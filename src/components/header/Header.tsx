@@ -192,7 +192,7 @@ const Header = () => {
             <Box sx={{ display: "flex" }}>
               <Box>
                 <div className="grid">
-                  <a className="ahihi1 p-3 listmenu-item text-xs	" href="">
+                  <a className="list_menu1 p-3 listmenu-item text-xs	" href="">
                     Giao dịch CK cơ sở
                   </a>
                   <a className="p-3 listmenu-item text-xs	" href="">
@@ -310,7 +310,7 @@ const Header = () => {
               aria-expanded={open2 ? "true" : undefined}
               onClick={handleClick2}
             >
-              <Typography sx={{ color: "#2371af" }} ><div className="text-sm">058C044534</div></Typography>
+             <div className="text-11pt text-colorTextLogo">058C044534</div>
               <ArrowDropDownIcon sx={{ color: "#2371af" }} />
             </IconButton>
           </Tooltip>
