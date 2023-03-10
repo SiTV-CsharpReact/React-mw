@@ -1,4 +1,4 @@
-.ahihi:after {
+.border-bottom-menu:after {
     content: "";
     height: 1px;
     background-color: #dadadc;
@@ -7,7 +7,7 @@
     bottom: 0;
     position: absolute;
 }
-.ahihi:before{
+.border-bottom-menu:before{
         content: "";
         width: 0;
         height: 0;
@@ -15,11 +15,11 @@
         border-bottom-color: #054d95;
         position: absolute;
         left: -11px;
-        top: 2px;
+        top: -3px;
         -webkit-transform: rotate(20deg);
         transform: rotate(-45deg);  
 }
-.ahihi1:after {
+.border-bottom-menu1:after {
     content: "";
     height: 1px;
     background-color: #dadadc;
@@ -28,8 +28,8 @@
     bottom: 0;
     position: absolute;
 }
-.ahihi1:before{
-        content: "";
+.border-bottom-menu1:before{
+    content: "";
         width: 0;
         height: 0;
         border: 11px solid transparent;
@@ -76,15 +76,15 @@
 }
  #btnUpQty{
     transform: rotate(-90deg);
-    top: -14px;
-    right: -1px;
-    font-size: 25px;
+    top: -12px;
+    right: -2px;
+    font-size: 20px;
 }
 #btnDownQty{
     transform: rotate(-90deg);
-    top: 1px;
-    right: 7px;
-    font-size: 25px;
+    top: 0px;
+    right: 5px;
+    font-size: 20px;
 
 }
 .container-spinner {
@@ -92,15 +92,15 @@
 }
 #btnUpPrice{
     transform: rotate(-90deg);
-    top: -14px;
-    right: -1px;
-    font-size: 25px;
+    top: -12px;
+    right: -2px;
+    font-size: 20px;
 }
 #btnDownPrice{
     transform: rotate(-90deg);
-    top: 1px;
-    right: 7px;
-    font-size: 25px;
+    top: 0px;
+    right: 5px;
+    font-size: 20px;
 }
 .spinner {
     right: 3px;
@@ -118,7 +118,7 @@
     text-transform: uppercase
 }
 .size-li{
-    font-size: 11px;
+    font-size: 14px;
 }
 .tabBuy{
     background-color: #0055ba;

@@ -75,13 +75,13 @@ const TableMarketW = () => {
               <div className="group-buysell flex">
                 <div
                   id="tabBuy"
-                  className="tabBuy active bg-[#0055ba] cursor-default border-black p-[6px] text-[#fff]"
+                  className="tabBuy active bg-[#0055ba] cursor-default border-black px-2.5 py-1.5 text-[#fff] text-sm"
                 >
                   MUA
                 </div>
                 <div
                   id="tabSell"
-                  className="tabSell normal-case p-[6px] bg-[#b3b3b3] text-[#fff]"
+                  className="tabSell normal-case px-2.5 py-1.5 bg-[#b3b3b3] text-[#fff] text-sm"
                 >
                   BÁN
                 </div>
@@ -130,7 +130,7 @@ const TableMarketW = () => {
                   <div className="ms-sel-ctn">
                     <input
                       type="text"
-                      className="form-control ui-autocomplete-input w-[100%] rounded-md
+                      className="form-control ui-autocomplete-input size-li p-[2px] w-[100%] mr-[14px] rounded-md
                       p-[1px]
                        tttt
 
@@ -153,7 +153,7 @@ const TableMarketW = () => {
               <div className="container-spinner fix-margin ">
                 <input
                   type="text"
-                  className="form-control OrderFormQuantity  text-right w-[100%] p-[1px] pr-[25px] rounded-md
+                  className="form-control OrderFormQuantity  size-li p-[2px] text-right w-[100%] p-[1px] pr-[25px] rounded-md
 
                   tttt 
 
@@ -232,7 +232,7 @@ const TableMarketW = () => {
                   <div className="ms-sel-ctn">
                     <input
                       type="text"
-                      className="form-control ui-autocomplete-input w-[100%] rounded-md p-[1px] tttt pl-[9px] "
+                      className="form-control ui-autocomplete-input size-li p-[2px] w-[100%] rounded-md p-[1px] tttt pl-[9px] "
                       placeholder="Giá"
                       id="txtPrice"
                     />
@@ -272,7 +272,7 @@ const TableMarketW = () => {
               />
               <button
                 id="btnBuySend"
-                className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] ml-[10px] rounded-lg text-white"
+                className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] ml-[10px]  size-li rounded-lg text-white"
               >
                 Gửi
               </button>
@@ -284,7 +284,7 @@ const TableMarketW = () => {
              
               <button className="refresh" id="btnReset" >
                         <img className="mt-[4px] mr-[8px] ml-[2px]" src="http://priceboard3.fpts.com.vn/images/EzFuture-05.png" />
-                        <span>Làm lại</span>
+                        <span className="size-li">Làm lại</span>
                     </button>
             </div>
           </div>

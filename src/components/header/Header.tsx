@@ -192,63 +192,63 @@ const Header = () => {
             <Box sx={{ display: "flex" }}>
               <Box>
                 <div className="grid">
-                  <a className="ahihi1 p-3 listmenu-item text-xs	" href="">
+                  <a className="border-bottom-menu1 p-3 listmenu-item size-li	" href="">
                     Giao dịch CK cơ sở
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="">
+                  <a className="p-3 listmenu-item size-li	" href="">
                     Giao dịch CK phát sinh
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="">
+                  <a className="p-3 listmenu-item size-li	" href="">
                     Đặt lệnh điều kiện
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="">
+                  <a className="p-3 listmenu-item size-li	" href="">
                     Thực hiện quyền
                   </a>
-                  <a className="pl-4 pt-3 hover:text-[#034e95] text-xs	" href="">
+                  <a className="pl-4 pt-3 hover:text-[#034e95] size-li	" href="">
                     Lưu ký chứng khoán
                   </a>
                 </div>
               </Box>
               <Box>
                 <div className="grid">
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Ứng trước cổ tức
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Cầm cố chứng khoán
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Quản lí hợp đồng quỹ
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Quản lí tài sản
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Tra cứu phí lưu ký
                   </a>
-                  <a className="pl-4 pt-3 hover:text-[#034e95] text-xs	 " href="#">
+                  <a className="pl-4 pt-3 hover:text-[#034e95] size-li	 " href="#">
                     Tra cứu chính quyền
                   </a>
                 </div>
               </Box>
               <Box>
                 <div className="grid">
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Chuyền tiền ngân hàng
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Chuyền tiền quỹ CKPS
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Bảng giá chứng khoán
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Bảng giá HNXPro
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Biểu đồ kĩ thuật
                   </a>
-                  <a className="pl-4 pt-3 hover:text-[#034e95] text-xs	" href="#">
+                  <a className="pl-4 pt-3 hover:text-[#034e95] size-li	" href="#">
                     Thông tin doanh nghiệp
                   </a>
                 </div>
@@ -306,7 +306,7 @@ const Header = () => {
               aria-expanded={open2 ? "true" : undefined}
               onClick={handleClick2}
             >
-              <Typography sx={{ color: "#2371af" }} ><div className="text-sm">058C044534</div></Typography>
+            <div className="text-11pt text-[#2371af]">058C044534</div>
               <ArrowDropDownIcon sx={{ color: "#2371af" }} />
             </IconButton>
           </Tooltip>
