@@ -77,15 +77,27 @@
  #btnUpQty{
     transform: rotate(-90deg);
     top: -12px;
-    right: -2px;
+    right: -3px;
     font-size: 20px;
 }
 #btnDownQty{
     transform: rotate(-90deg);
     top: 0px;
-    right: 5px;
+    right: 4px;
     font-size: 20px;
+}
 
+.ms-sel-ctn>input[type=text]:focus {
+    border: 2px solid #0055ba;
+    outline:none;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+}
+.container-spinner>input[type=text]:focus {
+    border: 2px solid #0055ba;
+    outline:none;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
 }
 .container-spinner {
     position: relative;
@@ -99,12 +111,12 @@
 #btnDownPrice{
     transform: rotate(-90deg);
     top: 0px;
-    right: 5px;
+    right: 4px;
     font-size: 20px;
 }
 .spinner {
     right: 3px;
-    top: 3px;
+    top: 2px;
     width: 1.3rem;
     position: absolute;
     background: #fff;
