@@ -28,10 +28,7 @@ const TableMarketW = () => {
     <div>
       <div className=" flex justify-end mr-[70px]">
         <div className="group  py-1 px-2  ">
-          <span className=" text-sm hover-text-blue ">
-            {" "}
-            Lệnh chờ khớp
-          </span>
+          <span className=" text-sm hover-text-blue "> Lệnh chờ khớp</span>
         </div>
         <div className="group  py-1 px-2  ">
           <span className=" text-sm hover-text-blue ">
@@ -39,9 +36,7 @@ const TableMarketW = () => {
           </span>
         </div>
         <div className="group  py-1 px-2  ">
-          <span className=" text-sm hover-text-blue ">
-            Lệnh trong ngày
-          </span>
+          <span className=" text-sm hover-text-blue ">Lệnh trong ngày</span>
         </div>
       </div>
       <div className="flex BGTB">
@@ -127,13 +122,17 @@ const TableMarketW = () => {
                   id="txtContactNo"
                 ></input>
                 <div
-                  className="ms-ctn form-control border-[#cccccc] rounded-lg "
+                  className="ms-ctn form-control border-[#cccccc] rounded-md
+
+                  "
                   id="txtSymbolBase"
                 >
                   <div className="ms-sel-ctn">
                     <input
                       type="text"
-                      className="form-control ui-autocomplete-input w-[120px] rounded-lg p-[2px] tttt
+                      className="form-control ui-autocomplete-input w-[110px] rounded-md
+
+                      p-[2px] tttt
 
                       "
                       placeholder="Mã CK"
@@ -151,24 +150,26 @@ const TableMarketW = () => {
                   Tối đa: <span id="spnMaxOrder">0</span>
                 </span>
               </div>
-              <div className="container-spinner fix-margin">
+              <div className="container-spinner fix-margin ">
                 <input
                   type="text"
-                  className="form-control OrderFormQuantity  text-right w-[130px] rounded-md p-[2px] tttt
+                  className="form-control OrderFormQuantity  text-right w-[130px] pr-[25px] rounded-md
+
+                  p-[2px] tttt 
 
                   "
                   placeholder="Khối lượng"
                   role="presentation"
                 />
                 <div
-                  className="spinner block absolute right-[3px]"
+                  className="spinner block   right-[3px]"
                   id="spinnerQuantity"
                 >
                   <button
                     type="button"
                     id="btnUpQty"
                     onClick={() => incrementCounter()}
-                    className="up button-spinner origin-top relative text-[#d3d3d3] rounded-md 
+                    className="up button-spinner relative  text-[#d3d3d3] rounded-md 
 
                     "
                   >
@@ -178,7 +179,7 @@ const TableMarketW = () => {
                     type="button"
                     id="btnDownQty"
                     onClick={() => decrementCounter()}
-                    className="down button-spinner origin-top relative text-[#d3d3d3]"
+                    className="down button-spinner relative text-[#d3d3d3]"
                   >
                     ‹
                   </button>
@@ -200,7 +201,7 @@ const TableMarketW = () => {
                       </td>
                       <td>
                         <span
-                          className="spnThamChieu text-[#f26f21] pl-[30px]  text-xs"
+                          className="spnThamChieu text-[#f26f21] pl-[20px]  text-xs"
                           id="spnRefPrice"
                         >
                           0
@@ -208,7 +209,7 @@ const TableMarketW = () => {
                       </td>
                       <td>
                         <span
-                          className="spnSan text-[#f26f21] pl-[30px]  text-xs"
+                          className="spnSan text-[#f26f21] pl-[20px]  text-xs"
                           id="spnFloorPrice"
                         >
                           0
@@ -231,7 +232,7 @@ const TableMarketW = () => {
                   <div className="ms-sel-ctn">
                     <input
                       type="text"
-                      className="form-control ui-autocomplete-input w-[150px] rounded-md p-[2px] tttt"
+                      className="form-control ui-autocomplete-input w-[140px] rounded-md p-[2px] tttt pl-[9px] "
                       placeholder="Giá"
                       id="txtPrice"
                     />
@@ -239,14 +240,14 @@ const TableMarketW = () => {
                 </div>
                 <div id="divAutoPrice"></div>
                 <div
-                  className="spinner  absolute right-[3px]"
+                  className="spinner right-[3px] ml-[60px] "
                   id="spinnerPrice "
                 >
                   <button
                     type="button"
                     id="btnUpPrice"
-                    onClick={() => decrementCounter1()}
-                    className="up button-spinner origin-top relative text-[#d3d3d3]"
+                    onClick={() => incrementCounter1()}
+                    className="up button-spinner relative  text-[#d3d3d3]"
                   >
                     ›
                   </button>
@@ -254,7 +255,7 @@ const TableMarketW = () => {
                     type="button"
                     id="btnDownPrice"
                     onClick={() => decrementCounter1()}
-                    className="down button-spinner origin-top relative text-[#d3d3d3]"
+                    className="down button-spinner relative text-[#d3d3d3]"
                   >
                     ‹
                   </button>
@@ -271,7 +272,7 @@ const TableMarketW = () => {
               />
               <button
                 id="btnBuySend"
-                className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] rounded-lg pl-12 pr-12 pb-[5px] mt-[5px] ml-[15px] text-white"
+                className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] rounded-lg pl-10 pr-10 pb-[5px] mt-[5px] ml-[15px] text-white"
               >
                 Gửi
               </button>

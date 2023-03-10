@@ -74,3 +74,31 @@
 .tttt{
     border: 1px solid #dedede;
 }
+ #btnUpQty{
+    transform: rotate(-90deg);
+    top: -40px;
+    right: -52px;
+    font-size: 25px;
+}
+#btnDownQty{
+    transform: rotate(-90deg);
+    top: -25px;
+    right: -44px;
+    font-size: 25px;
+
+}
+.container-spinner {
+    position: relative;
+}
+#btnUpPrice{
+    transform: rotate(-90deg);
+    top: -40px;
+    right: -55px;
+    font-size: 25px;
+}
+#btnDownPrice{
+    transform: rotate(-90deg);
+    top: -25px;
+    right: -47px;
+    font-size: 25px;
+}
