@@ -14,11 +14,11 @@ const VN30MarketWatch = () => {
     })
     .finally(()=> setLoading(false));
 }, []);
-if (loading) return <LoadingComponent message="Loading..."/>
-   console.log(products)
+console.log(products)
+if (loading) return <>Loading...</>
    const test= products;
   return (
-    <div className=''>
+    <div className='h-full min-h-500'>
 
     <table className="w-full ">
   <thead>

@@ -67,7 +67,7 @@ export const setColorMarket =(tc:number,price:number,tran:number,san:number) =>{
     else if(price >tc){
         Color="text-green"
     }
-    else if(price>san && price<tc )
+    else if(price<tc && price>san  )
     {
         Color="text-red"
     }

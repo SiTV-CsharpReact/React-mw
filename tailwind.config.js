@@ -3,6 +3,10 @@ module.exports = {
       "./src/**/*.{js,jsx,ts,tsx}",
     ],
     theme: {
+      minHeight: {
+        '500':'500px',
+        '1/2': '50%',
+      },
       extend: {},
       colors: {
         'borderBodyTableMarket': '#505050',

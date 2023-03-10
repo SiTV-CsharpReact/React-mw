@@ -6,6 +6,7 @@ import { formatNumber, formatNumberMarket, setColorMarket, tinhGiaTC} from "../u
 import IframeComponent from './IFrameComponent';
 const HSXMarketWatch = () => {
     const [loading,setLoading] = useState(true);
+    const [data, setData] = useState("");
   const [products, setProducts] = useState<[] | null>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   useEffect(() => {
@@ -23,11 +24,31 @@ const HSXMarketWatch = () => {
     })
     .finally(()=> setLoading(false));
 }, []);
-if (loading) return <LoadingComponent message="Loading..."/>
-   console.log(products)
+useEffect(() => {
+    const socket = new WebSocket('ws://eztradereact.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=2XHl0lWPWTQWVNVE6n1NzvJ333dEkfIKOidSoEmxczI5oAqEfNFYWnpo1zQtkCrKotgj1KsYgpCYd3lr05eeGDMPrgCQpghAUXVwxNXp6OaqHmdulSGGU1zUywjT1xrE&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=3');
+
+    socket.onopen = () => {
+      console.log('WebSocket connection established.');
+    };
+
+    socket.onmessage = (event) => {
+      setData(event.data);
+    };
+
+    socket.onclose = () => {
+      console.log('WebSocket connection closed.');
+    };
+
+    return () => {
+      socket.close();
+    };
+  }, []);
+  console.log(products)
+  console.log(data)
+if (loading) return <>Loading...</>
    const test= products;
   return (
-    <div className=''>
+    <div className='h-full min-h-500'>
 
     <table className="w-full ">
   <thead>
@@ -131,7 +152,7 @@ if (loading) return <LoadingComponent message="Loading..."/>
     
   </tbody>
 </table>
-   <IframeComponent/>
+   {/* //<IframeComponent/> */}
    </div>
   )
 }

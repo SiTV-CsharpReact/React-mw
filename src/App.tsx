@@ -37,6 +37,10 @@ var updateIndex = (objRoot:any)=>{
 function App() {
   const { t } = useTranslation(["home", "report"]);
 
+
+  
+  //console.log(data.replaceAll('/@"\\"/g',''))
+
 //   const [products, setProducts] = useState<DataHNX | null>(null);
 //   const iframeRef = useRef<HTMLIFrameElement>(null);
 //   useEffect(() => {
@@ -57,6 +61,8 @@ function App() {
 // console.log(products);
   return (
     <div className=' bg-BGTableMarket text-white'>
+    
+       
       <div className='flex pt-14'>
         <div className="group bg-activeListMarketWatch inline-block p-1 border-r border-black rounded-t cursor-pointer" >
           <span className="uppercase text-sm ">HNX </span>
