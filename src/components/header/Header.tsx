@@ -155,7 +155,7 @@ const Header = () => {
       </div>
       <div></div>
       <Box className="header-right" display="flex">
-        <div className="group inline-block py-1  px-4">
+        <div className="group inline-block py-1  px-2">
           <span className="  uppercase text-sm">
             <a href="/">
               <img
