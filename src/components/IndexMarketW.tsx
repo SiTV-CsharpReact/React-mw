@@ -469,7 +469,7 @@ const IndexMarketW = () => {
   ));
 
   return (
-    <div className="h-full min-h-500">
+    <div className="h-420 overflow-auto">
       {/* <iframe id="iframe" src="/hnx/blank?843" ref={iframeRef}></iframe> */}
       {/* <p>{dataRT[0]}</p> */}
 

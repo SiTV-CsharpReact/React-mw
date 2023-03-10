@@ -216,7 +216,7 @@ const listMenu = () => {
             </a>
           </li>
           <li>
-            <a className=" rounded-b listmenu-item  text-xs" href="#">
+            <a className="listmenu-item  text-xs" href="#">
               Sản phẩm dịch vụ cho tổ chức
             </a>
           </li>

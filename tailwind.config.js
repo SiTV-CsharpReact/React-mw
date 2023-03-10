@@ -3,6 +3,10 @@ module.exports = {
       "./src/**/*.{js,jsx,ts,tsx}",
     ],
     theme: {
+      height: {
+        '420': '420px',
+        '500': '500px',
+      },
       minHeight: {
         '500':'500px',
         '1/2': '50%',
