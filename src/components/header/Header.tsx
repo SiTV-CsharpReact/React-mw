@@ -267,7 +267,7 @@ const Header = () => {
               onClick={handleClick1}
               
             >
-              <NotificationsIcon sx={{ color: "#2371af",width:"22"}} />
+              <NotificationsIcon sx={{ color: "#0861a9",width:"22"}} />
             </IconButton>
           </Tooltip>
           <Menu
@@ -310,8 +310,8 @@ const Header = () => {
               aria-expanded={open2 ? "true" : undefined}
               onClick={handleClick2}
             >
-              <Typography sx={{ color: "#2371af" }} ><div className="text-sm">058C044534</div></Typography>
-              <ArrowDropDownIcon sx={{ color: "#2371af" }} />
+              <Typography sx={{ color: "#0861a9" }} ><div className="size">058C044534</div></Typography>
+              <ArrowDropDownIcon sx={{ color: "#0861a9" }} />
             </IconButton>
           </Tooltip>
           <Menu

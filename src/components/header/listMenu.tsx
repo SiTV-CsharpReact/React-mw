@@ -4,7 +4,7 @@ const listMenu = () => {
   return (
     <div className="flex">
       <div className="group inline-block py-2 px-2 border-r border-borderListMenu ">
-        <span className="uppercase text-xs hover-text-blue "> Lịch sử GD </span>
+        <span className="uppercase size hover-text-blue "> Lịch sử GD </span>
         <ul className="absolute hidden text-gray-700 pt-2 group-hover:block boxShadow ">
           <li className="ahihi ">
             <a className=" listmenu-item text-xs " href="#">
@@ -74,7 +74,7 @@ const listMenu = () => {
         </ul>
       </div>
       <div className="group inline-block py-2 px-2 border-r border-borderListMenu">
-        <span className="  uppercase  text-xs  hover-text-blue">
+        <span className="  uppercase  size  hover-text-blue">
           {" "}
           GD đặc biệt
         </span>
@@ -107,7 +107,7 @@ const listMenu = () => {
         </ul>
       </div>
       <div className="group inline-block py-2  px-2 border-r border-borderListMenu">
-        <span className="  uppercase text-xs hover-text-blue">
+        <span className="  uppercase size hover-text-blue">
           {" "}
           Quản lý tk{" "}
         </span>
@@ -175,7 +175,7 @@ const listMenu = () => {
         </ul>
       </div>
       <div className="group inline-block py-2  px-2 border-r border-borderListMenu">
-        <span className="  uppercase  text-xs hover-text-blue">
+        <span className="  uppercase size hover-text-blue">
           QUẢN LÝ KÝ QUỸ{" "}
         </span>
         <ul className="absolute hidden text-gray-700 pt-2 group-hover:block">
@@ -197,13 +197,13 @@ const listMenu = () => {
         </ul>
       </div>
       <div className="group inline-block py-2  px-2 border-r border-borderListMenu">
-        <span className="  uppercase  text-xs hover-text-blue">
+        <span className="  uppercase  size hover-text-blue">
           Tư vấn đầu tư
         </span>
         <ul className="absolute hidden text-gray-700 pt-2 group-hover:block"></ul>
       </div>
       <div className="group inline-block py-2  px-2">
-        <span className="  uppercase  text-xs hover-text-blue">Hỗ trợ</span>
+        <span className="  uppercase  size hover-text-blue">Hỗ trợ</span>
         <ul className="absolute hidden text-gray-700 pt-2 group-hover:block">
           <li className="ahihi ">
             <a className="listmenu-item  text-xs" href="#">
