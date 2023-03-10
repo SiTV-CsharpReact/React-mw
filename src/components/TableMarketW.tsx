@@ -75,13 +75,13 @@ const TableMarketW = () => {
               <div className="group-buysell flex">
                 <div
                   id="tabBuy"
-                  className="tabBuy active bg-[#0055ba] cursor-default border-black pl-[10px] pr-[10px] pt-[3px] pb-[3px] text-[#fff]"
+                  className="tabBuy active bg-[#0055ba] cursor-default border-black p-[6px] text-[#fff]"
                 >
                   MUA
                 </div>
                 <div
                   id="tabSell"
-                  className="tabSell normal-case pl-[10px] pr-[10px] pt-[3px] pb-[3px] bg-[#b3b3b3] text-[#fff]"
+                  className="tabSell normal-case p-[6px] bg-[#b3b3b3] text-[#fff]"
                 >
                   BÁN
                 </div>

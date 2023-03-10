@@ -45,7 +45,7 @@ useEffect(() => {
   }, []);
   console.log(products)
   console.log(data)
-if (loading) return <>Loading...</>
+if (loading) return <div className="h-420">Loading...</div>
    const test= products;
   return (
     <div className='h-420 overflow-auto'>

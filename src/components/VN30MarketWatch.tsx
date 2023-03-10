@@ -15,7 +15,7 @@ const VN30MarketWatch = () => {
     .finally(()=> setLoading(false));
 }, []);
 console.log(products)
-if (loading) return <>Loading...</>
+if (loading) return <div className="h-420">Loading...</div>
    const test= products;
   return (
     <div className='h-420 overflow-auto'>

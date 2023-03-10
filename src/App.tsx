@@ -7,8 +7,8 @@ import HSXMarketWatch from "./components/HSXMarketWatch";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import VN30MarketWatch from "./components/VN30MarketWatch";
-
-
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 var updateIndex = (objRoot:any)=>{
   var arrData = JSON.parse(objRoot.Change);
 }
@@ -61,9 +61,32 @@ function App() {
 // console.log(products);
   return (
     <div className=' bg-BGTableMarket text-white'>
-    
-       
-      <div className='flex pt-7'>
+   
+   <div>
+      <ul className="flex p-1">
+  <li className="mr-10">
+  <p className="text-sm"><span id="" className="mar_">VNXALL: </span><span id="VNXALL_IndexValue" className="text-red ">1,596.14 </span><span id="VNXALL_Image" className="text-red"><ArrowDropDownIcon/></span><span id="VNXALL_Change" className="text-red ">-6.73</span><span id="" className="text-red px-0.5"><span id="VNXALL_ChangePercent" className="text-red px-0.5">-0.42</span>%</span></p>
+
+  </li>
+  <li className="mr-10">
+  <p className="text-sm"><span id="" className="mar_">VNI: </span><span id="VNI_IndexValue" className="text-red ">1,053</span><span id="VNI_Image" className="arrowDown text-red"><ArrowDropDownIcon/></span><span id="VNI_Change" className="text-red ">-2.95</span><span id="" className="text-red px-0.5"><span id="VNI_ChangePercent" className="text-red px-0.5">-0.28</span>%</span></p>
+  </li>
+  <li className="mr-10">
+  <p className="text-sm"><span id="" className="mar_">HNX: </span><span id="i02_3" className="text-red ">207.86</span><span id="i02_Image" className="arrowDown text-red"><ArrowDropDownIcon/></span><span id="i02_5" className="text-red">-1.17</span><span id="" className="text-red px-0.5"><span id="i02_6" className="text-red px-0.5">-0.56</span>%</span></p>
+  </li>
+  <li className="mr-10">
+  <p className="text-sm"><span id="" className="mar_">HNX30: </span><span id="i41_3" className="text-red ">367.92</span><span id="i41_Image" className="arrowDown text-red"><ArrowDropDownIcon/></span><span id="i41_5" className="text-red ">-3.02</span><span id="" className="text-red px-0.5"><span id="i41_6" className="text-red px-0.5">-0.81</span>%</span></p>
+  </li>
+  <li className="mr-10">
+  <p className="text-sm"><span id="" className="mar_">VN30: </span><span id="VN30_IndexValue" className="text-red ">1,047.2</span><span id="VN30_Image" className="arrowDown text-red"><ArrowDropDownIcon/></span><span id="VN30_Change" className="text-red ">-3.08</span><span id="" className="text-red px-0.5"><span id="VN30_ChangePercent" className="text-red px-0.5">-0.29</span>%</span></p>
+  </li>
+  <li className="mr-10">
+  <p className="text-sm"><span id="" className="mar_">UPCOM: </span><span id="i03_3" className="text-green ">76.77</span><span id="i03_Image" className="arrowUp text-green"><ArrowDropUpIcon/></span><span id="i03_5" className="text-green ">0.17</span><span id="" className="text-green px-0.5"><span id="i03_6" className="text-green px-0.5">0.22</span>%</span></p>
+  </li>
+  </ul>
+      </div>
+      <div className='flex'>
+     
         <div className="group bg-activeListMarketWatch inline-block p-1 border-r border-black rounded-t cursor-pointer" >
           <span className="uppercase text-sm ">HNX </span>
           <ul className="absolute hidden text-black pt-1.5 group-hover:block">

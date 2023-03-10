@@ -14,7 +14,7 @@ import IframeComponent from "./IFrameComponent";
 import { HubConnectionBuilder } from "@aspnet/signalr/dist/esm/HubConnectionBuilder";
 import * as signalR from "@aspnet/signalr";
 import { io } from "socket.io-client";
- 
+
 const IndexMarketW = () => {
   const cellRefs = useRef([]);
   const [loading, setLoading] = useState(true);
@@ -145,7 +145,7 @@ const IndexMarketW = () => {
           (arrDatas = JSON.parse(dataLT.A[0].Change)),
           // /console.log(arrDatas),
           arrDatas.map(
-            (arrData: any) => (    //arrData.Info.length>2 ? arrData.Info.map((arrInfo:any)=>(console.log(arrInfo))):  arrData.arrInfo,
+            (arrData: any) => ( 
               // (arrData.Info)
               // console.log(arrData.RowID),
               // console.log(`${arrData.RowID}_${arrData.Info[0][0]}`),
@@ -167,7 +167,7 @@ const IndexMarketW = () => {
     }
   }
  
-  if (loading) return <LoadingComponent message="Loading..." />;
+  if (loading) return <div className="h-420">Loading...</div>
 
   const rows = products?.map((dataTable: any) => (
     <tr key={dataTable.RowID} id={`tr${dataTable.RowID}`}>
