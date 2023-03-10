@@ -1,4 +1,4 @@
-.ahihi:after {
+.border-bottom-menu:after {
     content: "";
     height: 1px;
     background-color: #dadadc;
@@ -7,7 +7,7 @@
     bottom: 0;
     position: absolute;
 }
-.ahihi:before{
+.border-bottom-menu:before{
         content: "";
         width: 0;
         height: 0;
@@ -15,11 +15,11 @@
         border-bottom-color: #054d95;
         position: absolute;
         left: -11px;
-        top: 2px;
+        top: -3px;
         -webkit-transform: rotate(20deg);
         transform: rotate(-45deg);  
 }
-.ahihi1:after {
+.border-bottom-menu1:after {
     content: "";
     height: 1px;
     background-color: #dadadc;
@@ -28,7 +28,7 @@
     bottom: 0;
     position: absolute;
 }
-.ahihi1:before{
+.border-bottom-menu1:before{
         content: "";
         width: 0;
         height: 0;
@@ -115,4 +115,34 @@
 }
 .size{
     font-size: 14px;
+    text-transform: uppercase
+}
+.size-li{
+    font-size: 11px;
+}
+.tabBuy{
+    background-color: #0055ba;
+    cursor: default;
+    border: 1px solid #2491eb;
+}
+.btnBuyGui{
+    padding-right: 20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 20px;
+    margin-top: 6px;
+    width: 100px;
+}
+#btnReset {
+    margin-top: 7px;
+    background-color: white;
+    margin-left: 10px;
+    margin-right: -8px;
+    display: flex;
+    width: 90px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    margin-top: 6px;
+    border-radius: 5px;
+    border: 1px solid #ccc !important;
 }

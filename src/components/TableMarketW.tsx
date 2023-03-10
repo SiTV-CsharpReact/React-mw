@@ -28,15 +28,15 @@ const TableMarketW = () => {
     <div>
       <div className=" flex justify-end mr-[70px]">
         <div className="group  py-1 px-2  ">
-          <span className=" text-sm hover-text-blue "> Lệnh chờ khớp</span>
+          <span className=" text-sm hover-text-blue-L "> Lệnh chờ khớp</span>
         </div>
         <div className="group  py-1 px-2  ">
-          <span className=" text-sm hover-text-blue ">
+          <span className=" text-sm hover-text-blue-L ">
             KQ khớp lệnh trong phiên
           </span>
         </div>
         <div className="group  py-1 px-2  ">
-          <span className=" text-sm hover-text-blue ">Lệnh trong ngày</span>
+          <span className=" text-sm hover-text-blue-L ">Lệnh trong ngày</span>
         </div>
       </div>
       <div className="flex BGTB">
@@ -69,19 +69,19 @@ const TableMarketW = () => {
             <span className="font-semibold">-2,200,000</span>
           </div>
         </div>
-        <div className="bottom-left pt-2 pb-2 pl-6 pr-6 mr-[-30px] w-[700px] bg-[#dfeeff] mt-[20px] mb-[30px]  MBR">
+        <div className="bottom-left pt-2 p-[20px] mr-[-30px] w-[48%] bg-[#dfeeff] mt-[20px] mb-[30px]  MBR">
           <div className="flex justify-between ">
             <div className="btnSwitchBS">
               <div className="group-buysell flex">
                 <div
                   id="tabBuy"
-                  className="tabBuy active bg-[#0055ba] cursor-default border-black p-[6px] text-[#fff]"
+                  className="tabBuy active bg-[#0055ba] cursor-default border-black pl-[10px] pr-[10px] pt-[3px] pb-[3px] text-[#fff]"
                 >
                   MUA
                 </div>
                 <div
                   id="tabSell"
-                  className="tabSell normal-case p-[6px] bg-[#b3b3b3] text-[#fff]"
+                  className="tabSell normal-case pl-[10px] pr-[10px] pt-[3px] pb-[3px] bg-[#b3b3b3] text-[#fff]"
                 >
                   BÁN
                 </div>
@@ -90,7 +90,7 @@ const TableMarketW = () => {
             <div className="flex justify-center">
               <div>
                 <label
-                  className="inline-block pl-[0.15rem] hover:cursor-pointer mr-[10px] text-sm "
+                  className="inline-block pl-[0.15rem] hover:cursor-pointer  mr-[10px] text-sm "
                   htmlFor="flexSwitchCheckDefault"
                 >
                   Ghi lệnh chờ gửi:
@@ -130,9 +130,9 @@ const TableMarketW = () => {
                   <div className="ms-sel-ctn">
                     <input
                       type="text"
-                      className="form-control ui-autocomplete-input w-[110px] rounded-md
-
-                      p-[2px] tttt
+                      className="form-control ui-autocomplete-input w-[100%] rounded-md
+                      p-[1px]
+                       tttt
 
                       "
                       placeholder="Mã CK"
@@ -153,9 +153,9 @@ const TableMarketW = () => {
               <div className="container-spinner fix-margin ">
                 <input
                   type="text"
-                  className="form-control OrderFormQuantity  text-right w-[130px] pr-[25px] rounded-md
+                  className="form-control OrderFormQuantity  text-right w-[100%] p-[1px] pr-[25px] rounded-md
 
-                  p-[2px] tttt 
+                  tttt 
 
                   "
                   placeholder="Khối lượng"
@@ -232,7 +232,7 @@ const TableMarketW = () => {
                   <div className="ms-sel-ctn">
                     <input
                       type="text"
-                      className="form-control ui-autocomplete-input w-[140px] rounded-md p-[2px] tttt pl-[9px] "
+                      className="form-control ui-autocomplete-input w-[100%] rounded-md p-[1px] tttt pl-[9px] "
                       placeholder="Giá"
                       id="txtPrice"
                     />
@@ -272,7 +272,7 @@ const TableMarketW = () => {
               />
               <button
                 id="btnBuySend"
-                className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] rounded-lg pl-10 pr-10 pb-[5px] mt-[5px] ml-[15px] text-white"
+                className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] ml-[10px] rounded-lg text-white"
               >
                 Gửi
               </button>
@@ -281,17 +281,11 @@ const TableMarketW = () => {
             </div>
             <div className="divReset">
               <div className="h-[14px]"></div>
-              <button
-                id="btnReset"
-                className="btn btnBuyGui btnSaveTemplate bg-white rounded-lg pl-2 pr-2 mt-[7px] pb-[6px] ml-[15px] pd-[5px] flex justify-between tttt"
-              >
-                <img
-                  className="w-[15px] mt-[9px] mr-[10px]"
-                  src="http://priceboard3.fpts.com.vn/images/EzFuture-05.png"
-                  alt=""
-                />
-                <span className="mt-[3px] text-sm">Làm lại</span>
-              </button>
+             
+              <button className="refresh" id="btnReset" >
+                        <img className="mt-[4px] mr-[8px] ml-[2px]" src="http://priceboard3.fpts.com.vn/images/EzFuture-05.png" />
+                        <span>Làm lại</span>
+                    </button>
             </div>
           </div>
         </div>

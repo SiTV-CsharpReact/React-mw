@@ -6,68 +6,68 @@ const listMenu = () => {
       <div className="group inline-block py-2 px-2 border-r border-borderListMenu ">
         <span className="uppercase size hover-text-blue "> Lịch sử GD </span>
         <ul className="absolute hidden text-gray-700 pt-2 group-hover:block boxShadow ">
-          <li className="ahihi ">
-            <a className=" listmenu-item text-xs " href="#">
+          <li className="border-bottom-menu ">
+            <a className=" listmenu-item size-li " href="#">
               Lịch sử đặt lệnh
             </a>
           </li>
           <li>
-            <a className="listmenu-item text-xs " href="#">
+            <a className="listmenu-item size-li " href="#">
               Lịch sử khớp lệnh
             </a>
           </li>
           <li>
-            <a className="rounded-b listmenu-item text-xs  " href="#">
+            <a className="rounded-b listmenu-item size-li  " href="#">
               Lệnh chờ khớp thanh toán
             </a>
           </li>
         </ul>
       </div>
       <div className="group inline-block py-2  px-2 border-r border-borderListMenu">
-        <span className="  uppercase text-sm hover-text-blue"> GD tiền </span>
+        <span className="  uppercase size hover-text-blue"> GD tiền </span>
         <ul className="absolute hidden text-gray-700 pt-2 boxShadow group-hover:block ">
-          <li className="ahihi">
-            <a className="listmenu-item text-xs " href="#">
+          <li className="border-bottom-menu">
+            <a className="listmenu-item size-li " href="#">
               Chuyển tiền
             </a>
           </li>
           <li>
-            <a className=" listmenu-item text-xs " href="#">
+            <a className=" listmenu-item size-li " href="#">
               Chuyển tiền ký quỹ CK phái sinh
             </a>
           </li>
           <li>
-            <a className=" listmenu-item text-xs " href="#">
+            <a className=" listmenu-item size-li" href="#">
               GD tiền
             </a>
           </li>
           <li>
-            <a className="listmenu-item text-xs " href="#">
+            <a className="listmenu-item size-li " href="#">
               Lịch sử chuyển tiền
             </a>
           </li>
           <li>
-            <a className=" listmenu-item text-xs " href="#">
+            <a className=" listmenu-item size-li " href="#">
               Tiền cho vay - EzSaving
             </a>
           </li>
           <li>
-            <a className=" listmenu-item text-xs " href="#">
+            <a className=" listmenu-item size-li " href="#">
               Tất toán tiền cho vay
             </a>
           </li>
           <li>
-            <a className="listmenu-item text-xs " href="#">
+            <a className="listmenu-item size-li " href="#">
               Danh sách hợp đồng cho vay
             </a>
           </li>
           <li>
-            <a className=" listmenu-item text-xs " href="#">
+            <a className=" listmenu-item size-li " href="#">
               Ứng trước tiền cổ tức
             </a>
           </li>
           <li>
-            <a className="rounded-b listmenu-item text-xs " href="#">
+            <a className="rounded-b listmenu-item size-li " href="#">
               Lịch sử ứng trước tiền cổ tức
             </a>
           </li>
@@ -84,7 +84,7 @@ const listMenu = () => {
               Lịch sử bán CK lô lẻ
             </a>
           </li>
-          <li className="ahihi">
+          <li className="border-bottom-menu">
             <a className="listmenu-item text-xs " href="#">
               Thực hiện quyền
             </a>
@@ -112,7 +112,7 @@ const listMenu = () => {
           Quản lý tk{" "}
         </span>
         <ul className="absolute hidden text-gray-700 pt-2 group-hover:block">
-          <li className="ahihi">
+          <li className="border-bottom-menu">
             <a className=" listmenu-item  text-xs" href="#">
               Báo cáo tổng hợp số dư giao dịch
             </a>
@@ -179,7 +179,7 @@ const listMenu = () => {
           QUẢN LÝ KÝ QUỸ{" "}
         </span>
         <ul className="absolute hidden text-gray-700 pt-2 group-hover:block">
-          <li className="ahihi">
+          <li className="border-bottom-menu">
             <a className="listmenu-item  text-xs" href="#">
               Tra cứu lãi vay
             </a>
@@ -205,7 +205,7 @@ const listMenu = () => {
       <div className="group inline-block py-2  px-2">
         <span className="  uppercase  size hover-text-blue">Hỗ trợ</span>
         <ul className="absolute hidden text-gray-700 pt-2 group-hover:block">
-          <li className="ahihi ">
+          <li className="border-bottom-menu">
             <a className="listmenu-item  text-xs" href="#">
               Sản phẩm dịch vụ trực tuyến
             </a>
