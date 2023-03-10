@@ -42,7 +42,7 @@ const TableMarketW = () => {
       <div className="flex BGTB">
         <div className="bottom__sdTien mr-[2%]  mt-[20px] SDTM ">
           <div className="bottom__sdTien__title bg-[#b3b3b3] h-[25px] ">
-            <span className="pl-[9px] pr-[9px] text-[#0055ba]">Số dư tiền</span>
+            <span className="pl-[9px] pr-[9px] text-[#0055ba] uppercase">Số dư tiền</span>
             <i
               title="Cập nhật số dư tiền"
               className="glyphicon glyphicon-refresh"
@@ -51,22 +51,22 @@ const TableMarketW = () => {
           </div>
           <div className="bottom__sdTien__title  h-[25px] pl-[9px] pr-[9px]  flex justify-between text-sm	">
             <span className="">Số dư tiền mặt:</span>
-            <span className="font-bold">-2,200,000</span>
+            <span className="font-semibold">-2,200,000</span>
           </div>
           <div className="bottom__sdTien__title  h-[25px] pl-[9px] pr-[9px]  flex justify-between text-sm	">
             <span className="">Tiền ứng trước</span>
 
-            <span className="font-bold">0</span>
+            <span className="font-semibold">0</span>
           </div>
           <div className="bottom__sdTien__title  h-[25px] pl-[9px] pr-[9px]  flex justify-between text-sm	">
             <span className="">Tiền cho FPTS vay</span>
 
-            <span className="tt-t font-bold">0</span>
+            <span className="tt-t font-semibold">0</span>
           </div>
 
           <div className="bottom__sdTien__title  h-[25px] pl-[9px] pr-[9px]  flex justify-between	text-sm	">
             <span className="">Số dư có thể giao dịch:</span>
-            <span className="font-bold">-2,200,000</span>
+            <span className="font-semibold">-2,200,000</span>
           </div>
         </div>
         <div className="bottom-left pt-2 pb-2 pl-6 pr-6 mr-[-30px] w-[700px] bg-[#dfeeff] mt-[20px] mb-[30px]  MBR">

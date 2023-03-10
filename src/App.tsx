@@ -63,7 +63,7 @@ function App() {
     <div className=' bg-BGTableMarket text-white'>
     
        
-      <div className='flex pt-14'>
+      <div className='flex pt-7'>
         <div className="group bg-activeListMarketWatch inline-block p-1 border-r border-black rounded-t cursor-pointer" >
           <span className="uppercase text-sm ">HNX </span>
           <ul className="absolute hidden text-black pt-1.5 group-hover:block">

@@ -48,7 +48,7 @@ useEffect(() => {
 if (loading) return <>Loading...</>
    const test= products;
   return (
-    <div className='h-full min-h-500'>
+    <div className='h-420 overflow-auto'>
 
     <table className="w-full ">
   <thead>
