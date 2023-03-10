@@ -90,7 +90,7 @@ const TableMarketW = () => {
             <div className="flex justify-center">
               <div>
                 <label
-                  className="inline-block pl-[0.15rem] hover:cursor-pointer mr-[10px] text-sm tttt"
+                  className="inline-block pl-[0.15rem] hover:cursor-pointer mr-[10px] text-sm "
                   htmlFor="flexSwitchCheckDefault"
                 >
                   Ghi lệnh chờ gửi:
