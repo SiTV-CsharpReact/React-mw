@@ -162,7 +162,7 @@ const TableMarketW = () => {
                   role="presentation"
                 />
                 <div
-                  className="spinner block   right-[3px]"
+                  className="spinner  right-[3px]"
                   id="spinnerQuantity"
                 >
                   <button
@@ -240,7 +240,7 @@ const TableMarketW = () => {
                 </div>
                 <div id="divAutoPrice"></div>
                 <div
-                  className="spinner right-[3px] ml-[60px] "
+                  className="spinner right-[3px]  "
                   id="spinnerPrice "
                 >
                   <button

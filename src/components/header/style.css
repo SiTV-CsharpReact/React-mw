@@ -76,14 +76,14 @@
 }
  #btnUpQty{
     transform: rotate(-90deg);
-    top: -40px;
-    right: -52px;
+    top: -14px;
+    right: -1px;
     font-size: 25px;
 }
 #btnDownQty{
     transform: rotate(-90deg);
-    top: -25px;
-    right: -44px;
+    top: 1px;
+    right: 7px;
     font-size: 25px;
 
 }
@@ -92,13 +92,25 @@
 }
 #btnUpPrice{
     transform: rotate(-90deg);
-    top: -40px;
-    right: -55px;
+    top: -14px;
+    right: -1px;
     font-size: 25px;
 }
 #btnDownPrice{
     transform: rotate(-90deg);
-    top: -25px;
-    right: -47px;
+    top: 1px;
+    right: 7px;
     font-size: 25px;
 }
+.spinner {
+    right: 3px;
+    top: 3px;
+    width: 1.3rem;
+    position: absolute;
+    background: #fff;
+    border-radius: 0.5rem;
+    display: none;
+    height: 24px;
+    display:block;
+}
+
