@@ -69,6 +69,7 @@
 .tt-t{
     background-color: #fff;   
     border-bottom: 1px solid black;
+    margin-left: 260px;
     /* padding: 0 10px 22px; */
 }
 .tttt{
@@ -76,15 +77,19 @@
 }
  #btnUpQty{
     transform: rotate(-90deg);
-    top: -10px;
-    right: -3px;
-    font-size: 20px;
+    top: -21px;
+    right: 1px;
+    font-size: 2.2rem;
+    border: none;
+    font-size: 2.2rem;
+    
 }
 #btnDownQty{
     transform: rotate(-90deg);
-    top: 4px;
-    right: 4px;
-    font-size: 20px;
+    top: -58px;
+    border: none;
+    right: 1px;
+    font-size: 2.2rem;
 }
 
 input[type=text], txtSymbol {
@@ -96,32 +101,22 @@ input[type=text], txtSymbol {
     box-shadow:0 0 5px rgba(81, 203, 238, 1);
     border: 1px solid rgba(81, 203, 238, 1);
   }
-/* .ms-sel-ctn>input[type=text]:focus {
-    border: 2px solid #0055ba;
-    outline:none;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-}
-.container-spinner>input[type=text]:focus {
-    border: 2px solid #0055ba;
-    outline:none;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-} */
 .container-spinner {
     position: relative;
 }
 #btnUpPrice{
     transform: rotate(-90deg);
-    top: -10px;
-    right: -3px;
-    font-size: 20px;
+    top: -21px;
+    right: -1px;
+    font-size: 2.2rem;
+    border: none;
 }
 #btnDownPrice{
     transform: rotate(-90deg);
-    top: 4px;
-    right: 4px;
-    font-size: 20px;
+    top: -58px;
+    right: -1px;
+    font-size: 2.2rem;
+    border: none;
 }
 .spinner {
     right: 3px;
@@ -147,8 +142,8 @@ input[type=text], txtSymbol {
     border: 1px solid #2491eb;
 }
 .btnBuyGui{
-    padding: 6px 20px 3px;
-    padding-bottom: 2px;
+    padding: 4px 20px 3px;
+    padding-bottom: 4px;
     margin-top: 6px;
     width: 100px;
 }
@@ -161,6 +156,83 @@ input[type=text], txtSymbol {
     margin-right: -8px;
     margin-top: 8px;
     padding-bottom: 2px;
-    padding-top: 5px;
+    padding-top: 4px;
+    padding-bottom: 4px;
     width: 90px;
+}
+.size-input{
+    font-size: 13px;
+}
+.group-buysell>div{
+    border: unset;
+    text-transform: uppercase;
+    padding: 8px 10px 8px;
+    line-height: 100%;
+    color: #fff;
+    background-color: #b3b3b3;
+    cursor: pointer;
+    font-size: 14px;
+}
+#tabBuy{
+    background-color: #0055ba;
+}
+.gb_srv{
+    top: -10px;
+    right: 66px;
+    border-color: transparent;
+    border-style: dashed dashed solid;
+    border-width: 0 8.5px 8.5px;
+    position: absolute;
+    left: 45px;
+    z-index: 1;
+    height: 0;
+    width: 0;
+    -webkit-animation: gb__a .2s;
+    animation: gb__a .2s;
+    border-bottom-color: rgba(0,0,0,.2);
+    top: 27px;
+}
+#account {
+    top: -7px;
+    position: relative;
+}
+.glyphicon-triangle-bottom:before {
+    content: "\e252";
+}
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: "Glyphicons Halflings";
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+#divArrowBottomDown {
+    margin-top: 0;
+    text-align: center;
+    cursor: pointer;
+    
+}
+#divArrowBottomUp{
+    margin-top: 0;
+    height: 25px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    
+}
+.glyphicon-triangle-top:before {
+    content: "\e253";
+}
+#spanArrowDown{
+    font-size: 45px;
+    color: #b3b3b3;
+    margin-top: -10px;
+}
+.icon-spnTitlePanelBottom{
+    font-size: 45px !important;
+    color: #b3b3b3;
 }

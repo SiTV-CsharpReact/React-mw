@@ -115,6 +115,7 @@ const Header = () => {
   };
   const handleCloseLanguage1 = () => {
     setAnchorEl1(null);
+    
   };
   const handleCloseLanguage2 = () => {
     setAnchorEl2(null);
@@ -125,7 +126,7 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
-
+  
   const handleClose = () => {
     setOpen(false);
   };
@@ -323,9 +324,15 @@ const Header = () => {
               onClick={handleClick2}
             >
               <div className="text-11pt text-[#2371af]">058C044534</div>
+              <div id="selectSrvdiv" className="gb_srv " style={{ display: anchorEl2 ? "block" : "none" }}></div>
+
+          
               <ArrowDropDownIcon sx={{ color: "#2371af" }} />
+              
             </IconButton>
+            
           </Tooltip>
+          
           <Menu
             id="basic-menu2"
             anchorEl={anchorEl2}
@@ -336,6 +343,7 @@ const Header = () => {
             }}
             sx={{}}
           >
+          
             <Box sx={{ display: "flex", padding: "8px" }}>
               <img
                 width={100}
@@ -343,7 +351,9 @@ const Header = () => {
                 src="https://eztrade.fpts.com.vn/Content/images/avatar_ano.png"
                 alt=""
               />
+              
               <Box>
+                
                 <Typography paddingTop={2}>Nguyễn Xuân Hiệp</Typography>
                 <button className="bg-[#339cdf] btnTTTK">
                   Thông tin chủ tài khoản
@@ -376,6 +386,7 @@ const Header = () => {
                 <a className="pl-4 pt-3 hover:text-[#034e95] size-li	" href="#">
                   Thoát
                 </a>
+                
               </div>
             </Box>
           </Menu>
