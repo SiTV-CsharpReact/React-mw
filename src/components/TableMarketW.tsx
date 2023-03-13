@@ -133,7 +133,7 @@ const TableMarketW = () => {
                   <div className="ms-sel-ctn">
                     <input
                       type="text"
-                      className="form-control ui-autocomplete-input size-li p-[2px] w-[100%] mr-[14px] rounded-md
+                      className="form-control ui-autocomplete-input size-li p-[2px] w-[100%] mr-[14px] rounded-md pl-[6px]
                       p-[1px]
                        tttt
 

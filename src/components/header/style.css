@@ -76,18 +76,27 @@
 }
  #btnUpQty{
     transform: rotate(-90deg);
-    top: -12px;
+    top: -10px;
     right: -3px;
     font-size: 20px;
 }
 #btnDownQty{
     transform: rotate(-90deg);
-    top: 0px;
+    top: 4px;
     right: 4px;
     font-size: 20px;
 }
 
-.ms-sel-ctn>input[type=text]:focus {
+input[type=text], txtSymbol {
+    outline: none;
+    
+    border: 1px solid #DDDDDD;
+  }
+  input[type=text]:focus, txtSymbol:focus {
+    box-shadow:0 0 5px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1);
+  }
+/* .ms-sel-ctn>input[type=text]:focus {
     border: 2px solid #0055ba;
     outline:none;
     -webkit-transition: 0.5s;
@@ -98,19 +107,19 @@
     outline:none;
     -webkit-transition: 0.5s;
     transition: 0.5s;
-}
+} */
 .container-spinner {
     position: relative;
 }
 #btnUpPrice{
     transform: rotate(-90deg);
-    top: -12px;
-    right: -2px;
+    top: -10px;
+    right: -3px;
     font-size: 20px;
 }
 #btnDownPrice{
     transform: rotate(-90deg);
-    top: 0px;
+    top: 4px;
     right: 4px;
     font-size: 20px;
 }
@@ -138,10 +147,8 @@
     border: 1px solid #2491eb;
 }
 .btnBuyGui{
-    padding-right: 20px;
-    padding-top: 3px;
+    padding: 6px 20px 3px;
     padding-bottom: 2px;
-    padding-left: 20px;
     margin-top: 6px;
     width: 100px;
 }
@@ -154,6 +161,6 @@
     margin-right: -8px;
     margin-top: 8px;
     padding-bottom: 2px;
-    padding-top: 2px;
+    padding-top: 5px;
     width: 90px;
 }
