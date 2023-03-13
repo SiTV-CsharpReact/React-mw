@@ -42,7 +42,9 @@ module.exports = {
         'hvListMarketWatch':'#f5f5f5',
         'borderListMenu': '#e9e9e9;',
          'colorTextLogo':'#034E95',
-         'spnTitlePanelBottom':'#2371af'
+         'spnTitlePanelBottom':'#2371af',
+
+         'iconShowOrder':'#b3b3b3'
          
       },
       fontSize: {

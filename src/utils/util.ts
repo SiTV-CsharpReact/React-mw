@@ -73,3 +73,34 @@ export const setColorMarket =(tc:number,price:number,tran:number,san:number) =>{
     }
     return Color;
 }
+export const setColorMenuMarket =(value?:string)=>{
+   
+    let Color ="text-yellow";
+    if(value){
+       
+       if(value.includes("-")){
+        Color= "text-red";
+       }
+       else if(value === "0"){
+        Color= "text-yellow";
+       }
+       else{
+        Color= "text-green";
+       }}
+   return Color
+}
+export const iconColorMenuMarket =(value?:string)=> {
+    let icon ="arrowUp";
+    if(value){
+       
+       if(value.includes("-")){
+        icon ="arrowDown"
+       }
+       else if(value === "0"){
+        icon= "square";
+       }
+       else{
+        icon ="arrowUp"
+       }}
+   return icon
+}

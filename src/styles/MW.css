@@ -1,3 +1,43 @@
 .tableMW tr td:hover{
    background-color: #444444;
 }
+
+/* 'red': '#FF0000',
+'green':'#00FF00',
+'blue':"#66CCFF",
+'violet':'#FF00FF',
+'yellow': '#F7FF31', */
+.text-red{
+  color:#FF0000
+}
+.text-white{
+   color:#fff
+}
+.text-blue{
+   color:#66CCFF
+}
+.text-violet{
+   color:#FF00FF
+}
+.text-green{
+   color:#00FF00
+}
+.text-yellow{
+   color:#F7FF31
+}
+.bg-tdHover{
+   background-color: #797979;
+}
+.arrowUp, .arrowDown, .square {
+   background-image: url(../../public/Arrow.png);
+   background-repeat: no-repeat;
+   display: inline-block;
+   width: 12px;
+   height: 12px;
+}
+.arrowDown {
+   background-position: -43px -1px;
+}
+.arrowUp {
+   background-position: -6px -2px;
+}

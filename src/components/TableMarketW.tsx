@@ -1,7 +1,9 @@
 import { useState } from "react";
 import "flowbite";
 import React from "react";
-
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { fontSize } from "@mui/system";
 
 const TableMarketW = () => {
   const [counter, setCounter] = useState(0);
@@ -46,7 +48,7 @@ const TableMarketW = () => {
         <div className=""></div>
 
       <div onClick={ handleClick2} id="divArrowBottomDown" style={{ display: !anchorEl2 ? "block" : "none" }}>
-      <svg  id="spanArrowDown"  className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root spanArrowDown" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropDownIcon"><path d="m7 10 5 5 5-5z"></path></svg>
+     < ArrowDropDownIcon className=" text-iconShowOrder" sx={{fontSize:45}}/>
         </div>
         
         <div style={{ display: !anchorEl2 ? "block" : "none" }}>
@@ -320,7 +322,7 @@ const TableMarketW = () => {
       </div>
       <div  onClick={handleCloseLanguage2} id="divArrowBottomUp" style={{ display: anchorEl2 ? "block" : "none" }}>
             <span id="spnTitlePanelBottom" className="text-spnTitlePanelBottom cursor-pointer	text-xl font-normal	">ĐẶT LỆNH</span>
-            <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root icon-spnTitlePanelBottom " focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropUpIcon"><path d="m7 14 5-5 5 5z"></path></svg>
+            <ArrowDropUpIcon className="text-5xl text-iconShowOrder" sx={{fontSize:45}}/>
         </div>
     </div>
     

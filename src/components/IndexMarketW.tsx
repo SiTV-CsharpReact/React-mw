@@ -16,6 +16,9 @@ import * as signalR from "@aspnet/signalr";
 import { io } from "socket.io-client";
 
 const IndexMarketW = () => {
+  const arrTCTranSan = []
+  const arrayPrice =[5,7,9,11,14,16,18]
+  const arrayKL =[6,8,10,12,15,17,19]
   const cellRefs = useRef([]);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState("{}");
@@ -104,15 +107,67 @@ const IndexMarketW = () => {
     if(arrRowID){
       if(dataHNX.Info.length>1){
         dataHNX.Info.map((dataInfo:any)=>(
-          console.log(dataInfo)
+          updateDataTable(arrRowID,dataInfo[0],dataInfo[1])
         ))
       }
       else{
         const tdIndex = document.getElementById(`${arrRowID}_${arrInfo[0][0]}`);
+        var valueTC= document.getElementById(`${arrRowID}_TC`)?.innerHTML;
+        
+        var valueTran= document.getElementById(`${arrRowID}_Tran`)?.innerHTML;
+      
+        var valueSan= document.getElementById(`${arrRowID}_San`)?.innerHTML;
         console.log(tdIndex)
         if (tdIndex)  {
           tdIndex.innerHTML = `${formatNumberMarket(arrInfo[0][1])}`
-          tdIndex.style.backgroundColor =`#444444` }
+          
+          //tdIndex.classList.add("bg-tdHover")
+          tdIndex.style.backgroundColor ="#888888"
+          setTimeout(function() {
+            tdIndex.style.backgroundColor =""
+          }, 500);
+             
+          const indexPrice = arrayPrice.indexOf(arrInfo[0][0])
+          if(indexPrice !== -1)
+          {
+          if(valueTC && valueTran && valueSan)
+          {
+            if(arrInfo[0][0] === 11){
+              const PT =  tinhGiaTC(Number(valueTC),arrInfo[0][1])
+              const textColor=  colorTextTD(valueTC,valueTran,valueSan,arrInfo[0][1])
+              tdIndex.innerHTML = `${formatNumberMarket(PT)}`
+              tdIndex.classList.add(textColor)
+              document.getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)?.classList.add(textColor)
+            }
+            else{
+              const textColor=  colorTextTD(valueTC,valueTran,valueSan,arrInfo[0][1])
+              tdIndex.classList.add(textColor)
+              document.getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)?.classList.add(textColor)
+            }
+        
+          }
+        
+
+         /* Changing the background color of the tdIndex to #797979 and then after 500 milliseconds it
+         changes it back to #1D1D1D. */
+          // tdIndex.style.backgroundColor ="#797979"
+     
+          // setTimeout(function() {
+          //   tdIndex.style.backgroundColor ="#1D1D1D"
+          // }, 500);
+        }
+     
+      
+        //  setTimeout(function() {
+        //   document.getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)?.classList.add("bg-tdHover")
+        //   tdIndex?.classList.add("bg-tdHover")
+        // }, 500);
+        }
+        // arrayPrice.map((indexPrice)=>(  
+        //   compareValue(`${arrRowID}_${indexPrice}`,`${arrRowID}_${arrInfo[0][0]}`,`${arrInfo[0][1]}`,valueTC)
+        // ))
+        
+
       }
     }
     else{
@@ -120,6 +175,54 @@ const IndexMarketW = () => {
     }
    }
   }
+  const colorTextTD = (tc?:string,tran?:string,san?:string,price?:number)=>{
+    let Color ="text-white";
+    // if(price=== san){
+    //     Color="text-blue"
+    // }
+    if(price){
+      if(price===0){
+        Color="text-white"
+    }
+    else if(price=== Number(san)){
+        Color="text-blue"
+    }
+    else if(price === Number(tran)){
+        Color="text-violet"
+    }
+    else if(price === Number(tc)){
+        Color="text-yellow"
+    }
+    else if(price > Number(tc)){
+        Color="text-green"
+    }
+    else if(price<Number(tc) && Number(san)  )
+    {
+        Color="text-red"
+    }
+    }
+   
+    return Color;
+  }
+
+  // const compareValue = (indexPrice:string,tdIndex:string,tdValue:string,valueTC:string) =>{
+  //    if(indexPrice === tdIndex){
+  //     const tdIndex = document.getElementById(indexPrice);
+  //     if (tdIndex)  {
+  //       tdIndex.innerHTML = `${formatNumberMarket(tdValue)}`
+  //        if(tdValue === valueTC){
+  //        tdIndex.classList.add("text-yellow")
+  //        }
+  //        else if(tdValue <valueTC){
+  //         tdIndex.classList.add("text-red") 
+  //        }
+  //        else{
+  //         tdIndex.classList.add("text-red") 
+  //        }
+  //     }
+      
+  //    }
+  // }
   const updateDataTable= (arrRowID?:string,arrInfo?:number,arrValue?:number) =>{
    
     const td = document.getElementById(`${arrRowID}_${arrInfo}`);
@@ -194,6 +297,7 @@ const IndexMarketW = () => {
       {/* TTham chiếu */}
       <td
         data-sort={dataTable.Info[13][1]}
+        id={`${dataTable.RowID}_TC`}
         className="border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right bg-BGTableHoverMarket text-textTableMarketTC"
       >
         {formatNumber(dataTable.Info[13][1])}
@@ -201,6 +305,7 @@ const IndexMarketW = () => {
       {/* Trần */}
       <td
         data-sort={dataTable.Info[15][1]}
+        id={`${dataTable.RowID}_Tran`}
         className="border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right bg-BGTableHoverMarket text-textTableMarketTran"
       >
         {formatNumber(dataTable.Info[15][1])}
@@ -208,6 +313,7 @@ const IndexMarketW = () => {
       {/* Sàn */}
       <td
         data-sort={dataTable.Info[14][1]}
+        id={`${dataTable.RowID}_San`}
         className="border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right bg-BGTableHoverMarket text-textTableMarketSan"
       >
         {formatNumber(dataTable.Info[14][1])}
@@ -241,7 +347,7 @@ const IndexMarketW = () => {
       {/* G2 */}
       <td
         data-sort={dataTable.Info[4][1]}
-        id={`${dataTable.RowID}${dataTable.Info[4][0]}`}
+        id={`${dataTable.RowID}_${dataTable.Info[4][0]}`}
         className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right ${setColorMarket(
           dataTable.Info[13][1],
           dataTable.Info[4][1],
