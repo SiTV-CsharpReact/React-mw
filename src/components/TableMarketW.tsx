@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "flowbite";
 
 const TableMarketW = () => {
   const [counter, setCounter] = useState(0);
@@ -28,21 +29,23 @@ const TableMarketW = () => {
     <div>
       <div className=" flex justify-end mr-[70px]">
         <div className="group  py-1 px-2  ">
-          <span className=" text-sm hover-text-blue "> Lệnh chờ khớp</span>
+          <span className=" text-sm hover-text-blue-L "> Lệnh chờ khớp</span>
         </div>
         <div className="group  py-1 px-2  ">
-          <span className=" text-sm hover-text-blue ">
+          <span className=" text-sm hover-text-blue-L ">
             KQ khớp lệnh trong phiên
           </span>
         </div>
         <div className="group  py-1 px-2  ">
-          <span className=" text-sm hover-text-blue ">Lệnh trong ngày</span>
+          <span className=" text-sm hover-text-blue-L ">Lệnh trong ngày</span>
         </div>
       </div>
       <div className="flex BGTB">
         <div className="bottom__sdTien mr-[2%]  mt-[20px] SDTM ">
           <div className="bottom__sdTien__title bg-[#b3b3b3] h-[25px] ">
-            <span className="pl-[9px] pr-[9px] text-[#0055ba] uppercase">Số dư tiền</span>
+            <span className="pl-[9px] pr-[9px] text-[#0055ba] uppercase">
+              Số dư tiền
+            </span>
             <i
               title="Cập nhật số dư tiền"
               className="glyphicon glyphicon-refresh"
@@ -69,19 +72,19 @@ const TableMarketW = () => {
             <span className="font-semibold">-2,200,000</span>
           </div>
         </div>
-        <div className="bottom-left pt-2 pb-2 pl-6 pr-6 mr-[-30px] w-[700px] bg-[#dfeeff] mt-[20px] mb-[30px]  MBR">
+        <div className="bottom-left pt-2 p-[20px] mr-[-30px] w-[48%] bg-[#dfeeff] mt-[20px] mb-[30px]  MBR">
           <div className="flex justify-between ">
             <div className="btnSwitchBS">
               <div className="group-buysell flex">
                 <div
                   id="tabBuy"
-                  className="tabBuy active bg-[#0055ba] cursor-default border-black px-2.5 py-1.5 text-[#fff] text-sm"
+                  className="tabBuy active bg-[#0055ba]  border-black px-2.5 py-1.5 text-[#fff] text-sm cursor-pointer"
                 >
                   MUA
                 </div>
                 <div
                   id="tabSell"
-                  className="tabSell normal-case px-2.5 py-1.5 bg-[#b3b3b3] text-[#fff] text-sm"
+                  className="tabSell normal-case px-2.5 py-1.5 bg-[#b3b3b3] text-[#fff] text-sm cursor-pointer"
                 >
                   BÁN
                 </div>
@@ -90,17 +93,17 @@ const TableMarketW = () => {
             <div className="flex justify-center">
               <div>
                 <label
-                  className="inline-block pl-[0.15rem] hover:cursor-pointer mr-[10px] text-sm "
+                  className="inline-block pl-[0.15rem] hover:cursor-pointer  mr-[10px] text-sm "
                   htmlFor="flexSwitchCheckDefault"
                 >
                   Ghi lệnh chờ gửi:
                 </label>
               </div>
-              <input
-                className="mt-[0.3rem] mr-2 h-3.5 w-8 appearance-none rounded-[0.4375rem] bg-[rgba(0,0,0,0.25)] outline-none before:pointer-events-none before:absolute before:h-3.5 before:w-3.5 before:rounded-full before:bg-transparent before:content-[''] after:absolute after:z-[2] after:-mt-[0.1875rem] after:h-5 after:w-5 after:rounded-full after:border-none after:bg-white after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] checked:bg-primary checked:after:absolute checked:after:z-[2] checked:after:-mt-[3px] checked:after:ml-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border-none checked:after:bg-primary checked:after:shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-[''] hover:cursor-pointer focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[3px_-1px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:border-primary checked:focus:bg-primary checked:focus:before:ml-[1.0625rem] checked:focus:before:scale-100 checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]"
-                type="checkbox"
-                id="flexSwitchCheckDefault"
-              />
+
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" value="" className="sr-only peer" />
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              </label>
             </div>
           </div>
           <div className="flex">
@@ -130,9 +133,9 @@ const TableMarketW = () => {
                   <div className="ms-sel-ctn">
                     <input
                       type="text"
-                      className="form-control ui-autocomplete-input w-[110px] rounded-md
-
-                      p-[2px] tttt
+                      className="form-control ui-autocomplete-input size-li p-[2px] w-[100%] mr-[14px] rounded-md pl-[6px]
+                      p-[1px]
+                       tttt
 
                       "
                       placeholder="Mã CK"
@@ -153,18 +156,15 @@ const TableMarketW = () => {
               <div className="container-spinner fix-margin ">
                 <input
                   type="text"
-                  className="form-control OrderFormQuantity  text-right w-[130px] pr-[25px] rounded-md
+                  className="form-control OrderFormQuantity  size-li p-[2px] text-right w-[100%] p-[1px] pr-[25px] rounded-md
 
-                  p-[2px] tttt 
+                  tttt 
 
                   "
                   placeholder="Khối lượng"
                   role="presentation"
                 />
-                <div
-                  className="spinner  right-[3px]"
-                  id="spinnerQuantity"
-                >
+                <div className="spinner  right-[3px]" id="spinnerQuantity">
                   <button
                     type="button"
                     id="btnUpQty"
@@ -232,17 +232,14 @@ const TableMarketW = () => {
                   <div className="ms-sel-ctn">
                     <input
                       type="text"
-                      className="form-control ui-autocomplete-input w-[140px] rounded-md p-[2px] tttt pl-[9px] "
+                      className="form-control ui-autocomplete-input size-li p-[2px] w-[100%] rounded-md p-[1px] tttt pl-[9px] "
                       placeholder="Giá"
                       id="txtPrice"
                     />
                   </div>
                 </div>
                 <div id="divAutoPrice"></div>
-                <div
-                  className="spinner right-[3px]  "
-                  id="spinnerPrice "
-                >
+                <div className="spinner right-[3px]  " id="spinnerPrice ">
                   <button
                     type="button"
                     id="btnUpPrice"
@@ -272,7 +269,7 @@ const TableMarketW = () => {
               />
               <button
                 id="btnBuySend"
-                className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] rounded-lg pl-10 pr-10 pb-[5px] mt-[5px] ml-[15px] text-white"
+                className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] ml-[10px]  size-li rounded-md text-white"
               >
                 Gửi
               </button>
@@ -281,16 +278,13 @@ const TableMarketW = () => {
             </div>
             <div className="divReset">
               <div className="h-[14px]"></div>
-              <button
-                id="btnReset"
-                className="btn btnBuyGui btnSaveTemplate bg-white rounded-lg pl-2 pr-2 mt-[7px] pb-[6px] ml-[15px] pd-[5px] flex justify-between tttt"
-              >
+
+              <button className="refresh" id="btnReset">
                 <img
-                  className="w-[15px] mt-[9px] mr-[10px]"
+                  className="mt-[4px] mr-[7px] ml-[2px] ml-[10px]"
                   src="http://priceboard3.fpts.com.vn/images/EzFuture-05.png"
-                  alt=""
                 />
-                <span className="mt-[3px] text-sm">Làm lại</span>
+                <span className="size-li">Làm lại</span>
               </button>
             </div>
           </div>

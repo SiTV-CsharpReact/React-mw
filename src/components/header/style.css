@@ -1,4 +1,4 @@
-.list_menu:after {
+.border-bottom-menu:after {
     content: "";
     height: 1px;
     background-color: #dadadc;
@@ -7,7 +7,7 @@
     bottom: 0;
     position: absolute;
 }
-.list_menu:before{
+.border-bottom-menu:before{
         content: "";
         width: 0;
         height: 0;
@@ -15,11 +15,11 @@
         border-bottom-color: #054d95;
         position: absolute;
         left: -11px;
-        top: -2px;
+        top: -3px;
         -webkit-transform: rotate(20deg);
         transform: rotate(-45deg);  
 }
-.list_menu1:after {
+.border-bottom-menu1:after {
     content: "";
     height: 1px;
     background-color: #dadadc;
@@ -28,8 +28,8 @@
     bottom: 0;
     position: absolute;
 }
-.list_menu1:before{
-        content: "";
+.border-bottom-menu1:before{
+    content: "";
         width: 0;
         height: 0;
         border: 11px solid transparent;
@@ -76,35 +76,56 @@
 }
  #btnUpQty{
     transform: rotate(-90deg);
-    top: -14px;
-    right: -1px;
-    font-size: 25px;
+    top: -10px;
+    right: -3px;
+    font-size: 20px;
 }
 #btnDownQty{
     transform: rotate(-90deg);
-    top: 1px;
-    right: 7px;
-    font-size: 25px;
-
+    top: 4px;
+    right: 4px;
+    font-size: 20px;
 }
+
+input[type=text], txtSymbol {
+    outline: none;
+    
+    border: 1px solid #DDDDDD;
+  }
+  input[type=text]:focus, txtSymbol:focus {
+    box-shadow:0 0 5px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1);
+  }
+/* .ms-sel-ctn>input[type=text]:focus {
+    border: 2px solid #0055ba;
+    outline:none;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+}
+.container-spinner>input[type=text]:focus {
+    border: 2px solid #0055ba;
+    outline:none;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+} */
 .container-spinner {
     position: relative;
 }
 #btnUpPrice{
     transform: rotate(-90deg);
-    top: -14px;
-    right: -1px;
-    font-size: 25px;
+    top: -10px;
+    right: -3px;
+    font-size: 20px;
 }
 #btnDownPrice{
     transform: rotate(-90deg);
-    top: 1px;
-    right: 7px;
-    font-size: 25px;
+    top: 4px;
+    right: 4px;
+    font-size: 20px;
 }
 .spinner {
     right: 3px;
-    top: 3px;
+    top: 2px;
     width: 1.3rem;
     position: absolute;
     background: #fff;
@@ -113,4 +134,33 @@
     height: 24px;
     display:block;
 }
-
+.size{
+    font-size: 14px;
+    text-transform: uppercase
+}
+.size-li{
+    font-size: 14px;
+}
+.tabBuy{
+    background-color: #0055ba;
+    cursor: default;
+    border: 1px solid #2491eb;
+}
+.btnBuyGui{
+    padding: 6px 20px 3px;
+    padding-bottom: 2px;
+    margin-top: 6px;
+    width: 100px;
+}
+#btnReset {
+    background-color: #fff;
+    border: 1px solid #ccc!important;
+    border-radius: 5px;
+    display: flex;
+    margin-left: 10px;
+    margin-right: -8px;
+    margin-top: 8px;
+    padding-bottom: 2px;
+    padding-top: 5px;
+    width: 90px;
+}

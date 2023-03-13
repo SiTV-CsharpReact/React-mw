@@ -138,7 +138,7 @@ const Header = () => {
     <Box
       sx={{
         // bgcolor: theme.palette.mode === "dark" ? "#000" : "#fff",
-        padding: "0px 18px 0px 15px",
+        padding: "0px 10px",
         display: "flex",
         zIndex: 100,
         width: "100%",
@@ -159,9 +159,8 @@ const Header = () => {
           <span className="  uppercase text-sm">
             <a href="/">
               <img
-                
                 className="mt-[6px] w-[18px]"
-                src="https://eztrade.fpts.com.vn/images/headerEzAcc/exchange1.png"
+                src="http://priceboard3.fpts.com.vn/images/headerEzAcc/exchange1.png"
                 alt="Giao dịch chứng khoán phát sinh"
               />
             </a>
@@ -177,7 +176,12 @@ const Header = () => {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              <img className="pt-[3px]" width={20} src="https://eztrade.fpts.com.vn/images/menu.png" alt="" />
+              <img
+                className="pt-[3px]"
+                width={20}
+                src="http://priceboard3.fpts.com.vn/images/menu.png"
+                alt=""
+              />
             </IconButton>
           </Tooltip>
           <Menu
@@ -192,63 +196,72 @@ const Header = () => {
             <Box sx={{ display: "flex" }}>
               <Box>
                 <div className="grid">
-                  <a className="list_menu1 p-3 listmenu-item text-xs	" href="">
+                  <a
+                    className="border-bottom-menu1 p-3 listmenu-item size-li	"
+                    href=""
+                  >
                     Giao dịch CK cơ sở
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="">
+                  <a className="p-3 listmenu-item size-li	" href="">
                     Giao dịch CK phát sinh
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="">
+                  <a className="p-3 listmenu-item size-li	" href="">
                     Đặt lệnh điều kiện
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="">
+                  <a className="p-3 listmenu-item size-li	" href="">
                     Thực hiện quyền
                   </a>
-                  <a className="pl-4 pt-3 hover:text-[#034e95] text-xs	" href="">
+                  <a className="pl-4 pt-3 hover:text-[#034e95] size-li	" href="">
                     Lưu ký chứng khoán
                   </a>
                 </div>
               </Box>
               <Box>
                 <div className="grid">
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Ứng trước cổ tức
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Cầm cố chứng khoán
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Quản lí hợp đồng quỹ
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Quản lí tài sản
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Tra cứu phí lưu ký
                   </a>
-                  <a className="pl-4 pt-3 hover:text-[#034e95] text-xs	 " href="#">
+                  <a
+                    className="pl-4 pt-3 hover:text-[#034e95] size-li	 "
+                    href="#"
+                  >
                     Tra cứu chính quyền
                   </a>
                 </div>
               </Box>
               <Box>
                 <div className="grid">
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Chuyền tiền ngân hàng
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Chuyền tiền quỹ CKPS
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Bảng giá chứng khoán
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Bảng giá HNXPro
                   </a>
-                  <a className="p-3 listmenu-item text-xs	" href="#">
+                  <a className="p-3 listmenu-item size-li	" href="#">
                     Biểu đồ kĩ thuật
                   </a>
-                  <a className="pl-4 pt-3 hover:text-[#034e95] text-xs	" href="#">
+                  <a
+                    className="pl-4 pt-3 hover:text-[#034e95] size-li	"
+                    href="#"
+                  >
                     Thông tin doanh nghiệp
                   </a>
                 </div>
@@ -265,9 +278,8 @@ const Header = () => {
               aria-haspopup="true"
               aria-expanded={open1 ? "true" : undefined}
               onClick={handleClick1}
-              
             >
-              <NotificationsIcon sx={{ color: "#2371af",width:"22"}} />
+              <NotificationsIcon sx={{ color: "#0861a9", width: "22" }} />
             </IconButton>
           </Tooltip>
           <Menu
@@ -279,7 +291,7 @@ const Header = () => {
               "aria-labelledby": "basic-button",
             }}
           >
-            <Box sx={{ display: "flex"}}>
+            <Box sx={{ display: "flex" }}>
               <Box>
                 <Typography padding={1}>Thông báo</Typography>
               </Box>
@@ -287,14 +299,14 @@ const Header = () => {
                 <Typography padding={1}>
                   <div className="flex justify-center">
                     <p className="mr-[20px]">Bật tắt thông báo</p>
-                    <div>
+                    <label className="relative inline-flex items-center cursor-pointer">
                       <input
-                        className="mt-[0.3rem] mr-2 h-3.5 w-8 appearance-none rounded-[0.4375rem] bg-[rgba(0,0,0,0.25)] outline-none before:pointer-events-none before:absolute before:h-3.5 before:w-3.5 before:rounded-full before:bg-transparent before:content-[''] after:absolute after:z-[2] after:-mt-[0.1875rem] after:h-5 after:w-5 after:rounded-full after:border-none after:bg-white after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] checked:bg-primary checked:after:absolute checked:after:z-[2] checked:after:-mt-[3px] checked:after:ml-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border-none checked:after:bg-primary checked:after:shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-[''] hover:cursor-pointer focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[3px_-1px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:border-primary checked:focus:bg-primary checked:focus:before:ml-[1.0625rem] checked:focus:before:scale-100 checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]"
                         type="checkbox"
-                        role="switch"
-                        id="flexSwitchCheckDefault"
+                        value=""
+                        className="sr-only peer"
                       />
-                    </div>
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                    </label>
                   </div>
                 </Typography>
               </Box>
@@ -310,7 +322,7 @@ const Header = () => {
               aria-expanded={open2 ? "true" : undefined}
               onClick={handleClick2}
             >
-             <div className="text-11pt text-colorTextLogo">058C044534</div>
+              <div className="text-11pt text-[#2371af]">058C044534</div>
               <ArrowDropDownIcon sx={{ color: "#2371af" }} />
             </IconButton>
           </Tooltip>
@@ -340,28 +352,28 @@ const Header = () => {
             </Box>
             <Box>
               <div className="grid">
-                <a className="p-3 listmenu-item text-xs	" href="#">
+                <a className="p-3 listmenu-item size-li	" href="#">
                   Chuyên Viên Quản lý tài khoản
                 </a>
-                <a className="p-3 listmenu-item text-xs	" href="#">
+                <a className="p-3 listmenu-item size-li	" href="#">
                   Thay đổi mật khẩu
                 </a>
-                <a className="p-3 listmenu-item text-xs	" href="#">
+                <a className="p-3 listmenu-item size-li	" href="#">
                   Quản trị Token
                 </a>
-                <a className="p-3 listmenu-item text-xs	" href="#">
+                <a className="p-3 listmenu-item size-li	" href="#">
                   Hoạt động gần đây
                 </a>
-                <a className="p-3 listmenu-item text-xs	" href="#">
+                <a className="p-3 listmenu-item size-li	" href="#">
                   Cài đặt mặt khẩu giao dịch
                 </a>
-                <a className="p-3 listmenu-item text-xs	" href="#">
+                <a className="p-3 listmenu-item size-li	" href="#">
                   Hướng dẫn xóa cache
                 </a>
-                <a className="p-3 listmenu-item text-xs	" href="#">
+                <a className="p-3 listmenu-item size-li	" href="#">
                   Hỗ trợ ngôn ngữ
                 </a>
-                <a className="pl-4 pt-3 hover:text-[#034e95] text-xs	" href="#">
+                <a className="pl-4 pt-3 hover:text-[#034e95] size-li	" href="#">
                   Thoát
                 </a>
               </div>

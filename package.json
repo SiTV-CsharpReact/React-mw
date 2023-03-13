@@ -20,6 +20,7 @@
     "aspnet-signalr-reactjs": "^1.3.0",
     "autoprefixer": "^10.4.13",
     "axios": "^1.3.4",
+    "flowbite": "^1.6.4",
     "i18next": "^22.4.10",
     "i18next-browser-languagedetector": "^7.0.1",
     "postcss": "^8.4.21",
