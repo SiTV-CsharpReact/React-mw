@@ -74,10 +74,7 @@ const listMenu = () => {
         </ul>
       </div>
       <div className="group inline-block py-2 px-2 border-r border-borderListMenu">
-        <span className="  uppercase  size  hover-text-blue">
-          {" "}
-          GD đặc biệt
-        </span>
+        <span className="  uppercase  size  hover-text-blue"> GD đặc biệt</span>
         <ul className="absolute hidden text-gray-700 pt-2 boxShadow group-hover:block">
           <li>
             <a className="rounded-t listmenu-item size-li " href="#">
@@ -107,10 +104,7 @@ const listMenu = () => {
         </ul>
       </div>
       <div className="group inline-block py-2  px-2 border-r border-borderListMenu">
-        <span className="  uppercase size hover-text-blue">
-          {" "}
-          Quản lý tk{" "}
-        </span>
+        <span className="  uppercase size hover-text-blue"> Quản lý tk </span>
         <ul className="absolute hidden text-gray-700 pt-2 group-hover:block">
           <li className="border-bottom-menu">
             <a className=" listmenu-item  size-li" href="#">
@@ -197,9 +191,7 @@ const listMenu = () => {
         </ul>
       </div>
       <div className="group inline-block py-2  px-2 border-r border-borderListMenu">
-        <span className="  uppercase  size hover-text-blue">
-          Tư vấn đầu tư
-        </span>
+        <span className="  uppercase  size hover-text-blue">Tư vấn đầu tư</span>
         <ul className="absolute hidden text-gray-700 pt-2 group-hover:block"></ul>
       </div>
       <div className="group inline-block py-2  px-2">

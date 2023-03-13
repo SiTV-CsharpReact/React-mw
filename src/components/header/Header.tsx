@@ -159,9 +159,8 @@ const Header = () => {
           <span className="  uppercase text-sm">
             <a href="/">
               <img
-                
                 className="mt-[6px] w-[18px]"
-                src="https://eztrade.fpts.com.vn/images/headerEzAcc/exchange1.png"
+                src="http://priceboard3.fpts.com.vn/images/headerEzAcc/exchange1.png"
                 alt="Giao dịch chứng khoán phát sinh"
               />
             </a>
@@ -177,7 +176,12 @@ const Header = () => {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              <img className="pt-[3px]" width={20} src="https://eztrade.fpts.com.vn/images/menu.png" alt="" />
+              <img
+                className="pt-[3px]"
+                width={20}
+                src="http://priceboard3.fpts.com.vn/images/menu.png"
+                alt=""
+              />
             </IconButton>
           </Tooltip>
           <Menu
@@ -192,7 +196,10 @@ const Header = () => {
             <Box sx={{ display: "flex" }}>
               <Box>
                 <div className="grid">
-                  <a className="border-bottom-menu1 p-3 listmenu-item size-li	" href="">
+                  <a
+                    className="border-bottom-menu1 p-3 listmenu-item size-li	"
+                    href=""
+                  >
                     Giao dịch CK cơ sở
                   </a>
                   <a className="p-3 listmenu-item size-li	" href="">
@@ -226,7 +233,10 @@ const Header = () => {
                   <a className="p-3 listmenu-item size-li	" href="#">
                     Tra cứu phí lưu ký
                   </a>
-                  <a className="pl-4 pt-3 hover:text-[#034e95] size-li	 " href="#">
+                  <a
+                    className="pl-4 pt-3 hover:text-[#034e95] size-li	 "
+                    href="#"
+                  >
                     Tra cứu chính quyền
                   </a>
                 </div>
@@ -248,7 +258,10 @@ const Header = () => {
                   <a className="p-3 listmenu-item size-li	" href="#">
                     Biểu đồ kĩ thuật
                   </a>
-                  <a className="pl-4 pt-3 hover:text-[#034e95] size-li	" href="#">
+                  <a
+                    className="pl-4 pt-3 hover:text-[#034e95] size-li	"
+                    href="#"
+                  >
                     Thông tin doanh nghiệp
                   </a>
                 </div>
@@ -265,9 +278,8 @@ const Header = () => {
               aria-haspopup="true"
               aria-expanded={open1 ? "true" : undefined}
               onClick={handleClick1}
-              
             >
-              <NotificationsIcon sx={{ color: "#0861a9",width:"22"}} />
+              <NotificationsIcon sx={{ color: "#0861a9", width: "22" }} />
             </IconButton>
           </Tooltip>
           <Menu
@@ -279,7 +291,7 @@ const Header = () => {
               "aria-labelledby": "basic-button",
             }}
           >
-            <Box sx={{ display: "flex"}}>
+            <Box sx={{ display: "flex" }}>
               <Box>
                 <Typography padding={1}>Thông báo</Typography>
               </Box>
@@ -287,10 +299,14 @@ const Header = () => {
                 <Typography padding={1}>
                   <div className="flex justify-center">
                     <p className="mr-[20px]">Bật tắt thông báo</p>
-                    <label className="switch">
-  <input type="checkbox" checked/>
-  <span className="slider round"></span>
-</label>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        value=""
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                    </label>
                   </div>
                 </Typography>
               </Box>
@@ -306,7 +322,7 @@ const Header = () => {
               aria-expanded={open2 ? "true" : undefined}
               onClick={handleClick2}
             >
-            <div className="text-11pt text-[#2371af]">058C044534</div>
+              <div className="text-11pt text-[#2371af]">058C044534</div>
               <ArrowDropDownIcon sx={{ color: "#2371af" }} />
             </IconButton>
           </Tooltip>

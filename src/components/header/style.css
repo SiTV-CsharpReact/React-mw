@@ -139,22 +139,21 @@
 }
 .btnBuyGui{
     padding-right: 20px;
-    padding-top: 2px;
+    padding-top: 3px;
     padding-bottom: 2px;
     padding-left: 20px;
     margin-top: 6px;
     width: 100px;
 }
 #btnReset {
-    margin-top: 7px;
-    background-color: white;
+    background-color: #fff;
+    border: 1px solid #ccc!important;
+    border-radius: 5px;
+    display: flex;
     margin-left: 10px;
     margin-right: -8px;
-    display: flex;
-    width: 90px;
+    margin-top: 8px;
     padding-bottom: 2px;
-    padding-top: 3px;
-    margin-top: 6px;
-    border-radius: 5px;
-    border: 1px solid #ccc !important;
+    padding-top: 2px;
+    width: 90px;
 }

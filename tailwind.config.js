@@ -1,6 +1,7 @@
 module.exports = {
     content: [
       "./src/**/*.{js,jsx,ts,tsx}",
+      "./node_modules/flowbite/**/*.js"
     ],
     theme: {
       height: {
@@ -56,5 +57,7 @@ module.exports = {
         '11pt':'11pt'
       }
     },
-    plugins: [],
+    plugins: [
+      require('flowbite/plugin')
+    ],
   }
