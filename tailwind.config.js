@@ -41,7 +41,9 @@ module.exports = {
         'bgListMarketWatch':'#404040',
         'hvListMarketWatch':'#f5f5f5',
         'borderListMenu': '#e9e9e9;',
-         'colorTextLogo':'#034E95'
+         'colorTextLogo':'#034E95',
+         'spnTitlePanelBottom':'#2371af'
+         
       },
       fontSize: {
         textHeadTableMarket: '0.675rem',

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "flowbite";
+import React from "react";
+
 
 const TableMarketW = () => {
   const [counter, setCounter] = useState(0);
@@ -24,23 +26,48 @@ const TableMarketW = () => {
       setCounter(counter - 1);
     }
   };
+  const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
 
+  const openPopupLanguage2 = Boolean(anchorEl2);
+  
+  const handleClick2 = (event: React.MouseEvent<HTMLDivElement>) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  const handleCloseLanguage2 = () => {
+    setAnchorEl2(null);
+  };
+  const [open2, setOpen2] = useState(false);
   return (
-    <div>
-      <div className=" flex justify-end mr-[70px]">
-        <div className="group  py-1 px-2  ">
+    <div className="">
+     
+      <div className="flex justify-between">
+        <div className=""></div>
+        <div className=""></div>
+        <div className=""></div>
+
+      <div onClick={ handleClick2} id="divArrowBottomDown" style={{ display: !anchorEl2 ? "block" : "none" }}>
+      <svg  id="spanArrowDown"  className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root spanArrowDown" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropDownIcon"><path d="m7 10 5 5 5-5z"></path></svg>
+        </div>
+        
+        <div style={{ display: !anchorEl2 ? "block" : "none" }}>
+      <div className="panel__bottom__link flex justify-end mr-[40px]">
+        
+        <div className="group   px-2  ">
           <span className=" text-sm hover-text-blue-L "> Lệnh chờ khớp</span>
         </div>
-        <div className="group  py-1 px-2  ">
+        <div className="group   px-2  ">
           <span className=" text-sm hover-text-blue-L ">
             KQ khớp lệnh trong phiên
           </span>
         </div>
-        <div className="group  py-1 px-2  ">
+        <div className="group   px-2  ">
           <span className=" text-sm hover-text-blue-L ">Lệnh trong ngày</span>
         </div>
       </div>
-      <div className="flex BGTB">
+      </div>
+      </div>
+      <div style={{ display: !anchorEl2 ? "block" : "none" }} >
+      <div className="flex BGTB" >
         <div className="bottom__sdTien mr-[2%]  mt-[20px] SDTM ">
           <div className="bottom__sdTien__title bg-[#b3b3b3] h-[25px] ">
             <span className="pl-[9px] pr-[9px] text-[#0055ba] uppercase">
@@ -54,22 +81,22 @@ const TableMarketW = () => {
           </div>
           <div className="bottom__sdTien__title  h-[25px] pl-[9px] pr-[9px]  flex justify-between text-sm	">
             <span className="">Số dư tiền mặt:</span>
-            <span className="font-semibold">-2,200,000</span>
+            <span className="font-medium">-2,200,000</span>
           </div>
           <div className="bottom__sdTien__title  h-[25px] pl-[9px] pr-[9px]  flex justify-between text-sm	">
             <span className="">Tiền ứng trước</span>
 
-            <span className="font-semibold">0</span>
+            <span className="font-medium">0</span>
           </div>
           <div className="bottom__sdTien__title  h-[25px] pl-[9px] pr-[9px]  flex justify-between text-sm	">
             <span className="">Tiền cho FPTS vay</span>
 
-            <span className="tt-t font-semibold">0</span>
+            <span className=" font-medium">0</span>
           </div>
-
+           <div className="tt-t"></div>
           <div className="bottom__sdTien__title  h-[25px] pl-[9px] pr-[9px]  flex justify-between	text-sm	">
             <span className="">Số dư có thể giao dịch:</span>
-            <span className="font-semibold">-2,200,000</span>
+            <span className="font-medium">-2,200,000</span>
           </div>
         </div>
         <div className="bottom-left pt-2 p-[20px] mr-[-30px] w-[48%] bg-[#dfeeff] mt-[20px] mb-[30px]  MBR">
@@ -78,13 +105,13 @@ const TableMarketW = () => {
               <div className="group-buysell flex">
                 <div
                   id="tabBuy"
-                  className="tabBuy active bg-[#0055ba]  border-black px-2.5 py-1.5 text-[#fff] text-sm cursor-pointer"
+                  className="tabBuy active bg-[#0055ba]"
                 >
                   MUA
                 </div>
                 <div
                   id="tabSell"
-                  className="tabSell normal-case px-2.5 py-1.5 bg-[#b3b3b3] text-[#fff] text-sm cursor-pointer"
+                  className="tabSell normal-case "
                 >
                   BÁN
                 </div>
@@ -133,7 +160,7 @@ const TableMarketW = () => {
                   <div className="ms-sel-ctn">
                     <input
                       type="text"
-                      className="form-control ui-autocomplete-input size-li p-[2px] w-[100%] mr-[14px] rounded-md pl-[6px]
+                      className="form-control ui-autocomplete-input size-input p-[2px] w-[100%] mr-[14px] rounded-md pl-[6px]
                       p-[1px]
                        tttt
 
@@ -156,7 +183,7 @@ const TableMarketW = () => {
               <div className="container-spinner fix-margin ">
                 <input
                   type="text"
-                  className="form-control OrderFormQuantity  size-li p-[2px] text-right w-[100%] p-[1px] pr-[25px] rounded-md
+                  className="form-control OrderFormQuantity  size-input p-[2px] text-right w-[100%] p-[1px] pr-[25px] rounded-md
 
                   tttt 
 
@@ -232,7 +259,7 @@ const TableMarketW = () => {
                   <div className="ms-sel-ctn">
                     <input
                       type="text"
-                      className="form-control ui-autocomplete-input size-li p-[2px] w-[100%] rounded-md p-[1px] tttt pl-[9px] "
+                      className="form-control ui-autocomplete-input size-input p-[2px] w-[100%] rounded-md p-[1px] tttt pl-[9px] "
                       placeholder="Giá"
                       id="txtPrice"
                     />
@@ -281,16 +308,22 @@ const TableMarketW = () => {
 
               <button className="refresh" id="btnReset">
                 <img
-                  className="mt-[4px] mr-[7px] ml-[2px] ml-[10px]"
+                  className="mt-[4px] mr-[8px] ml-[10px] "
                   src="http://priceboard3.fpts.com.vn/images/EzFuture-05.png"
                 />
-                <span className="size-li">Làm lại</span>
+                <span className="size-li ">Làm lại</span>
               </button>
             </div>
           </div>
         </div>
       </div>
+      </div>
+      <div  onClick={handleCloseLanguage2} id="divArrowBottomUp" style={{ display: anchorEl2 ? "block" : "none" }}>
+            <span id="spnTitlePanelBottom" className="text-spnTitlePanelBottom cursor-pointer	text-xl font-normal	">ĐẶT LỆNH</span>
+            <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root icon-spnTitlePanelBottom " focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropUpIcon"><path d="m7 14 5-5 5 5z"></path></svg>
+        </div>
     </div>
+    
   );
 };
 
