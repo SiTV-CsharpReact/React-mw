@@ -8,102 +8,77 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import VN30MarketWatch from "./components/VN30MarketWatch";
 import MenuMarketWatch from "./components/MenuMarketWatch";
-var updateIndex = (objRoot:any)=>{
-  var arrData = JSON.parse(objRoot.Change);
+import { Tooltip } from "@mui/material";
+import React from "react";
+
+function Clock() {
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const intervalID = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalID);
+    };
+  }, []);
+// Format lại chuỗi thời gian và ngày theo định dạng mong muốn
+const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit',second: '2-digit',hour12: false });
+const formattedDate = time.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+//const formattedDate = `${time.getDate()}/${time.getMonth() + 1}/${time.getFullYear()}`;
+  return (
+    <div className="d-flex float-right pr-10">    
+      <span className="text-xs font-medium px-1.5">{formattedDate}</span>
+      <span className="text-xs font-medium px-1.5">{formattedTime}</span>
+    </div>
+  );
 }
-// interface IData {
-//   id: number;
-//   name: string;
-// }
-// var g_Utils = {
-//   showLoading: function (x:any) { },
-//   hideLoading: function (x:any) { },
-//   updateQuote: function (x:any) {
-
-//   },
-//   updateIndex: function (x:any) { },
-//   updateQuoteRealTime: function (x:any) { // xử lí lấy giá realtime
-//       //console.log(x);
-     
-//   }
-// }
-
-// // ifarme giá
-// var g_SideBar = {
-//   updateQuote: function (x:any) { }
-// }
-
+const AnHienContext = React.createContext(false);
 function App() {
+ 
+
   const { t } = useTranslation(["home", "report"]);
-
-
-  
-  //console.log(data.replaceAll('/@"\\"/g',''))
-
-//   const [products, setProducts] = useState<DataHNX | null>(null);
-//   const iframeRef = useRef<HTMLIFrameElement>(null);
-//   useEffect(() => {
-//     if (iframeRef.current) {
-//       iframeRef.current.onload = () => {
-//         // Do something when iframe is loaded
-//       };
-//     }
-//   }, [iframeRef]);
-//   useEffect(() => {
-//     axios.get(`/hnx/data.ashx?s=quote&l=HNXIndex`)
-//     .then(res=>setProducts(res.data))
-//     .catch(error=>{
-//       console.log(error);
-//     })
-   
-// }, []);
-// console.log(products);
   return (
     <div className=' bg-BGTableMarket text-white'>
        <MenuMarketWatch/>
-      <div className='flex'>
-     
-        <div className="group bg-activeListMarketWatch inline-block p-1 border-r border-black rounded-t cursor-pointer" >
+      <div className='flex justify-between'>
+     <div className="flex">
+     <div className="group bg-activeListMarketWatch inline-block p-1 border-r border-black rounded-t cursor-pointer" >
           <span className="uppercase text-sm ">HNX </span>
           <ul className="absolute hidden text-black pt-1.5 group-hover:block">
           <li >
-             <Link to="/" className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-2 px-4 block whitespace-no-wrap border-b border-bdListMarketWatch">
+             <Link to="/" className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-2 px-4 block whitespace-no-wrap border-b border-bdListMarketWatch text-white">
               hnx
             </Link>
             </li>
-            {/* <li >
-            <Link to="/" className=" bg-bgListMarketWatch text-white hover:bg-activeListDropMarketWatch py-2 px-4 block whitespace-no-wrap border-b border-bdListMarketWatch">
-              hnx30
-            </Link>
-            </li>
-            <li >
-            <Link to="/" className=" bg-bgListMarketWatch text-white hover:bg-activeListDropMarketWatch py-2 px-4 block whitespace-no-wrap border-b border-bdListMarketWatch">
-              BOND
-            </Link>
-            </li>
-            <li >
-            <Link to="/" className=" bg-bgListMarketWatch text-white hover:bg-activeListDropMarketWatch py-2 px-4 block whitespace-no-wrap ">
-              Giao dịch thỏa thuận
-            </Link>
-            </li> */}
           </ul>
         </div>
         <div className="group inline-block p-1 border-r border-black bg-noActiveListMarketWatch rounded-t cursor-pointer">
           <span className="  uppercase text-sm ">HOSE</span>
           <ul className="absolute hidden text-gray-700 pt-2 group-hover:block">
             <li >
-            <Link to="/marketwatch-hsx" className=" bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-2 px-4 block whitespace-no-wrap border-b border-bdListMarketWatch">
+            <Link to="/marketwatch-hsx" className=" bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-2 px-4 block whitespace-no-wrap border-b border-bdListMarketWatch text-white">
               VNI
             </Link>
             </li>
             <li >
-            <Link to="/marketwatch-vn30" className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-2 px-4 block whitespace-no-wrap" >
+            <Link to="/marketwatch-vn30" className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-2 px-4 block whitespace-no-wrap text-white" >
               VN30
             </Link>
             </li>
        
           </ul>
         </div>   
+        <div>
+          <Tooltip title="Hiện đồ thị">
+          <span id="spExpand" className="imgExpandOpen"></span>
+          </Tooltip>
+            
+        </div>
+     </div>
+       
+        <Clock/>
       </div> 
   
       <Routes>
