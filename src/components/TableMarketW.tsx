@@ -1,9 +1,10 @@
 import { useState } from "react";
 import "flowbite";
 import React from "react";
+import Switch from "@mui/material/Switch";
+import { FormControlLabel, styled } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import { fontSize } from "@mui/system";
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 
 const TableMarketW = () => {
   const [counter, setCounter] = useState(0);
@@ -31,44 +32,88 @@ const TableMarketW = () => {
   const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
 
   const openPopupLanguage2 = Boolean(anchorEl2);
-  
+  const setHeight = (value:number) =>{
+    return value /10 *5.7
+  }
+  const setHeightTable = (value:number) =>{
+      return (value /10) * 4.3 - 46
+  }
+
   const handleClick2 = (event: React.MouseEvent<HTMLDivElement>) => {
     setAnchorEl2(event.currentTarget);
+    const indexMW= document.getElementById("indexMarketW")
+     if(indexMW) indexMW.style.minHeight ="100vh"
   };
   const handleCloseLanguage2 = () => {
     setAnchorEl2(null);
+    const indexMWClose= document.getElementById("indexMarketW")
+     if(indexMWClose) indexMWClose.style.minHeight =""
   };
   const [open2, setOpen2] = useState(false);
+  const Android12Switch = styled(Switch)(({ theme }) => ({
+    padding: 8,
+    '& .MuiSwitch-track': {
+      borderRadius: 22 / 2,
+      '&:before, &:after': {
+        content: '""',
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        width: 16,
+        height: 16,
+      },
+      '&:before': {
+        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
+          theme.palette.getContrastText(theme.palette.primary.main),
+        )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
+        left: 12,
+      },
+      '&:after': {
+        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
+          theme.palette.getContrastText(theme.palette.primary.main),
+        )}" d="M19,13H5V11H19V13Z" /></svg>')`,
+        right: 12,
+      },
+    },
+    '& .MuiSwitch-thumb': {
+      boxShadow: 'none',
+      width: 16,
+      height: 16,
+      margin: 2,
+    },
+  }));
+
   return (
-    <div className="">
+    <div className="" id="tablepricelist">
      
-      <div className="flex justify-between">
+      <div className="flex justify-between" >
         <div className=""></div>
         <div className=""></div>
         <div className=""></div>
 
       <div onClick={ handleClick2} id="divArrowBottomDown" style={{ display: !anchorEl2 ? "block" : "none" }}>
-     < ArrowDropDownIcon className=" text-iconShowOrder" sx={{fontSize:45}}/>
+      {/* <svg  id="spanArrowDown"  className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root spanArrowDown" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropDownIcon"><path d="m7 10 5 5 5-5z"></path></svg> */}
+      < ArrowDropDownIcon className=" text-iconShowOrder text-[#b3b3b3]" sx={{fontSize:45,marginTop:"-10px"}}/>
         </div>
         
         <div style={{ display: !anchorEl2 ? "block" : "none" }}>
       <div className="panel__bottom__link flex justify-end mr-[40px]">
         
         <div className="group   px-2  ">
-          <span className=" text-sm hover-text-blue-L "> Lệnh chờ khớp</span>
+          <span className=" size-input hover-text-blue-L "> Lệnh chờ khớp</span>
         </div>
         <div className="group   px-2  ">
-          <span className=" text-sm hover-text-blue-L ">
+          <span className=" size-input hover-text-blue-L ">
             KQ khớp lệnh trong phiên
           </span>
         </div>
         <div className="group   px-2  ">
-          <span className=" text-sm hover-text-blue-L ">Lệnh trong ngày</span>
+          <span className=" size-input hover-text-blue-L ">Lệnh trong ngày</span>
         </div>
       </div>
       </div>
       </div>
-      <div style={{ display: !anchorEl2 ? "block" : "none" }} >
+      <div style={{ display: !anchorEl2 ? "block" : "none" ,}} >
       <div className="flex BGTB" >
         <div className="bottom__sdTien mr-[2%]  mt-[20px] SDTM ">
           <div className="bottom__sdTien__title bg-[#b3b3b3] h-[25px] ">
@@ -101,7 +146,7 @@ const TableMarketW = () => {
             <span className="font-medium">-2,200,000</span>
           </div>
         </div>
-        <div className="bottom-left pt-2 p-[20px] mr-[-30px] w-[48%] bg-[#dfeeff] mt-[20px] mb-[30px]  MBR">
+        <div className="bottom-left pt-2 p-[20px] mr-[-30px] w-[48%] bg-[#dfeeff] mt-[20px] mb-[30px]  MBR pb-[6px]">
           <div className="flex justify-between ">
             <div className="btnSwitchBS">
               <div className="group-buysell flex">
@@ -129,10 +174,10 @@ const TableMarketW = () => {
                 </label>
               </div>
 
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" value="" className="sr-only peer" />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-              </label>
+              <p className="mt-[-7px]">  <FormControlLabel
+                  control={<Android12Switch defaultChecked />} label={undefined}                   
+                  /></p>
+
             </div>
           </div>
           <div className="flex">
@@ -179,7 +224,7 @@ const TableMarketW = () => {
             <div className="inpBalance text-center">
               <div id="divMaxOrder ">
                 <span className=" text-xs " id="fillMaxOrder">
-                  Tối đa: <span id="spnMaxOrder">0</span>
+                  Tối đa: <span id="spnMaxOrder"></span>
                 </span>
               </div>
               <div className="container-spinner fix-margin ">
@@ -230,7 +275,7 @@ const TableMarketW = () => {
                       </td>
                       <td>
                         <span
-                          className="spnThamChieu text-[#f26f21] pl-[20px]  text-xs"
+                          className="spnThamChieu text-[#f26f21] pl-[15px]  text-xs"
                           id="spnRefPrice"
                         >
                           0
@@ -238,7 +283,7 @@ const TableMarketW = () => {
                       </td>
                       <td>
                         <span
-                          className="spnSan text-[#f26f21] pl-[20px]  text-xs"
+                          className="spnSan text-[#00b8ff] pl-[15px]  text-xs"
                           id="spnFloorPrice"
                         >
                           0
@@ -246,7 +291,7 @@ const TableMarketW = () => {
                       </td>
                       <td>
                         <span
-                          className="spnNum text-black pl-[20px] text-xs"
+                          className="spnNum text-black pl-[15px] text-xs"
                           id="spnNum"
                         >
                           x1000
@@ -322,9 +367,11 @@ const TableMarketW = () => {
       </div>
       <div  onClick={handleCloseLanguage2} id="divArrowBottomUp" style={{ display: anchorEl2 ? "block" : "none" }}>
             <span id="spnTitlePanelBottom" className="text-spnTitlePanelBottom cursor-pointer	text-xl font-normal	">ĐẶT LỆNH</span>
-            <ArrowDropUpIcon className="text-5xl text-iconShowOrder" sx={{fontSize:45}}/>
+            <ArrowDropUpIcon className="text-5xl text-iconShowOrder  text-[#b3b3b3]" sx={{fontSize:45}}/>
+            {/* <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root icon-spnTitlePanelBottom " focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropUpIcon"><path d="m7 14 5-5 5 5z"></path></svg> */}
         </div>
-    </div>
+        <div id="draggableH" className="ui-draggable ui-draggable-handle" style={{ top: anchorEl2 ? "431px" : "263.469px",background : "transparent" }} ></div>  
+          </div>
     
   );
 };
