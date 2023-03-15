@@ -42,12 +42,12 @@ const TableMarketW = () => {
   const handleClick2 = (event: React.MouseEvent<HTMLDivElement>) => {
     setAnchorEl2(event.currentTarget);
     const indexMW= document.getElementById("indexMarketW")
-     if(indexMW) indexMW.style.height ="100vh"
+     if(indexMW) indexMW.style.minHeight ="100vh"
   };
   const handleCloseLanguage2 = () => {
     setAnchorEl2(null);
     const indexMWClose= document.getElementById("indexMarketW")
-     if(indexMWClose) indexMWClose.style.height =""
+     if(indexMWClose) indexMWClose.style.minHeight =""
   };
   const [open2, setOpen2] = useState(false);
   const Android12Switch = styled(Switch)(({ theme }) => ({
