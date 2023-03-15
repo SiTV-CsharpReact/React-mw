@@ -98,8 +98,13 @@ input[type=text], txtSymbol {
     border: 1px solid #DDDDDD;
   }
   input[type=text]:focus, txtSymbol:focus {
-    box-shadow:0 0 5px rgba(81, 203, 238, 1);
+    /* box-shadow:0 0 5px rgba(81, 203, 238, 1);
     border: 1px solid rgba(81, 203, 238, 1);
+    border-color: rgb(102, 175, 233); */
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
   }
 .container-spinner {
     position: relative;
@@ -192,24 +197,6 @@ input[type=text], txtSymbol {
     border-bottom-color: rgba(0,0,0,.2);
     top: 27px;
 }
-#account {
-    top: -7px;
-    position: relative;
-}
-.glyphicon-triangle-bottom:before {
-    content: "\e252";
-}
-.glyphicon {
-    position: relative;
-    top: 1px;
-    display: inline-block;
-    font-family: "Glyphicons Halflings";
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
 #divArrowBottomDown {
     margin-top: 0;
     text-align: center;
@@ -219,10 +206,10 @@ input[type=text], txtSymbol {
 #divArrowBottomUp{
     margin-top: 0;
     height: 25px;
-    font-size: 16px;
+    font-size: 1.5em;
     text-align: center;
     cursor: pointer;
-    
+    text-transform: uppercase
 }
 .glyphicon-triangle-top:before {
     content: "\e253";
@@ -235,4 +222,16 @@ input[type=text], txtSymbol {
 .icon-spnTitlePanelBottom{
     font-size: 45px !important;
     color: #b3b3b3;
+}
+.border-Notification{
+    border-bottom: solid 1px #dddfe2;
+}
+#draggableH {
+    position: absolute;
+    z-index: 3;
+    cursor: row-resize;
+    background: transparent;
+    height: 6px;
+    width: 100%;
+    background: #fff;
 }
