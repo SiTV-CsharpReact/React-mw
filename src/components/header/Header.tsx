@@ -1,4 +1,5 @@
 import {
+  FormControlLabel,
   IconButton,
   Menu,
   MenuItem,
@@ -28,7 +29,7 @@ interface Props {
   darkMode: boolean;
   handleThemeChange: () => void;
 }
-
+const label = { inputProps: { 'aria-label': 'Switch demo' } };
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 52,
   height: 30,
@@ -134,7 +135,38 @@ const Header = () => {
     i18n.changeLanguage(lng);
     handleCloseLanguage();
   };
-
+  const Android12Switch = styled(Switch)(({ theme }) => ({
+    padding: 8,
+    '& .MuiSwitch-track': {
+      borderRadius: 22 / 2,
+      '&:before, &:after': {
+        content: '""',
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        width: 16,
+        height: 16,
+      },
+      '&:before': {
+        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
+          theme.palette.getContrastText(theme.palette.primary.main),
+        )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
+        left: 12,
+      },
+      '&:after': {
+        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
+          theme.palette.getContrastText(theme.palette.primary.main),
+        )}" d="M19,13H5V11H19V13Z" /></svg>')`,
+        right: 12,
+      },
+    },
+    '& .MuiSwitch-thumb': {
+      boxShadow: 'none',
+      width: 16,
+      height: 16,
+      margin: 2,
+    },
+  }));
   return (
     <Box
       sx={{
@@ -144,7 +176,7 @@ const Header = () => {
         zIndex: 100,
         width: "100%",
       }}
-      className="header-fpts justify-between"
+      className="header-fpts justify-between" id="header-fpts"
     >
       <div className="flex">
         <Link to="/" className="text-2xl font-bold italic">
@@ -196,7 +228,7 @@ const Header = () => {
           >
             <Box sx={{ display: "flex" }}>
               <Box>
-                <div className="grid">
+                <div className="grid pr-[20px]">
                   <a
                     className="border-bottom-menu1 p-3 listmenu-item size-li	"
                     href=""
@@ -218,7 +250,7 @@ const Header = () => {
                 </div>
               </Box>
               <Box>
-                <div className="grid">
+                <div className="grid pr-[20px]">
                   <a className="p-3 listmenu-item size-li	" href="#">
                     Ứng trước cổ tức
                   </a>
@@ -243,7 +275,7 @@ const Header = () => {
                 </div>
               </Box>
               <Box>
-                <div className="grid">
+                <div className="grid ">
                   <a className="p-3 listmenu-item size-li	" href="#">
                     Chuyền tiền ngân hàng
                   </a>
@@ -291,23 +323,21 @@ const Header = () => {
             MenuListProps={{
               "aria-labelledby": "basic-button",
             }}
+            sx={{padding:10}}
           >
-            <Box sx={{ display: "flex" }}>
+            <Box className="border-Notification" sx={{ display: "flex" }}>
               <Box>
-                <Typography padding={1}>Thông báo</Typography>
+                <Typography padding={1} >
+                 <p className="size-input">Thông báo</p> 
+                  </Typography>
               </Box>
               <Box>
                 <Typography padding={1}>
                   <div className="flex justify-center">
-                    <p className="mr-[20px]">Bật tắt thông báo</p>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        value=""
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                    </label>
+                    <p className="mr-[20px] size-input">Bật/tắt thông báo</p>
+                    <p className="mt-[-10px]">  <FormControlLabel
+                  control={<Android12Switch defaultChecked />} label={undefined}                   
+                  /></p>
                   </div>
                 </Typography>
               </Box>

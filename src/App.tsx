@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import VN30MarketWatch from "./components/VN30MarketWatch";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { resizeWindow } from "./utils/resizeWindow";
 var updateIndex = (objRoot:any)=>{
   var arrData = JSON.parse(objRoot.Change);
 }
@@ -36,9 +37,13 @@ var updateIndex = (objRoot:any)=>{
 
 function App() {
   const { t } = useTranslation(["home", "report"]);
-
-
-  
+  useEffect(() => {
+    resizeWindow()
+  }, []);
+  //var heightHeader2 = document.getElementById("header-fpts")
+ // var pannelTop = document.getElementById("pannel-top")
+  //if(heightHeader2) console.log(heightHeader2.offsetHeight)
+  //if(pannelTop) console.log(pannelTop.offsetHeight)
   //console.log(data.replaceAll('/@"\\"/g',''))
 
 //   const [products, setProducts] = useState<DataHNX | null>(null);
@@ -60,7 +65,7 @@ function App() {
 // }, []);
 // console.log(products);
   return (
-    <div className=' bg-BGTableMarket text-white'>
+    <div className=' bg-BGTableMarket text-white' id="pannel-top">
    
    <div>
       <ul className="flex p-1">
