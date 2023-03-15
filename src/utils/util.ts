@@ -48,26 +48,27 @@ const checkZeroLast =  (value:number, numberFixed?:number) => {
 
 }
 export const setColorMarket =(tc:number,price:number,tran:number,san:number) =>{
+    // console.log(tc,price,tran,san)
      let Color ="text-white";
     // if(price=== san){
     //     Color="text-blue"
     // }
-    if(price===0){
+    if(Number(price)===0){
         Color="text-white"
     }
-    else if(price=== san){
+    else if(Number(price)=== Number(san)){
         Color="text-blue"
     }
-    else if(price === tran){
+    else if(Number(price) === Number(tran)){
         Color="text-violet"
     }
-    else if(price === tc){
+    else if(Number(price) === Number(tc)){
         Color="text-yellow"
     }
-    else if(price >tc){
+    else if(Number(price) >Number(tc)){
         Color="text-green"
     }
-    else if(price<tc && price>san  )
+    else if(Number(price)<Number(tc) && Number(price)>Number(san)  )
     {
         Color="text-red"
     }
@@ -103,4 +104,23 @@ export const iconColorMenuMarket =(value?:string)=> {
         icon ="arrowUp"
        }}
    return icon
+}
+export const checkSTTMarket = (value:string,status?:string,kl?:string)=>{
+    //console.log(value, status)
+   if(status ==="P" && value ==="" && Number(kl) >0)
+   {
+    return "ATO"
+   }
+   else if(status ==="A" && value ==="" && Number(kl) >0)
+   {
+    return "ATC"
+   }
+   else if(status ==="K" && value ==="" && Number(kl) >0)
+   {
+    return "ATC"
+   }
+   else{
+    return value
+   }
+   
 }

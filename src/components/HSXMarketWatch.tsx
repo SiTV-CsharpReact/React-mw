@@ -17,7 +17,7 @@ const HSXMarketWatch = () => {
     }
   }, [iframeRef]);
   useEffect(() => {
-    axios.get(`/hsx/data.ashx?s=quote&l=All`)
+    axios.get(`http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=All`)
     .then(res=>setProducts(res.data))
     .catch(error=>{
       console.log(error);

@@ -7,7 +7,7 @@ const VN30MarketWatch = () => {
     const [loading,setLoading] = useState(true);
   const [products, setProducts] = useState<[] | null>(null);
   useEffect(() => {
-    axios.get(`/hsx/data.ashx?s=quote&l=VN30`)
+    axios.get(`http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=VN30`)
     .then(res=>setProducts(res.data))
     .catch(error=>{
       console.log(error);
