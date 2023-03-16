@@ -25,10 +25,12 @@ export function tinhGiaTC(tc:number,price:number){
       return strPercent
 }
 export function tinhGiaCT(tc:number,price:number){
+      
       const diff = (price - tc);
     //if(isFinite(diff)) return "";
       if (isNaN(diff)) return "";
-      const strPercent = diff === 0 ? "" :  checkZeroLast(diff,2) +" %";
+      let strPercent = diff === 0 ? "" :  checkZeroLast(diff,2);
+      if(Number(price)===0) strPercent ="";
     //   const percent = (diff / tc) * 100;
     //   const strPercent = percent === 0 ? "" :  checkZeroLast(percent,1) +" %";
     //   //console.log(strPercent)
@@ -142,7 +144,7 @@ export const checkSTTMarket = (value:string,status?:string,kl?:string)=>{
 export const fStatusMarket = (value?:string) =>{
     let valueStatus = ""
     g_arrHAMarketStatus.map((g_HNXStatus)=>{
-      console.log(g_HNXStatus[0])
+      //console.log(g_HNXStatus[0])
          
           if(g_HNXStatus[0] === value){
             valueStatus= g_HNXStatus[1]

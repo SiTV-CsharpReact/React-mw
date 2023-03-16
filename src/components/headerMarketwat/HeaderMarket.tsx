@@ -1,5 +1,51 @@
 import React from 'react'
+const showKLPT =(value:string) =>{
+  console.log(value)
+  if(value === "showPT"){
+    const element =   document.getElementsByClassName("price-ot");
+    const elementFirst = document.getElementsByClassName("price-ot")[0];
+    const element2 =   document.getElementsByClassName("price-change")
+    const element3 =   document.getElementById("showKhopLenhPT")
+    if(elementFirst.classList.contains("d-block-kl")){
+      for (let j = 0; j < element.length; j++) {
+        const elementOT = element.item(j);
+        elementOT?.classList.remove("d-block-kl");
+        elementOT?.classList.add("d-none-kl");
+      
+         // In ra danh sách các lớp của phần tử
+      }
+      for (let i = 0; i < element2.length; i++) {
+        const elementChange = element2.item(i);
+        elementChange?.classList.remove("d-none-kl")
+        elementChange?.classList.add("d-block-kl")
+         // In ra danh sách các lớp của phần tử
+      }
+      if(element3) element3.innerHTML = "+/-";
+    }
+    else{
+      for (let j = 0; j < element.length; j++) {
+        const elementOT = element.item(j);
+        elementOT?.classList.remove("d-none-kl")
+        elementOT?.classList.add("d-block-kl")
+         // In ra danh sách các lớp của phần tử
+      }
+      for (let i = 0; i < element2.length; i++) {
+        const elementChange = element2.item(i);
+        elementChange?.classList.remove("d-block-kl")
+        elementChange?.classList.add("d-none-kl")
+         // In ra danh sách các lớp của phần tử
+      }
+      if(element3) element3.innerHTML = "%";
+    }
+    // if(element) {
+    //   element.classList.remove("d-block-kl") 
+    //   element.classList.add("d-none-kl")
+    // } 
 
+  
+   
+  }
+}
 const HeaderMarketW = () => {
   return (
     <div>
@@ -147,14 +193,14 @@ const HeaderMarketW = () => {
             </th>
             <th className="border border-borderHeadTableMarket text-textHeadTableMarket bg-BGTableHoverMarket relative">
               <div className='flex justify-between'>
-                <button className='inset-y-0 absolute left-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL'> 
+                <button className='inset-y-0 absolute left-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL' onClick={() => showKLPT("showPT")}> 
                 <div className="arrow arrow-left"></div>
                 </button>
-             <div className='child-center'>
-             +/-
+             <div className='child-center' id="showKhopLenhPT">
+            %
              </div>
             
-              <button className='inset-y-0 absolute right-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL'>
+              <button className='inset-y-0 absolute right-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL' onClick={() => showKLPT("showPT")}>
                 <div className="arrow arrow-right"></div>
                 </button>
               </div>
