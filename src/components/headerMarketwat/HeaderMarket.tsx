@@ -10,7 +10,6 @@ const HeaderMarketW = () => {
         <col className="show-on-mobile col-price" />
         <col className="show-on-mobile col-price" />
         <col className="show-on-mobile col-price" />
-       
         <col className="col-price" />
         <col className="col-vol" />
         <col className="col-price" />
@@ -37,134 +36,146 @@ const HeaderMarketW = () => {
         <thead>
           <tr>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket"
               rowSpan={2}
             >
               Mã
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
               rowSpan={2}
             >
               TC
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
               rowSpan={2}
             >
               Trần
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
               rowSpan={2}
             >
               Sàn
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket"
               colSpan={6}
             >
               Mua
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
               colSpan={3}
             >
               Khớp lệnh
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket"
               colSpan={6}
             >
               Bán
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
               rowSpan={2}
             >
               Tổng KL
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
               rowSpan={2}
             >
               Mở cửa
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
               rowSpan={2}
             >
               Cao nhất
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
               rowSpan={2}
             >
               Thấp nhất
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
               rowSpan={2}
             >
               NN mua
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
               rowSpan={2}
             >
               NN bán
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
               rowSpan={2}
             >
               Room còn lại
             </th>
           </tr>
           <tr>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
               G3
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
               KL3
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
               G2
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
               KL2
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
               G1
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
               KL1
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket bg-BGTableHoverMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket">
               Giá
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket bg-BGTableHoverMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket">
               KL
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket bg-BGTableHoverMarket">
-              +-
+            <th className="border border-borderHeadTableMarket text-textHeadTableMarket bg-BGTableHoverMarket relative">
+              <div className='flex justify-between'>
+                <button className='inset-y-0 absolute left-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL'> 
+                <div className="arrow arrow-left"></div>
+                </button>
+             <div className='child-center'>
+             +/-
+             </div>
+            
+              <button className='inset-y-0 absolute right-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL'>
+                <div className="arrow arrow-right"></div>
+                </button>
+              </div>
+           
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
               G1
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
               KL1
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
               G2
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
               KL2
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
               G3
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
               KL3
             </th>
           </tr>

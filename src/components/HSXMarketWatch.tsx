@@ -3,7 +3,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import LoadingComponent from '../layout/LoaddingComponent';
 import { DataHNX } from '../models/modelTableHNX';
 import { formatNumber, formatNumberMarket, setColorMarket, tinhGiaTC} from "../utils/util";
+import HeaderMarketW from './headerMarketwat/HeaderMarket';
 import IframeComponent from './IFrameComponent';
+import "../styles/MW.css";
 const HSXMarketWatch = () => {
     const [loading,setLoading] = useState(true);
     const [data, setData] = useState("");
@@ -49,58 +51,41 @@ if (loading) return <div className="h-420">Loading...</div>
    const test= products;
   return (
     <div className='h-420 overflow-auto' id="indexMarketW">
-
-    <table className="w-full ">
-  <thead>
-    <tr>
-      <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket' rowSpan={2}>Mã</th>
-      <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket bg-BGTableHoverMarket' rowSpan={2}>TC</th>
-      <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket bg-BGTableHoverMarket' rowSpan={2}>Trần</th>
-      <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket bg-BGTableHoverMarket' rowSpan={2}>Sàn</th>
-      <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket' colSpan={6}>Mua</th>
-      <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket bg-BGTableHoverMarket' colSpan={3}>Khớp lệnh</th>
-      <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket' colSpan={6}>Bán</th>
-      <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket bg-BGTableHoverMarket' rowSpan={2}>Tổng KL</th>
-      <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket bg-BGTableHoverMarket' rowSpan={2}>Mở cửa</th>
-      <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket bg-BGTableHoverMarket' rowSpan={2}>Cao nhất</th>
-      <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket bg-BGTableHoverMarket' rowSpan={2}>Thấp nhất</th>
-      <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket bg-BGTableHoverMarket' rowSpan={2}>NN mua</th>
-      <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket bg-BGTableHoverMarket' rowSpan={2}>NN bán</th>
-      <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket bg-BGTableHoverMarket' rowSpan={2}>Room còn lại</th>
-    </tr>
-    <tr>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket'>G3</th>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket'>KL3</th>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket'>G2</th>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket'>KL2</th>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket' >G1</th>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket'>KL1</th>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket bg-BGTableHoverMarket'>Giá</th>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket bg-BGTableHoverMarket'>KL</th>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket bg-BGTableHoverMarket'>+-</th>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket'>G1</th>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket'>KL1</th>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket'>G2</th>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket'>KL2</th>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket'>G3</th>
-     <th className='border border-borderHeadTableMarket p-2 text-textHeadTableMarket'>KL3</th>
-    </tr>
-  </thead>
+  <HeaderMarketW/>
+    <table className="w-full tableMW">
+    <colgroup>
+        <col className="col-symbol" />
+        <col className="show-on-mobile col-price" />
+        <col className="show-on-mobile col-price" />
+        <col className="show-on-mobile col-price" />
+        <col className="col-price" />
+        <col className="col-vol" />
+        <col className="col-price" />
+        <col className="col-vol" />
+        <col className="col-price" />
+        <col className="col-vol" />
+        <col className="col-price" />
+        <col className="col-vol col-vol-sm" />
+        <col className="col-diff" />
+        <col className="col-price" />
+        <col className="col-vol" />
+        <col className="col-price" />
+        <col className="col-vol" />
+        <col className="col-price" />
+        <col className="col-vol" />
+        <col className="col-vol-total" />
+        <col className="col-price-open" />
+        <col className="col-price-high" />
+        <col className="col-price-short" />
+        <col className="col-vol-foreign-buy" />
+        <col className="col-vol-foreign-sell" />
+        <col className="col-vol-still" />
+        </colgroup>
   <tbody>
   {products?.map((dataTable:any) =>(
       <tr key={dataTable.RowID}>
         
         <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right ${setColorMarket(dataTable.Info[1][1],dataTable.Info[11][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}> {dataTable.Info[0][1]}</td>
-        {/* <td>   {dataTable.Info.map((items:any) => (
-              items.map((item:any) =>(
-                console.log(item),
-                item[13]
-            
-              ))
-  'border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right ${`formatNumberMarket()`}'
- 
-      ))}</td>  */}
-         {/* TTham chiếu */}
       <td className='border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right bg-BGTableHoverMarket text-textTableMarketTC'>{formatNumber(dataTable.Info[1][1])}</td>   
       {/* Trần */}
       <td className='border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right bg-BGTableHoverMarket text-textTableMarketTran'>{formatNumber(dataTable.Info[2][1])}</td>
@@ -147,7 +132,6 @@ if (loading) return <div className="h-420">Loading...</div>
       </tr>  
     ) 
     )
-    
     }
     
   </tbody>

@@ -4,9 +4,11 @@ module.exports = {
       "./node_modules/flowbite/**/*.js"
     ],
     theme: {
+    
       height: {
         '420': '420px',
         '500': '500px',
+        '32':'32px'
       },
       minHeight: {
         '500':'500px',
@@ -35,7 +37,7 @@ module.exports = {
         'violet':'#FF00FF',
         'yellow': '#F7FF31',
         'activeListMarketWatch':'#22B14C',
-        'noActiveListMarketWatch':'#717171',
+        'noActiveListMarketWatch':'#404040',
         'activeListDropMarketWatch':'#828282',
         'bdListMarketWatch':'#6F6F6F',
         'bgListMarketWatch':'#404040',
@@ -43,8 +45,9 @@ module.exports = {
         'borderListMenu': '#e9e9e9;',
          'colorTextLogo':'#034E95',
          'spnTitlePanelBottom':'#2371af',
-
-         'iconShowOrder':'#b3b3b3'
+         'headerMenuTableMarket':'#010101',
+         'iconShowOrder':'#b3b3b3',
+         'hoverKL':"#717171"
          
       },
       fontSize: {

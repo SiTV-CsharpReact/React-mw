@@ -5,7 +5,9 @@ import {
   checkSTTMarket,
   formatNumber,
   formatNumberMarket,
+  fStatusMarket,
   setColorMarket,
+  tinhGiaCT,
   tinhGiaTC,
 } from "../utils/util";
 import "../styles/MW.css";
@@ -101,7 +103,7 @@ const IndexMarketW = () => {
       socket.close();
     };
   }, []);
-  console.log(statusMarket)
+  //console.log(statusMarket)
   const updateTableHNX = (dataHNX:any)=>{
     const arrRowID = dataHNX.RowID
     const arrInfo = dataHNX.Info
@@ -123,6 +125,14 @@ const IndexMarketW = () => {
      //const tdImageIndexMenu = document.getElementById(`${dataHNX[0]}_Image`);
       //console.log(tdIndexMenu)
      if(tdIndexMenu) {
+      if(fStatusMarket(dataHNX[1]))
+      {
+        tdIndexMenu.innerHTML = `${dataHNX[1]}`;
+        tdIndexMenu.style.backgroundColor ="#888888"
+        setTimeout(function() {
+          tdIndexMenu.style.backgroundColor =""
+         }, 500);
+      }
      tdIndexMenu.innerHTML = `${dataHNX[1]}`;
      tdIndexMenu.style.backgroundColor ="#888888"
      tdIndexMenu.style.color = colorTextMenu(dataHNX[1]) 
@@ -204,10 +214,11 @@ const IndexMarketW = () => {
       {
       if(valueTC && valueTran && valueSan)
       {
+        // check khớp lệnh giá ==11 thì tính pt và set color
         if(arrInfo === 11){
           const PT =  tinhGiaTC(Number(valueTC),arrValue)
          
-          console.log(Number(valueTC),arrValue,PT)
+          //console.log(Number(valueTC),arrValue,PT)
           const textColor=  colorTextTD(valueTC,valueTran,valueSan,arrValue)
           if(valuePT) valuePT.innerHTML = `${PT}`
           // console.log(tdIndex.classList.contains("text-red text-green text-blue text-white text-yellow text-violet"))
@@ -223,10 +234,14 @@ const IndexMarketW = () => {
           document.getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)?.classList.add(textColor)
           valuePT?.classList.add(textColor)
         }
-
+        else if(arrInfo === 24 || arrInfo === 22 || arrInfo === 23){
+          console.log(valueTC,valueTran,valueSan,arrValue)
+          const textColor=  colorTextTD(valueTC,valueTran,valueSan,arrValue)
+          console.log(textColor)
+        }
         else{
           const statusMarketW =statusMarket?.STAT_ControlCode
-          console.log(statusMarketW,arrInfo)
+          //console.log(statusMarketW,arrInfo)
         //   if((arrInfo === 2 && statusMarketW=== "A") || "P"){
         //     const textColor=  colorTextTD(valueTC,valueTran,valueSan,arrValue)
         //     // eslint-disable-next-line array-callback-return
@@ -288,7 +303,7 @@ const IndexMarketW = () => {
   const rows = products?.map((dataTable: any) => (
     <tr key={dataTable.RowID} id={`tr${dataTable.RowID}`}>
       <td 
-        className={` text-right ${setColorMarket(
+        className={`${setColorMarket(
           dataTable.Info[13][1],
           dataTable.Info[18][1],
           dataTable.Info[15][1],
@@ -296,8 +311,8 @@ const IndexMarketW = () => {
         )}`}
         id={`${dataTable.RowID}`}
       >
-    
-        {dataTable.RowID}
+    <input type="checkbox" id={`cb${dataTable.RowID}`}  className="cbTop priceboard"></input>
+       <span className="pl-0.5"> {dataTable.RowID}</span>
       </td>
     
       {/* TTham chiếu */}
@@ -440,7 +455,15 @@ const IndexMarketW = () => {
           dataTable.Info[14][1]
         )}`}
       >
-        {tinhGiaTC(dataTable.Info[13][1], dataTable.Info[18][1])}
+        <span>
+          <div className="price-ot d-block-kl">
+          {tinhGiaTC(dataTable.Info[13][1], dataTable.Info[18][1])}
+          </div>
+          <div className="price-change d-none-kl">
+          {tinhGiaCT(dataTable.Info[13][1], dataTable.Info[18][1])}
+          </div>
+        </span>
+      
       </td>
       {/* G1 Ban*/}
       <td
@@ -590,9 +613,10 @@ const IndexMarketW = () => {
 
   return (
     <div className="h-420 overflow-auto" id="tableHNX">
+        <HeaderMarketW/>
       {/* <iframe id="iframe" src="/hnx/blank?843" ref={iframeRef}></iframe> */}
       {/* <p>{dataRT[0]}</p> */}
-      <HeaderMarketW/>
+ 
       <table className="w-full tableMW " id="tableMW_HNX">
     {/* <colgroup><col className="col-symbol" /><col className="col-price" /><col className="col-price" /><col className="col-price" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-total-vol" /><col className="col-over-buy" /><col className="col-over-sell" /><col className="col-ave-price" /><col className="col-high-price" /><col className="col-low-price" /><col className="col-foreign-buy" /><col className="col-foreign-sell" /></colgroup>
      */}
@@ -602,7 +626,6 @@ const IndexMarketW = () => {
         <col className="show-on-mobile col-price" />
         <col className="show-on-mobile col-price" />
         <col className="show-on-mobile col-price" />
-       
         <col className="col-price" />
         <col className="col-vol" />
         <col className="col-price" />
@@ -622,15 +645,11 @@ const IndexMarketW = () => {
         <col className="col-price-open" />
         <col className="col-price-high" />
         <col className="col-price-short" />
-     
         <col className="col-vol-foreign-buy" />
         <col className="col-vol-foreign-sell" />
         <col className="col-vol-still" />
         </colgroup>
         <tbody>
-        {/* <tr  className="unselect" id="trCEO" data-pos="37" role="row"><td className="cccd fixedcol" ><span >CEO</span></td><td className="g_r">20.7</td><td className="g_c">22.7</td><td className="grf">18.7</td><td id="CEO_5" className="b_d">20.3</td><td className="b_d" id="CEO_6">165,200</td><td className="b_d" id="CEO_7">20.4</td><td id="CEO_8" className="b_d">149,700</td><td className="b_d" id="CEO_9">20.5</td><td className="brd" id="CEO_10">37,300</td><td className="g_d" id="CEO_11">20.6</td><td className="g_d" id="CEO_12">200</td><td className="grd">-0.5 %</td><td className="b_d">20.6</td><td className="b_d">4,500</td><td className="b_r">20.7</td><td className="b_r">187,500</td><td className="b_u">20.8</td><td className="b_u">76,600</td><td className="br_ hide">2,648,200</td><td className="g__">960,000</td><td className="g_d">20.6</td><td className="g_r">20.7</td><td className="g_d">20.3</td><td className="grd hide">20.502</td><td className="g__">13,300</td><td className="g__"></td><td className="g__">118,402,461</td></tr>
-        <tr  className="unselect" id="trCEO" data-pos="37" role="row"><td className="cccd fixedcol" ><span >SHS</span></td><td className="g_r">20.7</td><td className="g_c">22.7</td><td className="grf">18.7</td><td className="b__ hide">2,767,600</td><td className="b_d">20.3</td><td className="b_d">165,200</td><td className="b_d">20.4</td><td className="b_d">149,700</td><td className="b_d">20.5</td><td className="brd">37,300</td><td className="g_d">20.6</td><td className="g_d">200</td><td className="grd">-0.5 %</td><td className="b_d">20.6</td><td className="b_d">4,500</td><td className="b_r">20.7</td><td className="b_r">187,500</td><td className="b_u">20.8</td><td className="b_u">76,600</td><td className="br_ hide">2,648,200</td><td className="g__">960,000</td><td className="g_d">20.6</td><td className="g_r">20.7</td><td className="g_d">20.3</td><td className="grd hide">20.502</td><td className="g__">13,300</td><td className="g__"></td><td className="g__">118,402,461</td></tr>
-        <tr  className="unselect" id="trSHS" data-pos="249" role="row"><td className="cccr fixedcol" ><span>SHS</span></td><td className="g_r">8.7</td><td className="g_c">9.5</td><td className="grf">7.9</td><td className="b__ hide">5,081,900</td><td className="b_d" >8.5</td><td className="b_d" >2,327,400</td><td className="b_d" >8.6</td><td className="b_d" >2,290,700</td><td className="b_r" >8.7</td><td className="brr" >9,200</td><td className="g_r">8.7</td><td className="g_r" >3,000</td><td className="grr"></td><td className="b_u" >8.8</td><td className="b_u" >2,535,700</td><td className="b_u" >8.9</td><td className="b_u" >2,051,100</td><td className="b_u" >9</td><td className="b_u" >1,422,600</td><td className="br_ hide">4,679,900</td><td className="g__" >5,255,500</td><td className="g_r">8.7</td><td className="g_u">8.8</td><td className="g_d">8.5</td><td className="grd hide">8.668</td><td className="g__">3,400</td><td className="g__"></td><td className="g__">343,257,762</td></tr> */}
           {rows}</tbody>
       </table>
     </div>

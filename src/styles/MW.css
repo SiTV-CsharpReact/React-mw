@@ -5,7 +5,7 @@
    padding: 2px 4px;
    border: 1px solid #505050;
    font-weight:400;
-   font-size:13px
+   font-size:14px
 } 
 /* 'red': '#FF0000',
 'green':'#00FF00',
@@ -87,13 +87,13 @@
     border: 1px solid transparent;
 }
 .col-symbol {
-   width: 5%;
+   width: 5.5%;
 }
  .col-price {
    width: 3%;
 }
 .col-diff{
-   width: 4.5%;
+   width: 3%;
 }
 .col-vol {
    width: 4.5%;
@@ -112,4 +112,93 @@
 }
 .col-vol-still{
    width: 6%;
+}
+/* #divIndexChart{
+   width: 3000px;
+} */
+.mar_{
+   color: #ffffff;
+}
+.imgCustom{
+   background: url(../../public/custom30.png) no-repeat;
+   display: inline-block;
+   width: 30px;
+   height: 30px;
+   /* margin: 6px 0; */
+   border: none;
+   margin-right: 10px;
+}
+.imgCustom:hover{
+   background-position: -29px 0
+}
+.date-time {
+   display: inline-block;
+   text-align: right;
+   margin: 0 8px 0 0;
+   overflow: hidden;
+   /* float: left; */
+}
+#divAcount, #lbDate, #lbClock {
+   text-align: center;
+   font-size: 12px;
+   padding: 6px 6px 0 3px;
+}
+.imgHelp{
+   background: url(../../public/help30.png) no-repeat;
+   display: inline-block;
+   width: 29px;
+   height: 30px;
+   /* margin: 6px 0; */
+   border: none;
+   cursor: pointer;
+}
+.imgHelp:hover{
+   background-position: -29px 0
+}
+.imgChart{
+   background: url(../../public/line-chart-32.png) no-repeat;
+   display: inline-block;
+   width: 29px;
+   height: 30px;
+   /* margin: 6px 0; */
+   border: none;
+   cursor: pointer;
+}
+.imgChart:hover{
+
+}
+.arrow-left {
+   border-top: 4px solid transparent;
+   border-bottom: 4px solid transparent;
+   border-left: 8px solid white;
+   position: relative;
+   top: 0;
+   right: 4px;
+   bottom: 0;
+}
+.arrow-right {
+   border-top: 4px solid transparent;
+   border-bottom: 4px solid transparent;
+   border-left: 8px solid white;
+   position: relative;
+   top: 0;
+   right: -3px;
+   bottom: 0;
+}
+.arrow-left {
+   border-left: none;
+   border-right: 8px solid white;
+   left: -4px;
+}
+.child-center {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+}
+.d-none-kl{
+   display: none;
+}
+.d-block-kl{
+   display: block;
 }
