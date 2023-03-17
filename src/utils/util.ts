@@ -1,4 +1,4 @@
-import { g_arrHAMarketStatus } from "../configs/app.config";
+import { g_arrHAMarketStatus, g_arrUPMarketStatus } from "../configs/app.config";
 
 export function formatNumber(number:any) {
     if (!number || number === 0 || number === "0")
@@ -141,7 +141,8 @@ export const checkSTTMarket = (value:string,status?:string,kl?:string)=>{
    }
    
 }
-export const fStatusMarket = (value?:string) =>{
+// status sàn HNX
+export const fStatusMarketHNX = (value?:string) =>{
     let valueStatus = ""
     g_arrHAMarketStatus.map((g_HNXStatus)=>{
       //console.log(g_HNXStatus[0])
@@ -152,4 +153,35 @@ export const fStatusMarket = (value?:string) =>{
           
     })
     return valueStatus
+  }
+  // status HSX
+  export const fStatusMarketHSX = (value?:string) =>{
+    let valueStatus = ""
+    g_arrHAMarketStatus.map((g_HSXStatus)=>{
+      //console.log(g_HNXStatus[0])
+         
+          if(g_HSXStatus[0] === value){
+            valueStatus= g_HSXStatus[1]
+          }
+          else{
+            valueStatus =""
+          }
+    })
+    return valueStatus
+  }
+  //status sàn UPCOM
+  export const fStatusMarketUPCOM = (value?:string) =>{
+    let valueStatus = ""
+    g_arrUPMarketStatus.map((g_UPCStatus)=>{
+      //console.log(g_HNXStatus[0])
+         
+          if(g_UPCStatus[0] === value){
+            valueStatus= g_UPCStatus[1]
+          }
+          
+    })
+    return valueStatus
+  }
+  export const HNXStatus =() =>{
+    
   }

@@ -1,26 +1,50 @@
-// export const  g_arrHAMarketStatus = [
-//     // HNX
-//     ['LIS_AUC_C_NML_1', 'ATC', MARKETSTATUS_A],// ATC
-//     ['LIS_AUC_C_NML_LOC_1', 'ATC (chặn hủy sửa)', MARKETSTATUS_A],// ATC
-//     ['LIS_AUC_C_NEW_1', 'ATC', MARKETSTATUS_A],// ATC
-//     ['LIS_AUC_C_NEW_LOC_1', 'ATC (chặn hủy sửa)', MARKETSTATUS_A],// ATC
-//     ['LIS_CON_NML_90', 'Đóng cửa (chờ nhận lệnh)', MARKETSTATUS_G],
-//     ['LIS_CON_NML_2', 'Nghỉ trưa', MARKETSTATUS_I],
-//     ['LIS_CON_NML_1', 'Liên tục', MARKETSTATUS_O],
-//     ['LIS_PTH_P_NML_13', 'Đóng cửa (kết thúc nhận lệnh)', MARKETSTATUS_G],
-//     ['LIS_PTH_P_NML_1', 'Thỏa thuận', MARKETSTATUS_C],
-//     ['LIS_PTH_P_NML_97', 'Đóng cửa', MARKETSTATUS_G],
-//     ['LIS_CON_NEW_90', 'Đóng cửa (chờ nhận lệnh)', MARKETSTATUS_G],
-//     ['LIS_CON_NEW_2', 'Nghỉ trưa', MARKETSTATUS_I],
-//    ['LIS_CON_NEW_1', 'Liên tục', MARKETSTATUS_O],
-//    //thêm 2020-02-19 9h28 longht
-//    ['BON_CON_NML_1', 'Liên tục', MARKETSTATUS_O], //đã thêm 2020-02-19
-//    ['BON_CON_NML_2', 'Nghỉ trưa', MARKETSTATUS_I],//đã thêm 2020-02-19
-//    ['BON_PTH_P_NML_13', 'Đóng cửa (kết thúc nhận lệnh)', MARKETSTATUS_G],//đã thêm 2020-02-19
-//    ['BON_PTH_P_NML_1', 'Thỏa thuận', MARKETSTATUS_C],//2020-02-19
-//    ['BON_PTH_P_NML_97', 'Đóng cửa', MARKETSTATUS_G],//đã thêm 2020-02-19
-//    ['BON_AUC_C_NML_1', 'ATC', MARKETSTATUS_A],// ATC
-// ];
+var LANGUAGE_VN_FULL = 'vi-VN';
+var LANGUAGE_EN_FULL = 'en-US';
+// ngon ngu
+var LANGUAGE_VN = 'VN';
+var LANGUAGE_EN = 'EN';
+
+var ARRAY_INDEX_LANGUAGE = [0,1];
+var COOKIE_LANGUAGE_NAME = 'aspfpt_language';
+var g_CurrentLanguage = ""
+var g_ARRAY_CHART_NAME = ["VNXALL", "VNI", "VN30", "VN100", "VNALL", "VNMID", "VNSML", "HNX", "HNX30", "UPCOM", "HNXLCAP", "HNXSMCAP", "HNXFIN", "HNXMAN", "HNXCON"];
+var g_ARRAY_CHART_HIDE_DEFAULT = ["HNXCON", "VNXALL", "VNI", "VN100", "VNALL", "VNMID", "VNSML", "HNX", "HNXLCAP", "HNXSMCAP", "HNXFIN", "HNXMAN", "UPCOM"]; // 2017-04-14 16:13:51 DucKT remove UPCOM.PRE
+var g_ARRAY_CHART_NAME_DS = ["VN30F1M", "VN30F2M", "VN30F1Q", "VN30F2Q"];
+var g_ARRAY_CLASSIFY_NAME = [
+    { 'key': 'HOSE', 'value': ["VNXALL", "VNI", "VN30", "VN100", "VNALL", "VNMID", "VNSML"] }, // "VNDIAMOND", "VNFINLEAD", "VNFINSELECT"
+    //{ 'key': 'HOSE', 'value': ["VNI", "VN30", "VN100", "VNALL", "VNMID", "VNSML"] },
+    { 'key': 'HNX.NY', 'value': ["HNX", "HNX30", "HNXLCAP", "HNXSMCAP", "HNXFIN", "HNXMAN", "HNXCON"] },
+    { 'key': 'HNX.UPCOM', 'value': ["UPCOM"] }  // 2017-04-14 16:13:51 DucKT remove UPCOM.PRE
+];
+// export const getCookieLanguage =()=>{
+//     var name = COOKIE_LANGUAGE_NAME, language = 0;
+//     var loadCookies = document.cookie.split(';');
+//     var checkCookie = false;
+//     for (var i = 0; i < loadCookies.length; i++) {
+//         if (loadCookies[i].indexOf('=') == -1) { // kiem tra neu k chua dau = thi next for
+//             continue;
+//         }
+//         var strs = loadCookies[i].split('=');
+//         if (strs[0].indexOf(name) > -1 && strs[1] != '') { // neu chua cookie va co du lieu
+//             if (strs[1] == LANGUAGE_VN ) {
+//                 language = this?.ARRAY_INDEX_LANGUAGE[0];
+//                 g_CurrentLanguage = LANGUAGE_VN_FULL;
+//             } else {
+//                 language = this?.ARRAY_INDEX_LANGUAGE[1];
+//                 g_CurrentLanguage = LANGUAGE_EN_FULL;
+
+//             }
+//             checkCookie = true;
+//             break;
+//         }
+//     }
+//     if (!checkCookie) {
+//         language = this.ARRAY_INDEX_LANGUAGE[0];
+//         g_CurrentLanguage = LANGUAGE_VN_FULL;
+//     }
+//     return language;
+// }
+
 export const g_arrHOMarketStatus = [
     ['P', 'Bắt đầu đợt KL định kỳ mở cửa', ], // ATO
     ['O', 'Bắt đầu đợt KL lien tục', ],    // continous
@@ -45,7 +69,7 @@ export const g_arrHOMarketStatus = [
   ['LIS_CON_NML_90', 'Đóng cửa (chờ nhận lệnh)', ],
   ['LIS_CON_NML_2', 'Nghỉ trưa', ],
   ['LIS_CON_NML_1', 'Liên tục', ],
-  ['LIS_PTH_P_NML_13', 'Đóng cửa (kết thúc nhận lệnh)', ],
+  ['LIS_PTH_P_NML_13', 'Đóng cửa', ],
   ['LIS_PTH_P_NML_1', 'Thỏa thuận', ],
   ['LIS_PTH_P_NML_97', 'Đóng cửa', ],
   ['LIS_CON_NEW_90', 'Đóng cửa (chờ nhận lệnh)', ],
@@ -54,7 +78,7 @@ export const g_arrHOMarketStatus = [
  //thêm 2020-02-19 9h28 longht
  ['BON_CON_NML_1', 'Liên tục', ], //đã thêm 2020-02-19
  ['BON_CON_NML_2', 'Nghỉ trưa', ],//đã thêm 2020-02-19
- ['BON_PTH_P_NML_13', 'Đóng cửa (kết thúc nhận lệnh)', ],//đã thêm 2020-02-19
+ ['BON_PTH_P_NML_13', 'Đóng cửa', ],//đã thêm 2020-02-19
  ['BON_PTH_P_NML_1', 'Thỏa thuận', ],//2020-02-19
  ['BON_PTH_P_NML_97', 'Đóng cửa', ],//đã thêm 2020-02-19
  ['BON_AUC_C_NML_1', 'ATC', ],// ATC

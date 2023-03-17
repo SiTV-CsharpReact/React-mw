@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import { ObjectMenuHNX, ObjectMenuHSX } from "../models/modelListMenuHSX";
-import { iconColorMenuMarket, setColorMenuMarket, fStatusMarket } from "../utils/util";
+import { iconColorMenuMarket, setColorMenuMarket, fStatusMarketHNX, fStatusMarketUPCOM } from "../utils/util";
 
 const MenuMarketWatch = () => {
   const [valueHSX, setValueHSX] = useState<ObjectMenuHSX | null>(null);
@@ -31,7 +31,7 @@ const MenuMarketWatch = () => {
   if (loading)
     return <div className="bg-headerMenuTableMarket">Loading...</div>;
   return (
-    <div id="divIndexChart" className="bg-headerMenuTableMarket">
+    <div id="divIndexChart" className="bg-headerMenuTableMarket max-h-27">
       <ul className=" col-priceboard class-chart">
         <div className="flex p-1 scrollableArea">
           {/* <li className="dvChart">
@@ -115,19 +115,22 @@ const MenuMarketWatch = () => {
                   (<span id="i02_x253f">{valueHNX?.i02_x253f}</span>)
                 </span>
                 <span id="i02_x336x340" className="HA_MarketStat txtIndex">
-                {fStatusMarket(valueHNX?.i02_x336x340)}
+                {fStatusMarketHNX(valueHNX?.i02_x336x340)}
                   {/* {valueHNX?.i02_x336x340 === "LIS_CON_NML_2"
                     ? "Nghỉ trưa"
                     : "Liên tục"} */}
                 </span>
               </p>
             </div>
+            <div>
+                <span className="chart3d hidden"></span>
+            </div>
           </li>
           <li className="dvChart">
             <div>
               <p className="text-sm">
                 <span id="" className="mar_">
-                  HNX30: 
+                  HNX30:{" "}
                 </span>
                 <span
                   id="i41_3"
@@ -189,9 +192,12 @@ const MenuMarketWatch = () => {
                   (<span id="i41_x253f">{valueHNX?.i41_x253f}</span>)
                 </span>
                 <span id="i41_x336x340" className="HA_MarketStat txtIndex">
-                   {fStatusMarket(valueHNX?.i41_x336x340)}
+                   {fStatusMarketHNX(valueHNX?.i41_x336x340)}
                 </span>
               </p>
+            </div>
+            <div>
+                <span className="chart3d hidden"></span>
             </div>
           </li>
           {/* <li className="dvChart">
@@ -264,9 +270,12 @@ const MenuMarketWatch = () => {
                   (<span id="i03_x253f">{valueHNX?.i03_x253f}</span>)
                 </span>
                 <span id="i03_x336x340" className="UP_MarketStat txtIndex">
-                {fStatusMarket(valueHNX?.i03_x336x340)}
+                {fStatusMarketUPCOM(valueHNX?.i03_x336x340)}
                 </span>
               </p>
+            </div>
+            <div>
+                <span className="chart3d hidden"></span>
             </div>
           </li>
           <li className="dvChart">
@@ -315,9 +324,12 @@ const MenuMarketWatch = () => {
                   (<span id="i28_x253f">{valueHNX?.i28_x253f}</span>)
                 </span>
                 <span id="i28_x336x340" className="HA_MarketStat txtIndex">
-                {fStatusMarket(valueHNX?.i28_x336x340)}
+                {fStatusMarketHNX(valueHNX?.i28_x336x340)}
                 </span>
               </p>
+            </div>
+            <div>
+                <span className="chart3d hidden"></span>
             </div>
           </li>
           <li className="dvChart">
@@ -366,9 +378,12 @@ const MenuMarketWatch = () => {
                   (<span id="i26_x253f">{valueHNX?.i26_x253f}</span>)
                 </span>
                 <span id="i26_x336x340" className="HA_MarketStat txtIndex">
-                {fStatusMarket(valueHNX?.i26_x336x340)}
+                {fStatusMarketHNX(valueHNX?.i26_x336x340)}
                 </span>
               </p>
+            </div>
+            <div>
+                <span className="chart3d hidden"></span>
             </div>
           </li>
           <li className="dvChart">
@@ -417,9 +432,12 @@ const MenuMarketWatch = () => {
                   (<span id="i39_x253f">{valueHNX?.i39_x253f}</span>)
                 </span>
                 <span id="i39_x336x340" className="HA_MarketStat txtIndex">
-                {fStatusMarket(valueHNX?.i39_x336x340)}
+                {fStatusMarketHNX(valueHNX?.i39_x336x340)}
                 </span>
               </p>
+            </div>
+            <div>
+                <span className="chart3d hidden"></span>
             </div>
           </li>
           <li className="dvChart">
@@ -468,9 +486,12 @@ const MenuMarketWatch = () => {
                   (<span id="i310_x253f">{valueHNX?.i310_x253f}</span>)
                 </span>
                 <span id="i310_x336x340" className="HA_MarketStat txtIndex">
-                {fStatusMarket(valueHNX?.i310_x336x340)}
+                {fStatusMarketHNX(valueHNX?.i310_x336x340)}
                 </span>
               </p>
+            </div>
+            <div>
+                <span className="chart3d hidden"></span>
             </div>
           </li>
           <li className="dvChart">
@@ -519,9 +540,12 @@ const MenuMarketWatch = () => {
                   (<span id="i311_x253f">{valueHNX?.i311_x253f}</span>)
                 </span>
                 <span id="i311_x336x340" className="HA_MarketStat txtIndex">
-                {fStatusMarket(valueHNX?.i311_x336x340)}
+                {fStatusMarketHNX(valueHNX?.i311_x336x340)}
                 </span>
               </p>
+            </div>
+            <div>
+                <span className="chart3d hidden"></span>
             </div>
           </li>
         </div>

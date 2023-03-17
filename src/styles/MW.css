@@ -127,9 +127,10 @@
    /* margin: 6px 0; */
    border: none;
    margin-right: 10px;
+   cursor: pointer;
 }
 .imgCustom:hover{
-   background-position: -29px 0
+   background-position: -30px 0
 }
 .date-time {
    display: inline-block;
@@ -201,4 +202,24 @@
 }
 .d-block-kl{
    display: block;
+}
+.chart3d{
+   background: url(../../public/chart.png) no-repeat;
+   width: 204px;
+   height: 97px;
+}
+.imgExpand{
+   margin-left: 3px;
+   background-image: url(../../public/arrowup_2.png);
+   background-repeat: no-repeat;
+   display: block;
+   width: 30px;
+   height: 30px;
+   cursor: pointer;
+}
+.footer-content {
+   margin-top: 10px;
+   text-align: center;
+   color: #717171;
+   margin-bottom: 10px;
 }

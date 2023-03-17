@@ -4,11 +4,13 @@ module.exports = {
       "./node_modules/flowbite/**/*.js"
     ],
     theme: {
-    
+      maxHeight: {
+        '27': '27px',
+      },
       height: {
         '420': '420px',
         '500': '500px',
-        '32':'32px'
+        '35':'35px'
       },
       minHeight: {
         '500':'500px',

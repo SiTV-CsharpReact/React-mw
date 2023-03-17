@@ -5,7 +5,7 @@ const listMenu = () => {
     <div className="pl-2.5 flex">
       <div className="group inline-block py-2 px-2 border-r border-borderListMenu ">
         <span className="uppercase size hover-text-blue "> Lịch sử GD </span>
-        <ul className="absolute hidden text-gray-700 pt-2 group-hover:block boxShadow ">
+        <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50 boxShadow ">
           <li className="border-bottom-menu ">
             <a className=" listmenu-item size-li " href="#">
               Lịch sử đặt lệnh
@@ -25,7 +25,7 @@ const listMenu = () => {
       </div>
       <div className="group inline-block py-2  px-2 border-r border-borderListMenu">
         <span className="  uppercase size hover-text-blue"> GD tiền </span>
-        <ul className="absolute hidden text-gray-700 pt-2 boxShadow group-hover:block ">
+        <ul className="absolute hidden text-gray-700 pt-2 boxShadow group-hover:block z-50 ">
           <li className="border-bottom-menu">
             <a className="listmenu-item size-li " href="#">
               Chuyển tiền
@@ -75,7 +75,7 @@ const listMenu = () => {
       </div>
       <div className="group inline-block py-2 px-2 border-r border-borderListMenu">
         <span className="  uppercase  size  hover-text-blue"> GD đặc biệt</span>
-        <ul className="absolute hidden text-gray-700 pt-2 boxShadow group-hover:block">
+        <ul className="absolute hidden text-gray-700 pt-2 boxShadow group-hover:block z-50">
           <li>
             <a className="rounded-t listmenu-item size-li " href="#">
               Lịch sử bán CK lô lẻ
@@ -105,7 +105,7 @@ const listMenu = () => {
       </div>
       <div className="group inline-block py-2  px-2 border-r border-borderListMenu">
         <span className="  uppercase size hover-text-blue"> Quản lý tk </span>
-        <ul className="absolute hidden text-gray-700 pt-2 group-hover:block">
+        <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50 ">
           <li className="border-bottom-menu">
             <a className=" listmenu-item  size-li" href="#">
               Báo cáo tổng hợp số dư giao dịch
@@ -172,7 +172,7 @@ const listMenu = () => {
         <span className="  uppercase  size hover-text-blue">
           QUẢN LÝ KÝ QUỸ{" "}
         </span>
-        <ul className="absolute hidden text-gray-700 pt-2 group-hover:block">
+        <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50">
           <li className="border-bottom-menu">
             <a className="listmenu-item  size-li" href="#">
               Tra cứu lãi vay
@@ -192,11 +192,11 @@ const listMenu = () => {
       </div>
       <div className="group inline-block py-2  px-2 border-r border-borderListMenu">
         <span className="  uppercase  size hover-text-blue">Tư vấn đầu tư</span>
-        <ul className="absolute hidden text-gray-700 pt-2 group-hover:block"></ul>
+        <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50"></ul>
       </div>
       <div className="group inline-block py-2  px-2">
         <span className="  uppercase  size hover-text-blue">Hỗ trợ</span>
-        <ul className="absolute hidden text-gray-700 pt-2 group-hover:block">
+        <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50">
           <li className="border-bottom-menu ">
             <a className="listmenu-item  size-li" href="#">
               Sản phẩm dịch vụ trực tuyến

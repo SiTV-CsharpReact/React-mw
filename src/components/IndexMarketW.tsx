@@ -5,7 +5,7 @@ import {
   checkSTTMarket,
   formatNumber,
   formatNumberMarket,
-  fStatusMarket,
+  fStatusMarketHNX,
   setColorMarket,
   tinhGiaCT,
   tinhGiaTC,
@@ -19,6 +19,7 @@ import "../styles/MW.css";
 // import { io } from "socket.io-client";
 import { ObjectMenuHSX } from "../models/modelListMenuHSX"; 
 import HeaderMarketW from "./headerMarketwat/HeaderMarket";
+import FooterMarket from "./footerMarketwat/FooterMarket";
 
 const IndexMarketW = () => {
   const arrayPrice =[5,7,9,11,14,16,18]
@@ -125,9 +126,9 @@ const IndexMarketW = () => {
      //const tdImageIndexMenu = document.getElementById(`${dataHNX[0]}_Image`);
       //console.log(tdIndexMenu)
      if(tdIndexMenu) {
-      if(fStatusMarket(dataHNX[1]))
+      if(fStatusMarketHNX(dataHNX[1]) !== "")
       {
-        tdIndexMenu.innerHTML = `${dataHNX[1]}`;
+        tdIndexMenu.innerHTML = fStatusMarketHNX(dataHNX[1]);
         tdIndexMenu.style.backgroundColor ="#888888"
         setTimeout(function() {
           tdIndexMenu.style.backgroundColor =""
@@ -203,6 +204,7 @@ const IndexMarketW = () => {
     const valueTran= document.getElementById(`${arrRowID}_Tran`)?.innerHTML;
     const valueSan= document.getElementById(`${arrRowID}_San`)?.innerHTML;
     const valuePT= document.getElementById(`${arrRowID}_PT`);
+    const valueCT= document.getElementById(`${arrRowID}_CT`);
     if (tdIndex)  {
       tdIndex.innerHTML = `${formatNumberMarket(arrValue)}`
       tdIndex.style.backgroundColor ="#888888"
@@ -217,10 +219,11 @@ const IndexMarketW = () => {
         // check khớp lệnh giá ==11 thì tính pt và set color
         if(arrInfo === 11){
           const PT =  tinhGiaTC(Number(valueTC),arrValue)
-         
+           const CT =  tinhGiaCT(Number(valueTC),arrValue)
           //console.log(Number(valueTC),arrValue,PT)
           const textColor=  colorTextTD(valueTC,valueTran,valueSan,arrValue)
           if(valuePT) valuePT.innerHTML = `${PT}`
+          if(valueCT) valueCT.innerHTML = `${CT}`
           // console.log(tdIndex.classList.contains("text-red text-green text-blue text-white text-yellow text-violet"))
           // eslint-disable-next-line array-callback-return
           arrayColor.map((arrayColorText:string)=>{        
@@ -228,11 +231,13 @@ const IndexMarketW = () => {
               document.getElementById(`${arrRowID}`)?.classList.remove(arrayColorText)
               document.getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)?.classList.remove(arrayColorText)
               valuePT?.classList.remove(arrayColorText)
+              valueCT?.classList.remove(arrayColorText)
           })
           tdIndex.classList.add(textColor)
           document.getElementById(`${arrRowID}`)?.classList.add(textColor)
           document.getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)?.classList.add(textColor)
           valuePT?.classList.add(textColor)
+          valueCT?.classList.add(textColor)
         }
         else if(arrInfo === 24 || arrInfo === 22 || arrInfo === 23){
           console.log(valueTC,valueTran,valueSan,arrValue)
@@ -446,8 +451,7 @@ const IndexMarketW = () => {
       </td>
       {/* +-*/}
       <td
-        data-sort={tinhGiaTC(dataTable.Info[13][1], dataTable.Info[18][1])}
-        id={`${dataTable.RowID}_PT`}
+        data-sort={tinhGiaTC(dataTable.Info[13][1], dataTable.Info[18][1])}     
         className={` text-right bg-BGTableHoverMarket ${setColorMarket(
           dataTable.Info[13][1],
           dataTable.Info[18][1],
@@ -456,10 +460,10 @@ const IndexMarketW = () => {
         )}`}
       >
         <span>
-          <div className="price-ot d-block-kl">
+          <div className="price-ot d-block-kl"  id={`${dataTable.RowID}_PT`}>
           {tinhGiaTC(dataTable.Info[13][1], dataTable.Info[18][1])}
           </div>
-          <div className="price-change d-none-kl">
+          <div className="price-change d-none-kl" id={`${dataTable.RowID}_CT`}>
           {tinhGiaCT(dataTable.Info[13][1], dataTable.Info[18][1])}
           </div>
         </span>
@@ -612,7 +616,7 @@ const IndexMarketW = () => {
   ));
 
   return (
-    <div className="h-420 overflow-auto" id="tableHNX">
+    <div className="h-420 overflow-auto relative z-10" id="tableHNX">
         <HeaderMarketW/>
       {/* <iframe id="iframe" src="/hnx/blank?843" ref={iframeRef}></iframe> */}
       {/* <p>{dataRT[0]}</p> */}
@@ -652,6 +656,7 @@ const IndexMarketW = () => {
         <tbody>
           {rows}</tbody>
       </table>
+      <FooterMarket/>
     </div>
   );
 };
