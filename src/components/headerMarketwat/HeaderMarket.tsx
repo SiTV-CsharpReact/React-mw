@@ -47,6 +47,7 @@ const showKLPT =(value:string) =>{
   }
 }
 const HeaderMarketW = () => {
+  
   return (
     <div>
         <table className="w-full tableMW " >
