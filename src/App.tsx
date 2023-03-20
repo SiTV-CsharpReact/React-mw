@@ -1,34 +1,22 @@
-import { useEffect, useRef, useState } from "react";
-import IndexMarketW from "./components/IndexMarketW";
-import axios from "axios";
-import { DataHNX } from "./models/modelTableHNX";
+import IndexMarketW from "./components/tableMarketwat/IndexMarketW";
 import { Route, Routes } from "react-router-dom";
-import HSXMarketWatch from "./components/HSXMarketWatch";
-import { Link } from "react-router-dom";
+import HSXMarketWatch from "./components/tableMarketwat/HSXMarketWatch";
 import { useTranslation } from "react-i18next";
-import VN30MarketWatch from "./components/VN30MarketWatch";
-import MenuMarketWatch from "./components/MenuMarketWatch";
-import { Tooltip } from "@mui/material";
+import VN30MarketWatch from "./components/tableMarketwat/VN30MarketWatch";
 import React from "react";
-import HeaderMarketW from "./components/headerMarketwat/HeaderMarket";
-import InsertChartIcon from "@mui/icons-material/InsertChart";
-import MenuBarMW from "./components/menuBarMW/MenuBarMW";
-
-const AnHienContext = React.createContext(false);
+import Table from "./components/tableMarketwat/HNX30MarketWatch";
+import AssetReport from "./pages/Report/AssetReport";
 function App() {
   const { t } = useTranslation(["home", "report"]);
   return (
-    <div className=" bg-BGTableMarket text-white">
-      <MenuMarketWatch />
-      <MenuBarMW/>
-      
-      {/* <div className="h-420 overflow-auto" id="tableHNX">
-      <HeaderMarketW/>
-      </div> */}
+    <div>
+  
       <Routes>
         <Route path="/" element={<IndexMarketW />} />
         <Route path="/marketwatch-hsx" element={<HSXMarketWatch />} />
         <Route path="/marketwatch-vn30" element={<VN30MarketWatch />} />
+        <Route path="/marketwatch-hnx30" element={<Table />} />
+        <Route path="/report-bcts" element={<AssetReport />} />
         {/* <Route path="/hnx" element={<IndexMarketW/>}/> */}
       </Routes>
       {/* <IndexMarketW/> */}

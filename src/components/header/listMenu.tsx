@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./style.css";
 const listMenu = () => {
   return (
@@ -112,9 +113,9 @@ const listMenu = () => {
             </a>
           </li>
           <li>
-            <a className="listmenu-item  size-li" href="#">
+            <Link to="/report-bcts" className="listmenu-item  size-li">
               Báo cáo tài sản
-            </a>
+            </Link>
           </li>
           <li>
             <a className=" listmenu-item  size-li" href="#">

@@ -47,16 +47,31 @@ const showKLPT =(value:string) =>{
   }
 }
 const HeaderMarketW = () => {
-  
+  // const tableInstance = useTable(
+  //   {
+  //     columns,
+  //     data
+  //   },
+  //   useSortBy
+  // )
+
+  // const {
+  //   getTableProps,
+  //   getTableBodyProps,
+  //   headerGroups,
+  //   rows,
+  //   prepareRow
+  // } = tableInstance
+
   return (
     <div>
         <table className="w-full tableMW " >
         {/* <colgroup><col className="col-symbol" /><col className="col-price" /><col className="col-price" /><col className="col-price" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-total-vol" /><col className="col-over-buy" /><col className="col-over-sell" /><col className="col-ave-price" /><col className="col-high-price" /><col className="col-low-price" /><col className="col-foreign-buy" /><col className="col-foreign-sell" /></colgroup>   */}
         <colgroup>
         <col className="col-symbol" />
-        <col className="show-on-mobile col-price" />
-        <col className="show-on-mobile col-price" />
-        <col className="show-on-mobile col-price" />
+        <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
+        <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
+        <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
         <col className="col-price" />
         <col className="col-vol" />
         <col className="col-price" />
@@ -89,19 +104,19 @@ const HeaderMarketW = () => {
               Mã
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket "
               rowSpan={2}
             >
               TC
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket "
               rowSpan={2}
             >
               Trần
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket "
               rowSpan={2}
             >
               Sàn

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
-import { ObjectMenuHNX, ObjectMenuHSX } from "../models/modelListMenuHSX";
-import { iconColorMenuMarket, setColorMenuMarket, fStatusMarketHNX, fStatusMarketUPCOM } from "../utils/util";
+import { ObjectMenuHNX, ObjectMenuHSX } from "../../models/modelListMenuHSX";
+import { iconColorMenuMarket, setColorMenuMarket, fStatusMarketHNX, fStatusMarketUPCOM } from "../../utils/util";
 
 const MenuMarketWatch = () => {
   const [valueHSX, setValueHSX] = useState<ObjectMenuHSX | null>(null);

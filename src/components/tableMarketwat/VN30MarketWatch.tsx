@@ -1,10 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
-import LoadingComponent from '../layout/LoaddingComponent';
-import { DataHNX } from '../models/modelTableHNX';
-import { formatNumber, formatNumberMarket, setColorMarket, tinhGiaTC} from "../utils/util";
-import HeaderMarketW from './headerMarketwat/HeaderMarket';
-import "../styles/MW.css";
+import LoadingComponent from '../../layout/LoaddingComponent';
+import { DataHNX } from '../../models/modelTableHNX';
+import { formatNumber, formatNumberMarket, setColorMarket, tinhGiaTC} from "../../utils/util";
+import HeaderMarketW from '../headerMarketwat/HeaderMarket';
+import "../../styles/MW.css";
+import MenuMarketWatch from '../indexMarketWat/MenuMarketWatch';
+import MenuBarMW from '../menuBarMW/MenuBarMW';
 const VN30MarketWatch = () => {
     const [loading,setLoading] = useState(true);
   const [products, setProducts] = useState<[] | null>(null);
@@ -20,7 +22,10 @@ console.log(products)
 if (loading) return <div className="h-420">Loading...</div>
    const test= products;
   return (
-    <div className='h-420 overflow-auto' id="indexMarketW">
+    <div className=" bg-BGTableMarket text-white" >
+    <MenuMarketWatch />
+  <MenuBarMW/>  
+    <div className='h-420 overflow-auto table_market' id="indexMarketW">
      <HeaderMarketW/>
     <table className="w-full ">
     <colgroup>
@@ -107,6 +112,7 @@ if (loading) return <div className="h-420">Loading...</div>
     
   </tbody>
 </table>
+    </div>
     </div>
   )
 }

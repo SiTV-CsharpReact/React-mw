@@ -1,23 +1,25 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
-import LoadingComponent from '../layout/LoaddingComponent';
-import { DataHNX } from '../models/modelTableHNX';
-import { formatNumber, formatNumberMarket, setColorMarket, tinhGiaTC} from "../utils/util";
-import HeaderMarketW from './headerMarketwat/HeaderMarket';
-import IframeComponent from './IFrameComponent';
-import "../styles/MW.css";
+import LoadingComponent from '../../layout/LoaddingComponent';
+import { DataHNX } from '../../models/modelTableHNX';
+import { formatNumber, formatNumberMarket, setColorMarket, tinhGiaTC} from "../../utils/util";
+import HeaderMarketW from '../headerMarketwat/HeaderMarket';
+import "../../styles/MW.css";
+import MenuMarketWatch from '../indexMarketWat/MenuMarketWatch';
+import MenuBarMW from '../menuBarMW/MenuBarMW';
+import OrderMarketW from '../orderFormMarketwat/OrderFormMarketWatch';
 const HSXMarketWatch = () => {
     const [loading,setLoading] = useState(true);
     const [data, setData] = useState("");
   const [products, setProducts] = useState<[] | null>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  useEffect(() => {
-    if (iframeRef.current) {
-      iframeRef.current.onload = () => {
-        // Do something when iframe is loaded
-      };
-    }
-  }, [iframeRef]);
+  // const iframeRef = useRef<HTMLIFrameElement>(null);
+  // useEffect(() => {
+  //   if (iframeRef.current) {
+  //     iframeRef.current.onload = () => {
+  //       // Do something when iframe is loaded
+  //     };
+  //   }
+  // }, [iframeRef]);
   useEffect(() => {
     axios.get(`http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=All`)
     .then(res=>setProducts(res.data))
@@ -50,7 +52,10 @@ useEffect(() => {
 if (loading) return <div className="h-420">Loading...</div>
    const test= products;
   return (
-    <div className='h-420 overflow-auto' id="indexMarketW">
+    <div className=" bg-BGTableMarket text-white" >
+    <MenuMarketWatch />
+  <MenuBarMW/>  
+    <div className='h-420 overflow-auto table_market' id="indexMarketW">
   <HeaderMarketW/>
     <table className="w-full tableMW">
     <colgroup>
@@ -137,6 +142,8 @@ if (loading) return <div className="h-420">Loading...</div>
   </tbody>
 </table>
    {/* //<IframeComponent/> */}
+   </div>
+   <OrderMarketW/>
    </div>
   )
 }

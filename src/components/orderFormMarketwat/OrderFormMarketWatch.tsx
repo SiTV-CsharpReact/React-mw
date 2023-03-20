@@ -6,7 +6,7 @@ import { FormControlLabel, styled } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 
-const TableMarketW = () => {
+const OrderMarketW = () => {
   const [counter, setCounter] = useState(0);
 
   const incrementCounter = () => {
@@ -41,13 +41,22 @@ const TableMarketW = () => {
 
   const handleClick2 = (event: React.MouseEvent<HTMLDivElement>) => {
     setAnchorEl2(event.currentTarget);
-   const tableHNX=   document.getElementById("tableHNX")
-   if(tableHNX) tableHNX.style.height="730px"
+   const tableMarketWatch=   document.querySelectorAll<HTMLElement>(".table_market")
+   for (let j = 0; j < tableMarketWatch.length; j++) {
+     const elementChange = tableMarketWatch[j];
+   if(tableMarketWatch[j]) elementChange.style.height="790px"
+     // In ra danh sách các lớp của phần tử
+  }
+   //if(tableHNX) tableHNX.style.height="730px"
   };
   const handleCloseLanguage2 = () => {
     setAnchorEl2(null);
-    const tableHNX=   document.getElementById("tableHNX")
-   if(tableHNX) tableHNX.style.height="420px"
+    const tableMarketWatch=   document.querySelectorAll<HTMLElement>(".table_market")
+   for (let j = 0; j < tableMarketWatch.length; j++) {
+     const elementChange = tableMarketWatch[j];
+   if(tableMarketWatch[j]) elementChange.style.height="420px"
+     // In ra danh sách các lớp của phần tử
+  }
   };
   const [open2, setOpen2] = useState(false);
   const Android12Switch = styled(Switch)(({ theme }) => ({
@@ -84,7 +93,7 @@ const TableMarketW = () => {
   }));
 
   return (
-    <div className="" id="tablepricelist">
+    <div className="bg-white text-black" id="tablepricelist">
      
       <div className="flex justify-between" >
         <div className=""></div>
@@ -375,4 +384,4 @@ const TableMarketW = () => {
   );
 };
 
-export default TableMarketW;
+export default OrderMarketW;

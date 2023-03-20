@@ -64,6 +64,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-table": "^7.7.14",
     "tailwindcss": "^3.2.7"
   }
 }

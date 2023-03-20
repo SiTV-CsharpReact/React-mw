@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Header from './components/header/Header';
 import { BrowserRouter } from 'react-router-dom';
-import TableMarketW from './components/TableMarketW';
+import TableMarketW from './components/orderFormMarketwat/OrderFormMarketWatch';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,7 +15,7 @@ root.render(
     <BrowserRouter>
     <Header/>
 <App />
-<TableMarketW/></BrowserRouter>
+</BrowserRouter>
    
   </React.StrictMode>
 );
