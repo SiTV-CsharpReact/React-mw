@@ -29,7 +29,7 @@ const HSXMarketWatch = () => {
     .finally(()=> setLoading(false));
 }, []);
 useEffect(() => {
-    const socket = new WebSocket('ws://eztradereact.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=2XHl0lWPWTQWVNVE6n1NzvJ333dEkfIKOidSoEmxczI5oAqEfNFYWnpo1zQtkCrKotgj1KsYgpCYd3lr05eeGDMPrgCQpghAUXVwxNXp6OaqHmdulSGGU1zUywjT1xrE&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=3');
+    const socket = new WebSocket('ws://eztrade.fpts.com.vn/hsx2/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=PPIIZqMyjQ27Vj31ZUHh2gx5rQ8ffBgdgTDk0g94ho5bjEya6LB8rJe%2FpoUd29o9jM3fchuIkHDJf0xHvsererRIO6XXZ1Nfq5keTYR%2FcTWuSbOLojXPJeVLob6ucBAB&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=5');
 
     socket.onopen = () => {
       console.log('WebSocket connection established.');

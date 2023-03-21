@@ -1,10 +1,12 @@
 import React from 'react'
 import LayoutMarketWatch from '../layoutMarketwat/LayoutMarketWatch'
 
-const HNX30MarketWatch = () => {
+
+
+const HNIMarketWatch = () => {
   return (
     <div><LayoutMarketWatch content={<>oke</>}/></div>
   )
 }
 
-export default HNX30MarketWatch
+export default HNIMarketWatch

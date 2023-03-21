@@ -43,21 +43,22 @@ const IndexMarketW = () => {
         try {
             setLoading(true);
             const responseHNX = await axios.get(`http://marketstream.fpts.com.vn/hnx2/data.ashx?s=quote&l=HNXIndex`);
-            //const responsesttHNX = await axios.get(`http://marketstream.fpts.com.vn/hsx2/data.ashx?s=index`);
+            const responsesttHNX = await axios.get(`http://marketstream.fpts.com.vn/hsx2/data.ashx?s=index`);
             setProductsHNX(responseHNX.data);
-            //setStatusMarket(responsesttHNX.data);
+            setStatusMarket(responsesttHNX.data);
           } catch (error) {
             console.log(error);
-          } finally {
-            setLoading(false);
-          }
+          } 
+          // finally {
+          //   setLoading(false);
+          // }
       }
       fetchData();
    
   }, []);
  
  
-  if (loading) return <div className="h-420">Loading...</div>
+  //if (loading) return <div className="h-420">Loading...</div>
 
   const rows = products?.map((dataTable: any) => (
     <tr key={dataTable.RowID} id={`tr${dataTable.RowID}`}>

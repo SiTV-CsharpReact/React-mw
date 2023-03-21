@@ -123,7 +123,7 @@ export const iconColorMenuMarket =(value?:string)=> {
    return icon
 }
 export const checkSTTMarket = (value:string,status?:string,kl?:string)=>{
-    //console.log(value, status)
+    console.log(value, status)
    if(status ==="P" && value ==="" && Number(kl) >0)
    {
     return "ATO"
@@ -133,6 +133,25 @@ export const checkSTTMarket = (value:string,status?:string,kl?:string)=>{
     return "ATC"
    }
    else if(status ==="K" && value ==="" && Number(kl) >0)
+   {
+    return "ATC"
+   }
+   else{
+    return value
+   }
+   
+}
+export const checkSTTMarketValue = (value:string,status?:string)=>{
+    //console.log(value, status)
+   if(status ==="P" && value ==="" )
+   {
+    return "ATO"
+   }
+   else if(status ==="A" && value ==="")
+   {
+    return "ATC"
+   }
+   else if(status ==="K" && value ==="")
    {
     return "ATC"
    }

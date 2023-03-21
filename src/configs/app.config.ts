@@ -154,3 +154,4 @@ export const g_arrMenuMarket = [
     ],
   },
 ];
+export const g_CLASS_INDEX = [['marn', 'square'], ['maru', 'arrowUp'], ['mard', 'arrowDown']];

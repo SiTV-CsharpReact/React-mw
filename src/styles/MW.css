@@ -53,19 +53,19 @@
    padding: 0 3px;
 }
 .maru {
-   color: #00ff00;
+   color: #00ff00 !important;
 }
 .marn {
-   color: #f7ff31;
+   color: #f7ff31 !important;
 }
 .marf {
-   color: #66ccff;
+   color: #66ccff !important;
 }
 .mard {
    color: #ff0000 !important;
 }
 .marc {
-   color: #ff00ff;
+   color: #ff00ff !important;
 }
 .imgExpandOpen, .imgExpandOpen:hover, .spExpand{
    margin-left: 3px;
@@ -117,7 +117,7 @@
    width: 3000px;
 } */
 .mar_{
-   color: #ffffff;
+   color: #ffffff !important;
 }
 .imgCustom{
    background: url(../../public/custom30.png) no-repeat;
