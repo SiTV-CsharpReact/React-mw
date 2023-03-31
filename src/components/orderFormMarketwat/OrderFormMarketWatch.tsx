@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import "flowbite";
 import React from "react";
 import Switch from "@mui/material/Switch";
 import { FormControlLabel, styled } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
+import TableTotalMonney from "./TableTotalMonney";
 
+import './style.css'
 const OrderMarketW = () => {
   const [counter, setCounter] = useState(0);
 
@@ -98,13 +100,13 @@ const OrderMarketW = () => {
       <div className="flex justify-between" >
         <div className=""></div>
         <div className=""></div>
-        <div className=""></div>
+        
 
       <div onClick={ handleClick2} id="divArrowBottomDown" style={{ display: !anchorEl2 ? "block" : "none" }}>
-     < ArrowDropDownIcon className=" text-iconShowOrder" sx={{fontSize:45, marginBottom:"-20px",marginTop:"-28px"}}/>
+     < ArrowDropDownIcon className=" text-iconShowOrder" sx={{fontSize:45, marginBottom:"-20px",marginTop:"-20px"}}/>
         </div>
         
-        <div style={{ display: !anchorEl2 ? "block" : "none" }}>
+        <div style={{ display: !anchorEl2 ? "block" : "none" }} className="mt-1">
       <div className="panel__bottom__link flex justify-end mr-[40px]">
         
         <div className="group   px-2  ">
@@ -122,42 +124,13 @@ const OrderMarketW = () => {
       </div>
       </div>
       <div style={{ display: !anchorEl2 ? "block" : "none" ,}} >
-      <div className="flex BGTB" >
-        <div className="bottom__sdTien mr-[2%]  mt-[20px] SDTM ">
-          <div className="bottom__sdTien__title bg-[#b3b3b3] h-[25px] ">
-            <span className="pl-[9px] pr-[9px] text-[#0055ba] uppercase">
-              Số dư tiền
-            </span>
-            <i
-              title="Cập nhật số dư tiền"
-              className="glyphicon glyphicon-refresh"
-              id="spnRefreshDataCookieTien"
-            ></i>
-          </div>
-          <div className="bottom__sdTien__title  h-[25px] pl-[9px] pr-[9px]  flex justify-between text-sm	">
-            <span className="">Số dư tiền mặt:</span>
-            <span className="font-medium">-2,200,000</span>
-          </div>
-          <div className="bottom__sdTien__title  h-[25px] pl-[9px] pr-[9px]  flex justify-between text-sm	">
-            <span className="">Tiền ứng trước</span>
-
-            <span className="font-medium">0</span>
-          </div>
-          <div className="bottom__sdTien__title  h-[25px] pl-[9px] pr-[9px]  flex justify-between text-sm	">
-            <span className="">Tiền cho FPTS vay</span>
-
-            <span className=" font-medium">0</span>
-          </div>
-           <div className="tt-t"></div>
-          <div className="bottom__sdTien__title  h-[25px] pl-[9px] pr-[9px]  flex justify-between	text-sm	">
-            <span className="">Số dư có thể giao dịch:</span>
-            <span className="font-medium">-2,200,000</span>
-          </div>
-        </div>
-        <div className="bottom-left pt-2 p-[20px] mr-[-30px] w-[48%] bg-[#dfeeff] mt-[20px] mb-[30px]  MBR pb-[6px]">
-          <div className="flex justify-between ">
+      <div className="inline-block BGTB w-full" >
+        <TableTotalMonney/>
+        {/* <div className="bottom-left pt-2 p-[20px] mr-[-30px] w-[48%] bg-[#dfeeff] mt-[20px] mb-[30px]  MBR pb-[6px]"> */}
+        <div className="bottom-left float-left  mt-[18px] pt-1.5 pb-1 px-2 w-[48%]  MBR bg-[#dfeeff]">
+          <div className="flex justify-between "> 
             <div className="btnSwitchBS">
-              <div className="group-buysell flex">
+              <div className="group-buysell flex w-1/5">
                 <div
                   id="tabBuy"
                   className="tabBuy active bg-[#0055ba]"
@@ -172,26 +145,24 @@ const OrderMarketW = () => {
                 </div>
               </div>
             </div>
-            <div className="flex justify-center">
-              <div>
-                <label
-                  className="inline-block pl-[0.15rem] hover:cursor-pointer  mr-[10px] text-sm "
-                  htmlFor="flexSwitchCheckDefault"
-                >
-                  Ghi lệnh chờ gửi:
-                </label>
+            <div className="btn__switchGroup text-right w-4/5">
+              <div className="groupSwitch">
+                <span>
+                  Ghi lệnh chờ gửi: 
+                </span>
+                <label className="switch" id="switchLabelLCG">
+        <input type="checkbox" id="ckGhiLenhChoGui" />
+        <span className="slider round">
+          <span className="on">Bật</span>
+          <span className="off">Tắt</span>
+        </span>
+      </label>
               </div>
-
-              <p className="mt-[-7px]">  <FormControlLabel
-                  control={<Android12Switch defaultChecked />} label={undefined}                   
-                  /></p>
-
             </div>
           </div>
-          <div className="flex">
-            <div className="row bottom1 mb-4"></div>
-            <div className="row bottom2 mt-2"></div>
-            <div className="inpStock pr-[15px]">
+          <div className="flex w-full pt-1">
+            <div className="flex w-[90%] panelDatLenhThuong">
+            <div className="inpStock pr-[15px] w-1/4">
               <div id="divStock">
                 <span id="spnDivStock " className="p-[20px]"></span>
                 <span className="spnClTLV hidden">
@@ -229,7 +200,7 @@ const OrderMarketW = () => {
                 </div>
               </div>
             </div>
-            <div className="inpBalance text-center">
+            <div className="inpBalance text-center w-1/4">
               <div id="divMaxOrder ">
                 <span className=" text-xs " id="fillMaxOrder">
                   Tối đa: <span id="spnMaxOrder"></span>
@@ -268,9 +239,9 @@ const OrderMarketW = () => {
                 </div>
               </div>
             </div>
-            <div className="divPrice pl-[15px]">
+            <div className="divPrice pl-[15px] w-1/4">
               <div className="fix-position">
-                <table className="mb-[-2px]">
+                <table className="mb-[-2px] w-full">
                   <tbody>
                     <tr>
                       <td>
@@ -341,26 +312,30 @@ const OrderMarketW = () => {
                 </div>
               </div>
             </div>
-            <div className="tab-Buy">
+            <div className="tab-Buy w-1/4">
               <div className="h-[17px]"></div>
               <input
                 id="btnBuySave"
                 type="button"
-                className="btn btnBuyGhi btnSaveTemplate hidden"
+                className="btn btnBuyGhi btnSaveTemplate hidden "
                 value="Ghi"
               />
               <button
                 id="btnBuySend"
-                className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] ml-[10px]  size-li rounded-md text-white"
+                className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] ml-[10px]  size-li rounded-md text-white w-4/5"
               >
                 Gửi
               </button>
 
               {/* <input id="btnBuySend" type="button" className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] rounded-lg pl-10 pr-10 mt-[7px] ml-[15px]" value="Gửi"  /> */}
             </div>
-            <div className="divReset">
-              <div className="h-[14px]"></div>
+          
+          
 
+              
+            </div>
+            <div className="divReset w-[10%]">
+              <div className="h-[14px]"></div>
               <button className="refresh" id="btnReset">
                 <img
                   className="mt-[4px] mr-[8px] ml-[10px] "
@@ -384,4 +359,4 @@ const OrderMarketW = () => {
   );
 };
 
-export default OrderMarketW;
+export default memo(OrderMarketW);

@@ -1,3 +1,267 @@
+body{
+    font-family: Arial, Helvetica, sans-serif
+}
+body .panel-horizontally {
+    background-color: #fff;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    color: #333;
+    font-size: 13px;
+    overflow: auto !important;
+    min-width: 975px;
+}
+body .fpts-header .header-right .box .OrderForm .ezfu-group-dropdow .ezfu-ServiceBox .service__col ul li {
+    list-style: none;
+    height: 40px;
+    line-height: 40px;
+}
+a{
+    text-decoration: none !important;
+}
+.ezfu-ServiceBox ul li {
+    padding-left: 0px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 13px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.list_menu_right ul li:hover {
+   background-color: #dadde3!important;
+}
+.fptstriangle {
+    width: 0;
+    height: 0;
+    border-top: 18px solid #054d95;
+    border-right: 18px solid transparent;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.ezfu-ServiceBox, .account-info {
+    border: 1px solid #ccc;
+    border-color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.15);
+    width: 680px;
+    
+}
+.ezfu-ServiceBox ul li:last-child {
+    border-bottom: 0;
+}
+.ezfu-ServiceBox ul li:last-child {
+    margin-bottom: 10px;
+}
+
+body .fpts-header .header-right .box .OrderForm .eztrade__notification .notification__togglelyout {
+    display: none;
+    width: 410px;
+    z-index: 1010;
+    background-color: #fff;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-color: rgba(0, 0, 0, 0.2);
+    text-align: left;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.15);
+    position: absolute;
+    top: 36px;
+    right: -127px;
+    bottom: unset;
+    left: unset;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+.notification__togglelyout__header {
+    background-clip: padding-box;
+    background-color: #fff;
+    border-bottom: solid 1px #dddfe2;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    padding: 8px 12px 6px;
+    position: relative;
+    z-index: 100;
+}
+body .fpts-header .header-right .box .OrderForm .eztrade__notification .notification__togglelyout .notification__content {
+    height: auto;
+    max-height: 540px;
+    overflow-y: auto;
+    font-size: 13px;
+}
+body .fpts-header .header-right .box .OrderForm .eztrade__notification .notification__togglelyout .notification__seemore {
+    text-align: center;
+}
+.groupSwitch .switchNoti {
+    height: 16px !important;
+}
+.groupSwitch .switch {
+    position: relative;
+    display: inline-block;
+    width: 56px;
+    height: 22px;
+    margin: 0;
+}
+.groupSwitch .switch input {
+    display: none;
+}
+.groupSwitch .slider.round:before {
+    border-radius: 50%;
+}
+.groupSwitch input:checked+.slider:before {
+    -webkit-transform: translateX(29px);
+    -ms-transform: translateX(29px);
+    transform: translateX(29px);
+}
+.groupSwitch .slider:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 6px;
+    bottom: 5px;
+    background-color: #fff;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+body .fpts-header .header-right .box .OrderForm .eztrade__notification .notification__togglelyout .notification__togglelyout__header .noti__header .btn__switchNoti .groupSwitch span {
+    font-weight: 600;
+}
+
+.groupSwitch .on, .groupSwitch .off {
+    color: #fff;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    font-size: 12px;
+    font-family: Arial;
+}
+.groupSwitch .on {
+    display: none;
+    left: 35%;
+}
+body .fpts-header .header-right .box .OrderForm .eztrade__notification .notification__togglelyout .notification__togglelyout__header .noti__header .btn__switchNoti .groupSwitch span {
+    font-weight: 600;
+}
+
+.groupSwitch input:checked+.slider {
+    background-color: #2ab934;
+}
+.groupSwitch .slider.round {
+    border-radius: 34px;
+    width: 55px;
+    height: 22px;
+}
+.groupSwitch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #b3b3b3;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+body .fpts-header .header-right .box .OrderForm .eztrade__notification .notification__togglelyout .notification__togglelyout__header .noti__header .btn__switchNoti .groupSwitch span {
+    font-weight: 600;
+}
+
+.groupSwitch input:checked+.slider .on {
+    display: block;
+}
+.groupSwitch .on, .groupSwitch .off {
+    color: #fff;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    font-size: 12px;
+    font-family: Arial;
+}
+.groupSwitch .on {
+    display: none;
+    left: 35%;
+}
+.groupSwitch .off {
+    left: 70%;
+}
+.groupSwitch input:checked+.slider .off {
+    display: none;
+}
+.notification__content {
+    height: auto;
+    max-height: 540px;
+    overflow-y: auto;
+    font-size: 13px;
+}
+body .fpts-header .header-right .box .OrderForm .eztrade__notification .notification__togglelyout .notification__content .content__area ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.content__loadmore {
+    color: #1d2129;
+    display: block;
+    padding: 8px 12px 3px 12px;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    border-top-width: 0;
+    float: left;
+}
+.content__detail {
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 197px;
+}
+.con__detail__title {
+    display: block;
+    white-space: normal;
+    word-break: break-word;
+    width: 285px;
+    height: auto;
+}
+.content__detail__content__short {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 235px;
+    height: auto;
+}
+.anchorContainer {
+    overflow: auto;
+}
+.content__timestamp {
+    float: right;
+    padding-right: 5px;
+}
+.content__loaddetails {
+    display: flex;
+    justify-content: flex-end;
+    max-height: 21px;
+    position: relative;
+}
+.notification__content .content__area ul li {
+    position: relative;
+    border-bottom: 1px solid #dddfe2;
+    overflow: hidden;
+}
+.anchorContainer .content__timestamp .timer {
+    cursor: default;
+    color: #90949c;
+    position: absolute;
+    right: 5px;
+    top: 23px;
+}
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

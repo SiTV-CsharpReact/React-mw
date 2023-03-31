@@ -40,12 +40,11 @@
         -webkit-transform: rotate(20deg);
         transform: rotate(-45deg);  
 }
-.btnTTTK{
-    width: 170px;
+.ezfu-btn-profile{
     height: unset;
     background: #339cdf;
     color: #fff;
-    padding: 7px 20px 8px 20px;
+    padding: 6px 20px;
     text-shadow: 0px -1px #278db8;
     border: 1px solid #339cdf;
     box-shadow: none;
@@ -141,43 +140,12 @@ input[type=text], txtSymbol {
 .size-li{
     font-size: 14px;
 }
-.tabBuy{
-    background-color: #0055ba;
-    cursor: default;
-    border: 1px solid #2491eb;
-}
-.btnBuyGui{
-    padding: 4px 20px 3px;
-    padding-bottom: 4px;
-    margin-top: 6px;
-    width: 100px;
-}
-#btnReset {
-    background-color: #fff;
-    border: 1px solid #ccc!important;
-    border-radius: 5px;
-    display: flex;
-    margin-left: 10px;
-    margin-right: -8px;
-    margin-top: 8px;
-    padding-bottom: 2px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    width: 90px;
-}
+
+
 .size-input{
     font-size: 13px;
 }
-.group-buysell>div{
-    border: unset;
-    text-transform: uppercase;
-    padding: 8px 10px 8px;
-    line-height: 100%;
-    color: #fff;
-    background-color: #b3b3b3;
-    cursor: pointer;
-    font-size: 14px;
-}
+
 #tabBuy{
     background-color: #0055ba;
 }
@@ -195,7 +163,7 @@ input[type=text], txtSymbol {
     -webkit-animation: gb__a .2s;
     animation: gb__a .2s;
     border-bottom-color: rgba(0,0,0,.2);
-    top: 27px;
+    top: 29px;
 }
 #divArrowBottomDown {
     margin-top: 0;
@@ -234,4 +202,184 @@ input[type=text], txtSymbol {
     height: 6px;
     width: 100%;
     background: #fff;
+}
+a:focus {
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+a:focus, a:hover {
+    color: #23527c;
+    text-decoration: underline;
+}
+.img-circle {
+    width: 85px;
+    height: 85px;
+    margin: 10px;
+}
+.icon_account{
+    position: absolute;
+    top: 12px;
+    right: unset;
+    bottom: unset;
+    left: 9px;
+    font-size: 12px;
+}
+.account-info li:hover {
+    background-color: darkgrey;
+}
+.gb_srvService {
+    right: 66px;
+    border-color: transparent;
+    border-style: dashed dashed solid;
+    border-width: 0 8.5px 8.5px;
+    position: absolute;
+    left: 12px;
+    z-index: 1;
+    height: 0;
+    width: 0;
+    animation: gb__a .2s;
+    border-bottom-color: rgba(0,0,0,.2);
+    top: 25px;
+}
+.gb_srvNoti {
+    right: 66px;
+    border-color: transparent;
+    border-style: dashed dashed solid;
+    border-width: 0 8.5px 8.5px;
+    position: absolute;
+    left: 9px;
+    z-index: 1;
+    height: 0;
+    width: 0;
+    animation: gb__a .2s;
+    border-bottom-color: rgba(0,0,0,.2);
+    top: 25px;
+}
+.service__col ul li > a {
+     display: block;
+}
+.notification__togglelyout {
+   
+    border: 1px solid #ccc;
+  
+  
+}
+.account-info li .fa {
+    position: absolute;
+    top: 10px;
+    right: unset;
+    bottom: unset;
+    left: 10px;
+}
+.content__area ul li .anchorContainer .content__loadmore .img__content__lfloat {
+    float: left;
+}
+.notification__content .content__area ul li .anchorContainer .content__loadmore .img__content__lfloat img {
+    display: block;
+    height: 40px;
+    margin-right: 12px;
+    width: 40px;
+    margin-top: 3px;
+}
+.notification__content .content__area ul li .anchorContainer .content__loaddetails a {
+    
+}
+.notification__content .content__area ul li .anchorContainer .content__timestamp {
+    float: right;
+    padding-right: 5px;
+}
+.notification__content .content__area ul li .anchorContainer .content__timestamp .timer {
+    cursor: default;
+    color: #90949c;
+    position: absolute;
+    right: 5px;
+    top: 28px;
+}
+.notification__content .content__area ul li .anchorContainer .content__loaddetails a img {
+    cursor: pointer;
+}
+.anchorContainer .content__loadmore .content__detail .con__detail__title .content__detail__title {
+    font-weight: 600;
+}
+.anchorContainer .content__loadmore .content__detail .content__detail__content__short {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 235px;
+    height: auto;
+}
+.anchorContainer .content__loadmore .content__detail .content__detail__content {
+    display: block;
+}
+.anchorContainer .content__loadmore .content__detail div {
+    line-height: 20px;
+}
+.anchorContainer .content__loadmore .img__content__lfloat img {
+    display: block;
+    height: 40px;
+    margin-right: 12px;
+    width: 40px;
+    margin-top: 3px;
+}
+.anchorContainer .content__loadmore .content__detail .content__detail__content__short {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 235px;
+}
+.anchorContainer .content__loaddetails a {
+ 
+    padding-top: 7px;
+}
+.notification__content .content__area ul li .anchorContainer .content__loadmore .img__content__lfloat svg {
+    display: block;
+    height: 40px;
+    margin-right: 12px;
+    width: 40px;
+    margin-top: 3px;
+}
+/* .notification__content .content__area ul li {
+    position: relative;
+    border-bottom: 1px solid #dddfe2;
+    overflow: hidden;
+} */
+.eztrade__notification .eztrade__notification__bell .bell__button .bell__button__click .bell_count .noti__value {
+    background-color: #fa3e3e;
+    border-radius: 2px;
+    color: #fff;
+    padding: 1px 3px;
+    background-clip: padding-box;
+    display: inline-block;
+    font-size: 10px;
+    line-height: 1.3;
+    min-height: 13px;
+}
+.eztrade__notification {
+    position: relative;
+}
+.eztrade__notification .eztrade__notification__bell {
+    display: inline-block;
+    padding: 0 10px;
+    position: relative;
+    cursor: pointer;
+}
+.eztrade__notification .eztrade__notification__bell .bell__button {
+    text-decoration: none;
+    outline: none;
+    display: block;
+    cursor: pointer;
+}
+.eztrade__notification__bell .bell__button .bell__button__click {
+    position: relative;
+}
+.noti__value {
+    background-color: #fa3e3e;
+    border-radius: 2px;
+    color: #fff;
+    padding: 1px 3px;
+    background-clip: padding-box;
+    display: inline-block;
+    font-size: 10px;
+    line-height: 1.3;
+    min-height: 13px;
 }

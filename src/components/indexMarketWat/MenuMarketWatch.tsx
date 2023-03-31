@@ -4,7 +4,7 @@ import axios from "axios";
 import { ObjectMenuHNX, ObjectMenuHSX } from "../../models/modelListMenuHSX";
 import { iconColorMenuMarket, setColorMenuMarket, fStatusMarketHNX, fStatusMarketUPCOM, formatNumberMarket, tinhGiaTC, tinhGiaCT, checkSTTMarket, checkSTTMarketValue } from "../../utils/util";
 import { g_CLASS_INDEX } from "../../configs/app.config";
-
+import "./style.css"
 const MenuMarketWatch = () => {
   const [valueHSX, setValueHSX] = useState<ObjectMenuHSX | null>(null);
   const [valueHNX, setValueHNX] = useState<ObjectMenuHNX | null>(null);
@@ -18,10 +18,10 @@ const MenuMarketWatch = () => {
       try {
         setLoading(true);
         const responseHSX = await axios.get(
-          `http://marketstream.fpts.com.vn/hsx2/data.ashx?s=index`
+          `http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`
         );
         const responseHNX = await axios.get(
-          `http://marketstream.fpts.com.vn/hnx2/data.ashx?s=index`
+          `http://marketstream.fpts.com.vn/hnx/data.ashx?s=index`
         );
         setValueHSX(responseHSX.data);
         setValueHNX(responseHNX.data);
@@ -61,128 +61,117 @@ const MenuMarketWatch = () => {
       socket.close();
     };
   }, []);
+  //console.log(valueHSX, valueHNX)
   const updateTableHNX = (dataHNX:any)=>{
     var vTextClass = '', vImageClass = '', vName = '', vStrs = '';
     const arrRowID = dataHNX.RowID
     const arrInfo = dataHNX.Info
    if(dataHNX){
+    //console.log(dataHNX)
     // data trả ra object có arrRowId
     if(arrRowID){
+      // data >2 map ra 
       if(dataHNX.Info.length>1){
         dataHNX.Info.map((dataInfo:any)=>(
           updateDataTable(arrRowID,dataInfo[0],dataInfo[1])
         ))
       }
+      // data = 1 
       else{
         updateDataTable(arrRowID,arrInfo[0][0],arrInfo[0][1])
       }
     }
     else{
-     vStrs = dataHNX[0].split("_");
-     var vIDImage = dataHNX[0].substring(0, dataHNX[0].indexOf('_'));
-     const vCLassImage = document.getElementById(`${vIDImage}_Image`);
-     const vCLassIndex = document.getElementById(`${vIDImage}_3`)
-     const vCLassPT = document.getElementById(`${vIDImage}_6`)?.parentElement;
-     if(vStrs[1] ==="5"){
-      var v = parseFloat(dataHNX[1]);
-             if (v === 0) // = tham chieu, vang
-						{
-							vTextClass = g_CLASS_INDEX[0][0];
-							vImageClass = g_CLASS_INDEX[0][1];
-						}
-						if (v > 0) // tang, xanh
-						{
-							vTextClass = g_CLASS_INDEX[1][0];
-							vImageClass = g_CLASS_INDEX[1][1];
-						}
-						if (v < 0) // giam, do
-						{
-							vTextClass = g_CLASS_INDEX[2][0];
-							vImageClass = g_CLASS_INDEX[2][1];
-						}
-            
-     }
-     if(vCLassImage){
-      if(vImageClass){
-        vCLassImage.className = vImageClass
-        console.log(vCLassImage,vTextClass)
-      }
-     } 
-     if(vCLassIndex){
-      if(vTextClass) {
-        vCLassIndex.className = vTextClass+" px-0.5";
-    
-        console.log(vCLassIndex,vTextClass)
-        //vCLassIndex.classList.add(vTextClass);
-      }
-     }
-     if(vCLassPT){
-      if(vTextClass) {
-        vCLassPT.className = vTextClass;    
-        console.log(vCLassPT,vTextClass)
-        //vCLassIndex.classList.add(vTextClass);
-      }
-     }
-   
-    // $$(arrData[i][0]).parentElement.className = vTextClass;
-    //  if (vStrs[1] === "5" || vStrs[1] === "6"){
-    //   var v = parseFloat(dataHNX[1]);
-    //   //vStrs[1] === "6" ? v = parseFloat(arrData[i - 1][1]) : v = parseFloat(arrData[i][1]);
-    //   if (v === 0) // = tham chieu, vang
-    //   {
-    //     vTextClass = g_CLASS_INDEX[0][0];
-    //     vImageClass = g_CLASS_INDEX[0][1];
-    //   }
-    //   if (v > 0) // tang, xanh
-    //   {
-    //     vTextClass = g_CLASS_INDEX[1][0];
-    //     vImageClass = g_CLASS_INDEX[1][1];
-    //   }
-    //   if (v < 0) // giam, do
-    //   {
-    //     vTextClass = g_CLASS_INDEX[2][0];
-    //     vImageClass = g_CLASS_INDEX[2][1];
-    //   }
-    //  }
-      //console.log(dataHNX[0])
-     const tdIndexMenu = document.getElementById(`${dataHNX[0]}`);
-     if(tdIndexMenu) {
-      if(fStatusMarketHNX(dataHNX[1]) !== "")
-      {
-        tdIndexMenu.innerHTML = fStatusMarketHNX(dataHNX[1]);
-        tdIndexMenu.style.backgroundColor ="#888888";
-        arrayColor.map((arrayColorText:string)=>{        
-          tdIndexMenu.classList.remove(arrayColorText)
-         })
-        setTimeout(function() {
-          tdIndexMenu.style.backgroundColor =""
-         }, 500);
-      }
-      else if(fStatusMarketUPCOM(dataHNX[1]) !== "")
-      {
-        tdIndexMenu.innerHTML = fStatusMarketUPCOM(dataHNX[1]);
-        tdIndexMenu.style.backgroundColor ="#888888";
-        arrayColor.map((arrayColorText:string)=>{        
-          tdIndexMenu.classList.remove(arrayColorText)
-         })
-        setTimeout(function() {
-          tdIndexMenu.style.backgroundColor =""
-         }, 500);
-      }
-      else{
-        tdIndexMenu.innerHTML = `${dataHNX[1]}`;
-     tdIndexMenu.style.backgroundColor ="#888888";
-     arrayColor.map((arrayColorText:string)=>{        
-      tdIndexMenu.classList.remove(arrayColorText)
-     })
-     //tdIndexMenu.style.color = colorTextMenu(dataHNX[1]) 
-     tdIndexMenu.classList.add(colorTextMenu(dataHNX[1]))
-     //valuePT?.classList.add(textColor)
-     setTimeout(function() {
-      tdIndexMenu.style.backgroundColor =""
-     }, 500);}
-      }
-     
+      //tạo biến tdIndex lấy element
+      const tdIndexMenu = document.getElementById(`${dataHNX[0]}`);
+       // lay gia trị đằng sau
+      vStrs = dataHNX[0].split("_");
+      
+      var vIDImage = dataHNX[0].substring(0, dataHNX[0].indexOf('_'));
+      const vCLassImage = document.getElementById(`${vIDImage}_Image`);
+      const vCLassIndex = document.getElementById(`${vIDImage}_3`)
+      const vCLassPT = document.getElementById(`${vIDImage}_6`)?.parentElement;
+        /// check có tdIndex để bắt đầu add giá trị vào
+      if(tdIndexMenu) {
+        // neu = 5 thì update màu cho image và PT 
+        if(vStrs[1] ==="5"){
+          var v = parseFloat(dataHNX[1]);
+                 if (v === 0) // = tham chieu, vang
+                {
+                  vTextClass = g_CLASS_INDEX[0][0];
+                  vImageClass = g_CLASS_INDEX[0][1];
+                }
+                if (v > 0) // tang, xanh
+                {
+                  vTextClass = g_CLASS_INDEX[1][0];
+                  vImageClass = g_CLASS_INDEX[1][1];
+                }
+                if (v < 0) // giam, do
+                {
+                  vTextClass = g_CLASS_INDEX[2][0];
+                  vImageClass = g_CLASS_INDEX[2][1];
+                }
+                if(vCLassImage){
+                  if(vImageClass){
+                    vCLassImage.className = vImageClass
+                   // console.log(vCLassImage,vTextClass)
+                  }
+                 } 
+                 if(vCLassIndex){
+                  if(vTextClass) {
+                    vCLassIndex.className = vTextClass+" px-0.5";
+                
+                   // console.log(vCLassIndex,vTextClass)
+                    //vCLassIndex.classList.add(vTextClass);
+                  }
+                 }
+                 if(vCLassPT){
+                  if(vTextClass) {
+                    vCLassPT.className = vTextClass;    
+                   // console.log(vCLassPT,vTextClass)
+                    //vCLassIndex.classList.add(vTextClass);
+                  }
+                 }   
+         }
+         // check trạng thái thị trường HNX 
+       if(fStatusMarketHNX(dataHNX[1]) !== "")
+       {
+         tdIndexMenu.innerHTML = fStatusMarketHNX(dataHNX[1]);
+         tdIndexMenu.style.backgroundColor ="#888888";
+         arrayColor.map((arrayColorText:string)=>{        
+           tdIndexMenu.classList.remove(arrayColorText)
+          })
+         setTimeout(function() {
+           tdIndexMenu.style.backgroundColor =""
+          }, 500);
+       }
+       // check thị trường UPCOM
+       else if(fStatusMarketUPCOM(dataHNX[1]) !== "")
+       {
+         tdIndexMenu.innerHTML = fStatusMarketUPCOM(dataHNX[1]);
+         tdIndexMenu.style.backgroundColor ="#888888";
+         arrayColor.map((arrayColorText:string)=>{        
+           tdIndexMenu.classList.remove(arrayColorText)
+          })
+         setTimeout(function() {
+           tdIndexMenu.style.backgroundColor =""
+          }, 500);
+       }
+       else{
+         tdIndexMenu.innerHTML = `${dataHNX[1]}`;
+      tdIndexMenu.style.backgroundColor ="#888888";
+      arrayColor.map((arrayColorText:string)=>{        
+       tdIndexMenu.classList.remove(arrayColorText)
+      })
+      //tdIndexMenu.style.color = colorTextMenu(dataHNX[1]) 
+      tdIndexMenu.classList.add(colorTextMenu(dataHNX[1]))
+      //valuePT?.classList.add(textColor)
+      setTimeout(function() {
+       tdIndexMenu.style.backgroundColor =""
+      }, 500);}
+       }
+
+      //console.log(dataHNX)
     }
    }
   }
@@ -292,10 +281,15 @@ const MenuMarketWatch = () => {
           valuePT?.classList.add(textColor)
           valueCT?.classList.add(textColor)
         }
+        // gia mo cua cao nhap thap nhat
         else if(arrInfo === 24 || arrInfo === 22 || arrInfo === 23){
           console.log(valueTC,valueTran,valueSan,arrValue)
           const textColor=  colorTextTD(valueTC,valueTran,valueSan,arrValue)
-          console.log(textColor)
+          arrayColor.map((arrayColorText:string)=>{       
+            tdIndex.classList.remove(arrayColorText)        
+        })
+        tdIndex.classList.add(textColor)
+          //console.log(textColor)
         }
         // con không thì up giá trị vào td như bt
         else{
@@ -366,7 +360,8 @@ const MenuMarketWatch = () => {
   }
   if (loading) return <div className="bg-headerMenuTableMarket">Loading...</div>;
   return (
-    <div id="divIndexChart" className="bg-headerMenuTableMarket max-h-27">
+    <div className="relative overflow-hidden">
+         <div id="divIndexChart" className="bg-headerMenuTableMarket max-h-27">
       <ul className=" col-priceboard class-chart">
         <div className="flex p-1 scrollableArea">
           {/* <li className="dvChart">
@@ -510,7 +505,7 @@ const MenuMarketWatch = () => {
                   {valueHNX?.i41_x251}
                 </span>
                 <span className="marc txtIndex">
-                  (<span id="i41_x251c">{valueHNX?.i41_x251c}</span>)
+                  (<span id="i41_x251c" className="marc">{valueHNX?.i41_x251c}</span>)
                 </span>
                 <span className="square" />
                 <span id="i41_x252" className="marn txtIndex">
@@ -599,7 +594,7 @@ const MenuMarketWatch = () => {
                   {valueHNX?.i03_x253}
                 </span>
                 <span className="marf txtIndex">
-                  (<span id="i03_x253f">{valueHNX?.i03_x253f}</span>)
+                  (<span id="i03_x253f" className="marf">{valueHNX?.i03_x253f}</span>)
                 </span>
                 <span id="i03_x336x340" className="UP_MarketStat txtIndex">
                 {fStatusMarketUPCOM(valueHNX?.i03_x336x340)}
@@ -650,7 +645,7 @@ const MenuMarketWatch = () => {
                   {valueHNX?.i28_x251}
                 </span>
                 <span className="marc txtIndex">
-                  (<span id="i28_x251c">{valueHNX?.i28_x251c}</span>)
+                  (<span id="i28_x251c" className="marc">{valueHNX?.i28_x251c}</span>)
                 </span>
                 <span className="square" />
                 <span id="i28_x252" className="marn txtIndex">
@@ -661,7 +656,7 @@ const MenuMarketWatch = () => {
                   {valueHNX?.i28_x253}
                 </span>
                 <span className="marf txtIndex">
-                  (<span id="i28_x253f">{valueHNX?.i28_x253f}</span>)
+                  (<span id="i28_x253f" className="marf">{valueHNX?.i28_x253f}</span>)
                 </span>
                 <span id="i28_x336x340" className="HA_MarketStat txtIndex">
                 {fStatusMarketHNX(valueHNX?.i28_x336x340)}
@@ -712,7 +707,7 @@ const MenuMarketWatch = () => {
                   {valueHNX?.i26_x251}
                 </span>
                 <span className="marc txtIndex">
-                  (<span id="i26_x251c">{valueHNX?.i26_x251c}</span>)
+                  (<span id="i26_x251c" className="marc">{valueHNX?.i26_x251c}</span>)
                 </span>
                 <span className="square" />
                 <span id="i26_x252" className="marn txtIndex">
@@ -723,7 +718,7 @@ const MenuMarketWatch = () => {
                   {valueHNX?.i26_x253}
                 </span>
                 <span className="marf txtIndex">
-                  (<span id="i26_x253f">{valueHNX?.i26_x253f}</span>)
+                  (<span id="i26_x253f" className="marf">{valueHNX?.i26_x253f}</span>)
                 </span>
                 <span id="i26_x336x340" className="HA_MarketStat txtIndex">
                 {fStatusMarketHNX(valueHNX?.i26_x336x340)}
@@ -774,7 +769,7 @@ const MenuMarketWatch = () => {
                   {valueHNX?.i39_x251}
                 </span>
                 <span className="marc txtIndex">
-                  (<span id="i39_x251c">{valueHNX?.i39_x251c}</span>)
+                  (<span id="i39_x251c" className="marc">{valueHNX?.i39_x251c}</span>)
                 </span>
                 <span className="square" />
                 <span id="i39_x252" className="marn txtIndex">
@@ -785,7 +780,7 @@ const MenuMarketWatch = () => {
                   {valueHNX?.i39_x253}
                 </span>
                 <span className="marf txtIndex">
-                  (<span id="i39_x253f">{valueHNX?.i39_x253f}</span>)
+                  (<span id="i39_x253f" className="marf">{valueHNX?.i39_x253f}</span>)
                 </span>
                 <span id="i39_x336x340" className="HA_MarketStat txtIndex">
                 {fStatusMarketHNX(valueHNX?.i39_x336x340)}
@@ -836,7 +831,7 @@ const MenuMarketWatch = () => {
                   {valueHNX?.i310_x251}
                 </span>
                 <span className="marc txtIndex">
-                  (<span id="i310_x251c">{valueHNX?.i310_x251c}</span>)
+                  (<span id="i310_x251c" className="marc">{valueHNX?.i310_x251c}</span>)
                 </span>
                 <span className="square" />
                 <span id="i310_x252" className="marn txtIndex">
@@ -847,7 +842,7 @@ const MenuMarketWatch = () => {
                   {valueHNX?.i310_x253}
                 </span>
                 <span className="marf txtIndex">
-                  (<span id="i310_x253f">{valueHNX?.i310_x253f}</span>)
+                  (<span id="i310_x253f" className="marf">{valueHNX?.i310_x253f}</span>)
                 </span>
                 <span id="i310_x336x340" className="HA_MarketStat txtIndex">
                 {fStatusMarketHNX(valueHNX?.i310_x336x340)}
@@ -898,7 +893,7 @@ const MenuMarketWatch = () => {
                   {valueHNX?.i311_x251}
                 </span>
                 <span className="marc txtIndex">
-                  (<span id="i311_x251c">{valueHNX?.i311_x251c}</span>)
+                  (<span id="i311_x251c" className="marc">{valueHNX?.i311_x251c}</span>)
                 </span>
                 <span className="square" />
                 <span id="i311_x252" className="marn txtIndex">
@@ -909,7 +904,7 @@ const MenuMarketWatch = () => {
                   {valueHNX?.i311_x253}
                 </span>
                 <span className="marf txtIndex">
-                  (<span id="i311_x253f">{valueHNX?.i311_x253f}</span>)
+                  (<span id="i311_x253f" className="marf">{valueHNX?.i311_x253f}</span>)
                 </span>
                 <span id="i311_x336x340" className="HA_MarketStat txtIndex">
                 {fStatusMarketHNX(valueHNX?.i311_x336x340)}
@@ -923,6 +918,8 @@ const MenuMarketWatch = () => {
         </div>
       </ul>
     </div>
+    </div>
+ 
   );
 };
 
