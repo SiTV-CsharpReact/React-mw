@@ -142,7 +142,7 @@
 #divAcount, #lbDate, #lbClock {
    text-align: center;
    font-size: 12px;
-   padding: 6px 6px 0 3px;
+   padding: 7px 6px 0 3px;
 }
 .imgHelp{
    background: url(../../public/help30.png) no-repeat;
@@ -156,15 +156,15 @@
 .imgHelp:hover{
    background-position: -29px 0
 }
-.imgChart{
+/* .imgChart{
    background: url(../../public/line-chart-32.png) no-repeat;
    display: inline-block;
    width: 29px;
    height: 30px;
-   /* margin: 6px 0; */
+   margin: 6px 0; 
    border: none;
    cursor: pointer;
-}
+} */
 .imgChart:hover{
 
 }
@@ -222,4 +222,16 @@
    text-align: center;
    color: #717171;
    margin-bottom: 10px;
+}
+.btn-chart {
+   border-radius: unset;
+   height: 30px;
+   width: 40px;
+   background: transparent;
+   padding: 5px 10px;
+   margin-right: 5px;
+}
+.btn-chart:hover {
+   background-color: #2371AF !important;
+   color: #fff;
 }

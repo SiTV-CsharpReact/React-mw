@@ -10,7 +10,8 @@ module.exports = {
       height: {
         '420': '420px',
         '500': '500px',
-        '35':'35px'
+        '30':'30px',
+        '40':'40px'
       },
       minHeight: {
         '500':'500px',
@@ -49,21 +50,29 @@ module.exports = {
          'spnTitlePanelBottom':'#2371af',
          'headerMenuTableMarket':'#010101',
          'iconShowOrder':'#b3b3b3',
-         'hoverKL':"#717171"
-         
+         'hoverKL':"#717171",
+        'textLanguage':'#2697de',
+        'textNoti':'#385898',
+        'iconNoti': '#0861a9',
+        //'tooltipNoti':'#2371af'
       },
       fontSize: {
         textHeadTableMarket: '0.675rem',
         xs:'0.75rem',
         sm:' 0.875rem',
         base: '1rem',
+        lg:'18px',
         '11pt':'11pt',
         xl: '1.25rem',
         '2xl': '1.563rem',
         '3xl': '1.953rem',
         '4xl': '2.441rem',
         '5xl': '3.052rem',
-        '11pt':'11pt'
+        'fontLogo':'26px',
+        large:'large !important',
+        '13px':'13px',
+        '15px':'15px'
+         
       }
     },
     plugins: [

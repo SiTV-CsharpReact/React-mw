@@ -42,8 +42,8 @@ const IndexMarketW = () => {
     async function fetchData() {
         try {
             setLoading(true);
-            const responseHNX = await axios.get(`http://marketstream.fpts.com.vn/hnx2/data.ashx?s=quote&l=HNXIndex`);
-            const responsesttHNX = await axios.get(`http://marketstream.fpts.com.vn/hsx2/data.ashx?s=index`);
+            const responseHNX = await axios.get(`/hnx/data.ashx?s=quote&l=HNXIndex`);
+            const responsesttHNX = await axios.get(`/hsx/data.ashx?s=index`);
             setProductsHNX(responseHNX.data);
             setStatusMarket(responsesttHNX.data);
           } catch (error) {
@@ -371,7 +371,9 @@ const IndexMarketW = () => {
   ));
 
   return (
-    <div className=" bg-BGTableMarket text-white" >
+    <div className=" bg-BGTableMarket text-white panel-horizontally" >
+        <div id="panel-top" className="panel-top bg-black" style={{height: '516.99px'}}>
+     
         <MenuMarketWatch />
       <MenuBarMW/>  
     <div className="h-420 overflow-auto relative z-10 table_market" id="tableHNX">
@@ -419,6 +421,7 @@ const IndexMarketW = () => {
     
     </div>
     <OrderMarketW/>
+    </div>
     </div>
   );
 };

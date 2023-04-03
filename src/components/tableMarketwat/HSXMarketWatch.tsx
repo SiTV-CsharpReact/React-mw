@@ -2,16 +2,19 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 import LoadingComponent from '../../layout/LoaddingComponent';
 import { DataHNX } from '../../models/modelTableHNX';
-import { formatNumber, formatNumberMarket, setColorMarket, tinhGiaTC} from "../../utils/util";
+import { checkSTTMarket, formatNumber, formatNumberMarket, setColorMarket, tinhGiaTC} from "../../utils/util";
 import HeaderMarketW from '../headerMarketwat/HeaderMarket';
 import "../../styles/MW.css";
 import MenuMarketWatch from '../indexMarketWat/MenuMarketWatch';
 import MenuBarMW from '../menuBarMW/MenuBarMW';
 import OrderMarketW from '../orderFormMarketwat/OrderFormMarketWatch';
+import { ObjectMenuHSX } from '../../models/modelListMenuHSX';
+import FooterMarket from "../footerMarketwat/FooterMarket";
 const HSXMarketWatch = () => {
     const [loading,setLoading] = useState(true);
     const [data, setData] = useState("");
   const [products, setProducts] = useState<[] | null>(null);
+  const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
   // const iframeRef = useRef<HTMLIFrameElement>(null);
   // useEffect(() => {
   //   if (iframeRef.current) {
@@ -21,13 +24,46 @@ const HSXMarketWatch = () => {
   //   }
   // }, [iframeRef]);
   useEffect(() => {
-    axios.get(`http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=All`)
-    .then(res=>setProducts(res.data))
-    .catch(error=>{
-      console.log(error);
-    })
-    .finally(()=> setLoading(false));
+    // axios.get(`http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=All`)
+    // .then(res=>setProducts(res.data))
+    // .catch(error=>{
+    //   console.log(error);
+    // })
+    // .finally(()=> setLoading(false));
+    async function fetchData() {
+      try {
+          setLoading(true);
+          const responseHSX = await axios.get(`http://marketstream.fpts.com.vn/hsx2/data.ashx?s=quote&l=All`);
+          const responsesttHSX = await axios.get(`http://marketstream.fpts.com.vn/hsx2/data.ashx?s=index`);
+          setProducts(responseHSX.data);
+          setStatusMarket(responsesttHSX.data);
+        } catch (error) {
+          console.log(error);
+        } 
+        finally {
+          setLoading(false);
+        }
+    }
+    fetchData();
 }, []);
+// useEffect(() => {
+//   async function fetchData() {
+//       try {
+//           setLoading(true);
+//           const responseHNX = await axios.get(`http://marketstream.fpts.com.vn/hnx2/data.ashx?s=quote&l=HNXIndex`);
+//           const responsesttHNX = await axios.get(`http://marketstream.fpts.com.vn/hsx2/data.ashx?s=index`);
+//           setProductsHNX(responseHNX.data);
+//           setStatusMarket(responsesttHNX.data);
+//         } catch (error) {
+//           console.log(error);
+//         } 
+//         // finally {
+//         //   setLoading(false);
+//         // }
+//     }
+//     fetchData();
+ 
+// }, []);
 useEffect(() => {
     const socket = new WebSocket('ws://eztrade.fpts.com.vn/hsx2/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=PPIIZqMyjQ27Vj31ZUHh2gx5rQ8ffBgdgTDk0g94ho5bjEya6LB8rJe%2FpoUd29o9jM3fchuIkHDJf0xHvsererRIO6XXZ1Nfq5keTYR%2FcTWuSbOLojXPJeVLob6ucBAB&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=5');
 
@@ -49,7 +85,7 @@ useEffect(() => {
   }, []);
   console.log(products)
   console.log(data)
-if (loading) return <div className="h-420">Loading...</div>
+//if (loading) return <div className="h-420">Loading...</div>
    const test= products;
   return (
     <div className=" bg-BGTableMarket text-white" >
@@ -105,7 +141,8 @@ if (loading) return <div className="h-420">Loading...</div>
        {/* KL2 */}
       <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right ${setColorMarket(dataTable.Info[1][1],dataTable.Info[7][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}>{formatNumberMarket(dataTable.Info[8][1])}</td>
        {/* G1 */}
-      <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right ${setColorMarket(dataTable.Info[1][1],dataTable.Info[9][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}>{formatNumberMarket(dataTable.Info[9][1])}</td>
+      {/* <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right ${setColorMarket(dataTable.Info[1][1],dataTable.Info[9][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}>{formatNumberMarket(dataTable.Info[9][1])}</td> */}
+      <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right ${setColorMarket(dataTable.Info[1][1],dataTable.Info[9][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}> {checkSTTMarket(formatNumberMarket(dataTable.Info[9][1]),statusMarket?.STAT_ControlCode,(dataTable.Info[10][1]))}</td>
        {/* KL1 */}
       <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right ${setColorMarket(dataTable.Info[1][1],dataTable.Info[9][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}>{formatNumberMarket(dataTable.Info[10][1])}</td>
        {/* Gia Khơp lenh */}
@@ -141,6 +178,7 @@ if (loading) return <div className="h-420">Loading...</div>
     
   </tbody>
 </table>
+<FooterMarket/>
    {/* //<IframeComponent/> */}
    </div>
    <OrderMarketW/>
