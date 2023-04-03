@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 import LoadingComponent from '../../layout/LoaddingComponent';
-import { DataHNX } from '../../models/modelTableHNX';
 import { formatNumber, formatNumberMarket, setColorMarket, tinhGiaTC} from "../../utils/util";
 import HeaderMarketW from '../headerMarketwat/HeaderMarket';
 import "../../styles/MW.css";

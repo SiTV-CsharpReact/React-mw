@@ -2,7 +2,10 @@ import React from 'react'
 
 const FooterMarket = () => {
   return (
-    <div className='footer-content'>ĐƠN VỊ GIÁ: 1,000 ĐỒNGĐƠN VỊ KHỐI LƯỢNG: 1 CỔ PHIẾU.</div>
+    <div className='footer-content flex justify-center bg-bgFooterTable'>
+     <span className='pr-4'>ĐƠN VỊ GIÁ: 1,000 ĐỒNG</span> 
+      <span> ĐƠN VỊ KHỐI LƯỢNG: 1 CỔ PHIẾU.</span>
+     </div>
   )
 }
 

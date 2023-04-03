@@ -54,6 +54,7 @@ module.exports = {
         'textLanguage':'#2697de',
         'textNoti':'#385898',
         'iconNoti': '#0861a9',
+        'bgFooterTable': '#131722'
         //'tooltipNoti':'#2371af'
       },
       fontSize: {

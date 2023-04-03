@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./style.css";
+import "./styleHeader.css";
 const ListMenu = () => {
   return (
     // <div className="pl-2.5 flex">
@@ -8,19 +8,19 @@ const ListMenu = () => {
     //     <span className="uppercase size hover-text-blue "> Lịch sử GD </span>
     //     <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50 boxShadow ">
     //       <li className="border-bottom-menu ">
-    //         <a className=" listmenu-item size-li " href="#">
+    //         <Link className=" listmenu-item size-li " to="#">
     //           Lịch sử đặt lệnh
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className="listmenu-item size-li " href="#">
+    //         <Link className="listmenu-item size-li " to="#">
     //           Lịch sử khớp lệnh
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className="rounded-b listmenu-item size-li  " href="#">
+    //         <Link className="rounded-b listmenu-item size-li  " to="#">
     //           Lệnh chờ khớp thanh toán
-    //         </a>
+    //         </Link>
     //       </li>
     //     </ul>
     //   </div>
@@ -28,49 +28,49 @@ const ListMenu = () => {
     //     <span className="  uppercase size hover-text-blue"> GD tiền </span>
     //     <ul className="absolute hidden text-gray-700 pt-2 boxShadow group-hover:block z-50 ">
     //       <li className="border-bottom-menu">
-    //         <a className="listmenu-item size-li " href="#">
+    //         <Link className="listmenu-item size-li " to="#">
     //           Chuyển tiền
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" listmenu-item size-li " href="#">
+    //         <Link className=" listmenu-item size-li " to="#">
     //           Chuyển tiền ký quỹ CK phái sinh
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" listmenu-item size-li " href="#">
+    //         <Link className=" listmenu-item size-li " to="#">
     //           GD tiền
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className="listmenu-item size-li " href="#">
+    //         <Link className="listmenu-item size-li " to="#">
     //           Lịch sử chuyển tiền
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" listmenu-item size-li" href="#">
+    //         <Link className=" listmenu-item size-li" to="#">
     //           Tiền cho vay - EzSaving
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" listmenu-item size-li " href="#">
+    //         <Link className=" listmenu-item size-li " to="#">
     //           Tất toán tiền cho vay
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className="listmenu-item size-li " href="#">
+    //         <Link className="listmenu-item size-li " to="#">
     //           Danh sách hợp đồng cho vay
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" listmenu-item size-li " href="#">
+    //         <Link className=" listmenu-item size-li " to="#">
     //           Ứng trước tiền cổ tức
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className="rounded-b listmenu-item size-li " href="#">
+    //         <Link className="rounded-b listmenu-item size-li " to="#">
     //           Lịch sử ứng trước tiền cổ tức
-    //         </a>
+    //         </Link>
     //       </li>
     //     </ul>
     //   </div>
@@ -78,29 +78,29 @@ const ListMenu = () => {
     //     <span className="  uppercase  size  hover-text-blue"> GD đặc biệt</span>
     //     <ul className="absolute hidden text-gray-700 pt-2 boxShadow group-hover:block z-50">
     //       <li>
-    //         <a className="rounded-t listmenu-item size-li " href="#">
+    //         <Link className="rounded-t listmenu-item size-li " to="#">
     //           Lịch sử bán CK lô lẻ
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li className="border-bottom-menu">
-    //         <a className="listmenu-item size-li " href="#">
+    //         <Link className="listmenu-item size-li " to="#">
     //           Thực hiện quyền
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" listmenu-item size-li  " href="#">
+    //         <Link className=" listmenu-item size-li  " to="#">
     //           Đặt lệnh điều kiện
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className="listmenu-item size-li " href="#">
+    //         <Link className="listmenu-item size-li " to="#">
     //           Sổ lệnh điều kiện
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className="rounded-b listmenu-item size-li " href="#">
+    //         <Link className="rounded-b listmenu-item size-li " to="#">
     //           Lưu ký trực tuyến
-    //         </a>
+    //         </Link>
     //       </li>
     //     </ul>
     //   </div>
@@ -108,9 +108,9 @@ const ListMenu = () => {
     //     <span className="  uppercase size hover-text-blue"> Quản lý tk </span>
     //     <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50 ">
     //       <li className="border-bottom-menu">
-    //         <a className=" listmenu-item  size-li" href="#">
+    //         <Link className=" listmenu-item  size-li" to="#">
     //           Báo cáo tổng hợp số dư giao dịch
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
     //         <Link to="/report-bcts" className="listmenu-item  size-li">
@@ -118,54 +118,54 @@ const ListMenu = () => {
     //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" listmenu-item  size-li" href="#">
+    //         <Link className=" listmenu-item  size-li" to="#">
     //           Báo cáo biến động tài sản ròng
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" listmenu-item  size-li" href="#">
+    //         <Link className=" listmenu-item  size-li" to="#">
     //           Báo cáo lãi lỗ thực hiện
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className="listmenu-item  size-li" href="#">
+    //         <Link className="listmenu-item  size-li" to="#">
     //           Báo cáo tổng hợp giao dịch theo mã chứng khoán
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" listmenu-item  size-li" href="#">
+    //         <Link className=" listmenu-item  size-li" to="#">
     //           Số dư chứng khoán
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" listmenu-item  size-li" href="#">
+    //         <Link className=" listmenu-item  size-li" to="#">
     //           Số dư tiền
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className="listmenu-item  size-li" href="#">
+    //         <Link className="listmenu-item  size-li" to="#">
     //           Sao kê chứng khoán
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" listmenu-item  size-li" href="#">
+    //         <Link className=" listmenu-item  size-li" to="#">
     //           Sao kê tiền
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" listmenu-item  size-li" href="#">
+    //         <Link className=" listmenu-item  size-li" to="#">
     //           Tra cứu phí lưu ký
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className="listmenu-item size-li" href="#">
+    //         <Link className="listmenu-item size-li" to="#">
     //           Tra cứu tình trạng chứng quyền
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" rounded-b listmenu-item  size-li" href="#">
+    //         <Link className=" rounded-b listmenu-item  size-li" to="#">
     //           Tra cứu biểu phí
-    //         </a>
+    //         </Link>
     //       </li>
     //     </ul>
     //   </div>
@@ -175,19 +175,19 @@ const ListMenu = () => {
     //     </span>
     //     <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50">
     //       <li className="border-bottom-menu">
-    //         <a className="listmenu-item  size-li" href="#">
+    //         <Link className="listmenu-item  size-li" to="#">
     //           Tra cứu lãi vay
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className="listmenu-item  size-li" href="#">
+    //         <Link className="listmenu-item  size-li" to="#">
     //           Tra cứu chi tiết tài khoản ký quỹ
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" rounded-b listmenu-item  size-li" href="#">
+    //         <Link className=" rounded-b listmenu-item  size-li" to="#">
     //           Sao kê tiền vay ký quỹ
-    //         </a>
+    //         </Link>
     //       </li>
     //     </ul>
     //   </div>
@@ -199,24 +199,24 @@ const ListMenu = () => {
     //     <span className="  uppercase  size hover-text-blue">Hỗ trợ</span>
     //     <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50">
     //       <li className="border-bottom-menu ">
-    //         <a className="listmenu-item  size-li" href="#">
+    //         <Link className="listmenu-item  size-li" to="#">
     //           Sản phẩm dịch vụ trực tuyến
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className="listmenu-item  size-li" href="#">
+    //         <Link className="listmenu-item  size-li" to="#">
     //           Hướng dẫn nhà đầu tư
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className="listmenu-item  size-li" href="#">
+    //         <Link className="listmenu-item  size-li" to="#">
     //           Sản phẩm dịch vụ cho tổ chức
-    //         </a>
+    //         </Link>
     //       </li>
     //       <li>
-    //         <a className=" rounded-b listmenu-item  size-li" href="#">
+    //         <Link className=" rounded-b listmenu-item  size-li" to="#">
     //           Hướng dẫn sử dụng dịch vụ
-    //         </a>
+    //         </Link>
     //       </li>
     //     </ul>
     //   </div>
@@ -227,13 +227,13 @@ const ListMenu = () => {
         <a>Lịch sử GD</a>
         <ul>
           <li>
-            <a target="_blank" href="/report/ClientActivityRange">Lịch sử đặt lệnh</a>
+            <Link  to="/report/ClientActivityRange">Lịch sử đặt lệnh</Link>
           </li>
           <li>
-            <a target="_blank" href="/report/TradeLog">Lịch sử khớp lệnh</a>
+            <Link  to="/report/TradeLog">Lịch sử khớp lệnh</Link>
           </li>
           <li>
-            <a target="_blank" href="/report/PendingSettlement">Lệnh khớp chờ t.toán</a>
+            <Link  to="/report/PendingSettlement">Lệnh khớp chờ t.toán</Link>
           </li>
         </ul>
       </li>
@@ -241,34 +241,34 @@ const ListMenu = () => {
         <a>GD tiền</a>
         <ul>
           <li>
-            <a target="_blank" href="/transfer">Chuyển tiền</a>
+            <Link  to="/transfer">Chuyển tiền</Link>
           </li>
           <li>
-            <a target="_blank" href="/transfer/template">Mẫu chuyển tiền</a>
+            <Link  to="/transfer/template">Mẫu chuyển tiền</Link>
           </li>
           <li>
-            <a target="_blank" href="/transfer/home/transferds">Chuyển tiền ký quỹ CK phái sinh</a>
+            <Link  to="/transfer/home/transferds">Chuyển tiền ký quỹ CK phái sinh</Link>
           </li>
           <li>
-            <a target="_blank" href="/transfer/history">Lịch sử chuyển tiền</a>
+            <Link  to="/transfer/history">Lịch sử chuyển tiền</Link>
           </li>
           <li>
-            <a target="_blank" href="/transfer/ordersavings" className="Foreign-Hide">Tiền cho vay - EzSaving  <input type="image" src="../../report/images/new.png" height={16} width={28} /></a>
+            <Link  to="/transfer/ordersavings" className="Foreign-Hide">Tiền cho vay - EzSaving  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <a target="_blank" href="/transfer/finalizesavings" className="Foreign-Hide">Tất toán tiền cho vay  <input type="image" src="../../report/images/new.png" height={16} width={28} /></a>
+            <Link  to="/transfer/finalizesavings" className="Foreign-Hide">Tất toán tiền cho vay  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <a target="_blank" href="/transfer/savingshistory" className="Foreign-Hide">Danh sách hợp đồng cho vay  <input type="image" src="../../report/images/new.png" height={16} width={28} /></a>
+            <Link  to="/transfer/savingshistory" className="Foreign-Hide">Danh sách hợp đồng cho vay  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <a target="_blank" href="/report/AdvReport" className="MarPro-Hide" style={{display: 'none'}}>Lịch sử ứng trước tiền bán CK</a>
+            <Link  to="/report/AdvReport" className="MarPro-Hide" style={{display: 'none'}}>Lịch sử ứng trước tiền bán CK</Link>
           </li>
           <li>
-            <a target="_blank" href="/rightscustody/AdvanceOrderForm">Ứng trước tiền cổ tức</a>
+            <Link  to="/rightscustody/AdvanceOrderForm">Ứng trước tiền cổ tức</Link>
           </li>
           <li>
-            <a target="_blank" href="/rightscustody/AdvanceHistory">Lịch sử ứng trước tiền cổ tức</a>
+            <Link  to="/rightscustody/AdvanceHistory">Lịch sử ứng trước tiền cổ tức</Link>
           </li>
         </ul>
       </li>
@@ -276,19 +276,19 @@ const ListMenu = () => {
         <a>GD đặc biệt</a>
         <ul>
           <li>
-            <a target="_blank" href="/oddlot/History">Lịch sử bán CK lô lẻ</a>
+            <Link  to="/oddlot/History">Lịch sử bán CK lô lẻ</Link>
           </li>
           <li>
-            <a target="_blank" href="/rightscustody/OverView">Thực hiện quyền</a>
+            <Link  to="/rightscustody/OverView">Thực hiện quyền</Link>
           </li>
           <li>
-            <a target="_blank" href="/stoploss/orderform">Đặt lệnh điều kiện</a>
+            <Link  to="/stoploss/orderform">Đặt lệnh điều kiện</Link>
           </li>
           <li>
-            <a target="_blank" href="/stoploss/history">Sổ lệnh điều kiện</a>
+            <Link  to="/stoploss/history">Sổ lệnh điều kiện</Link>
           </li>
           <li>
-            <a target="_blank" href="/rightscustody/CustodyOrderForm">Lưu ký trực tuyến</a>
+            <Link  to="/rightscustody/CustodyOrderForm">Lưu ký trực tuyến</Link>
           </li>
         </ul>
       </li>
@@ -296,40 +296,40 @@ const ListMenu = () => {
         <a>Quản lý TK</a>
         <ul>
           <li>
-            <a target="_blank" href="/report/ReportTransBalance">Báo cáo tổng hợp số dư giao dịch  <input type="image" src="../../report/images/new.png" height={16} width={28} /></a>
+            <Link  to="/report/ReportTransBalance">Báo cáo tổng hợp số dư giao dịch  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <a target="_blank" href="/report/AssetReport2">Báo cáo tài sản   <input type="image" src="../../report/images/new.png" height={16} width={28} /></a>
+            <Link  to="/report/AssetReport2">Báo cáo tài sản   <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <a target="_blank" href="/report/ReportNAV">Báo cáo biến động tài sản ròng  <input type="image" src="../../report/images/new.png" height={16} width={28} /></a>
+            <Link  to="/report/ReportNAV">Báo cáo biến động tài sản ròng  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <a target="_blank" href="/report/reportprofitloss">Báo cáo lãi lỗ thực hiện  <input type="image" src="../../report/images/new.png" height={16} width={28} /></a>
+            <Link  to="/report/reportprofitloss">Báo cáo lãi lỗ thực hiện  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <a target="_blank" href="/report/ReportTransSummary">Báo cáo tổng hợp giao dịch theo mã chứng khoán  <input type="image" src="../../report/images/new.png" height={16} width={28} /></a>
+            <Link  to="/report/ReportTransSummary">Báo cáo tổng hợp giao dịch theo mã chứng khoán  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <a target="_blank" href="/report/StockDetails">Số dư chứng khoán</a>
+            <Link  to="/report/StockDetails">Số dư chứng khoán</Link>
           </li>
           <li>
-            <a target="_blank" href="/report/CurrMargin">Số dư tiền</a>
+            <Link  to="/report/CurrMargin">Số dư tiền</Link>
           </li>
           <li>
-            <a target="_blank" href="/report/StockSettlement">Sao kê chứng khoán</a>
+            <Link  to="/report/StockSettlement">Sao kê chứng khoán</Link>
           </li>
           <li>
-            <a target="_blank" href="/report/CashSettlement">Sao kê tiền</a>
+            <Link  to="/report/CashSettlement">Sao kê tiền</Link>
           </li>
           <li>
-            <a target="_blank" href="/rightscustody/DepositoryHistory">Tra cứu phí lưu ký</a>
+            <Link  to="/rightscustody/DepositoryHistory">Tra cứu phí lưu ký</Link>
           </li>
           <li>
-            <a target="_blank" href="/report/ReportCW">Tra cứu tình trạng chứng quyền</a>
+            <Link  to="/report/ReportCW">Tra cứu tình trạng chứng quyền</Link>
           </li>
           <li>
-            <a target="_blank" href="/report/ListFee">Tra cứu biểu phí</a>
+            <Link  to="/report/ListFee">Tra cứu biểu phí</Link>
           </li>
         </ul>
       </li>
@@ -337,22 +337,22 @@ const ListMenu = () => {
         <a>Quản lý ký quỹ</a>
         <ul>
           <li>
-            <a target="_blank" href="/margin/Mortgage">Cầm cố chứng khoán</a>
+            <Link  to="/margin/Mortgage">Cầm cố chứng khoán</Link>
           </li>
           <li>
-            <a target="_blank" href="/margin/Report">Tra cứu tham số - HĐ Ký quỹ</a>
+            <Link  to="/margin/Report">Tra cứu tham số - HĐ Ký quỹ</Link>
           </li>
           <li>
-            <a target="_blank" href="/margin/Payment">Trả tiền HĐ Ký quỹ</a>
+            <Link  to="/margin/Payment">Trả tiền HĐ Ký quỹ</Link>
           </li>
           <li>
-            <a target="_blank" href="/margin/ReportPayment">Tra cứu trả tiền HĐ Ký quỹ</a>
+            <Link  to="/margin/ReportPayment">Tra cứu trả tiền HĐ Ký quỹ</Link>
           </li>
           <li>
-            <a target="_blank" href="/margin/Extend">Gia hạn hợp đồng Ký quỹ</a>
+            <Link  to="/margin/Extend">Gia hạn hợp đồng Ký quỹ</Link>
           </li>
           <li>
-            <a target="_blank" href="/margin/Quota">Đề nghị thay đổi hạn mức</a>
+            <Link  to="/margin/Quota">Đề nghị thay đổi hạn mức</Link>
           </li>
         </ul>
       </li>
@@ -360,39 +360,39 @@ const ListMenu = () => {
         <a>Quản lý ký quỹ</a>
         <ul>
           <li>
-            <a target="_blank" href="/margin/InterestMP">Tra cứu lãi vay ký quỹ</a>
+            <Link  to="/margin/InterestMP">Tra cứu lãi vay ký quỹ</Link>
           </li>
           <li>
-            <a target="_blank" href="/margin/DetailReport">Tra cứu chi tiết tài khoản ký quỹ</a>
+            <Link  to="/margin/DetailReport">Tra cứu chi tiết tài khoản ký quỹ</Link>
           </li>
           <li>
-            <a target="_blank" href="/margin/CashSettlementMP">Sao kê tiền vay ký quỹ</a>
+            <Link  to="/margin/CashSettlementMP">Sao kê tiền vay ký quỹ</Link>
           </li>
           <li>
-            <a target="_blank" href="/margin/ParameterMP">Tra cứu tham số ký quỹ</a>
+            <Link  to="/margin/ParameterMP">Tra cứu tham số ký quỹ</Link>
           </li>
           <li>
-            <a target="_blank" href="/margin/QuotaMP">Đề nghị thay đổi hạn mức</a>
+            <Link  to="/margin/QuotaMP">Đề nghị thay đổi hạn mức</Link>
           </li>
         </ul>
       </li>
       <li className="ezfu-hover-tuvandautu">
-        <a target="_blank" href="https://ezadvisorselect.fpts.com.vn/">Tư vấn Đầu tư</a>
+        <Link  to="https://ezadvisorselect.fpts.com.vn/">Tư vấn Đầu tư</Link>
       </li>
       <li className="eezfu-hover-giaodichdacbiet">
         <a>Hỗ trợ</a>
         <ul>
           <li>
-            <a target="_blank" href="http://www.fpts.com.vn/san-pham-dich-vu/giao-dich-chung-khoan/mo-tai-khoan-giao-dich-chung-khoan/">Sản phẩm dịch vụ trực tuyến</a>
+            <Link  to="http://www.fpts.com.vn/san-pham-dich-vu/giao-dich-chung-khoan/mo-tai-khoan-giao-dich-chung-khoan/">Sản phẩm dịch vụ trực tuyến</Link>
           </li>
           <li>
-            <a target="_blank" href="http://www.fpts.com.vn/ho-tro-khach-hang/giao-dich-chung-khoan-co-so/cau-hoi-thuong-gap/">Hướng dẫn Nhà đầu tư</a>
+            <Link  to="http://www.fpts.com.vn/ho-tro-khach-hang/giao-dich-chung-khoan-co-so/cau-hoi-thuong-gap/">Hướng dẫn Nhà đầu tư</Link>
           </li>
           <li>
-            <a target="_blank" href="http://www.fpts.com.vn/san-pham-dich-vu/tu-van-doanh-nghiep/">Sản phẩm dịch vụ cho Tổ chức</a>
+            <Link  to="http://www.fpts.com.vn/san-pham-dich-vu/tu-van-doanh-nghiep/">Sản phẩm dịch vụ cho Tổ chức</Link>
           </li>
           <li>
-            <a target="_blank" href="http://fpts.com.vn/ho-tro-khach-hang/giao-dich-chung-khoan-co-so/huong-dan-su-dung-dich-vu/marketwatch-va-do-thi-tren-eztrade-new/">Hướng dẫn sử dụng dịch vụ</a>
+            <Link  to="http://fpts.com.vn/ho-tro-khach-hang/giao-dich-chung-khoan-co-so/huong-dan-su-dung-dich-vu/marketwatch-va-do-thi-tren-eztrade-new/">Hướng dẫn sử dụng dịch vụ</Link>
           </li>
         </ul>
       </li>
