@@ -7,8 +7,12 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import TableTotalMonney from "./TableTotalMonney";
 
-import './style.css'
+import './styleOrderForm.css'
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { decrement, increment } from "./counterSlice";
 const OrderMarketW = () => {
+  const dispatch = useAppDispatch();
+  const {data} = useAppSelector(state => state.counter);
   const [counter, setCounter] = useState(0);
 
   const incrementCounter = () => {
@@ -61,38 +65,7 @@ const OrderMarketW = () => {
   }
   };
   const [open2, setOpen2] = useState(false);
-  const Android12Switch = styled(Switch)(({ theme }) => ({
-    padding: 8,
-    '& .MuiSwitch-track': {
-      borderRadius: 22 / 2,
-      '&:before, &:after': {
-        content: '""',
-        position: 'absolute',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        width: 16,
-        height: 16,
-      },
-      '&:before': {
-        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-          theme.palette.getContrastText(theme.palette.primary.main),
-        )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
-        left: 12,
-      },
-      '&:after': {
-        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-          theme.palette.getContrastText(theme.palette.primary.main),
-        )}" d="M19,13H5V11H19V13Z" /></svg>')`,
-        right: 12,
-      },
-    },
-    '& .MuiSwitch-thumb': {
-      boxShadow: 'none',
-      width: 16,
-      height: 16,
-      margin: 2,
-    },
-  }));
+ 
 
   return (
     <div className="bg-white text-black" id="tablepricelist">
@@ -186,7 +159,7 @@ const OrderMarketW = () => {
                   <div className="ms-sel-ctn">
                     <input
                       type="text"
-                      className="form-control ui-autocomplete-input size-input p-[2px] w-[100%] mr-[14px] rounded-md pl-[6px]
+                      className="form-control ui-autocomplete-input size-input p-[2px] w-[100%] mr-[14px] rounded-md pl-[8px]
                       p-[1px]
                        tttt
 
@@ -203,7 +176,7 @@ const OrderMarketW = () => {
             <div className="inpBalance text-center w-1/4">
               <div id="divMaxOrder ">
                 <span className=" text-xs " id="fillMaxOrder">
-                  Tối đa: <span id="spnMaxOrder"></span>
+                  Tối đa: <span id="spnMaxOrder"> {data}</span>
                 </span>
               </div>
               <div className="container-spinner fix-margin ">
@@ -221,7 +194,7 @@ const OrderMarketW = () => {
                   <button
                     type="button"
                     id="btnUpQty"
-                    onClick={() => incrementCounter()}
+                    onClick={() => dispatch(decrement(1))}
                     className="up button-spinner relative  text-[#d3d3d3] rounded-md 
 
                     "
@@ -231,7 +204,7 @@ const OrderMarketW = () => {
                   <button
                     type="button"
                     id="btnDownQty"
-                    onClick={() => decrementCounter()}
+                    onClick={() => dispatch(increment(1))}
                     className="down button-spinner relative text-[#d3d3d3]"
                   >
                     ‹
@@ -322,9 +295,9 @@ const OrderMarketW = () => {
               />
               <button
                 id="btnBuySend"
-                className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] ml-[10px]  size-li rounded-md text-white w-4/5"
+                className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] ml-[10px]  text-13px rounded-md text-white w-4/5"
               >
-                Gửi
+                GỬI
               </button>
 
               {/* <input id="btnBuySend" type="button" className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] rounded-lg pl-10 pr-10 mt-[7px] ml-[15px]" value="Gửi"  /> */}
@@ -338,10 +311,10 @@ const OrderMarketW = () => {
               <div className="h-[14px]"></div>
               <button className="refresh" id="btnReset">
                 <img
-                  className="mt-[4px] mr-[8px] ml-[10px] "
+                  className="mt-[2px] mr-[8px] ml-[10px] "
                   src="http://priceboard3.fpts.com.vn/images/EzFuture-05.png"
                 />
-                <span className="size-li ">Làm lại</span>
+                <span className="text-13px">Làm lại</span>
               </button>
             </div>
           </div>

@@ -5,7 +5,7 @@
    padding: 2px 4px;
    border: 1px solid #505050;
    font-weight:400;
-   font-size:14px
+   font-size:13.333333px
 } 
 /* 'red': '#FF0000',
 'green':'#00FF00',
@@ -218,10 +218,9 @@
    cursor: pointer;
 }
 .footer-content {
-   margin-top: 10px;
+   padding: 10px 0;
    text-align: center;
    color: #717171;
-   margin-bottom: 10px;
 }
 .btn-chart {
    border-radius: unset;
@@ -234,4 +233,8 @@
 .btn-chart:hover {
    background-color: #2371AF !important;
    color: #fff;
+}
+.tableMW{
+   background-color: #1D1D1D;
+   color:#fff
 }

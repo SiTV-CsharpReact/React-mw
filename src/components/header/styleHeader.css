@@ -74,22 +74,7 @@
 .tttt{
     border: 1px solid #dedede;
 }
- #btnUpQty{
-    transform: rotate(-90deg);
-    top: -21px;
-    right: 1px;
-    font-size: 2.2rem;
-    border: none;
-    font-size: 2.2rem;
-    
-}
-#btnDownQty{
-    transform: rotate(-90deg);
-    top: -58px;
-    border: none;
-    right: 1px;
-    font-size: 2.2rem;
-}
+
 
 input[type=text], txtSymbol {
     outline: none;
@@ -108,20 +93,7 @@ input[type=text], txtSymbol {
 .container-spinner {
     position: relative;
 }
-#btnUpPrice{
-    transform: rotate(-90deg);
-    top: -21px;
-    right: -1px;
-    font-size: 2.2rem;
-    border: none;
-}
-#btnDownPrice{
-    transform: rotate(-90deg);
-    top: -58px;
-    right: -1px;
-    font-size: 2.2rem;
-    border: none;
-}
+
 .spinner {
     right: 3px;
     top: 2px;

@@ -10,6 +10,8 @@ import SettingTable from "./SettingTable";
 import DateTime from "./DateTime";
 
 import LineChart from "../../images/line-chart-32.png"
+import { useAppDispatch } from "../../store/configureStore";
+import { fetchTableAsync, fetchTableHSXAsync } from "../tableMarketwat/tableSlice";
 let stateIndex = 0;
 const callExpand = (id: string, hideClass: string) => {
   const divIndex = document.getElementById("divIndexChart");
@@ -39,18 +41,19 @@ const callExpand = (id: string, hideClass: string) => {
   }
 };
 const MenuBarMW = () => {
-  const [open, setOpen] = React.useState(false);
-  const [stockData, setStockData] = useState([]);
-  const [weatherData, setWeatherData] = useState([]);
+  const dispatch = useAppDispatch();
+  // const [open, setOpen] = React.useState(false);
+  // const [stockData, setStockData] = useState([]);
+  // const [weatherData, setWeatherData] = useState([]);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
- 
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+   
   return (
     <div className="flex justify-between h-30 bg-headerMenuTableMarket relative">
       <div className="flex ">
@@ -59,8 +62,8 @@ const MenuBarMW = () => {
           <ul className="absolute hidden text-black pt-1.5 group-hover:block z-40">
             <li>
               <NavLink
-                to="/"
-                
+                to="/Table"
+                onClick={() => dispatch(fetchTableAsync())}
                 className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
               >
                 HNX
@@ -85,10 +88,19 @@ const MenuBarMW = () => {
             <li>
               <Link
                 to="/"
+             
                 className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white rounded-b"
               >
                 Giao dịch thỏa thuận
               </Link>
+            </li>
+            <li>
+              <span className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white rounded-b"
+                onClick={() => dispatch(fetchTableHSXAsync())}>HSX</span>
+            </li>
+            <li>
+              <span className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white rounded-b"
+                onClick={() => dispatch(fetchTableAsync())}>HNX</span>
             </li>
           </ul>
         </div>
@@ -99,7 +111,8 @@ const MenuBarMW = () => {
           <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50">
             <li>
               <NavLink
-                to="/marketwatch-hsx"
+                to="/Table"
+                onClick={() => dispatch(fetchTableHSXAsync())}
                 className=" bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
               >
                 VNI

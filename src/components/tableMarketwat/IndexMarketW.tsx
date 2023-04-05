@@ -24,8 +24,33 @@ import MenuMarketWatch from "../indexMarketWat/MenuMarketWatch";
 import MenuBarMW from "../menuBarMW/MenuBarMW";
 import TableMarketW from "../orderFormMarketwat/OrderFormMarketWatch";
 import OrderMarketW from "../orderFormMarketwat/OrderFormMarketWatch";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { fetchTableAsync } from "./tableSlice";
+//import { productSelectors } from "./tableSlice";
 
 const IndexMarketW = () => {
+  const dispatch = useAppDispatch();
+  //const productssss = useAppSelector(productSelectors.selectAll);
+ // const { productsLoaded,productParams} = useAppSelector(state => state.table);
+  const  table  = useAppSelector(state => state.table.table);
+console.log(table );
+useEffect(()=>{
+    dispatch(fetchTableAsync())
+},[])
+ //console.log(productssss);
+ 
+  // const dispatch = useAppDispatch();
+  // const { table } = useAppSelector(state => state.table);
+  // console.log(table);
+  // const dispatch = useAppDispatch();
+  // const data = useAppSelector((state) => state.data);
+  // const loading = useAppSelector((state) => state.loading);
+  // const error = useAppSelector((state) => state.data.error);
+
+  // useEffect(() => {
+  //   dispatch(fetchData());
+  // }, [dispatch]);
+  // console.log(data)
 //const arrayPrice =[5,7,9,11,14,16,18]
  // const arrayKL =[6,8,10,12,15,17,19]
   //const arrayColor ="text-red text-green text-blue text-white text-yellow text-violet";
@@ -33,7 +58,7 @@ const IndexMarketW = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState("{}");
   
-
+  // /const size = useWindowSize();
   const [products, setProductsHNX] = useState<[] | null>(null);
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
   // const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -42,8 +67,8 @@ const IndexMarketW = () => {
     async function fetchData() {
         try {
             setLoading(true);
-            const responseHNX = await axios.get(`/hnx/data.ashx?s=quote&l=HNXIndex`);
-            const responsesttHNX = await axios.get(`/hsx/data.ashx?s=index`);
+            const responseHNX = await axios.get(`http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=HNXIndex`);
+            const responsesttHNX = await axios.get(`http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`);
             setProductsHNX(responseHNX.data);
             setStatusMarket(responsesttHNX.data);
           } catch (error) {
@@ -56,7 +81,7 @@ const IndexMarketW = () => {
       fetchData();
    
   }, []);
- 
+  
  
   //if (loading) return <div className="h-420">Loading...</div>
 
@@ -421,6 +446,9 @@ const IndexMarketW = () => {
     
     </div>
     <OrderMarketW/>
+
+   
+
     </div>
     </div>
   );

@@ -69,7 +69,7 @@
 }
 .btnBuyGui{
     padding: 4px 20px 3px;
-    
+    height: 29px;
     margin-top: 3px;
    
 }
@@ -83,9 +83,60 @@
     padding:3px 0px;
 
     width: 90px;
+    box-shadow: rgba(0, 0, 0, 0.075) 0px 1px 1px inset;
 }
 .panelDatLenhThuong input {
     height: 29px !important;
+}
+#btnUpQty{
+    transform: rotate(-90deg);
+    top: -15px;
+    right: -4px;
+    font-size: 1.8rem;
+    border: none;
+}
+#btnDownQty{
+    transform: rotate(-90deg);
+    top: -1px;
+    border: none;
+    right: 5px;
+    font-size: 1.8rem;
+}
+#btnUpPrice{
+    transform: rotate(-90deg);
+    top: -15px;
+    right: -5px;
+    font-size: 1.8rem;
+    border: none;
+}
+#btnDownPrice{
+    transform: rotate(-90deg);
+    top: -1px;
+    border: none;
+    right: 5px;
+    font-size: 1.8rem;
+}
+.divReset{
+    max-width: 100px;
+    text-align: left;
+    padding-right: 20px;
+    margin-left: -15px; 
+}
+.btnBuyGui:hover, .btnBuyGhi:hover {
+    background-color: #3987c5 !important;
+}
+#divBot #txtSymbolBase .ms-sel-ctn {
+    overflow: auto;
+    line-height: 18px;
+    padding-right: 0px !important;
+    text-transform: uppercase;
+}
+#divPanelBottom .button-spinner:hover {
+    color: #808080;
+}
+button#btnReset:hover {
+    border: 1px solid #66afe9 !important;
+    border-radius: 5px;
 }
 @media only screen and (max-width: 600px) {
     body {

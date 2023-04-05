@@ -18,8 +18,8 @@ const HNX30MarketWatch = () => {
     async function fetchData() {
         try {
         
-            const responseHNX = await axios.get(`/hnx/data.ashx?s=quote&l=HNXIndex`);
-            const responsesttHNX = await axios.get(`/hsx/data.ashx?s=index`);
+            const responseHNX = await axios.get(`http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=HNXIndex`);
+            const responsesttHNX = await axios.get(`http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`);
             setProductsHNX(responseHNX.data);
             setStatusMarket(responsesttHNX.data);
           } catch (error) {

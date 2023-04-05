@@ -1,97 +1,18 @@
-import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react'
-import LoadingComponent from '../../layout/LoaddingComponent';
-import { checkSTTMarket, formatNumber, formatNumberMarket, setColorMarket, tinhGiaTC} from "../../utils/util";
-import HeaderMarketW from '../headerMarketwat/HeaderMarket';
+import React, { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '../../store/configureStore';
+import { fetchTableAsync } from './tableSlice';
+import { formatNumber, formatNumberMarket, setColorMarket } from '../../utils/util';
 import "../../styles/MW.css";
-import MenuMarketWatch from '../indexMarketWat/MenuMarketWatch';
-import MenuBarMW from '../menuBarMW/MenuBarMW';
-import OrderMarketW from '../orderFormMarketwat/OrderFormMarketWatch';
-import { ObjectMenuHSX } from '../../models/modelListMenuHSX';
-import FooterMarket from "../footerMarketwat/FooterMarket";
-const HSXMarketWatch = () => {
-    const [loading,setLoading] = useState(true);
-    const [data, setData] = useState("");
-  const [products, setProducts] = useState<[] | null>(null);
-  const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
-  // const iframeRef = useRef<HTMLIFrameElement>(null);
-  // useEffect(() => {
-  //   if (iframeRef.current) {
-  //     iframeRef.current.onload = () => {
-  //       // Do something when iframe is loaded
-  //     };
-  //   }
-  // }, [iframeRef]);
-  useEffect(() => {
-    // axios.get(`http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=All`)
-    // .then(res=>setProducts(res.data))
-    // .catch(error=>{
-    //   console.log(error);
-    // })
-    // .finally(()=> setLoading(false));
-    async function fetchData() {
-      try {
-          setLoading(true);
-          const responseHSX = await axios.get(`http://marketstream.fpts.com.vn/hsx2/data.ashx?s=quote&l=All`);
-          const responsesttHSX = await axios.get(`http://marketstream.fpts.com.vn/hsx2/data.ashx?s=index`);
-          setProducts(responseHSX.data);
-          setStatusMarket(responsesttHSX.data);
-        } catch (error) {
-          console.log(error);
-        } 
-        finally {
-          setLoading(false);
-        }
-    }
-    fetchData();
-}, []);
-// useEffect(() => {
-//   async function fetchData() {
-//       try {
-//           setLoading(true);
-//           const responseHNX = await axios.get(`http://marketstream.fpts.com.vn/hnx2/data.ashx?s=quote&l=HNXIndex`);
-//           const responsesttHNX = await axios.get(`http://marketstream.fpts.com.vn/hsx2/data.ashx?s=index`);
-//           setProductsHNX(responseHNX.data);
-//           setStatusMarket(responsesttHNX.data);
-//         } catch (error) {
-//           console.log(error);
-//         } 
-//         // finally {
-//         //   setLoading(false);
-//         // }
-//     }
-//     fetchData();
- 
-// }, []);
-useEffect(() => {
-    const socket = new WebSocket('ws://eztrade.fpts.com.vn/hsx2/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=PPIIZqMyjQ27Vj31ZUHh2gx5rQ8ffBgdgTDk0g94ho5bjEya6LB8rJe%2FpoUd29o9jM3fchuIkHDJf0xHvsererRIO6XXZ1Nfq5keTYR%2FcTWuSbOLojXPJeVLob6ucBAB&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=5');
-
-    socket.onopen = () => {
-      console.log('WebSocket connection established.');
-    };
-
-    socket.onmessage = (event) => {
-      setData(event.data);
-    };
-
-    socket.onclose = () => {
-      console.log('WebSocket connection closed.');
-    };
-
-    return () => {
-      socket.close();
-    };
-  }, []);
-  console.log(products)
-  console.log(data)
-//if (loading) return <div className="h-420">Loading...</div>
-   const test= products;
+const TableMarketWatch = () => {
+    const dispatch = useAppDispatch();
+  //const productssss = useAppSelector(productSelectors.selectAll);
+ // const { productsLoaded,productParams} = useAppSelector(state => state.table);
+  const  products = useAppSelector(state => state.table.table);
+ console.log(products)
+useEffect(()=>{
+    dispatch(fetchTableAsync())
+},[dispatch])
   return (
-    <div className=" bg-BGTableMarket text-white" >
-    <MenuMarketWatch />
-  <MenuBarMW/>  
-    <div className='h-420 overflow-auto table_market' id="indexMarketW">
-  <HeaderMarketW/>
     <table className="w-full tableMW">
     <colgroup>
         <col className="col-symbol" />
@@ -141,7 +62,7 @@ useEffect(() => {
       <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right ${setColorMarket(dataTable.Info[1][1],dataTable.Info[7][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}>{formatNumberMarket(dataTable.Info[8][1])}</td>
        {/* G1 */}
       {/* <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right ${setColorMarket(dataTable.Info[1][1],dataTable.Info[9][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}>{formatNumberMarket(dataTable.Info[9][1])}</td> */}
-      <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right ${setColorMarket(dataTable.Info[1][1],dataTable.Info[9][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}> {checkSTTMarket(formatNumberMarket(dataTable.Info[9][1]),statusMarket?.STAT_ControlCode,(dataTable.Info[10][1]))}</td>
+      <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right ${setColorMarket(dataTable.Info[1][1],dataTable.Info[9][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}> oke</td>
        {/* KL1 */}
       <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right ${setColorMarket(dataTable.Info[1][1],dataTable.Info[9][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}>{formatNumberMarket(dataTable.Info[10][1])}</td>
        {/* Gia Khơp lenh */}
@@ -149,7 +70,7 @@ useEffect(() => {
        {/* KL */}
       <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right bg-BGTableHoverMarket  ${setColorMarket(dataTable.Info[1][1],dataTable.Info[11][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}>{formatNumberMarket(dataTable.Info[12][1])}</td>
        {/* +-*/}
-      <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right bg-BGTableHoverMarket  ${setColorMarket(dataTable.Info[1][1],dataTable.Info[11][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}>{tinhGiaTC(dataTable.Info[1][1],dataTable.Info[11][1])}</td>
+      <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right bg-BGTableHoverMarket  ${setColorMarket(dataTable.Info[1][1],dataTable.Info[11][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}>oke</td>
        {/* G1 Ban*/}
       <td className={`border px-1 py-0.5 font-normal border-borderBodyTableMarket text-xs text-right ${setColorMarket(dataTable.Info[1][1],dataTable.Info[14][1],dataTable.Info[2][1],dataTable.Info[3][1])}`}>{formatNumberMarket(dataTable.Info[14][1])}</td>
        {/* KL1 */}
@@ -177,12 +98,7 @@ useEffect(() => {
     
   </tbody>
 </table>
-<FooterMarket/>
-   {/* //<IframeComponent/> */}
-   </div>
-   <OrderMarketW/>
-   </div>
   )
 }
 
-export default HSXMarketWatch
+export default TableMarketWatch
