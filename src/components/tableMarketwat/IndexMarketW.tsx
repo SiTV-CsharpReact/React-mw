@@ -25,7 +25,7 @@ import MenuBarMW from "../menuBarMW/MenuBarMW";
 import TableMarketW from "../orderFormMarketwat/OrderFormMarketWatch";
 import OrderMarketW from "../orderFormMarketwat/OrderFormMarketWatch";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
-import { fetchTableAsync } from "./tableSlice";
+import { fetchTableHNXAsync } from "./tableSlice";
 //import { productSelectors } from "./tableSlice";
 
 const IndexMarketW = () => {
@@ -35,7 +35,7 @@ const IndexMarketW = () => {
   const  table  = useAppSelector(state => state.table.table);
 console.log(table );
 useEffect(()=>{
-    dispatch(fetchTableAsync())
+    dispatch(fetchTableHNXAsync())
 },[])
  //console.log(productssss);
  

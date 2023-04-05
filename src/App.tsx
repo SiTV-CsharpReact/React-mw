@@ -14,13 +14,13 @@ function App() {
     <div>
   
       <Routes>
-        <Route path="/" element={<IndexMarketW />} />
+        <Route index path="/" element={<LayoutMarketWatch />} />
         <Route path="/marketwatch-hsx" element={<HSXMarketWatch />} />
         <Route path="/marketwatch-vn30" element={<VN30MarketWatch />} />
         <Route path="/marketwatch-hnx30" element={<HNX30MarketWatch />} />
         <Route path="/report-bcts" element={<AssetReport />} />
-        <Route path="/HNI" element={<HNIMarketWatch />} />
-        <Route path="/Table" element={<LayoutMarketWatch />} />
+        {/* <Route path="/HNI" element={<HNIMarketWatch />} />
+        <Route path="/Table" element={<LayoutMarketWatch />} /> */}
         {/* <Route path="/hnx" element={<IndexMarketW/>}/> */}
       </Routes>
       {/* <IndexMarketW/> */}

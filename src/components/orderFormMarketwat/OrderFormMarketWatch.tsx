@@ -11,8 +11,8 @@ import './styleOrderForm.css'
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { decrement, increment } from "./counterSlice";
 const OrderMarketW = () => {
-  const dispatch = useAppDispatch();
-  const {data} = useAppSelector(state => state.counter);
+  //const dispatch = useAppDispatch();
+  //const {data} = useAppSelector(state => state.counter);
   const [counter, setCounter] = useState(0);
 
   const incrementCounter = () => {
@@ -176,7 +176,7 @@ const OrderMarketW = () => {
             <div className="inpBalance text-center w-1/4">
               <div id="divMaxOrder ">
                 <span className=" text-xs " id="fillMaxOrder">
-                  Tối đa: <span id="spnMaxOrder"> {data}</span>
+                  Tối đa: <span id="spnMaxOrder"> 0</span>
                 </span>
               </div>
               <div className="container-spinner fix-margin ">
@@ -194,7 +194,7 @@ const OrderMarketW = () => {
                   <button
                     type="button"
                     id="btnUpQty"
-                    onClick={() => dispatch(decrement(1))}
+                    // onClick={() => dispatch(decrement(1))}
                     className="up button-spinner relative  text-[#d3d3d3] rounded-md 
 
                     "
@@ -204,7 +204,7 @@ const OrderMarketW = () => {
                   <button
                     type="button"
                     id="btnDownQty"
-                    onClick={() => dispatch(increment(1))}
+                    // onClick={() => dispatch(increment(1))}
                     className="down button-spinner relative text-[#d3d3d3]"
                   >
                     ‹
@@ -332,4 +332,4 @@ const OrderMarketW = () => {
   );
 };
 
-export default memo(OrderMarketW);
+export default OrderMarketW;
