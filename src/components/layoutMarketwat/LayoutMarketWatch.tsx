@@ -11,6 +11,7 @@ const LayoutMarketWatch  = (prop:Props) => {
     <div>
         <MenuMarketWatch/>
         <MenuBarMW/>
+        
        {prop.content}
         <OrderMarketW/>
     </div>
