@@ -5,7 +5,7 @@ import LayoutMarketWatch from '../layoutMarketwat/LayoutMarketWatch'
 
 const HNIMarketWatch = () => {
   return (
-    <div><LayoutMarketWatch content={<>oke</>}/></div>
+    <div></div>
   )
 }
 

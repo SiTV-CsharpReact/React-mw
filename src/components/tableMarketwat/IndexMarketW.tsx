@@ -25,8 +25,20 @@ import MenuBarMW from "../menuBarMW/MenuBarMW";
 import TableMarketW from "../orderFormMarketwat/OrderFormMarketWatch";
 import OrderMarketW from "../orderFormMarketwat/OrderFormMarketWatch";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { fetchTableAsync } from "./tableSlice";
+//import { productSelectors } from "./tableSlice";
 
 const IndexMarketW = () => {
+  const dispatch = useAppDispatch();
+  //const productssss = useAppSelector(productSelectors.selectAll);
+ // const { productsLoaded,productParams} = useAppSelector(state => state.table);
+  const  table  = useAppSelector(state => state.table.table);
+console.log(table );
+useEffect(()=>{
+    dispatch(fetchTableAsync())
+},[])
+ //console.log(productssss);
+ 
   // const dispatch = useAppDispatch();
   // const { table } = useAppSelector(state => state.table);
   // console.log(table);
@@ -434,6 +446,9 @@ const IndexMarketW = () => {
     
     </div>
     <OrderMarketW/>
+
+   
+
     </div>
     </div>
   );

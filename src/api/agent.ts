@@ -8,7 +8,7 @@ const requests = {
 }
 const Table = {
     list: (params: URLSearchParams) => requests.get('http://marketstream.fpts.com.vn/hnx/data.ashx', params),
-    get: () => requests.get('http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=HNXIndex'),
+    get: () => requests.get('/hnx/data.ashx?s=quote&l=HNXIndex'),
 }
 const agent = {
     Table,

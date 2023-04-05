@@ -3,16 +3,25 @@ import HeaderMarketW from '../headerMarketwat/HeaderMarket'
 import MenuMarketWatch from '../indexMarketWat/MenuMarketWatch'
 import MenuBarMW from '../menuBarMW/MenuBarMW'
 import OrderMarketW from '../orderFormMarketwat/OrderFormMarketWatch'
+import TableMarketWatch from '../tableMarketwat/TableMarketWatch'
 type Props ={
     content:ReactElement;
 }
-const LayoutMarketWatch  = (prop:Props) => {
+const LayoutMarketWatch  = () => {
   return (
     <div>
-        <MenuMarketWatch/>
-        <MenuBarMW/>
-       {prop.content}
+       <div className=" bg-BGTableMarket text-white panel-horizontally" >
+        <div id="panel-top" className="panel-top bg-black" style={{height: '516.99px'}}>
+     
+        <MenuMarketWatch />
+      <MenuBarMW/>  
+    <div className="h-420 overflow-auto relative z-10 table_market" id="tableHNX">
+        <HeaderMarketW/>
+        <TableMarketWatch/> 
+        </div>
         <OrderMarketW/>
+        </div>
+        </div>
     </div>
   )
 }

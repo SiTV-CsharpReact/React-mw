@@ -7,6 +7,7 @@ import React from "react";
 import AssetReport from "./pages/Report/AssetReport";
 import HNIMarketWatch from "./components/tableMarketwat/HNIMarketWatch";
 import HNX30MarketWatch from "./components/tableMarketwat/HNX30MarketWatch";
+import LayoutMarketWatch from "./components/layoutMarketwat/LayoutMarketWatch";
 function App() {
   const { t } = useTranslation(["home", "report"]);
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/marketwatch-hnx30" element={<HNX30MarketWatch />} />
         <Route path="/report-bcts" element={<AssetReport />} />
         <Route path="/HNI" element={<HNIMarketWatch />} />
+        <Route path="/Table" element={<LayoutMarketWatch />} />
         {/* <Route path="/hnx" element={<IndexMarketW/>}/> */}
       </Routes>
       {/* <IndexMarketW/> */}
