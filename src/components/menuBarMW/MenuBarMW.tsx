@@ -60,7 +60,7 @@ const MenuBarMW = () => {
           <ul className="absolute hidden text-black pt-1.5 group-hover:block z-40">
             <li>
               <NavLink
-                to="/"
+                to="/HNX"
                 onClick={() => dispatch(fetchTableHNXAsync())}
                 className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
               >
@@ -70,16 +70,16 @@ const MenuBarMW = () => {
                 onClick={() => dispatch(fetchTableHNXAsync())}>HNX</span> */}
             </li>
             <li>
-            <NavLink to="/" className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white rounded-b"
-                onClick={() => dispatch(fetchTableHNX30Async())}>HNX30</NavLink>
+            <NavLink to="/HNX30" className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white rounded-b"
+              >HNX30</NavLink>
             </li>
             <li>
-            <NavLink to="/"  className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white rounded-b"
+            <NavLink to="/BOND"  className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white rounded-b"
                 onClick={() => dispatch(fetchTableBONDAsync())}>BOND</NavLink>
             </li>
             <li>
               <Link
-                to="/"
+                to="/thoathuanhnx"
                 // onClick={() => dispatch(fetchBasketAsync())}
                 className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white rounded-b"
               >

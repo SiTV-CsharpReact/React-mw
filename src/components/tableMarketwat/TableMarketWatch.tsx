@@ -5,12 +5,24 @@ import { checkSTTMarket, formatNumber, formatNumberMarket, setColorMarket, tinhG
 import "../../styles/MW.css";
 import axios from 'axios';
 import { ObjectMenuHSX } from '../../models/modelListMenuHSX';
+import { useParams } from 'react-router-dom';
+import { stocks } from '../../models/marketwacthTable';
+import HeaderMarketW from '../headerMarketwat/HeaderMarket';
 const TableMarketWatch = () => {
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
     const dispatch = useAppDispatch();
+    const [products, setProducts] = useState([]);
+
+    const params = useParams<{ id: string }>()
+    const paramstock  = stocks.find(
+      paramstock => paramstock.id === params.id
+    )
+//     const param = window.location.search;
+//     const urlParams = new URLSearchParams(param);
+// console.log(urlParams)
   //const productssss = useAppSelector(productSelectors.selectAll);
  // const { productsLoaded,productParams} = useAppSelector(state => state.table);
-  const  products = useAppSelector(state => state.table.table);
+  //const  products = useAppSelector(state => state.table.table);
 //const  statusMarket = useAppSelector(state => state.table.table);
 useEffect(() => {
   async function fetchData() {
@@ -23,12 +35,56 @@ useEffect(() => {
     }
     fetchData();
  
-}, []);
- console.log(products)
+}, [paramstock?.id]);
+useEffect(()=>{
+   if(paramstock){
+    if(paramstock.id){
+      fetchTable(paramstock.id)
+    }
+    else{
+      fetchTable("HNX")
+    }
+   }
+  //   if(type1 && type2) {
+  
+  //     fetchTable(type1, type2)
+  
+  //   } else {
+  
+  //     fetchTable("HNX", "HNX30")
+  
+  //   }
+  
+  },[paramstock?.id])
+ //console.log(products)
 useEffect(()=>{
     dispatch(fetchTableHNXAsync())
     //dispatch(fetchStatusAsync())
 },[dispatch])
+
+const fetchTable = async(param:string) => {
+  let valueParam ="HNX";
+   switch(param) {
+    case "HNX":
+      valueParam= "s=quote&l=HNXIndex";
+      break;
+      case "HNX30":
+        valueParam = "s=quote&l=HNX30";
+        break;
+        case "BOND":
+          valueParam = "s=quote&l=BOND";
+          break;
+      default:
+        break;
+   }
+   console.log(valueParam)
+    const res = await fetch(`http://marketstream.fpts.com.vn/hnx/data.ashx?${valueParam}`);
+  
+    const data = await res.json();
+  
+    setProducts(data)
+  
+  }
 
 
 const rows = products?.map((dataTable: any) => (
@@ -342,7 +398,8 @@ const rows = products?.map((dataTable: any) => (
 ));
 
   return (
-    <table className="w-full tableMW">
+    <> <HeaderMarketW/>
+      <table className="w-full tableMW">
     <colgroup>
         <col className="col-symbol" />
         <col className="show-on-mobile col-price" />
@@ -373,7 +430,8 @@ const rows = products?.map((dataTable: any) => (
         </colgroup>
         <tbody>
           {rows}</tbody>
-</table>
+</table></>
+  
   )
 }
 
