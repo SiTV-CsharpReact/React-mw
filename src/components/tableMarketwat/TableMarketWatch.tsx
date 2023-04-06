@@ -8,6 +8,7 @@ import { ObjectMenuHSX } from '../../models/modelListMenuHSX';
 import { useParams } from 'react-router-dom';
 import { stocks } from '../../models/marketwacthTable';
 import HeaderMarketW from '../headerMarketwat/HeaderMarket';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 const TableMarketWatch = () => {
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
     const dispatch = useAppDispatch();
@@ -85,10 +86,385 @@ const fetchTable = async(param:string) => {
     setProducts(data)
   
   }
+  const [users, setUsers] = useState([]);
 
+  const handleDragEnd = (e:any) => {
+    if (!e.destination) return;
+    let tempData = Array.from(users);
+    let [source_data] = tempData.splice(e.source.index, 1);
+    tempData.splice(e.destination.index, 0, source_data);
+    setUsers(tempData);
+  };
 
-const rows = products?.map((dataTable: any) => (
-  <tr key={dataTable.RowID} id={`tr${dataTable.RowID}`}>
+// const rows = products?.map((dataTable: any) => (
+//   <Draggable
+//   key={dataTable.RowID}
+//   draggableId={dataTable.RowID}
+//   index={dataTable}
+// >
+//   {(provider) => (
+//   <tr key={dataTable.RowID} id={`tr${dataTable.RowID}`}{...provider.draggableProps} ref={provider.innerRef}>
+//     <td 
+//       className={`${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[18][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//       id={`${dataTable.RowID}`}
+//     >
+//   <input type="checkbox" id={`cb${dataTable.RowID}`}  className="cbTop priceboard"></input>
+//      <span className="pl-0.5"> {dataTable.RowID}</span>
+//     </td>
+  
+//     {/* TTham chiếu */}
+//     <td
+//       data-sort={dataTable.Info[13][1]}
+//       id={`${dataTable.RowID}_TC`}
+//       className=" text-right bg-BGTableHoverMarket text-textTableMarketTC"
+//     >
+//       {formatNumber(dataTable.Info[13][1])}
+//     </td>
+//     {/* Trần */}
+//     <td
+//       data-sort={dataTable.Info[15][1]}
+//       id={`${dataTable.RowID}_Tran`}
+//       className=" text-right bg-BGTableHoverMarket text-textTableMarketTran"
+//     >
+//       {formatNumber(dataTable.Info[15][1])}
+//     </td>
+//     {/* Sàn */}
+//     <td
+//       data-sort={dataTable.Info[14][1]}
+//       id={`${dataTable.RowID}_San`}
+//       className=" text-right bg-BGTableHoverMarket text-textTableMarketSan"
+//     >
+//       {formatNumber(dataTable.Info[14][1])}
+//     </td>
+//     {/* G3 Mua*/}
+//     <td
+//       data-sort={dataTable.Info[8][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[8][0]}`}
+//       className={` text-right ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[8][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[8][1])}
+//     </td>
+//     {/* KL3 */}
+//     <td
+//       data-sort={dataTable.Info[9][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[9][0]}`}
+//       className={` text-right ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[8][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[9][1])}
+//     </td>
+//     {/* G2 */}
+//     <td
+//       data-sort={dataTable.Info[4][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[4][0]}`}
+//       className={` text-right ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[4][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[4][1])}
+//     </td>
+//     {/* KL2 */}
+//     <td
+//       data-sort={dataTable.Info[5][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[5][0]}`}
+//       className={` text-right ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[4][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[5][1])}
+//     </td>
+//     {/* G1 */}
+//     <td
+//       data-sort={dataTable.Info[0][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[0][0]}`}
+//       className={` text-right ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[0][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//              {checkSTTMarket(formatNumberMarket(dataTable.Info[0][1]),statusMarket?.STAT_ControlCode,(dataTable.Info[1][1]))}
+//       {/* {formatNumberMarket(dataTable.Info[0][1])} */}
+//     </td>
+//     {/* KL1 */}
+//     <td
+//       data-sort={dataTable.Info[1][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[1][0]}`}
+//       className={` text-right ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[0][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[1][1])}
+//     </td>
+//     {/* Gia Khơp lenh */}
+//     <td
+//       data-sort={dataTable.Info[18][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[18][0]}`}
+//       className={` text-right bg-BGTableHoverMarket ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[18][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[18][1])}
+//     </td>
+//     {/* KL */}
+//     <td
+//       data-sort={dataTable.Info[19][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[19][0]}`}
+//       className={` text-right bg-BGTableHoverMarket ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[18][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[19][1])}
+//     </td>
+//     {/* +-*/}
+//     <td
+//       data-sort={tinhGiaTC(dataTable.Info[13][1], dataTable.Info[18][1])}     
+//       className={` text-right bg-BGTableHoverMarket ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[18][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       <span>
+//         <div className="price-ot d-block-kl"  id={`${dataTable.RowID}_PT`}>
+//         {tinhGiaTC(dataTable.Info[13][1], dataTable.Info[18][1])}
+//         </div>
+//         <div className="price-change d-none-kl" id={`${dataTable.RowID}_CT`}>
+//         {tinhGiaCT(dataTable.Info[13][1], dataTable.Info[18][1])}
+//         </div>
+//       </span>
+    
+//     </td>
+//     {/* G1 Ban*/}
+//     <td
+//       data-sort={dataTable.Info[2][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[2][0]}`}
+//       className={` text-right ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[2][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {checkSTTMarket(formatNumberMarket(dataTable.Info[2][1]),statusMarket?.STAT_ControlCode,(dataTable.Info[3][1]))}
+//     </td>
+//     {/* KL1 */}
+//     <td
+//       data-sort={dataTable.Info[3][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[3][0]}`}
+//       className={` text-right ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[2][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[3][1])}
+//     </td>
+//     {/* G2 */}
+//     <td
+//       data-sort={dataTable.Info[6][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[6][0]}`}
+//       className={` text-right ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[6][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[6][1])}
+//     </td>
+//     {/* KL2 */}
+//     <td
+//       data-sort={dataTable.Info[7][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[7][0]}`}
+//       className={` text-right ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[6][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[7][1])}
+//     </td>
+//     {/* G3 */}
+//     <td
+//       data-sort={dataTable.Info[10][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[10][0]}`}
+//       className={` text-right ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[10][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[10][1])}
+//     </td>
+//     {/* KL3 */}
+//     <td
+//       data-sort={dataTable.Info[11][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[11][0]}`}
+//       className={` text-right ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[10][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[11][1])}
+//     </td>
+//     {/* TKL */}
+//     <td
+//       data-sort={dataTable.Info[20][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[20][0]}`}
+//       className=" text-right bg-BGTableHoverMarket "
+//     >
+//       {formatNumberMarket(dataTable.Info[20][1])}
+//     </td>
+//     <td
+//       data-sort={dataTable.Info[21][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[21][0]}`}
+//       className={` text-right bg-BGTableHoverMarket ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[21][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[21][1])}
+//     </td>
+//     <td
+//       data-sort={dataTable.Info[22][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[22][0]}`}
+//       className={` text-right bg-BGTableHoverMarket ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[22][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[22][1])}
+//     </td>
+//     <td
+//       data-sort={dataTable.Info[23][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[23][0]}`}
+//       className={` text-right bg-BGTableHoverMarket ${setColorMarket(
+//         dataTable.Info[13][1],
+//         dataTable.Info[23][1],
+//         dataTable.Info[15][1],
+//         dataTable.Info[14][1]
+//       )}`}
+//     >
+//       {formatNumberMarket(dataTable.Info[23][1])}
+//     </td>
+//     <td
+//       data-sort={dataTable.Info[25][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[25][0]}`}
+//       className=" text-right bg-BGTableHoverMarket"
+//     >
+//       {formatNumberMarket(dataTable.Info[25][1])}
+//     </td>
+//     <td
+//       data-sort={dataTable.Info[26][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[26][0]}`}
+//       className=" text-right bg-BGTableHoverMarket"
+//     >
+//       {formatNumberMarket(dataTable.Info[26][1])}
+//     </td>
+//     <td
+//       data-sort={dataTable.Info[27][1]}
+//       id={`${dataTable.RowID}_${dataTable.Info[27][0]}`}
+//       className=" text-right bg-BGTableHoverMarket"
+//     >
+//       {formatNumberMarket(dataTable.Info[27][1])}
+//     </td>
+//   </tr>
+  
+//       )}
+// </Draggable>
+// ))
+;
+
+  return (
+    <>
+    <DragDropContext onDragEnd={handleDragEnd}> 
+    <HeaderMarketW/>
+      <table className="w-full tableMW">
+    <colgroup>
+        <col className="col-symbol" />
+        <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
+        <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
+        <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
+        <col className="col-price" />
+        <col className="col-vol" />
+        <col className="col-price" />
+        <col className="col-vol" />
+        <col className="col-price" />
+        <col className="col-vol" />
+        <col className="col-price" />
+        <col className="col-vol col-vol-sm" />
+        <col className="col-diff" />
+        <col className="col-price" />
+        <col className="col-vol" />
+        <col className="col-price" />
+        <col className="col-vol" />
+        <col className="col-price" />
+        <col className="col-vol" />
+        <col className="col-vol-total" />
+        <col className="col-price-open" />
+        <col className="col-price-high" />
+        <col className="col-price-short" />
+        <col className="col-vol-foreign-buy" />
+        <col className="col-vol-foreign-sell" />
+        <col className="col-vol-still" />
+        </colgroup>
+         <Droppable droppableId="droppable-1" >
+            {(provider) => (    
+        <tbody className="text-capitalize"
+                ref={provider.innerRef}
+                {...provider.droppableProps}>
+           {products?.map((dataTable:any) =>(
+  <Draggable
+  key={dataTable.RowID}
+  draggableId={dataTable.RowID}
+  index={dataTable.Info}
+  
+>
+  {(provider) => (
+  <tr key={dataTable.RowID} id={`tr${dataTable.RowID}`} 
+  {...provider.draggableProps}
+  {...provider.dragHandleProps} ref={provider.innerRef}>
     <td 
       className={`${setColorMarket(
         dataTable.Info[13][1],
@@ -395,44 +771,20 @@ const rows = products?.map((dataTable: any) => (
       {formatNumberMarket(dataTable.Info[27][1])}
     </td>
   </tr>
-));
-
-  return (
-    <> <HeaderMarketW/>
-      <table className="w-full tableMW">
-    <colgroup>
-        <col className="col-symbol" />
-        <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
-        <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
-        <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
-        <col className="col-price" />
-        <col className="col-vol" />
-        <col className="col-price" />
-        <col className="col-vol" />
-        <col className="col-price" />
-        <col className="col-vol" />
-        <col className="col-price" />
-        <col className="col-vol col-vol-sm" />
-        <col className="col-diff" />
-        <col className="col-price" />
-        <col className="col-vol" />
-        <col className="col-price" />
-        <col className="col-vol" />
-        <col className="col-price" />
-        <col className="col-vol" />
-        <col className="col-vol-total" />
-        <col className="col-price-open" />
-        <col className="col-price-high" />
-        <col className="col-price-short" />
-        <col className="col-vol-foreign-buy" />
-        <col className="col-vol-foreign-sell" />
-        <col className="col-vol-still" />
-        </colgroup>
-        <tbody>
-          {rows}</tbody>
-</table></>
   
-  )
+  )}
+</Draggable>
+
+      ))
+}
+          {provider.placeholder}
+          </tbody>
+        )}          
+          </Droppable>
+          </table>
+</DragDropContext>  </>
+  
+  ) 
 }
 
 export default TableMarketWatch
