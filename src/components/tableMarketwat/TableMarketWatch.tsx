@@ -10,7 +10,7 @@ import { stocks } from '../../models/marketwacthTable';
 import HeaderMarketW from '../headerMarketwat/HeaderMarket';
 const TableMarketWatch = () => {
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
-    const dispatch = useAppDispatch();
+    //const dispatch = useAppDispatch();
     const [products, setProducts] = useState([]);
 
     const params = useParams<{ id: string }>()
@@ -45,22 +45,12 @@ useEffect(()=>{
       fetchTable("HNX")
     }
    }
-  //   if(type1 && type2) {
-  
-  //     fetchTable(type1, type2)
-  
-  //   } else {
-  
-  //     fetchTable("HNX", "HNX30")
-  
-  //   }
-  
   },[paramstock?.id])
  //console.log(products)
-useEffect(()=>{
-    dispatch(fetchTableHNXAsync())
-    //dispatch(fetchStatusAsync())
-},[dispatch])
+// useEffect(()=>{
+//     dispatch(fetchTableHNXAsync())
+//     //dispatch(fetchStatusAsync())
+// },[dispatch])
 
 const fetchTable = async(param:string) => {
   let valueParam ="HNX";
@@ -77,16 +67,11 @@ const fetchTable = async(param:string) => {
       default:
         break;
    }
-   console.log(valueParam)
+   //console.log(valueParam)
     const res = await fetch(`http://marketstream.fpts.com.vn/hnx/data.ashx?${valueParam}`);
-  
     const data = await res.json();
-  
     setProducts(data)
-  
   }
-
-
 const rows = products?.map((dataTable: any) => (
   <tr key={dataTable.RowID} id={`tr${dataTable.RowID}`}>
     <td 

@@ -11,7 +11,8 @@ module.exports = {
         '420': '420px',
         '500': '500px',
         '30':'30px',
-        '40':'40px'
+        '40':'40px',
+        '24':'24px'
       },
       minHeight: {
         '500':'500px',
@@ -54,7 +55,9 @@ module.exports = {
         'textLanguage':'#2697de',
         'textNoti':'#385898',
         'iconNoti': '#0861a9',
-        'bgFooterTable': '#131722'
+        'bgFooterTable': '#131722',
+        'textHeaderTableGDTT':'#F7FFAA',
+         
         //'tooltipNoti':'#2371af'
       },
       fontSize: {
@@ -72,8 +75,8 @@ module.exports = {
         'fontLogo':'26px',
         large:'large !important',
         '13px':'13px',
-        '15px':'15px'
-         
+        '15px':'15px',
+         '16px':'16px'
       }
     },
     plugins: [

@@ -1,0 +1,67 @@
+.item-settings .col {
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-width: 100%;
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+}
+.item-settings {
+    font-size: 12px;
+    //margin-bottom: 10px;
+    margin:10px 0px;
+    & .row{
+        display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    padding-bottom: 3px;
+    }
+    & .settings-body label {
+        height: 13px;
+        vertical-align: middle;
+        margin-top: 2px;
+        margin-bottom: 3px;
+        font-weight: 700;
+    }
+    & .settings-body input[type=checkbox] {
+        margin: 0 4px;
+    }
+}
+.iconcustom {
+    background: url(../../images/modalCustom/custom30.png) no-repeat;
+    background-position: -29px 0;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-top: 6px;
+    border: none;
+
+ 
+}
+.imgChart {
+    background: url(../../images/modalCustom/chart.png) no-repeat;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin: -2px 4px;
+}
+.imgTable {
+    background: url(../../images/modalCustom/table1.png) no-repeat;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin: -2px 4px;
+}
+.priceboard-settings .settings-body {
+    padding: 0 28px;
+}
+input[type=checkbox].priceboard2 {
+    vertical-align: sub;
+    margin: 4px 4px 0 4px;
+    line-height: normal !important;
+}
