@@ -32,10 +32,11 @@ function getAxiosParams(tableParams: TableParams) {
 
     return params;
 }
-const fetchBasketAsync = createAsyncThunk<DataTable[],void,{ state: RootState }>(
+const fetchTableAsync = createAsyncThunk<DataTable[],void,{ state: RootState }>(
     "table/fecthTable",
     async (_, thunkAPI) => {
         const params = getAxiosParams(thunkAPI.getState().table.productParams);
+        console.log(params)
         try {
             const response = await agent.Table.list(params);
             const data = await response.json();
@@ -48,10 +49,40 @@ const fetchBasketAsync = createAsyncThunk<DataTable[],void,{ state: RootState }>
 );
 
 
-export const fetchTableAsync = createAsyncThunk<[]>(
-    "table/fecthTable",
+export const fetchTableHNXAsync = createAsyncThunk<[]>(
+    "table/fecthTableHNX",
     async () => {
         const res = await fetch('http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=HNXIndex');
+      
+        const data = await res.json();
+        console.log(data)
+        return data;
+    }
+);
+export const fetchTableHNX30Async = createAsyncThunk<[]>(
+    "table/fecthTableHN30",
+    async () => {
+        const res = await fetch('http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=HNX30');
+      
+        const data = await res.json();
+        console.log(data)
+        return data;
+    }
+);
+export const fetchTableBONDAsync = createAsyncThunk<[]>(
+    "table/fecthTableBOND",
+    async () => {
+        const res = await fetch('http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=BOND');
+      
+        const data = await res.json();
+        console.log(data)
+        return data;
+    }
+);
+export const fetchStatusAsync = createAsyncThunk<[]>(
+    "table/fecthStatusMarket",
+    async () => {
+        const res = await fetch('http://marketstream.fpts.com.vn/hsx/data.ashx?s=index');
       
         const data = await res.json();
         console.log(data)
@@ -94,10 +125,38 @@ export const tableSlice = createSlice({
 
     extraReducers: (builder) => {
         builder
-            .addCase(fetchTableAsync.pending, (state) => {
+            .addCase(fetchTableHNXAsync.pending, (state) => {
                 state.status = "loading";
             })
-            .addCase(fetchTableAsync.fulfilled, (state, action) => {
+            .addCase(fetchTableHNXAsync.fulfilled, (state, action) => {
+                state.productsLoaded = true;
+                console.log(action.payload);
+                //productsAdapter.setAll(state, action.payload);
+                state.table = action.payload;
+                state.status = "idle";
+            })
+            .addCase(fetchTableHNX30Async.fulfilled, (state, action) => {
+                state.productsLoaded = true;
+                console.log(action.payload);
+                //productsAdapter.setAll(state, action.payload);
+                state.table = action.payload;
+                state.status = "idle";
+            })
+            .addCase(fetchTableBONDAsync.fulfilled, (state, action) => {
+                state.productsLoaded = true;
+                console.log(action.payload);
+                //productsAdapter.setAll(state, action.payload);
+                state.table = action.payload;
+                state.status = "idle";
+            })
+            // .addCase(fetchTableAsync.fulfilled, (state, action) => {
+            //     state.productsLoaded = true;
+            //     console.log(action.payload);
+            //     //productsAdapter.setAll(state, action.payload);
+            //     state.table = action.payload;
+            //     state.status = "idle";
+            // })
+            .addCase(fetchStatusAsync.fulfilled, (state, action) => {
                 state.productsLoaded = true;
                 console.log(action.payload);
                 //productsAdapter.setAll(state, action.payload);

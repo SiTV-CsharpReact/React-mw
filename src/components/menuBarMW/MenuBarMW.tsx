@@ -11,7 +11,7 @@ import DateTime from "./DateTime";
 
 import LineChart from "../../images/line-chart-32.png"
 import { useAppDispatch } from "../../store/configureStore";
-import { fetchTableAsync, fetchTableHSXAsync } from "../tableMarketwat/tableSlice";
+import { fetchTableBONDAsync, fetchTableHNX30Async, fetchTableHNXAsync } from "../tableMarketwat/tableSlice";
 let stateIndex = 0;
 const callExpand = (id: string, hideClass: string) => {
   const divIndex = document.getElementById("divIndexChart");
@@ -62,46 +62,40 @@ const MenuBarMW = () => {
           <ul className="absolute hidden text-black pt-1.5 group-hover:block z-40">
             <li>
               <NavLink
-                to="/Table"
-                onClick={() => dispatch(fetchTableAsync())}
+                to="/HNX"
+                onClick={() => dispatch(fetchTableHNXAsync())}
                 className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
               >
                 HNX
               </NavLink>
+              {/* <span className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white rounded-b"
+                onClick={() => dispatch(fetchTableHNXAsync())}>HNX</span> */}
             </li>
             <li>
-              <NavLink
-                to="/marketwatch-hnx30"
-                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
-              >
-                HNX30
-              </NavLink>
+            <NavLink to="/HNX30" className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white rounded-b"
+              >HNX30</NavLink>
             </li>
             <li>
-              <Link
-                to="/"
-                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
-              >
-                BOND
-              </Link>
+            <NavLink to="/BOND"  className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white rounded-b"
+                onClick={() => dispatch(fetchTableBONDAsync())}>BOND</NavLink>
             </li>
             <li>
               <Link
-                to="/"
-             
+                to="/thoathuanhnx"
+                // onClick={() => dispatch(fetchBasketAsync())}
                 className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white rounded-b"
               >
                 Giao dịch thỏa thuận
               </Link>
             </li>
-            <li>
+            {/* <li>
               <span className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white rounded-b"
                 onClick={() => dispatch(fetchTableHSXAsync())}>HSX</span>
             </li>
             <li>
               <span className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white rounded-b"
-                onClick={() => dispatch(fetchTableAsync())}>HNX</span>
-            </li>
+                onClick={() => dispatch(fetchTableHNXAsync())}>HNX</span>
+            </li> */}
           </ul>
         </div>
 
@@ -111,8 +105,7 @@ const MenuBarMW = () => {
           <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50">
             <li>
               <NavLink
-                to="/Table"
-                onClick={() => dispatch(fetchTableHSXAsync())}
+                to="/marketwatch-hsx"
                 className=" bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
               >
                 VNI
