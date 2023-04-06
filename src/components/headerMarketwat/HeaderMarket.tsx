@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+// import { DataTable } from '../../models/modelTableHNX';
 const showKLPT =(value:string) =>{
   console.log(value)
   if(value === "showPT"){
@@ -46,6 +47,11 @@ const showKLPT =(value:string) =>{
    
   }
 }
+type DataTable = {
+  RowID: string,
+  info:[]
+}
+
 
 const HeaderMarketW = () => {
   // const tableInstance = useTable(
@@ -63,7 +69,24 @@ const HeaderMarketW = () => {
   //   rows,
   //   prepareRow
   // } = tableInstance
-
+  const [data,setdate] = useState<DataTable[]>();
+  const [order,setorder]= useState("ASC");
+  const sorting = (col: keyof DataTable) => {
+    console.log("aa",sorting)
+    if (Array.isArray(data)) {
+      if (order === "ASC") {
+        const sorted = [...data].sort((a, b) => a[col].toString().toLowerCase() > b[col].toString().toLowerCase() ? 1 : -1);
+        setdate(sorted);
+        console.log("sorting",sorted);
+        setorder("DSC");
+      } else {
+        const sorted = [...data].sort((a, b) => a[col].toString().toLowerCase() > b[col].toString().toLowerCase() ? -1 : 1);
+        setdate(sorted);
+        setorder("ASC");
+      }
+    }
+  };
+  
   return (
     <div>
         <table className="w-full tableMW " >
@@ -99,8 +122,9 @@ const HeaderMarketW = () => {
         <thead>
           <tr>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer"
               rowSpan={2}
+              onClick={() => sorting("RowID")}
             >
               Mã
             </th>
