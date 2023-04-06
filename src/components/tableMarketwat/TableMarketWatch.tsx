@@ -94,22 +94,12 @@ useEffect(()=>{
       fetchTable("HNX")
     }
    }
-  //   if(type1 && type2) {
-  
-  //     fetchTable(type1, type2)
-  
-  //   } else {
-  
-  //     fetchTable("HNX", "HNX30")
-  
-  //   }
-  
   },[paramstock?.id])
  //console.log(products)
-useEffect(()=>{
-    dispatch(fetchTableHNXAsync())
-    //dispatch(fetchStatusAsync())
-},[dispatch])
+// useEffect(()=>{
+//     dispatch(fetchTableHNXAsync())
+//     //dispatch(fetchStatusAsync())
+// },[dispatch])
 
 const fetchTable = async(param:string) => {
   let valueParam ="HNX";
@@ -126,13 +116,10 @@ const fetchTable = async(param:string) => {
       default:
         break;
    }
-   console.log(valueParam)
+   //console.log(valueParam)
     const res = await fetch(`http://marketstream.fpts.com.vn/hnx/data.ashx?${valueParam}`);
-  
     const data = await res.json();
-  
     setProducts(data)
-  
   }
   const [users, setUsers] = useState([]);
 

@@ -1,6 +1,10 @@
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button,Tooltip } from '@mui/material'
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button,Tooltip, Typography, IconButton, Box } from '@mui/material'
 import React from 'react'
-
+import "./menuBar.scss"
+import CloseIcon from '@mui/icons-material/Close';
+// const useStyles = makeStyles(() => ({
+//   paper: { minWidth: "500px" },
+// }));
 const SettingTable = () => {
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
@@ -28,13 +32,33 @@ const SettingTable = () => {
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
+      sx={{
+        "& .MuiDialog-container": {
+          "& .MuiPaper-root": {
+            width: "100%",
+            maxWidth: "1000px", 
+            overflowY:'unset' // Set your width here
+          },
+        },
+      }}
     >
-      <DialogTitle id="alert-dialog-title">
-        {"Thiết lập Giao diện"}
+ 
+      <DialogTitle  id="alert-dialog-title" className='text-center border-b border-[#e5e5e5] flex justify-between' sx={{padding:'10px 15px'}} >
+      <Box className='iconcustom'></Box>
+      <Typography sx={{paddingTop:"8px",fontSize:18,fontWeight:500}}>Thiết lập Giao diện</Typography>
+        {/* {"Thiết lập Giao diện"} */}
+        <Tooltip title="Đóng">
+          <IconButton
+           onClick={handleClose}>
+          <CloseIcon/>
+          </IconButton>
+       
+        </Tooltip>
+   
       </DialogTitle>
-      <DialogContent sx={{width:950,maxWidth:"95%"}}>
+      <DialogContent sx={{width:1050,maxWidth:"100%",padding:'0px 5px!important',overflowY:'unset'}}>
         <DialogContentText id="alert-dialog-description">
-          <div className="modal-body">
+          <div className="modal-body text-black">
             <div
               className="item-settings index-settings"
               id="index-settings"
@@ -43,20 +67,20 @@ const SettingTable = () => {
                 <div className="settings-header">
                   <div className="content">
                     <span className="imgChart" />
-                    <label className="lbText">Lựa chọn chỉ số</label>
+                    <label className="lbText text-16px">Lựa chọn chỉ số</label>
                   </div>
                 </div>
-                <div className="settings-body">
-                  <div className="flex">
+                <div className="settings-body pt-2">
+                  <div className="row">
                     <div
                       className="text-right"
                       style={{ width: "100px", paddingLeft: "20px" }}
                     >
                       HOSE :{" "}
                     </div>
-                    <div className="col-md-10 col-xs-10 ">
-                      <div className="flex">
-                        <div className="col" style={{}}>
+                    <div className="w-5/6 px-4">
+                      <div className="row">
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -67,7 +91,7 @@ const SettingTable = () => {
                             <label htmlFor="cbChartVNXALL">VNXALL</label>
                           </div>
                         </div>
-                        <div className="col" style={{}}>
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -78,7 +102,7 @@ const SettingTable = () => {
                             <label htmlFor="cbChartVNI">VNI</label>
                           </div>
                         </div>
-                        <div className="col" style={{}}>
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -89,7 +113,7 @@ const SettingTable = () => {
                             <label htmlFor="cbChartVN30">VN30</label>
                           </div>
                         </div>
-                        <div className="col" style={{}}>
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -100,7 +124,7 @@ const SettingTable = () => {
                             <label htmlFor="cbChartVN100">VN100</label>
                           </div>
                         </div>
-                        <div className="col" style={{}}>
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -111,7 +135,7 @@ const SettingTable = () => {
                             <label htmlFor="cbChartVNALL">VNALL</label>
                           </div>
                         </div>
-                        <div className="col" style={{}}>
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -122,7 +146,7 @@ const SettingTable = () => {
                             <label htmlFor="cbChartVNMID">VNMID</label>
                           </div>
                         </div>
-                        <div className="col" style={{}}>
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -136,16 +160,16 @@ const SettingTable = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex">
+                  <div className="row">
                     <div
                       className="text-right"
-                      style={{ width: "100px", paddingLeft: "20px" }}
+                      style={{ width: "100px", }}
                     >
                       HNX.NY :{" "}
                     </div>
-                    <div className="col-md-10 col-xs-10">
-                      <div className="flex">
-                        <div className="col" style={{}}>
+                    <div className="w-5/6 px-4">
+                      <div className="row">
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -156,7 +180,7 @@ const SettingTable = () => {
                             <label htmlFor="cbChartHNX">HNX</label>
                           </div>
                         </div>
-                        <div className="col" style={{}}>
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -167,7 +191,7 @@ const SettingTable = () => {
                             <label htmlFor="cbChartHNX30">HNX30</label>
                           </div>
                         </div>
-                        <div className="col" style={{}}>
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -180,7 +204,7 @@ const SettingTable = () => {
                             </label>
                           </div>
                         </div>
-                        <div className="col" style={{}}>
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -193,7 +217,7 @@ const SettingTable = () => {
                             </label>
                           </div>
                         </div>
-                        <div className="col" style={{}}>
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -204,7 +228,7 @@ const SettingTable = () => {
                             <label htmlFor="cbChartHNXFIN">HNXFIN</label>
                           </div>
                         </div>
-                        <div className="col" style={{}}>
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -215,7 +239,7 @@ const SettingTable = () => {
                             <label htmlFor="cbChartHNXMAN">HNXMAN</label>
                           </div>
                         </div>
-                        <div className="col" style={{}}>
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -229,16 +253,16 @@ const SettingTable = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex">
+                  <div className="row">
                     <div
                       className="text-right"
-                      style={{ width: "100px", paddingLeft: "20px" }}
+                      style={{ width: "100px" }}
                     >
                       HNX.UPCOM :{" "}
                     </div>
-                    <div className="col-md-10 col-xs-10">
-                      <div className="flex">
-                        <div className="col" style={{}}>
+                    <div className="w-5/6 px-4">
+                      <div className="row">
+                        <div className="col" >
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
@@ -263,14 +287,14 @@ const SettingTable = () => {
                 <div className="settings-header">
                   <div className="content">
                     <span className="imgTable" />
-                    <label className="lbText">
+                    <label className="lbText text-16px">
                       Lựa chọn cột thông tin
                     </label>
                   </div>
                 </div>
-                <div className="settings-body">
-                  <div className="flex">
-                    <div className="col-sm-2 col-md-2" style={{}}>
+                <div className="settings-body ">
+                  <div className="row pt-1.5 w-5/6" >
+                    <div className="col" >
                       <div className="clsAllIndex">
                         <input
                           type="checkbox"
@@ -281,7 +305,7 @@ const SettingTable = () => {
                         <label htmlFor="cbcol4">Dư mua - KL4</label>
                       </div>
                     </div>
-                    <div className="col-sm-2 col-md-2" style={{}}>
+                    <div className="col" >
                       <div className="clsAllIndex">
                         <input
                           type="checkbox"
@@ -292,7 +316,7 @@ const SettingTable = () => {
                         <label htmlFor="cbcol20">Dư bán - KL4</label>
                       </div>
                     </div>
-                    <div className="col-sm-2 col-md-2" style={{}}>
+                    <div className="col" >
                       <div className="clsAllIndex">
                         <input
                           type="checkbox"
@@ -303,7 +327,7 @@ const SettingTable = () => {
                         <label htmlFor="cbcol25">Trung bình</label>
                       </div>
                     </div>
-                    <div className="col-sm-2 col-md-2" style={{}}>
+                    <div className="col" >
                       <div className="clsAllIndex">
                         <input
                           type="checkbox"
@@ -314,9 +338,12 @@ const SettingTable = () => {
                         <label htmlFor="cbcol28">Room còn lại</label>
                       </div>
                     </div>
+                    <div className="col" >
+                     
+                    </div>
                   </div>
-                  <div className="flex">
-                    <div className="col-sm-2 col-md-2" style={{}}>
+                  <div className="row w-5/6">
+                    <div className="col" >
                       <div className="clsAllIndex">
                         <input
                           type="checkbox"
@@ -327,7 +354,7 @@ const SettingTable = () => {
                         <label htmlFor="cbcol22">Mở cửa</label>
                       </div>
                     </div>
-                    <div className="col-sm-2 col-md-2" style={{}}>
+                    <div className="col" >
                       <div className="clsAllIndex">
                         <input
                           type="checkbox"
@@ -338,7 +365,7 @@ const SettingTable = () => {
                         <label htmlFor="cbcol23">Cao nhất</label>
                       </div>
                     </div>
-                    <div className="col-sm-2 col-md-2" style={{}}>
+                    <div className="col" >
                       <div className="clsAllIndex">
                         <input
                           type="checkbox"
@@ -349,7 +376,7 @@ const SettingTable = () => {
                         <label htmlFor="cbcol24">Thấp nhất</label>
                       </div>
                     </div>
-                    <div className="col-sm-2 col-md-2" style={{}}>
+                    <div className="col" >
                       <div className="clsAllIndex">
                         <input
                           type="checkbox"
@@ -360,7 +387,7 @@ const SettingTable = () => {
                         <label htmlFor="cbcol26">NN mua</label>
                       </div>
                     </div>
-                    <div className="col-sm-2 col-md-2" style={{}}>
+                    <div className="col" >
                       <div className="clsAllIndex">
                         <input
                           type="checkbox"
@@ -383,7 +410,7 @@ const SettingTable = () => {
                 <div className="settings-header">
                   <div className="content">
                     <span className="imgTable" />
-                    <label className="lbText">
+                    <label className="lbText text-16px">
                       Tính năng thêm mã thông minh
                     </label>
                     <label
@@ -400,8 +427,8 @@ const SettingTable = () => {
                   </div>
                 </div>
                 <div className="settings-body">
-                  <div className="flex">
-                    <div className="col-md-2">
+                  <div className="row w5/6">
+                    <div className="col max-w-[16%!important]">
                       <b
                         style={{
                           marginLeft: "30px",
@@ -414,7 +441,7 @@ const SettingTable = () => {
                         Vị trí thêm mã mới:
                       </b>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col max-w-[16%!important]">
                       <div style={{ marginLeft: "17px" }}>
                         <div className="clsAllIndex">
                           <input
@@ -432,7 +459,7 @@ const SettingTable = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col max-w-[16%]">
                       <div style={{ marginLeft: "9px" }}>
                         <div className="clsAllIndex">
                           <input
@@ -462,14 +489,14 @@ const SettingTable = () => {
                 <div className="settings-header">
                   <div className="content">
                     <span className="imgTable" />
-                    <label className="lbText">
+                    <label className="lbText text-16px">
                       Lựa chọn nhập thông tin Giá / Khối lượng trước
                     </label>
                   </div>
                 </div>
                 <div className="settings-body">
-                  <div className="flex">
-                    <div className="col-md-2">
+                  <div className="row w5/6">
+                    <div className="col max-w-[16%!important]">
                       <b
                         style={{
                           marginLeft: "30px",
@@ -482,7 +509,7 @@ const SettingTable = () => {
                         Ưu tiên:
                       </b>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col max-w-[16%!important]">
                       <div style={{ marginLeft: "17px" }}>
                         <div className="clsAllIndex">
                           <input
@@ -500,7 +527,7 @@ const SettingTable = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col max-w-[25%!important]">
                       <div style={{ marginLeft: "9px" }}>
                         <div className="clsAllIndex">
                           <input
@@ -524,12 +551,12 @@ const SettingTable = () => {
                 </div>
               </div>
             </div>
-            <div className="item-settings">
-              <div className="flex">
+            <div className="item-settings border-b border-[#e5e5e5]">
+              <div className="row">
                 <div className="col-md-12">
                   <button
                     id="btnResetChart"
-                    className="btn btn-profile"
+                    className="px-3.5 rounded-sm py-1.5 text-white bg-[#22b14c] hover:bg-[#2371AF] "
                     type="button"
                     style={{ marginLeft: "30px" }}
                   >
@@ -554,11 +581,29 @@ const SettingTable = () => {
           </div>
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Lưu</Button>
+      <DialogActions sx={{justifyContent:'center',paddingBottom:'30px' }}>
+              <button
+                    id="btnResetChart"
+                    className="px-7 rounded-sm py-0.5 text-white bg-[#717171] hover:bg-[#2371AF] shadow-lg"
+                    type="button"
+                
+                    onClick={handleClose}
+                  >
+                    Lưu
+                  </button>
+                  <button
+                    id="btnResetChart"
+                    className="px-7 rounded-sm py-0.5 text-white bg-[#717171] hover:bg-[#2371AF] shadow-lg"
+                    type="button"
+                    style={{ marginLeft: "30px" }}
+                    onClick={handleClose}
+                  >
+                   Đóng
+                  </button>
+        {/* <Button onClick={handleClose}>Lưu</Button>
         <Button onClick={handleClose} autoFocus>
           Đóng
-        </Button>
+        </Button> */}
       </DialogActions>
     </Dialog>
   </div>

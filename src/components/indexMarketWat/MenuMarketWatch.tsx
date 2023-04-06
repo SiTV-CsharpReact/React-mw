@@ -4,7 +4,7 @@ import axios from "axios";
 import { ObjectMenuHNX, ObjectMenuHSX } from "../../models/modelListMenuHSX";
 import { iconColorMenuMarket, setColorMenuMarket, fStatusMarketHNX, fStatusMarketUPCOM, formatNumberMarket, tinhGiaTC, tinhGiaCT, checkSTTMarket, checkSTTMarketValue } from "../../utils/util";
 import { g_CLASS_INDEX } from "../../configs/app.config";
-import "./style.css"
+import "./styleMenuBarMW.css"
 const MenuMarketWatch = () => {
   const [valueHSX, setValueHSX] = useState<ObjectMenuHSX | null>(null);
   const [valueHNX, setValueHNX] = useState<ObjectMenuHNX | null>(null);
