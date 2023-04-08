@@ -64,10 +64,12 @@ const fetchTable = async(param:string) => {
         case "BOND":
           valueParam = "s=quote&l=BOND";
           break;
+          case "UPCOM":
+            valueParam = "s=quote&l=HNXUpcomIndex";
+            break;
       default:
         break;
    }
-   //console.log(valueParam)
     const res = await fetch(`http://marketstream.fpts.com.vn/hnx/data.ashx?${valueParam}`);
     const data = await res.json();
     setProducts(data)

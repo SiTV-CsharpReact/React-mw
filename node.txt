@@ -815,3 +815,338 @@ const Header = () => {
 };
 
 export default Header;
+
+
+
+
+
+<div className="flex ">
+        <div className="group list-sub-menu">
+        {/* <div className={ `group list-sub-menu isActive ? "active" : ""`}> */}
+          <span className="uppercase text-13px ">HNX </span>
+          <ul className="absolute hidden text-black group-hover:block z-40 sub-menu">
+            <li>
+              <NavLink
+                to="/HNX"
+                onClick={() => dispatch(fetchTableHNXAsync())}
+                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+                HNX
+              </NavLink>
+              {/* <span className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white "
+                onClick={() => dispatch(fetchTableHNXAsync())}>HNX</span> */}
+            </li>
+            <li>
+            <NavLink to="/HNX30" className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white "
+              >HNX30</NavLink>
+            </li>
+            <li>
+            <NavLink to="/BOND"  className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white "
+                onClick={() => dispatch(fetchTableBONDAsync())}>BOND</NavLink>
+            </li>
+            <li>
+              <Link
+                to="/thoa-thuan-hnx"
+                // onClick={() => dispatch(fetchBasketAsync())}
+                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white "
+              >
+                Giao dịch thỏa thuận
+              </Link>
+            </li>
+            {/* <li>
+              <span className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white "
+                onClick={() => dispatch(fetchTableHSXAsync())}>HSX</span>
+            </li>
+            <li>
+              <span className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch py-1.5 px-2.5 text-xs block whitespace-no-wrap  border-b border-bdListMarketWatch text-white "
+                onClick={() => dispatch(fetchTableHNXAsync())}>HNX</span>
+            </li> */}
+          </ul>
+        </div>
+
+        <div className="group list-sub-menu">
+          {/* <span className="  uppercase text-13px ">HOSE</span> */}
+          <span className="  uppercase text-13px ">HOSE</span>
+          <ul className="absolute hidden text-gray-700 group-hover:block z-50 sub-menu ">
+            <li>
+              <NavLink
+                to="/VNI"
+                className=" bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+                VNI
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/VN30"
+                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+                VN30
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/BOND"
+                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+                BOND
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/thoa-thuan-hsx"
+                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+              Giao dịch thỏa thuận
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/VNXALL"
+                className=" bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+                VNXALL
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/VN100"
+                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+                VN100
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/VNALL"
+                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+                VNALL
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/VNMID"
+                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+              VNMID
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/VNSML"
+                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+            VNSML
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+        <div className="group list-sub-menu">
+          <span className="  uppercase text-13px ">UPCOM</span>
+          <ul className="absolute hidden text-gray-700 group-hover:block z-50 sub-menu">
+            <li>
+              <Link
+                to="/UPCOM"
+                className=" bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+                UPCOM
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/thoa-thuan-upcom"
+                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap text-white"
+              >
+                  Giao dịch thỏa thuận
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="group list-sub-menu">
+          <span className="text-13px ">Ngành</span>
+          <ul className="absolute hidden text-gray-70 group-hover:block z-50 sub-menu">
+            <li>
+              <Link
+                to="/marketwatch-hsx"
+                className=" bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+                VNI
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/marketwatch-vn30"
+                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap text-white"
+              >
+                VN30
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="group list-sub-menu">
+          <span className="text-13px ">Thống kê</span>
+          <ul className="absolute hidden text-gray-700 group-hover:block z-50 sub-menu">
+            <li>
+              <Link
+                to="/marketwatch-hsx"
+                className=" bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+                VNI
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/marketwatch-vn30"
+                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap text-white"
+              >
+                VN30
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="group list-sub-menu">
+          <span className="text-13px ">Chứng quyền</span>
+          <ul className="absolute hidden text-gray-700 group-hover:block z-50 sub-menu">
+            <li>
+              <Link
+                to="/marketwatch-hsx"
+                className=" bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+                VNI
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/marketwatch-vn30"
+                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap text-white"
+              >
+                VN30
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="group list-sub-menu">
+          <span className="text-13px ">Danh mục</span>
+          <ul className="absolute hidden text-gray-700 group-hover:block z-50  sub-menu">
+            <li>
+              <Link
+                to="/marketwatch-hsx"
+                className=" bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap border-b border-bdListMarketWatch text-white"
+              >
+                VNI
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/marketwatch-vn30"
+                className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap text-white"
+              >
+                VN30
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <Tooltip title="Hiện đồ thị">
+            <span
+              id="spExpand"
+              className="imgExpandOpen"
+              onClick={() => callExpand("spExpand", "imgExpandOpen")}
+            ></span>
+          </Tooltip>
+          {/* <Tooltip title="Hiện đồ thị">
+          <span id="spExpand" className="imgExpandClose" onClick={()=>callExpand("spExpand","imgExpandOpen")}></span>
+        </Tooltip> */}
+        </div>
+      </div>
+
+
+
+
+      import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import './style.scss'
+interface MenuItem {
+  label: string;
+  path: string;
+  children?: MenuItem[];
+}
+
+const menuItems: MenuItem[] = [
+  {
+    label: 'Home',
+    path: '/',
+    children: [
+      {
+        label: 'Service 1',
+        path: '/report/AssetReport2/1',
+      },
+      {
+        label: 'Service 2',
+        path: '/report/AssetReport2/2',
+      },
+    ],
+  },
+  {
+    label: 'About',
+    path: '/about',
+  },
+  {
+    label: 'Services',
+    path: '/services',
+    children: [
+      {
+        label: 'Service 1',
+        path: '/services/1',
+      },
+      {
+        label: 'Service 2',
+        path: '/services/2',
+      },
+    ],
+  },
+];
+
+const AssetReport = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const handleMenuItemClick = (index: number) => {
+    setActiveIndex(index);
+  };
+
+  const renderMenuItem = (item: MenuItem, index: number) => {
+    const isActive = activeIndex === index;
+
+    return (
+      <li
+        key={item.path}
+        onClick={() => handleMenuItemClick(index)}
+        // className={isActive ? 'active' : ''}
+        className={`list-sub-menu ${isActive ? 'active' : '' }`}
+      >
+        <NavLink to={item.path}>{item.label}</NavLink>
+        {item.children && (
+          <ul className="sub-menu">
+            {item.children.map((childItem, childIndex) => (
+              <li key={childItem.path}>
+                <NavLink to={childItem.path}>{childItem.label}</NavLink>
+              </li>
+            ))}
+          </ul>
+        )}
+      </li>
+    );
+  };
+
+  return (
+    <nav>
+      <ul>
+        {menuItems.map((item, index) => renderMenuItem(item, index))}
+      </ul>
+    </nav>
+  );
+};
+
+
+export default AssetReport
