@@ -21,12 +21,15 @@
     "aspnet-signalr-reactjs": "^1.3.0",
     "autoprefixer": "^10.4.13",
     "axios": "^1.3.4",
+    "build": "^0.1.4",
     "flowbite": "^1.6.4",
     "font-awesome": "^4.7.0",
     "i18next": "^22.4.10",
     "i18next-browser-languagedetector": "^7.0.1",
     "postcss": "^8.4.21",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.5",
     "react-i18next": "^12.2.0",
@@ -70,6 +73,7 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^7.0.0",
+    "@types/react-beautiful-dnd": "^13.1.4",
     "@types/react-table": "^7.7.14",
     "tailwindcss": "^3.2.7",
     "webpack": "^5.77.0"

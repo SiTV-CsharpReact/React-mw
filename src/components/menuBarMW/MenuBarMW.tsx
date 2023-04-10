@@ -1,12 +1,14 @@
 import { Button, DialogContentText, Tooltip } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 import { formatNumberMarket, fStatusMarketHNX, fStatusMarketUPCOM, tinhGiaCT, tinhGiaTC } from "../../utils/util";
 import { NavLink } from "react-router-dom";
 import { g_CLASS_INDEX } from "../../configs/app.config";
+import { Navbar, Nav, Form, FormControl, NavItem } from 'react-bootstrap';
 import SettingTable from "./SettingTable";
 import DateTime from "./DateTime";
+
 import LineChart from "../../images/line-chart-32.png"
 import { useAppDispatch } from "../../store/configureStore";
 import { fetchTableBONDAsync, fetchTableHNX30Async, fetchTableHNXAsync } from "../tableMarketwat/tableSlice";
@@ -272,12 +274,13 @@ const MenuBarMW = () => {
               </Link>
             </li>
             <li>
-              <Link
+               <Link
                 to="/marketwatch-vn30"
                 className="bg-bgListMarketWatch hover:bg-activeListDropMarketWatch  py-1.5 px-2.5 text-xs block whitespace-no-wrap text-white"
               >
                 VN30
-              </Link>
+              </Link> 
+              
             </li>
           </ul>
         </div>
@@ -341,8 +344,11 @@ const MenuBarMW = () => {
               >
                 VN30
               </Link>
+             
+          
             </li>
           </ul>
+          
         </div>
         <div>
           <Tooltip title="Hiện đồ thị">
