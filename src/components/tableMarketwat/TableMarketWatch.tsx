@@ -960,11 +960,11 @@ const TableMarketWatch = () => {
                 </th>
                 <th
                   className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer test"
-                  onClick={() => sortData("13")}
+                  onClick={() => sortData("11")}
                 >
                   KL3
                   <span className="arrow">
-                    {sortedColumn === "13"
+                    {sortedColumn === "11"
                       ? order === "ASC"
                         ? "▼"
                         : "▲"
