@@ -499,7 +499,7 @@ console.log(sortData);
     <div>
         <table className="w-full tableMW " >
         {/* <colgroup><col className="col-symbol" /><col className="col-price" /><col className="col-price" /><col className="col-price" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-price" /><col className="col-vol" /><col className="col-total-vol" /><col className="col-over-buy" /><col className="col-over-sell" /><col className="col-ave-price" /><col className="col-high-price" /><col className="col-low-price" /><col className="col-foreign-buy" /><col className="col-foreign-sell" /></colgroup>   */}
-        <colgroup>
+        {/* <colgroup>
         <col className="col-symbol" />
         <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
         <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
@@ -526,13 +526,18 @@ console.log(sortData);
         <col className="col-vol-foreign-buy" />
         <col className="col-vol-foreign-sell" />
         <col className="col-vol-still" />
-        </colgroup>
-        <thead>
+        </colgroup> */}
+       
+        </table>
+    </div>
+      <table className="w-full tableMW">
+      <thead>
           <tr>
             <th
               className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer"
               rowSpan={2}
               onClick={() => sorting("RowID")}
+              style={{width:"6%"}}
             >
               Mã
             </th>
@@ -666,7 +671,8 @@ console.log(sortData);
             <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer" onClick={() => sortData("19")}>
               KL
             </th>
-            <th className="border border-borderHeadTableMarket text-textHeadTableMarket bg-BGTableHoverMarket relative cursor-pointer" onClick={() => sortData("13")}>
+            <th className="border border-borderHeadTableMarket text-textHeadTableMarket bg-BGTableHoverMarket relative cursor-pointer" onClick={() => sortData("13")}
+            style={{width:'4%'}}>
               <div className='flex justify-between'>
                 <button className='inset-y-0 absolute left-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL ' onClick={() => showKLPT("showPT")} > 
                 <div className="arrow arrow-left"></div>
@@ -701,10 +707,7 @@ console.log(sortData);
             </th>
           </tr>
         </thead>
-        </table>
-    </div>
-      <table className="w-full tableMW">
-    <colgroup>
+    {/* <colgroup>
         <col className="col-symbol" />
         <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
         <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
@@ -731,9 +734,9 @@ console.log(sortData);
         <col className="col-vol-foreign-buy" />
         <col className="col-vol-foreign-sell" />
         <col className="col-vol-still" />
-        </colgroup>
+        </colgroup> */}
          <Droppable droppableId="droppable-1" >
-            {(provider) => (    
+            {(provider:any) => (    
         <tbody className="text-capitalize"
                 ref={provider.innerRef}
                 {...provider.droppableProps}>
@@ -744,7 +747,7 @@ console.log(sortData);
   index={dataTable.Info}
   
 >
-  {(provider) => (
+  {(provider:any) => (
   <tr key={dataTable.RowID} id={`tr${dataTable.RowID}`} 
   {...provider.draggableProps}
    ref={provider.innerRef}>

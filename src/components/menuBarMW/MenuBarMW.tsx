@@ -5,13 +5,14 @@ import InsertChartIcon from "@mui/icons-material/InsertChart";
 import { formatNumberMarket, fStatusMarketHNX, fStatusMarketUPCOM, tinhGiaCT, tinhGiaTC } from "../../utils/util";
 import { NavLink } from "react-router-dom";
 import { g_CLASS_INDEX } from "../../configs/app.config";
-import { Navbar, Nav, Form, FormControl, NavItem } from 'react-bootstrap';
+// import { Navbar, Nav, Form, FormControl, NavItem } from 'react-bootstrap';
 import SettingTable from "./SettingTable";
 import DateTime from "./DateTime";
 
 import LineChart from "../../images/line-chart-32.png"
 import { useAppDispatch } from "../../store/configureStore";
 import { fetchTableBONDAsync, fetchTableHNX30Async, fetchTableHNXAsync } from "../tableMarketwat/tableSlice";
+import ListMenuTest from "./ListMenuTest";
 let stateIndex = 0;
 const callExpand = (id: string, hideClass: string) => {
   const divIndex = document.getElementById("divIndexChart");
@@ -363,6 +364,7 @@ const MenuBarMW = () => {
         </Tooltip> */}
         </div>
       </div>
+      <ListMenuTest/>
       {/* <nav>
       <ul style={{ listStyleType: 'none', margin: 0, padding: 0 }}>
         {menuItems.map((item: MenuItem, index: number) => (
