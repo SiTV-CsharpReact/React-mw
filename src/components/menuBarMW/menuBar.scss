@@ -65,3 +65,25 @@ input[type=checkbox].priceboard2 {
     margin: 4px 4px 0 4px;
     line-height: normal !important;
 }
+.list-sub-menu{
+   padding: 0.25rem;
+   background-color: #717171;
+   display: inline-block;
+   color:#fff;
+   cursor: pointer;
+   border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    border-right: 1px solid #000;
+    &:hover{
+        background-color: #404040;
+    }
+    & .sub-menu{ 
+        box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        overflow-y: auto;
+        background-color: #404040;
+        width: 210px;
+        margin-top: 7px;
+        margin-left: -3px; 
+    }
+    
+}

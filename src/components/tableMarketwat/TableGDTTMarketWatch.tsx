@@ -8,7 +8,8 @@ const TableGDTTMarketWatch = () => {
   const params = useParams<{ id: string }>();
   const paramstock = stocks.find((paramstock) => paramstock.id === params.id);
   const [products, setProducts] = useState([]);
-  const [prices, setPrices] = useState<any[]>([])
+  const [prices, setPrices] = useState<any[]>([]);
+  const [floor,setFloor]=useState("");
   useEffect(()=>{
     if(paramstock){
      if(paramstock.id){
@@ -20,30 +21,16 @@ const TableGDTTMarketWatch = () => {
     }
    },[paramstock?.id])
   const fetchTable = async(param:string) => {
-    // let valueParam ="thoathuanhnx";
-    // let valueParamPrice ="s=bi";
-    //  switch(param) {
-    //   case "thoathuanhnx":
-    //     valueParam= "s=pt";
-    //     valueParamPrice=""
-    //     break;
-    //     // case "HNX30":
-    //     //   valueParam = "s=quote&l=HNX30";
-    //     //   break;
-    //     //   case "BOND":
-    //     //     valueParam = "s=quote&l=BOND";
-    //     //     break;
-    //     default:
-    //       break;
-    //  }
-     //console.log(valueParam)
-      const res = await fetch(`http://marketstream.fpts.com.vn/hnx/data.ashx?s=pt`);
-      const resPrice = await fetch(`http://marketstream.fpts.com.vn/hnx/data.ashx?s=bi`);
+     let valueParamPrice = param  === "thoa-thuan-hsx" ? "hsx":"hnx"
+     setFloor(valueParamPrice)
+      const res = await fetch(`http://marketstream.fpts.com.vn/${valueParamPrice}/data.ashx?s=pt`);
+      const resPrice = await fetch(`http://marketstream.fpts.com.vn/${valueParamPrice}/data.ashx?s=bi`);
       const data = await res.json();
     const dataPrice = await resPrice.json();
       setProducts(data.sort())
     setPrices(dataPrice.sort())
     }
+    console.log(products)
   return (
     <div id="dvFixedH">
       <div className="dvContentLP border-t border-borderHeadTableMarket">
@@ -65,7 +52,15 @@ const TableGDTTMarketWatch = () => {
           </span>
          </div>
           ))} */}
-         <div  className="col-span-2 flex justify-around font-bold pt-1">
+             {floor === "hnx" ? <div  className="col-span-2 flex justify-around font-bold pt-1">
+           <span>
+           Tổng KL GDTT :  
+           <label> {formatNumber(prices[4]?.f240) }</label>    
+         </span>
+         <span>
+            Tổng KL GDTT : <label> { formatNumber(prices[4]?.f241)}</label>
+          </span>
+         </div> : <div  className="col-span-2 flex justify-around font-bold pt-1">
            <span>
            Tổng KL GDTT :  
            <label> {formatNumber(prices[4]?.f240) }</label>    
@@ -74,7 +69,8 @@ const TableGDTTMarketWatch = () => {
             Tổng KL GDTT : <label> { formatNumber(prices[4]?.f241)}</label>
           </span>
          </div>
-     
+
+        }
         
           <div className="col-span-1">
 
