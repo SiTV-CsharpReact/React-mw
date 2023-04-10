@@ -544,7 +544,7 @@ console.log(sortData);
               TC
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket "
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer"
               rowSpan={2}
               // onClick={sortData}
               onClick={() => sortData("15")}
@@ -553,7 +553,7 @@ console.log(sortData);
               Trần
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket "
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer"
               rowSpan={2}
               // onClick={sortData}
               onClick={() => sortData("14")}
