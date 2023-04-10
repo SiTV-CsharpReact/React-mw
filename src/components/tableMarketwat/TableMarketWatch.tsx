@@ -121,14 +121,15 @@ const fetchTable = async(param:string) => {
     const data = await res.json();
     setProducts(data)
   }
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
 
   const handleDragEnd = (e:any) => {
     if (!e.destination) return;
-    let tempData = Array.from(users);
+    let tempData = Array.from(products);
     let [source_data] = tempData.splice(e.source.index, 1);
     tempData.splice(e.destination.index, 0, source_data);
-    setUsers(tempData);
+    setProducts(tempData);
+    
   };
 
 // const rows = products?.map((dataTable: any) => (
@@ -451,7 +452,7 @@ const fetchTable = async(param:string) => {
 // ))
 ;
   const [order,setorder]= useState("ASC");
-  const sorting = (col: string) => {
+  const sorting = (col: any) => {
     console.log("aa",sorting)
       if (order === "ASC") {
         const sorted = [...products].sort((a, b) => 
@@ -466,7 +467,29 @@ const fetchTable = async(param:string) => {
         setorder("ASC");
       }
   };
- 
+  // a === b ? 0 :
+  console.log("product",products)
+    const sortData = (param:string) => {
+      Number(param)
+      if (order === "ASC") {
+  const sortedData = [...products].sort((a, b) =>
+  ((b.Info[param][1]) - (a.Info[param][1])) 
+    );
+        setProducts(sortedData);
+        console.log("aa",sortedData);
+        setorder("DSC");
+      }else { 
+        const sortedData = [...products].sort((a, b) =>
+  ((a.Info[param][1]) - (b.Info[param][1])) 
+    );
+        setProducts(sortedData);
+        console.log("aa",sortedData);
+        setorder("ASC");
+
+      }
+    };
+console.log(sortData);
+
   return (
     <>
     <DragDropContext onDragEnd={handleDragEnd}> 
@@ -512,34 +535,43 @@ const fetchTable = async(param:string) => {
               Mã
             </th>
             <th
-           
+             
               className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer"
               rowSpan={2}
-              onClick={() => sorting("Info")}
+              // onClick={sortData(12)}
+              onClick={() => sortData("13")}
             >
               TC
             </th>
             <th
               className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket "
               rowSpan={2}
+              // onClick={sortData}
+              onClick={() => sortData("15")}
+
             >
               Trần
             </th>
             <th
               className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket "
               rowSpan={2}
+              // onClick={sortData}
+              onClick={() => sortData("14")}
+
             >
               Sàn
             </th>
             <th
               className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket"
               colSpan={6}
+              onClick={() => sortData("14")}
             >
               Mua
             </th>
             <th
               className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
               colSpan={3}
+              onClick={() => sortData("14")}
             >
               Khớp lệnh
             </th>
@@ -550,76 +582,91 @@ const fetchTable = async(param:string) => {
               Bán
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
               rowSpan={2}
+              onClick={() => sortData("20")}
+
             >
               Tổng KL
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
               rowSpan={2}
+              onClick={() => sortData("21")}
+
             >
               Mở cửa
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
               rowSpan={2}
+              onClick={() => sortData("22")}
+
             >
               Cao nhất
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
               rowSpan={2}
+              onClick={() => sortData("23")}
+
             >
               Thấp nhất
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
               rowSpan={2}
+              onClick={() => sortData("25")}
+
             >
               NN mua
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
               rowSpan={2}
+              onClick={() => sortData("26")}
+
             >
               NN bán
             </th>
             <th
-              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
+              className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
               rowSpan={2}
+              onClick={() => sortData("27")}
+
             >
               Room còn lại
             </th>
           </tr>
           <tr>
-            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer" onClick={() => sortData("8")} >
               G3
+              
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer" onClick={() => sortData("9")} >
               KL3
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer" onClick={() => sortData("4")} >
               G2
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer" onClick={() => sortData("5")} >
               KL2
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer " onClick={() => sortData("0")} >
               G1
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket" onClick={() => sortData("1")}>
               KL1
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"  onClick={() => sortData("18")}>
               Giá
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer" onClick={() => sortData("19")}>
               KL
             </th>
-            <th className="border border-borderHeadTableMarket text-textHeadTableMarket bg-BGTableHoverMarket relative">
+            <th className="border border-borderHeadTableMarket text-textHeadTableMarket bg-BGTableHoverMarket relative cursor-pointer" onClick={() => sortData("13")}>
               <div className='flex justify-between'>
-                <button className='inset-y-0 absolute left-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL' onClick={() => showKLPT("showPT")}> 
+                <button className='inset-y-0 absolute left-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL ' onClick={() => showKLPT("showPT")} > 
                 <div className="arrow arrow-left"></div>
                 </button>
              <div className='child-center' id="showKhopLenhPT">
@@ -632,22 +679,22 @@ const fetchTable = async(param:string) => {
               </div>
            
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer" onClick={() => sortData("2")}>
               G1
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer" onClick={() => sortData("3")}>
               KL1
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer" onClick={() => sortData("13")}>
               G2
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer" onClick={() => sortData("7")}>
               KL2
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer" onClick={() => sortData("10")}>
               G3
             </th>
-            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket">
+            <th className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer" onClick={() => sortData("9")}>
               KL3
             </th>
           </tr>
@@ -698,8 +745,9 @@ const fetchTable = async(param:string) => {
   {(provider) => (
   <tr key={dataTable.RowID} id={`tr${dataTable.RowID}`} 
   {...provider.draggableProps}
-  {...provider.dragHandleProps} ref={provider.innerRef}>
+   ref={provider.innerRef}>
     <td 
+    {...provider.dragHandleProps}
       className={`${setColorMarket(
         dataTable.Info[13][1],
         dataTable.Info[18][1],
