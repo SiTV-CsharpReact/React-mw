@@ -23,12 +23,12 @@ const Menu: React.FC<Props> = ({ items }) => {
     return (
       <li
         key={item.path}
-        className={`has-children ${isActive ? "active" : ""} `}
+        className={`group list-sub-menu  ${isActive ? "active" : ""} `}
         onClick={() => handleItemClick(item.path)}
       >
         <Link to={item.path}>{item.label}</Link>
         {item.children && (
-          <ul className={`${isActive ? "active" : ""} sub-menu`}>
+          <ul className={`${isActive ? "active" : ""} absolute hidden text-black group-hover:block z-40 sub-menu`}>
             {item.children.map((child) => renderMenuItem(child))}
           </ul>
         )}

@@ -9,8 +9,8 @@ import { stocks } from '../../models/marketwacthTable'
 import TableGDTTMarketWatch from '../tableMarketwat/TableGDTTMarketWatch'
 import HSXMarketWatch from '../tableMarketwat/TableHSXMarketWatch'
 import TableThongKeMarketWatch from '../tableMarketwat/TableThongKeMarketWatch'
-import MenuTest from '../menuBarMW/MenuTest'
-import ListMenuTest from '../menuBarMW/ListMenuTest'
+import MenuTest from '../menuBarMW/MenuBar'
+import ListMenuTest from '../menuBarMW/ListMenuBar'
 type Props ={
     content:ReactElement;
 }

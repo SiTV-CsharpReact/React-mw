@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
 interface MenuItem {
-  label: string;
+  name: string;
   path: string;
   children?: MenuItem[];
 }
@@ -11,37 +11,44 @@ interface Props {
   items: MenuItem[];
 }
 
-const MenuTest: React.FC<Props>  = ({items}) => {
+const MenuBar: React.FC<Props>  = ({items}) => {
+  const [isActive, setIsActive] = useState("");
+  const handleItemClick = (path: string) => {
+    setIsActive(path);
+    console.log(path)
+  };
   const renderMenuItemChild =(item:MenuItem) =>{
     return(
-      <li>
-        <Link  to={item.path}>
-        {item.label}
+      <li  key={item.path}>
+        <Link  to={item.path} 
+         >
+        {item.name}
         </Link>
       </li>
     )
   }
   const renderMenuItem = (item: MenuItem) => {
+ 
     // const isActive = item.path === activeItem;
     return (
-      <div
+      <li
         key={item.path}
-        className='group list-sub-menu'
-        // className={`has-children ${isActive ? "active" : ""} `}
+        // className='group list-sub-menu'
+        className={`group list-sub-menu ${isActive ? "active" : ""} `}
 
-        // onClick={() => handleItemClick(item.path)}
+        onClick={() => handleItemClick(item.path)}
       >
-        <span  >{item.label}</span>
+        <Link to="/" className='text-13px' >{item.name}</Link>
         {item.children && (
           // <ul className={`${isActive ? "active" : ""} sub-menu`}>
             <ul className='absolute hidden text-black group-hover:block z-40 sub-menu'>
             {item.children.map((child) => renderMenuItemChild(child))}
           </ul>
         )}
-      </div>
+      </li>
     );
   };
     return <div className='flex'>{items.map((item) => renderMenuItem(item))}</div>;
 }
 
-export default MenuTest
+export default MenuBar

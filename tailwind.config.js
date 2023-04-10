@@ -76,7 +76,8 @@ module.exports = {
         large:'large !important',
         '13px':'13px',
         '15px':'15px',
-         '16px':'16px'
+         '16px':'16px',
+         '16pxi':'16px !important',
       }
     },
     plugins: [

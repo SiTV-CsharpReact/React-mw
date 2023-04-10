@@ -20,6 +20,9 @@ function App() {
       <Route path="/menu" element={<ListMenuApp />} > 
           <Route path=":id" element={<ListMenuApp />} />
       </Route>
+
+          
+ 
         {/* <Route path="/marketwatch-hsx" element={<HSXMarketWatch />} />
         <Route path="/marketwatch-vn30" element={<VN30MarketWatch />} />
         <Route path="/marketwatch-hnx30" element={<HNX30MarketWatch />} />

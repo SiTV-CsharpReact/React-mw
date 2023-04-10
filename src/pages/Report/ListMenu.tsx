@@ -1,30 +1,176 @@
-import Menu from "./Menu";
+import Menu from "../../components/menuBarMW/Menu";
+
 
 const ListMenuApp = () => {
-  const menuItems = [
-    {
-      label: "Home",
-      path: "/",
-    },
-    {
-      label: "About",
-      path: "/about",
-      children: [
+    const menuItems = [
         {
-          label: "Team",
-          path: "/about/team",
+          name: "HNX",
+          path: "/",
+          children: [
+            {
+              name: "HNX",
+              path: "/HNX",
+            },
+            {
+              name: "HNX30",
+              path: "/HNX30",
+            },
+            {
+                name: "BOND",
+                path: "/BOND",
+              },
+              {
+                name: "Giao dịch thỏa thuận",
+                path: "/thoa-thuan-hnx",
+              },
+          ],
         },
         {
-          label: "Mission",
-          path: "/about/mission",
+          name: "HOSE",
+          path: "/HSX",
+          children: [
+            {
+              name: "VNI",
+              path: "/VNI",
+            },
+            {
+              name: "VN30",
+              path: "/VN30",
+            },
+            {
+                name: "BOND",
+                path: "/BOND",
+              },
+              {
+                name: "Giao dịch thỏa thuận",
+                path: "/thoa-thuan-hsx",
+              },
+              {
+                name: "VNXALL",
+                path: "/VNXALL",
+              },
+              {
+                name: "VN100",
+                path: "/VN100",
+              },
+              {
+                name: "VNALL",
+                path: "/VNALL",
+              },
+              {
+                name: "VNMID",
+                path: "/VNMID",
+              },
+              {
+                name: "VNSML",
+                path: "/VNSML",
+              },
+          ],
         },
-      ],
-    },
-    {
-      label: "Contact",
-      path: "/contact",
-    },
-  ];
+        {
+            name: "UPCOM",
+            path: "/UPCOM",
+            children: [
+              {
+                name: "UPCOM",
+                path: "/UPCOM",
+              },
+              {
+                name: "Giao dịch thỏa thuận",
+                path: "/HNX30",
+              },
+            
+            ],
+          },
+          {
+            name: "Ngành",
+            path: "/",
+            children: [
+              {
+                name: "HNX",
+                path: "/HNX",
+              },
+              {
+                name: "HNX30",
+                path: "/HNX30",
+              },
+              {
+                  name: "BOND",
+                  path: "/BOND",
+                },
+                {
+                  name: "Giao dịch thỏa thuận",
+                  path: "/thoa-thuan-hnx",
+                },
+            ],
+          },
+          {
+            name: "Thống kê",
+            path: "/",
+            children: [
+              {
+                name: "HNX",
+                path: "/HNX",
+              },
+              {
+                name: "HNX30",
+                path: "/HNX30",
+              },
+              {
+                  name: "BOND",
+                  path: "/BOND",
+                },
+                {
+                  name: "Giao dịch thỏa thuận",
+                  path: "/thoa-thuan-hnx",
+                },
+            ],
+          },
+          {
+            name: "Chứng quyền",
+            path: "/",
+            children: [
+              {
+                name: "HNX",
+                path: "/HNX",
+              },
+              {
+                name: "HNX30",
+                path: "/HNX30",
+              },
+              {
+                  name: "BOND",
+                  path: "/BOND",
+                },
+                {
+                  name: "Giao dịch thỏa thuận",
+                  path: "/thoa-thuan-hnx",
+                },
+            ],
+          },
+          {
+            name: "Danh mục",
+            path: "/",
+            children: [
+              {
+                name: "HNX",
+                path: "/HNX",
+              },
+              {
+                name: "HNX30",
+                path: "/HNX30",
+              },
+              {
+                  name: "BOND",
+                  path: "/BOND",
+                },
+                {
+                  name: "Giao dịch thỏa thuận",
+                  path: "/thoa-thuan-hnx",
+                },
+            ],
+          },
+      ];
 
   return (
     <div>
