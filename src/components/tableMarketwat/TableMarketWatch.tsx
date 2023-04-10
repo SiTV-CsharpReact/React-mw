@@ -555,7 +555,7 @@ const TableMarketWatch = () => {
             <thead>
               <tr>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer test"
                   rowSpan={2}
                   onClick={() => {
                     sorting("RowID");
@@ -594,7 +594,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer test"
                   rowSpan={2}
                   // onClick={sortData}
                   onClick={() => sortData("15")}
@@ -609,7 +609,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer test"
                   rowSpan={2}
                   // onClick={sortData}
                   onClick={() => sortData("14")}
@@ -626,39 +626,26 @@ const TableMarketWatch = () => {
                 <th
                   className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket"
                   colSpan={6}
-                  onClick={() => sortData("14")}
                 >
                   Mua
-                  <span className="arrow">
-                    {sortedColumn === "14"
-                      ? order === "ASC"
-                        ? "▼"
-                        : "▲"
-                      : null}
-                  </span>
+                
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket test"
                   colSpan={3}
                   onClick={() => sortData("14")}
                 >
                   Khớp lệnh
-                  <span className="arrow">
-                    {sortedColumn === "14"
-                      ? order === "ASC"
-                        ? "▼"
-                        : "▲"
-                      : null}
-                  </span>
+                 
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket "
                   colSpan={6}
                 >
                   Bán
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer test"
                   rowSpan={2}
                   onClick={() => sortData("20")}
                 >
@@ -672,7 +659,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer test"
                   rowSpan={2}
                   onClick={() => sortData("21")}
                   
@@ -687,7 +674,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer test"
                   rowSpan={2}
                   onClick={() => sortData("22")}
                 >
@@ -701,7 +688,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer test"
                   rowSpan={2}
                   onClick={() => sortData("23")}
                 >
@@ -715,7 +702,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer test"
                   rowSpan={2}
                   onClick={() => sortData("25")}
                 >
@@ -729,7 +716,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer test"
                   rowSpan={2}
                   onClick={() => sortData("26")}
                 >
@@ -743,7 +730,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer test"
                   rowSpan={2}
                   onClick={() => sortData("27")}
                 >
@@ -759,7 +746,7 @@ const TableMarketWatch = () => {
               </tr>
               <tr>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer test"
                   onClick={() => sortData("8")}
                 >
                   G3
@@ -772,7 +759,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer test"
                   onClick={() => sortData("9")}
                 >
                   KL3
@@ -785,7 +772,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer test"
                   onClick={() => sortData("4")}
                 >
                   G2
@@ -798,7 +785,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer test"
                   onClick={() => sortData("5")}
                 >
                   KL2
@@ -811,7 +798,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer "
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer test"
                   onClick={() => sortData("0")}
                 >
                   G1
@@ -824,7 +811,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket cursor-pointer test"
                   onClick={() => sortData("1")}
                 >
                   KL1
@@ -837,7 +824,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer test"
                   onClick={() => sortData("18")}
                 >
                   Giá
@@ -850,7 +837,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer"
+                  className="border border-borderHeadTableMarket px-2 py-1.5 text-textHeadTableMarket bg-BGTableHoverMarket cursor-pointer test"
                   onClick={() => sortData("19")}
                 >
                   KL
@@ -863,7 +850,7 @@ const TableMarketWatch = () => {
                   </span>
                 </th>
                 <th
-                  className="border border-borderHeadTableMarket text-textHeadTableMarket bg-BGTableHoverMarket relative cursor-pointer"
+                  className="border border-borderHeadTableMarket text-textHeadTableMarket bg-BGTableHoverMarket relative cursor-pointer test"
                   onClick={() => sortData("13")}
                 >
                   <div className="flex justify-between pt-[20px]">
