@@ -260,8 +260,15 @@ body .fpts-header .header-right .box .OrderForm .eztrade__notification .notifica
     right: 5px;
     top: 23px;
 }
-
-
+th.test:hover {
+    cursor: url(http://priceboard3.fpts.com.vn/images/menuMW/sort_full.png), auto;
+}
+th.test.active::after {
+    background: url(http://priceboard3.fpts.com.vn/images/menuMW/sort_up.png) center bottom no-repeat
+  }
+.arrow{
+    display: block
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
