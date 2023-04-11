@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
 interface MenuItem {
@@ -12,15 +12,50 @@ interface Props {
 }
 
 const MenuBar: React.FC<Props>  = ({items}) => {
-  const [isActive, setIsActive] = useState("");
+  
+  // useEffect(() => {
+  //   // Load active item from localStorage
+  //   const activeItem = localStorage.getItem("activeItem");
+  //   if (activeItem) {
+  //     setActive(activeItem);
+  //   }
+  // }, []);
+  const [activeMenuItem, setActiveMenuItem] = useState<string | null>(null);
+    const [activeMenuItemChild, setActiveMenuItemChild] = useState<string | null>(null);
   const handleItemClick = (path: string) => {
-    setIsActive(path);
-    console.log(path)
+    setActiveMenuItem(path);
+    localStorage.setItem("activePriceboardTab", path);
+    //console.log(path)
+  };
+  const handleItemChildClick = (path: string) => {
+    setActiveMenuItemChild(path);
+    localStorage.setItem("activePriceboardTabMenu", path);
+    //console.log(path)
   };
   const renderMenuItemChild =(item:MenuItem) =>{
+    //console.log(item)
+    //console.log(Object.keys(item))
     return(
-      <li  key={item.path}>
+      <li  key={item.path}
+      
+      onClick={() => handleItemChildClick(item.path)}
+      >
         <Link  to={item.path} 
+        className={`${ activeMenuItemChild === item.path ? 'active' : ''} `}
+         >
+        {item.name}
+        </Link>
+      </li>
+    )
+  }
+  const renderMenuItemChildS =(item:MenuItem,index:number) =>{
+    return(
+      <li  key={index}
+      className={`${ index % 2 === 0 ? "float-left" : "float-right" }`}
+      onClick={() => handleItemChildClick(item.path)}
+      >
+        <Link  to={item.path} 
+        className={`${ activeMenuItemChild === item.path ? 'active' : ''} `}
          >
         {item.name}
         </Link>
@@ -31,24 +66,33 @@ const MenuBar: React.FC<Props>  = ({items}) => {
  
     // const isActive = item.path === activeItem;
     return (
-      <li
+      <div
         key={item.path}
         // className='group list-sub-menu'
-        className={`group list-sub-menu ${isActive ? "active" : ""} `}
+       
+        className={`group list-sub-menu ${ activeMenuItem === item.path ? 'active' : ''} `}
 
         onClick={() => handleItemClick(item.path)}
       >
-        <Link to="/" className='text-13px' >{item.name}</Link>
-        {item.children && (
+        <span  className='text-13px' >{item.name}{ activeMenuItemChild === item.path ? 'active' : ''}</span>
+      {item.children && item.children.length <=9 ? (
           // <ul className={`${isActive ? "active" : ""} sub-menu`}>
             <ul className='absolute hidden text-black group-hover:block z-40 sub-menu'>
-            {item.children.map((child) => renderMenuItemChild(child))}
+            {item.children?.map((child) => renderMenuItemChild(child))}
+            
           </ul>
+        ):(
+        <div>
+           <ul className='absolute hidden text-black group-hover:block z-40 sub-menu dropdown-menu-price'>
+            {item.children?.map((child,index) => renderMenuItemChildS(child,index))}
+            
+          </ul>
+        </div>
         )}
-      </li>
+      </div>
     );
   };
-    return <div className='flex'>{items.map((item) => renderMenuItem(item))}</div>;
+    return <div className='flex menu-table'>{items.map((item) => renderMenuItem(item))}</div>;
 }
 
 export default MenuBar

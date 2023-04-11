@@ -43,3 +43,57 @@ div#dvContentLP {
 .table-priceboard thead tr th {
     border: 1px solid #858585 !Important;
 }
+.context-menu-list {
+    position: absolute;
+    display: inline-block;
+    min-width: 130px;
+    max-width: 360px;
+    padding: 1px 0;
+    margin: 5px;
+    font-family: Arial;
+    font-size: 9pt!important;
+    font-size: inherit;
+    list-style-type: none;
+    background: #fff;
+    border: 1px solid #bebebe;
+    border-radius: 0px;
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+    & li{
+        position: relative;
+    padding: 6px 10px;
+    color: black;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #fff;
+    border-bottom: 1px double rgba(128, 128, 128, 0.32);
+    white-space: nowrap;
+    &:hover{
+        color: #fff;
+        cursor: pointer;
+        z-index: 1;
+        background-color: #22B14C;
+        -webkit-box-shadow: 0 5px 10px -4px rgba(0,0,0,0.4);
+        -moz-box-shadow: 0 5px 10px -4px rgba(0,0,0,0.4);
+        box-shadow: 0 5px 10px -4px rgba(0,0,0,0.4);
+        & i{
+            color: #fff !important;
+        }
+        }
+    & span{
+        padding-left: 10px;
+    }
+   
+ 
+    }
+}
+#idContextMenu li i {
+    width: 20px;
+    vertical-align: -15%;
+    line-height: 0.75em;
+    font-size: 1.2em;
+   
+
+}

@@ -84,89 +84,213 @@ const ListMenuBar = () => {
       },
       {
         name: "Ngành",
-        path: "/",
+        path: "/nganh",
         children: [
           {
-            name: "HNX",
-            path: "/HNX",
+            name: "Bán lẻ",
+            path: "/HN",
           },
           {
-            name: "HNX30",
-            path: "/HNX30",
+            name: "Bảo hiểm",
+            path: "/HNX3",
           },
           {
-              name: "BOND",
-              path: "/BOND",
+              name: "Cơ sở hạ tầng giao thông vận tải",
+              path: "/BON",
             },
             {
-              name: "Giao dịch thỏa thuận",
-              path: "/thoa-thuan-hnx",
+              name: "Công nghệ thông tin tích hợp",
+              path: "/table",
             },
+            {
+              name: "Công ty chứng khoán",
+              path: "/HN",
+            },
+            {
+              name: "Dịch vụ & thiết bị y tế",
+              path: "/HNX3",
+            },
+            {
+                name: "Dịch vụ công cộng",
+                path: "/BON",
+              },
+              {
+                name: "Dịch vụ thương mại chuyên biệt",
+                path: "/table",
+              },
+              {
+                name: "Dịch vụ viễn thông",
+                path: "/HN",
+              },
+              {
+                name: "Dược phẩm, Công nghệ sinh học",
+                path: "/HNX3",
+              },
+              {
+                  name: "Giấy và các sản phẩm từ gỗ",
+                  path: "/BON",
+                },
+                {
+                  name: "Hàng tiêu dùng lâu bền",
+                  path: "/table",
+                },
+                {
+                  name: "Kim loại & Khai khoáng",
+                  path: "/HN",
+                },
+                {
+                  name: "Năng lượng",
+                  path: "/HNX3",
+                },
+                {
+                    name: "Ngân hàng",
+                    path: "/BON",
+                  },
+                  {
+                    name: "Nguyên vật liệu",
+                    path: "/table",
+                  },
+                  {
+                  name: "Giấy và các sản phẩm từ gỗ",
+                  path: "/BON",
+                },
+                {
+                  name: "Hàng tiêu dùng lâu bền",
+                  path: "/table",
+                },
+                {
+                  name: "Kim loại & Khai khoáng",
+                  path: "/HN",
+                },
+                {
+                  name: "Năng lượng",
+                  path: "/HNX3",
+                },
+                {
+                    name: "Ngân hàng",
+                    path: "/BON",
+                  },
+                  {
+                    name: "Nguyên vật liệu",
+                    path: "/table",
+                  },
+
+                  {
+                    name: "Ngân hàng",
+                    path: "/BON",
+                  },
+                  {
+                    name: "Nguyên vật liệu",
+                    path: "/table",
+                  },
+                  {
+                  name: "Ô tô & Phụ tùng",
+                  path: "/BON",
+                },
+                {
+                  name: "Phần cứng",
+                  path: "/table",
+                },
+                {
+                  name: "Phần mềm",
+                  path: "/HN",
+                },
+                {
+                  name: "Quản lý, phát triển bất động sản",
+                  path: "/HNX3",
+                },
+                {
+                    name: "Quỹ",
+                    path: "/BON",
+                  },
+                  {
+                    name: "Sản phẩm cá nhân & hộ gia đình",
+                    path: "/table",
+                  },
+                  {
+                    name: "Tài chính chuyên biệt khác",
+                    path: "/BON",
+                  },
+                  {
+                    name: "Thực phẩm & Đồ uống",
+                    path: "/table",
+                  },
+                  {
+                    name: "Truyền thống và xuất bản",
+                    path: "/HN",
+                  },
+                  {
+                    name: "Tư liệu sản xuất",
+                    path: "/HNX3",
+                  },
+                  {
+                      name: "Vận tải",
+                      path: "/BON",
+                    },
+                    {
+                      name: "Vật liệu xây dựng",
+                      path: "/table",
+                    },
+                  
+
         ],
       },
       {
         name: "Thống kê",
-        path: "/",
+        path: "/hehe",
         children: [
           {
-            name: "HNX",
-            path: "/HNX",
+            name: "Thống kê Index",
+            path: "/HN",
           },
           {
-            name: "HNX30",
-            path: "/HNX30",
+            name: "Thống kê Giá",
+            path: "/HNX3",
           },
           {
-              name: "BOND",
-              path: "/BOND",
+              name: "Thống kê Đặt lệnh",
+              path: "/BON",
             },
             {
-              name: "Giao dịch thỏa thuận",
-              path: "/thoa-thuan-hnx",
+              name: "Giao dịch khớp lệnh NDTNN",
+              path: "/table",
+            },
+            {
+              name: "Giao dịch thỏa thuận NDTNN",
+              path: "/table",
             },
         ],
       },
       {
         name: "Chứng quyền",
-        path: "/",
+        path: "/keo",
         children: [
           {
-            name: "HNX",
-            path: "/HNX",
+            name: "CW",
+            path: "/X",
           },
-          {
-            name: "HNX30",
-            path: "/HNX30",
-          },
-          {
-              name: "BOND",
-              path: "/BOND",
-            },
-            {
-              name: "Giao dịch thỏa thuận",
-              path: "/thoa-thuan-hnx",
-            },
+         
         ],
       },
       {
         name: "Danh mục",
-        path: "/",
+        path: "/oke",
         children: [
           {
             name: "HNX",
-            path: "/HNX",
+            path: "/X",
           },
           {
-            name: "HNX30",
-            path: "/HNX30",
+            name: "HN30",
+            path: "/",
           },
           {
               name: "BOND",
-              path: "/BOND",
+              path: "/BND",
             },
             {
               name: "Giao dịch thỏa thuận",
-              path: "/thoa-thuan-hnx",
+              path: "/table",
             },
         ],
       },
