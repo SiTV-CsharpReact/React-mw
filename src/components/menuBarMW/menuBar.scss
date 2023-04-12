@@ -65,8 +65,14 @@ input[type=checkbox].priceboard2 {
     margin: 4px 4px 0 4px;
     line-height: normal !important;
 }
+.menu-table {
+    height: 30px;
+    & .active{
+        background-color: #22B14C !important;
+    }
+}
 .list-sub-menu{
-   padding: 0.25rem;
+   padding: 5px;
    background-color: #717171;
    display: inline-block;
    color:#fff;
@@ -80,10 +86,41 @@ input[type=checkbox].priceboard2 {
     & .sub-menu{ 
         box-shadow: 0 6px 12px rgba(0,0,0,.175);
         overflow-y: auto;
-        background-color: #404040;
+        background-color: #303030;
         width: 210px;
-        margin-top: 7px;
-        margin-left: -3px; 
+        margin-top: 6px;
+        margin-left: -4px; 
+        & li:last-child a{
+            border: none;
+        }
+        & li a{
+            padding: 6px 10px;
+            color: #fff ;
+            background-color: #303030;
+            font-size: 0.75rem;
+            border-bottom: 1px solid #6F6F6F;
+            display: block;
+            &:hover{
+                background-color: #828282;
+            }
+           
+        }
+        & li .active{
+            background-color: #404040 !important;
+        }
     }
     
+}
+
+.dropdown-menu-price{
+    width: 450px !important;
+  
+    max-height: 245px;
+    overflow-y: auto;
+    &> li{
+        min-width: 210px;
+        max-width: 700px;
+        position: relative;
+    }
+
 }

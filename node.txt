@@ -1150,3 +1150,84 @@ const AssetReport = () => {
 
 
 export default AssetReport
+
+
+{/* <HeaderMarketW/> 
+         <div>
+          <table className="w-full tableMW ">
+         
+            <colgroup>
+              <col className="col-symbol" />
+              <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
+              <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
+              <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
+              <col className="col-price" />
+              <col className="col-vol" />
+              <col className="col-price" />
+              <col className="col-vol" />
+              <col className="col-price" />
+              <col className="col-vol" />
+              <col className="col-price" />
+              <col className="col-vol col-vol-sm" />
+              <col className="col-diff" />
+              <col className="col-price" />
+              <col className="col-vol" />
+              <col className="col-price" />
+              <col className="col-vol" />
+              <col className="col-price" />
+              <col className="col-vol" />
+              <col className="col-vol-total" />
+              <col className="col-price-open" />
+              <col className="col-price-high" />
+              <col className="col-price-short" />
+              <col className="col-vol-foreign-buy" />
+              <col className="col-vol-foreign-sell" />
+              <col className="col-vol-still" />
+            </colgroup>
+          
+          </table>
+        </div> */}
+
+              {/* <colgroup>
+            <col className="col-symbol" />
+            <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
+            <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
+            <col className="show-on-mobile col-price bg-BGTableHoverMarket" />
+            <col className="col-price" />
+            <col className="col-vol" />
+            <col className="col-price" />
+            <col className="col-vol" />
+            <col className="col-price" />
+            <col className="col-vol" />
+            <col className="col-price" />
+            <col className="col-vol col-vol-sm" />
+            <col className="col-diff" />
+            <col className="col-price" />
+            <col className="col-vol" />
+            <col className="col-price" />
+            <col className="col-vol" />
+            <col className="col-price" />
+            <col className="col-vol" />
+            <col className="col-vol-total" />
+            <col className="col-price-open" />
+            <col className="col-price-high" />
+            <col className="col-price-short" />
+            <col className="col-vol-foreign-buy" />
+            <col className="col-vol-foreign-sell" />
+            <col className="col-vol-still" />
+          </colgroup> */}
+
+
+
+          // const handleContextMenu = (e: any) => {
+  //   if(e){
+  //     e.preventDefault();
+  //     const element = e as HTMLInputElement
+  //   const trValue = element.parentElement?.getAttribute('data-tr-value');
+  //   if(trValue){
+  //     setPopupPosition({ x: e.clientX, y: e.clientY });
+  //     setPopupVisible(true);
+  //   } 
+  //   }
+    
+  // }

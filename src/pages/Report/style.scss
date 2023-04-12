@@ -31,4 +31,47 @@
 //       }
      
 //  }
- 
+// ul {
+//     list-style: none;
+//     padding: 0;
+//     margin: 0;
+//   }
+  
+//   li {
+//     display: inline-block;
+//     position: relative;
+//   }
+  
+//   li:hover {
+//     color:#fff
+
+//   }
+
+
+// li:hover {
+//     background-color: #ddd;
+//   }
+  
+//   .has-children:hover > ul {
+//     display: block;
+//   }
+  
+//   li.active,
+//   li.active:hover {
+//     background-color: #008cba;
+//     color: white;
+//   }
+  
+//   .sub-menu {
+//     display: none;
+//     position: absolute;
+//     top: 100%;
+//     left: 0;
+//     background-color: #f2f2f2;
+//     border-radius: 5px;
+//     padding: 10px;
+//   }
+  
+//   .sub-menu li:hover {
+//     background-color: #ddd;
+//   }

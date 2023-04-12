@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import React from "react";
 import AssetReport from "./pages/Report/AssetReport";
 import LayoutMarketWatch from "./components/layoutMarketwat/LayoutMarketWatch";
+import Menu from "./pages/Report/Menu";
+import ListMenuApp from "./pages/Report/ListMenu";
 function App() {
   const { t } = useTranslation(["home", "report"]);
   return (
@@ -12,9 +14,15 @@ function App() {
         <Route path="/" element={<LayoutMarketWatch />} >
           <Route path=":id" element={<LayoutMarketWatch />} />
         </Route>
-      <Route path="/report/AssetReport2" element={<AssetReport />} > 
+      {/* <Route path="/services" element={<AssetReport />} > 
           <Route path=":id" element={<AssetReport />} />
+      </Route> */}
+      <Route path="/menu" element={<ListMenuApp />} > 
+          <Route path=":id" element={<ListMenuApp />} />
       </Route>
+
+          
+ 
         {/* <Route path="/marketwatch-hsx" element={<HSXMarketWatch />} />
         <Route path="/marketwatch-vn30" element={<VN30MarketWatch />} />
         <Route path="/marketwatch-hnx30" element={<HNX30MarketWatch />} />

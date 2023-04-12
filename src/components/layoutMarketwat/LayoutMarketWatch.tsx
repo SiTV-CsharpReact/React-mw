@@ -9,6 +9,8 @@ import { stocks } from '../../models/marketwacthTable'
 import TableGDTTMarketWatch from '../tableMarketwat/TableGDTTMarketWatch'
 import HSXMarketWatch from '../tableMarketwat/TableHSXMarketWatch'
 import TableThongKeMarketWatch from '../tableMarketwat/TableThongKeMarketWatch'
+import MenuTest from '../menuBarMW/MenuBar'
+import ListMenuTest from '../menuBarMW/ListMenuBar'
 type Props ={
     content:ReactElement;
 }
@@ -63,6 +65,7 @@ const LayoutMarketWatch  = () => {
      
         <MenuMarketWatch />
       <MenuBarMW/>  
+     
     <div className="h-420 overflow-auto relative z-10 table_market" id="tableHNX">
         {/* {switch(paramstock)
         
