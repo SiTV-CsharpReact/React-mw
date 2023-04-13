@@ -1,37 +1,17 @@
-import { Route, Routes } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import AssetReport from "./pages/Report/AssetReport";
-import LayoutMarketWatch from "./components/layoutMarketwat/LayoutMarketWatch";
-import Menu from "./pages/Report/Menu";
-import ListMenuApp from "./pages/Report/ListMenu";
+import LayoutMarketWatch from "./components/layoutMarketwatch/LayoutMarketWatch";
+import AppProvider from "./Context/AppContext";
 function App() {
-  const { t } = useTranslation(["home", "report"]);
   return (
     <div>
-  
+        <AppProvider>
       <Routes>
-        <Route path="/" element={<LayoutMarketWatch />} >
-          <Route path=":id" element={<LayoutMarketWatch />} />
-        </Route>
-      {/* <Route path="/services" element={<AssetReport />} > 
-          <Route path=":id" element={<AssetReport />} />
-      </Route> */}
-      <Route path="/menu" element={<ListMenuApp />} > 
-          <Route path=":id" element={<ListMenuApp />} />
-      </Route>
-
-          
- 
-        {/* <Route path="/marketwatch-hsx" element={<HSXMarketWatch />} />
-        <Route path="/marketwatch-vn30" element={<VN30MarketWatch />} />
-        <Route path="/marketwatch-hnx30" element={<HNX30MarketWatch />} />
-     
-        {/* <Route path="/HNI" element={<HNIMarketWatch />} />
-        <Route path="/Table" element={<LayoutMarketWatch />} /> */}
-        {/* <Route path="/hnx" element={<IndexMarketW/>}/> */}
+        <Route path="/" element={<Navigate to="/chung-khoan/HNX" />} />
+        <Route path="/chung-khoan" element={<Navigate to="/chung-khoan/HNX" />} />
+        <Route path="/chung-khoan/:id" element={<LayoutMarketWatch />} />
       </Routes>
-      {/* <IndexMarketW/> */}
+      </AppProvider>
     </div>
   );
 }

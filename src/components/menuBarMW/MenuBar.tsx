@@ -11,26 +11,38 @@ interface Props {
   items: MenuItem[];
 }
 
+// const activeItem = localStorage.getItem("activePriceboardTab");
+// const activeItemChild = localStorage.getItem("activePriceboardTabMenu");
+
 const MenuBar: React.FC<Props>  = ({items}) => {
   
-  // useEffect(() => {
-  //   // Load active item from localStorage
-  //   const activeItem = localStorage.getItem("activeItem");
-  //   if (activeItem) {
-  //     setActive(activeItem);
-  //   }
-  // }, []);
+  const activeItem = localStorage.getItem("activePriceboardTab");
+  const activeItemChild = localStorage.getItem("activePriceboardTabMenu");
   const [activeMenuItem, setActiveMenuItem] = useState<string | null>(null);
     const [activeMenuItemChild, setActiveMenuItemChild] = useState<string | null>(null);
+    useEffect(() => {
+      // Load active item from localStorage
+      const activeItem = localStorage.getItem("activePriceboardTab");
+      const activeItemChild = localStorage.getItem("activePriceboardTabMenu");
+      console.log(activeItem)
+      if (activeItem) {
+        setActiveMenuItem(activeItem);
+      }
+      if (activeItemChild) {
+        setActiveMenuItemChild(activeItemChild);
+      }
+    }, []);
   const handleItemClick = (path: string) => {
+    
     setActiveMenuItem(path);
     localStorage.setItem("activePriceboardTab", path);
-    //console.log(path)
+    console.log(path)
   };
-  const handleItemChildClick = (path: string) => {
+  const handleItemChildClick = (path: string,name:string) => {
     setActiveMenuItemChild(path);
-    localStorage.setItem("activePriceboardTabMenu", path);
-    //console.log(path)
+    localStorage.setItem("activePriceboardTabMenu", name);
+    //localStorage.setItem("activePriceboardTab", path);
+    console.log(path)
   };
   const renderMenuItemChild =(item:MenuItem) =>{
     //console.log(item)
@@ -38,7 +50,7 @@ const MenuBar: React.FC<Props>  = ({items}) => {
     return(
       <li  key={item.path}
       
-      onClick={() => handleItemChildClick(item.path)}
+      onClick={() => handleItemChildClick(item.path,item.name)}
       >
         <Link  to={item.path} 
         className={`${ activeMenuItemChild === item.path ? 'active' : ''} `}
@@ -52,7 +64,7 @@ const MenuBar: React.FC<Props>  = ({items}) => {
     return(
       <li  key={index}
       className={`${ index % 2 === 0 ? "float-left" : "float-right" }`}
-      onClick={() => handleItemChildClick(item.path)}
+      onClick={() => handleItemChildClick(item.path,item.name)}
       >
         <Link  to={item.path} 
         className={`${ activeMenuItemChild === item.path ? 'active' : ''} `}
@@ -68,13 +80,11 @@ const MenuBar: React.FC<Props>  = ({items}) => {
     return (
       <div
         key={item.path}
-        // className='group list-sub-menu'
-       
         className={`group list-sub-menu ${ activeMenuItem === item.path ? 'active' : ''} `}
 
         onClick={() => handleItemClick(item.path)}
       >
-        <span  className='text-13px' >{item.name}{ activeMenuItemChild === item.path ? 'active' : ''}</span>
+        <span  className='text-13px' >{item.name}{ activeMenuItem === item.path ? activeItemChild?.replace("",": ") : ''}</span>
       {item.children && item.children.length <=9 ? (
           // <ul className={`${isActive ? "active" : ""} sub-menu`}>
             <ul className='absolute hidden text-black group-hover:block z-40 sub-menu'>

@@ -50,12 +50,12 @@
 .group-buysell>div{
     border: unset;
     text-transform: uppercase;
-    padding: 8px 10px 8px;
+    padding: 9px 12px 8px;
     line-height: 100%;
     color: #fff;
     background-color: #b3b3b3;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
 }
 .group-buysell .tabBuy.active {
     background-color: #0055ba;
@@ -133,6 +133,108 @@
 }
 #divPanelBottom .button-spinner:hover {
     color: #808080;
+}
+.group-buysell .tabSell.active {
+    background-color: #d71920;
+    cursor: default;
+    border: 1px solid #2491eb;
+}
+#panel-bottom table tr th, #panel-bottom table tr td {
+    padding: 0 6px !important;
+}
+.bottom__sdCKhoan__content table thead tr th {
+    padding-left: 0;
+    padding-right: 0;
+    background-color: #dcdcdc !important;
+    border-right: 1px solid #c7c7c7;
+}
+table {
+    width: 100%;
+}
+tr {
+    box-sizing: border-box;
+    height: 22px !important;
+}
+
+.bottom__sdCKhoan__content {
+  
+    & table tbody tr{
+        &:last-child{
+            border: 1px solid #dedede
+        }
+     ;
+    &:hover{
+    background: #efe;      
+   }
+   & td {
+    text-align: center;
+    padding: 0px 6px;
+    border: 1px solid #dedede;
+    font-size: 13px;
+    border-bottom: none;
+    & .btnSellStockBalance {
+        width: 70%;
+        height: 21px !important;
+        border-radius: 4px !important;
+        background-color: #d71920;
+        padding: 3px !important;
+        text-transform: uppercase;
+        color: #fff;
+        font-size: 12px;
+        cursor: pointer;
+        } 
+    
+      }
+    }
+    
+}
+  .bottom-right .top .btn-submit-all {
+    float: right;
+    color: #fff;
+    background-color: #2ab934;
+    text-transform: uppercase;
+    border-radius: 5px;
+
+    margin-bottom: 10px;
+    padding: 2px 5px;
+    font-size: 12px;
+    &:hover{
+        background-color: #069d00 !important;
+        cursor: pointer;
+    }
+}
+.bottom__sdCKhoan__footer {
+    text-align: right;
+    margin-top: 5px;
+}
+.bottom__sdCKhoan__content__thead__chonTM {
+    width: 80px;
+}
+#spanShowAll, #spanShowLimit {
+    color: #0055ba;
+}
+.sell {
+    color: #9C0A0A;
+}
+.bottom-center {
+    left: 50%;
+    top: 50px;
+    position: absolute;
+}
+.bottom-right {
+    float: left;
+    width: 48%;
+    border: 1px solid #dedede;
+    padding: 5px;
+}
+.table-pending thead{
+    background-color:#EEEEEE ;
+    & th{
+     border: 1px solid #dedede;
+    font-size: 13px;
+    border-bottom: none;
+    font-weight: 400;
+    }
 }
 button#btnReset:hover {
     border: 1px solid #66afe9 !important;

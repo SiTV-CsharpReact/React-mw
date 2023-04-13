@@ -1,7 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit'
-import { counterSlice } from '../components/orderFormMarketwat/counterSlice'
+import { counterSlice } from '../components/orderFormMarketwatch/counterSlice'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { tableSlice } from '../components/tableMarketwat/tableSlice';
+import { tableSlice } from '../components/tableMarketwatch/tableSlice';
 
 export const store = configureStore({
     reducer:{

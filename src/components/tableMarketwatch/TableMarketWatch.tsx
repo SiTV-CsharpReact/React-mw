@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { fetchTableHNXAsync } from "./tableSlice";
 import {
@@ -14,11 +14,13 @@ import axios from "axios";
 import { ObjectMenuHSX } from "../../models/modelListMenuHSX";
 import { useParams } from "react-router-dom";
 import { stocks } from "../../models/marketwacthTable";
-import HeaderMarketW from "../headerMarketwat/HeaderMarket";
+import HeaderMarketW from "../headerMarketwatch/HeaderMarket";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { DataTable } from "../../models/modelTableHNX";
+import FooterMarket from "../footerMarketwatch/FooterMarket";
+import { AppContext } from "../../Context/AppContext";
 const showKLPT = (value: string) => {
-  console.log(value);
+  // console.log(value);
   if (value === "showPT") {
     const element = document.getElementsByClassName("price-ot");
     const elementFirst = document.getElementsByClassName("price-ot")[0];
@@ -61,8 +63,10 @@ const showKLPT = (value: string) => {
   }
 };
 const TableMarketWatch = () => {
-  const [popupVisible, setPopupVisible] = useState(false);
-  const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 ,value:""});
+  const height = useContext(AppContext)
+  console.log(height)
+  // const [popupVisible, setPopupVisible] = useState(false);
+  // const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 ,value:""});
   //const [selectedRowId, setSelectedRowId] = useState<string | null>(null);
   const [sortedColumn, setSortedColumn] = useState("");
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
@@ -122,15 +126,22 @@ const TableMarketWatch = () => {
     setProducts(data);
   };
   // const [users, setUsers] = useState([]);
+  // const handleTypeOptionClick = (type:string) => {
+  //   const newData = products.slice().sort((a, b) => {
+  //     if (a.RowID === type) return -1;
+  //     if (b.RowID === type) return 1;
+  //     return 0;
+  //   });
+  //   setProducts(newData);
+  //   console.log(products)
+  // };
   const handleTypeOptionClick = (type:string) => {
-    const newData = products.sort((a, b) => {
-      if (a.RowID === type) return -1;
-      if (b.RowID === type) return 1;
-      return 0;
-    });
+    const newData = [...products];
+    const index = newData.findIndex((item) => item.RowID === type);
+    const clickedItem = newData.splice(index, 1)[0];
+    newData.unshift(clickedItem);
     setProducts(newData);
-    console.log(products)
-  };
+  }
   const handleDragEnd = (e: any) => {
     if (!e.destination) return;
     let tempData = Array.from(products);
@@ -147,7 +158,7 @@ const TableMarketWatch = () => {
         a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
       );
       setProducts(sorted);
-      console.log("sorting", sorted);
+      // console.log("sorting", sorted);
       setorder("DSC");
       setSortedColumn(col);
     } else {
@@ -178,88 +189,15 @@ const TableMarketWatch = () => {
       setorder("DSC");
     }
   };
-  const handleContextMenu = (e:any) => {
-    e.preventDefault();
-    const trValue = e.target.parentElement.getAttribute('data-tr-value');
-    if(trValue){
-      setPopupPosition({ x: e.clientX, y: e.clientY, value:trValue });
-      setPopupVisible(true);
-    } 
-  }
-  const popupRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    function handleClickOutside(e:any) {
-      if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
-        setPopupVisible(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [popupRef]);
-  function handleClick() {
-    setPopupVisible(false);
-  }
+  // function handleClick() {
+  //   setPopupVisible(false);
+  // }
  // console.log(sortedColumn);
- console.log(products)
+//  console.log(products)
   return (
-    <>
-        {popupVisible  && <div className="popup" ref={popupRef}    style={{ position: 'absolute', top: popupPosition.y, left: popupPosition.x }}>
-        <ul className="context-menu-list" id="idContextMenu">
-          <li>
-          <i className="fa fa-arrow-left text-[#00A4FF]"></i>
-          <span>
-          Mua <b>{popupPosition.value}</b> 
-          </span> 
-          </li>
-          <li>
-          <i className="fa fa-arrow-right text-[#f44336]"></i>
-          <span>
-          Bán <b>{popupPosition.value}</b> 
-          </span> 
-          </li>
-          <li>
-          <i className="fa fa-language text-[#22B14C]"></i>
-          <span>
-          Thông tin doanh nghiệp <b>{popupPosition.value}</b> 
-          </span> 
-          </li>
-          <li>
-          <i className="fa fa-sign-out text-[#2371AF]"></i>
-          <span>
-          Chi tiết <b>{popupPosition.value}</b> 
-          </span> 
-          </li>
-          <li>
-          <i className="fa fa-history text-[#009688]"></i>
-          <span>
-          Lịch sử giá <b>{popupPosition.value}</b> 
-          </span> 
-          </li>
-          <li>
-          <i className="fa fa-bar-chart text-[#795548]"></i>
-          <span>
-          Phân tích Kỹ thuật <b>{popupPosition.value}</b> 
-          </span> 
-          </li>
-          <li>
-          <i className="fa fa-close text-[#f44336]"></i>
-          <span>
-          Bỏ mã <b>{popupPosition.value}</b> 
-          </span> 
-          </li>
-          <li>
-          <i className="fa fa-info-circle text-[#949831]"></i>
-          <span>
-         Ghi thành DM mặc định
-          </span> 
-          </li>
-        </ul>
-        <button onClick={handleClick}>Close</button>
-        </div>}
+    <div className="dvContentLP relative overflow-x-auto" style={{height:height.heightPriceBoard-57}} > 
       <DragDropContext onDragEnd={handleDragEnd}>      
-        <table className="w-full tableMW table-priceboard"   onContextMenu={handleContextMenu} >
+        <table className="w-full tableMW table-priceboard"    >
       
           <thead>
             <tr>
@@ -275,7 +213,7 @@ const TableMarketWatch = () => {
                 onClick={() => {
                   sorting("RowID");
                 }}
-                style={{ width: "6%" }}
+                style={{ width: "6%",minWidth:"90px"}}
               >
                 Mã
                 {sortedColumn === "RowID" ? (
@@ -700,7 +638,7 @@ const TableMarketWatch = () => {
                   ""
                 )}
               </th>
-              <th className="border border-borderHeadTableMarket text-textHeadTableMarket bg-BGTableHoverMarket relative sort-table w-12">
+              <th className="border border-borderHeadTableMarket text-textHeadTableMarket bg-BGTableHoverMarket relative sort-table w-12 min-w-[50px]">
                 <div className="flex justify-between pt-[20px]">
                   <button
                     className="inset-y-0 absolute left-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL "
@@ -714,7 +652,7 @@ const TableMarketWatch = () => {
                     onClick={() => sortData("13")}
                   >
                     %
-                    {sortedColumn === "13" ? (
+                    {/* {sortedColumn === "13" ? (
                       order === "ASC" ? (
                         <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
                       ) : (
@@ -722,7 +660,7 @@ const TableMarketWatch = () => {
                       )
                     ) : (
                       ""
-                    )}
+                    )} */}
                   </div>
 
                   <button
@@ -886,21 +824,19 @@ const TableMarketWatch = () => {
                         // style={{ backgroundColor: selectedRowId === dataTable.RowID ? 'yellow' : 'white' }}
                       >
                         <td
-                
-                          onClick={() => handleTypeOptionClick(dataTable.RowID)}
                           {...provider.dragHandleProps}
                           className={`${setColorMarket(
                             dataTable.Info[13][1],
                             dataTable.Info[18][1],
                             dataTable.Info[15][1],
                             dataTable.Info[14][1]
-                          )}`}
+                          )} text-left`}
                           id={`${dataTable.RowID}`}
                         >
                           <input
                             type="checkbox"
                             id={`cb${dataTable.RowID}`}
-                           
+                            onClick={() => handleTypeOptionClick(dataTable.RowID)}
                             className="cbTop priceboard"
                           ></input>
                           <span className="pl-0.5"> {dataTable.RowID}</span>
@@ -1256,7 +1192,8 @@ const TableMarketWatch = () => {
           </Droppable>
         </table>
       </DragDropContext>
-    </>
+      <FooterMarket/>
+    </div>
   );
 };
 

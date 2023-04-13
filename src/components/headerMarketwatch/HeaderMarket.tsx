@@ -47,6 +47,7 @@ const showKLPT =(value:string) =>{
    
   }
 }
+
 type DataTable = {
   RowID: string,
   info:[]

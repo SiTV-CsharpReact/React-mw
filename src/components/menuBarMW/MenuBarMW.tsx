@@ -1,57 +1,69 @@
 import { Tooltip } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // import { Navbar, Nav, Form, FormControl, NavItem } from 'react-bootstrap';
 import SettingTable from "./SettingTable";
 import DateTime from "./DateTime";
 
 import LineChart from "../../images/line-chart-32.png"
 import { useAppDispatch } from "../../store/configureStore";
-import { fetchTableBONDAsync, fetchTableHNX30Async, fetchTableHNXAsync } from "../tableMarketwat/tableSlice";
+import { fetchTableBONDAsync, fetchTableHNX30Async, fetchTableHNXAsync } from "../tableMarketwatch/tableSlice";
 import ListMenuBar from "./ListMenuBar";
-let stateIndex = 0;
-const callExpand = (id: string, hideClass: string) => {
-  const divIndex = document.getElementById("divIndexChart");
-  const spExpand = document.getElementById("spExpand");
-  var charts = document.querySelectorAll(".chart3d");
-  if (spExpand?.className === "imgExpand") {
-    spExpand.className = "imgExpandOpen";
-    for (var i = 0; i < charts.length; i++) {
-      charts[i].classList.add("hidden");
-    }
-    if (divIndex) divIndex.style.maxHeight = "";
-    stateIndex = 0;
+import { AppContext } from "../../Context/AppContext";
+type Props ={
+  windowHeight:number,
+  heightOrderForm:number
+  expand:number,
+  heightPriceBoard:number  
+  setExpand(expand: number): void;
+  setHeightPriceBoard(heightPriceBoard: number): void
+}
+const showExpand =(value:Props)=>{
+  if (value.expand === 27) {
+    value.setExpand(67);
+    value.setHeightPriceBoard(value.heightPriceBoard-40);
+    console.log(value.heightPriceBoard)
+  } else if (value.expand === 67) {
+    value.setHeightPriceBoard(value.heightPriceBoard-107);
+    value.setExpand(157);
   } else {
-    if (stateIndex === 0) {
-      if (divIndex) divIndex.style.maxHeight = "67px";
-      //divIndex.className = CLASS_EXPAND_OPEN;
-    } else if (stateIndex === 1) {
-      if (spExpand) spExpand.className = "imgExpand";
-      if (divIndex) divIndex.style.maxHeight = "unset";
-      for (var i = 0; i < charts.length; i++) {
-        charts[i].classList.remove("hidden");
-        charts[i].classList.add("block");
-      }
-      //divIndex.className = CLASS_EXPAND_OPEN;
-    }
-    stateIndex++;
+    value.setHeightPriceBoard(value.windowHeight - value.heightOrderForm-40 );
+    value.setExpand(27);
   }
-};
-
+  
+}
 const MenuBarMW = () => {
+  const height = useContext(AppContext)
+  console.log(height)
   const dispatch = useAppDispatch();
   return (
     <div className="flex justify-between h-30 bg-headerMenuTableMarket relative">
       <div className="flex ">
       <ListMenuBar/>
-        <div>
+        {height.expand === 157 ?<div>  <Tooltip title="Ẩn đồ thị">
+            <span
+              id="spExpand"
+              className="imgExpand"
+              onClick={() => showExpand(height)}
+            ></span>
+          </Tooltip></div>:<div>
           <Tooltip title="Hiện đồ thị">
             <span
               id="spExpand"
               className="imgExpandOpen"
-              onClick={() => callExpand("spExpand", "imgExpandOpen")}
+              onClick={() => showExpand(height)}
             ></span>
           </Tooltip>
-        </div>
+        </div>}
+        
+        {/* <div>
+          <Tooltip title="Hiện đồ thị">
+            <span
+              id="spExpand"
+              className="imgExpandOpen"
+              onClick={() => showExpand(height)}
+            ></span>
+          </Tooltip>
+        </div> */}
       </div>
       <div className="flex">
         <div>

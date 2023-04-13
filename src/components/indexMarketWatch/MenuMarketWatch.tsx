@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import axios from "axios";
 import { ObjectMenuHNX, ObjectMenuHSX } from "../../models/modelListMenuHSX";
 import { iconColorMenuMarket, setColorMenuMarket, fStatusMarketHNX, fStatusMarketUPCOM, formatNumberMarket, tinhGiaTC, tinhGiaCT, checkSTTMarket, checkSTTMarketValue } from "../../utils/util";
 import { g_CLASS_INDEX } from "../../configs/app.config";
 import "./styleMenuBarMW.css"
+import { AppContext } from "../../Context/AppContext";
 const MenuMarketWatch = () => {
+  const height = useContext(AppContext)
   const [valueHSX, setValueHSX] = useState<ObjectMenuHSX | null>(null);
   const [valueHNX, setValueHNX] = useState<ObjectMenuHNX | null>(null);
   const [loading, setLoading] = useState(true);
@@ -361,7 +363,7 @@ const MenuMarketWatch = () => {
   if (loading) return <div className="bg-headerMenuTableMarket">Loading...</div>;
   return (
     <div className="relative overflow-hidden">
-         <div id="divIndexChart" className="bg-headerMenuTableMarket max-h-27">
+         <div id="divIndexChart" className={`bg-headerMenuTableMarket ${height.expand ===27 ?"max-h-[27px]":height.expand ===67?"max-h-[67px]":"max-h-[unset]"}`}>
       <ul className=" col-priceboard class-chart">
         <div className="flex p-1 scrollableArea">
           {/* <li className="dvChart">
@@ -450,7 +452,7 @@ const MenuMarketWatch = () => {
               </p>
             </div>
             <div>
-                <span className="chart3d hidden"></span>
+                <span className={`chart3d ${height.expand ===27 ?"hidden":height.expand ===67?"hidden":"block"}`}></span>
             </div>
           </li>
           <li className="dvChart">
@@ -524,7 +526,7 @@ const MenuMarketWatch = () => {
               </p>
             </div>
             <div>
-                <span className="chart3d hidden"></span>
+                <span className={`chart3d ${height.expand ===27 ?"hidden":height.expand ===67?"hidden":"block"}`}></span>
             </div>
           </li>
           {/* <li className="dvChart">
@@ -536,7 +538,7 @@ const MenuMarketWatch = () => {
 </li> */}
           <li className="dvChart">
             <div>
-              <p className="text-sm">
+              <p className="text-sm ">
                 <span id="" className="mar_">
                   UPCOM:{" "}
                 </span>
@@ -560,13 +562,13 @@ const MenuMarketWatch = () => {
                   id=""
                   className={`${setColorMenuMarket(valueHNX?.i03_6)} px-0.5`}
                 >
-                  <span id="i03_6" className="px-0.5">
+                  <span id="i03_6" className="px-0.5 ">
                     {valueHNX?.i03_6}
                   </span>
                  %
                 </span>
               </p>
-              <p className="text-xs text-center">
+              <p className="text-xs text-center ">
                 <span className="mar_ spQtty">KL:</span>
                 <span id="i03_7" className="mar_ txtIndex">
                   {valueHNX?.i03_7}
@@ -577,7 +579,7 @@ const MenuMarketWatch = () => {
                 </span>
                 <span className="mar_ spUnit">tỷ</span>
               </p>
-              <p className="text-xs text-center">
+              <p className="text-xs text-center whitespace-nowrap">
                 <span className="arrowUp" />
                 <span id="i03_x251" className="maru txtIndex">
                   {valueHNX?.i03_x251}
@@ -602,12 +604,12 @@ const MenuMarketWatch = () => {
               </p>
             </div>
             <div>
-                <span className="chart3d hidden"></span>
+                <span className={`chart3d ${height.expand ===27 ?"hidden":height.expand ===67?"hidden":"block"}`}></span>
             </div>
           </li>
           <li className="dvChart">
             <div id="<!Id>" className="<!Class>">
-              <p className="mard text-sm">
+              <p className="mard text-sm whitespace-nowrap">
                 <span className="mar_">HNXSMCAP:{" "}</span>
                 <span id="i28_3"
                     className={`${setColorMenuMarket(valueHNX?.i28_5)} px-0.5`}
@@ -664,7 +666,7 @@ const MenuMarketWatch = () => {
               </p>
             </div>
             <div>
-                <span className="chart3d hidden"></span>
+                <span className={`chart3d ${height.expand ===27 ?"hidden":height.expand ===67?"hidden":"block"}`}></span>
             </div>
           </li>
           <li className="dvChart">
@@ -726,7 +728,7 @@ const MenuMarketWatch = () => {
               </p>
             </div>
             <div>
-                <span className="chart3d hidden"></span>
+                <span className={`chart3d ${height.expand ===27 ?"hidden":height.expand ===67?"hidden":"block"}`}></span>
             </div>
           </li>
           <li className="dvChart">
@@ -788,7 +790,7 @@ const MenuMarketWatch = () => {
               </p>
             </div>
             <div>
-                <span className="chart3d hidden"></span>
+                <span className={`chart3d ${height.expand ===27 ?"hidden":height.expand ===67?"hidden":"block"}`}></span>
             </div>
           </li>
           <li className="dvChart">
@@ -850,7 +852,7 @@ const MenuMarketWatch = () => {
               </p>
             </div>
             <div>
-                <span className="chart3d hidden"></span>
+                <span className={`chart3d ${height.expand ===27 ?"hidden":height.expand ===67?"hidden":"block"}`}></span>
             </div>
           </li>
           <li className="dvChart">
@@ -912,7 +914,7 @@ const MenuMarketWatch = () => {
               </p>
             </div>
             <div>
-                <span className="chart3d hidden"></span>
+                <span className={`chart3d ${height.expand ===27 ?"hidden":height.expand ===67?"hidden":"block"}`}></span>
             </div>
           </li>
         </div>
