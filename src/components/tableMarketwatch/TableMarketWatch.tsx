@@ -121,53 +121,16 @@ const TableMarketWatch = () => {
     const data = await res.json();
     setProducts(data);
   };
-  //const [users, setUsers] = useState([]);
-  // const handleTypeOptionClick = (type:string) => {
-  //   const newData = products.slice().sort((a, b) => {
-  //     if (a.RowID === type) return -1;
-  //     if (b.RowID === type) return 1;
-  //     return 0;
-  //   });
-  //   setProducts(newData);
-  //   console.log(products);
-  // };
-  
-  const handleTypeOptionClick = (id: any, index: any) => {
-    // Lấy ra phần tử cần đưa lên đầu mảng
-    const itemToMove = products[index];
-    // Lấy ra các phần tử trước và sau phần tử cần đưa lên
-    const head = products.slice(0, index);
-    const tail = products.slice(index + 1);
-    // Gộp lại các phần tử theo thứ tự mới và cập nhật vào state
-    setProducts([itemToMove, ...head, ...tail]);
+  // const [users, setUsers] = useState([]);
+  const handleTypeOptionClick = (type:string) => {
+    const newData = products.sort((a, b) => {
+      if (a.RowID === type) return -1;
+      if (b.RowID === type) return 1;
+      return 0;
+    });
+    setProducts(newData);
     console.log(products)
   };
-  
-  
-  
-  
-
-  // lay index td (map 1:1 vs products)
- // const index = 3;
-
-  // clone 1 thang obj co index da lay dc (3)
-  //const cloneObj = products[index];
-
-  // xoa di khoi products
- // products.slice(index,1)
-
-  // insert vao vi tri index
-  // 1. lay 1 mang tu 0 > index - 1 (1)
-  // 2. lay 1 mang tu index -> cuoi (2)
-  // 3. merge (1) (3) (2)
-  // const arr1 = products.slice(0, index);
-  // const arr2 = products.slice(index, last);
-
-  // newData = [...1,..2,...3]
- 
-  
-
-  
   const handleDragEnd = (e: any) => {
     if (!e.destination) return;
     let tempData = Array.from(products);
@@ -242,7 +205,7 @@ const TableMarketWatch = () => {
  console.log(products)
   return (
     <>
-        <div className="popup" ref={popupRef}    style={{display: popupVisible?'block':'none'  , position: 'absolute', top: popupPosition.y, left: popupPosition.x }}>
+        {popupVisible  && <div className="popup" ref={popupRef}    style={{ position: 'absolute', top: popupPosition.y, left: popupPosition.x }}>
         <ul className="context-menu-list" id="idContextMenu">
           <li>
           <i className="fa fa-arrow-left text-[#00A4FF]"></i>
@@ -294,7 +257,7 @@ const TableMarketWatch = () => {
           </li>
         </ul>
         <button onClick={handleClick}>Close</button>
-        </div>
+        </div>}
       <DragDropContext onDragEnd={handleDragEnd}>      
         <table className="w-full tableMW table-priceboard"   onContextMenu={handleContextMenu} >
       
@@ -923,8 +886,8 @@ const TableMarketWatch = () => {
                         // style={{ backgroundColor: selectedRowId === dataTable.RowID ? 'yellow' : 'white' }}
                       >
                         <td
-                          data-index = {index} key={index}
-                          onClick={() => handleTypeOptionClick(dataTable.RowID,index)}
+                
+                          onClick={() => handleTypeOptionClick(dataTable.RowID)}
                           {...provider.dragHandleProps}
                           className={`${setColorMarket(
                             dataTable.Info[13][1],

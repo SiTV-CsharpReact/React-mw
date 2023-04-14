@@ -1,8 +1,12 @@
 import React from 'react'
 import CachedIcon from '@mui/icons-material/Cached';
-const TableTotalMonney = () => {
+interface IMyProps {
+  status: boolean,
+}
+const TableTotalMonney: React.FC<IMyProps> = (status:IMyProps) => {
+  console.log(status)
   return (
-    <div className="bottom__sdTien ml-[13%] mr-[3%] float-left mt-[18px] SDTM ">
+    <div className={`bottom__sdTien ml-[13%] mr-[3%] float-left  SDTM ${status.status?'ml-[13%]':'absolute top-[110px] ml-[25px]'}`}>
           <div className=" bg-[#b3b3b3] h-[25px] ">
             <span className="px-2.5 text-[#0055ba] uppercase text-15px leading-[25px]">
               Số dư tiền
@@ -35,7 +39,6 @@ const TableTotalMonney = () => {
             <span className="font-bold">7,860,601,494</span>
           </div>
           </div>
-         
         </div>
   )
 }

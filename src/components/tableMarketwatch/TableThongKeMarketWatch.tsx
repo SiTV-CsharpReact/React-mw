@@ -34,7 +34,15 @@ const TableThongKeMarketWatch = () => {
            case "thong-ke-gia":
              valueParam = "s=bi";
              break;
-        
+              case "thong-ke-dat-lenh":
+                valueParam = "s=bi";
+                break;
+                  case "Giao-dich-KL-NDTNN":
+                    valueParam = "s=bi";
+                    break;
+                    case "Giao-dich-TT-NDTNN":
+                      valueParam = "s=bi";
+                      break;
            default:
              break;
         }
@@ -46,11 +54,11 @@ const TableThongKeMarketWatch = () => {
     <div>
       <div
         id="dvSTTIndex"
-        className="col-xs-12 col-sm-12 col-priceboard"
+        className="grid grid-cols-6 gap-4 col-priceboard py-2.5 px-0.5"
         style={{}}
       >
         <div
-          className="form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price"
+          className="form-group flex col-xs-2 col-sm-2 col-priceboard div-group-stt-price"
           style={{}}
         >
           <label className="label_price col-priceboard">Sàn</label>
@@ -73,7 +81,7 @@ const TableThongKeMarketWatch = () => {
           </select>
         </div>
         <div
-          className="form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price"
+          className="form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price flex"
           style={{}}
         >
           <label className="label_price col-priceboard">Đợt</label>
@@ -87,7 +95,7 @@ const TableThongKeMarketWatch = () => {
           </select>
         </div>
         <div
-          className="form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price"
+          className="form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price flex"
           style={{}}
         >
           <label className="label_price col-priceboard">Từ ngày</label>
@@ -98,7 +106,7 @@ const TableThongKeMarketWatch = () => {
           />
         </div>
         <div
-          className="form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price"
+          className="form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price flex"
           style={{}}
         >
           <label className="label_price col-priceboard">Đến ngày</label>

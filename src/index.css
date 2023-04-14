@@ -260,6 +260,12 @@ body .fpts-header .header-right .box .OrderForm .eztrade__notification .notifica
     right: 5px;
     top: 23px;
 }
+.L {
+    text-align: left !important;
+}
+.R {
+    text-align: right !important;
+}
 th.sort-table:hover {
     cursor: url(http://priceboard3.fpts.com.vn/images/menuMW/sort_full.png), auto;
 }

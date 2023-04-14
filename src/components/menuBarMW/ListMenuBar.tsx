@@ -1,4 +1,3 @@
-import Menu from "./Menu";
 import MenuBar from "./MenuBar";
 
 const ListMenuBar = () => {
@@ -9,19 +8,19 @@ const ListMenuBar = () => {
       children: [
         {
           name: "HNX",
-          path: "/HNX",
+          path: "/chung-khoan/HNX",
         },
         {
           name: "HNX30",
-          path: "/HNX30",
+          path: "/chung-khoan/HNX30",
         },
         {
             name: "BOND",
-            path: "/BOND",
+            path: "/chung-khoan/BOND",
           },
           {
             name: "Giao dịch thỏa thuận",
-            path: "/thoa-thuan-hnx",
+            path: "/chung-khoan/thoa-thuan-hnx",
           },
       ],
     },
@@ -31,39 +30,35 @@ const ListMenuBar = () => {
       children: [
         {
           name: "VNI",
-          path: "/VNI",
+          path: "/chung-khoan/VNI",
         },
         {
           name: "VN30",
-          path: "/VN30",
+          path: "/chung-khoan/VN30",
         },
-        {
-            name: "BOND",
-            path: "/BOND",
-          },
           {
             name: "Giao dịch thỏa thuận",
-            path: "/thoa-thuan-hsx",
+            path: "/chung-khoan/thoa-thuan-hsx",
           },
           {
             name: "VNXALL",
-            path: "/VNXALL",
+            path: "/chung-khoan/VNXALL",
           },
           {
             name: "VN100",
-            path: "/VN100",
+            path: "/chung-khoan/VN100",
           },
           {
             name: "VNALL",
-            path: "/VNALL",
+            path: "/chung-khoan/VNALL",
           },
           {
             name: "VNMID",
-            path: "/VNMID",
+            path: "/chung-khoan/VNMID",
           },
           {
             name: "VNSML",
-            path: "/VNSML",
+            path: "/chung-khoan/VNSML",
           },
       ],
     },
@@ -73,11 +68,11 @@ const ListMenuBar = () => {
         children: [
           {
             name: "UPCOM",
-            path: "/UPCOM",
+            path: "/chung-khoan/UPCOM",
           },
           {
             name: "Giao dịch thỏa thuận",
-            path: "/HNX30",
+            path: "/chung-khoan/thoa-thuan-upcom",
           },
         
         ],
@@ -88,11 +83,11 @@ const ListMenuBar = () => {
         children: [
           {
             name: "Bán lẻ",
-            path: "/HN",
+            path: "/chung-khoan/Ban-le",
           },
           {
             name: "Bảo hiểm",
-            path: "/HNX3",
+            path: "/chung-khoan/HNX3",
           },
           {
               name: "Cơ sở hạ tầng giao thông vận tải",
@@ -241,23 +236,23 @@ const ListMenuBar = () => {
         children: [
           {
             name: "Thống kê Index",
-            path: "/HN",
+            path: "/chung-khoan/thong-ke-index",
           },
           {
             name: "Thống kê Giá",
-            path: "/HNX3",
+            path: "/chung-khoan/thong-ke-gia",
           },
           {
               name: "Thống kê Đặt lệnh",
-              path: "/BON",
+              path: "/chung-khoan/thong-ke-dat-lenh",
             },
             {
               name: "Giao dịch khớp lệnh NDTNN",
-              path: "/table",
+              path: "/chung-khoan/giao-dich-khop-lenh-ndtnn",
             },
             {
               name: "Giao dịch thỏa thuận NDTNN",
-              path: "/table",
+              path: "/chung-khoan/giao-dich-thoa-thuan-ndtnn",
             },
         ],
       },
@@ -267,7 +262,7 @@ const ListMenuBar = () => {
         children: [
           {
             name: "CW",
-            path: "/X",
+            path: "/chung-khoan/CW",
           },
          
         ],
