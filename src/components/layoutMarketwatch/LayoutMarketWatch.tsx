@@ -14,6 +14,9 @@ import TableGDTTMarketWatch from "../tableMarketwatch/TableGDTTMarketWatch";
 import HSXMarketWatch from "../tableMarketwatch/TableHSXMarketWatch";
 import TableThongKeMarketWatch from "../tableMarketwatch/TableThongKeMarketWatch";
 import AppProvider, { AppContext } from "../../Context/AppContext";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/configureStore";
+import ChartMarketwatch from "../chartMarketwatch/ChartMarketwatch";
 function RenderTable() {
   const params = useParams<{ id: string }>();
   // console.log(params);
@@ -28,16 +31,17 @@ function RenderTable() {
     case "HNX30":
     case "BOND":
     case "UPCOM":
+      case "VNI":
+        case "VN30":
+        case "VNXALL":
+        case "VN100":
+        case "VNALL":
+        case "VNMID":
+        case "VNSML":
+        case "CW":
       return <TableMarketWatch />;
-    case "VNI":
-    case "VN30":
-    case "VNXALL":
-    case "VN100":
-    case "VNALL":
-    case "VNMID":
-    case "VNSML":
-    case "CW":
-      return <HSXMarketWatch />;
+   
+      // return <HSXMarketWatch />;
     case "thong-ke-index":
     case "thong-ke-gia":
     case "thong-ke-dat-lenh":
@@ -49,7 +53,13 @@ function RenderTable() {
   }
 }
 // const LayoutMarketWatch  = () => {
-const LayoutMarketWatch = () => {
+const LayoutMarketWatch: React.FC = ()=> {
+  const componentVisible = useSelector((state: RootState) => state.menu.visible);
+  console.log(componentVisible)
+  // const isVisible = useSelector(state => state.componentVisibility);
+
+  // const isVisible = useSelector((state: RootState) => state.componentVisibility.isVisible);
+  // const dispatch = useDispatch();
   // const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   // const heightPriceBoard = ((windowHeight - 40) / 10) * 5.7;
   // const heightOrderForm = ((windowHeight - 40) / 10) * 4.3;
@@ -156,6 +166,7 @@ const LayoutMarketWatch = () => {
             className="panel-top bg-black overflow-auto "
             style={{ height: height.heightPriceBoard }}
           >
+         <div className="price-board-layout" style={{ display: componentVisible ? "block" : "none",}}>
             <MenuMarketWatch />
             <div className="overflow-hidden dvFixed">
               <MenuBarMW />
@@ -164,9 +175,19 @@ const LayoutMarketWatch = () => {
                 id="tableHNX"
                 onContextMenu={handleContextMenu}
               >
-                {RenderTable()}
+                <div className={`dvContentLP relative overflow-x-auto `} style={{height:height.expand ===27?height.heightPriceBoard-57:height.expand ===67?height.heightPriceBoard-97:height.heightPriceBoard-194}}>
+              
+              {/* <div className="dvContentLP relative overflow-x-auto" style={{height:height.heightPriceBoard-57}}> */}
+              {RenderTable()}
+              </div>
               </div>
             </div>
+            </div>
+              <div className="chart-layout" style={{ display: componentVisible ? "none" : "block",}}>
+              <ChartMarketwatch/>
+            </div>
+
+          
           </div>
           
           <div  className="panel-bottom divBot">

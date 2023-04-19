@@ -57,29 +57,29 @@ const OrderMarketW = () => {
   const openPopupLanguage2 = Boolean(anchorEl2);
 
   const handleClick2 = (event: React.MouseEvent<HTMLDivElement>) => {
-    height.setHeightPriceBoard(height.windowHeight-25)
+    height.setHeightPriceBoard(height.windowHeight-40)
     console.log(height)
     setAnchorEl2(event.currentTarget);
-   const tableMarketWatch=   document.querySelectorAll<HTMLElement>(".table_market")
-   for (let j = 0; j < tableMarketWatch.length; j++) {
-     const elementChange = tableMarketWatch[j];
-   if(tableMarketWatch[j]) elementChange.style.height="790px"
+   //const tableMarketWatch=   document.querySelectorAll<HTMLElement>(".table_market")
+  //  for (let j = 0; j < tableMarketWatch.length; j++) {
+  //    const elementChange = tableMarketWatch[j];
+  //  if(tableMarketWatch[j]) elementChange.style.height="790px"
 
 
-     // In ra danh sách các lớp của phần tử
-  }
+  //    // In ra danh sách các lớp của phần tử
+  // }
    //if(tableHNX) tableHNX.style.height="730px"
   };
   const handleCloseLanguage2 = () => {
-    height.setHeightPriceBoard(height.windowHeight-40)
+    height.setHeightPriceBoard(height.windowHeight-height.heightOrderFormFix -40)
     console.log(height)
     setAnchorEl2(null);
-    const tableMarketWatch=   document.querySelectorAll<HTMLElement>(".table_market")
-   for (let j = 0; j < tableMarketWatch.length; j++) {
-     const elementChange = tableMarketWatch[j];
-   if(tableMarketWatch[j]) elementChange.style.height="420px"
-     // In ra danh sách các lớp của phần tử
-  }
+    //const tableMarketWatch=   document.querySelectorAll<HTMLElement>(".table_market")
+  //  for (let j = 0; j < tableMarketWatch.length; j++) {
+  //    const elementChange = tableMarketWatch[j];
+  //  if(tableMarketWatch[j]) elementChange.style.height="420px"
+  //    // In ra danh sách các lớp của phần tử
+  // }
  
   };
   const toggleOrder = () => {

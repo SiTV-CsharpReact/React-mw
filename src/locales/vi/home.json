@@ -1,0 +1,39 @@
+{
+    "menu":{
+        "REPORT_LSKL":"Lịch sử khớp lệnh",
+        "REPORT_LSDL":"Lịch sử đặt lệnh",
+        "REPORT_LCKTT":"Lệnh khớp chờ t.toán",
+        "HOME":"Trang chủ",
+        "LichSuGD":"Lịch sử GD",
+        "GDTien":"GD Tiền",
+        "GDDacBiet": "GD ĐẶC BIỆT",
+        "QuanLyKQ":"Quản lý KQ",
+        "QuanLyTK":"Quản lý TK",
+        "Quyen":"Quyền",
+        "BaoCao":"Báo cáo",
+        "TuVanDauTu":"Tư vấn Đầu tư",
+        "HoTro":"Hỗ trợ"
+    },
+    "base":{
+        "Time":"Thời gian",
+        "Stock":"Mã CK",
+        "LoaiGD":"Loại GD",
+        "MuaBan":"M/B",
+        "LoaiLenh":"Loại lệnh",
+        "SoLuong":"Số lượng",
+        "Gia":"Giá",
+        "SanGD":"Sàn GD",
+        "TinhTrang":"Tình Trạng",
+        "PhuongThucDatLenh":"P.thức đặt lệnh",
+        "SHL":"SHL",
+        "ThongBao":"Thông báo",
+        "TatCa":"Tất cả",
+        "TinhTrangLenh":"Tình trạng lệnh",
+        "TuNgay":"Từ ngày",
+        "DenNgay":"Đến ngày",
+        "ThuTuSapXep":"T.Tự sắp xếp",
+        "TangDan":"Tăng dần",
+        "GiamDan":"Giảm dần",
+        "CapNhat":"Cập nhật"
+    }
+}

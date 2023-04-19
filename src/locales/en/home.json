@@ -1,0 +1,38 @@
+{
+    "menu":{
+        "REPORT_LSKL":"Matched Order History",      
+        "REPORT_LSDL":"Order Placement History",
+        "REPORT_LCKTT":"Matched Orders Pending for Settlement",
+        "HOME":"Home",
+        "LichSuGD":"TXN History",
+        "GDTien":"Monney TXN",
+        "GDDacBiet": "SPECIAL TXN",
+        "QuanLyTK":"ACCOUNT MGMT",
+        "Quyen":"Permission",
+        "BaoCao":"Report",
+        "TuVanDauTu":"Advisory",
+        "HoTro":"Support"
+    },
+    "base":{
+        "Time":"Time",
+        "Stock":"Stock",
+        "LoaiGD":"Trading Type",
+        "MuaBan":"Buy/Sell",
+        "LoaiLenh":"Order Type",
+        "SoLuong":"Quantity",
+        "Gia":"Price",
+        "SanGD":"Exchange",
+        "TinhTrang":"Status",
+        "PhuongThucDatLenh":"Place via",
+        "SHL":"TranID",
+        "ThongBao":"Status",
+        "TatCa":"ALL",
+        "TinhTrangLenh":"Order Status",
+        "TuNgay":"From",
+        "DenNgay":"To",
+        "ThuTuSapXep":"Sort by",
+        "TangDan":"Ascending",
+        "GiamDan":"Descending",
+        "CapNhat":"Update"
+    }
+}
