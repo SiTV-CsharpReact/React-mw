@@ -1,0 +1,64 @@
+div.scrollingHotSpotLeft {
+    min-width: 75px;
+    width: 4%;
+    height: 120px;
+    background-image: url(../images/SlideChart/big_transparent.gif);
+    background-repeat: repeat;
+    background-position: center center;
+    position: absolute;
+    z-index: 1001;
+    left: 0;
+    cursor: url(../images/SlideChart/cursors/cursor_arrow_left.png), url(../images/SlideChart/cursors/cursor_arrow_left.cur),w-resize;
+}
+div.scrollingHotSpotRight {
+    min-width: 75px;
+    width: 4%;
+    height: 120px;
+    background-image: url(../images/SlideChart/big_transparent.gif);
+    background-repeat: repeat;
+    background-position: center center;
+    position: absolute;
+    z-index: 1001;
+    top:0;
+    right: 0;
+    cursor: url(../images/SlideChart/cursors/cursor_arrow_right.png), url(../images/SlideChart/cursors/cursor_arrow_right.cur),e-resize;
+}
+.custom-carousel {
+    background-color: #000;
+    color: #fff;
+    height: 27px; /* Change this to your desired color */
+  }
+  div.scrollingHotSpotRightVisible {
+    background-image: url(../images/SlideChart/arrow_right.gif);
+    background-color: #fff;
+    background-repeat: no-repeat;
+    opacity: 0.35;
+    filter: alpha(opacity = 35);
+    -moz-opacity: 0.35;
+    zoom: 1;
+    position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  max-height: 100%;
+}
+div.scrollingHotSpotLeftVisible {
+    background-image: url(../images/SlideChart/arrow_left.gif);
+    background-color: #fff;
+    background-repeat: no-repeat;
+    opacity: 0.35;
+    -moz-opacity: 0.35;
+    filter: alpha(opacity = 35);
+    zoom: 1;
+    position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  max-height: 100%;
+}
+//   .slick-slide {
+//     background-color: #000;
+//     height: 150px; /* đặt chiều cao của mỗi slide là 300px */
+//   }
+// .slick-slide {
+//     width: 220px ; /* Kích thước slide là 300px */
+//   }
+  
