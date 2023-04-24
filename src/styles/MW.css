@@ -204,6 +204,7 @@
    display: block;
 }
 .chart3d{
+   margin: 2px 0px;
    background: url(../../public/chart.png) no-repeat;
    width: 204px;
    height: 97px;

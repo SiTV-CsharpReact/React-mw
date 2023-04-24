@@ -1231,3 +1231,165 @@ export default AssetReport
   //   }
     
   // }
+
+  import React, { RefObject, useEffect, useRef, useState } from 'react'
+import MenuMarketWatch from '../components/indexMarketWatch/MenuMarketWatch'
+import Slider, { Settings } from 'react-slick'
+import axios from 'axios';
+import { ObjectMenuHSX, ObjectMenuHNX } from '../models/modelListMenuHSX';
+import { fStatusMarketHNX, iconColorMenuMarket, setColorMenuMarket } from '../utils/util';
+import '../components/indexMarketWatch/styleMenuBarMW.css'
+import './slide.scss'
+
+// const SamplePrevArrow = (props:any) => {
+//     const { onClick } = props;
+//     return (
+//         <div className="scrollingHotSpotLeft" style={{display: 'block', opacity: 0}} />
+//     );
+//   };
+  
+//   const SampleNextArrow = (props:any) => {
+//     const { onClick } = props;
+//     return (
+       
+//     );
+//   };
+ 
+const Slides = () => {
+    const [isHovering, setIsHovering] = useState(false);
+
+  const sliderRef = useRef<Slider | null>(null);
+  const handleMouseEnter = () => {
+    sliderRef?.current?.slickPrev();
+  }; // Change type of sliderRef to RefObject<Slider | null>
+//   const handleMouseMove = (event:any) => {
+//     const slider = sliderRef.current;
+//     console.log(slider)
+//     if (slider) { 
+//         const sliderDiv = slider.innerSlider?.list;
+//         //console.log(sliderDiv)
+//   if (sliderDiv instanceof HTMLElement) {
+//     const distanceFromRight = 2000 - sliderDiv.offsetWidth - sliderDiv.scrollLeft;
+// console.log(sliderDiv.scrollWidth, sliderDiv.scrollLeft, sliderDiv.offsetWidth)
+//     //console.log(distanceFromRight)
+//     if (distanceFromRight < 50) {
+//       slider.slickNext();
+//     } else if (distanceFromRight > 200) {
+//       slider.slickPrev();
+//     }
+//   }
+//         // console.log(slider?.innerSlider)
+//         // const sliderRect = slider?.innerSlider?.list?.getBoundingClientRect();
+//         // if(sliderRect)// Access the inner slider element with slider.slider
+//         // {const x = event.clientX - sliderRect?.left;
+//         // const y = event.clientY - sliderRect?.top;
+//         // const width = sliderRect.width;
+//         // const height = sliderRect.height;
+//         // const centerX = width / 2;
+//         // const centerY = height / 2;
+//         // const deltaX = centerX - x;
+//         // const deltaY = centerY - y;
+//         // const percentX = deltaX / centerX;
+//         // const percentY = deltaY / centerY;
+//         // const amount = 0.2;
+//         // slider.scrollLeft += percentX * amount * slider.scrollWidth;
+//         // }
+//         // console.log(sliderRect)
+//     }
+//   };
+  
+  const settings = {
+//     dots: true,
+//     infinite: true,
+//     speed: 500,
+//     slidesToShow: 3,
+//     slidesToScroll: 1,
+//     // prevArrow: <SamplePrevArrow />,
+//     // nextArrow: <SampleNextArrow />,
+//     centerMode: true,
+//   centerPadding: '6px', // You can adjust the padding to fit your needs
+dots: false,
+infinite: true,
+speed: 500,
+slidesToShow: 1,
+slidesToScroll: 1,
+autoplay: !isHovering,
+autoplaySpeed: 2000,
+cssEase: "linear"
+  };
+  
+
+  return (
+    <div className="App">
+      <h1>React Slick Example</h1>
+      <div className="scrollingHotSpotLeft" style={{opacity: 0}}  onMouseOver={handleMouseEnter}/>
+      <Slider {...settings} ref={sliderRef} className="custom-carousel">
+  <div style={{width: '220px'}}>Slide 1</div>
+  <div style={{width: '220px'}}>Slide 2</div>
+  <div style={{width: '220px'}}>Slide 3</div>
+  <div style={{width: '220px'}}>Slide 4</div>
+  <div style={{width: '220px'}}>Slide 5</div>
+  <div style={{width: '220px'}}>Slide 6</div>
+  <div style={{width: '220px'}}>Slide 7</div>
+  <div style={{width: '220px'}}>Slide 8</div>
+  <div style={{width: '220px'}}>Slide 9</div>
+  <div style={{width: '220px'}}>Slide 10</div>
+  <div style={{width: '220px'}}>Slide 11</div>
+  <div style={{width: '220px'}}>Slide 12</div>
+  <div style={{width: '220px'}}>Slide 13</div>
+  <div style={{width: '220px'}}>Slide 14</div>
+  <div style={{width: '220px'}}>Slide 15</div>
+      </Slider>
+      <div className="scrollingHotSpotRight" style={{opacity: 0}}  onMouseOver={handleMouseEnter}/>
+    </div>
+  );
+}
+
+export default Slides;
+
+
+
+// 21/04 10h12  
+  // var dataHNXRealTime = JSON.parse(dataHNX);
+  // if (typeof dataHNXRealTime !== "undefined") {
+  //   const dataRTLT= Object.keys(dataHNXRealTime)
+  //   if(dataRTLT.length !== 0){
+  //   const dataRT = dataHNXRealTime.M;
+  //   let arrDatas = [];
+
+  //   if (typeof dataRT !== "undefined") {
+  //     //let arrTest =JSON.parse(dataRT.A[0].Change);
+  //     dataRT.map((dataLT: any) => (
+  //       // console.log(dataLT),
+  //         arrDatas = JSON.parse(dataLT.A[0].Change),
+  //         arrDatas.map(
+  //           (arrData: any) => (
+  //             updateTableHNX(arrData)
+  //           )
+  //         )
+  //       )
+  //     );
+  //   }
+  // }
+  // } else {
+
+  // }
+
+  // const dataHSXRealTime = JSON.parse(dataHSX);
+  // if (typeof dataHSXRealTime === "undefined") {
+  // } else {
+  //   const dataRTHSX = dataHSXRealTime.M;
+  //   let arrDataHSX = [];
+  //   let arrData = [];
+  //   // console.log(dataRTHSX)
+  //     if (typeof dataRTHSX !== "undefined") {
+  //       if(Array.isArray(dataRTHSX)){
+  //         dataRTHSX?.map((dataRT: any) => (
+  //           // arrData = dataRT.A[0],
+
+  //           arrDataHSX = JSON.parse(dataRT.A[0].Change),
+  //           arrDataHSX?.map((arrDataHSX: any) => (  updateTableHNX(arrDataHSX)) )),
+  //       );
+  //       }
+  //     }
+  // }

@@ -155,3 +155,9 @@ export const g_arrMenuMarket = [
   },
 ];
 export const g_CLASS_INDEX = [['marn', 'square'], ['maru', 'arrowUp'], ['mard', 'arrowDown']];
+export const ARRAY_COL_ATO_ATC_QTTY = [10, 15];  // cell index co hien ATO / ATC
+export const g_ID_TD_STAT_CONTROLCODE = 'STAT_ControlCode';
+export const g_PARTERN_HNX_MARKETSTATUS = /^(LIS_AUC_C_NML_1|LIS_AUC_C_NML_LOC_1|LIS_CON_NML_90|LIS_CON_NML_2|LIS_CON_NML_1|LIS_PTH_P_NML_13|LIS_PTH_P_NML_1|LIS_PTH_P_NML_97|LIS_CON_NEW_90|LIS_CON_NEW_2|LIS_CON_NEW_1|LIS_AUC_C_NEW_1|LIS_AUC_C_NEW_LOC_1|BON_CON_NML_1|BON_CON_NML_2|BON_PTH_P_NML_13|BON_PTH_P_NML_1|BON_PTH_P_NML_97|BON_AUC_C_NML_1)$/; // HuyNQ 25-11-15 HNX_MARKETSTATUS
+export const g_PARTERN_UP_MARKETSTATUS = /^(UPC_CON_NML_97|UPC_CON_NML_13|UPC_CON_NML_1|UPC_CON_NML_2|UPC_CON_NML_90|UPC_CON_NEW_1|UPC_CON_NEW_97|UPC_CON_NEW_13|UPC_CON_NEW_2|UPC_CON_NEW_90)$/; // HuyNQ 25-11-15 HNX_MARKETSTATUS
+export const g_ARRAY_COLOR_CLASS = ['*', 'c', 'u', 'r', 'd', 'f', '_'];
+export const g_ARRAY_CONTTROL_CODE = ['STAT_ControlCode', 'STAT_Time', 'STAT_Date'];

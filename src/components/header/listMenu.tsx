@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./styleHeader.css";
+import { useTranslation } from "react-i18next";
 const ListMenu = () => {
+  const { t } = useTranslation(["home"]);
   return (
     // <div className="pl-2.5 flex">
     //   <div className="group inline-block py-2 px-2 border-r border-borderListMenu ">
@@ -224,7 +226,7 @@ const ListMenu = () => {
     <div className="header-center">
     <ul>
       <li className="ezfu-hover-giaodichchungkhoan">
-        <a>Lịch sử GD</a>
+        <a>{t("home:menu.LichSuGD")}</a>
         <ul>
           <li>
             <Link  to="/report/ClientActivityRange">Lịch sử đặt lệnh</Link>
@@ -238,7 +240,7 @@ const ListMenu = () => {
         </ul>
       </li>
       <li className="ezfu-hover-chuyentien">
-        <a>GD tiền</a>
+        <a> {t("home:menu.GDTien")}</a>
         <ul>
           <li>
             <Link  to="/transfer">Chuyển tiền</Link>
@@ -273,7 +275,7 @@ const ListMenu = () => {
         </ul>
       </li>
       <li className="ezfu-hover-giaodichdacbiet">
-        <a>GD đặc biệt</a>
+        <a>{t("home:menu.GDDacBiet")}</a>
         <ul>
           <li>
             <Link  to="/oddlot/History">Lịch sử bán CK lô lẻ</Link>
@@ -293,7 +295,7 @@ const ListMenu = () => {
         </ul>
       </li>
       <li className="ezfu-hover-quanlytaikhoan">
-        <a>Quản lý TK</a>
+        <a>{t("home:menu.QuanLyTK")}</a>
         <ul>
           <li>
             <Link  to="/report/ReportTransBalance">Báo cáo tổng hợp số dư giao dịch  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
@@ -334,7 +336,7 @@ const ListMenu = () => {
         </ul>
       </li>
       <li className="ezfu-hover-quanlytaikhoanMarMor MarMor-Show" style={{display: 'none'}}>
-        <a>Quản lý ký quỹ</a>
+        <a>{t('home:menu.QuanLyKQ')}</a>
         <ul>
           <li>
             <Link  to="/margin/Mortgage">Cầm cố chứng khoán</Link>
@@ -357,7 +359,7 @@ const ListMenu = () => {
         </ul>
       </li>
       <li className="ezfu-hover-quanlytaikhoanMarPro MarPro-Show" style={{display: 'list-item'}}>
-        <a>Quản lý ký quỹ</a>
+        <a>{t("home:menu.QuanLyTK")}</a>
         <ul>
           <li>
             <Link  to="/margin/InterestMP">Tra cứu lãi vay ký quỹ</Link>
@@ -377,10 +379,10 @@ const ListMenu = () => {
         </ul>
       </li>
       <li className="ezfu-hover-tuvandautu">
-        <Link  to="https://ezadvisorselect.fpts.com.vn/">Tư vấn Đầu tư</Link>
+        <Link  to="https://ezadvisorselect.fpts.com.vn/">{t("home:menu.TuVanDauTu")}</Link>
       </li>
       <li className="eezfu-hover-giaodichdacbiet">
-        <a>Hỗ trợ</a>
+        <a>{t("home:menu.HoTro")}</a>
         <ul>
           <li>
             <Link  to="http://www.fpts.com.vn/san-pham-dich-vu/giao-dich-chung-khoan/mo-tai-khoan-giao-dich-chung-khoan/">Sản phẩm dịch vụ trực tuyến</Link>

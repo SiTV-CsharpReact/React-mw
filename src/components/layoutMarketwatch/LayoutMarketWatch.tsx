@@ -1,9 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import MenuMarketWatch from "../indexMarketWatch/MenuMarketWatch";
 import MenuBarMW from "../menuBarMW/MenuBarMW";
 import OrderMarketW from "../orderFormMarketwatch/OrderFormMarketWatch";
@@ -14,6 +9,15 @@ import TableGDTTMarketWatch from "../tableMarketwatch/TableGDTTMarketWatch";
 import HSXMarketWatch from "../tableMarketwatch/TableHSXMarketWatch";
 import TableThongKeMarketWatch from "../tableMarketwatch/TableThongKeMarketWatch";
 import AppProvider, { AppContext } from "../../Context/AppContext";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../store/configureStore";
+import ChartMarketwatch from "../chartMarketwatch/ChartMarketwatch";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { setOrderCount, setShowHideOrderForm } from "./LayoutMarketWatchSLice";
+import PendingOrders from "../orderFormMarketwatch/PendingOrders";
+import IntradayOrder from "../orderFormMarketwatch/IntradayOrder";
+import TradingResult from "../orderFormMarketwatch/TradingResult";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 function RenderTable() {
   const params = useParams<{ id: string }>();
   // console.log(params);
@@ -28,7 +32,6 @@ function RenderTable() {
     case "HNX30":
     case "BOND":
     case "UPCOM":
-      return <TableMarketWatch />;
     case "VNI":
     case "VN30":
     case "VNXALL":
@@ -37,7 +40,9 @@ function RenderTable() {
     case "VNMID":
     case "VNSML":
     case "CW":
-      return <HSXMarketWatch />;
+      return <TableMarketWatch />;
+
+    // return <HSXMarketWatch />;
     case "thong-ke-index":
     case "thong-ke-gia":
     case "thong-ke-dat-lenh":
@@ -49,14 +54,44 @@ function RenderTable() {
   }
 }
 // const LayoutMarketWatch  = () => {
-const LayoutMarketWatch = () => {
-  // const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-  // const heightPriceBoard = ((windowHeight - 40) / 10) * 5.7;
-  // const heightOrderForm = ((windowHeight - 40) / 10) * 4.3;
-  // console.log(windowHeight);
-  const height = useContext(AppContext)
-  console.log(height.heightOrderForm)
+const LayoutMarketWatch: React.FC = () => {
+  const componentVisible = useSelector(
+    (state: RootState) => state.menu.visible
+  );
+  const hideShowOrderForm = useSelector(
+    (state: RootState) => state.layoutmarketwatch.orderForm
+  );
+  const hideShowPendingOrder = useSelector(
+    (state: RootState) => state.layoutmarketwatch.pendingOrder
+  );
+  const orderCount = useSelector(
+    (state: RootState) => state.layoutmarketwatch.orderCount
+  );
+  const height = useContext(AppContext);
+  console.log(height.heightOrderForm);
   const [popupVisible, setPopupVisible] = useState(false);
+  const dispatch = useAppDispatch();
+  const hideOrderForm = () => {
+    dispatch(setShowHideOrderForm(false));
+  };
+  const showOrderForm = () => {
+    dispatch(setShowHideOrderForm(true));
+  };
+  const showPendingOrder = () =>{
+    dispatch(setOrderCount(1)) 
+    console.log(orderCount)
+
+}
+const showTradingResult = () =>{
+  dispatch(setOrderCount(2)) 
+  console.log(orderCount)
+}
+const showIntradayOrder= () =>{
+dispatch(setOrderCount(3)) 
+console.log(orderCount)
+
+}
+  // const [showhideOrderForm, setShowhideOrderForm] = useState(false);
   const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0, value: "" });
   const handleContextMenu = (e: any) => {
     e.preventDefault();
@@ -78,11 +113,15 @@ const LayoutMarketWatch = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [popupRef]);
+
   // const params = useParams<{ id: string }>()
   // const paramstock  = stocks.find(
   //   paramstock => paramstock.id === params.id
   // )
-
+  const menuTabOrderForm = () =>{
+    
+  }
+ 
   //   const paramTable = paramstock?.id
   return (
     <div>
@@ -145,16 +184,20 @@ const LayoutMarketWatch = () => {
           </li>
         </ul>
       </div>
-     
+      {/* marketwatch */}
+      <div
+        className="panel-horizontally bg-BGTableMarket text-white relative overflow-hidden"
+        style={{ height: height.windowHeight }}
+      >
+        {/* priceboard */}
         <div
-          className="panel-horizontally bg-BGTableMarket text-white relative overflow-hidden"
-          style={{ height: height.windowHeight}}
-          
+          id="panel-top"
+          className="panel-top bg-black overflow-auto "
+          style={{ height: height.heightPriceBoard }}
         >
           <div
-            id="panel-top"
-            className="panel-top bg-black overflow-auto "
-            style={{ height: height.heightPriceBoard }}
+            className="price-board-layout"
+            style={{ display: componentVisible ? "block" : "none" }}
           >
             <MenuMarketWatch />
             <div className="overflow-hidden dvFixed">
@@ -164,16 +207,78 @@ const LayoutMarketWatch = () => {
                 id="tableHNX"
                 onContextMenu={handleContextMenu}
               >
-                {RenderTable()}
+                <div
+                  className={`dvContentLP relative overflow-x-auto `}
+                  style={{
+                    height:
+                      height.expand === 27
+                        ? height.heightPriceBoard - 57
+                        : height.expand === 67
+                        ? height.heightPriceBoard - 97
+                        : height.heightPriceBoard - 194,
+                  }}
+                >
+                  {/* <div className="dvContentLP relative overflow-x-auto" style={{height:height.heightPriceBoard-57}}> */}
+                  {RenderTable()}
+                </div>
               </div>
             </div>
           </div>
-          
-          <div  className="panel-bottom divBot">
-            <OrderMarketW />
+          {/* chart */}
+          <div
+            className="chart-layout"
+            style={{ display: componentVisible ? "none" : "block" }}
+          >
+            <ChartMarketwatch />
           </div>
         </div>
-      
+        <div className="flex justify-between">
+          <div
+            className="relative left-[49%]"
+            onClick={hideOrderForm}
+            id="divArrowBottomDown"
+            style={{ display: hideShowOrderForm ? "block" : "none" }}
+          >
+            <ArrowDropDownIcon
+              className=" text-iconShowOrder"
+              sx={{ fontSize: 45, marginBottom: "-20px", marginTop: "-20px" }}
+            />
+          </div>
+          {/* menu link */}
+          <div
+            style={{ display: hideShowOrderForm ? "block" : "none" }}
+            className="mt-1 text-black"
+          >
+            <div className="panel__bottom__link flex justify-end mr-[40px] mb-[20px]">
+              <div className="group   px-2" onClick={showPendingOrder}>
+                <span className=" size-input hover-text-blue-L ">
+                  Lệnh chờ khớp
+                </span>
+              </div>
+              <div className="group   px-2"  onClick={showTradingResult}>
+                <span className=" size-input hover-text-blue-L ">
+                  KQ khớp lệnh trong phiên
+                </span>
+              </div>
+              <div className="group   px-2" onClick={showIntradayOrder}>
+                <span className=" size-input hover-text-blue-L " >
+                  Lệnh trong ngày
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div  onClick={showOrderForm} id="divArrowBottomUp" style={{ display: !hideShowOrderForm ? "block" : "none" }}>
+            <span id="spnTitlePanelBottom" className="text-spnTitlePanelBottom cursor-pointer	text-xl font-normal	">ĐẶT LỆNH</span>
+            <ArrowDropUpIcon className="text-5xl text-iconShowOrder  text-[#b3b3b3]" sx={{fontSize:45}}/>
+            {/* <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root icon-spnTitlePanelBottom " focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropUpIcon"><path d="m7 14 5-5 5 5z"></path></svg> */}
+        </div>
+        {/* Order */}
+        <div className="panel-bottom divBot" style={{ display: hideShowOrderForm ? "block" : "none" }}>
+        {orderCount === 0 ? <OrderMarketW /> : orderCount === 1 ? <PendingOrders/> : orderCount === 2 ? <TradingResult/> : orderCount === 3 ? <IntradayOrder/>:""}
+          {/* <OrderMarketW /> */}
+        </div>
+      </div>
     </div>
   );
 };

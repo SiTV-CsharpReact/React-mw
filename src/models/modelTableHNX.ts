@@ -1,6 +1,6 @@
 export interface DataTable {
-    RowID: string,
-    info:[]
+   RowID: string;
+   Info: Array<Array<string>>;
   }
   export interface ProductParams {
     value: string;

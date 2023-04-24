@@ -1,0 +1,48 @@
+.chart-layout-left{
+    width: calc(100% - 350px);
+}
+ul.ul-menu-tab > li {
+    padding: 7.5px;
+    border: 1px solid #505050;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    color: #ffffff;
+    font-weight: 500;
+    cursor: pointer;
+}
+ul.ul-menu-tab > .active, ul.ul-menu-tab > li:hover {
+    background: #404040;
+}
+.mt-content{
+    width: calc(100% - 40px);
+    float: left;
+
+}
+.mt-menu-tab{
+    width: 40px;
+    float: right;
+}
+table.no-index tr.header {
+    background: #404040;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 10px;
+    height: 22px !important;
+    &>td{
+        text-align: center;
+    }
+}
+table.no-index tr.no-border > td:nth-child(2n) {
+    text-align: right;
+}
+table.no-index tr td {
+    padding: 2px 6px;
+}
+.index-chart{
+    width: calc(100% - 300px);
+    max-width: 1000px;
+}

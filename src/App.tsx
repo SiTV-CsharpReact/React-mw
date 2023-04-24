@@ -2,6 +2,9 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import AssetReport from "./pages/Report/AssetReport";
 import LayoutMarketWatch from "./components/layoutMarketwatch/LayoutMarketWatch";
 import AppProvider from "./Context/AppContext";
+import SlidesMarketWatch from "./components/indexMarketWatch/SlidesMarketWatch";
+import Slide from "./pages/slide";
+import MySwiper from "./pages/swiper";
 function App() {
   return (
     <div>
@@ -10,6 +13,9 @@ function App() {
         <Route path="/" element={<Navigate to="/chung-khoan/HNX" />} />
         <Route path="/chung-khoan" element={<Navigate to="/chung-khoan/HNX" />} />
         <Route path="/chung-khoan/:id" element={<LayoutMarketWatch />} />
+        <Route path="/report/ClientActivityRange" element={<SlidesMarketWatch />} />
+        <Route path="/report/TradeLog" element={<Slide />} />
+        <Route path="/report/PendingSettlement" element={<MySwiper />} />
       </Routes>
       </AppProvider>
     </div>

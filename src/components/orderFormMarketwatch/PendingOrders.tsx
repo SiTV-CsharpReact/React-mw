@@ -2,7 +2,7 @@ import React from 'react'
 
 const PendingOrders = () => {
   return (
-    <div>PendingOrder</div>
+    <div>PendingOrders</div>
   )
 }
 

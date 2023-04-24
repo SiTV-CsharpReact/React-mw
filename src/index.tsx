@@ -7,7 +7,7 @@ import Header from './components/header/Header';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/configureStore';
-
+import './i18n/i18n'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

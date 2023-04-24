@@ -267,28 +267,7 @@ const ListMenuBar = () => {
          
         ],
       },
-      {
-        name: "Danh mục",
-        path: "/oke",
-        children: [
-          {
-            name: "HNX",
-            path: "/X",
-          },
-          {
-            name: "HN30",
-            path: "/",
-          },
-          {
-              name: "BOND",
-              path: "/BND",
-            },
-            {
-              name: "Giao dịch thỏa thuận",
-              path: "/table",
-            },
-        ],
-      },
+      
   ];
 
   return (

@@ -124,3 +124,17 @@ input[type=checkbox].priceboard2 {
     }
 
 }
+.imgDel, .imgDel:hover {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    display: block;
+    right: 5px;
+    top: 5px;
+    /* border: 1px solid #2a2a2a; */
+    background: url(../../images/menuMW/delete.png) no-repeat;
+    cursor: pointer;
+}
+.imgDel:hover {
+    background-position: -20px 0;
+}

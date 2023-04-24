@@ -4,7 +4,9 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import menuImage from "../../images/menu.png";
 import avatarImage from "../../images/avatar_ano.png";
+import { useTranslation } from "react-i18next";
 const ProfileAccount = () => {
+  const { i18n } = useTranslation(["home", "report"]);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [openAccount, setOpenAccount] = useState(false);
     const openPopupAccount = Boolean(anchorEl);
@@ -14,6 +16,10 @@ const ProfileAccount = () => {
       const handleCloseAccount = () => {
         setAnchorEl(null);
       };
+      const changeLanguage = (lng:'EN' | 'VN')=>{
+        console.log('oke')
+        i18n.changeLanguage(lng);
+      }
   return (
     <Box>
     <Tooltip title="Thông tin tài khoản">
@@ -162,13 +168,13 @@ const ProfileAccount = () => {
             {/* <FontAwesomeIcon icon={faLanguage}  className="icon_account"/> */}
             <i className="fa fa-language"></i>
             <span>Hỗ trợ ngôn ngữ:</span>
-            <a href="/" className="px-3 text-textLanguage">
+            <span  className="px-3 text-textLanguage" onClick={()=>changeLanguage('VN')}>
               Tiếng Việt
-            </a>
+            </span>
             <span>|</span>
-            <a href="/" className="px-3 text-textLanguage">
+            <span  className="px-3 text-textLanguage" onClick={()=>changeLanguage('EN')}>
               English
-            </a>
+            </span>
           </li>
           <a href="/LogOut" style={{ color: "black" }} id="idLogOut">
             <li>
