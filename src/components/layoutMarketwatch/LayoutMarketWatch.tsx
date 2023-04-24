@@ -17,6 +17,7 @@ import { setOrderCount, setShowHideOrderForm } from "./LayoutMarketWatchSLice";
 import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import IntradayOrder from "../orderFormMarketwatch/IntradayOrder";
 import TradingResult from "../orderFormMarketwatch/TradingResult";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 function RenderTable() {
   const params = useParams<{ id: string }>();
   // console.log(params);
@@ -70,7 +71,10 @@ const LayoutMarketWatch: React.FC = () => {
   console.log(height.heightOrderForm);
   const [popupVisible, setPopupVisible] = useState(false);
   const dispatch = useAppDispatch();
-  const showhideOrderForm = () => {
+  const hideOrderForm = () => {
+    dispatch(setShowHideOrderForm(false));
+  };
+  const showOrderForm = () => {
     dispatch(setShowHideOrderForm(true));
   };
   const showPendingOrder = () =>{
@@ -231,7 +235,7 @@ console.log(orderCount)
         <div className="flex justify-between">
           <div
             className="relative left-[49%]"
-            onClick={showhideOrderForm}
+            onClick={hideOrderForm}
             id="divArrowBottomDown"
             style={{ display: hideShowOrderForm ? "block" : "none" }}
           >
@@ -264,8 +268,13 @@ console.log(orderCount)
             </div>
           </div>
         </div>
+        <div  onClick={showOrderForm} id="divArrowBottomUp" style={{ display: !hideShowOrderForm ? "block" : "none" }}>
+            <span id="spnTitlePanelBottom" className="text-spnTitlePanelBottom cursor-pointer	text-xl font-normal	">ĐẶT LỆNH</span>
+            <ArrowDropUpIcon className="text-5xl text-iconShowOrder  text-[#b3b3b3]" sx={{fontSize:45}}/>
+            {/* <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root icon-spnTitlePanelBottom " focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropUpIcon"><path d="m7 14 5-5 5 5z"></path></svg> */}
+        </div>
         {/* Order */}
-        <div className="panel-bottom divBot">
+        <div className="panel-bottom divBot" style={{ display: hideShowOrderForm ? "block" : "none" }}>
         {orderCount === 0 ? <OrderMarketW /> : orderCount === 1 ? <PendingOrders/> : orderCount === 2 ? <TradingResult/> : orderCount === 3 ? <IntradayOrder/>:""}
           {/* <OrderMarketW /> */}
         </div>

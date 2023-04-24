@@ -8,11 +8,12 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import TableTotalMonney from "./TableTotalMonney";
 import './styleOrderForm.scss'
 import IconNext from "../../images/icon-next.png";
-import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { RootState, useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { decrement, increment } from "./counterSlice";
 import StockBalance from "./StockBalance";
 import RecordPending from "./RecordPending";
 import { AppContext } from "../../Context/AppContext";
+import { useSelector } from "react-redux";
 type Props ={
   windowHeight:number,
   heightOrderForm:number
@@ -23,6 +24,10 @@ type Props ={
 }
 const OrderMarketW = () => {
   const height = useContext(AppContext)
+  const hideShowOrderForm = useSelector(
+    (state: RootState) => state.layoutmarketwatch.orderForm
+  );
+  console.log(hideShowOrderForm)
   console.log(height)
   // color mua ban
   const [color, setColor] = useState(true);
@@ -41,8 +46,6 @@ const OrderMarketW = () => {
       setCounter(counter - 1);
     }
   };
-  const [counter1, setCounter1] = useState(0);
-
   const incrementCounter1 = () => {
     setCounter(counter + 1);
   };
@@ -60,27 +63,12 @@ const OrderMarketW = () => {
     height.setHeightPriceBoard(height.windowHeight-40)
     console.log(height)
     setAnchorEl2(event.currentTarget);
-   //const tableMarketWatch=   document.querySelectorAll<HTMLElement>(".table_market")
-  //  for (let j = 0; j < tableMarketWatch.length; j++) {
-  //    const elementChange = tableMarketWatch[j];
-  //  if(tableMarketWatch[j]) elementChange.style.height="790px"
-
-
-  //    // In ra danh sách các lớp của phần tử
-  // }
-   //if(tableHNX) tableHNX.style.height="730px"
   };
   const handleCloseLanguage2 = () => {
     height.setHeightPriceBoard(height.windowHeight-height.heightOrderFormFix -40)
     console.log(height)
     setAnchorEl2(null);
-    //const tableMarketWatch=   document.querySelectorAll<HTMLElement>(".table_market")
-  //  for (let j = 0; j < tableMarketWatch.length; j++) {
-  //    const elementChange = tableMarketWatch[j];
-  //  if(tableMarketWatch[j]) elementChange.style.height="420px"
-  //    // In ra danh sách các lớp của phần tử
-  // }
- 
+
   };
   const toggleOrder = () => {
     setOrder(!order);
@@ -92,7 +80,7 @@ const OrderMarketW = () => {
      
 
       {/* đặt lệnh */}
-      <div className={`panel-bottom pb-5` } style={{ display: !anchorEl2 ? "block" : "none" , height:height.heightOrderForm-40}} >
+      <div className={`panel-bottom pb-5` } style={{height:height.heightOrderForm-40}} >
       <div className={`inline-block BGTB w-full ${order ? "":"relative"}`} >
       {color ?    <TableTotalMonney status={order} /> : <StockBalance status={order}/>}
         {/* <TableTotalMonney />
@@ -325,11 +313,7 @@ const OrderMarketW = () => {
       
       </div>
       </div>
-      <div  onClick={handleCloseLanguage2} id="divArrowBottomUp" style={{ display: anchorEl2 ? "block" : "none" }}>
-            <span id="spnTitlePanelBottom" className="text-spnTitlePanelBottom cursor-pointer	text-xl font-normal	">ĐẶT LỆNH</span>
-            <ArrowDropUpIcon className="text-5xl text-iconShowOrder  text-[#b3b3b3]" sx={{fontSize:45}}/>
-            {/* <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root icon-spnTitlePanelBottom " focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropUpIcon"><path d="m7 14 5-5 5 5z"></path></svg> */}
-        </div>
+      
         {/* <div id="draggableH" className="ui-draggable ui-draggable-handle" style={{ top: anchorEl2 ? "431px" : "263.469px",background : "transparent" }} ></div>   */}
           </div>
     
