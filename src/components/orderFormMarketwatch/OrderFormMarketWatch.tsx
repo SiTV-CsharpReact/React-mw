@@ -90,31 +90,7 @@ const OrderMarketW = () => {
   return (
     <div className="bg-white text-black" id="tablepricelist">
      
-      <div className="flex justify-between" >
-       
-        
 
-      <div className="relative left-[49%]" onClick={ handleClick2} id="divArrowBottomDown" style={{ display: !anchorEl2 ? "block" : "none" }}>
-     < ArrowDropDownIcon className=" text-iconShowOrder" sx={{fontSize:45, marginBottom:"-20px",marginTop:"-20px"}}/>
-        </div>
-        
-        <div style={{ display: !anchorEl2 ? "block" : "none" }} className="mt-1">
-      <div className="panel__bottom__link flex justify-end mr-[40px] mb-[20px]">
-        
-        <div className="group   px-2  ">
-          <span className=" size-input hover-text-blue-L "> Lệnh chờ khớp</span>
-        </div>
-        <div className="group   px-2  ">
-          <span className=" size-input hover-text-blue-L ">
-            KQ khớp lệnh trong phiên
-          </span>
-        </div>
-        <div className="group   px-2  ">
-          <span className=" size-input hover-text-blue-L ">Lệnh trong ngày</span>
-        </div>
-      </div>
-      </div>
-      </div>
       {/* đặt lệnh */}
       <div className={`panel-bottom pb-5` } style={{ display: !anchorEl2 ? "block" : "none" , height:height.heightOrderForm-40}} >
       <div className={`inline-block BGTB w-full ${order ? "":"relative"}`} >

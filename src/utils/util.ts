@@ -432,7 +432,7 @@ export const fStatusMarketHNX = (value?:string) =>{
 //     }
 // }
 export const updateQuoteData =(objRoot:any[])=>{
-    console.log(objRoot)
+    //console.log(objRoot)
 }
 //   export const updateIndex =(objRoot:any) =>{
 //     var arrData = JSON.parse(objRoot.Change);
