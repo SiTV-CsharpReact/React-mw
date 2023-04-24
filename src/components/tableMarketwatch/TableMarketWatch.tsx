@@ -14,7 +14,6 @@ import axios from "axios";
 import { ObjectMenuHSX } from "../../models/modelListMenuHSX";
 import { useParams } from "react-router-dom";
 import { stocks } from "../../models/marketwacthTable";
-import HeaderMarketW from "../headerMarketwat/HeaderMarket";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { DataTable } from "../../models/modelTableHNX";
 const showKLPT = (value: string) => {
@@ -122,15 +121,34 @@ const TableMarketWatch = () => {
     setProducts(data);
   };
   // const [users, setUsers] = useState([]);
-  const handleTypeOptionClick = (type:string) => {
-    const newData = products.sort((a, b) => {
-      if (a.RowID === type) return -1;
-      if (b.RowID === type) return 1;
-      return 0;
-    });
-    setProducts(newData);
-    console.log(products)
+  // const handleTypeOptionClick = (type:string) => {
+  //   const newData = products.sort((a, b) => {
+  //     if (a.RowID === type) return -1;
+  //     if (b.RowID === type) return 1;
+  //     return 0;
+  //   });
+  //   setProducts(newData);
+  //   console.log(products)
+  // };
+  // const handleTypeOptionClick = (id: any, index: any) => {
+  //   // Lấy ra phần tử cần đưa lên đầu mảng
+  //   const itemToMove = products[index];
+  //   // Lấy ra các phần tử trước và sau phần tử cần đưa lên
+  //   const head = products.slice(0, index);
+  //   const tail = products.slice(index - 1);
+  //   // Gộp lại các phần tử theo thứ tự mới và cập nhật vào state
+  //   setProducts([itemToMove, ...head, ...tail]);
+  // };
+  const handleTypeOptionClick = (id: any, index: any) => {
+    // Lấy ra phần tử cần đưa lên đầu mảng
+    const itemToMove = products[index];
+    // Lấy ra phần tử đứng trước phần tử cần đưa lên
+    const prevItem = products[index - 1];
+    // Gộp lại các phần tử theo thứ tự mới và cập nhật vào state
+    setProducts([itemToMove, prevItem, ...products.slice(0, index - 1), ...products.slice(index)]);
   };
+  
+  
   const handleDragEnd = (e: any) => {
     if (!e.destination) return;
     let tempData = Array.from(products);
@@ -886,8 +904,8 @@ const TableMarketWatch = () => {
                         // style={{ backgroundColor: selectedRowId === dataTable.RowID ? 'yellow' : 'white' }}
                       >
                         <td
-                
-                          onClick={() => handleTypeOptionClick(dataTable.RowID)}
+                            data-id={index+1}
+                          onClick={() => handleTypeOptionClick(dataTable.RowID,index)}
                           {...provider.dragHandleProps}
                           className={`${setColorMarket(
                             dataTable.Info[13][1],
