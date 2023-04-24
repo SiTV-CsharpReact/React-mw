@@ -7,9 +7,12 @@ import { ObjectMenuHNX, ObjectMenuHSX } from '../../models/modelListMenuHSX';
 import axios from 'axios';
 import { setColorMenuMarket, iconColorMenuMarket, fStatusMarketHNX, fStatusMarketUPCOM } from '../../utils/util';
 import { AppContext } from '../../Context/AppContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/configureStore';
 
 
 const SlidesMarketWatch = () => {
+ 
   const height = useContext(AppContext);
   const [loading, setLoading] = useState(true);
   const [isHoveringLeft, setIsHoveringLeft] = useState(false);
@@ -20,7 +23,7 @@ const SlidesMarketWatch = () => {
   const screenWidth = window.innerWidth;
 const slideWidth = 220;
 const slidesToShow = Math.floor(screenWidth / slideWidth);
-console.log(slidesToShow)
+//console.log(slidesToShow)
 useEffect(() => {
   async function fetchData() {
     try {
@@ -79,9 +82,10 @@ useEffect(() => {
     // centerMode: true,
     dots: false,
     speed: 500,
+    
     // infinite: true, 
-    slidesToShow:slidesToShow,
-    slidesToScroll: slidesToShow,
+    slidesToShow:6,
+    slidesToScroll: 1,
     // slidesToShow: 7, // Hiển thị 3 slide trên một lần trượt
     // slidesToScroll: 7,
     autoplay: isHoveringLeft || isHoveringRight,
@@ -89,18 +93,11 @@ useEffect(() => {
     cssEase: 'linear',
     centerPadding: "50px", 
   };
- console.log(isHoveringLeft,isHoveringRight)
+// console.log(isHoveringLeft,isHoveringRight)
   return (
     <div
     id="divIndexChart "
-    className={`bg-headerMenuTableMarket ${
-      height.expand === 27
-        ? "max-h-[23px]"
-        : height.expand === 67
-        ? "max-h-[67px]"
-        : "max-h-[unset]"
-    }`}
-  >
+    className={`bg-headerMenuTableMarket`} >
       <div
         className="scrollingHotSpotLeft"
         onMouseEnter={handleHoverLeft}
@@ -111,6 +108,7 @@ useEffect(() => {
         {...(settings as any)}
         className="custom-carousel my-slider"
         ref={(slider) => setSliderRef(slider)}
+        draggable={true}
       >
    <li className="dvChart">
               <div>

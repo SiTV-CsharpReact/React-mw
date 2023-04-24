@@ -5,13 +5,14 @@ import SettingTable from "./SettingTable";
 import DateTime from "./DateTime";
 
 import LineChart from "../../images/line-chart-32.png"
-import { useAppDispatch } from "../../store/configureStore";
+import { RootState, useAppDispatch } from "../../store/configureStore";
 import { fetchTableBONDAsync, fetchTableHNX30Async, fetchTableHNXAsync } from "../tableMarketwatch/tableSlice";
 import ListMenuBar from "./ListMenuBar";
 import { AppContext } from "../../Context/AppContext";
 import DanhMuc from "./DanhMuc";
 import { useDispatch, useSelector } from "react-redux";
 import { setVisible } from "./menuSlice";
+import { setHeightExpand } from "../layoutMarketwatch/LayoutMarketWatchSLice";
 type Props ={
   windowHeight:number,
   heightOrderForm:number
@@ -20,26 +21,26 @@ type Props ={
   setExpand(expand: number): void;
   setHeightPriceBoard(heightPriceBoard: number): void
 }
-const showExpand =(value:Props)=>{
-  if (value.expand === 27) {
-    value.setExpand(67);
-    //value.setHeightPriceBoard(value.heightPriceBoard-40);
-    console.log(value.heightPriceBoard)
-  } else if (value.expand === 67) {
-    //value.setHeightPriceBoard(value.heightPriceBoard-107);
-    value.setExpand(157);
-  } else {
-    //value.setHeightPriceBoard(value.windowHeight - value.heightOrderForm-40 );
-    value.setExpand(27);
-  }
+// const showExpand =(value:Props)=>{
+//   if (value.expand === 27) {
+//     value.setExpand(67);
+//     //value.setHeightPriceBoard(value.heightPriceBoard-40);
+//     console.log(value.heightPriceBoard)
+//   } else if (value.expand === 67) {
+//     //value.setHeightPriceBoard(value.heightPriceBoard-107);
+//     value.setExpand(157);
+//   } else {
+//     //value.setHeightPriceBoard(value.windowHeight - value.heightOrderForm-40 );
+//     value.setExpand(27);
+//   }
   
-}
+// }
 const MenuBarMW = () => {
-  
-  const height = useContext(AppContext);
  
-  console.log(height)
+  //const height = useContext(AppContext);
   const dispatch = useAppDispatch();
+  const heightIndex = useSelector(   (state: RootState) => state.layoutmarketwatch.heightExpand);
+  //console.log(heightIndex)
   const showChart = () => {
     dispatch(setVisible(false));
   };
@@ -49,18 +50,30 @@ const MenuBarMW = () => {
       <ListMenuBar/>
       <DanhMuc/>
       
-        {height.expand === 157 ?<div>  <Tooltip title="Ẩn đồ thị">
+        {heightIndex === 169 ?
+        <div><Tooltip title="Ẩn đồ thị">
             <span
               id="spExpand"
               className="imgExpand"
-              onClick={() => showExpand(height)}
+              onClick={() => dispatch(setHeightExpand(27))}
             ></span>
-          </Tooltip></div>:<div>
+          </Tooltip></div>
+          :heightIndex === 67 ?
+          <div>
           <Tooltip title="Hiện đồ thị">
             <span
               id="spExpand"
               className="imgExpandOpen"
-              onClick={() => showExpand(height)}
+              onClick={() => dispatch(setHeightExpand(169))}
+            ></span>
+          </Tooltip>
+        </div>
+          :<div>
+          <Tooltip title="Hiện thị index">
+            <span
+              id="spExpand"
+              className="imgExpandOpen"
+              onClick={() => dispatch(setHeightExpand(67))}
             ></span>
           </Tooltip>
         </div>}

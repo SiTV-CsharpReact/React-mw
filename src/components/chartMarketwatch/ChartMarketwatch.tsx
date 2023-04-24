@@ -32,7 +32,7 @@ const ChartMarketwatch = () => {
     };
     fetchData();
   }, []);
-  console.log(dataChart);
+  //console.log(dataChart);
   //   useEffect(()=>{
   //     const res =  fetch(
   //         `http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=FTS`
