@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { fetchTableHNXAsync } from "./tableSlice";
 import {
@@ -14,10 +14,13 @@ import axios from "axios";
 import { ObjectMenuHSX } from "../../models/modelListMenuHSX";
 import { useParams } from "react-router-dom";
 import { stocks } from "../../models/marketwacthTable";
+import HeaderMarketW from "../headerMarketwatch/HeaderMarket";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { DataTable } from "../../models/modelTableHNX";
+import FooterMarket from "../footerMarketwatch/FooterMarket";
+import { AppContext } from "../../Context/AppContext";
 const showKLPT = (value: string) => {
-  console.log(value);
+  // console.log(value);
   if (value === "showPT") {
     const element = document.getElementsByClassName("price-ot");
     const elementFirst = document.getElementsByClassName("price-ot")[0];
@@ -60,8 +63,10 @@ const showKLPT = (value: string) => {
   }
 };
 const TableMarketWatch = () => {
-  const [popupVisible, setPopupVisible] = useState(false);
-  const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 ,value:""});
+  const height = useContext(AppContext)
+  console.log(height)
+  // const [popupVisible, setPopupVisible] = useState(false);
+  // const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 ,value:""});
   //const [selectedRowId, setSelectedRowId] = useState<string | null>(null);
   const [sortedColumn, setSortedColumn] = useState("");
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
@@ -95,34 +100,107 @@ const TableMarketWatch = () => {
 
   const fetchTable = async (param: string) => {
     let valueParam = "HNX";
+    let valueSan = "hsx"
     switch (param) {
-      // case "":
-      //   valueParam = "s=quote&l=HNXIndex";
-      //   break;
+     
       case "HNX":
         valueParam = "s=quote&l=HNXIndex";
+        valueSan = "hnx"
         break;
       case "HNX30":
         valueParam = "s=quote&l=HNX30";
+        valueSan = "hnx"
         break;
       case "BOND":
         valueParam = "s=quote&l=BOND";
+        valueSan = "hnx"
         break;
       case "UPCOM":
         valueParam = "s=quote&l=HNXUpcomIndex";
+        valueSan = "hnx"
         break;
+          case "VNI":
+        valueParam = "s=quote&l=All";
+        valueSan = "hsx"
+        break;
+      case "VN30":
+        valueParam = "s=quote&l=VN30";
+        valueSan = "hsx"
+        break;
+      case "VNXALL":
+        valueParam = "s=quote&l=VNXALL";
+        valueSan = "hsx"
+        break;
+      case "VN100":
+        valueParam = "s=quote&l=VN100";
+        valueSan = "hsx"
+        break;
+      case "VNALL":
+        valueParam = "s=quote&l=VNALL";
+        valueSan = "hsx"
+        break;
+        case "VNMID":
+          valueParam = "s=quote&l=VNMID";
+          valueSan = "hsx"
+          break;
+        case "VNSML":
+          valueParam = "s=quote&l=VNSML";
+          valueSan = "hsx"
+          break;
+          case "CW":
+            valueParam = "s=quote&l=CACB2208,CACB2301,CFPT2210,CFPT2212,CFPT2213,CFPT2214,CFPT2301,CFPT2302,CFPT2303,CHPG2225,CHPG2226,CHPG2227,CHPG2301,CHPG2302,CHPG2303,CHPG2304,CHPG2305,CHPG2306,CMBB2211,CMBB2213,CMBB2214,CMBB2215,CMBB2301,CMBB2302,CMBB2303,CMSN2214,CMSN2215,CMWG2213,CMWG2214,CMWG2215,CMWG2301,CMWG2302,CPOW2210,CSTB2224,CSTB2225,CSTB2301,CSTB2302,CSTB2303,CTCB2212,CTCB2214,CTCB2215,CTCB2216,CTCB2301,CTPB2301,CVHM2216,CVHM2218,CVHM2219,CVHM2220,CVIB2201,CVIB2301,CVNM2211,CVNM2212,CVPB2212,CVPB2214,CVPB2301,CVPB2302,CVRE2216,CVRE2219,CVRE2220,CVRE2221,CVRE2301";
+            valueSan = "hsx"
+            break;
       default:
         break;
     }
     const res = await fetch(
-      `http://marketstream.fpts.com.vn/hnx/data.ashx?${valueParam}`
+      `http://marketstream.fpts.com.vn/${valueSan}/data.ashx?${valueParam}`
     );
     const data = await res.json();
     setProducts(data);
   };
+  // sort products 
+  products.forEach((obj) =>
+  obj.Info.sort((a:any, b:any) => {
+    const indexA = Number(a[0]);
+    const indexB = Number(b[0]);
+    if (indexA < indexB) {
+      return -1;
+    }
+    if (indexA > indexB) {
+      return 1;
+    }
+    return 0;
+  })
+);
+console.log(products)
+//   const sortedData = products.forEach((item) => {
+//     item.Info.sort((a:any, b:any) => {
+//         return parseInt(a[0]) - parseInt(b[0]);
+//     });
+// });
+//   console.log(sortedData)
+  // function compare(a: Array<string>, b: Array<string>) {
+  //   if (a[0][0] < b[0][0]) {
+  //     return -1;
+  //   }
+  //   if (a[0][0] > b[0][0]) {
+  //     return 1;
+  //   }
+  //   return 0;
+  // }
+  // products.map((obj) => {
+  //   obj.Info = obj.Info.sort(compare);
+  //   return obj;
+  // });
+  //  console.log(products)
+  // console.log(products.sort(
+  //   (a, b) => a.Info[0] - b.Info[0]
+  // ));
   // const [users, setUsers] = useState([]);
   // const handleTypeOptionClick = (type:string) => {
-  //   const newData = products.sort((a, b) => {
+  //   const newData = products.slice().sort((a, b) => {
   //     if (a.RowID === type) return -1;
   //     if (b.RowID === type) return 1;
   //     return 0;
@@ -130,25 +208,15 @@ const TableMarketWatch = () => {
   //   setProducts(newData);
   //   console.log(products)
   // };
-  // const handleTypeOptionClick = (id: any, index: any) => {
-  //   // Lấy ra phần tử cần đưa lên đầu mảng
-  //   const itemToMove = products[index];
-  //   // Lấy ra các phần tử trước và sau phần tử cần đưa lên
-  //   const head = products.slice(0, index);
-  //   const tail = products.slice(index - 1);
-  //   // Gộp lại các phần tử theo thứ tự mới và cập nhật vào state
-  //   setProducts([itemToMove, ...head, ...tail]);
-  // };
-  const handleTypeOptionClick = (id: any, index: any) => {
-    // Lấy ra phần tử cần đưa lên đầu mảng
-    const itemToMove = products[index];
-    // Lấy ra phần tử đứng trước phần tử cần đưa lên
-    const prevItem = products[index - 1];
-    // Gộp lại các phần tử theo thứ tự mới và cập nhật vào state
-    setProducts([itemToMove, prevItem, ...products.slice(0, index - 1), ...products.slice(index)]);
-  };
-  
-  
+
+
+  const handleTypeOptionClick = (type:string) => {
+    const newData = [...products];
+    const index = newData.findIndex((item) => item.RowID === type);
+    const clickedItem = newData.splice(index, 1)[0];
+    newData.unshift(clickedItem);
+    setProducts(newData);
+  }
   const handleDragEnd = (e: any) => {
     if (!e.destination) return;
     let tempData = Array.from(products);
@@ -165,7 +233,7 @@ const TableMarketWatch = () => {
         a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
       );
       setProducts(sorted);
-      console.log("sorting", sorted);
+      // console.log("sorting", sorted);
       setorder("DSC");
       setSortedColumn(col);
     } else {
@@ -196,94 +264,21 @@ const TableMarketWatch = () => {
       setorder("DSC");
     }
   };
-  const handleContextMenu = (e:any) => {
-    e.preventDefault();
-    const trValue = e.target.parentElement.getAttribute('data-tr-value');
-    if(trValue){
-      setPopupPosition({ x: e.clientX, y: e.clientY, value:trValue });
-      setPopupVisible(true);
-    } 
-  }
-  const popupRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    function handleClickOutside(e:any) {
-      if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
-        setPopupVisible(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [popupRef]);
-  function handleClick() {
-    setPopupVisible(false);
-  }
+  // function handleClick() {
+  //   setPopupVisible(false);
+  // }
  // console.log(sortedColumn);
- console.log(products)
+//  console.log(products)
   return (
-    <>
-        {popupVisible  && <div className="popup" ref={popupRef}    style={{ position: 'absolute', top: popupPosition.y, left: popupPosition.x }}>
-        <ul className="context-menu-list" id="idContextMenu">
-          <li>
-          <i className="fa fa-arrow-left text-[#00A4FF]"></i>
-          <span>
-          Mua <b>{popupPosition.value}</b> 
-          </span> 
-          </li>
-          <li>
-          <i className="fa fa-arrow-right text-[#f44336]"></i>
-          <span>
-          Bán <b>{popupPosition.value}</b> 
-          </span> 
-          </li>
-          <li>
-          <i className="fa fa-language text-[#22B14C]"></i>
-          <span>
-          Thông tin doanh nghiệp <b>{popupPosition.value}</b> 
-          </span> 
-          </li>
-          <li>
-          <i className="fa fa-sign-out text-[#2371AF]"></i>
-          <span>
-          Chi tiết <b>{popupPosition.value}</b> 
-          </span> 
-          </li>
-          <li>
-          <i className="fa fa-history text-[#009688]"></i>
-          <span>
-          Lịch sử giá <b>{popupPosition.value}</b> 
-          </span> 
-          </li>
-          <li>
-          <i className="fa fa-bar-chart text-[#795548]"></i>
-          <span>
-          Phân tích Kỹ thuật <b>{popupPosition.value}</b> 
-          </span> 
-          </li>
-          <li>
-          <i className="fa fa-close text-[#f44336]"></i>
-          <span>
-          Bỏ mã <b>{popupPosition.value}</b> 
-          </span> 
-          </li>
-          <li>
-          <i className="fa fa-info-circle text-[#949831]"></i>
-          <span>
-         Ghi thành DM mặc định
-          </span> 
-          </li>
-        </ul>
-        <button onClick={handleClick}>Close</button>
-        </div>}
+    <div> 
       <DragDropContext onDragEnd={handleDragEnd}>      
-        <table className="w-full tableMW table-priceboard"   onContextMenu={handleContextMenu} >
+        <table className="w-full tableMW table-priceboard"    >
       
           <thead>
             <tr>
               <th
                 className={` text-textHeadTableMarket sort-table  ${
-                  sortedColumn === "RowID"
+                  sortedColumn === "0"
                     ? order === "ASC"
                       ? "headerSortUp"
                       : "headerSortUp"
@@ -291,12 +286,12 @@ const TableMarketWatch = () => {
                 }`}
                 rowSpan={2}
                 onClick={() => {
-                  sorting("RowID");
+                  sortData("0");
                 }}
-                style={{ width: "6%" }}
+                style={{ width: "6%",minWidth:"90px"}}
               >
                 Mã
-                {sortedColumn === "RowID" ? (
+                {sortedColumn === "0" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
                   ) : (
@@ -308,7 +303,7 @@ const TableMarketWatch = () => {
               </th>
               <th
                 className={`bg-BGTableHoverMarket text-textHeadTableMarket sort-table  ${
-                  sortedColumn === "13"
+                  sortedColumn === "1"
                     ? order === "ASC"
                       ? "headerSortUp"
                       : "headerSortUp"
@@ -317,11 +312,11 @@ const TableMarketWatch = () => {
                 rowSpan={2}
                 // onClick={sortData(12)}
                 onClick={() => {
-                  sortData("13");
+                  sortData("1");
                 }}
               >
                 TC
-                {sortedColumn === "13" ? (
+                {sortedColumn === "1" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
                   ) : (
@@ -333,7 +328,7 @@ const TableMarketWatch = () => {
               </th>
               <th
                 className={`bg-BGTableHoverMarket text-textHeadTableMarket sort-table  ${
-                  sortedColumn === "15"
+                  sortedColumn === "2"
                     ? order === "ASC"
                       ? "headerSortUp"
                       : "headerSortUp"
@@ -341,10 +336,10 @@ const TableMarketWatch = () => {
                 }`}
                 rowSpan={2}
                 // onClick={sortData}
-                onClick={() => sortData("15")}
+                onClick={() => sortData("2")}
               >
                 Trần
-                {sortedColumn === "15" ? (
+                {sortedColumn === "2" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
                   ) : (
@@ -356,7 +351,7 @@ const TableMarketWatch = () => {
               </th>
               <th
                 className={`bg-BGTableHoverMarket text-textHeadTableMarket sort-table  ${
-                  sortedColumn === "14"
+                  sortedColumn === "3"
                     ? order === "ASC"
                       ? "headerSortUp"
                       : "headerSortUp"
@@ -364,10 +359,10 @@ const TableMarketWatch = () => {
                 }`}
                 rowSpan={2}
                 // onClick={sortData}
-                onClick={() => sortData("14")}
+                onClick={() => sortData("3")}
               >
                 Sàn
-                {sortedColumn === "14" ? (
+                {sortedColumn === "3" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
                   ) : (
@@ -380,14 +375,14 @@ const TableMarketWatch = () => {
               <th
                 className=" text-textHeadTableMarket"
                 colSpan={6}
-                onClick={() => sortData("14")}
+                // onClick={() => sortData("4")}
               >
                 Mua
               </th>
               <th
                 className=" text-textHeadTableMarket bg-BGTableHoverMarket"
                 colSpan={3}
-                onClick={() => sortData("14")}
+                // onClick={() => sortData("14")}
               >
                 Khớp lệnh
               </th>
@@ -396,29 +391,7 @@ const TableMarketWatch = () => {
               </th>
               <th
                 className={`border border-borderHeadTableMarket bg-BGTableHoverMarket px-2 py-1.5 text-textHeadTableMarket sort-table  ${
-                  sortedColumn === "20"
-                    ? order === "ASC"
-                      ? "headerSortUp"
-                      : "headerSortUp"
-                    : ""
-                }`}
-                rowSpan={2}
-                onClick={() => sortData("20")}
-              >
-                Tổng KL
-                {sortedColumn === "20" ? (
-                  order === "ASC" ? (
-                    <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
-                  ) : (
-                    <i className="fa fa-caret-down text-16pxi absolute bottom-[-4px] left-[45%]"></i>
-                  )
-                ) : (
-                  ""
-                )}
-              </th>
-              <th
-                className={`bg-BGTableHoverMarket text-textHeadTableMarket sort-table  ${
-                  sortedColumn === "20"
+                  sortedColumn === "21"
                     ? order === "ASC"
                       ? "headerSortUp"
                       : "headerSortUp"
@@ -427,7 +400,7 @@ const TableMarketWatch = () => {
                 rowSpan={2}
                 onClick={() => sortData("21")}
               >
-                Mở cửa
+                Tổng KL
                 {sortedColumn === "21" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
@@ -449,7 +422,7 @@ const TableMarketWatch = () => {
                 rowSpan={2}
                 onClick={() => sortData("22")}
               >
-                Cao nhất
+                Mở cửa
                 {sortedColumn === "22" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
@@ -471,7 +444,7 @@ const TableMarketWatch = () => {
                 rowSpan={2}
                 onClick={() => sortData("23")}
               >
-                Thấp nhất
+                Cao nhất
                 {sortedColumn === "23" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
@@ -484,17 +457,17 @@ const TableMarketWatch = () => {
               </th>
               <th
                 className={`bg-BGTableHoverMarket text-textHeadTableMarket sort-table  ${
-                  sortedColumn === "25"
+                  sortedColumn === "24"
                     ? order === "ASC"
                       ? "headerSortUp"
                       : "headerSortUp"
                     : ""
                 }`}
                 rowSpan={2}
-                onClick={() => sortData("25")}
+                onClick={() => sortData("24")}
               >
-                NN mua
-                {sortedColumn === "25" ? (
+                Thấp nhất
+                {sortedColumn === "24" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
                   ) : (
@@ -515,7 +488,7 @@ const TableMarketWatch = () => {
                 rowSpan={2}
                 onClick={() => sortData("26")}
               >
-                NN bán
+                NN mua
                 {sortedColumn === "26" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
@@ -537,8 +510,30 @@ const TableMarketWatch = () => {
                 rowSpan={2}
                 onClick={() => sortData("27")}
               >
-                Room còn lại
+                NN bán
                 {sortedColumn === "27" ? (
+                  order === "ASC" ? (
+                    <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
+                  ) : (
+                    <i className="fa fa-caret-down text-16pxi absolute bottom-[-4px] left-[45%]"></i>
+                  )
+                ) : (
+                  ""
+                )}
+              </th>
+              <th
+                className={`bg-BGTableHoverMarket text-textHeadTableMarket sort-table  ${
+                  sortedColumn === "28"
+                    ? order === "ASC"
+                      ? "headerSortUp"
+                      : "headerSortUp"
+                    : ""
+                }`}
+                rowSpan={2}
+                onClick={() => sortData("28")}
+              >
+                Room còn lại
+                {sortedColumn === "28" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
                   ) : (
@@ -552,6 +547,69 @@ const TableMarketWatch = () => {
             <tr>
               <th
                 className={` text-textHeadTableMarket sort-table  ${
+                  sortedColumn === "5"
+                    ? order === "ASC"
+                      ? "headerSortUp"
+                      : "headerSortUp"
+                    : ""
+                }`}
+                onClick={() => sortData("5")}
+              >
+                G3
+                {sortedColumn === "5" ? (
+                  order === "ASC" ? (
+                    <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
+                  ) : (
+                    <i className="fa fa-caret-down text-16pxi absolute bottom-[-4px] left-[45%]"></i>
+                  )
+                ) : (
+                  ""
+                )}
+              </th>
+              <th
+                className={` text-textHeadTableMarket sort-table  ${
+                  sortedColumn === "6"
+                    ? order === "ASC"
+                      ? "headerSortUp"
+                      : "headerSortUp"
+                    : ""
+                }`}
+                onClick={() => sortData("6")}
+              >
+                KL3
+                {sortedColumn === "6" ? (
+                  order === "ASC" ? (
+                    <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
+                  ) : (
+                    <i className="fa fa-caret-down text-16pxi absolute bottom-[-4px] left-[45%]"></i>
+                  )
+                ) : (
+                  ""
+                )}
+              </th>
+              <th
+                className={` text-textHeadTableMarket sort-table  ${
+                  sortedColumn === "7"
+                    ? order === "ASC"
+                      ? "headerSortUp"
+                      : "headerSortUp"
+                    : ""
+                }`}
+                onClick={() => sortData("7")}
+              >
+                G2
+                {sortedColumn === "7" ? (
+                  order === "ASC" ? (
+                    <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
+                  ) : (
+                    <i className="fa fa-caret-down text-16pxi absolute bottom-[-4px] left-[45%]"></i>
+                  )
+                ) : (
+                  ""
+                )}
+              </th>
+              <th
+                className={` text-textHeadTableMarket sort-table  ${
                   sortedColumn === "8"
                     ? order === "ASC"
                       ? "headerSortUp"
@@ -560,7 +618,7 @@ const TableMarketWatch = () => {
                 }`}
                 onClick={() => sortData("8")}
               >
-                G3
+                KL2
                 {sortedColumn === "8" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
@@ -581,7 +639,7 @@ const TableMarketWatch = () => {
                 }`}
                 onClick={() => sortData("9")}
               >
-                KL3
+                G1
                 {sortedColumn === "9" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
@@ -594,79 +652,16 @@ const TableMarketWatch = () => {
               </th>
               <th
                 className={` text-textHeadTableMarket sort-table  ${
-                  sortedColumn === "4"
+                  sortedColumn === "10"
                     ? order === "ASC"
                       ? "headerSortUp"
                       : "headerSortUp"
                     : ""
                 }`}
-                onClick={() => sortData("4")}
-              >
-                G2
-                {sortedColumn === "4" ? (
-                  order === "ASC" ? (
-                    <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
-                  ) : (
-                    <i className="fa fa-caret-down text-16pxi absolute bottom-[-4px] left-[45%]"></i>
-                  )
-                ) : (
-                  ""
-                )}
-              </th>
-              <th
-                className={` text-textHeadTableMarket sort-table  ${
-                  sortedColumn === "5"
-                    ? order === "ASC"
-                      ? "headerSortUp"
-                      : "headerSortUp"
-                    : ""
-                }`}
-                onClick={() => sortData("5")}
-              >
-                KL2
-                {sortedColumn === "5" ? (
-                  order === "ASC" ? (
-                    <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
-                  ) : (
-                    <i className="fa fa-caret-down text-16pxi absolute bottom-[-4px] left-[45%]"></i>
-                  )
-                ) : (
-                  ""
-                )}
-              </th>
-              <th
-                className={` text-textHeadTableMarket sort-table  ${
-                  sortedColumn === "0"
-                    ? order === "ASC"
-                      ? "headerSortUp"
-                      : "headerSortUp"
-                    : ""
-                }`}
-                onClick={() => sortData("0")}
-              >
-                G1
-                {sortedColumn === "0" ? (
-                  order === "ASC" ? (
-                    <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
-                  ) : (
-                    <i className="fa fa-caret-down text-16pxi absolute bottom-[-4px] left-[45%]"></i>
-                  )
-                ) : (
-                  ""
-                )}
-              </th>
-              <th
-                className={` text-textHeadTableMarket sort-table  ${
-                  sortedColumn === "1"
-                    ? order === "ASC"
-                      ? "headerSortUp"
-                      : "headerSortUp"
-                    : ""
-                }`}
-                onClick={() => sortData("1")}
+                onClick={() => sortData("10")}
               >
                 KL1
-                {sortedColumn === "1" ? (
+                {sortedColumn === "10" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
                   ) : (
@@ -678,16 +673,16 @@ const TableMarketWatch = () => {
               </th>
               <th
                 className={` text-textHeadTableMarket bg-BGTableHoverMarket sort-table  ${
-                  sortedColumn === "18"
+                  sortedColumn === "11"
                     ? order === "ASC"
                       ? "headerSortUp"
                       : "headerSortUp"
                     : ""
                 }`}
-                onClick={() => sortData("18")}
+                onClick={() => sortData("11")}
               >
                 Giá
-                {sortedColumn === "18" ? (
+                {sortedColumn === "11" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
                   ) : (
@@ -699,16 +694,16 @@ const TableMarketWatch = () => {
               </th>
               <th
                 className={` text-textHeadTableMarket bg-BGTableHoverMarket sort-table  ${
-                  sortedColumn === "19"
+                  sortedColumn === "12"
                     ? order === "ASC"
                       ? "headerSortUp"
                       : "headerSortUp"
                     : ""
                 }`}
-                onClick={() => sortData("19")}
+                onClick={() => sortData("12")}
               >
                 KL
-                {sortedColumn === "19" ? (
+                {sortedColumn === "12" ? (
                   order === "ASC" ? (
                     <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
                   ) : (
@@ -718,7 +713,7 @@ const TableMarketWatch = () => {
                   ""
                 )}
               </th>
-              <th className="border border-borderHeadTableMarket text-textHeadTableMarket bg-BGTableHoverMarket relative sort-table w-12">
+              <th className="border border-borderHeadTableMarket text-textHeadTableMarket bg-BGTableHoverMarket relative sort-table w-12 min-w-[50px]">
                 <div className="flex justify-between pt-[20px]">
                   <button
                     className="inset-y-0 absolute left-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL "
@@ -732,7 +727,7 @@ const TableMarketWatch = () => {
                     onClick={() => sortData("13")}
                   >
                     %
-                    {sortedColumn === "13" ? (
+                    {/* {sortedColumn === "13" ? (
                       order === "ASC" ? (
                         <i className="fa fa-caret-up text-16pxi absolute bottom-[-4px] left-[45%]"></i>
                       ) : (
@@ -740,7 +735,7 @@ const TableMarketWatch = () => {
                       )
                     ) : (
                       ""
-                    )}
+                    )} */}
                   </div>
 
                   <button
@@ -904,24 +899,22 @@ const TableMarketWatch = () => {
                         // style={{ backgroundColor: selectedRowId === dataTable.RowID ? 'yellow' : 'white' }}
                       >
                         <td
-                            data-id={index+1}
-                          onClick={() => handleTypeOptionClick(dataTable.RowID,index)}
                           {...provider.dragHandleProps}
                           className={`${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[18][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
-                          )}`}
-                          id={`${dataTable.RowID}`}
+                            dataTable.Info[1][1],
+                            dataTable.Info[11][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )} text-left`}
+                          id={`${ dataTable.Info[1][1]}`}
                         >
                           <input
                             type="checkbox"
                             id={`cb${dataTable.RowID}`}
-                           
+                            onClick={() => handleTypeOptionClick(dataTable.RowID)}
                             className="cbTop priceboard"
                           ></input>
-                          <span className="pl-0.5"> {dataTable.RowID}</span>
+                          <span className="pl-0.5"> {dataTable.Info[0][1]}</span>
                         </td>
 
                         {/* TTham chiếu */}
@@ -932,7 +925,7 @@ const TableMarketWatch = () => {
                           id={`${dataTable.RowID}_TC`}
                           className=" text-right bg-BGTableHoverMarket text-textTableMarketTC"
                         >
-                          {formatNumber(dataTable.Info[13][1])}
+                          {formatNumber(dataTable.Info[1][1])}
                         </td>
                         {/* Trần */}
                         <td
@@ -941,7 +934,7 @@ const TableMarketWatch = () => {
                           id={`${dataTable.RowID}_Tran`}
                           className=" text-right bg-BGTableHoverMarket text-textTableMarketTran"
                         >
-                          {formatNumber(dataTable.Info[15][1])}
+                          {formatNumber(dataTable.Info[2][1])}
                         </td>
                         {/* Sàn */}
                         <td
@@ -950,137 +943,137 @@ const TableMarketWatch = () => {
                           id={`${dataTable.RowID}_San`}
                           className=" text-right bg-BGTableHoverMarket text-textTableMarketSan"
                         >
-                          {formatNumber(dataTable.Info[14][1])}
+                          {formatNumber(dataTable.Info[3][1])}
                         </td>
                         {/* G3 Mua*/}
                         <td
                                 {...provider.dragHandleProps}
                           data-sort={dataTable.Info[8][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[8][0]}`}
+                          id={`${dataTable.RowID}_${dataTable.Info[5][0]}`}
                           className={` text-right ${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[8][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[1][1],
+                            dataTable.Info[5][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
-                          {formatNumberMarket(dataTable.Info[8][1])}
+                          {formatNumberMarket(dataTable.Info[5][1])}
                         </td>
                         {/* KL3 */}
                         <td
                                 {...provider.dragHandleProps}
                           data-sort={dataTable.Info[9][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[9][0]}`}
+                          id={`${dataTable.RowID}_${dataTable.Info[6][0]}`}
                           className={` text-right ${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[8][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[1][1],
+                            dataTable.Info[5][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
-                          {formatNumberMarket(dataTable.Info[9][1])}
+                          {formatNumberMarket(dataTable.Info[6][1])}
                         </td>
                         {/* G2 */}
                         <td
                                 {...provider.dragHandleProps}
                           data-sort={dataTable.Info[4][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[4][0]}`}
+                          id={`${dataTable.RowID}_${dataTable.Info[7][0]}`}
                           className={` text-right ${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[4][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[1][1],
+                            dataTable.Info[7][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
-                          {formatNumberMarket(dataTable.Info[4][1])}
+                          {formatNumberMarket(dataTable.Info[7][1])}
                         </td>
                         {/* KL2 */}
                         <td
                                 {...provider.dragHandleProps}
                           data-sort={dataTable.Info[5][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[5][0]}`}
+                          id={`${dataTable.RowID}_${dataTable.Info[8][0]}`}
                           className={` text-right ${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[4][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[1][1],
+                            dataTable.Info[7][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
-                          {formatNumberMarket(dataTable.Info[5][1])}
+                          {formatNumberMarket(dataTable.Info[8][1])}
                         </td>
                         {/* G1 */}
                         <td
-                                {...provider.dragHandleProps}
-                          data-sort={dataTable.Info[0][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[0][0]}`}
+                          {...provider.dragHandleProps}
+                        
+                          id={`${dataTable.RowID}_${dataTable.Info[9][0]}`}
                           className={` text-right ${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[0][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[1][1],
+                            dataTable.Info[9][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
                           {checkSTTMarket(
-                            formatNumberMarket(dataTable.Info[0][1]),
+                            formatNumberMarket(dataTable.Info[9][1]),
                             statusMarket?.STAT_ControlCode,
-                            dataTable.Info[1][1]
+                            dataTable.Info[10][1]
                           )}
-                          {/* {formatNumberMarket(dataTable.Info[0][1])} */}
+                          {/* {formatNumberMarket(dataTable.RowID)} */}
                         </td>
                         {/* KL1 */}
                         <td
                                 {...provider.dragHandleProps}
                           data-sort={dataTable.Info[1][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[1][0]}`}
+                          id={`${dataTable.RowID}_${dataTable.Info[10][0]}`}
                           className={` text-right ${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[0][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[1][1],
+                            dataTable.Info[9][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
-                          {formatNumberMarket(dataTable.Info[1][1])}
+                          {formatNumberMarket(dataTable.Info[10][1])}
                         </td>
                         {/* Gia Khơp lenh */}
                         <td
                                 {...provider.dragHandleProps}
                           data-sort={dataTable.Info[18][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[18][0]}`}
+                          id={`${dataTable.RowID}_${dataTable.Info[11][0]}`}
                           className={` text-right bg-BGTableHoverMarket ${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[18][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[1][1],
+                            dataTable.Info[11][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
-                          {formatNumberMarket(dataTable.Info[18][1])}
+                          {formatNumberMarket(dataTable.Info[11][1])}
                         </td>
                         {/* KL */}
                         <td
                                 {...provider.dragHandleProps}
                           data-sort={dataTable.Info[19][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[19][0]}`}
+                          id={`${dataTable.RowID}_${dataTable.Info[12][0]}`}
                           className={` text-right bg-BGTableHoverMarket ${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[18][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[1][1],
+                            dataTable.Info[11][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
-                          {formatNumberMarket(dataTable.Info[19][1])}
+                          {formatNumberMarket(dataTable.Info[12][1])}
                         </td>
                         {/* +-*/}
                         <td
                          {...provider.dragHandleProps}
                           data-sort={tinhGiaTC(
-                            dataTable.Info[13][1],
-                            dataTable.Info[18][1]
+                            dataTable.Info[1][1],
+                            dataTable.Info[11][1]
                           )}
                           className={` text-right bg-BGTableHoverMarket ${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[18][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[1][1],
+                            dataTable.Info[11][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
                           <span>
@@ -1089,8 +1082,8 @@ const TableMarketWatch = () => {
                               id={`${dataTable.RowID}_PT`}
                             >
                               {tinhGiaTC(
-                                dataTable.Info[13][1],
-                                dataTable.Info[18][1]
+                                dataTable.Info[1][1],
+                                dataTable.Info[11][1]
                               )}
                             </div>
                             <div
@@ -1098,8 +1091,8 @@ const TableMarketWatch = () => {
                               id={`${dataTable.RowID}_CT`}
                             >
                               {tinhGiaCT(
-                                dataTable.Info[13][1],
-                                dataTable.Info[18][1]
+                                dataTable.Info[1][1],
+                                dataTable.Info[11][1]
                               )}
                             </div>
                           </span>
@@ -1108,149 +1101,141 @@ const TableMarketWatch = () => {
                         <td
                          {...provider.dragHandleProps}
                           data-sort={dataTable.Info[2][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[2][0]}`}
+                          id={`${dataTable.RowID}_${dataTable.Info[14][0]}`}
                           className={` text-right ${setColorMarket(
-                            dataTable.Info[13][1],
+                            dataTable.Info[1][1],
+                            dataTable.Info[14][1],
                             dataTable.Info[2][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[3][1]
                           )}`}
                         >
                           {checkSTTMarket(
-                            formatNumberMarket(dataTable.Info[2][1]),
+                            formatNumberMarket(dataTable.Info[14][1]),
                             statusMarket?.STAT_ControlCode,
-                            dataTable.Info[3][1]
+                            dataTable.Info[15][1]
                           )}
                         </td>
                         {/* KL1 */}
                         <td
                          {...provider.dragHandleProps}
                           data-sort={dataTable.Info[3][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[3][0]}`}
+                          id={`${dataTable.RowID}_${dataTable.Info[15][0]}`}
                           className={` text-right ${setColorMarket(
-                            dataTable.Info[13][1],
+                            dataTable.Info[1][1],
+                            dataTable.Info[14][1],
                             dataTable.Info[2][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[3][1]
                           )}`}
                         >
-                          {formatNumberMarket(dataTable.Info[3][1])}
+                          {formatNumberMarket(dataTable.Info[15][1])}
                         </td>
                         {/* G2 */}
                         <td
                          {...provider.dragHandleProps}
                           data-sort={dataTable.Info[6][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[6][0]}`}
+                          id={`${dataTable.RowID}_${dataTable.Info[16][0]}`}
                           className={` text-right ${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[6][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[1][1],
+                            dataTable.Info[16][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
-                          {formatNumberMarket(dataTable.Info[6][1])}
+                          {formatNumberMarket(dataTable.Info[16][1])}
                         </td>
                         {/* KL2 */}
                         <td
                          {...provider.dragHandleProps}
                           data-sort={dataTable.Info[7][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[7][0]}`}
+                          id={`${dataTable.RowID}_${dataTable.Info[17][0]}`}
                           className={` text-right ${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[6][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[1][1],
+                            dataTable.Info[16][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
-                          {formatNumberMarket(dataTable.Info[7][1])}
+                          {formatNumberMarket(dataTable.Info[17][1])}
                         </td>
                         {/* G3 */}
                         <td
                          {...provider.dragHandleProps}
                           data-sort={dataTable.Info[10][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[10][0]}`}
+                          id={`${dataTable.RowID}_${dataTable.Info[18][0]}`}
                           className={` text-right ${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[10][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[1][1],
+                            dataTable.Info[18][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
-                          {formatNumberMarket(dataTable.Info[10][1])}
+                          {formatNumberMarket(dataTable.Info[18][1])}
                         </td>
                         {/* KL3 */}
                         <td
                          {...provider.dragHandleProps}
                           data-sort={dataTable.Info[11][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[11][0]}`}
+                          id={`${dataTable.RowID}_${dataTable.Info[19][0]}`}
                           className={` text-right ${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[10][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[1][1],
+                            dataTable.Info[18][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
-                          {formatNumberMarket(dataTable.Info[11][1])}
+                          {formatNumberMarket(dataTable.Info[19][1])}
                         </td>
                         {/* TKL */}
                         <td
                          {...provider.dragHandleProps}
                           data-sort={dataTable.Info[20][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[20][0]}`}
-                          className=" text-right bg-BGTableHoverMarket "
-                        >
-                          {formatNumberMarket(dataTable.Info[20][1])}
-                        </td>
-                        <td
-                         {...provider.dragHandleProps}
-                          data-sort={dataTable.Info[21][1]}
                           id={`${dataTable.RowID}_${dataTable.Info[21][0]}`}
-                          className={` text-right bg-BGTableHoverMarket ${setColorMarket(
-                            dataTable.Info[13][1],
-                            dataTable.Info[21][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
-                          )}`}
+                          className=" text-right bg-BGTableHoverMarket "
                         >
                           {formatNumberMarket(dataTable.Info[21][1])}
                         </td>
                         <td
                          {...provider.dragHandleProps}
-                          data-sort={dataTable.Info[22][1]}
+                          data-sort={dataTable.Info[21][1]}
                           id={`${dataTable.RowID}_${dataTable.Info[22][0]}`}
                           className={` text-right bg-BGTableHoverMarket ${setColorMarket(
-                            dataTable.Info[13][1],
+                            dataTable.Info[1][1],
                             dataTable.Info[22][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
                           {formatNumberMarket(dataTable.Info[22][1])}
                         </td>
                         <td
                          {...provider.dragHandleProps}
-                          data-sort={dataTable.Info[23][1]}
+                          data-sort={dataTable.Info[22][1]}
                           id={`${dataTable.RowID}_${dataTable.Info[23][0]}`}
                           className={` text-right bg-BGTableHoverMarket ${setColorMarket(
-                            dataTable.Info[13][1],
+                            dataTable.Info[1][1],
                             dataTable.Info[23][1],
-                            dataTable.Info[15][1],
-                            dataTable.Info[14][1]
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
                           )}`}
                         >
                           {formatNumberMarket(dataTable.Info[23][1])}
                         </td>
                         <td
                          {...provider.dragHandleProps}
-                          data-sort={dataTable.Info[25][1]}
-                          id={`${dataTable.RowID}_${dataTable.Info[25][0]}`}
-                          className=" text-right bg-BGTableHoverMarket"
+                          data-sort={dataTable.Info[23][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[24][0]}`}
+                          className={` text-right bg-BGTableHoverMarket ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[24][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
                         >
-                          {formatNumberMarket(dataTable.Info[25][1])}
+                          {formatNumberMarket(dataTable.Info[24][1])}
                         </td>
                         <td
                          {...provider.dragHandleProps}
-                          data-sort={dataTable.Info[26][1]}
+                          data-sort={dataTable.Info[25][1]}
                           id={`${dataTable.RowID}_${dataTable.Info[26][0]}`}
                           className=" text-right bg-BGTableHoverMarket"
                         >
@@ -1258,11 +1243,19 @@ const TableMarketWatch = () => {
                         </td>
                         <td
                          {...provider.dragHandleProps}
-                          data-sort={dataTable.Info[27][1]}
+                          data-sort={dataTable.Info[26][1]}
                           id={`${dataTable.RowID}_${dataTable.Info[27][0]}`}
                           className=" text-right bg-BGTableHoverMarket"
                         >
                           {formatNumberMarket(dataTable.Info[27][1])}
+                        </td>
+                        <td
+                         {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[27][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[28][0]}`}
+                          className=" text-right bg-BGTableHoverMarket"
+                        >
+                          {formatNumberMarket(dataTable.Info[28][1])}
                         </td>
                       </tr>
                     )}
@@ -1274,7 +1267,8 @@ const TableMarketWatch = () => {
           </Droppable>
         </table>
       </DragDropContext>
-    </>
+      <FooterMarket/>
+    </div>
   );
 };
 
