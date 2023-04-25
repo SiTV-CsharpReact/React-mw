@@ -62,3 +62,25 @@ div.scrollingHotSpotLeftVisible {
 //     width: 220px ; /* Kích thước slide là 300px */
 //   }
   
+#draggableH {
+  position: absolute;
+  z-index: 3;
+  cursor: row-resize;
+  background: transparent;
+  height: 6px;
+  width: 100%;
+  background: #fff;
+}
+.red-div:hover::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  background-image: url('path/to/drag-icon.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: grab;
+}

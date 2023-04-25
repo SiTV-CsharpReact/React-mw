@@ -13,12 +13,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/configureStore";
 import ChartMarketwatch from "../chartMarketwatch/ChartMarketwatch";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import {setHeightOrderFormShow, setHeightPriceBoardShow, setOrderCount, setShowHideOrderForm, updateHeight } from "./LayoutMarketWatchSLice";
+import {setHeightDragable, setHeightOrderFormShow, setHeightPriceBoardShow, setOrderCount, setShowHideOrderForm, updateHeight } from "./LayoutMarketWatchSLice";
 import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import IntradayOrder from "../orderFormMarketwatch/IntradayOrder";
 import TradingResult from "../orderFormMarketwatch/TradingResult";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import './LayoutMarketWatch.scss'
+import './LayoutMarketWatch.scss';
+import Draggable from 'react-draggable';
 function RenderTable() {
   const params = useParams<{ id: string }>();
   // console.log(params);
@@ -131,27 +132,35 @@ const LayoutMarketWatch: React.FC = () => {
   // const paramstock  = stocks.find(
   //   paramstock => paramstock.id === params.id
   // )
-  const [height, setHeight] = useState(200);
-  const [dragging, setDragging] = useState(false);
-  const [yOffset, setYOffset] = useState(0);
+  const [height, setHeight] = useState(heightPriceBoard);
+  const draggingRef = useRef<boolean>(false);
+  const yOffsetRef = useRef<number>(0);
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    setDragging(true);
-    setYOffset(e.clientY - height);
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    draggingRef.current = true;
+    yOffsetRef.current = e.clientY - height;
+    e.dataTransfer?.setDragImage(new Image(), 0, 0); // ẩn hiệu ứng kéo thả mặc định
   };
 
-  const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
-    if (dragging) {
-      const newHeight = e.clientY - yOffset;
-      console.log(newHeight)
-      setHeight(newHeight);
+  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
+    if (draggingRef.current) {
+      const newHeight = e.clientY - yOffsetRef.current;
+      console.log(e.clientY,yOffsetRef.current,newHeight)
+      requestAnimationFrame(() => {
+        if(e.clientY !==0){
+          setHeight(newHeight);
+          dispatch(setHeightDragable(newHeight))
+        };
+        
+      });
     }
   };
 
-  const handleMouseUp = () => {
-    setDragging(false);
+  const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
+    draggingRef.current = false;
   };
-  console.log(height)
+  // console.log(height)
+  // console.log(yOffset)
   //   const paramTable = paramstock?.id
   return (
     <div>
@@ -257,6 +266,9 @@ const LayoutMarketWatch: React.FC = () => {
             <ChartMarketwatch />
           </div>
         </div>
+        {/* orderform */}
+      
+      <div>
         <div className="flex justify-between">
           <div
             className="relative left-[49%]"
@@ -342,12 +354,17 @@ const LayoutMarketWatch: React.FC = () => {
           {/* <OrderMarketW /> */}
         </div>
         <div id="draggableH" className="ui-draggable ui-draggable-handle" 
-         style={{top:heightPriceBoard, background: 'transparent'}}
-         onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onMouseMove={handleMouseMove}
+         style={{top:height, background: 'transparent'}}
+         onClick={(e) => e.stopPropagation()}
+         draggable
+         onDragStart={handleDragStart}
+         onDrag={handleDrag}
+         onDragEnd={handleDragEnd}
          />
+         </div>
+            
       </div>
+   
     </div>
   );
 };

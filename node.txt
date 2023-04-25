@@ -253,7 +253,7 @@
   Popover,
   styled,
   Switch,
-  Tooltip,
+  Tooltip,onMouseMoveonMouseMove
   Typography,
   useTheme,
 } from "@mui/material";
@@ -1393,3 +1393,136 @@ export default Slides;
   //       }
   //     }
   // }
+
+
+  import { useState, useRef } from "react";
+import './slide.scss'
+
+const DraggableDiv: React.FC = () => {
+  const windowHeight = window.innerHeight - 40;
+  const [heightW, setHeightW] = useState<number>(windowHeight);
+  const [height, setHeight] = useState<number>(200);
+
+  const draggingRef = useRef<boolean>(false);
+  const yOffsetRef = useRef<number>(0);
+
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    draggingRef.current = true;
+    yOffsetRef.current = e.clientY - height;
+    e.dataTransfer?.setDragImage(new Image(), 0, 0); // ẩn hiệu ứng kéo thả mặc định
+  };
+
+  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
+    if (draggingRef.current) {
+      const newHeight = e.clientY - yOffsetRef.current;
+      requestAnimationFrame(() => {
+        setHeight(newHeight);
+      });
+    }
+  };
+
+  const handleDragEnd = () => {
+    draggingRef.current = false;
+  };
+
+  return (
+    <div className="relative">
+      <div
+        style={{
+          height: `${height}px`,
+          backgroundColor: "grey",
+     
+        }}
+      
+      >
+      div ngoài
+      </div>
+ 
+      <div
+      className="red-div"
+        style={{
+          height: `${heightW - height}px`,
+          backgroundColor: "red",
+          cursor: "grab",
+        }}
+        onClick={(e) => e.stopPropagation()}
+        draggable
+        onDragStart={handleDragStart}
+        onDrag={handleDrag}
+        onDragEnd={handleDragEnd}
+      >
+          Drag me!
+      </div>
+    </div>
+  );
+};
+
+export default DraggableDiv;
+
+import { useState, useRef } from "react";
+import './slide.scss'
+
+const DraggableDiv: React.FC = () => {
+  const windowHeight = window.innerHeight - 40;
+  const divOneHeight = windowHeight * 5.7 / 10;
+const divTwoHeight = windowHeight * 4.3 / 10;
+const [divOne, setDivOne] = useState<number>(divOneHeight);
+const [divTwo, setDivTwo] = useState<number>(divTwoHeight);
+  const [heightW, setHeightW] = useState<number>(windowHeight);
+  const [height, setHeight] = useState<number>(200);
+
+  const draggingRef = useRef<boolean>(false);
+  const yOffsetRef = useRef<number>(0);
+
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    draggingRef.current = true;
+    yOffsetRef.current = e.clientY - height;
+    e.dataTransfer?.setDragImage(new Image(), 0, 0); // ẩn hiệu ứng kéo thả mặc định
+  };
+
+  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
+    if (draggingRef.current) {
+      const newHeight = e.clientY - yOffsetRef.current;
+      requestAnimationFrame(() => {
+        setHeight(newHeight);
+      });
+    }
+  };
+
+  const handleDragEnd = () => {
+    draggingRef.current = false;
+  };
+
+  return (
+    <div className="relative">
+      <div
+        style={{
+            height: `${divOneHeight}px`,
+          backgroundColor: "grey",
+     
+        }}
+      
+      >
+      div 1
+      </div>
+ 
+      <div
+      className="red-div"
+        style={{
+            height: `${divTwoHeight}px`,
+          backgroundColor: "red",
+          cursor: "grab",
+        }}
+        onClick={(e) => e.stopPropagation()}
+        draggable
+        onDragStart={handleDragStart}
+        onDrag={handleDrag}
+        onDragEnd={handleDragEnd}
+      >
+         div 2
+      </div>
+    </div>
+  );
+};
+
+export default DraggableDiv;
