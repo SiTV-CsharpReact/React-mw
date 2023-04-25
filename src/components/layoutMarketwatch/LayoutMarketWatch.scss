@@ -1,0 +1,9 @@
+.panel-horizontally #draggableH {
+    position: absolute;
+    z-index: 3;
+    cursor: row-resize;
+    background: transparent;
+    height: 6px;
+    width: 100%;
+    background: #fff;
+}

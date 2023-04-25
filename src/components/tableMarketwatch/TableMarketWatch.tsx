@@ -18,7 +18,6 @@ import HeaderMarketW from "../headerMarketwatch/HeaderMarket";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { DataTable } from "../../models/modelTableHNX";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
-import { AppContext } from "../../Context/AppContext";
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
@@ -63,8 +62,8 @@ const showKLPT = (value: string) => {
   }
 };
 const TableMarketWatch = () => {
-  const height = useContext(AppContext)
-  console.log(height)
+
+ // console.log(height)
   // const [popupVisible, setPopupVisible] = useState(false);
   // const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 ,value:""});
   //const [selectedRowId, setSelectedRowId] = useState<string | null>(null);
@@ -174,7 +173,7 @@ const TableMarketWatch = () => {
     return 0;
   })
 );
-console.log(products)
+// console.log(products)
 //   const sortedData = products.forEach((item) => {
 //     item.Info.sort((a:any, b:any) => {
 //         return parseInt(a[0]) - parseInt(b[0]);

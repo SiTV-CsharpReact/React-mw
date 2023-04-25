@@ -4,7 +4,7 @@ interface IMyProps {
   status: boolean,
 }
 const TableTotalMonney: React.FC<IMyProps> = (status:IMyProps) => {
-  console.log(status)
+  //console.log(status)
   return (
     <div className={`bottom__sdTien ml-[13%] mr-[3%] float-left  SDTM ${status.status?'ml-[13%]':'absolute top-[110px] ml-[25px]'}`}>
           <div className=" bg-[#b3b3b3] h-[25px] ">

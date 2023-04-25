@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { MouseEventHandler, useContext, useEffect, useRef, useState } from "react";
 import MenuMarketWatch from "../indexMarketWatch/MenuMarketWatch";
 import MenuBarMW from "../menuBarMW/MenuBarMW";
 import OrderMarketW from "../orderFormMarketwatch/OrderFormMarketWatch";
@@ -13,11 +13,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/configureStore";
 import ChartMarketwatch from "../chartMarketwatch/ChartMarketwatch";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { setOrderCount, setShowHideOrderForm } from "./LayoutMarketWatchSLice";
+import {setHeightOrderFormShow, setHeightPriceBoardShow, setOrderCount, setShowHideOrderForm, updateHeight } from "./LayoutMarketWatchSLice";
 import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import IntradayOrder from "../orderFormMarketwatch/IntradayOrder";
 import TradingResult from "../orderFormMarketwatch/TradingResult";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import './LayoutMarketWatch.scss'
 function RenderTable() {
   const params = useParams<{ id: string }>();
   // console.log(params);
@@ -41,8 +42,6 @@ function RenderTable() {
     case "VNSML":
     case "CW":
       return <TableMarketWatch />;
-
-    // return <HSXMarketWatch />;
     case "thong-ke-index":
     case "thong-ke-gia":
     case "thong-ke-dat-lenh":
@@ -67,30 +66,36 @@ const LayoutMarketWatch: React.FC = () => {
   const orderCount = useSelector(
     (state: RootState) => state.layoutmarketwatch.orderCount
   );
-  const height = useContext(AppContext);
-  console.log(height.heightOrderForm);
+ const hideOrderForm = () =>{
+  dispatch(setShowHideOrderForm(!hideShowOrderForm))
+  dispatch(setHeightPriceBoardShow())
+ }
+ const showOrderForm = () =>{
+  dispatch(setShowHideOrderForm(!hideShowOrderForm))
+  dispatch(setHeightOrderFormShow())
+ }
+ // const height = useContext(AppContext);
+  //console.log(height.heightOrderForm);
   const [popupVisible, setPopupVisible] = useState(false);
   const dispatch = useAppDispatch();
-  const hideOrderForm = () => {
-    dispatch(setShowHideOrderForm(false));
+   // show hide menu tab 
+  const showPendingOrder = () => {
+    dispatch(setOrderCount(1));
   };
-  const showOrderForm = () => {
-    dispatch(setShowHideOrderForm(true));
+  const showTradingResult = () => {
+    dispatch(setOrderCount(2));
   };
-  const showPendingOrder = () =>{
-    dispatch(setOrderCount(1)) 
-    console.log(orderCount)
-
-}
-const showTradingResult = () =>{
-  dispatch(setOrderCount(2)) 
-  console.log(orderCount)
-}
-const showIntradayOrder= () =>{
-dispatch(setOrderCount(3)) 
-console.log(orderCount)
-
-}
+  const showIntradayOrder = () => {
+    dispatch(setOrderCount(3));
+  };
+  // tính height window 
+  const heightDragable = useSelector(   (state: RootState) => state.layoutmarketwatch.heightDragable);
+  const heightMarketWatch = useSelector(   (state: RootState) => state.layoutmarketwatch.heightMarketWatch);
+  const heightPriceBoard = useSelector(   (state: RootState) => state.layoutmarketwatch.heightPriceBoard);
+  const heightOrderForm = useSelector(   (state: RootState) => state.layoutmarketwatch.heightOrderForm);
+  const heightExpand = useSelector(   (state: RootState) => state.layoutmarketwatch.heightExpand);
+  const heightTable = useSelector(   (state: RootState) => state.layoutmarketwatch.heightTable);
+  //console.log(heightMarketWatch ,heightPriceBoard, heightOrderForm,heightExpand)
   // const [showhideOrderForm, setShowhideOrderForm] = useState(false);
   const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0, value: "" });
   const handleContextMenu = (e: any) => {
@@ -113,15 +118,40 @@ console.log(orderCount)
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [popupRef]);
-
+  useEffect(() => {
+    function handleResize() {
+      dispatch(updateHeight());
+    }
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [dispatch]);
   // const params = useParams<{ id: string }>()
   // const paramstock  = stocks.find(
   //   paramstock => paramstock.id === params.id
   // )
-  const menuTabOrderForm = () =>{
-    
-  }
- 
+  const [height, setHeight] = useState(200);
+  const [dragging, setDragging] = useState(false);
+  const [yOffset, setYOffset] = useState(0);
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setDragging(true);
+    setYOffset(e.clientY - height);
+  };
+
+  const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
+    if (dragging) {
+      const newHeight = e.clientY - yOffset;
+      console.log(newHeight)
+      setHeight(newHeight);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setDragging(false);
+  };
+  console.log(height)
   //   const paramTable = paramstock?.id
   return (
     <div>
@@ -187,20 +217,20 @@ console.log(orderCount)
       {/* marketwatch */}
       <div
         className="panel-horizontally bg-BGTableMarket text-white relative overflow-hidden"
-        style={{ height: height.windowHeight }}
+        style={{ height: heightMarketWatch }}
       >
         {/* priceboard */}
         <div
           id="panel-top"
           className="panel-top bg-black overflow-auto "
-          style={{ height: height.heightPriceBoard }}
+          style={{ height: heightPriceBoard }}
         >
           <div
             className="price-board-layout"
             style={{ display: componentVisible ? "block" : "none" }}
           >
             <MenuMarketWatch />
-            <div className="overflow-hidden dvFixed">
+            <div className="overflow-hidden dvFixed"  style={{ height: heightTable }}>
               <MenuBarMW />
               <div
                 className=" overflow-auto relative z-10 table_market"
@@ -210,12 +240,7 @@ console.log(orderCount)
                 <div
                   className={`dvContentLP relative overflow-x-auto `}
                   style={{
-                    height:
-                      height.expand === 27
-                        ? height.heightPriceBoard - 57
-                        : height.expand === 67
-                        ? height.heightPriceBoard - 97
-                        : height.heightPriceBoard - 194,
+                    height: heightTable-30,
                   }}
                 >
                   {/* <div className="dvContentLP relative overflow-x-auto" style={{height:height.heightPriceBoard-57}}> */}
@@ -255,29 +280,73 @@ console.log(orderCount)
                   Lệnh chờ khớp
                 </span>
               </div>
-              <div className="group   px-2"  onClick={showTradingResult}>
+              <div className="group   px-2" onClick={showTradingResult}>
                 <span className=" size-input hover-text-blue-L ">
                   KQ khớp lệnh trong phiên
                 </span>
               </div>
               <div className="group   px-2" onClick={showIntradayOrder}>
-                <span className=" size-input hover-text-blue-L " >
+                <span className=" size-input hover-text-blue-L ">
                   Lệnh trong ngày
                 </span>
               </div>
             </div>
           </div>
         </div>
-        <div  onClick={showOrderForm} id="divArrowBottomUp" style={{ display: !hideShowOrderForm ? "block" : "none" }}>
-            <span id="spnTitlePanelBottom" className="text-spnTitlePanelBottom cursor-pointer	text-xl font-normal	">ĐẶT LỆNH</span>
-            <ArrowDropUpIcon className="text-5xl text-iconShowOrder  text-[#b3b3b3]" sx={{fontSize:45}}/>
-            {/* <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root icon-spnTitlePanelBottom " focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropUpIcon"><path d="m7 14 5-5 5 5z"></path></svg> */}
+        <div
+          onClick={showOrderForm}
+          id="divArrowBottomUp"
+          style={{ display: !hideShowOrderForm ? "block" : "none" }}
+        >
+          <span
+            id="spnTitlePanelBottom"
+            className="text-spnTitlePanelBottom cursor-pointer	text-xl font-normal	"
+          >
+            ĐẶT LỆNH
+          </span>
+          <ArrowDropUpIcon
+            className="text-5xl text-iconShowOrder  text-[#b3b3b3]"
+            sx={{ fontSize: 45 }}
+          />
+          {/* <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root icon-spnTitlePanelBottom " focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropUpIcon"><path d="m7 14 5-5 5 5z"></path></svg> */}
         </div>
         {/* Order */}
-        <div className="panel-bottom divBot" style={{ display: hideShowOrderForm ? "block" : "none" }}>
-        {orderCount === 0 ? <OrderMarketW /> : orderCount === 1 ? <PendingOrders/> : orderCount === 2 ? <TradingResult/> : orderCount === 3 ? <IntradayOrder/>:""}
+        <div
+          className=" divBot panel-footer__ordrp text-black"
+          style={{ display: hideShowOrderForm ? "block" : "none", height: heightOrderForm }}
+        >
+          {/* {orderCount === 0 ? (
+            <OrderMarketW />
+          ) : orderCount === 1 ? (
+            <PendingOrders />
+          ) : orderCount === 2 ? (
+            <TradingResult />
+          ) : orderCount === 3 ? (
+            <IntradayOrder />
+          ) : (
+            ""
+          )} */}
+          <div  style={{ display: orderCount === 0 ? "block" : "none" }}>
+          <OrderMarketW />
+          </div>
+          <div style={{ display: orderCount === 1 ? "block" : "none" }}>
+          <PendingOrders />
+          </div>
+          <div style={{ display: orderCount === 2 ? "block" : "none" }}>
+          <TradingResult />
+          </div>
+         <div style={{ display: orderCount === 3 ? "block" : "none" }}>
+         <IntradayOrder />
+         </div>
+        
           {/* <OrderMarketW /> */}
         </div>
+        <div id="draggableH" className="ui-draggable ui-draggable-handle" 
+         style={{top:heightPriceBoard, background: 'transparent'}}
+         onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onMouseMove={handleMouseMove}
+         />
       </div>
     </div>
   );

@@ -24,6 +24,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import SlidesMarketWatch from "./SlidesMarketWatch";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/configureStore";
 const MenuMarketWatch = () => {
   const height = useContext(AppContext);
   const [isHoveringLeft, setIsHoveringLeft] = useState(false);
@@ -579,6 +581,7 @@ const slidesToShow = Math.floor(screenWidth / slideWidth);
       // console.log(dataHNXRealTime)
     }
   };
+  
   const updateDataRealTime = (objRealtime: any) => {
     var dataHNXRealTime = JSON.parse(objRealtime);
     let arrDatas = [];
@@ -603,6 +606,7 @@ const slidesToShow = Math.floor(screenWidth / slideWidth);
       // console.log(dataHNXRealTime)
     }
   };
+  const heightIndex = useSelector(   (state: RootState) => state.layoutmarketwatch.heightExpand);
   if (loading)
     return <div className="bg-headerMenuTableMarket">Loading...</div>;
     const settings = {
@@ -621,7 +625,11 @@ const slidesToShow = Math.floor(screenWidth / slideWidth);
       center: "5px",
     };
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden" style={{height:heightIndex === 27
+      ? "27px"
+      : heightIndex === 67
+      ? "67px"
+      : "169px"}}>
    
          <SlidesMarketWatch/>
     

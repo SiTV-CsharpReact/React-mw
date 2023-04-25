@@ -27,8 +27,8 @@ const OrderMarketW = () => {
   const hideShowOrderForm = useSelector(
     (state: RootState) => state.layoutmarketwatch.orderForm
   );
-  console.log(hideShowOrderForm)
-  console.log(height)
+  // console.log(hideShowOrderForm)
+  // console.log(height)
   // color mua ban
   const [color, setColor] = useState(true);
   // ghi lenh cho gui
@@ -59,17 +59,17 @@ const OrderMarketW = () => {
 
   const openPopupLanguage2 = Boolean(anchorEl2);
 
-  const handleClick2 = (event: React.MouseEvent<HTMLDivElement>) => {
-    height.setHeightPriceBoard(height.windowHeight-40)
-    console.log(height)
-    setAnchorEl2(event.currentTarget);
-  };
-  const handleCloseLanguage2 = () => {
-    height.setHeightPriceBoard(height.windowHeight-height.heightOrderFormFix -40)
-    console.log(height)
-    setAnchorEl2(null);
+  // const handleClick2 = (event: React.MouseEvent<HTMLDivElement>) => {
+  //   height.setHeightPriceBoard(height.windowHeight-40)
+  //   console.log(height)
+  //   setAnchorEl2(event.currentTarget);
+  // };
+  // const handleCloseLanguage2 = () => {
+  //   height.setHeightPriceBoard(height.windowHeight-height.heightOrderFormFix -40)
+  //   console.log(height)
+  //   setAnchorEl2(null);
 
-  };
+  // };
   const toggleOrder = () => {
     setOrder(!order);
   };
