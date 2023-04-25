@@ -1,41 +1,75 @@
-import { MouseEventHandler, useState } from "react";
 
-const DraggableDiv = () => {
-    const [height, setHeight] = useState(200);
-  const [dragging, setDragging] = useState(false);
-  const [yOffset, setYOffset] = useState(0);
+import { useState, useRef } from "react";
+import './slide.scss'
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    setDragging(true);
-    setYOffset(e.clientY - height);
+const DraggableDiv: React.FC = () => {
+  const windowHeight = window.innerHeight - 40;
+  const [heightW, setHeightW] = useState<number>(windowHeight);
+  const [height, setHeight] = useState<number>(200);
+
+  const draggingRef = useRef<boolean>(false);
+  const yOffsetRef = useRef<number>(0);
+
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    draggingRef.current = true;
+    yOffsetRef.current = e.clientY - height;
+    e.dataTransfer?.setDragImage(new Image(), 0, 0); // ẩn hiệu ứng kéo thả mặc định
   };
 
-  const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
-    if (dragging) {
-      const newHeight = e.clientY - yOffset;
-      console.log(newHeight)
-      setHeight(newHeight);
+  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
+    if (draggingRef.current) {
+    
+      const newHeight = e.clientY - yOffsetRef.current;
+      console.log(e.clientY,yOffsetRef.current,newHeight)
+      
+      requestAnimationFrame(() => {
+        if(e.clientY !==0) setHeight(newHeight);
+        
+      });
     }
   };
 
-  const handleMouseUp = () => {
-    setDragging(false);
+  const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
+    // console.log( e.clientY)
+    // const newHeight = e.clientY - yOffsetRef.current;
+    // setHeight(newHeight);
+    draggingRef.current = false;
   };
 
   return (
-    <div
-      style={{ height: `${height}px`, backgroundColor: "grey", cursor: "grab" }}
-      onClick={(e) => e.stopPropagation()}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onMouseMove={handleMouseMove}
-    >
-      Drag me!
+    <div className="relative">
+      <div
+        style={{
+          height: `${height}px`,
+          backgroundColor: "grey",
+     
+        }}
+      
+      >
+      div ngoài
+      </div>
+ 
+      <div
+      className="red-div"
+        style={{
+          height: `${heightW - height}px`,
+          backgroundColor: "red",
+      
+        }}
+      >
+          Drag me!
+      </div>
+      <div id="draggableH" className="ui-draggable ui-draggable-handle" 
+         style={{top:height, background: 'transparent'}}
+         onClick={(e) => e.stopPropagation()}
+         draggable
+         onDragStart={handleDragStart}
+         onDrag={handleDrag}
+         onDragEnd={handleDragEnd}
+         />
+       
     </div>
   );
-}
+};
 
-export default DraggableDiv
-
-
-
+export default DraggableDiv;
