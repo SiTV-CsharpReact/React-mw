@@ -73,6 +73,7 @@ const OrderMarketW = () => {
   const toggleOrder = () => {
     setOrder(!order);
   };
+  console.log("heloo")
   //  const showBuy =() => setColor(true);
   //  const showSell =() => setColor(false);
   return (

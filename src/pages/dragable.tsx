@@ -1,6 +1,8 @@
 
 import { useState, useRef } from "react";
 import './slide.scss'
+import OrderMarketW from "../components/orderFormMarketwatch/OrderFormMarketWatch";
+import TableGDTTMarketWatch from "../components/tableMarketwatch/TableGDTTMarketWatch";
 
 const DraggableDiv: React.FC = () => {
   const windowHeight = window.innerHeight - 40;
@@ -46,7 +48,6 @@ const DraggableDiv: React.FC = () => {
         }}
       
       >
-      div ngoài
       </div>
  
       <div
@@ -57,7 +58,7 @@ const DraggableDiv: React.FC = () => {
       
         }}
       >
-          Drag me!
+             <OrderMarketW />
       </div>
       <div id="draggableH" className="ui-draggable ui-draggable-handle" 
          style={{top:height, background: 'transparent'}}

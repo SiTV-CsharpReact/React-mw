@@ -53,28 +53,92 @@ function RenderTable() {
       break;
   }
 }
+const heightHeader= 40 //height header
+const heightPannelLink= 46 
+const heightArrow = 38 // đặt lệnh 
+const expand = 27
+const heightWindow = window.innerHeight /// height 1000  // - đi header 
+const heightMarketWatchOr = heightWindow - heightHeader - heightPannelLink 
+const heightMarketWatch = heightWindow -40  // height market watch 
+const heightOrderForm = heightMarketWatch/10 *4.3
+const heightPriceBoard = heightMarketWatch - heightOrderForm ;   // height bang gia = height market watch - height order form 
+const heightTable = heightPriceBoard - expand;
+const heightDragable = heightMarketWatch - heightOrderForm -45
+interface resizeState {
+  orderForm: boolean;
+  pendingOrder: boolean;
+  orderCount:number;
+  heightWindow: number;
+  heightMarketWatch: number;
+  heightPriceBoard:number;
+  heightOrderForm:number;
+  heightPannelLink:number;
+  heightArrow:number;
+  heightExpand:number;
+  heightTable:number;
+}
+const initialState: resizeState = {
+  orderForm: true,
+  pendingOrder:true,
+  orderCount:0,
+  heightWindow:heightWindow,
+  heightMarketWatch: heightWindow- heightHeader,
+  heightPriceBoard:(heightWindow - heightHeader) /10 *5.7 ,
+  heightOrderForm:  (heightWindow - heightHeader)/10 *4.3 - heightPannelLink,
+  heightPannelLink: heightPannelLink,
+  heightArrow : heightArrow,
+  heightExpand:expand,
+  heightTable:heightTable,
+};
 // const LayoutMarketWatch  = () => {
 const LayoutMarketWatch: React.FC = () => {
+  // tao useState resize
+  const [statusOrderForm, setStatusOrderForm] = useState(true)
+  const [heightComponent, setHeightComponent] =useState(initialState)
+  const [height, setHeight] = useState(heightComponent.heightPriceBoard);
+  const draggingRef = useRef<boolean>(false);
+  const yOffsetRef = useRef<number>(0);
+ // kéo thả orderform
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    draggingRef.current = true;
+    yOffsetRef.current = e.clientY - height;
+    e.dataTransfer?.setDragImage(new Image(), 0, 0); // ẩn hiệu ứng kéo thả mặc định
+  };
+  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
+    if (draggingRef.current) {
+      const newHeight = e.clientY - yOffsetRef.current;
+      console.log(e.clientY,yOffsetRef.current,newHeight)
+   
+        if(e.clientY !==0){
+          setHeight(newHeight);
+          setHeightDragable(newHeight)
+          //dispatch(setHeightDragable(newHeight))
+        };
+        
+     
+    }
+  };
+  // keo tha tinh lai height 
+  const setHeightDragable = (height:number)=>{
+    setHeightComponent({...heightComponent, heightPriceBoard:height, heightOrderForm:heightMarketWatchOr-height,heightTable : height - 27})
+  }
+  // show hide order
+   const hideOrderForm = () =>{
+  setHeightComponent({ ...heightComponent, orderForm:!heightComponent.orderForm })
+  // dispatch(setHeightPriceBoardShow())
+ }
+ const showOrderForm = () =>{
+  setHeightComponent({ ...heightComponent, orderForm:!heightComponent.orderForm })
+  dispatch(setHeightOrderFormShow())
+ }
+ // show popup theo mã
+ 
   const componentVisible = useSelector(
     (state: RootState) => state.menu.visible
   );
-  const hideShowOrderForm = useSelector(
-    (state: RootState) => state.layoutmarketwatch.orderForm
-  );
-  const hideShowPendingOrder = useSelector(
-    (state: RootState) => state.layoutmarketwatch.pendingOrder
-  );
-  const orderCount = useSelector(
-    (state: RootState) => state.layoutmarketwatch.orderCount
-  );
- const hideOrderForm = () =>{
-  dispatch(setShowHideOrderForm(!hideShowOrderForm))
-  dispatch(setHeightPriceBoardShow())
- }
- const showOrderForm = () =>{
-  dispatch(setShowHideOrderForm(!hideShowOrderForm))
-  dispatch(setHeightOrderFormShow())
- }
+  const hideShowOrderForm = heightComponent.orderForm;
+  const orderCount = heightComponent.orderCount;
+
  // const height = useContext(AppContext);
   //console.log(height.heightOrderForm);
   const [popupVisible, setPopupVisible] = useState(false);
@@ -90,12 +154,7 @@ const LayoutMarketWatch: React.FC = () => {
     dispatch(setOrderCount(3));
   };
   // tính height window 
-  const heightDragable = useSelector(   (state: RootState) => state.layoutmarketwatch.heightDragable);
-  const heightMarketWatch = useSelector(   (state: RootState) => state.layoutmarketwatch.heightMarketWatch);
-  const heightPriceBoard = useSelector(   (state: RootState) => state.layoutmarketwatch.heightPriceBoard);
-  const heightOrderForm = useSelector(   (state: RootState) => state.layoutmarketwatch.heightOrderForm);
-  const heightExpand = useSelector(   (state: RootState) => state.layoutmarketwatch.heightExpand);
-  const heightTable = useSelector(   (state: RootState) => state.layoutmarketwatch.heightTable);
+ 
   //console.log(heightMarketWatch ,heightPriceBoard, heightOrderForm,heightExpand)
   // const [showhideOrderForm, setShowhideOrderForm] = useState(false);
   const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0, value: "" });
@@ -127,34 +186,12 @@ const LayoutMarketWatch: React.FC = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [dispatch]);
+  }, [dispatch,window.innerHeight]);
   // const params = useParams<{ id: string }>()
   // const paramstock  = stocks.find(
   //   paramstock => paramstock.id === params.id
   // )
-  const [height, setHeight] = useState(heightPriceBoard);
-  const draggingRef = useRef<boolean>(false);
-  const yOffsetRef = useRef<number>(0);
 
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    draggingRef.current = true;
-    yOffsetRef.current = e.clientY - height;
-    e.dataTransfer?.setDragImage(new Image(), 0, 0); // ẩn hiệu ứng kéo thả mặc định
-  };
-
-  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
-    if (draggingRef.current) {
-      const newHeight = e.clientY - yOffsetRef.current;
-      console.log(e.clientY,yOffsetRef.current,newHeight)
-      requestAnimationFrame(() => {
-        if(e.clientY !==0){
-          setHeight(newHeight);
-          dispatch(setHeightDragable(newHeight))
-        };
-        
-      });
-    }
-  };
 
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     draggingRef.current = false;
@@ -225,21 +262,24 @@ const LayoutMarketWatch: React.FC = () => {
       </div>
       {/* marketwatch */}
       <div
-        className="panel-horizontally bg-BGTableMarket text-white relative overflow-hidden"
-        style={{ height: heightMarketWatch }}
+        className="resize panel-horizontally bg-BGTableMarket text-white relative overflow-hidden"
+        style={{ height: heightComponent.heightMarketWatch }}
       >
         {/* priceboard */}
         <div
           id="panel-top"
-          className="panel-top bg-black overflow-auto "
-          style={{ height: heightPriceBoard }}
+          className="resize panel-top bg-black overflow-auto "
+          style={{ height: heightComponent.heightPriceBoard }}
         >
           <div
             className="price-board-layout"
             style={{ display: componentVisible ? "block" : "none" }}
           >
+            {/* menu marketwatch */}
+            <div className="relative overflow-hidden" style={{height:heightComponent.heightExpand === 27 ? "27px": heightComponent.heightExpand === 67? "67px" : "169px"}}>
             <MenuMarketWatch />
-            <div className="overflow-hidden dvFixed"  style={{ height: heightTable }}>
+            </div>
+            <div className="overflow-hidden dvFixed"  style={{ height: heightComponent.heightTable }}>
               <MenuBarMW />
               <div
                 className=" overflow-auto relative z-10 table_market"
@@ -249,7 +289,7 @@ const LayoutMarketWatch: React.FC = () => {
                 <div
                   className={`dvContentLP relative overflow-x-auto `}
                   style={{
-                    height: heightTable-30,
+                    height: heightComponent.heightTable-30,
                   }}
                 >
                   {/* <div className="dvContentLP relative overflow-x-auto" style={{height:height.heightPriceBoard-57}}> */}
@@ -274,7 +314,7 @@ const LayoutMarketWatch: React.FC = () => {
             className="relative left-[49%]"
             onClick={hideOrderForm}
             id="divArrowBottomDown"
-            style={{ display: hideShowOrderForm ? "block" : "none" }}
+            style={{ display: heightComponent.orderForm ? "block" : "none" }}
           >
             <ArrowDropDownIcon
               className=" text-iconShowOrder"
@@ -283,7 +323,7 @@ const LayoutMarketWatch: React.FC = () => {
           </div>
           {/* menu link */}
           <div
-            style={{ display: hideShowOrderForm ? "block" : "none" }}
+            style={{ display: heightComponent.orderForm ? "block" : "none" }}
             className="mt-1 text-black"
           >
             <div className="panel__bottom__link flex justify-end mr-[40px] mb-[20px]">
@@ -308,7 +348,7 @@ const LayoutMarketWatch: React.FC = () => {
         <div
           onClick={showOrderForm}
           id="divArrowBottomUp"
-          style={{ display: !hideShowOrderForm ? "block" : "none" }}
+          style={{ display: !heightComponent.orderForm ? "block" : "none" }}
         >
           <span
             id="spnTitlePanelBottom"
@@ -325,19 +365,8 @@ const LayoutMarketWatch: React.FC = () => {
         {/* Order */}
         <div
           className=" divBot panel-footer__ordrp text-black"
-          style={{ display: hideShowOrderForm ? "block" : "none", height: heightOrderForm }}
+          style={{ display: hideShowOrderForm ? "block" : "none", height: heightComponent.heightOrderForm }}
         >
-          {/* {orderCount === 0 ? (
-            <OrderMarketW />
-          ) : orderCount === 1 ? (
-            <PendingOrders />
-          ) : orderCount === 2 ? (
-            <TradingResult />
-          ) : orderCount === 3 ? (
-            <IntradayOrder />
-          ) : (
-            ""
-          )} */}
           <div  style={{ display: orderCount === 0 ? "block" : "none" }}>
           <OrderMarketW />
           </div>
