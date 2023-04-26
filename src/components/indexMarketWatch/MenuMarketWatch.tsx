@@ -628,4 +628,4 @@ const slidesToShow = Math.floor(screenWidth / slideWidth);
   );
 };
 
-export default MenuMarketWatch;
+export default React.memo(MenuMarketWatch);

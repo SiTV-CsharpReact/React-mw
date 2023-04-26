@@ -73,7 +73,6 @@ const OrderMarketW = () => {
   const toggleOrder = () => {
     setOrder(!order);
   };
-  console.log("heloo")
   //  const showBuy =() => setColor(true);
   //  const showSell =() => setColor(false);
   return (
@@ -321,4 +320,4 @@ const OrderMarketW = () => {
   );
 };
 
-export default OrderMarketW;
+export default React.memo(OrderMarketW);

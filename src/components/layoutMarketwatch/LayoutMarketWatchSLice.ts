@@ -36,7 +36,7 @@ interface ComponentState {
     heightOrderForm:  (heightWindow - heightHeader)/10 *4.3 - heightPannelLink,
     heightPannelLink: heightPannelLink,
     heightArrow : heightArrow,
-    heightExpand:expand,
+    heightExpand:expand, // linkbar 
     heightTable:heightTable,
     heightDragable:heightDragable
   };
@@ -70,19 +70,20 @@ const LayoutMarketWatchSLice = createSlice({
         state.heightOrderForm = heightOrderForm
         state.heightTable = state.heightPriceBoard - state.heightExpand 
       },
+    //    show
       setHeightExpand(state, action:PayloadAction<number>) {
-        state.heightExpand = action.payload;
+        state.heightExpand = action.payload; // 27 -  - 67 -169
+        console.log("vô đây action ", action.payload)
        if(state.orderForm === true) {
         console.log(heightPriceBoard)
         state.heightTable = heightPriceBoard - state.heightExpand;
         state.heightPriceBoard = heightPriceBoard;
-        console.log(heightPriceBoard, state.heightExpand)
        }
        else{
         state.heightTable = heightMarketWatch - state.heightExpand  -heightArrow;
         state.heightPriceBoard = heightMarketWatch -heightArrow;
-        console.log(heightPriceBoard, state.heightExpand)
        }
+
       },
       setHeightDragable(state,action) {
         state.heightPriceBoard = action.payload

@@ -1231,7 +1231,7 @@ const TableMarketWatch = () => {
   );
 };
 
-export default TableMarketWatch;
+export default  React.memo(TableMarketWatch);
 
   //     const param = window.location.search;
   //     const urlParams = new URLSearchParams(param);
