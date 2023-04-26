@@ -1,0 +1,14 @@
+// const heightHeader= 40 //height header
+// const heightPannelLink= 46
+// const heightArrow = 38 
+// const expand = 27
+// const heightWindow = window.innerHeight /// height 1000  // - đi header 
+// const heightMarketWatchOr = heightWindow - heightHeader - heightPannelLink 
+// const heightMarketWatch = heightWindow -40  // height market watch 
+// const heightOrderForm = heightMarketWatch/10 *4.3
+// const heightPriceBoard = heightMarketWatch - heightOrderForm ;   // height bang gia = height market watch - height order form 
+// const heightTable = heightPriceBoard - expand;
+// const heightDragable = heightMarketWatch - heightOrderForm -45
+export const resizeWindow = () =>{
+    
+}

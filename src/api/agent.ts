@@ -7,11 +7,12 @@ const requests = {
     delete: (url: string) => axios.delete(url).then(responseBody),
 }
 const Table = {
-    list: (params: URLSearchParams) => requests.get('http://marketstream.fpts.com.vn/hnx/data.ashx', params),
-    get: () => requests.get('http://marketstream.fpts.com.vn/hnx/data.ashx?'),
+    list: (params: URLSearchParams) => requests.get('http://marketstream.fpts.com.vn/', params),
+    get: () => requests.get(''),
 }
+
 const agent = {
     Table,
-  
+
 }
 export default agent;

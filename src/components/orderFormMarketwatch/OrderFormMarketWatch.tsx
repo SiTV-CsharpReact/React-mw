@@ -320,4 +320,4 @@ const OrderMarketW = () => {
   );
 };
 
-export default OrderMarketW;
+export default React.memo(OrderMarketW);

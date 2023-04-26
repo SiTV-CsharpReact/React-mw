@@ -286,6 +286,7 @@ body .fpts-header .header-right .box .OrderForm .box__contact .ezfu-button .fpts
 
 .fpts-header .header-right {
     float: right;
+    height: 40px;
 }
 
 .account-info li {
