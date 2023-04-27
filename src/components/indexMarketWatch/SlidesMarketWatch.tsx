@@ -17,7 +17,6 @@ import {
 import { AppContext } from "../../Context/AppContext";
 
 const SlidesMarketWatch = () => {
- 
   const height = useContext(AppContext);
   const [loading, setLoading] = useState(true);
   const [isHoveringLeft, setIsHoveringLeft] = useState(false);
@@ -100,7 +99,7 @@ const SlidesMarketWatch = () => {
     speed: 4000,
     // infinite: true,
     slidesToShow: slidesToShow,
-    slidesToScroll: slidesToShow,
+    slidesToScroll: slidesToShow /3,
     // slidesToShow: 7, // Hiển thị 3 slide trên một lần trượt
     // slidesToScroll: 7,
     autoplay: isHoveringLeft || isHoveringRight,
@@ -130,19 +129,47 @@ const SlidesMarketWatch = () => {
         onMouseEnter={handleHoverLeft}
         onMouseLeave={handleLeaveLeft}
       />
-       <ul className=" my-1 col-priceboard class-chart">
-      <Slider
-        {...(settings as any)}
-        className="custom-carousel my-slider"
-        ref={(slider) => setSliderRef(slider)}
-        draggable={true}
-      >
-   <li className="dvChart">
-              <div>
-                <p className="text-sm">
-                  <span id="" className="mar_">
-                    VNXALL:{" "}
-                  </span>
+      <ul className=" my-1 col-priceboard class-chart">
+        <Slider
+          {...(settings as any)}
+          className="custom-carousel my-slider"
+          ref={(slider) => setSliderRef(slider)}
+          
+        >
+          <li className="dvChart">
+            <div>
+              <p className="text-sm">
+                <span id="" className="mar_">
+                  VNXALL:{" "}
+                </span>
+                <span
+                  id="VNXALL_IndexValue"
+                  className={`${setColorMenuMarket(
+                    valueHSX?.VNALL_Change
+                  )} px-0.5`}
+                >
+                  {valueHSX?.VNXALL_IndexValue}
+                </span>
+                <span
+                  id="VNXALL_Image"
+                  className={`${iconColorMenuMarket(
+                    valueHSX?.VNALL_Change
+                  )} px-0.5`}
+                ></span>
+                <span
+                  id="VNXALL_Change"
+                  className={`${setColorMenuMarket(
+                    valueHSX?.VNALL_Change
+                  )} px-0.5`}
+                >
+                  {valueHSX?.VNALL_Change}
+                </span>
+                <span
+                  id=""
+                  className={`${setColorMenuMarket(
+                    valueHSX?.VNALL_Change
+                  )} px-0.5`}
+                >
                   <span
                     id="VNXALL_ChangePercent"
                     className={`${setColorMenuMarket(
