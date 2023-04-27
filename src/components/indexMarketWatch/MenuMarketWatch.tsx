@@ -27,7 +27,6 @@ import SlidesMarketWatch from "./SlidesMarketWatch";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 const MenuMarketWatch = () => {
-  const height = useContext(AppContext);
   const [isHoveringLeft, setIsHoveringLeft] = useState(false);
   const [isHoveringRight, setIsHoveringRight] = useState(false);
   const [sliderRef, setSliderRef] = useState<Slider | null>(null);
@@ -606,7 +605,7 @@ const slidesToShow = Math.floor(screenWidth / slideWidth);
       // console.log(dataHNXRealTime)
     }
   };
-  const heightIndex = useSelector(   (state: RootState) => state.layoutmarketwatch.heightExpand);
+
   if (loading)
     return <div className="bg-headerMenuTableMarket">Loading...</div>;
     const settings = {
@@ -624,17 +623,9 @@ const slidesToShow = Math.floor(screenWidth / slideWidth);
       cssEase: 'linear',
       center: "5px",
     };
-  return (
-    <div className="relative overflow-hidden" style={{height:heightIndex === 27
-      ? "27px"
-      : heightIndex === 67
-      ? "67px"
-      : "169px"}}>
-   
-         <SlidesMarketWatch/>
-    
-    </div>
+  return (   
+         <SlidesMarketWatch/> 
   );
 };
 
-export default MenuMarketWatch;
+export default React.memo(MenuMarketWatch);

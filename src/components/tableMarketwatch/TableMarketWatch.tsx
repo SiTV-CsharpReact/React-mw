@@ -95,7 +95,7 @@ const TableMarketWatch = () => {
         fetchTable("HNX");
       }
     }
-  }, [paramstock?.id]);
+  }, [paramstock?.id,dispatch]);
 
   const fetchTable = async (param: string) => {
     let valueParam = "HNX";
@@ -173,42 +173,6 @@ const TableMarketWatch = () => {
     return 0;
   })
 );
-// console.log(products)
-//   const sortedData = products.forEach((item) => {
-//     item.Info.sort((a:any, b:any) => {
-//         return parseInt(a[0]) - parseInt(b[0]);
-//     });
-// });
-//   console.log(sortedData)
-  // function compare(a: Array<string>, b: Array<string>) {
-  //   if (a[0][0] < b[0][0]) {
-  //     return -1;
-  //   }
-  //   if (a[0][0] > b[0][0]) {
-  //     return 1;
-  //   }
-  //   return 0;
-  // }
-  // products.map((obj) => {
-  //   obj.Info = obj.Info.sort(compare);
-  //   return obj;
-  // });
-  //  console.log(products)
-  // console.log(products.sort(
-  //   (a, b) => a.Info[0] - b.Info[0]
-  // ));
-  // const [users, setUsers] = useState([]);
-  // const handleTypeOptionClick = (type:string) => {
-  //   const newData = products.slice().sort((a, b) => {
-  //     if (a.RowID === type) return -1;
-  //     if (b.RowID === type) return 1;
-  //     return 0;
-  //   });
-  //   setProducts(newData);
-  //   console.log(products)
-  // };
-
-
   const handleTypeOptionClick = (type:string) => {
     const newData = [...products];
     const index = newData.findIndex((item) => item.RowID === type);
@@ -263,11 +227,7 @@ const TableMarketWatch = () => {
       setorder("DSC");
     }
   };
-  // function handleClick() {
-  //   setPopupVisible(false);
-  // }
- // console.log(sortedColumn);
-//  console.log(products)
+  console.log(products)
   return (
     <div> 
       <DragDropContext onDragEnd={handleDragEnd}>      
@@ -1271,7 +1231,7 @@ const TableMarketWatch = () => {
   );
 };
 
-export default TableMarketWatch;
+export default  React.memo(TableMarketWatch);
 
   //     const param = window.location.search;
   //     const urlParams = new URLSearchParams(param);

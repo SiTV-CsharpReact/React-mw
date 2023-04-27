@@ -1,13 +1,14 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-const heightWindow = window.innerHeight /// height 1000  // - đi header 
 const heightHeader= 40 //height header
-const heightMarketWatch = heightWindow -40  // height market watch 
 const heightPannelLink= 46
 const heightArrow = 38 
 const expand = 27
+const heightWindow = window.innerHeight /// height 1000  // - đi header 
+const heightMarketWatchOr = heightWindow - heightHeader - heightPannelLink 
+const heightMarketWatch = heightWindow -40  // height market watch 
 const heightOrderForm = heightMarketWatch/10 *4.3
-const heightPriceBoard = heightMarketWatch - heightOrderForm ;
+const heightPriceBoard = heightMarketWatch - heightOrderForm ;   // height bang gia = height market watch - height order form 
 const heightTable = heightPriceBoard - expand;
 const heightDragable = heightMarketWatch - heightOrderForm -45
 interface ComponentState {
@@ -35,7 +36,7 @@ interface ComponentState {
     heightOrderForm:  (heightWindow - heightHeader)/10 *4.3 - heightPannelLink,
     heightPannelLink: heightPannelLink,
     heightArrow : heightArrow,
-    heightExpand:expand,
+    heightExpand:expand, // linkbar 
     heightTable:heightTable,
     heightDragable:heightDragable
   };
@@ -69,25 +70,29 @@ const LayoutMarketWatchSLice = createSlice({
         state.heightOrderForm = heightOrderForm
         state.heightTable = state.heightPriceBoard - state.heightExpand 
       },
+    //    show
       setHeightExpand(state, action:PayloadAction<number>) {
-        state.heightExpand = action.payload;
+        state.heightExpand = action.payload; // 27 -  - 67 -169
+        console.log("vô đây action ", action.payload)
        if(state.orderForm === true) {
         console.log(heightPriceBoard)
         state.heightTable = heightPriceBoard - state.heightExpand;
         state.heightPriceBoard = heightPriceBoard;
-        console.log(heightPriceBoard, state.heightExpand)
        }
        else{
-
         state.heightTable = heightMarketWatch - state.heightExpand  -heightArrow;
         state.heightPriceBoard = heightMarketWatch -heightArrow;
-        console.log(heightPriceBoard, state.heightExpand)
        }
-      
 
-      }
+      },
+      setHeightDragable(state,action) {
+        state.heightPriceBoard = action.payload
+        state.heightOrderForm = heightMarketWatchOr - action.payload;
+        state.heightTable = action.payload - state.heightExpand;
+        //state.heightTable = state.heightPriceBoard - state.heightExpand 
+      },
     },
 });
 
-export const { setShowHideOrderForm ,setShowHidePendingOrder,setOrderCount,updateHeight,setHeightPriceBoardShow,setHeightOrderFormShow,setHeightExpand} = LayoutMarketWatchSLice.actions;
+export const { setShowHideOrderForm ,setShowHidePendingOrder,setOrderCount,updateHeight,setHeightPriceBoardShow,setHeightOrderFormShow,setHeightExpand,setHeightDragable} = LayoutMarketWatchSLice.actions;
 export default LayoutMarketWatchSLice;
