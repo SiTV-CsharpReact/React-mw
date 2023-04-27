@@ -173,13 +173,42 @@ const TableMarketWatch = () => {
     return 0;
   })
 );
-  const handleTypeOptionClick = (type:string) => {
-    const newData = [...products];
-    const index = newData.findIndex((item) => item.RowID === type);
-    const clickedItem = newData.splice(index, 1)[0];
-    newData.unshift(clickedItem);
-    setProducts(newData);
+const handleTypeOptionClick = (type: string) => {
+  const newData = products.map((item) =>
+    item.RowID === type
+      ? { ...item, pinned: !item.pinned, originalIndex: item.originalIndex !== undefined ? item.originalIndex : products.length }
+      : item
+  );
+
+  // sắp xếp lại dữ liệu
+  newData.sort((a, b) => {
+    if (a.pinned && !b.pinned) {
+      return -1;
+    } else if (!a.pinned && b.pinned) {
+      return 1;
+    } else {
+      return a.originalIndex - b.originalIndex;
+    }
+  });
+
+  setProducts(newData);
+  
+  if (!newData.find((item) => item.pinned)) {
+    handleResetClick();
   }
+};
+
+
+const handleResetClick = () => {
+  const newData = products.map((item) =>
+    item.pinned ? { ...item, pinned: false } : item
+  );
+
+  newData.sort((a, b) => a.originalIndex - b.originalIndex); // sắp xếp lại dữ liệu theo originalIndex
+
+  setProducts(newData);
+};
+
   const handleDragEnd = (e: any) => {
     if (!e.destination) return;
     let tempData = Array.from(products);
@@ -213,20 +242,37 @@ const TableMarketWatch = () => {
     Number(param);
     if (order === "DSC") {
       const sortedData = [...products].sort(
-        (a, b) => a.Info[param][1] - b.Info[param][1]
+        (a, b) => {
+          if (a.pinned && !b.pinned) {
+            return -1;
+          } else if (!a.pinned && b.pinned) {
+            return 1;
+          } else {
+            return a.Info[param][1] - b.Info[param][1];
+          }
+        }
       );
       setProducts(sortedData);
       setSortedColumn(param);
       setorder("ASC");
     } else {
       const sortedData = [...products].sort(
-        (a, b) => b.Info[param][1] - a.Info[param][1]
+        (a, b) => {
+          if (a.pinned && !b.pinned) {
+            return -1;
+          } else if (!a.pinned && b.pinned) {
+            return 1;
+          } else {
+            return b.Info[param][1] - a.Info[param][1];
+          }
+        }
       );
       setProducts(sortedData);
       setSortedColumn(param);
       setorder("DSC");
     }
   };
+
   console.log(products)
   return (
     <div> 
@@ -245,7 +291,7 @@ const TableMarketWatch = () => {
                 }`}
                 rowSpan={2}
                 onClick={() => {
-                  sortData("0");
+                  sorting("RowID");
                 }}
                 style={{ width: "6%",minWidth:"90px"}}
               >

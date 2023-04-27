@@ -99,7 +99,7 @@ const SlidesMarketWatch = () => {
     speed: 4000,
     // infinite: true,
     slidesToShow: slidesToShow,
-    slidesToScroll: slidesToShow /3,
+    slidesToScroll: slidesToShow ,
     // slidesToShow: 7, // Hiển thị 3 slide trên một lần trượt
     // slidesToScroll: 7,
     autoplay: isHoveringLeft || isHoveringRight,
