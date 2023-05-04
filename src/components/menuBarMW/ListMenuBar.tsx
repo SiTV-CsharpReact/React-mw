@@ -3,28 +3,6 @@ import MenuBar from "./MenuBar";
 const ListMenuBar = () => {
   const menuItems = [
     {
-      name: "HNX",
-      path: "/",
-      children: [
-        {
-          name: "HNX",
-          path: "/chung-khoan/HNX",
-        },
-        {
-          name: "HNX30",
-          path: "/chung-khoan/HNX30",
-        },
-        {
-            name: "BOND",
-            path: "/chung-khoan/BOND",
-          },
-          {
-            name: "Giao dịch thỏa thuận",
-            path: "/chung-khoan/thoa-thuan-hnx",
-          },
-      ],
-    },
-    {
       name: "HOSE",
       path: "/HSX",
       children: [
@@ -62,6 +40,29 @@ const ListMenuBar = () => {
           },
       ],
     },
+    {
+      name: "HNX",
+      path: "/",
+      children: [
+        {
+          name: "HNX",
+          path: "/chung-khoan/HNX",
+        },
+        {
+          name: "HNX30",
+          path: "/chung-khoan/HNX30",
+        },
+        {
+            name: "BOND",
+            path: "/chung-khoan/BOND",
+          },
+          {
+            name: "Giao dịch thỏa thuận",
+            path: "/chung-khoan/thoa-thuan-hnx",
+          },
+      ],
+    },
+   
     {
         name: "UPCOM",
         path: "/UPCOM",
