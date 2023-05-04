@@ -616,3 +616,82 @@ export const updateQuoteData =(objRoot:any[])=>{
 //         }
 //     }
 //   }
+var ARRAY_EXCHANGE = [["HO", "HOSE"], ["HA", "HNX.NY"], ["UP", "HNX.UPCOM"]];
+function getCookie(cname:any) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+export const g_arrCompanyInfo = localStorage.getItem("CacheSI");
+const cachedValue = localStorage.getItem("CacheSI");
+const g_arrStockInfo = cachedValue ? JSON.parse(cachedValue) : [];
+const g_CurrentLanguage = getCookie("aspfpt_language")
+// HO => HOSE; HA => HNX.NY; UP => HNX.UPCOM
+const mapCompanyName =  () => {  
+    // console.log(g_arrStockInfo)
+    const arr = [...g_arrStockInfo];
+        if (arr) {
+            return arr.map(function (v) {
+                return {
+                    cpnyID: parseInt(v.ID),
+                    stock_code: v.Code,
+                    CodeID: 0,
+                     Ex: exChangeConvert(v.Exchange),
+                    name: g_CurrentLanguage === "VN" ? v.ScripName : v.ScripNameEN
+                }
+            })
+        }  
+        console.log(arr)
+}
+
+// mapCompanyName();
+const exChangeConvert = (number:number) => {
+    switch (number) {
+        case 2: return "HA";
+        case 3: return "UP";
+        default: return "HO";
+    }
+}
+const listDataCompany = mapCompanyName();
+console.log(listDataCompany)
+const getExchangeName = (vEx:string) => {
+    for (var i = 0; i < ARRAY_EXCHANGE.length; i++)
+        if (vEx === ARRAY_EXCHANGE[i][0])
+            return ARRAY_EXCHANGE[i][1];
+}
+export const getCompanyNameByCode = (vStockCode:string) => {
+    // if(g_arrCompanyInfo) {
+    //     let name = g_arrCompanyInfo.find((element:any)=>element.Code === vStockCode);
+    // } 
+    var name = '', element = '', cpnyID = 0
+    if(listDataCompany){
+        // const dataCom = JSON.parse(g_arrCompanyInfo)
+        // const dataCompany = dataCom.Data;
+    for (var i = 0; i < listDataCompany.length; i++) {
+        // element = dataCompany[i];
+    // console.log(element)
+       //console.log(listDataCompany[i])
+
+        if (vStockCode === listDataCompany[i].stock_code) {
+            // NamLD
+            // Sua lai tra gia tri companyName theo dang mang [fullname cong ty, cpnyID]
+            name = getExchangeName(listDataCompany[i].Ex) + ' - ' + listDataCompany[i].name;
+            //return [name, element.cpnyID];
+            cpnyID = listDataCompany[i].cpnyID;
+            break;
+        }
+    }
+}
+    return [name];
+}
+// export { g_arrStockInfo };

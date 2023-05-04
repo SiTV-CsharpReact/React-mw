@@ -5,6 +5,7 @@ import {
   checkSTTMarket,
   formatNumber,
   formatNumberMarket,
+  getCompanyNameByCode,
   setColorMarket,
   tinhGiaCT,
   tinhGiaTC,
@@ -18,12 +19,14 @@ import HeaderMarketW from "../headerMarketwatch/HeaderMarket";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { DataTable } from "../../models/modelTableHNX";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
-import { Tooltip } from "@mui/material";
+// import { Tooltip } from "@mui/material";
+import { Tooltip } from 'react-tooltip';
 import { setStatusChart } from "../menuBarMW/menuSlice";
 import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 import { Root } from "../../models/root";
+import 'react-tooltip/dist/react-tooltip.css';
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
@@ -108,10 +111,10 @@ const TableMarketWatch = () => {
   const fetchDataCompany = async () => {
    await dispatch(fetchCompanyAsync())
   };
-  console.log(fetchDataCompany())
   // Call `fetchData` to fetch data when component mounts
   useEffect(() => {
-    fetchDataCompany()
+  if(!localStorage.getItem("CacheSi"))  {fetchDataCompany()} 
+    
   }, []);
   const fetchTable = async (param: string) => {
     let valueParam = "HNX";
@@ -179,6 +182,11 @@ const TableMarketWatch = () => {
     const data = await res.json();
     setProducts(data);
   };
+  const company = useSelector(
+    (state: RootState) => state.company.data
+  );
+  // console.log(company)
+  // const company = useSelector((state=> state?.company))
 
   // sort products 
   products.forEach((obj) =>
@@ -212,26 +220,6 @@ const TableMarketWatch = () => {
   };
 
   const [order, setorder] = useState("ASC");
-  const sorting = (col: any) => {
-    //console.log("aa", sorting);
-    if (order === "ASC") {
-      const sorted = [...products].sort((a, b) =>
-        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
-      );
-      setProducts(sorted);
-      // console.log("sorting", sorted);
-      setorder("DSC");
-      setSortedColumn(col);
-    } else {
-      const sorted = [...products].sort((a, b) =>
-        a[col].toLowerCase() > b[col].toLowerCase() ? -1 : 1
-      );
-      setProducts(sorted);
-      setSortedColumn(col);
-      setorder("ASC");
-    }
-  };
-
   const sortData = (param: string) => {
     Number(param);
     if (order === "DSC") {
@@ -250,6 +238,7 @@ const TableMarketWatch = () => {
       setorder("DSC");
     }
   };
+  // console.log(products)
   // const showChart =()=>{
   //  dispatch(showChartMarketwatch())
   //  console.log("oke")
@@ -884,6 +873,7 @@ const TableMarketWatch = () => {
                      
                         // style={{ backgroundColor: selectedRowId === dataTable.RowID ? 'yellow' : 'white' }}
                       >
+                 
                         <td
                           {...provider.dragHandleProps}
                           className={`${setColorMarket(
@@ -892,9 +882,11 @@ const TableMarketWatch = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )} text-left`}
-                          data-tooltip={`${ dataTable.Info[0][1]}`}
+                          data-tooltip-id="my-tooltip"
+                          data-tooltip-content={getCompanyNameByCode(dataTable.Info[0][1]).toString()}
                           id={`${ dataTable.Info[1][1]}`}
                         >
+                             <Tooltip id="my-tooltip"  className="example" place="bottom"/>
                           <input
                             type="checkbox"
                             id={`cb${dataTable.RowID}`}

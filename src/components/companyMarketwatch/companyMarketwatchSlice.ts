@@ -12,7 +12,7 @@ interface TableState {
     status: string; //metaData:MetaData | null;
 }
 
-export const fetchCompanyAsync = createAsyncThunk<[]>(
+export const fetchCompanyAsync = createAsyncThunk<Root>(
     "table/fecthCompany",
     async () => {
         const res = await agent.Company.get();       
@@ -24,12 +24,12 @@ export const companySlice = createSlice({
     name: "table",
     initialState:{
         productsLoaded: false,
-        data: [],
+        data: {},
         status: "oke",
     },
 
     reducers: {
-        getDataSuccess: (state, action: PayloadAction<[]>) => {
+        getDataSuccess: (state, action: PayloadAction<{}>) => {
             state.data = action.payload;
             state.status = "idle";
           },
@@ -44,11 +44,13 @@ export const companySlice = createSlice({
         })
             .addCase(fetchCompanyAsync.fulfilled, (state, action) => {
                 state.productsLoaded = true;
-              
-               
                 state.data = action.payload;
-                const result = JSON.stringify(action.payload)
+                //console.log(action.payload)
+                // const dataCompany =  action.payload?.Data;
+                const result = JSON.stringify(action.payload.Data)
+                //console.log(result)
                 localStorage.setItem("CacheSI", result);
+                
                 state.status = "oke";
             })
             .addCase(fetchCompanyAsync.rejected, (state, action) => {

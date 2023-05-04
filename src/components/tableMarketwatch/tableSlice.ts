@@ -188,13 +188,13 @@ export const tableSlice = createSlice({
                 state.table = action.payload;
                 state.status = "idle";
             })
-            .addCase(fetchCompanyAsync.fulfilled, (state, action) => {
-                state.productsLoaded = true;
-                console.log(action.payload);
-                //productsAdapter.setAll(state, action.payload);
-                state.table = action.payload;
-                state.status = "idle";
-            })
+            // .addCase(fetchCompanyAsync.fulfilled, (state, action) => {
+            //     state.productsLoaded = true;
+            //     // console.log(action.payload);
+            //     //productsAdapter.setAll(state, action.payload);
+            //     state.table = action.payload;
+            //     state.status = "idle";
+            // })
     },
 });
 

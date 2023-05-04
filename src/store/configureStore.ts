@@ -14,7 +14,7 @@ export const store = configureStore({
         table:tableSlice.reducer,
         menu:menuSlice.reducer,
         layoutmarketwatch: LayoutMarketWatchSLice.reducer,
-        chart:chartMarketwatchSlice.reducer
+        chart:chartMarketwatchSlice.reducer,
     }
 })
 export type RootState = ReturnType<typeof store.getState>;
