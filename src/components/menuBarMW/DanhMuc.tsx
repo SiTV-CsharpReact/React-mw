@@ -24,7 +24,11 @@ const DanhMuc = () => {
           </Link>
           <span id="btDel0" className="imgDel   keep"/>
         </li>
-       
+        <li className="relative">
+          <input className="textBox" placeholder="Thêm danh mục">
+          </input>
+          <span id="btAdd" className="imgAdd keep"><span></span></span>
+        </li>
       </ul>
     </div>
   );

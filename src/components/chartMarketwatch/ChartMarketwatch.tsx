@@ -5,40 +5,39 @@ import ImageBuySell from "../../images/ppc-optimization-32.png";
 import ImageHandShake from "../../images/handshake-32.png";
 import DateTime from "../menuBarMW/DateTime";
 import "./chartMarketwatch.scss";
-import { useAppDispatch } from "../../store/configureStore";
-import { setVisible } from "../menuBarMW/menuSlice";
+import { RootState, useAppDispatch } from "../../store/configureStore";
+import { setStatusChart } from "../menuBarMW/menuSlice";
 import axios from "axios";
 import { formatNumber } from "../../utils/util";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
 import FooterChart from "../footerMarketwatch/FooterChart";
 import MenuMarketWatch from "../indexMarketWatch/MenuMarketWatch";
+import { useSelector } from "react-redux";
+import { hideChartMarketwatch } from "./chartMarketwatchSlice";
 interface Data {
   RowID: string;
   Info: string[][];
 }
+type ChartMarketwatchProps = {
+  stock: string;
+};
 const ChartMarketwatch = () => {
+  const stockCode = useSelector( (state: RootState) => state.chart.code);
+ const symbolNew =  stockCode ==='' ? 'FTS':stockCode
+  console.log(stockCode)
   // const [posts, setPosts] = useState<Post[]>([]);
   const [dataChart, setDataChart] = useState<Data[]>([]);
   const dispatch = useAppDispatch();
-  const showPriceBoard = () => {
-    dispatch(setVisible(true));
-  };
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get<Data[]>(
-        "http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=FTS"
+        `http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${symbolNew}`
       );
       setDataChart(response.data);
     };
     fetchData();
-  }, []);
-  //console.log(dataChart);
-  //   useEffect(()=>{
-  //     const res =  fetch(
-  //         `http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=FTS`
-  //       );
-  //       setDataChart(res);
-  //   },[])
+  }, [stockCode]);
+  console.log(dataChart)
   return (
     <section className="chart-layout">
       <div className="chart-layout-left float-left ">
@@ -50,7 +49,7 @@ const ChartMarketwatch = () => {
             <Tooltip title="Hiển thị bảng giá">
               <button
                 className="p-[5px] h-30 w-[30] hover:bg-spnTitlePanelBottom"
-                onClick={showPriceBoard}
+                onClick={() => dispatch(hideChartMarketwatch())}
               >
                 <img src={ImagePriceBoard} height={20} width={20} alt="" />
               </button>
@@ -237,4 +236,4 @@ const ChartMarketwatch = () => {
   );
 };
 
-export default ChartMarketwatch;
+export default React.memo(ChartMarketwatch);

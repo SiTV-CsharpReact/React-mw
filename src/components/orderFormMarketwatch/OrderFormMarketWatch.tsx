@@ -23,12 +23,8 @@ type Props ={
   setHeightPriceBoard(heightPriceBoard: number): void
 }
 const OrderMarketW = () => {
-  const height = useContext(AppContext)
-  const hideShowOrderForm = useSelector(
-    (state: RootState) => state.layoutmarketwatch.orderForm
-  );
-  // console.log(hideShowOrderForm)
-  // console.log(height)
+
+
   // color mua ban
   const [color, setColor] = useState(true);
   // ghi lenh cho gui
@@ -80,7 +76,7 @@ const OrderMarketW = () => {
      
 
       {/* đặt lệnh */}
-      <div className={`panel-bottom pb-5` } style={{height:height.heightOrderForm-40}} >
+      <div className="panel-bottom pb-5">
       <div className={`inline-block BGTB w-full ${order ? "":"relative"}`} >
       {color ?    <TableTotalMonney status={order} /> : <StockBalance status={order}/>}
         {/* <TableTotalMonney />

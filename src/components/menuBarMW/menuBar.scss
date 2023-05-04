@@ -138,3 +138,28 @@ input[type=checkbox].priceboard2 {
 .imgDel:hover {
     background-position: -20px 0;
 }
+.textBox {
+    display: block;
+    padding: 2px;
+    margin: 2px 8px;
+    color: #1D1D1D;
+    border: none;
+    /* font-style: italic; */
+    width: 70%;
+    &:focus{
+        border: 1px solid #2ff50f !important;
+    }
+}
+.imgAdd {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    display: block;
+    right: 5px;
+    top: 1px;
+    background: url(../../images/menuMW/add.png) no-repeat;
+    cursor: pointer;
+    &:hover{
+        background-position: -21px -1px;
+    }
+}

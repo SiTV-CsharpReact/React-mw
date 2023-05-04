@@ -4,13 +4,17 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { tableSlice } from '../components/tableMarketwatch/tableSlice';
 import menuSlice from '../components/menuBarMW/menuSlice';
 import LayoutMarketWatchSLice from '../components/layoutMarketwatch/LayoutMarketWatchSLice';
+import chartMarketwatchSlice from '../components/chartMarketwatch/chartMarketwatchSlice';
+import companySlice from '../components/companyMarketwatch/companyMarketwatchSlice';
 
 export const store = configureStore({
     reducer:{
+        company:companySlice.reducer,
         counter:counterSlice.reducer,
         table:tableSlice.reducer,
         menu:menuSlice.reducer,
-        layoutmarketwatch: LayoutMarketWatchSLice.reducer
+        layoutmarketwatch: LayoutMarketWatchSLice.reducer,
+        chart:chartMarketwatchSlice.reducer
     }
 })
 export type RootState = ReturnType<typeof store.getState>;

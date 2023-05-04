@@ -9,7 +9,7 @@ body {
     flex-direction: column;
     color: #333;
     font-size: 13px;
-    overflow: auto !important;
+    /* overflow: auto !important; */
     min-width: 975px;
 }
 body .fpts-header .header-right .box .OrderForm .ezfu-group-dropdow .ezfu-ServiceBox .service__col ul li {

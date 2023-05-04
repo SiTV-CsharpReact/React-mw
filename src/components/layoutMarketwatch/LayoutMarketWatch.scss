@@ -7,3 +7,27 @@
     width: 100%;
     background: #fff;
 }
+.text-iconShowOrder{
+    font-size: 28px !important;
+    padding-left: 5px;
+    color:#cccccc
+}
+.item__center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.panel__bottom__link .active{
+    opacity: 0.5;
+    // text-decoration:underline;
+    pointer-events: none;
+}
+// .button__close__pannellink{
+//     height:35;
+//     width:45;
+//     backgroundImage: url(../../images/x28.png);
+//     backgroundRepeat: no-repeat;
+//      backgroundPosition: center;
+//      backgroundSize: 11px 11px
+//     }

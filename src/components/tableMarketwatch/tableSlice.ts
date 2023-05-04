@@ -98,6 +98,20 @@ export const fetchTableHSXAsync = createAsyncThunk<[]>(
         return data;
     }
 );
+export const fetchCompanyAsync = createAsyncThunk<[]>(
+    "table/fecthCompany",
+    async () => {
+        const res = await fetch('http://localhost:8430/api/stock/v1/cache/stock_info_cn/eztrade?code=ALL');
+        const data = await res.json();
+        console.log(data)
+        return data;
+        // const res = await agent.Company.get();
+   
+        // // const data = await res.json();
+        // console.log(res)
+        // return res;
+    }
+);
 function initParams() {
     return {
         s: "quote",
@@ -149,6 +163,7 @@ export const tableSlice = createSlice({
                 state.table = action.payload;
                 state.status = "idle";
             })
+          
             // .addCase(fetchTableAsync.fulfilled, (state, action) => {
             //     state.productsLoaded = true;
             //     console.log(action.payload);
@@ -172,7 +187,14 @@ export const tableSlice = createSlice({
                 //productsAdapter.setAll(state, action.payload);
                 state.table = action.payload;
                 state.status = "idle";
-            });
+            })
+            .addCase(fetchCompanyAsync.fulfilled, (state, action) => {
+                state.productsLoaded = true;
+                console.log(action.payload);
+                //productsAdapter.setAll(state, action.payload);
+                state.table = action.payload;
+                state.status = "idle";
+            })
     },
 });
 

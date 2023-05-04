@@ -50,14 +50,14 @@ module.exports = {
          'colorTextLogo':'#034E95',
          'spnTitlePanelBottom':'#2371af',
          'headerMenuTableMarket':'#010101',
-         'iconShowOrder':'#b3b3b3',
+        //  'iconShowOrder':'#b3b3b3',
          'hoverKL':"#717171",
         'textLanguage':'#2697de',
         'textNoti':'#385898',
         'iconNoti': '#0861a9',
         'bgFooterTable': '#131722',
         'textHeaderTableGDTT':'#F7FFAA',
-         
+        'bgPannelLink':'#dedede',
         //'tooltipNoti':'#2371af'
       },
       fontSize: {

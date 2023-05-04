@@ -13,6 +13,8 @@ import "font-awesome/css/font-awesome.min.css";
 import ListService from "./ListService";
 import NotiHeader from "./NotiHeader";
 import ProfileAccount from "./ProfileAccount";
+import { useAppDispatch } from "../../store/configureStore";
+import { setStatusChart } from "../menuBarMW/menuSlice";
 const Header = () => {
   return (
     <Box component="header" className="fpts-header" id="header-fpts">

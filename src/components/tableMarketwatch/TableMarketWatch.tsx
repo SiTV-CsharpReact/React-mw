@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { RootState, useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { fetchTableHNXAsync } from "./tableSlice";
 import {
   checkSTTMarket,
@@ -18,6 +18,12 @@ import HeaderMarketW from "../headerMarketwatch/HeaderMarket";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { DataTable } from "../../models/modelTableHNX";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
+import { Tooltip } from "@mui/material";
+import { setStatusChart } from "../menuBarMW/menuSlice";
+import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
+import { useSelector } from "react-redux";
+import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
+import { Root } from "../../models/root";
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
@@ -69,11 +75,13 @@ const TableMarketWatch = () => {
   //const [selectedRowId, setSelectedRowId] = useState<string | null>(null);
   const [sortedColumn, setSortedColumn] = useState("");
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
+  const [companyStock, setCompanyStock] = useState<Root | null>(null);
   const dispatch = useAppDispatch();
   const [products, setProducts] = useState<any[]>([]);
   const params = useParams<{ id: string }>();
-  const paramstock = stocks.find((paramstock) => paramstock.id === params.id); // const { productsLoaded,productParams} = useAppSelector(state => state.table); //const  products = useAppSelector(state => state.table.table);
-
+  const paramstock = stocks.find((paramstock) => paramstock.id === params.id); 
+  const [dataCompany, setDataCompany]=useState([])// const { productsLoaded,productParams} = useAppSelector(state => state.table); //const  products = useAppSelector(state => state.table.table);
+  
   useEffect(() => {
     async function fetchData() {
       try {
@@ -95,8 +103,16 @@ const TableMarketWatch = () => {
         fetchTable("HNX");
       }
     }
+    
   }, [paramstock?.id,dispatch]);
-
+  const fetchDataCompany = async () => {
+   await dispatch(fetchCompanyAsync())
+  };
+  console.log(fetchDataCompany())
+  // Call `fetchData` to fetch data when component mounts
+  useEffect(() => {
+    fetchDataCompany()
+  }, []);
   const fetchTable = async (param: string) => {
     let valueParam = "HNX";
     let valueSan = "hsx"
@@ -118,10 +134,14 @@ const TableMarketWatch = () => {
         valueParam = "s=quote&l=HNXUpcomIndex";
         valueSan = "hnx"
         break;
-          case "VNI":
+          case "HSX":
         valueParam = "s=quote&l=All";
         valueSan = "hsx"
         break;
+        case "VNI":
+          valueParam = "s=quote&l=All";
+          valueSan = "hsx"
+          break;
       case "VN30":
         valueParam = "s=quote&l=VN30";
         valueSan = "hsx"
@@ -159,6 +179,7 @@ const TableMarketWatch = () => {
     const data = await res.json();
     setProducts(data);
   };
+
   // sort products 
   products.forEach((obj) =>
   obj.Info.sort((a:any, b:any) => {
@@ -173,6 +194,8 @@ const TableMarketWatch = () => {
     return 0;
   })
 );
+// const companyStock = 
+// const companyStock = useSelector( (state: RootState) => state.company.data);
   const handleTypeOptionClick = (type:string) => {
     const newData = [...products];
     const index = newData.findIndex((item) => item.RowID === type);
@@ -227,7 +250,11 @@ const TableMarketWatch = () => {
       setorder("DSC");
     }
   };
-  console.log(products)
+  // const showChart =()=>{
+  //  dispatch(showChartMarketwatch())
+  //  console.log("oke")
+  // }
+  // console.log(companyStock)
   return (
     <div> 
       <DragDropContext onDragEnd={handleDragEnd}>      
@@ -849,7 +876,7 @@ const TableMarketWatch = () => {
                     {(provider) => (
                       <tr
                     
-                      data-tr-value={dataTable.RowID}
+                      data-tr-value={dataTable.Info[0][1]}
                         key={dataTable.RowID}
                         id={`tr${dataTable.RowID}`}
                         {...provider.draggableProps}
@@ -865,6 +892,7 @@ const TableMarketWatch = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )} text-left`}
+                          data-tooltip={`${ dataTable.Info[0][1]}`}
                           id={`${ dataTable.Info[1][1]}`}
                         >
                           <input
@@ -873,7 +901,12 @@ const TableMarketWatch = () => {
                             onClick={() => handleTypeOptionClick(dataTable.RowID)}
                             className="cbTop priceboard"
                           ></input>
-                          <span className="pl-0.5"> {dataTable.Info[0][1]}</span>
+                  
+                          <span className="pl-0.5" 
+                          onDoubleClick={() =>  dispatch(showChartMarketwatch(dataTable.Info[0][1]))}
+                          > {dataTable.Info[0][1]}</span>
+                  
+                          
                         </td>
 
                         {/* TTham chiếu */}
