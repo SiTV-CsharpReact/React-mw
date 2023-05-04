@@ -173,7 +173,36 @@ const TableMarketWatch = () => {
     return 0;
   })
 );
+
+// const handleTypeOptionClick = (type: string) => {
+//   const newData = products.map((item) =>
+//     item.RowID === type
+//       ? { ...item, pinned: !item.pinned, originalIndex: item.originalIndex !== undefined ? item.originalIndex : products.length }
+//       : item
+//   );
+
+//   // sắp xếp lại dữ liệu
+//   newData.sort((a, b) => {
+//     if (a.pinned && !b.pinned) {
+//       return -1;
+//     } else if (!a.pinned && b.pinned) {
+//       return 1;
+//     } else {
+//       return a.originalIndex - b.originalIndex;
+//     }
+//   });
+
+//   setProducts(newData);
+  
+//   if (!newData.find((item) => item.pinned)) {
+//     handleResetClick();
+//   }
+// };
+const [lastCheckboxChecked, setLastCheckboxChecked] = useState('');
+
 const handleTypeOptionClick = (type: string) => {
+  // update the last checkbox checked
+  setLastCheckboxChecked(type);
   const newData = products.map((item) =>
     item.RowID === type
       ? { ...item, pinned: !item.pinned, originalIndex: item.originalIndex !== undefined ? item.originalIndex : products.length }
@@ -192,11 +221,16 @@ const handleTypeOptionClick = (type: string) => {
   });
 
   setProducts(newData);
-  
+
   if (!newData.find((item) => item.pinned)) {
     handleResetClick();
   }
 };
+
+
+
+
+
 
 
 const handleResetClick = () => {
@@ -219,19 +253,28 @@ const handleResetClick = () => {
 
   const [order, setorder] = useState("ASC");
   const sorting = (col: any) => {
-    //console.log("aa", sorting);
+    const pinned = products.filter(item => item.pinned); // Lọc ra các sản phẩm đã được click
+    const unpinned = products.filter(item => !item.pinned); // Lọc ra các sản phẩm chưa được click
+  
     if (order === "ASC") {
-      const sorted = [...products].sort((a, b) =>
+      pinned.sort((a, b) =>
         a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
       );
+      unpinned.sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      const sorted = [...pinned, ...unpinned]; // Ghép lại 2 mảng đã được sort
       setProducts(sorted);
-      // console.log("sorting", sorted);
       setorder("DSC");
       setSortedColumn(col);
     } else {
-      const sorted = [...products].sort((a, b) =>
+      pinned.sort((a, b) =>
         a[col].toLowerCase() > b[col].toLowerCase() ? -1 : 1
       );
+      unpinned.sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? -1 : 1
+      );
+      const sorted = [...pinned, ...unpinned]; // Ghép lại 2 mảng đã được sort
       setProducts(sorted);
       setSortedColumn(col);
       setorder("ASC");
@@ -887,23 +930,27 @@ const handleResetClick = () => {
                 {...provider.droppableProps}
               >
                 {products?.map((dataTable: any,index) => (
+                  
                   <Draggable
                     key={dataTable.RowID}
                     draggableId={dataTable.RowID}
                     index={index}
                   >
-                    {(provider) => (
+                    {(provider) => (                  
+                      
                       <tr
-                    
-                      data-tr-value={dataTable.RowID}
-                        key={dataTable.RowID}
+                      className={`${dataTable.pinned === true ? 'border-bottom' : ''}`}
+
+                      key={dataTable.RowID}
                         id={`tr${dataTable.RowID}`}
                         {...provider.draggableProps}
                         ref={provider.innerRef}
                      
                         // style={{ backgroundColor: selectedRowId === dataTable.RowID ? 'yellow' : 'white' }}
                       >
+          
                         <td
+                        
                           {...provider.dragHandleProps}
                           className={`${setColorMarket(
                             dataTable.Info[1][1],
@@ -918,6 +965,7 @@ const handleResetClick = () => {
                             id={`cb${dataTable.RowID}`}
                             onClick={() => handleTypeOptionClick(dataTable.RowID)}
                             className="cbTop priceboard"
+                            
                           ></input>
                           <span className="pl-0.5"> {dataTable.Info[0][1]}</span>
                         </td>

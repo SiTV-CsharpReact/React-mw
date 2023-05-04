@@ -23,3 +23,7 @@ div#dvContentLP {
 .table-responsive {
     border: none !important;
 }
+tr.border-bottom:last-child {
+    border-bottom: 1px double #00ff00 !important;
+  }
+  

@@ -1,5 +1,5 @@
 .table-priceboard {
-    border: 1px solid #858585 !Important;
+    // border: 1px solid #858585 !Important;
     background-color: #1d1d1d;
     font-size: 11px;
     & thead{
@@ -153,3 +153,6 @@ div#dvContentLP {
    
 
 }
+tr.border-bottom:last-child {
+    border-bottom: 1px double #00ff00 !important;
+  }

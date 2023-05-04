@@ -1,3 +1,7 @@
+tr.border-bottom:last-child {
+   border-top: 1px double #00ff00 !important;
+ }
+ 
 .tableMW tr td:hover{
    background-color: #444444;
 }
