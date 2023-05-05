@@ -9,4 +9,4 @@ const FooterMarket = () => {
   )
 }
 
-export default FooterMarket
+export default React.memo(FooterMarket)

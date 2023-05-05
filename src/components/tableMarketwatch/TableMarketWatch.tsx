@@ -20,7 +20,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { DataTable } from "../../models/modelTableHNX";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
 // import { Tooltip } from "@mui/material";
-import { Tooltip } from 'react-tooltip';
+import { Tooltip as ReactTooltip } from "react-tooltip"
 import { setStatusChart } from "../menuBarMW/menuSlice";
 import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import { useSelector } from "react-redux";
@@ -237,6 +237,15 @@ const TableMarketWatch = () => {
       setSortedColumn(param);
       setorder("DSC");
     }
+  };
+  const customArrowStyle = {
+    color: 'blue', // màu của mũi tên
+    border: 'none', // loại bỏ đường viền
+    boxShadow: 'none', // loại bỏ bóng
+    marginTop: '-8px', // điều chỉnh vị trí của mũi tên
+    width: '20px', // chiều rộng của mũi tên
+    height: '20px', // chiều cao của mũi tên
+    transform: 'rotate(45deg)', // xoay mũi tên
   };
   // console.log(products)
   // const showChart =()=>{
@@ -881,12 +890,14 @@ const TableMarketWatch = () => {
                             dataTable.Info[11][1],
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
-                          )} text-left`}
-                          data-tooltip-id="my-tooltip"
-                          data-tooltip-content={getCompanyNameByCode(dataTable.Info[0][1]).toString()}
+                          )} text-left has-symbol company-tooltip`}
+                          data-tooltip={getCompanyNameByCode(dataTable.Info[0][1]).toString()}
+                          // data-tooltip-id="my-tooltip"
+                          // data-tooltip-content={getCompanyNameByCode(dataTable.Info[0][1]).toString()}
+                          // data-tooltip-offset={2}
                           id={`${ dataTable.Info[1][1]}`}
                         >
-                             <Tooltip id="my-tooltip"  className="example" place="bottom"/>
+                             {/* <ReactTooltip id="my-tooltip"  className="example" classNameArrow="arrow__tooltip"  place="bottom"/> */}
                           <input
                             type="checkbox"
                             id={`cb${dataTable.RowID}`}

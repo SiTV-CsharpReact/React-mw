@@ -64,8 +64,8 @@ const ChartMarketwatch = () => {
       <div className="chart-layout-right float-right w-[350px] border-l border-borderHeadTableMarket">
         <div className="mt-content">
           <table className="no-index">
-            {dataChart.map((dataTable) => (
-              <tbody>
+            {dataChart.map((dataTable,index) => (
+              <tbody key={index}>
                 <tr>
                   <td colSpan={4}>
                     <span className="text-xl">{dataTable.Info[0][1]}</span>
