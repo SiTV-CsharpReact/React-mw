@@ -610,4 +610,4 @@ const SettingTable = () => {
   )
 }
 
-export default SettingTable
+export default React.memo(SettingTable)

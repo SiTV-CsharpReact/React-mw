@@ -15,9 +15,13 @@ const Table = {
 const Company ={
     get: () => requests.get('http://localhost:8430/api/stock/v1/cache/stock_info_cn/eztrade?code=ALL'),
 }
+const Category ={
+    get: () => requests.get('http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C222210'),
+}
 const agent = {
     Table,
-    Company
+    Company,
+    Category,
 }
 export default agent;
 // import axios, { AxiosInstance, AxiosResponse } from "axios";

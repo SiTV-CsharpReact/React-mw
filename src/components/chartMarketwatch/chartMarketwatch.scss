@@ -46,3 +46,28 @@ table.no-index tr td {
     width: calc(100% - 300px);
     max-width: 1000px;
 }
+table.no-index tr {
+    border: 1px solid #404040;
+    line-height: 22px;
+}
+table tr.top1,tr.top2,tr.top3 {
+    // border: 1px solid #404040;
+    height: 27px !important;
+}
+table.no-index tr.no-border {
+    border: transparent;
+    border-left: 1px solid #505050;
+    border-right: 1px solid #505050;
+}
+table.no-index tr td{
+    border-right:  1px solid #404040;
+}
+table.no-index tr.no-border > td {
+    border: transparent;
+    text-align: left;
+}
+#tv_chart_container{
+    width: 100%;
+    float: left;
+    height: calc(100% - 30px);
+}

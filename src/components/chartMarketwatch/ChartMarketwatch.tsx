@@ -14,6 +14,8 @@ import FooterChart from "../footerMarketwatch/FooterChart";
 import MenuMarketWatch from "../indexMarketWatch/MenuMarketWatch";
 import { useSelector } from "react-redux";
 import { hideChartMarketwatch } from "./chartMarketwatchSlice";
+import SlidesMarketWatch from "../indexMarketWatch/SlidesMarketWatch";
+import SlidesIndexChartMarketwatch from "./SlidesIndexChartMarketwatch";
 interface Data {
   RowID: string;
   Info: string[][];
@@ -43,7 +45,10 @@ const ChartMarketwatch = () => {
       <div className="chart-layout-left float-left ">
         <div className="chart-layout-header float-left h-[30px]">
           <div className="float-left w-[900px] index-chart">
-            <MenuMarketWatch/>
+            <div>
+              <SlidesIndexChartMarketwatch/>
+            </div>
+            {/* <SlidesMarketWatch/> */}
           </div>
           <div className="float-right">
             <Tooltip title="Hiển thị bảng giá">
@@ -58,16 +63,16 @@ const ChartMarketwatch = () => {
 
           <DateTime />
         </div>
-        <div className="tv_chart_container">chart</div>
+        <div className="tv_chart_container w-full" id="tv_chart_container">chart</div>
       </div>
 
-      <div className="chart-layout-right float-right w-[350px] border-l border-borderHeadTableMarket">
+      <div className="chart-layout-right float-right w-[350px]  ">
         <div className="mt-content">
           <table className="no-index">
             {dataChart.map((dataTable,index) => (
               <tbody key={index}>
-                <tr>
-                  <td colSpan={4}>
+                <tr className="no-border">
+                  <td colSpan={4} className="h-40">
                     <span className="text-xl">{dataTable.Info[0][1]}</span>
                     <span className="text-xl"> 
                       <span className="px-1"></span>
@@ -79,7 +84,7 @@ const ChartMarketwatch = () => {
                 </tr>
                 <tr className="no-border">
                   <td>
-                    <span>K.lượng</span>
+                    <span>K.Lượng</span>
                   </td>
                   <td>
                     <span className="value-kl">
@@ -213,6 +218,48 @@ const ChartMarketwatch = () => {
                   <td className="text-center">Giá</td>
                   <td className="text-center">KL</td>
                 </tr>
+                <tr className="top1">
+                  <td>
+
+                  </td>
+                  <td>
+                    
+                    </td>
+                    <td>
+                    
+                    </td>
+                    <td>
+                    
+                    </td>
+                  </tr> 
+                  <tr className="top2">
+                  <td>
+
+                  </td>
+                  <td>
+                    
+                    </td>
+                    <td>
+                    
+                    </td>
+                    <td>
+                    
+                    </td>
+                  </tr> 
+                  <tr className="top3">
+                  <td>
+
+                  </td>
+                  <td>
+                    
+                    </td>
+                    <td>
+                    
+                    </td>
+                    <td>
+                    
+                    </td>
+                  </tr> 
               </tbody>
             ))}
           </table>
@@ -221,13 +268,13 @@ const ChartMarketwatch = () => {
         <div className="mt-menu-tab" style={{ width: "40px", float: "right" }}>
           <ul className="ul-menu-tab">
             <li title="Danh mục">
-              <img src={ImagePriceBoard} alt="Tab danh mục" />
+              <img src={ImagePriceBoard} height={24} width={24} alt="Tab danh mục" />
             </li>
             <li title="Top Mua/Bán" className="active">
-              <img src={ImageBuySell} alt="Tab Top Mua/Bán" />
+              <img src={ImageBuySell} height={24} width={24} alt="Tab Top Mua/Bán" />
             </li>
             <li title="Khớp lệnh">
-              <img src={ImageHandShake} alt="Tab Khớp lệnh" />
+              <img src={ImageHandShake} height={24} width={24} alt="Tab Khớp lệnh" />
             </li>
           </ul>
         </div>
