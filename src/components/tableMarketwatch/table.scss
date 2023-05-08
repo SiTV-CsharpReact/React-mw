@@ -153,6 +153,6 @@ div#dvContentLP {
    
 
 }
-tr.border-bottom:last-child {
+tr.border-bottom ~ tr.border-bottom {
     border-bottom: 1px double #00ff00 !important;
   }

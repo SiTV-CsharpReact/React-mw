@@ -1,6 +1,37 @@
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import MenuBar from "./MenuBar";
 
 const ListMenuBar = () => {
+  const [data, setData] = useState<{ Data: any[] }>({ Data: [] });
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          "http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C000700"
+        );
+        setData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
+  
+  // sort data with Default_MarketWatch = 1 to the top
+  const sortedData = [...data.Data].sort((a, b) => {
+    if (a.Default_MarketWatch === "1") return -1;
+    if (b.Default_MarketWatch === "1") return 1;
+    return 0;
+  });
+  
+  const children = sortedData.map((item) => ({
+    name: item.Name,
+    path: `/chung-khoan/${item.List}`,
+  }));
+  
   const menuItems = [
     {
       name: "HOSE",
@@ -268,7 +299,13 @@ const ListMenuBar = () => {
          
         ],
       },
-      
+      {
+        
+        name: "Danhmuc",
+        path: "/Danhmuc",
+        children: children,
+        
+      },
   ];
 
   return (
