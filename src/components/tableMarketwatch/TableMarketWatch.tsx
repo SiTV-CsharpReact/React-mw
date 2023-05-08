@@ -1002,8 +1002,8 @@ const TableMarketWatch = () => {
                             dataTable.Info[11][1],
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
-                          )} text-left`}
-                          data-tooltip={`${dataTable.Info[0][1]}`}
+                          )} text-left has-symbol company-tooltip`}
+                          data-tooltip={getCompanyNameByCode(dataTable.Info[0][1]).toString()}
                           id={`${dataTable.Info[1][1]}`}
                         >
                              {/* <ReactTooltip id="my-tooltip"  className="example" classNameArrow="arrow__tooltip"  place="bottom"/> */}
