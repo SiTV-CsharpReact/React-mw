@@ -24,7 +24,6 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { DataTable } from "../../models/modelTableHNX";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
 // import { Tooltip } from "@mui/material";
-import { Tooltip as ReactTooltip } from "react-tooltip"
 import { setStatusChart } from "../menuBarMW/menuSlice";
 import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import { useSelector } from "react-redux";
