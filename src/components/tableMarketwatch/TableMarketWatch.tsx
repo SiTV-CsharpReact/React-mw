@@ -9,6 +9,7 @@ import {
   checkSTTMarket,
   formatNumber,
   formatNumberMarket,
+  getCompanyNameByCode,
   setColorMarket,
   tinhGiaCT,
   tinhGiaTC,
@@ -22,12 +23,14 @@ import HeaderMarketW from "../headerMarketwatch/HeaderMarket";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { DataTable } from "../../models/modelTableHNX";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
-import { Tooltip } from "@mui/material";
+// import { Tooltip } from "@mui/material";
+import { Tooltip as ReactTooltip } from "react-tooltip"
 import { setStatusChart } from "../menuBarMW/menuSlice";
 import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 import { Root } from "../../models/root";
+import 'react-tooltip/dist/react-tooltip.css';
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
@@ -110,10 +113,10 @@ const TableMarketWatch = () => {
   const fetchDataCompany = async () => {
     await dispatch(fetchCompanyAsync());
   };
-  console.log(fetchDataCompany());
   // Call `fetchData` to fetch data when component mounts
   useEffect(() => {
-    fetchDataCompany();
+  if(!localStorage.getItem("CacheSi"))  {fetchDataCompany()} 
+    
   }, []);
   const fetchTable = async (param: string) => {
     let valueParam = "HNX";
@@ -181,6 +184,11 @@ const TableMarketWatch = () => {
     const data = await res.json();
     setProducts(data);
   };
+  const company = useSelector(
+    (state: RootState) => state.company.data
+  );
+  // console.log(company)
+  // const company = useSelector((state=> state?.company))
 
   // sort products
   products.forEach((obj) =>
@@ -335,8 +343,21 @@ const TableMarketWatch = () => {
       setorder("DSC");
     }
   };
-
-  console.log(products);
+  const customArrowStyle = {
+    color: 'blue', // màu của mũi tên
+    border: 'none', // loại bỏ đường viền
+    boxShadow: 'none', // loại bỏ bóng
+    marginTop: '-8px', // điều chỉnh vị trí của mũi tên
+    width: '20px', // chiều rộng của mũi tên
+    height: '20px', // chiều cao của mũi tên
+    transform: 'rotate(45deg)', // xoay mũi tên
+  };
+  // console.log(products)
+  // const showChart =()=>{
+  //  dispatch(showChartMarketwatch())
+  //  console.log("oke")
+  // }
+  // console.log(companyStock)
   return (
     <div>
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -974,6 +995,7 @@ const TableMarketWatch = () => {
 
                         // style={{ backgroundColor: selectedRowId === dataTable.RowID ? 'yellow' : 'white' }}
                       >
+                 
                         <td
                           {...provider.dragHandleProps}
                           className={`${setColorMarket(
@@ -985,6 +1007,7 @@ const TableMarketWatch = () => {
                           data-tooltip={`${dataTable.Info[0][1]}`}
                           id={`${dataTable.Info[1][1]}`}
                         >
+                             {/* <ReactTooltip id="my-tooltip"  className="example" classNameArrow="arrow__tooltip"  place="bottom"/> */}
                           <input
                             type="checkbox"
                             id={`cb${dataTable.RowID}`}
