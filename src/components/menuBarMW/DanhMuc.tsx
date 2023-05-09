@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useAppDispatch } from "../../store/configureStore";
+import codeListSlice, { listStock } from "./codeListSlice";
 
 const DanhMuc = () => {
-
+  const dispatch = useAppDispatch();
   const [Data, setData] = useState<{ Data: any[] }>({ Data: [] });
   useEffect(() => {
     async function fetchData() {
@@ -64,7 +66,7 @@ const DanhMuc = () => {
       {Data && Data.Data.map((item: any, index: number) => (
           <React.Fragment key={item.Score}>
             <li className="relative">
-              <Link className=" " data-codeList={item.List} to={`/chung-khoan/${item.List}`}>
+              <Link className=" " data-codeList={item.List} to={`/chung-khoan/danh-muc`} onClick={() => dispatch(listStock(item.List))}> 
                 {item.Name}
               </Link>
            

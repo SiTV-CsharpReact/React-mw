@@ -32,11 +32,14 @@ import Close from "../../images/x28.png";
 import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import PopupTableMarketwatch from "../popupTableMarketwatch/popupTableMarketwatch";
 import { resizeState } from "../../models/resizeWindow";
+import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatch";
+import { DraggableData, DraggableEvent } from "react-draggable";
 function RenderTable() {
   const params = useParams<{ id: string }>();
   // console.log(params);
   const paramstock = stocks.find((paramstock) => paramstock.id === params.id);
   const paramTable = paramstock?.id;
+  console.log(paramTable)
   switch (paramTable) {
     case "thoa-thuan-hnx":
     case "thoa-thuan-hsx":
@@ -55,6 +58,7 @@ function RenderTable() {
     case "VNMID":
     case "VNSML":
     case "CW":
+    case "danh-muc":
       return <TableMarketWatch />;
     case "thong-ke-index":
     case "thong-ke-gia":
@@ -95,6 +99,13 @@ const LayoutMarketWatch: React.FC = () => {
   const dispatch = useAppDispatch();
   // tao useState resize khi height window thay đổi
   const [heightComponent, setHeightComponent] = useState(initialState);
+  const [selectedValue, setSelectedValue] = useState({
+    x: 0,
+    y: 0,
+    value: "",
+    status: false,
+  });
+  // tinh height khi đổi từ màn hình này sang màn hình khác
   useEffect(() => {
     function handleResize() {
       setHeightComponent({
@@ -212,15 +223,11 @@ const LayoutMarketWatch: React.FC = () => {
   const showIntradayOrder = () => {
     setHeightComponent({ ...heightComponent, orderCount: 3 });
   };
-  const [selectedValue, setSelectedValue] = useState({
-    x: 0,
-    y: 0,
-    value: "",
-    status: false,
-  });
+
   const handleContextMenu = (e: any) => {
-    e.preventDefault();
+    e.preventDefault(); 
     const trValue = e.target.parentElement.getAttribute("data-tr-value");
+    console.log(trValue)
     if (trValue) {
       setSelectedValue({
         x: e.clientX,
@@ -233,6 +240,10 @@ const LayoutMarketWatch: React.FC = () => {
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     draggingRef.current = false;
   };
+  const handleDragable = (event: DraggableEvent, data: DraggableData) => {
+    console.log(`x: ${data.x}, y: ${data.y}`);
+  };
+  const status = useSelector(((state: RootState) => state.popupTable.visible))
   //console.log(heightComponent);
   return (
     <div>
@@ -241,6 +252,12 @@ const LayoutMarketWatch: React.FC = () => {
         selectedValue={selectedValue}
         setSelectedValueProp={setSelectedValue}
       />
+      {status ? <TablePopupMarketwatch
+
+//  defaultPosition={{ x: 0, y: 0 }}
+//  onDrag={handleDragable}
+ />:''}
+        
       {/* marketwatch */}
       <div
         className="resize panel-horizontally bg-BGTableMarket text-white relative overflow-hidden"

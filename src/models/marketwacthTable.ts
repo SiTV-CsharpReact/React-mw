@@ -92,4 +92,8 @@ export const stocks: Stock[] = [
     id: "CW",
     name: "CW",
   },
+  {
+    id: "danh-muc",
+    name: "danh-muc",
+  },
 ];

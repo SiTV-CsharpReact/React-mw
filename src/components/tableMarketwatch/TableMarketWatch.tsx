@@ -86,7 +86,8 @@ const TableMarketWatch = () => {
   const params = useParams<{ id: string }>();
   const paramstock = stocks.find((paramstock) => paramstock.id === params.id);
   const [dataCompany, setDataCompany] = useState([]); // const { productsLoaded,productParams} = useAppSelector(state => state.table); //const  products = useAppSelector(state => state.table.table);
-
+    const codeList = useSelector(((state: RootState) => state.codeList.codeList))
+    console.log(codeList)
   useEffect(() => {
     async function fetchData() {
       try {
@@ -174,14 +175,65 @@ const TableMarketWatch = () => {
           "s=quote&l=CACB2208,CACB2301,CFPT2210,CFPT2212,CFPT2213,CFPT2214,CFPT2301,CFPT2302,CFPT2303,CHPG2225,CHPG2226,CHPG2227,CHPG2301,CHPG2302,CHPG2303,CHPG2304,CHPG2305,CHPG2306,CMBB2211,CMBB2213,CMBB2214,CMBB2215,CMBB2301,CMBB2302,CMBB2303,CMSN2214,CMSN2215,CMWG2213,CMWG2214,CMWG2215,CMWG2301,CMWG2302,CPOW2210,CSTB2224,CSTB2225,CSTB2301,CSTB2302,CSTB2303,CTCB2212,CTCB2214,CTCB2215,CTCB2216,CTCB2301,CTPB2301,CVHM2216,CVHM2218,CVHM2219,CVHM2220,CVIB2201,CVIB2301,CVNM2211,CVNM2212,CVPB2212,CVPB2214,CVPB2301,CVPB2302,CVRE2216,CVRE2219,CVRE2220,CVRE2221,CVRE2301";
         valueSan = "hsx";
         break;
+        case "danh-muc":
+          //BIC,AAV,ASA,ADC,AAM,BID,FID,ABT
+        valueParam = `s=quote&l=${codeList}`;
+        valueSan = "hsx";
+        break;
       default:
         break;
     }
-    const res = await fetch(
-      `http://marketstream.fpts.com.vn/${valueSan}/data.ashx?${valueParam}`
-    );
-    const data = await res.json();
-    setProducts(data);
+    // let res =[];
+    if(param ==="danh-muc"){
+      const resHNX = await fetch(
+        `http://marketstream.fpts.com.vn/hnx/data.ashx?${valueParam}`
+      );
+      // resHNX = [AAA, AAV]
+      const resHSX = await fetch(
+        `http://marketstream.fpts.com.vn/hsx/data.ashx?${valueParam}`
+      );
+       // resHNX = [AAB, AAC]
+      // resHNX +resHNX = [AAA, AAV, AAB, AAC]
+      // [BIC,AAV,ASA,ADC,AAM,BID,FID,ABT]
+        var arrS = codeList.split(',');
+        var arr_names:string[] = new Array(arrS.length)  
+        const dataHSX = await resHSX.json();
+        const dataHNX = await resHNX.json();
+
+        for (let i = 0; i < dataHSX.length; i++) {
+          const cSym = dataHSX[i]?.Info[0][1]; // mã ck
+          if(arrS.includes(cSym)){
+            arr_names[arrS.indexOf(cSym)] = dataHSX[i];
+          }
+        }
+
+        for (let i = 0; i < dataHNX.length; i++) {
+          const cSym = dataHNX[i]?.RowID; // mã ck
+          if(arrS.includes(cSym)){
+            arr_names[arrS.indexOf(cSym)] = dataHNX[i];
+          }
+        }
+
+        console.log('data:', arr_names)
+        setProducts(arr_names);
+
+    }
+    else{
+      if(valueParam){
+        const res = await fetch(
+          `http://marketstream.fpts.com.vn/${valueSan}/data.ashx?${valueParam}`
+        );
+        const data = await res.json();
+        setProducts(data);
+      }
+ 
+    }
+   
+    // const resHSX = await fetch(
+    //   `http://marketstream.fpts.com.vn/${valueSan}/data.ashx?${valueParam}`
+    // );
+    // const data = await res.json();
+    // setProducts(data);
   };
   const company = useSelector(
     (state: RootState) => state.company.data
@@ -203,31 +255,6 @@ const TableMarketWatch = () => {
       return 0;
     })
   );
-
-  // const handleTypeOptionClick = (type: string) => {
-  //   const newData = products.map((item) =>
-  //     item.RowID === type
-  //       ? { ...item, pinned: !item.pinned, originalIndex: item.originalIndex !== undefined ? item.originalIndex : products.length }
-  //       : item
-  //   );
-
-  //   // sắp xếp lại dữ liệu
-  //   newData.sort((a, b) => {
-  //     if (a.pinned && !b.pinned) {
-  //       return -1;
-  //     } else if (!a.pinned && b.pinned) {
-  //       return 1;
-  //     } else {
-  //       return a.originalIndex - b.originalIndex;
-  //     }
-  //   });
-
-  //   setProducts(newData);
-
-  //   if (!newData.find((item) => item.pinned)) {
-  //     handleResetClick();
-  //   }
-  // };
   const [lastCheckboxChecked, setLastCheckboxChecked] = useState("");
 
   const handleTypeOptionClick = (type: string) => {
@@ -342,21 +369,6 @@ const TableMarketWatch = () => {
       setorder("DSC");
     }
   };
-  const customArrowStyle = {
-    color: 'blue', // màu của mũi tên
-    border: 'none', // loại bỏ đường viền
-    boxShadow: 'none', // loại bỏ bóng
-    marginTop: '-8px', // điều chỉnh vị trí của mũi tên
-    width: '20px', // chiều rộng của mũi tên
-    height: '20px', // chiều cao của mũi tên
-    transform: 'rotate(45deg)', // xoay mũi tên
-  };
-  // console.log(products)
-  // const showChart =()=>{
-  //  dispatch(showChartMarketwatch())
-  //  console.log("oke")
-  // }
-  // console.log(companyStock)
   return (
     <div>
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -976,6 +988,7 @@ const TableMarketWatch = () => {
                   >
                     {(provider) => (
                       <tr
+                      data-tr-value={dataTable.Info[0][1]}
                         // không đc pinned || không phải tr cuối cùng && tr hiện tại giống với tr sau || tr cuối cùng k đc pinned-> ''
 
                         className={`${

@@ -1,4 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useAppDispatch } from '../../store/configureStore';
+import { showDetailStock } from './popupTableSlice';
+import TablePopupMarketwatch from '../tablePopupMarketwatch/TablePopupMarketwatch';
 
 interface Props {
     x: number; 
@@ -11,15 +14,7 @@ interface Props {
     setSelectedValueProp: React.Dispatch<React.SetStateAction<Props>>;
   }
   const PopupTableMarketwatch = ({ selectedValue, setSelectedValueProp  }: Popup) =>  {
-    // const [selectedValue, setselectedValue] = useState({ x: 0, y: 0, value: "" });
-    // const handleContextMenu = (e: any) => {
-    //   e.preventDefault();
-    //   const trValue = e.target.parentElement.getAttribute("data-tr-value");
-    //   if (trValue) {
-    //     setselectedValue({ x: e.clientX, y: e.clientY, value: trValue });
-    //     setPopupVisible(true);
-    //   }
-    // };
+    const dispatch = useAppDispatch();
     const popupRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         function handleClickOutside(e: any) {
@@ -43,6 +38,7 @@ interface Props {
           left: selectedValue.x,
         }}
       >
+     
         <ul className="context-menu-list" id="idContextMenu">
           <li>
             <i className="fa fa-arrow-left text-[#00A4FF]"></i>
@@ -62,7 +58,7 @@ interface Props {
               Thông tin doanh nghiệp <b>{selectedValue.value}</b>
             </span>
           </li>
-          <li>
+          <li onClick={()=> dispatch(showDetailStock(selectedValue.value))}>
             <i className="fa fa-sign-out text-[#2371AF]"></i>
             <span>
               Chi tiết <b>{selectedValue.value}</b>

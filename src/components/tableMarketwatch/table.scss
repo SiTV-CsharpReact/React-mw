@@ -278,7 +278,22 @@ tr.border-bottom ~ tr.border-bottom {
         opacity: 1;
     }
 }
-
+/* Tùy chỉnh thanh cuộn */
+.dvContentLP::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .dvContentLP::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+  }
+  
+  .dvContentLP::-webkit-scrollbar-thumb {
+    background-color: #a9a9a9;
+     &:hover{
+        background-color: #555555;
+        
+     }
+  }
 // .has-symbol.company-tooltip[data-tooltip]::after {
 //     bottom: -20%;
 //     left: 50%;

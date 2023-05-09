@@ -12,6 +12,8 @@ interface TableState {
     status: string; //metaData:MetaData | null;
 }
 
+
+
 export const fetchCategoryAsync = createAsyncThunk<Root>(
     "table/fecthCategory",
     async () => {

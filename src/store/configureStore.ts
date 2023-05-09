@@ -6,6 +6,8 @@ import menuSlice from '../components/menuBarMW/menuSlice';
 import LayoutMarketWatchSLice from '../components/layoutMarketwatch/LayoutMarketWatchSLice';
 import chartMarketwatchSlice from '../components/chartMarketwatch/chartMarketwatchSlice';
 import companySlice from '../components/companyMarketwatch/companyMarketwatchSlice';
+import popupTableSlice from '../components/popupTableMarketwatch/popupTableSlice';
+import codeListSlice from '../components/menuBarMW/codeListSlice';
 
 export const store = configureStore({
     reducer:{
@@ -15,6 +17,8 @@ export const store = configureStore({
         menu:menuSlice.reducer,
         layoutmarketwatch: LayoutMarketWatchSLice.reducer,
         chart:chartMarketwatchSlice.reducer,
+        popupTable:popupTableSlice.reducer,
+        codeList:codeListSlice.reducer
     }
 })
 export type RootState = ReturnType<typeof store.getState>;
