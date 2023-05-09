@@ -13,10 +13,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/chung-khoan/HSX" />} />
         <Route path="/chung-khoan" element={<Navigate to="/chung-khoan/HSX" />} />
-        <Route path="/chung-khoan/:id" element={<LayoutMarketWatch />} />
+        <Route path="/chung-khoan/:id" element={<LayoutMarketWatch />} />   
         <Route path="/report/ClientActivityRange" element={<SlidesMarketWatch />} />
         <Route path="/report/TradeLog" element={<DraggableDiv />} />
         <Route path="/report/PendingSettlement" element={<MySwiper />} />
+        {/* <Route path="/chung-khoan" element={<LayoutMarketWatch />} />    */}
       </Routes>
       </AppProvider>
     </div>
