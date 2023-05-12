@@ -7,7 +7,6 @@ const requests = {
     post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
     put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
     delete: (url: string) => axios.delete(url).then(responseBody),
-    gets: (url: string, params?: string) => axios.get(url, {params}).then(responseBody),
 }
 const TableHNX = {
     list: (params: URLSearchParams) => requests.get(BASE_URL, params),

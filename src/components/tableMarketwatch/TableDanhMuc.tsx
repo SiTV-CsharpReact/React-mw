@@ -4,7 +4,6 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../store/configureStore";
-// import { fetchTableHNXAsync } from "./tableSlice";
 import {
   checkSTTMarket,
   formatNumber,
@@ -17,18 +16,14 @@ import {
 import "../../styles/MW.css";
 import axios from "axios";
 import { ObjectMenuHSX } from "../../models/modelListMenuHSX";
-
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { DataTable } from "../../models/modelTableHNX";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
-// import { Tooltip } from "@mui/material";
-import { setStatusChart } from "../menuBarMW/menuSlice";
 import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
-import { Root } from "../../models/root";
-import 'react-tooltip/dist/react-tooltip.css';
 import { fetchDataTableHNXAsync, fetchDataTableHSXAsync } from "./tableSlice";
+import { DataTable } from "../../models/modelTableHNX";
+// import { fetchDataTableHNXAsync, fetchDataTableHSXAsync } from "./tableSlice";
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
@@ -73,36 +68,73 @@ const showKLPT = (value: string) => {
   }
 };
 const TableDanhMuc = () => {
-  const dataTableHNX = useSelector((state:RootState) => state.table.tableHNX);
-  const dataTableHSX = useSelector((state:RootState) => state.table.tableHSX);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchDataTableHNXAsync());
+    dispatch(fetchDataTableHSXAsync());
+ }, [dispatch]);
+  const dataTableHNX = useSelector((state:RootState) => state.table?.tableHNX);
+  const dataTableHSX = useSelector((state:RootState) => state.table?.tableHSX);
+  if(dataTableHNX.length>0){
+    // const dataT = ...dataTableHNX;
+    dataTableHNX.map((obj) =>
+  obj.Info?.sort((a: any, b: any) => {
+    const indexA = Number(a[0]);
+    const indexB = Number(b[0]);
+    if (indexA < indexB) {
+      return -1;
+    }
+    if (indexA > indexB) {
+      return 1;
+    }
+    return 0;
+  })
+);
+  }
+  
+  console.log(dataTableHNX,dataTableHNX)
+
   const [sortedColumn, setSortedColumn] = useState("");
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
-  const dispatch = useAppDispatch();
+  
   const [products, setProducts] = useState<any[]>([]);
     const codeList = useSelector(((state: RootState) => state.codeList.codeList))
-    useEffect(() => {
-        dispatch(fetchDataTableHNXAsync());
-        dispatch(fetchDataTableHSXAsync());
-     }, [dispatch]);
+
     var arrS = codeList.split(',');
-    var arr_names:string[] = new Array(arrS.length)  
+    var arr_names:DataTable[] = new Array(arrS.length)  
     // const dataHSX = await resHSX.json();
     // const dataHNX = await resHNX.json();
   //  duy nhất 1 lần 
+   /* The above code is commented out, so it is not doing anything. However, it appears to be iterating
+   through two arrays (dataTableHSX and dataTableHNX), checking if a certain value (cSym or CSymHSX)
+   is included in another array (arrS), and if so, updating the corresponding element in another
+   array (arr_names) with the value from the current iteration of the dataTableHSX or dataTableHNX
+   array. */
+   if(dataTableHSX.length>0){
     for (let i = 0; i < dataTableHSX.length; i++) {
-      const cSym = dataTableHSX[i]; // mã ck
-      if(arrS.includes(cSym)){
-        arr_names[arrS.indexOf(cSym)] = dataTableHSX[i];
+      let cSym = dataTableHSX[i].RowID; // mã ck
+      if(cSym){
+        if(arrS.includes(cSym)){
+          arr_names[arrS.indexOf(cSym)] = dataTableHSX[i];
+        }
       }
+      
     }
-
+   }
+   
+   if(dataTableHNX.length>0){
+    
     for (let i = 0; i < dataTableHNX.length; i++) {
-      const cSym = dataTableHNX[i]; // mã ck
-      if(arrS.includes(cSym)){
-        arr_names[arrS.indexOf(cSym)] = dataTableHNX[i];
+      let CSymHSX = dataTableHNX[i].RowID; // mã ck
+      if(CSymHSX){
+        if(arrS.includes(CSymHSX)){
+          arr_names[arrS.indexOf(CSymHSX)] = dataTableHNX[i];
+        }
       }
+    
     }
-    setProducts(arr_names);
+  }
+    // setProducts(arr_names);
     useEffect(() => {
         async function fetchData() {
           try {
@@ -863,7 +895,7 @@ const TableDanhMuc = () => {
                 ref={provider.innerRef}
                 {...provider.droppableProps}
               >
-                {products?.map((dataTable: any, index) => (
+                {dataTableHNX?.map((dataTable: any, index) => (
                   <Draggable
                     key={dataTable.RowID}
                     draggableId={dataTable.RowID}

@@ -198,7 +198,7 @@ const TableMarketWatch = () => {
       // resHNX +resHNX = [AAA, AAV, AAB, AAC]
       // [BIC,AAV,ASA,ADC,AAM,BID,FID,ABT]
         var arrS = codeList.split(',');
-        var arr_names:string[] = new Array(arrS.length)  
+        var arr_names:DataTable[] = new Array(arrS.length)  
         const dataHSX = await resHSX.json();
         const dataHNX = await resHNX.json();
       //  duy nhất 1 lần 
@@ -254,6 +254,7 @@ const TableMarketWatch = () => {
       return 0;
     })
   );
+  console.log(products);
   const [lastCheckboxChecked, setLastCheckboxChecked] = useState("");
 
   const handleTypeOptionClick = (type: string) => {

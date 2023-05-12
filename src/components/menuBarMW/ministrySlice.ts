@@ -6,7 +6,7 @@ export const fetchMinistryAsync = createAsyncThunk<MinistriesMarketwatch>(
   "table/fecthMinistry",
   async () => {
     const res = await agent.Ministry.get();
-    console.log(res);
+    //console.log(res);
     return res;
   }
 );

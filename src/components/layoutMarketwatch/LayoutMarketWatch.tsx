@@ -38,11 +38,11 @@ import CompleteStock from "../menuBarMW/CompleteStock";
 import TableDanhMuc from "../tableMarketwatch/TableDanhMuc";
 function RenderTable() {
   const params = useParams<{ id: string }>();
-  console.log(params)
+  //console.log(params)
   // console.log(params);
   const paramstock = stocks.find((paramstock) => paramstock.id === params.id);
   const paramTable = paramstock?.id;
-  console.log(paramTable)
+  // console.log(paramTable)
   switch (paramTable) {
     case "thoa-thuan-hnx":
     case "thoa-thuan-hsx":
@@ -61,10 +61,10 @@ function RenderTable() {
     case "VNMID":
     case "VNSML":
     case "CW":
-    case "danh-muc":
+    // case "danh-muc":
       return <TableMarketWatch />;
-      // case "danh-muc":
-      //   return <TableDanhMuc/>;
+      case "danh-muc":
+        return <TableDanhMuc/>;
     case "thong-ke-index":
     case "thong-ke-gia":
     case "thong-ke-dat-lenh":
@@ -123,7 +123,7 @@ const LayoutMarketWatch: React.FC = () => {
       });
       // console.log(window.innerHeight)
     }
-    console.log(heightComponent);
+    // console.log(heightComponent);
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);

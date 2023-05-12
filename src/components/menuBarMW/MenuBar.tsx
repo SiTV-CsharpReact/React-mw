@@ -24,7 +24,7 @@ const MenuBar: React.FC<Props>  = ({items}) => {
       // Load active item from localStorage
       const activeItem = localStorage.getItem("activePriceboardTab");
       const activeItemChild = localStorage.getItem("activePriceboardTabMenu");
-      console.log(activeItem)
+      // console.log(activeItem)
       if (activeItem) {
         setActiveMenuItem(activeItem);
       }

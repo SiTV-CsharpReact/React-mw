@@ -12,7 +12,7 @@ const DanhMuc = () => {
   const { isLoading, data, status } = useSelector(
     (state: RootState) => state.categories
   );
- console.log({ isLoading, data, status })
+//  console.log({ isLoading, data, status })
  useEffect(() => {
   dispatch(fetchCategoryAsync());
 }, [dispatch]);
@@ -31,6 +31,7 @@ function handleDispatch() {
           <React.Fragment key={item.Score}>
             <li className="relative">
               <Link to="/chung-khoan/danh-muc" className=" "  onClick={() => dispatch(listStock(item.List))}> 
+              {/* <Link to="/chung-khoan/danh-muc" className=" "  onClick={() =>console.log("ok",item.List)}>  */}
                 {item.Name}
               </Link>  
               <span id={`btDel${index}`} className="imgDel keep" />
