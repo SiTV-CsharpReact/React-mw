@@ -379,3 +379,14 @@ tr.border-bottom ~ tr.border-bottom {
 //     left: 50%;
 //     margin-left: -80px;
 // }
+.popup_center{
+    height: 600px;
+    width: 1000px;
+    background-color: #000;
+    color: #fff;
+    position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  z-index: 5000;
+}

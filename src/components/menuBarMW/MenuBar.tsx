@@ -102,7 +102,10 @@ const MenuBar: React.FC<Props>  = ({items}) => {
       </div>
     );
   };
-    return <div className='flex menu-table'>{items.map((item) => renderMenuItem(item))}</div>;
+    return <div className='flex menu-table'>
+      {items.map((item) => renderMenuItem(item))}
+      
+      </div>;
 }
 
-export default MenuBar
+export default React.memo(MenuBar)

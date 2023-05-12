@@ -10,7 +10,7 @@ export const fetchCategoryAsync = createAsyncThunk<CategoriesMarketWatch>(
     return res;
   }
 );
-export const danhmucSlice = createSlice({
+export const tablePopupSlice = createSlice({
   name: "table_fecthCategory",
   initialState: {
     isLoading: false,
@@ -54,4 +54,4 @@ export const danhmucSlice = createSlice({
   },
 });
 
-export default danhmucSlice;
+export default tablePopupSlice;

@@ -7,10 +7,15 @@ const requests = {
     post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
     put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
     delete: (url: string) => axios.delete(url).then(responseBody),
+    gets: (url: string, params?: string) => axios.get(url, {params}).then(responseBody),
 }
-const Table = {
+const TableHNX = {
     list: (params: URLSearchParams) => requests.get(BASE_URL, params),
-    get: () => requests.get(URL_EZTRADE+'/api/ApiData/get_cache_stockinfo'),
+    get: () => requests.get(BASE_URL+'/hnx/data.ashx?s=quote&l=HNXIndex'),
+}
+const TableHSX = {
+    list: (params: URLSearchParams) => requests.get(BASE_URL, params),
+    get: () => requests.get(BASE_URL+'/hsx/ApiData/get_cache_stockinfo'),
 }
 const Company ={
     get: () => requests.get('http://localhost:8430/api/stock/v1/cache/stock_info_cn/eztrade?code=ALL'),
@@ -18,10 +23,15 @@ const Company ={
 const Category ={
     get: () => requests.get('http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C222210'),
 }
+const Ministry ={
+    get: () => requests.get('http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/s5g/default/ministry'),
+}
 const agent = {
-    Table,
+    TableHNX,
+    TableHSX,
     Company,
     Category,
+    Ministry
 }
 export default agent;
 // import axios, { AxiosInstance, AxiosResponse } from "axios";

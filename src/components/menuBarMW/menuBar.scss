@@ -163,3 +163,115 @@ input[type=checkbox].priceboard2 {
         background-position: -21px -1px;
     }
 }
+#addSymbol {
+    margin: 2px 2px 0 5px;
+    width: 180px;
+    height: 25px;
+    font-style: normal;
+    border-radius: 1px;
+    padding: 0 10px;
+}
+// .form-control {
+//     font-size: 12px;
+//     padding: 6px 4px;
+//     height: 28px;
+// }
+// .form-control {
+//     display: block;
+//     width: 100%;
+//     height: 34px;
+//     padding: 6px 12px;
+//     font-size: 14px;
+//     line-height: 1.42857143;
+//     color: #555;
+//     background-color: #fff;
+//     background-image: none;
+//     border: 1px solid #ccc;
+//     border-radius: 4px;
+//     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+//     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+//     -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+//     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+//     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+// }
+// .ms-ctn-focus {
+//     border-color: #66afe9;
+//     outline: 0;
+//     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+//     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+// }
+.input_complete {
+    margin: 2px 2px 0 5px;
+    width: 180px;
+    height: 25px;
+    font-style: normal;
+    border-radius: 1px;
+    padding: 0 10px;
+    background-color: #fff;
+    & input {
+    border: 0 !important;
+    box-shadow: none;
+    -webkit-transition: none;
+    outline: none;
+    display: block;
+    padding: 0;
+    line-height: 1.42857143;
+    margin: 3px 0;
+    width: 100%;
+    font-size: 9pt; 
+}
+& .ms-sel-ctn{
+    margin-left: -7px;
+  overflow: auto;
+line-height: 18px;
+padding-right: 25px;
+text-transform: uppercase;
+}
+}
+
+// .ms-sel-ctn {
+//     overflow: auto;
+//     line-height: 18px;
+//     padding-right: 25px;
+//     text-transform: uppercase;
+// }
+.input_complete .ms-trigger {
+    top: 0;
+    width: 25px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    background: transparent;
+    border-left: 1px solid #CCC;
+    cursor: pointer;
+    &:hover{
+        width: 24px;
+    right: 1px;
+    border-radius: 0 3px 3px 0;
+    }
+}
+.input_complete .ms-trigger .ms-trigger-ico {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    vertical-align: top;
+    border-top: 4px solid #333;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    content: "";
+    margin-left: 7px;
+    margin-top: 11px;
+
+}
+// .ms-ctn input {
+//     border: 0 !important;
+//     box-shadow: none;
+//     -webkit-transition: none;
+//     outline: none;
+//     display: block;
+//     padding: 0;
+//     line-height: 1.42857143;
+//     margin: 2px 0;
+//     width: 100%;
+//     font-size: 9pt;
+// }

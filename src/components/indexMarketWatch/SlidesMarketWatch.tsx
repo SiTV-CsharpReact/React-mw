@@ -27,7 +27,7 @@ const SlidesMarketWatch = () => {
   const screenWidth = window.innerWidth;
   const slideWidth = 220;
   const slidesToShow = Math.floor(screenWidth / slideWidth);
-  console.log(slidesToShow);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -112,7 +112,6 @@ const SlidesMarketWatch = () => {
     onMouseEnter: handleHover,
     onMouseLeave: handleLeave,
   };
-  console.log(isHoveringLeft, isHoveringRight);
   return (
     <div
       id="divIndexChart "
