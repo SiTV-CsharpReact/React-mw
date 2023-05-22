@@ -96,7 +96,7 @@ const SlidesMarketWatch = () => {
     // className: "center",
     // centerMode: true,
     dots: false,
-    speed: 4000,
+    speed: 3000,
     // infinite: true,
     slidesToShow: slidesToShow,
     slidesToScroll: slidesToShow ,

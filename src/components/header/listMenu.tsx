@@ -398,6 +398,10 @@ const ListMenu = () => {
           </li>
         </ul>
       </li>
+      <li>
+      <Link  to="/dynamic-dashboard">Giao diện của tôi</Link>
+       
+      </li>
     </ul>
   </div>
   );

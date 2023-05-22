@@ -16,7 +16,7 @@ export const fetchCompanyAsync = createAsyncThunk<Root>(
     "table/fecthCompany",
     async () => {
         const res = await agent.Company.get();       
-        console.log(res)      
+        //console.log(res)      
         return res;
     }
 );

@@ -1,0 +1,9 @@
+.main-wrappers{
+    height: calc(100vh - 57px);
+}
+.custom-layout-page {
+    border-color: var(--color-theme-primary);
+    height: 100%;
+    background-color: var(--color-theme-primary);
+    border-top-width: 0.25rem;
+}

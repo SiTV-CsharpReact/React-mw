@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {  useEffect,  useState } from "react";
 import {
   RootState,
   useAppDispatch,
@@ -21,9 +21,8 @@ import FooterMarket from "../footerMarketwatch/FooterMarket";
 import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
-import { fetchDataTableHNXAsync, fetchDataTableHSXAsync } from "./tableSlice";
+import {  fetchTableHNXAsync, fetchTableHSXAsync, productHSXSelectors, productSelectors, } from "./tableSlice";
 import { DataTable } from "../../models/modelTableHNX";
-// import { fetchDataTableHNXAsync, fetchDataTableHSXAsync } from "./tableSlice";
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
@@ -69,30 +68,14 @@ const showKLPT = (value: string) => {
 };
 const TableDanhMuc = () => {
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchDataTableHNXAsync());
-    dispatch(fetchDataTableHSXAsync());
- }, [dispatch]);
-  const dataTableHNX = useSelector((state:RootState) => state.table?.tableHNX);
-  const dataTableHSX = useSelector((state:RootState) => state.table?.tableHSX);
-  if(dataTableHNX.length>0){
-    // const dataT = ...dataTableHNX;
-    dataTableHNX.map((obj) =>
-  obj.Info?.sort((a: any, b: any) => {
-    const indexA = Number(a[0]);
-    const indexB = Number(b[0]);
-    if (indexA < indexB) {
-      return -1;
-    }
-    if (indexA > indexB) {
-      return 1;
-    }
-    return 0;
-  })
-);
-  }
-  
-  console.log(dataTableHNX,dataTableHNX)
+  const tableData = useSelector(productSelectors.selectAll);
+  const tableDataHSX = useSelector(productHSXSelectors.selectAll);
+  console.log(tableData,tableDataHSX)
+ useEffect(() => {
+  dispatch(fetchTableHNXAsync("BCC,AAV,BCM,CEO"));
+  dispatch(fetchTableHSXAsync("BCC,AAV,BCM,CEO"));
+}, [ dispatch]);
+
 
   const [sortedColumn, setSortedColumn] = useState("");
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
@@ -102,39 +85,6 @@ const TableDanhMuc = () => {
 
     var arrS = codeList.split(',');
     var arr_names:DataTable[] = new Array(arrS.length)  
-    // const dataHSX = await resHSX.json();
-    // const dataHNX = await resHNX.json();
-  //  duy nhất 1 lần 
-   /* The above code is commented out, so it is not doing anything. However, it appears to be iterating
-   through two arrays (dataTableHSX and dataTableHNX), checking if a certain value (cSym or CSymHSX)
-   is included in another array (arrS), and if so, updating the corresponding element in another
-   array (arr_names) with the value from the current iteration of the dataTableHSX or dataTableHNX
-   array. */
-   if(dataTableHSX.length>0){
-    for (let i = 0; i < dataTableHSX.length; i++) {
-      let cSym = dataTableHSX[i].RowID; // mã ck
-      if(cSym){
-        if(arrS.includes(cSym)){
-          arr_names[arrS.indexOf(cSym)] = dataTableHSX[i];
-        }
-      }
-      
-    }
-   }
-   
-   if(dataTableHNX.length>0){
-    
-    for (let i = 0; i < dataTableHNX.length; i++) {
-      let CSymHSX = dataTableHNX[i].RowID; // mã ck
-      if(CSymHSX){
-        if(arrS.includes(CSymHSX)){
-          arr_names[arrS.indexOf(CSymHSX)] = dataTableHNX[i];
-        }
-      }
-    
-    }
-  }
-    // setProducts(arr_names);
     useEffect(() => {
         async function fetchData() {
           try {
@@ -284,6 +234,7 @@ const TableDanhMuc = () => {
       setorder("DSC");
     }
   };
+  //  if (!productsLoaded) return <LoadingComponent message='Loading products...' />
   return (
     <div>
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -895,7 +846,7 @@ const TableDanhMuc = () => {
                 ref={provider.innerRef}
                 {...provider.droppableProps}
               >
-                {dataTableHNX?.map((dataTable: any, index) => (
+                {tableData?.map((dataTable: any, index) => (
                   <Draggable
                     key={dataTable.RowID}
                     draggableId={dataTable.RowID}

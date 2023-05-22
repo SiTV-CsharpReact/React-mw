@@ -33,7 +33,7 @@ const ListMenuBar = () => {
   
   const children = sortedData.map((item) => ({
     name: item.Name,
-    path: `/chung-khoan/${item.List}`,
+    path: ``,
   }));
   // const childrenMinistry = dataMinistry.Data.Data.map((item) => ({
   //   name: item.MinistryName,
@@ -307,13 +307,13 @@ const ListMenuBar = () => {
          
         ],
       },
-      {
+      // {
         
-        name: "Danhmuc",
-        path: "/Danhmuc",
-        children: children,
+      //   name: "Danhmuc",
+      //   path: "/Danhmuc",
+      //   children: children,
         
-      },
+      // },
   ];
 
   return (

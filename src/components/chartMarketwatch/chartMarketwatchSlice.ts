@@ -15,16 +15,16 @@ const chartMarketwatchSlice = createSlice({
     initialState,
     reducers: {
         showChartMarketwatch: (state, action: PayloadAction<string>) => {
-            state.visible = true;
+            state.visible = !state.visible ;
             state.code = action.payload;
             console.log( action.payload)
           },
-          hideChartMarketwatch: (state) => {
-            state.visible = false;
-            state.code = '';
-          },
+          // hideChartMarketwatch: (state) => {
+          //   state.visible = false;
+          //   state.code = '';
+          // },
     },
 });
 
-export const { showChartMarketwatch, hideChartMarketwatch  } = chartMarketwatchSlice.actions;
+export const { showChartMarketwatch  } = chartMarketwatchSlice.actions;
 export default chartMarketwatchSlice;
