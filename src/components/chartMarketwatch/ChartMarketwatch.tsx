@@ -1,5 +1,5 @@
 import { Tooltip } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ImagePriceBoard from "../../images/calendar-7-32.png";
 import ImageBuySell from "../../images/ppc-optimization-32.png";
 import ImageHandShake from "../../images/handshake-32.png";
@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { hideChartMarketwatch } from "./chartMarketwatchSlice";
 import SlidesMarketWatch from "../indexMarketWatch/SlidesMarketWatch";
 import SlidesIndexChartMarketwatch from "./SlidesIndexChartMarketwatch";
+import ReactApexChart from 'react-apexcharts';
 interface Data {
   RowID: string;
   Info: string[][];
@@ -23,6 +24,7 @@ interface Data {
 type ChartMarketwatchProps = {
   stock: string;
 };
+ 
 const ChartMarketwatch = () => {
   const stockCode = useSelector( (state: RootState) => state.chart.code);
  const symbolNew =  stockCode ==='' ? 'FTS':stockCode
@@ -40,9 +42,35 @@ const ChartMarketwatch = () => {
     fetchData();
   }, [stockCode]);
   //console.log(dataChart)
+  const [table, setTable] = useState(false)
+  const [ichart, setChart] = useState(false)
+  const handelTable = () => {
+    setTable(!table)
+    setChart(false)
+  }
+   const handelChart = () => {
+    setTable(false)
+    setChart(!ichart)
+   }
+   const options: any = {
+     chart: { type: 'bar', height: 200 },
+     height: ["200px"],
+     colors: ['#999999'],
+  plotOptions: { bar: { borderRadius: 5, horizontal: true } },
+  dataLabels: { enabled: false },
+  xaxis: { categories: ['Danh mục 1', 'Danh mục 2', 'Danh mục 3'] }
+};
+  const [chartData, setChartData] = useState(
+    {
+      series: [{
+      data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+    }],
+    options: options 
+    }
+  );
   return (
     <section className="chart-layout">
-      <div className="chart-layout-left float-left ">
+      <div className="float-left chart-layout-left ">
         <div className="chart-layout-header float-left h-[30px]">
           <div className="float-left w-[900px] index-chart">
             <div>
@@ -63,12 +91,13 @@ const ChartMarketwatch = () => {
 
           <DateTime />
         </div>
-        <div className="tv_chart_container w-full" id="tv_chart_container">chart</div>
+        <div className="w-full tv_chart_container" id="tv_chart_container">chart</div>
       </div>
 
       <div className="chart-layout-right float-right w-[350px]  ">
         <div className="mt-content">
-          <table className="no-index">
+
+          {table && <table  className="no-index">
             {dataChart.map((dataTable,index) => (
               <tbody key={index}>
                 <tr className="no-border">
@@ -262,7 +291,15 @@ const ChartMarketwatch = () => {
                   </tr> 
               </tbody>
             ))}
-          </table>
+          </table>}
+          {ichart &&<div className="absolute" id="chart">
+      <ReactApexChart
+        options={options}
+        series={chartData.series}
+        type="bar"
+        height={350}
+      />
+    </div>}
           <FooterChart/>
         </div>
         <div className="mt-menu-tab" style={{ width: "40px", float: "right" }}>
@@ -270,10 +307,10 @@ const ChartMarketwatch = () => {
             <li title="Danh mục">
               <img src={ImagePriceBoard} height={24} width={24} alt="Tab danh mục" />
             </li>
-            <li title="Top Mua/Bán" className="active">
+            <li onClick={handelTable} title="Top Mua/Bán" className="active">
               <img src={ImageBuySell} height={24} width={24} alt="Tab Top Mua/Bán" />
             </li>
-            <li title="Khớp lệnh">
+            <li onClick={handelChart}  title="Khớp lệnh">
               <img src={ImageHandShake} height={24} width={24} alt="Tab Khớp lệnh" />
             </li>
           </ul>

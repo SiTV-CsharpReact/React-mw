@@ -15,6 +15,7 @@ import {
   fStatusMarketUPCOM,
 } from "../../utils/util";
 import { AppContext } from "../../Context/AppContext";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 
 const SlidesMarketWatch = () => {
   const height = useContext(AppContext);
@@ -27,7 +28,10 @@ const SlidesMarketWatch = () => {
   const screenWidth = window.innerWidth;
   const slideWidth = 220;
   const slidesToShow = Math.floor(screenWidth / slideWidth);
-
+  
+  const settingTableData = useAppSelector(state => state.settingTable);
+  console.log("settingTableData", settingTableData)
+ 
   useEffect(() => {
     async function fetchData() {
       try {
@@ -128,7 +132,7 @@ const SlidesMarketWatch = () => {
         onMouseEnter={handleHoverLeft}
         onMouseLeave={handleLeaveLeft}
       />
-      <ul className=" my-1 col-priceboard class-chart">
+      <ul className="my-1 col-priceboard class-chart">
         <Slider
           {...(settings as any)}
           className="custom-carousel my-slider"
@@ -473,13 +477,13 @@ const SlidesMarketWatch = () => {
               ></span>
             </div>
           </li>
-          {/* <li className="dvChart">
+          <li className="dvChart">
   <div>
 <p className="text-sm "><span id="" className="mar_">VN30: </span><span id="VN30_IndexValue" className={`${setColorMenuMarket(valueHSX?.VN30_Change)} px-0.5`}>{valueHSX?.VN30_IndexValue}</span><span id="VN30_Image" className={`${iconColorMenuMarket(valueHSX?.VN30_Change)} px-0.5`}></span><span id="VN30_Change" className={`${setColorMenuMarket(valueHSX?.VN30_Change)} px-0.5`}>{valueHSX?.VN30_Change}</span><span id="" className={`${setColorMenuMarket(valueHSX?.VN30_ChangePercent)} px-0.5`}><span id="VN30_ChangePercent" className={`${setColorMenuMarket(valueHSX?.VN30_ChangePercent)} px-0.5`}>{valueHSX?.VN30_ChangePercent}</span>%</span></p>
 <p className="text-xs text-center"><span  className="mar_ spQtty">KL:</span><span id="VN30_TotalSharesAOM" className="mar_ txtIndex" >{valueHSX?.VN30_TotalSharesAOM}</span><span  className="mar_ spValue">GT:</span><span id="VN30_TotalValuesAOM" className="mar_ txtIndex" >{valueHSX?.VN30_TotalValuesAOM}</span><span  className="mar_ spUnit">tỷ</span></p>
         <p className="text-xs text-center"><span  className="arrowUp" /><span id="VN30_Up" className="maru txtIndex" >{valueHSX?.VN30_Up}</span><span  className="marc txtIndex">(<span id="VN30_Ceiling" >{valueHSX?.VN30_Ceiling}</span>)</span><span  className="square" /><span id="VN30_NoChange" className="marn txtIndex" >{valueHSX?.VN30_NoChange}</span><span  className="arrowDown" /><span id="VN30_Down" className="mard txtIndex" >{valueHSX?.VN30_Down}</span><span  className="marf txtIndex">(<span id="VN30_Floor" >{valueHSX?.VN30_Floor}</span>)</span><span  className="HO_MarketStat txtIndex">Liên tục</span></p>
         </div>
-</li> */}
+</li>
           <li className="dvChart">
             <div>
               <p className="text-sm ">
@@ -569,7 +573,7 @@ const SlidesMarketWatch = () => {
           </li>
           <li className="dvChart">
             <div id="<!Id>" className="<!Class>">
-              <p className="mard text-sm whitespace-nowrap">
+              <p className="text-sm mard whitespace-nowrap">
                 <span className="mar_">HNXSMCAP: </span>
                 <span
                   id="i28_3"
@@ -650,7 +654,7 @@ const SlidesMarketWatch = () => {
           </li>
           <li className="dvChart">
             <div id="<!Id>" className="<!Class>">
-              <p className="mard text-sm">
+              <p className="text-sm mard">
                 <span className="mar_">HNXLCAP: </span>
                 <span
                   id="i26_3"
@@ -731,7 +735,7 @@ const SlidesMarketWatch = () => {
           </li>
           <li className="dvChart">
             <div id="<!Id>" className="<!Class>">
-              <p className="mard text-sm">
+              <p className="text-sm mard">
                 <span className="mar_">HNXFIN: </span>
                 <span
                   id="i39_3"
@@ -812,7 +816,7 @@ const SlidesMarketWatch = () => {
           </li>
           <li className="dvChart">
             <div id="<!Id>" className="<!Class>">
-              <p className="mard text-sm">
+              <p className="text-sm mard">
                 <span className="mar_">HNXMAN: </span>
                 <span
                   id="i310_3"
@@ -893,7 +897,7 @@ const SlidesMarketWatch = () => {
           </li>
           <li className="dvChart">
             <div id="<!Id>" className="<!Class>">
-              <p className="mard text-sm">
+              <p className="text-sm mard">
                 <span className="mar_">HNXCON: </span>
                 <span
                   id="i311_3"
@@ -960,6 +964,10 @@ const SlidesMarketWatch = () => {
                 </span>
               </p>
             </div>
+            {/*  */}
+            <div>
+            </div>
+            {/*  */}
             <div>
               <span
                 className={`chart3d ${

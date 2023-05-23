@@ -15,7 +15,7 @@ const chartMarketwatchSlice = createSlice({
     initialState,
     reducers: {
         showChartMarketwatch: (state, action: PayloadAction<string>) => {
-            state.visible = true;
+            state.visible = !action.payload;
             state.code = action.payload;
             console.log( action.payload)
           },

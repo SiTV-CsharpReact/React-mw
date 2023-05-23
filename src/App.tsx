@@ -6,9 +6,14 @@ import SlidesMarketWatch from "./components/indexMarketWatch/SlidesMarketWatch";
 import Slide from "./pages/slide";
 import MySwiper from "./pages/swiper";
 import DraggableDiv from "./pages/dragable";
+import { useEffect, useState } from "react";
+import axios from "axios";
 function App() {
+         
+  
   return (
     <div>
+      
         <AppProvider>
       <Routes>
         <Route path="/" element={<Navigate to="/chung-khoan/HSX" />} />
