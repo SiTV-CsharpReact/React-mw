@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import excell from "../../images/excel.png"
 import pfd from "../../images/pdf.png"
-import * as XLSX from 'xlsx';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import * as XLSX from "xlsx";
+// import jsPDF from 'jspdf';
+// import 'jspdf-autotable';
 import axios from 'axios';
 import _ from 'lodash';
 const PendingOrders = () => {
@@ -16,7 +16,7 @@ const PendingOrders = () => {
       useEffect(() => {
         const fetchData = async () => {
           try {
-            const {data} = await axios.get("http://localhost:3005/items");
+            const {data} = await axios.get("http://localhost:5000/items");
             console.log("data", data);
             setData(data)
           } catch (error) {
@@ -71,34 +71,37 @@ const PendingOrders = () => {
        };
   
       
-    const handleExportToExcel = () => {
+    const handleExportToExcel = (e:any) => {
+      e.preventDefault();
       const table = document.getElementById('table-id');
       const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.table_to_sheet(table);
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
     XLSX.writeFile(workbook, 'filename.xlsx');
+   
   };
     const handleExportToPDF = () => {
-    const table = document.getElementById('table-id');
-      const doc: any = new jsPDF('p', 'pt');
-      doc.addFont('Helvetica', 'Helvetica', 'normal')
-      doc.setFont('Helvetica')
-      if (table) {
-        doc.autoTable({
-        html: table,
-        startX: 20,
-        styles: {
-          size:10,
-          fontSize: 4,
-          cellPadding: 6,
-          fillColor: 'gray',
-           font: 'Helvetica', lowercase: true,
-        },
-         tableWidth: 'auto',
-         margin: { top: 20 },
-      });
-    }
-    doc.save('filename.pdf');
+      console.log("oke")
+    // const table = document.getElementById('table-id');
+    //   const doc: any = new jsPDF('p', 'pt');
+    //   doc.addFont('Helvetica', 'Helvetica', 'normal')
+    //   doc.setFont('Helvetica')
+    //   if (table) {
+    //     doc.autoTable({
+    //     html: table,
+    //     startX: 20,
+    //     styles: {
+    //       size:10,
+    //       fontSize: 4,
+    //       cellPadding: 6,
+    //       fillColor: 'gray',
+    //        font: 'Helvetica', lowercase: true,
+    //     },
+    //      tableWidth: 'auto',
+    //      margin: { top: 20 },
+    //   });
+    // }
+    // doc.save('filename.pdf');
   };
   return (
     <div>

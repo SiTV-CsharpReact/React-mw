@@ -29,7 +29,6 @@ import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice"
 import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 import { Root } from "../../models/root";
-import 'react-tooltip/dist/react-tooltip.css';
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
