@@ -1,10 +1,14 @@
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button,Tooltip, Typography, IconButton, Box } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import "./menuBar.scss"
 import CloseIcon from '@mui/icons-material/Close';
+import { useDispatch } from 'react-redux';
+import settingSlice, { addTable } from './settingSlice';
 // const useStyles = makeStyles(() => ({
 //   paper: { minWidth: "500px" },
 // }));
+
+
 const SettingTable = () => {
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
@@ -14,6 +18,33 @@ const SettingTable = () => {
       const handleClose = () => {
         setOpen(false);
       };
+  
+   const dispatch = useDispatch()
+  const [isChecked, setIsChecked] = useState<boolean>(false)
+  const [iChecked, setIChecked] = useState<boolean>(false)
+
+
+  const handleCheckboxChange = (e :any) => {
+    const newVal = e.target as HTMLInputElement
+    let data = {
+      name: newVal.name
+    }
+    // console.log(data);
+    
+    // setIsChecked(newValue);
+    dispatch(addTable(data));
+  }
+
+  const handleCheckbox = (e :any) => {
+    const newVal = e.target as HTMLInputElement
+    let data = {
+      name: newVal.name
+    }
+    // console.log(data);
+    // setIsChecked(newValue);
+    dispatch(addTable(data));
+  }
+  
   return (
     <div className="btn-setting">
     <Tooltip title="Thiết lập Giao diện">
@@ -58,7 +89,7 @@ const SettingTable = () => {
       </DialogTitle>
       <DialogContent sx={{width:1050,maxWidth:"100%",padding:'0px 5px!important',overflowY:'unset'}}>
         <DialogContentText id="alert-dialog-description">
-          <div className="modal-body text-black">
+          <div className="text-black modal-body">
             <div
               className="item-settings index-settings"
               id="index-settings"
@@ -70,7 +101,7 @@ const SettingTable = () => {
                     <label className="lbText text-16px">Lựa chọn chỉ số</label>
                   </div>
                 </div>
-                <div className="settings-body pt-2">
+                <div className="pt-2 settings-body">
                   <div className="row">
                     <div
                       className="text-right"
@@ -80,13 +111,15 @@ const SettingTable = () => {
                     </div>
                     <div className="w-5/6 px-4">
                       <div className="row">
-                        <div className="col" >
+                      <div className="col">
                           <div className="clsAllIndex">
                             <input
                               type="checkbox"
                               className="cbCheck priceboard2"
                               name="VNXALL"
                               id="cbChartVNXALL"
+                              checked={isChecked}
+                              onChange={handleCheckboxChange}
                             />
                             <label htmlFor="cbChartVNXALL">VNXALL</label>
                           </div>
@@ -97,7 +130,9 @@ const SettingTable = () => {
                               type="checkbox"
                               className="cbCheck priceboard2"
                               name="VNI"
-                              id="cbChartVNI"
+                                id="cbChartVNI"
+                                checked={iChecked}
+                              onChange={handleCheckbox}
                             />
                             <label htmlFor="cbChartVNI">VNI</label>
                           </div>
@@ -342,7 +377,7 @@ const SettingTable = () => {
                      
                     </div>
                   </div>
-                  <div className="row w-5/6">
+                  <div className="w-5/6 row">
                     <div className="col" >
                       <div className="clsAllIndex">
                         <input

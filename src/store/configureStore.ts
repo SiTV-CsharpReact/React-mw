@@ -10,6 +10,8 @@ import popupTableSlice from '../components/popupTableMarketwatch/popupTableSlice
 import codeListSlice from '../components/menuBarMW/codeListSlice';
 import danhmucSlice from '../components/menuBarMW/danhmucSlice';
 import ministrySlice from '../components/menuBarMW/ministrySlice';
+import settingSlice from '../components/menuBarMW/settingSlice';
+import marketHSXSlice from '../components/indexMarketWatch/marketHSXSlice';
 
 export const store = configureStore({
     reducer:{
@@ -22,7 +24,9 @@ export const store = configureStore({
         popupTable:popupTableSlice.reducer,
         codeList:codeListSlice.reducer,
         categories:danhmucSlice.reducer,
-        ministry:ministrySlice.reducer
+        ministry: ministrySlice.reducer,
+        settingTable: settingSlice.reducer,
+        marketHSX:marketHSXSlice.reducer
     }
 })
 export type RootState = ReturnType<typeof store.getState>;

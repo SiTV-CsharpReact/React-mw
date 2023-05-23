@@ -265,13 +265,13 @@ const LayoutMarketWatch: React.FC = () => {
         
       {/* marketwatch */}
       <div
-        className="resize panel-horizontally bg-BGTableMarket text-white relative overflow-hidden"
+        className="relative overflow-hidden text-white resize panel-horizontally bg-BGTableMarket"
         style={{ height: heightComponent.heightMarketWatch }}
       >
         {/* priceboard */}
         <div
           id="panel-top"
-          className="resize panel-top bg-black "
+          className="bg-black resize panel-top "
           style={{ height: heightComponent.heightPriceBoard }}
         >
           <div
@@ -297,7 +297,7 @@ const LayoutMarketWatch: React.FC = () => {
               className="overflow-hidden dvFixed"
               style={{ height: heightComponent.heightTable }}
             >
-              <div className="flex justify-between h-30 bg-headerMenuTableMarket relative">
+              <div className="relative flex justify-between h-30 bg-headerMenuTableMarket">
                 <div className="flex ">
                   <ListMenuBar />
                   <DanhMuc />
@@ -362,7 +362,7 @@ const LayoutMarketWatch: React.FC = () => {
                 </div>
               </div>
               <div
-                className=" overflow-auto relative z-10 table_market"
+                className="relative z-10 overflow-auto  table_market"
                 id="tableHNX"
                 onContextMenu={handleContextMenu}
               >
@@ -407,18 +407,18 @@ const LayoutMarketWatch: React.FC = () => {
               className="mt-1 text-black"
             >
               <div className="panel__bottom__link flex justify-end mr-[40px] mb-[14px]">
-                <div className="group   px-2" onClick={showPendingOrder}>
-                  <span className=" size-input hover-text-blue-L ">
+                <div className="px-2 group" onClick={showPendingOrder}>
+                  <span className=" size-input hover-text-blue-L">
                     Lệnh chờ khớp
                   </span>
                 </div>
-                <div className="group   px-2" onClick={showTradingResult}>
-                  <span className=" size-input hover-text-blue-L ">
+                <div className="px-2 group" onClick={showTradingResult}>
+                  <span className=" size-input hover-text-blue-L">
                     KQ khớp lệnh trong phiên
                   </span>
                 </div>
-                <div className="group   px-2" onClick={showIntradayOrder}>
-                  <span className=" size-input hover-text-blue-L ">
+                <div className="px-2 group" onClick={showIntradayOrder}>
+                  <span className=" size-input hover-text-blue-L">
                     Lệnh trong ngày
                   </span>
                 </div>
@@ -462,10 +462,10 @@ const LayoutMarketWatch: React.FC = () => {
             {/* menu link */}
             <div
               style={{ display: heightComponent.orderForm ? "block" : "none" }}
-              className=" text-black"
+              className="text-black "
             >
-              <div className="panel__bottom__link flex justify-end items-center">
-                <div className="group px-2" onClick={showPendingOrder}>
+              <div className="flex items-center justify-end panel__bottom__link">
+                <div className="px-2 group" onClick={showPendingOrder}>
                   <span
                     className={`size-input hover-text-blue-L ${
                       heightComponent.orderCount === 1 ? "active" : ""
@@ -474,7 +474,7 @@ const LayoutMarketWatch: React.FC = () => {
                     Lệnh chờ khớp
                   </span>
                 </div>
-                <div className="group px-2" onClick={showTradingResult}>
+                <div className="px-2 group" onClick={showTradingResult}>
                   <span
                     className={`size-input hover-text-blue-L ${
                       heightComponent.orderCount === 2 ? "active" : ""
@@ -483,7 +483,7 @@ const LayoutMarketWatch: React.FC = () => {
                     KQ khớp lệnh trong phiên
                   </span>
                 </div>
-                <div className="group px-2" onClick={showIntradayOrder}>
+                <div className="px-2 group" onClick={showIntradayOrder}>
                   <span
                     className={`size-input hover-text-blue-L ${
                       heightComponent.orderCount === 3 ? "active" : ""
@@ -527,7 +527,7 @@ const LayoutMarketWatch: React.FC = () => {
           >
             <span
               id="spnTitlePanelBottom"
-              className="text-spnTitlePanelBottom cursor-pointer	text-xl font-normal	"
+              className="text-xl font-normal cursor-pointer text-spnTitlePanelBottom "
             >
               ĐẶT LỆNH
             </span>
@@ -535,7 +535,7 @@ const LayoutMarketWatch: React.FC = () => {
           </div>
           {/* form lệnh */}
           <div
-            className=" divBot panel-footer__ordrp text-black pb-5 overflow-auto"
+            className="pb-5 overflow-auto text-black  divBot panel-footer__ordrp"
             style={{
               display: hideShowOrderForm ? "block" : "none",
               height: heightComponent.heightOrderForm,
