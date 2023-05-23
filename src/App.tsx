@@ -9,8 +9,11 @@ import DraggableDiv from "./pages/dragable";
 import DynamicDashboard from "./components/dynamicDashboard/DynamicDashboard";
 import MyLayout from "./components/dynamicDashboard/MyLayout";
 function App() {
+         
+  
   return (
     <div>
+      
         <AppProvider>
       <Routes>
         <Route path="/" element={<Navigate to="/chung-khoan/HSX" />} />
