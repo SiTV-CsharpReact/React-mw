@@ -2,7 +2,7 @@ import React from 'react'
 
 const Box = () => {
   return (
-    <div>Box</div>
+    <div>Hello</div>
   )
 }
 

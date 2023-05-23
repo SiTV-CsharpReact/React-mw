@@ -407,4 +407,4 @@ const ListMenu = () => {
   );
 };
 
-export default ListMenu;
+export default React.memo(ListMenu);

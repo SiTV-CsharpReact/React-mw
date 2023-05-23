@@ -7,6 +7,7 @@ import Slide from "./pages/slide";
 import MySwiper from "./pages/swiper";
 import DraggableDiv from "./pages/dragable";
 import DynamicDashboard from "./components/dynamicDashboard/DynamicDashboard";
+import MyLayout from "./components/dynamicDashboard/MyLayout";
 function App() {
   return (
     <div>
@@ -16,6 +17,7 @@ function App() {
         <Route path="/chung-khoan" element={<Navigate to="/chung-khoan/HSX" />} />
         <Route path="/chung-khoan/:id" element={<LayoutMarketWatch />} />   
         <Route path="/dynamic-dashboard" element={<DynamicDashboard />} /> 
+        <Route path="/dynamic-dashboard-test" element={<MyLayout />} /> 
         {/* <Route path="/chung-khoan/danh-muc/:id" element={<LayoutMarketWatch />} /> */}
         <Route path="/report/ClientActivityRange" element={<SlidesMarketWatch />} />
         <Route path="/report/TradeLog" element={<DraggableDiv />} />
