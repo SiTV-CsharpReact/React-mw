@@ -17,8 +17,8 @@ function App() {
         <Route path="/" element={<Navigate to="/chung-khoan/HSX" />} />
         <Route path="/chung-khoan" element={<Navigate to="/chung-khoan/HSX" />} />
         <Route path="/chung-khoan/:id" element={<LayoutMarketWatch />} />   
-        <Route path="/dynamic-dashboard" element={<DynamicDashboard />} /> 
-        <Route path="/dynamic-dashboard-test" element={<MyLayout />} /> 
+        <Route path="/dynamic-dashboard-test" element={<DynamicDashboard />} /> 
+        <Route path="/dynamic-dashboard" element={<MyLayout />} /> 
         {/* <Route path="/chung-khoan/danh-muc/:id" element={<LayoutMarketWatch />} /> */}
         <Route path="/report/ClientActivityRange" element={<SlidesMarketWatch />} />
         <Route path="/report/TradeLog" element={<DraggableDiv />} />
