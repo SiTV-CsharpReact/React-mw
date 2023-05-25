@@ -10,8 +10,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import TableDanhMuc from "./components/tableMarketwatch/TableDanhMuc";
 function App() {
-         
-  
   return (
     <div>
       
