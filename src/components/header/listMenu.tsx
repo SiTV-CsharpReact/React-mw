@@ -301,7 +301,7 @@ const ListMenu = () => {
             <Link  to="/report/ReportTransBalance">Báo cáo tổng hợp số dư giao dịch  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <Link  to="/menu">Báo cáo tài sản   <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
+            <Link  to="/report/AssetReport2">Báo cáo tài sản   <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
             <Link  to="/report/ReportNAV">Báo cáo biến động tài sản ròng  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
