@@ -16,7 +16,6 @@ export const fetchCompanyAsync = createAsyncThunk<Root>(
     "table/fecthCompany",
     async () => {
         const res = await agent.Company.get();       
-        //console.log(res)      
         return res;
     }
 );
@@ -55,7 +54,6 @@ export const companySlice = createSlice({
             })
             .addCase(fetchCompanyAsync.rejected, (state, action) => {
                 state.productsLoaded = true;
-                console.log(action.payload);
                 state.status = "";
             })
 

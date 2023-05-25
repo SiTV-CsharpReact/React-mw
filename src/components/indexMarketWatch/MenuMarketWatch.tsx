@@ -31,8 +31,8 @@ const MenuMarketWatch = () => {
   const [isHoveringRight, setIsHoveringRight] = useState(false);
   const [sliderRef, setSliderRef] = useState<Slider | null>(null);
   const screenWidth = window.innerWidth;
-const slideWidth = 220;
-const slidesToShow = Math.floor(screenWidth / slideWidth);
+  const slideWidth = 220;
+  const slidesToShow = Math.floor(screenWidth / slideWidth);
   const [valueHSX, setValueHSX] = useState<ObjectMenuHSX | null>(null);
   const [valueHNX, setValueHNX] = useState<ObjectMenuHNX | null>(null);
   const [loading, setLoading] = useState(true);
@@ -118,34 +118,34 @@ const slidesToShow = Math.floor(screenWidth / slideWidth);
     // const currentSlide = sliderRef?.innerSlider
     // const totalSlides = sliderRef?.current?.slickGetOption('slidesToShow');
     if (sliderRef && (isHoveringLeft || isHoveringRight)) {
-         //console.log(sliderRef?.innerSlider)
-        if (isHoveringLeft) {
-          sliderRef.slickPrev();
-        }
-        if (isHoveringRight) {
-          sliderRef.slickNext();
-        }
+      //console.log(sliderRef?.innerSlider)
+      if (isHoveringLeft) {
+        sliderRef.slickPrev();
+      }
+      if (isHoveringRight) {
+        sliderRef.slickNext();
+      }
       // thời gian delay giữa các lần chuyển slide
     }
   }, [isHoveringLeft, isHoveringRight, sliderRef]);
 
   const handleHoverRight = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsHoveringRight(true);
-    e.currentTarget.classList.add('scrollingHotSpotRightVisible');
+    e.currentTarget.classList.add("scrollingHotSpotRightVisible");
   };
 
   const handleLeaveRight = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsHoveringRight(false);
-    e.currentTarget.classList.remove('scrollingHotSpotRightVisible');
+    e.currentTarget.classList.remove("scrollingHotSpotRightVisible");
   };
   const handleHoverLeft = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsHoveringLeft(true);
-    e.currentTarget.classList.add('scrollingHotSpotLeftVisible');
+    e.currentTarget.classList.add("scrollingHotSpotLeftVisible");
   };
 
   const handleLeaveLeft = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsHoveringLeft(false);
-    e.currentTarget.classList.remove('scrollingHotSpotLeftVisible');
+    e.currentTarget.classList.remove("scrollingHotSpotLeftVisible");
   };
   //console.log(valueHSX, valueHNX)
   // const updateQuote = (objRoot:any)=>{
@@ -580,7 +580,7 @@ const slidesToShow = Math.floor(screenWidth / slideWidth);
       // console.log(dataHNXRealTime)
     }
   };
-  
+
   const updateDataRealTime = (objRealtime: any) => {
     var dataHNXRealTime = JSON.parse(objRealtime);
     let arrDatas = [];
@@ -608,24 +608,22 @@ const slidesToShow = Math.floor(screenWidth / slideWidth);
 
   if (loading)
     return <div className="bg-headerMenuTableMarket">Loading...</div>;
-    const settings = {
-      // className: "center",
-      // centerMode: true,
-      dots: false,
-      speed: 500,
-      infinite: true, 
-      slidesToShow:slidesToShow,
-      slidesToScroll: slidesToShow,
-      // slidesToShow: 7, // Hiển thị 3 slide trên một lần trượt
-      // slidesToScroll: 7,
-      autoplay: isHoveringLeft || isHoveringRight,
-      autoplaySpeed: 500,
-      cssEase: 'linear',
-      center: "5px",
-    };
-  return (   
-         <SlidesMarketWatch/> 
-  );
+  const settings = {
+    // className: "center",
+    // centerMode: true,
+    dots: false,
+    speed: 500,
+    infinite: true,
+    slidesToShow: slidesToShow,
+    slidesToScroll: slidesToShow,
+    // slidesToShow: 7, // Hiển thị 3 slide trên một lần trượt
+    // slidesToScroll: 7,
+    autoplay: isHoveringLeft || isHoveringRight,
+    autoplaySpeed: 500,
+    cssEase: "linear",
+    center: "5px",
+  };
+  return <SlidesMarketWatch />;
 };
 
 export default React.memo(MenuMarketWatch);

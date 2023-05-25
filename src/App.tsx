@@ -1,11 +1,12 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import AssetReport from "./pages/Report/AssetReport";
+// import AssetReport from "./pages/Report/AssetReport";
 import LayoutMarketWatch from "./components/layoutMarketwatch/LayoutMarketWatch";
 import AppProvider from "./Context/AppContext";
 import SlidesMarketWatch from "./components/indexMarketWatch/SlidesMarketWatch";
 import DraggableDiv from "./pages/dragable";
 import DynamicDashboard from "./components/dynamicDashboard/DynamicDashboard";
 import MyLayout from "./components/dynamicDashboard/MyLayout";
+import AssetReport from "./components/AssetReport/AssetReport";
 function App() {
          
   
@@ -22,6 +23,7 @@ function App() {
         {/* <Route path="/chung-khoan/danh-muc/:id" element={<LayoutMarketWatch />} /> */}
         <Route path="/report/ClientActivityRange" element={<SlidesMarketWatch />} />
         <Route path="/report/TradeLog" element={<DraggableDiv />} />
+        <Route path="/report/AssetReport2" element={<AssetReport />} />
         {/* <Route path="/chung-khoan" element={<LayoutMarketWatch />} />    */}
       </Routes>
       </AppProvider>
