@@ -110,6 +110,7 @@ const LayoutMarketWatch: React.FC = () => {
     value: "",
     status: false,
   });
+  
   // tinh height khi đổi từ màn hình này sang màn hình khác
   useEffect(() => {
     function handleResize() {
@@ -174,7 +175,6 @@ const LayoutMarketWatch: React.FC = () => {
       heightTable: height - 27,
       orderForm: true,
     });
-    console.log(heightComponent);
   };
   // show hide order
   const hideOrderForm = () => {
@@ -265,7 +265,7 @@ const LayoutMarketWatch: React.FC = () => {
         
       {/* marketwatch */}
       <div
-        className="relative overflow-hidden text-white resize panel-horizontally bg-BGTableMarket"
+        className="resize panel-horizontally bg-BGTableMarket text-white relative z-50 overflow-hidden"
         style={{ height: heightComponent.heightMarketWatch }}
       >
         {/* priceboard */}
@@ -394,7 +394,7 @@ const LayoutMarketWatch: React.FC = () => {
             }`}
           >
             <div
-              className="relative left-[49%]"
+              className="relative left-[49%] z-40"
               id="divArrowBottomDown"
               style={{ display: heightComponent.orderForm ? "block" : "none" }}
               onClick={hideOrderForm}

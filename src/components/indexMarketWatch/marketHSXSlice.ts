@@ -1,37 +1,49 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios';
-import { ObjectMenuHSX } from '../../models/modelListMenuHSX';
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { ObjectMenuHSX } from "../../models/modelListMenuHSX";
+import axios from "axios";
 
-export const fetchAsyncHSX = createAsyncThunk('market/fetchMarket',async () => {
-    const resHSX = await axios.get(
-          `http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`
+// san HSX
+export const fetchHSXMarketAsync = createAsyncThunk<ObjectMenuHSX>(
+  "market/fetchMarketHSX",
+  async () => {
+    const responseHSX = await axios.get(
+      `http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`
     );
-    return resHSX.data;
-})
+    return responseHSX.data;
+  }
+);
 
 export const marketHSXSlice = createSlice({
-    name: 'market_fetchmarket',
-    initialState: {
-        valueHSX: {} as ObjectMenuHSX,
-        statrMarket:'idle'
+  name: "market_fetchMarketHSX",
+  initialState: {
+    isLoadingMarket: false,
+    marketHSX: {
+      valueHSX: {} as ObjectMenuHSX,
     },
-    reducers: {
-        getDataHSX: (state,action) => {
-            state.valueHSX = action.payload;
-        }
+    statusMarket: "idle",
+  },
+  reducers: {
+    getDataHSX: (state, action: PayloadAction<ObjectMenuHSX>) => {
+      state.marketHSX.valueHSX = action.payload;
     },
-    extraReducers:(builder)=> {
-        builder.addCase(fetchAsyncHSX.pending, state => {
-            state.statrMarket = 'loading';
-        }).addCase(fetchAsyncHSX.fulfilled, (state,action) => {
-            state.statrMarket = 'success';
-            state.valueHSX=action.payload
-        }).addCase(fetchAsyncHSX.rejected, (state, action) => {
-            state.statrMarket='failed';
-        })
-    },
-})
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchHSXMarketAsync.pending, (state) => {
+        state.statusMarket = "loading";
+      })
+      .addCase(fetchHSXMarketAsync.fulfilled, (state, action) => {
+        state.isLoadingMarket = true;
+        state.statusMarket = "success";
+        state.marketHSX.valueHSX = action.payload;
+      })
+      .addCase(fetchHSXMarketAsync.rejected, (state) => {
+        state.isLoadingMarket = true;
+        state.statusMarket = "failed";
+      });
+  },
+});
 
-export const { getDataHSX } = marketHSXSlice.actions
+export const { getDataHSX } = marketHSXSlice.actions;
 
 export default marketHSXSlice;
