@@ -4,9 +4,6 @@ import "./slide.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ObjectMenuHNX, ObjectMenuHSX } from "../../models/modelListMenuHSX";
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/pagination";
 import axios from "axios";
 import {
   setColorMenuMarket,
