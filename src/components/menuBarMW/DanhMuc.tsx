@@ -12,6 +12,7 @@ const DanhMuc = () => {
   const { isLoading, data, status } = useSelector(
     (state: RootState) => state.categories
   );
+  
 //  console.log({ isLoading, data, status })
  useEffect(() => {
   dispatch(fetchCategoryAsync());

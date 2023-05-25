@@ -97,28 +97,28 @@ export const tableSlice = createSlice({
         builder
         .addCase(fetchTableHNXAsync.fulfilled, (state, action) => {
             state.productsLoaded = true;
+            console.log('data',action.payload);
+            //productsAdapter.setAll(state, action.payload);
+            state.tableHNX = action.payload;
+            state.status = "idle";
+        })
+        .addCase(fetchDataTableHNXAsync.pending, (state) => {
+            state.status = "loading";
+        })
+        .addCase(fetchDataTableHNXAsync.fulfilled, (state, action) => {
+            state.productsLoaded = true;
             console.log(action.payload);
             //productsAdapter.setAll(state, action.payload);
             state.tableHNX = action.payload;
             state.status = "idle";
         })
-           .addCase(fetchDataTableHNXAsync.pending, (state) => {
-                state.status = "loading";
-            })
-           .addCase(fetchDataTableHNXAsync.fulfilled, (state, action) => {
-                state.productsLoaded = true;
-                console.log(action.payload);
-                //productsAdapter.setAll(state, action.payload);
-                state.tableHNX = action.payload;
-                state.status = "idle";
-            })
-            .addCase(fetchDataTableHSXAsync.fulfilled, (state, action) => {
-                state.productsLoaded = true;
-                console.log(action.payload);
-                //productsAdapter.setAll(state, action.payload);
-                state.tableHSX = action.payload;
-                state.status = "idle";
-            })
+        .addCase(fetchDataTableHSXAsync.fulfilled, (state, action) => {
+            state.productsLoaded = true;
+            console.log(action.payload);
+            //productsAdapter.setAll(state, action.payload);
+            state.tableHSX = action.payload;
+            state.status = "idle";
+        })
     },
 });
 
