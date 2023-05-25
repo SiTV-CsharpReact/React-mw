@@ -1157,12 +1157,13 @@ const TableMarketWatch = () => {
                             dataTable.Info[3][1]
                           )}`}
                           onClick={() => {
-                            console.log({
-                              a: dataTable.Info[1][1],
-                              b: dataTable.Info[5][1],
-                              c: dataTable.Info[2][1],
-                              d: dataTable.Info[3][1],
-                            });
+                            // console.log({
+                            //   a: dataTable.Info[1][1],
+                            //   b: dataTable.Info[5][1],
+                            //   c: dataTable.Info[2][1],
+                            //   d: dataTable.Info[3][1],
+                            // });
+                            alert("heheh");
                           }}
                         >
                           {formatNumberMarket(dataTable.Info[5][1])}

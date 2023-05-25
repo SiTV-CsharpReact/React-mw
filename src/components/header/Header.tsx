@@ -1,25 +1,28 @@
-import {
-  Box,
-  Tooltip,
-  Button
-} from "@mui/material";
+import { Box, Tooltip, Button } from "@mui/material";
 import "./styleHeader.css";
+import "./styleHeader.scss";
 import ListMenu from "./listMenu";
 import { Link } from "react-router-dom";
-// import "../../styles/sidebar.css";
 import "../../styles/header.css";
 import exchangeImage from "../../images/exchange1.png";
 import "font-awesome/css/font-awesome.min.css";
 import ListService from "./ListService";
 import NotiHeader from "./NotiHeader";
 import ProfileAccount from "./ProfileAccount";
-import { useAppDispatch } from "../../store/configureStore";
-import { setStatusChart } from "../menuBarMW/menuSlice";
+
+import useDarkMode from "./useDarkMode";
 const Header = () => {
+  const { mode } = useDarkMode();
+  console.log(mode);
+
   return (
-    <Box component="header" className="fpts-header" id="header-fpts">
+    <Box
+      component="header"
+      className={`fpts-header ${mode}-header`}
+      id="header-fpts"
+    >
       <div className="header-left">
-        <Link to="/" className="text-fontLogo font-bold italic">
+        <Link to="/" className={`text-fontLogo font-bold italic ${mode}-text`}>
           <span>Ez</span>
           <span className="text-colorTextLogo">Trade</span>
         </Link>
@@ -34,13 +37,13 @@ const Header = () => {
                 padding: "0px !important",
                 minWidth: 30,
                 marginBottom: 4,
-                marginRight:2
+                marginRight: 2,
               }}
             >
               <a href="/">
                 <img
-                width={19}
-                height={19}
+                  width={19}
+                  height={19}
                   src={exchangeImage}
                   alt="Giao dịch chứng khoán phát sinh"
                 />
@@ -48,11 +51,10 @@ const Header = () => {
             </Button>
           </Tooltip>
         </Box>
-        <ListService/>
-      <NotiHeader/>
-      <ProfileAccount/> 
+        <ListService />
+        <NotiHeader />
+        <ProfileAccount />
       </Box>
-    
     </Box>
   );
 };

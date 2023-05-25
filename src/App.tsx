@@ -7,7 +7,9 @@ import Slide from "./pages/slide";
 import MySwiper from "./pages/swiper";
 import DraggableDiv from "./pages/dragable";
 import AssetReport from "./components/AssetReport/AssetReport";
+import useDarkMode from "./components/header/useDarkMode";
 function App() {
+  const { mode } = useDarkMode();
   return (
     <div>
       <AppProvider>
