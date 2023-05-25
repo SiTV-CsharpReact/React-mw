@@ -74,21 +74,14 @@ const showKLPT = (value: string) => {
   }
 };
 const TableMarketWatch = () => {
-  const btnRef = useRef(null);
-  const dataTable = useSelector((state: RootState) => state.table.tableHNX);
-  const { INDEX } = useAppSelector((state) => state.show);
-  // console.log(height)
-  // const [popupVisible, setPopupVisible] = useState(false);
-  // const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 ,value:""});
-  //const [selectedRowId, setSelectedRowId] = useState<string | null>(null);
+  // 
+  const { INDEX } = useAppSelector((state: RootState) => state.settingMarketwatch);
   const [sortedColumn, setSortedColumn] = useState("");
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
-  const [companyStock, setCompanyStock] = useState<Root | null>(null);
   const dispatch = useAppDispatch();
   const [products, setProducts] = useState<any[]>([]);
   const params = useParams<{ id: string }>();
   const paramstock = stocks.find((paramstock) => paramstock.id === params.id);
-  const [dataCompany, setDataCompany] = useState([]); // const { productsLoaded,productParams} = useAppSelector(state => state.table); //const  products = useAppSelector(state => state.table.table);
   const codeList = useSelector((state: RootState) => state.codeList.codeList);
   // console.log(codeList, "okko")
   const handleDoubleClick = (e: any, val: any) => {

@@ -14,7 +14,7 @@ import React, { useState } from "react";
 import "./menuBar.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
-import { INDEX_TYPE, addMarket } from "../indexMarketWatch/marketShowSlice";
+import { INDEX_TYPE, paramsMarketwatch } from "../indexMarketWatch/marketShowSlice";
 
 export interface IData {
   key: string;
@@ -27,7 +27,7 @@ export interface IData {
 
 const SettingTable = () => {
   const [open, setOpen] = React.useState(false);
-  const { INDEX } = useAppSelector((state) => state.show);
+  const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
   const [type, setType] = useState(INDEX);
   const [text, setText] = useState("");
 
@@ -39,7 +39,7 @@ const SettingTable = () => {
 
   const handleClose = (t: string) => {
     if (t === "save") {
-      dispatch(addMarket(type));
+      dispatch(paramsMarketwatch(type));
       setOpen(false);
       setText("");
     } else {

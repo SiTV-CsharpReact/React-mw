@@ -30,7 +30,7 @@ ChartJS.register(
 );
 
 const ChartReport: any = (date: any) => {
-  const { assetReport } = useAppSelector((state) => state.report);
+  const { assetReport } = useAppSelector((state) => state.assetReport);
   // console.log(getMax(assetReport.Table2));
   console.log(date);
 

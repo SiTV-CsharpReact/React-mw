@@ -1,34 +1,27 @@
 import React, {
-  MouseEventHandler,
-  useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
 import MenuMarketWatch from "../indexMarketWatch/MenuMarketWatch";
-// import MenuBarMW from "../menuBarMW/MenuBarMW";
 import OrderMarketW from "../orderFormMarketwatch/OrderFormMarketWatch";
 import TableMarketWatch from "../tableMarketwatch/TableMarketWatch";
 import { useParams } from "react-router-dom";
 import { stocks } from "../../models/marketwacthTable";
 import TableGDTTMarketWatch from "../tableMarketwatch/TableGDTTMarketWatch";
 import TableThongKeMarketWatch from "../tableMarketwatch/TableThongKeMarketWatch";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/configureStore";
 import ChartMarketwatch from "../chartMarketwatch/ChartMarketwatch";
 import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import IntradayOrder from "../orderFormMarketwatch/IntradayOrder";
 import TradingResult from "../orderFormMarketwatch/TradingResult";
 import "./LayoutMarketWatch.scss";
-import { Button, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import ListMenuBar from "../menuBarMW/ListMenuBar";
 import DanhMuc from "../menuBarMW/DanhMuc";
 import SettingTable from "../menuBarMW/SettingTable";
 import DateTime from "../menuBarMW/DateTime";
-import { setStatusChart } from "../menuBarMW/menuSlice";
-//image
-import LineChart from "../../images/line-chart-32.png";
-import Close from "../../images/x28.png";
 import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import PopupTableMarketwatch from "../popupTableMarketwatch/popupTableMarketwatch";
 import { resizeState } from "../../models/resizeWindow";
@@ -36,6 +29,10 @@ import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatc
 import { DraggableData, DraggableEvent } from "react-draggable";
 import CompleteStock from "../menuBarMW/CompleteStock";
 import TableDanhMuc from "../tableMarketwatch/TableDanhMuc";
+//image
+import LineChart from "../../images/line-chart-32.png";
+import Close from "../../images/x28.png";
+
 function RenderTable() {
   const params = useParams<{ id: string }>();
   //console.log(params)

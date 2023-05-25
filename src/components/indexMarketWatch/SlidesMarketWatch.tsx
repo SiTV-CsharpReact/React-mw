@@ -16,7 +16,7 @@ import {
   fStatusMarketUPCOM,
 } from "../../utils/util";
 import { AppContext } from "../../Context/AppContext";
-import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { RootState, useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { fetchHSXMarketAsync } from "./marketHSXSlice";
 import { fetchHNXMarketAsync } from "./marketHNXSlice";
 
@@ -40,7 +40,7 @@ const SlidesMarketWatch = () => {
   const {
     marketHNX: { valueHNX },
   } = useAppSelector((state) => state.marketHNX);
-  const { INDEX } = useAppSelector((state) => state.show);
+  const { INDEX } = useAppSelector((state:RootState) => state.settingMarketwatch);
   useEffect(() => {
     dispatch(fetchHSXMarketAsync());
   }, [dispatch]);
