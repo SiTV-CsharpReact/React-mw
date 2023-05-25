@@ -30,6 +30,9 @@ import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 import { Root } from "../../models/root";
 import 'react-tooltip/dist/react-tooltip.css';
+import { dispatchDataTable } from "./tableThunk";
+import { useDispatch } from "react-redux";
+import { dispatchDataTableBuy } from "./tableBuy";
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
@@ -73,6 +76,7 @@ const showKLPT = (value: string) => {
     // }
   }
 };
+  
 const TableMarketWatch = () => {
   const dataTable = useSelector((state:RootState) => state.table.tableHNX);
   // console.log(height)
@@ -83,6 +87,15 @@ const TableMarketWatch = () => {
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
   const [companyStock, setCompanyStock] = useState<Root | null>(null);
   const dispatch = useAppDispatch();
+  const handleClick = (dataTable: any) => {
+    console.log("dataTable",dataTable)
+    dispatch(dispatchDataTable(dataTable));
+  };
+   const handleClickBuy = (dataTable: any) => {
+    console.log("dataTable",dataTable)
+     dispatch(dispatchDataTableBuy(dataTable))
+       ;
+  };
   const [products, setProducts] = useState<any[]>([]);
   const params = useParams<{ id: string }>();
   const paramstock = stocks.find((paramstock) => paramstock.id === params.id);
@@ -1079,6 +1092,9 @@ const TableMarketWatch = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )}`}
+                          onClick={() => handleClick({ma:dataTable.Info[0][1] , price:dataTable.Info[5][1]})}
+                          //{ma:dataTable.Info[0][1] , price:dataTable.Info[1][1]})
+
                         >
                           {formatNumberMarket(dataTable.Info[5][1])}
                         </td>
@@ -1093,6 +1109,9 @@ const TableMarketWatch = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )}`}
+                          onClick={() => handleClick({ma:dataTable.Info[0][1] , price:dataTable.Info[5][1]})}
+
+
                         >
                           {formatNumberMarket(dataTable.Info[6][1])}
                         </td>
@@ -1107,6 +1126,9 @@ const TableMarketWatch = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )}`}
+                              onClick={() => handleClick({ma:dataTable.Info[0][1] , price:dataTable.Info[7][1]})}
+                              //
+
                         >
                           {formatNumberMarket(dataTable.Info[7][1])}
                         </td>
@@ -1121,6 +1143,8 @@ const TableMarketWatch = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )}`}
+                          onClick={() => handleClick({ma:dataTable.Info[0][1] , price:dataTable.Info[7][1]})}
+                            //{ma:dataTable.Info[0][1] , price:dataTable.Info[1][1]}
                         >
                           {formatNumberMarket(dataTable.Info[8][1])}
                         </td>
@@ -1134,6 +1158,7 @@ const TableMarketWatch = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )}`}
+                              onClick={() => handleClick({ma:dataTable.Info[0][1] , price:dataTable.Info[9][1]})}
                         >
                           {checkSTTMarket(
                             formatNumberMarket(dataTable.Info[9][1]),
@@ -1153,6 +1178,8 @@ const TableMarketWatch = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )}`}
+                          onClick={() => handleClick({ma:dataTable.Info[0][1] , price:dataTable.Info[1][1]})}
+
                         >
                           {formatNumberMarket(dataTable.Info[10][1])}
                         </td>
@@ -1230,6 +1257,9 @@ const TableMarketWatch = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )}`}
+                         onClick={() => handleClickBuy({ma:dataTable.Info[0][1] , price:dataTable.Info[14][1]})}
+                            //{ma:dataTable.Info[0][1] , price:dataTable.Info[14][1]}
+
                         >
                           {checkSTTMarket(
                             formatNumberMarket(dataTable.Info[14][1]),
@@ -1248,6 +1278,9 @@ const TableMarketWatch = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )}`}
+                        onClick={() => handleClickBuy({ma:dataTable.Info[0][1] , price:dataTable.Info[14][1]})}
+
+
                         >
                           {formatNumberMarket(dataTable.Info[15][1])}
                         </td>
@@ -1262,6 +1295,9 @@ const TableMarketWatch = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )}`}
+                          onClick={() => handleClickBuy({ma:dataTable.Info[0][1] , price:dataTable.Info[16][1]})}
+                          //
+
                         >
                           {formatNumberMarket(dataTable.Info[16][1])}
                         </td>
@@ -1276,6 +1312,9 @@ const TableMarketWatch = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )}`}
+                        onClick={() => handleClickBuy({ma:dataTable.Info[0][1] , price:dataTable.Info[16][1]})}
+
+
                         >
                           {formatNumberMarket(dataTable.Info[17][1])}
                         </td>
@@ -1290,6 +1329,8 @@ const TableMarketWatch = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )}`}
+                         onClick={() => handleClickBuy({ma:dataTable.Info[0][1] , price:dataTable.Info[18][1]})}
+                            //{ma:dataTable.Info[0][1] , price:dataTable.Info[18][1]}
                         >
                           {formatNumberMarket(dataTable.Info[18][1])}
                         </td>
@@ -1304,6 +1345,9 @@ const TableMarketWatch = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )}`}
+                           onClick={() => handleClickBuy({ma:dataTable.Info[0][1] , price:dataTable.Info[18][1]})}
+
+
                         >
                           {formatNumberMarket(dataTable.Info[19][1])}
                         </td>

@@ -12,6 +12,8 @@ import danhmucSlice from '../components/menuBarMW/danhmucSlice';
 import ministrySlice from '../components/menuBarMW/ministrySlice';
 import settingSlice from '../components/menuBarMW/settingSlice';
 import marketHSXSlice from '../components/indexMarketWatch/marketHSXSlice';
+import { dataSlice } from '../components/tableMarketwatch/tableThunk';
+import {tableBuy} from '../components/tableMarketwatch/tableBuy';
 
 export const store = configureStore({
     reducer:{
@@ -26,7 +28,10 @@ export const store = configureStore({
         categories:danhmucSlice.reducer,
         ministry: ministrySlice.reducer,
         settingTable: settingSlice.reducer,
-        marketHSX:marketHSXSlice.reducer
+        marketHSX: marketHSXSlice.reducer,
+        dataTable: dataSlice.reducer,
+         dataBuy:tableBuy.reducer
+        
     }
 })
 export type RootState = ReturnType<typeof store.getState>;

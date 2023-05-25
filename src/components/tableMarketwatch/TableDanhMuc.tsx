@@ -5,6 +5,7 @@ import {
   useAppSelector,
 } from "../../store/configureStore";
 // import { fetchTableHNXAsync } from "./tableSlice";
+import { useDispatch } from "react-redux";
 import {
   checkSTTMarket,
   formatNumber,
@@ -27,8 +28,10 @@ import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice"
 import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 import { Root } from "../../models/root";
-import 'react-tooltip/dist/react-tooltip.css';
+import "react-tooltip/dist/react-tooltip.css";
 import { fetchDataTableHNXAsync, fetchDataTableHSXAsync } from "./tableSlice";
+import { dispatchDataTable } from "./tableThunk";
+
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
@@ -72,57 +75,68 @@ const showKLPT = (value: string) => {
     // }
   }
 };
+
 const TableDanhMuc = () => {
-  const dataTableHNX = useSelector((state:RootState) => state.table.tableHNX);
-  const dataTableHSX = useSelector((state:RootState) => state.table.tableHSX);
+  const dataTableHNX = useSelector((state: RootState) => state.table.tableHNX);
+  const dataTableHSX = useSelector((state: RootState) => state.table.tableHSX);
   const [sortedColumn, setSortedColumn] = useState("");
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
   const dispatch = useAppDispatch();
   const [products, setProducts] = useState<any[]>([]);
-    const codeList = useSelector(((state: RootState) => state.codeList.codeList))
-    useEffect(() => {
-        dispatch(fetchDataTableHNXAsync());
-        dispatch(fetchDataTableHSXAsync());
-     }, [dispatch]);
-    var arrS = codeList.split(',');
-    var arr_names:string[] = new Array(arrS.length)  
-    // const dataHSX = await resHSX.json();
-    // const dataHNX = await resHNX.json();
-  //  duy nhất 1 lần 
-    for (let i = 0; i < dataTableHSX.length; i++) {
-      const cSym = dataTableHSX[i]; // mã ck
-      if(arrS.includes(cSym)){
-        arr_names[arrS.indexOf(cSym)] = dataTableHSX[i];
-      }
-    }
+  const codeList = useSelector((state: RootState) => state.codeList.codeList);
+  useEffect(() => {
+    dispatch(fetchDataTableHNXAsync());
+    dispatch(fetchDataTableHSXAsync());
+  }, [dispatch]);
 
-    for (let i = 0; i < dataTableHNX.length; i++) {
-      const cSym = dataTableHNX[i]; // mã ck
-      if(arrS.includes(cSym)){
-        arr_names[arrS.indexOf(cSym)] = dataTableHNX[i];
+
+  const handleClick = (dataTable: any) => {
+    console.log("dataTable",dataTable);
+    // dispatch(dispatchDataTable());
+  };
+
+  
+  var arrS = codeList.split(",");
+  var arr_names: string[] = new Array(arrS.length);
+  // const dataHSX = await resHSX.json();
+  // const dataHNX = await resHNX.json();
+  //  duy nhất 1 lần
+  for (let i = 0; i < dataTableHSX.length; i++) {
+    const cSym = dataTableHSX[i]; // mã ck
+    if (arrS.includes(cSym)) {
+      arr_names[arrS.indexOf(cSym)] = dataTableHSX[i];
+    }
+  }
+
+  for (let i = 0; i < dataTableHNX.length; i++) {
+    const cSym = dataTableHNX[i]; // mã ck
+    if (arrS.includes(cSym)) {
+      arr_names[arrS.indexOf(cSym)] = dataTableHNX[i];
+    }
+  }
+  setProducts(arr_names);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const responsesttHNX = await axios.get(
+          `http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`
+        );
+        setStatusMarket(responsesttHNX.data);
+      } catch (error) {
+        console.log(error);
       }
     }
-    setProducts(arr_names);
-    useEffect(() => {
-        async function fetchData() {
-          try {
-            const responsesttHNX = await axios.get(
-              `http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`
-            );
-            setStatusMarket(responsesttHNX.data);
-          } catch (error) {
-            console.log(error);
-          }
-        }
-        fetchData();
-      }, []);
- 
+    fetchData();
+  }, []);
+
   const fetchDataCompany = async () => {
     await dispatch(fetchCompanyAsync());
   };
   // Call `fetchData` to fetch data when component mounts
   useEffect(() => {
-  if(!localStorage.getItem("CacheSi"))  {fetchDataCompany()} 
+    if (!localStorage.getItem("CacheSi")) {
+      fetchDataCompany();
+    }
   }, []);
   // sort products
   products.forEach((obj) =>
@@ -252,6 +266,7 @@ const TableDanhMuc = () => {
       setorder("DSC");
     }
   };
+
   return (
     <div>
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -871,7 +886,7 @@ const TableDanhMuc = () => {
                   >
                     {(provider) => (
                       <tr
-                      data-tr-value={dataTable.Info[0][1]}
+                        data-tr-value={dataTable.Info[0][1]}
                         // không đc pinned || không phải tr cuối cùng && tr hiện tại giống với tr sau || tr cuối cùng k đc pinned-> ''
 
                         className={`${
@@ -890,7 +905,6 @@ const TableDanhMuc = () => {
 
                         // style={{ backgroundColor: selectedRowId === dataTable.RowID ? 'yellow' : 'white' }}
                       >
-                 
                         <td
                           {...provider.dragHandleProps}
                           className={`${setColorMarket(
@@ -899,10 +913,12 @@ const TableDanhMuc = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )} text-left has-symbol company-tooltip`}
-                          data-tooltip={getCompanyNameByCode(dataTable.Info[0][1]).toString()}
+                          data-tooltip={getCompanyNameByCode(
+                            dataTable.Info[0][1]
+                          ).toString()}
                           id={`${dataTable.Info[1][1]}`}
                         >
-                             {/* <ReactTooltip id="my-tooltip"  className="example" classNameArrow="arrow__tooltip"  place="bottom"/> */}
+                          {/* <ReactTooltip id="my-tooltip"  className="example" classNameArrow="arrow__tooltip"  place="bottom"/> */}
                           <input
                             type="checkbox"
                             id={`cb${dataTable.RowID}`}
@@ -954,15 +970,19 @@ const TableDanhMuc = () => {
                         </td>
                         {/* G3 Mua*/}
                         <td
+                         
                           {...provider.dragHandleProps}
                           data-sort={dataTable.Info[8][1]}
                           id={`${dataTable.RowID}_${dataTable.Info[5][0]}`}
-                          className={` text-right ${setColorMarket(
+                          className={`text-right ${setColorMarket(
                             dataTable.Info[1][1],
                             dataTable.Info[5][1],
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )}`}
+                          // onClick={() => handleClick(dataTable) }
+                           onClick={() => console.log("oke") }
+                          // 
                         >
                           {formatNumberMarket(dataTable.Info[5][1])}
                         </td>

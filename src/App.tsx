@@ -8,6 +8,7 @@ import MySwiper from "./pages/swiper";
 import DraggableDiv from "./pages/dragable";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import TableDanhMuc from "./components/tableMarketwatch/TableDanhMuc";
 function App() {
          
   
@@ -19,7 +20,6 @@ function App() {
         <Route path="/" element={<Navigate to="/chung-khoan/HSX" />} />
         <Route path="/chung-khoan" element={<Navigate to="/chung-khoan/HSX" />} />
         <Route path="/chung-khoan/:id" element={<LayoutMarketWatch />} />   
-   
         {/* <Route path="/chung-khoan/danh-muc/:id" element={<LayoutMarketWatch />} /> */}
         <Route path="/report/ClientActivityRange" element={<SlidesMarketWatch />} />
         <Route path="/report/TradeLog" element={<DraggableDiv />} />
