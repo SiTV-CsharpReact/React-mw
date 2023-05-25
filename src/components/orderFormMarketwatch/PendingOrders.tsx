@@ -6,78 +6,101 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import axios from 'axios';
 import _ from 'lodash';
+import { uniqBy ,filter, sortBy } from 'lodash';
 const PendingOrders = () => {
 
       const [data, setData] = useState([]);
-      const [dataFiter, setDataFiter] = useState('');
-      const [dataMap, setDataMapp] = useState('');
-      const [sortData, setSortData] = useState('');
-  
+      const [dataAfter, setDataAfter] = useState({
+          dataCoppy: [],
+          dataValue: [],
+          dataFiter: '',
+          dataMap: '',
+          sortData: '',
+        });
+       useEffect(() => {
+            fetchDataValue();
+                 }, []);
+                      const fetchDataValue = async () => {
+                try {
+                  const response = await axios.get('http://localhost:3005/items');
+                  console.log("response", response);
+                  const jsonData = response.data;
+                  const uniqueData = uniqBy(jsonData, 'ASTOCKCODE');
+                  setDataAfter((prevState:any) => ({
+                    ...prevState,
+                    dataValue: uniqueData,
+                  }));
+                } catch (error) {
+                  console.log(error);
+                }
+              };
+
+
       useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const {data} = await axios.get("http://localhost:3005/items");
-            console.log("data", data);
-            setData(data)
-          } catch (error) {
-              console.log("error", error);
-          }
-        };
-        fetchData();
-      }, []);
-      // const handleRenderList = () => {
-      //   if (!dataFiter) return data;
-      //   return data.filter((a: any) => a.AEXCHANGE.toUpperCase() === dataFiter)
-      // }
-      // const handleRenderLis = () => {
-      //     if (!dataMap) return data;
-      //       return  data.filter((a: any) => a.ASTOCKCODE.toUpperCase() === dataMap)
-      // }
-          const handleRenderListCombined = (): any => {
-            let filteredData: any = data;
+      const fetchData = async () => {
+        try {
+          const { data } = await axios.get("http://localhost:3005/items");
+          setData(data)
+          console.log("data", data);
+          setDataAfter((prevState) => ({
+            ...prevState,
+            dataCoppy: data,
+          }));
+        } catch (error) {
+          console.log("error", error);
+        }
+      };
+      fetchData();
+    }, []);
 
-            if (dataFiter) {
-              filteredData = filteredData.filter((item: any) => item.AEXCHANGE.toUpperCase() === dataFiter);
+        const hanDelSubmit = () => {
+            let filteredData: any = [...dataAfter.dataCoppy];
+            if (dataAfter.dataFiter) {
+              filteredData = filteredData.filter(
+                (item: any) => item.AEXCHANGE.toUpperCase() === dataAfter.dataFiter
+              );
             }
-
-            if (dataMap) {
-              filteredData = filteredData.filter((item: any) => item.ASTOCKCODE.toUpperCase() === dataMap);
+            if (dataAfter.dataMap) {
+              filteredData = filteredData.filter(
+                (item: any) => item.ASTOCKCODE.toUpperCase() === dataAfter.dataMap
+              );
             }
-
-            return filteredData;
+            if (dataAfter.sortData === "asc") {
+              const array = filteredData.sort((a: any, b: any) =>
+                a.AEXCHANGE.toUpperCase() > b.AEXCHANGE.toUpperCase() ? -1 : 1
+              );
+              console.log("array", array);
+                setData(array);
+            } else {
+              const array = filteredData.sort((a: any, b: any) =>
+                a.AEXCHANGE.toUpperCase() < b.AEXCHANGE.toUpperCase() ? -1 : 1
+              );
+              console.log("array", array);
+              setData(array);
+            }
           };
 
 
-          const mangDaSapXep: any = handleRenderListCombined();
 
-           
-         
-        const hanDelSubmit = () => {
-         if (sortData === "asc") {
-           const array = data.sort((a: any, b: any) =>
-             a.AEXCHANGE.toUpperCase() > b.AEXCHANGE.toUpperCase() ? -1 : 1
-           )
-           console.log("array", array);
-           setData(array);
-         }
-         else {
-           const array = data.sort((a: any, b: any) =>
-             a.AEXCHANGE.toUpperCase() < b.AEXCHANGE.toUpperCase() ? -1 : 1
-           )
-           console.log("array", array);
-           setData(array);
-         }
-         
-       };
-  
       
-    const handleExportToExcel = () => {
-      const table = document.getElementById('table-id');
-      const workbook = XLSX.utils.book_new();
-    const worksheet = XLSX.utils.table_to_sheet(table);
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-    XLSX.writeFile(workbook, 'filename.xlsx');
-  };
+  const handleExportToExcel = (e: any) => {
+  e.preventDefault();
+
+  const table = document.getElementById('table-id');
+  const workbook = XLSX.utils.book_new();
+  const worksheet = XLSX.utils.table_to_sheet(table);
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+  const excelData = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  const data = new Blob([excelData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const url = URL.createObjectURL(data);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'filename.xlsx';
+  link.dispatchEvent(new MouseEvent('click'));
+  URL.revokeObjectURL(url);
+};
+
+
     const handleExportToPDF = () => {
     const table = document.getElementById('table-id');
       const doc: any = new jsPDF('p', 'pt');
@@ -115,50 +138,63 @@ const PendingOrders = () => {
       <div className='flex items-center gap-4'>
         <div className=''>
           <label  className='block mb-2 text-[12px]] leading-3 font-semibold text-[#333333]' htmlFor="">Sàn GD</label>
-          <select onChange={(e)=>setDataFiter(e.target.value)} style={{border:"1px solid #ccc" ,color:'#555'}} className=' border  border-inherit rounded-md h-[37px]' name="" id="sanGD">
-              <option className='text-[12px] pb-2' value="">Tất cả</option>
-              <option  value="HNX.LISTED" className='text-[12px] pb-2'>HNX.LISTED</option>
-              <option value="HSX"  className='text-[12px] pb-2'>HSX</option>
+          <select
+  onChange={(e) => setDataAfter((prevState) => ({ ...prevState, dataFiter: e.target.value }))}
+  style={{ border: "1px solid #ccc", color: "#555" }}
+  className="border leading-1 border-inherit rounded-md h-[37px]"
+  name=""
+  id="sanGD"
+>
+
+              <option className='text-[10px] pb-2' value="">Tất cả</option>
+              <option  value="HNX.LISTED" className='text-[10px] pb-2'>HNX.LISTED</option>
+              <option value="HSX"  className='text-[10px] pb-2'>HSX</option>
          </select>
         </div>
 
         <div>
-          <label className='block  mb-2 text-[12px]] leading-3 font-semibold text-[#333333]' htmlFor="">Mã CK</label>
-          <select onChange={(e)=>setDataMapp(e.target.value)} style={{border:"1px solid #ccc" ,color:'#555'}} className='  h-[37px] border rounded-md border-inherit' name="" id="">
-          <option  className='text-[12px] pb-2' value="">Tất cả</option>
-          <option  className='text-[12px] pb-2' value="AAV">AAV</option>
-          <option  className='text-[12px] pb-2' value="BAB">BAB</option>
-          <option  className='text-[12px] pb-2' value="C69">C69</option>
-          <option  className='text-[12px] pb-2' value="BAB">BAB</option>
-          <option  className='text-[12px] pb-2' value="AAM">AAM</option>
-         </select>
-        </div>
+            <label className='block mb-2 text-[12px] leading-3 font-semibold text-[#333333]' htmlFor="">Mã CK</label>
+                  <select
+                onChange={(e) => setDataAfter((prevState) => ({ ...prevState, dataMap: e.target.value }))}
+                style={{ border: "1px solid #ccc", color: "#555" }}
+                className="h-[37px] border rounded-md border-inherit"
+                name=""
+                id=""
+              >
+                <option className="text-[10px] pb-2" value="">Tất cả</option>
+                {dataAfter.dataValue.map((items: any, index: number) => (
+                  <option key={index} className="text-[12px] pb-2" value={items.ASTOCKCODE}>{items.ASTOCKCODE}</option>
+                ))}
+      </select>
 
-        <div>
-          <label className='block  mb-2 text-[12px]] leading-3 font-semibold text-[#333333]' htmlFor="">Sắp xếp theo</label>
-          <select onChange={(e)=>setSortData(e.target.value)} style={{border:"1px solid #ccc" ,color:'#555'}} className='  h-[37px] border rounded-md border-inherit' name="" id="">
-          <option  className='text-[12px] pb-2' value="">Tất cả</option>
-          <option  className='text-[12px] pb-2' value="desc">Mã CK</option>
-          <option  className='text-[12px] pb-2' value="asc" >Số lượng</option>
-         </select>
           </div>
-          
-        <div>
-          <label className='block  mb-2 text-[12px] leading-3 font-semibold text-[#333333]' htmlFor="">T.tự sắp xếp</label>
-          <select onChange={(e)=>setSortData(e.target.value)} style={{border:"1px solid #ccc" ,color:'#555'}} className='  h-[37px]  border rounded-md border-inherit' name="" id="">
-          <option className='text-[12px] pb-0 text-gray-500' value="">Tất cả</option>
-          <option className='text-[12px] pb-0 text-gray-500' value="asc">Tăng dần</option>
-          <option className='text-[12px] pb-0 text-gray-500' value="desc">Giảm dần</option>
-         </select>
-        </div>
+
+
+        <div className=''>
+  <label className='block mb-2 text-[12px] leading-3 font-semibold text-[#333333]' htmlFor=''>Sắp xếp theo</label>
+  <select onChange={(e) => setDataAfter(prevState => ({ ...prevState, sortData: e.target.value }))} style={{ border: '1px solid #ccc', color: '#555' }} className='h-[37px] border rounded-md border-inherit' name='' id=''>
+    <option className='text-[10px] pb-2' value=''>Tất cả</option>
+    <option className='text-[10px] pb-2' value='desc'>Mã CK</option>
+    <option className='text-[10px] pb-2' value='asc'>Số lượng</option>
+  </select>
+</div>
+
+<div>
+  <label className='block mb-2 text-[12px] leading-3 font-semibold text-[#333333]' htmlFor=''>Tự sắp xếp</label>
+  <select onChange={(e) => setDataAfter(prevState => ({ ...prevState, sortData: e.target.value }))} style={{ border: '1px solid #ccc', color: '#555' }} className='h-[37px] border rounded-md border-inherit' name='' id=''>
+    <option className='text-[10px] text-gray-500' value='asc'>Tăng dần</option>
+    <option className='text-[10px] pb-0 text-gray-500' value='desc'>Giảm dần</option>
+  </select>
+</div>
+
 
         <button onClick={hanDelSubmit} className='p-2 cursor-pointer mt-5 pl-5 pr-5 rounded-md text-white text-[13px] font-medium uppercase bg-[#0055ba]'>
           Cập nhật
         </button>
-        <div className='flex gap-2 mt-5 mr-8'>
+        <form className='flex gap-2 mt-5 mr-8'>
          <img className='cursor-pointer ' onClick={handleExportToExcel}  src={ excell} alt='excel' />
           <img className='cursor-pointer ' onClick={handleExportToPDF} src={ pfd}  alt='pfd'/>
-        </div>
+        </form>
       </div>
       </div>
       <div className='mt-2 ml-8 mr-8'>
@@ -210,27 +246,28 @@ const PendingOrders = () => {
         </thead>
 
           <tbody>
-             {mangDaSapXep.map((item:any, index:any) => {
+             {data.map((item:any, index:any) => {
         
         return <tr key={index}>
-          <td style={{ border: "1px solid #ccc", color: '#555', backgroundColor: "rgba(251,246,213)" }}></td>
-              <td style={{ border: "1px solid #ccc", color: '#555',backgroundColor:"rgba(251,246,213)" }}
+          <td style={{ border: "1px solid #ccc", color: '#555', }}></td>
+              <td style={{ border: "1px solid #ccc", color: '#555' }}
                 className='text-center '>
                 <p className=' bg-[#F3F3F3] border mx-auto border-black w-[40px] rounded-sm '>Hủy</p>
                 </td> 
-              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555' ,backgroundColor:"rgba(251,246,213)"}}>{ item.ASTOCKCODE}</td>
-              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555' ,backgroundColor:"rgba(251,246,213)"}}> { item.AORDERTYPE}</td>
-              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555' ,backgroundColor:"rgba(251,246,213)"}}> { item.APRODUCTTYPE_VN} </td>
-              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555' ,backgroundColor:"rgba(251,246,213)"}}>  { item.AQUANTITY} </td>
-              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555' ,backgroundColor:"rgba(251,246,213)"}}>  { item.AQUANTITY} </td>
-              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555' ,backgroundColor:"rgba(251,246,213)"}}>  { item.APRICE} </td>
-              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555' ,backgroundColor:"rgba(251,246,213)"}}>  { item.AORDERSTATUS_VN} </td>
-              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555' ,backgroundColor:"rgba(251,246,213)"}}>  { item.AMESSAGE_VN} </td>
-              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555' ,backgroundColor:"rgba(251,246,213)"}}>  { item.AEXCHANGE} </td>
-              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555' ,backgroundColor:"rgba(251,246,213)"}}>  { item.APLACEDBY} </td>
-              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555' ,backgroundColor:"rgba(251,246,213)"}}>  { item.ADATETIME} </td>
-            </tr>
-      })}
+              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555'}}>{ item.ASTOCKCODE}</td>
+              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555'}}> { item.AORDERTYPE}</td>
+              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555'}}> { item.APRODUCTTYPE_VN} </td>
+              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555'}}>  { item.AQUANTITY} </td>
+              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555'}}>  { item.AQUANTITY} </td>
+              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555'}}>  { item.APRICE} </td>
+              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555'}}>  { item.AORDERSTATUS_VN} </td>
+              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555'}}>  { item.AMESSAGE_VN} </td>
+              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555'}}>  { item.AEXCHANGE} </td>
+              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555'}}>  { item.APLACEDBY} </td>
+              <td className='text-center' style={{border:"1px solid #ccc" ,color:'#555'}}>  { item.ADATETIME} </td>
+          </tr>
+             })}
+
           </tbody>
         </table>
       </div>  
@@ -242,3 +279,4 @@ const PendingOrders = () => {
 }
 
 export default PendingOrders
+

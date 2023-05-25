@@ -298,7 +298,10 @@ th.sort-table.active::after {
     border-radius: 5px;
     color:white;
 }
-
+.select-aua{
+    line-height: 50px;
+    -webkit-appearance: menulist-button;  
+}
 
 @tailwind base;
 @tailwind components;
