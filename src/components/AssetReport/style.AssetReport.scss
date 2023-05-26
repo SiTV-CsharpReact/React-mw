@@ -19,12 +19,14 @@
 
 .body__content {
   &__asset_report {
-    margin: 13px 20px;
+    margin: 13px 20px 0;
   }
 }
 .report__tabcondition_BCTS {
   display: grid;
   margin-top: 6px;
+  grid-template-columns: 395px 1fr;
+  gap: 15px;
   @media screen and (min-width: 1700px) and (max-width: 1950px) {
     grid-template-columns: 400px 1fr;
   }
@@ -34,10 +36,11 @@
   width: 100%;
   padding-right: 5px;
   line-height: 25px;
+  background: #ececec;
+
   > div {
     margin-right: 10px;
     padding: 15px 7px;
-    background: #ececec;
     > table {
       width: 100%;
       background: transparent;
@@ -110,6 +113,30 @@
   &::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+  &.dark-bg {
+    > table {
+      thead {
+        background: #303030 !important;
+      }
+      tbody {
+        background: #303030 !important;
+        tr:hover {
+          background: none;
+        }
+        tr:nth-child(even) {
+          background: #1e1e1e;
+        }
+      }
+      tfoot {
+        tr {
+          td {
+            background-color: #303030 !important;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
   > table {
     width: 100%;
     color: #002060;
@@ -154,9 +181,9 @@
         height: 25px !important;
         td {
           position: sticky;
+          background-color: #ececec !important;
           z-index: 1;
           bottom: -1px;
-          background-color: #ececec !important;
         }
       }
     }
@@ -187,4 +214,31 @@
     border-bottom: 7px solid transparent;
     border-right: 7px solid #fffff0;
   }
+}
+
+.dark-bg {
+  background: #303030 !important;
+  .navigation {
+    li {
+      &::before {
+        float: left;
+        margin: 4px 2px 2px;
+        content: "";
+        width: 0;
+        height: 0;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-left: 7px solid #fff !important;
+        margin-right: 5px;
+        padding-top: 1px;
+        padding-right: 4px;
+      }
+    }
+  }
+}
+.dark-text {
+  color: #fff !important;
+}
+.light-text {
+  color: #000 !important;
 }

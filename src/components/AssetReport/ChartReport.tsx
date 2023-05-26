@@ -30,6 +30,7 @@ ChartJS.register(
 );
 
 const ChartReport: any = (date: any) => {
+  const { mode } = useAppSelector((state) => state.settingColorMode);
   const { assetReport } = useAppSelector((state) => state.assetReport);
   // console.log(getMax(assetReport.Table2));
   console.log(date);
@@ -120,10 +121,16 @@ const ChartReport: any = (date: any) => {
         position: "bottom" as const,
         labels: {
           usePointStyle: true,
+          // fontColor: `white`,
         },
       },
     },
     scales: {
+      x: {
+        ticks: {
+          color: `${mode === "light" ? "#000" : "#fff"}`,
+        },
+      },
       y: {
         beginAtZero: false,
         ticks: {
@@ -133,6 +140,7 @@ const ChartReport: any = (date: any) => {
           suggestedMax: getMax(assetReport.Table2),
           // forces step size to be 50 units
           stepSize: 200000,
+          color: `${mode === "light" ? "#000" : "#fff"}`,
         },
       },
     },

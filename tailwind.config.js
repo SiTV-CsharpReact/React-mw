@@ -80,5 +80,6 @@ module.exports = {
       "16pxi": "16px !important",
     },
   },
+  darkMode: "class",
   plugins: [require("flowbite/plugin")],
 };

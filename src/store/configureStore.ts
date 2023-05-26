@@ -12,6 +12,7 @@ import { marketHSXSlice } from "../components/indexMarketWatch/marketHSXSlice";
 import settingMarketWatchSlice from "../components/indexMarketWatch/marketShowSlice";
 import marketHNXSlice from "../components/indexMarketWatch/marketHNXSlice";
 import assetReportSlice from "../components/AssetReport/AssetReportSlice";
+import changeThemeModeSlice from "../components/header/DarkModeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,7 +23,7 @@ export const store = configureStore({
     table: tableSlice.reducer,
     // show hide chart 
     chart: chartMarketwatchSlice.reducer,
-    // Popup theo mã 
+    // Popup theo mã
     popupTable: popupTableSlice.reducer,
     // code list khi click danh mục
     codeList: codeListSlice.reducer,
@@ -32,12 +33,14 @@ export const store = configureStore({
     ministry: ministrySlice.reducer,
     // Get data Index của sàn hsx
     marketHSX: marketHSXSlice.reducer,
-        // Get data Index của sàn hnx
+    // Get data Index của sàn hnx
     marketHNX: marketHNXSlice.reducer,
     // cài đặt giao diện trang marketwatch
     settingMarketwatch: settingMarketWatchSlice.reducer,
     //báo cáo tài sản
     assetReport: assetReportSlice.reducer,
+    // change theme 
+    settingColorMode: changeThemeModeSlice.reducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;
