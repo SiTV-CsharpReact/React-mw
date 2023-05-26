@@ -25,12 +25,21 @@ const Category ={
 const Ministry ={
     get: () => requests.get('http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/s5g/default/ministry'),
 }
+const ListDataTable = {
+    list: (floor :  string ,valueParam :  string  ) => requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?${valueParam}`)
+}
+const dataGDTTtable = {
+    listPt : (floor : string)=>requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=pt`),
+    listBi : (floor : string)=>requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=bi`)
+}
 const agent = {
     TableHNX,
     TableHSX,
     Company,
     Category,
-    Ministry
+    Ministry,
+    ListDataTable,
+    dataGDTTtable
 }
 export default agent;
 // import axios, { AxiosInstance, AxiosResponse } from "axios";
