@@ -7,17 +7,16 @@ import menuImage from "../../images/menu.png";
 import avatarImage from "../../images/avatar_ano.png";
 import { useTranslation } from "react-i18next";
 import useDarkMode from "./useDarkMode";
+import { useAppSelector } from "../../store/configureStore";
 
-interface Mode {
-  mode: string;
-}
 // import { changeTheme } from "./DarkModeSlice";
 const ProfileAccount: any = () => {
   const { i18n } = useTranslation(["home", "report"]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openAccount, setOpenAccount] = useState(false);
-  // const mode = "light";
-  const { toogleSwitch, mode } = useDarkMode();
+  const mode = "light";
+  // const { toogleSwitch, mode } = useDarkMode();
+  // const { mode } = useAppSelector((state) => state.settingColorMode);
 
   // const { mode } = useAppSelector((state) => state.mode);
   // const dispatch = useDispatch();
@@ -216,7 +215,7 @@ const ProfileAccount: any = () => {
                 className="px-3 text-textLanguage absolute left-[200px]"
                 // onClick={() => changeLanguage("VN")}
               >
-                <span className="mx-1" onClick={() => toogleSwitch("light")}>
+                {/* <span className="mx-1" onClick={() => toogleSwitch("light")}>
                   <i className="fa fa-sun-o" aria-hidden="true"></i>
                 </span>
                 <span className="mx-1" onClick={() => toogleSwitch("dark")}>
@@ -224,7 +223,7 @@ const ProfileAccount: any = () => {
                 </span>
                 <span className="mx-1" onClick={() => toogleSwitch("green")}>
                   <i className="fa fa-meh-o" aria-hidden="true"></i>
-                </span>
+                </span> */}
               </span>
               {/* <span>|</span> */}
             </li>

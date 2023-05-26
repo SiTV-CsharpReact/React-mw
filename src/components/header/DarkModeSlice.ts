@@ -7,7 +7,7 @@ interface ModeState {
 
 const mode =
   localStorage.getItem("theme") !== null
-    ? JSON.parse(localStorage.getItem("theme") as string)
+    ? (localStorage.getItem("theme") as string)
     : "light";
 const initialState: ModeState = {
   mode: mode,

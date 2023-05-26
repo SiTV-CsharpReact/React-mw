@@ -16,27 +16,29 @@ import changeThemeModeSlice from "../components/header/DarkModeSlice";
 
 export const store = configureStore({
   reducer: {
-    // Get danh sách công ty để map với stockcode 
+    // Get danh sách công ty để map với stockcode
     company: companySlice.reducer,
     // Get Data Table market watch
     table: tableSlice.reducer,
-    // 
+    //
     menu: menuSlice.reducer,
-    // show hide chart 
+    // show hide chart
     chart: chartMarketwatchSlice.reducer,
-    // Popup theo mã 
+    // Popup theo mã
     popupTable: popupTableSlice.reducer,
     codeList: codeListSlice.reducer,
     categories: danhmucSlice.reducer,
     ministry: ministrySlice.reducer,
     // Get data Index của sàn hsx
     marketHSX: marketHSXSlice.reducer,
-        // Get data Index của sàn hnx
+    // Get data Index của sàn hnx
     marketHNX: marketHNXSlice.reducer,
     // cài đặt giao diện trang marketwatch
     settingMarketwatch: settingMarketWatchSlice.reducer,
     //báo cáo tài sản
     assetReport: assetReportSlice.reducer,
+    // change theme 
+    settingColorMode: changeThemeModeSlice.reducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;
