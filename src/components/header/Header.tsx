@@ -15,6 +15,7 @@ import NotiHeader from "./NotiHeader";
 import ProfileAccount from "./ProfileAccount";
 import { useAppDispatch } from "../../store/configureStore";
 import { setStatusChart } from "../menuBarMW/menuSlice";
+import React from "react";
 const Header = () => {
   return (
     <Box component="header" className="fpts-header" id="header-fpts">
@@ -57,4 +58,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default React.memo(Header);

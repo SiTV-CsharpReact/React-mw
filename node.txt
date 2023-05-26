@@ -1526,3 +1526,70 @@ const [divTwo, setDivTwo] = useState<number>(divTwoHeight);
 };
 
 export default DraggableDiv;
+
+
+
+
+// export const fetchTableHNXAsync = createAsyncThunk<[]>(
+//     "table/fecthTableHNX",
+//     async () => {
+//         const res = await fetch('http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=HNXIndex');
+      
+//         const data = await res.json();
+//         console.log(data)
+//         return data;
+//     }
+// );
+// export const fetchTableHNX30Async = createAsyncThunk<[]>(
+//     "table/fecthTableHN30",
+//     async () => {
+//         const res = await fetch('http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=HNX30');
+      
+//         const data = await res.json();
+//         console.log(data)
+//         return data;
+//     }
+// );
+// export const fetchTableBONDAsync = createAsyncThunk<[]>(
+//     "table/fecthTableBOND",
+//     async () => {
+//         const res = await fetch('http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=BOND');
+      
+//         const data = await res.json();
+//         console.log(data)
+//         return data;
+//     }
+// );
+// export const fetchStatusAsync = createAsyncThunk<[]>(
+//     "table/fecthStatusMarket",
+//     async () => {
+//         const res = await fetch('http://marketstream.fpts.com.vn/hsx/data.ashx?s=index');
+      
+//         const data = await res.json();
+//         console.log(data)
+//         return data;
+//     }
+// );
+// export const fetchTableHSXAsync = createAsyncThunk<[]>(
+//     "table/fecthTableHSX",
+//     async () => {
+//         const res = await fetch('https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=All');
+//         const data = await res.json();
+//         console.log(data)
+//         return data;
+//     }
+// );
+// export const fetchCompanyAsync = createAsyncThunk<[]>(
+//     "table/fecthCompany",
+//     async () => {
+//         const res = await fetch('http://localhost:8430/api/stock/v1/cache/stock_info_cn/eztrade?code=ALL');
+//         const data = await res.json();
+//         console.log(data)
+//         return data;
+//         // const res = await agent.Company.get();
+   
+//         // // const data = await res.json();
+//         // console.log(res)
+//         // return res;
+//     }
+// );

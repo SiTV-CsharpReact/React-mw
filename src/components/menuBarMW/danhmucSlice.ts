@@ -6,7 +6,7 @@ export const fetchCategoryAsync = createAsyncThunk<CategoriesMarketWatch>(
   "table/fecthCategory",
   async () => {
     const res = await agent.Category.get();
-    console.log(res);
+    //console.log(res);
     return res;
   }
 );

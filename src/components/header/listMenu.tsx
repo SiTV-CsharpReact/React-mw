@@ -301,7 +301,7 @@ const ListMenu = () => {
             <Link  to="/report/ReportTransBalance">Báo cáo tổng hợp số dư giao dịch  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <Link  to="/menu">Báo cáo tài sản   <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
+            <Link  to="/report/AssetReport2">Báo cáo tài sản   <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
             <Link  to="/report/ReportNAV">Báo cáo biến động tài sản ròng  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
@@ -398,9 +398,13 @@ const ListMenu = () => {
           </li>
         </ul>
       </li>
+      <li>
+      <Link  to="/dynamic-dashboard">Giao diện của tôi</Link>
+       
+      </li>
     </ul>
   </div>
   );
 };
 
-export default ListMenu;
+export default React.memo(ListMenu);

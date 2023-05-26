@@ -1,34 +1,27 @@
 import React, {
-  MouseEventHandler,
-  useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
 import MenuMarketWatch from "../indexMarketWatch/MenuMarketWatch";
-// import MenuBarMW from "../menuBarMW/MenuBarMW";
 import OrderMarketW from "../orderFormMarketwatch/OrderFormMarketWatch";
 import TableMarketWatch from "../tableMarketwatch/TableMarketWatch";
 import { useParams } from "react-router-dom";
 import { stocks } from "../../models/marketwacthTable";
 import TableGDTTMarketWatch from "../tableMarketwatch/TableGDTTMarketWatch";
 import TableThongKeMarketWatch from "../tableMarketwatch/TableThongKeMarketWatch";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/configureStore";
 import ChartMarketwatch from "../chartMarketwatch/ChartMarketwatch";
 import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import IntradayOrder from "../orderFormMarketwatch/IntradayOrder";
 import TradingResult from "../orderFormMarketwatch/TradingResult";
 import "./LayoutMarketWatch.scss";
-import { Button, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import ListMenuBar from "../menuBarMW/ListMenuBar";
 import DanhMuc from "../menuBarMW/DanhMuc";
 import SettingTable from "../menuBarMW/SettingTable";
 import DateTime from "../menuBarMW/DateTime";
-import { setStatusChart } from "../menuBarMW/menuSlice";
-//image
-import LineChart from "../../images/line-chart-32.png";
-import Close from "../../images/x28.png";
 import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import PopupTableMarketwatch from "../popupTableMarketwatch/popupTableMarketwatch";
 import { resizeState } from "../../models/resizeWindow";
@@ -36,13 +29,17 @@ import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatc
 import { DraggableData, DraggableEvent } from "react-draggable";
 import CompleteStock from "../menuBarMW/CompleteStock";
 import TableDanhMuc from "../tableMarketwatch/TableDanhMuc";
+//image
+import LineChart from "../../images/line-chart-32.png";
+import Close from "../../images/x28.png";
+
 function RenderTable() {
   const params = useParams<{ id: string }>();
-  console.log(params)
+  //console.log(params)
   // console.log(params);
   const paramstock = stocks.find((paramstock) => paramstock.id === params.id);
   const paramTable = paramstock?.id;
-  console.log(paramTable)
+  // console.log(paramTable)
   switch (paramTable) {
     case "thoa-thuan-hnx":
     case "thoa-thuan-hsx":
@@ -61,10 +58,10 @@ function RenderTable() {
     case "VNMID":
     case "VNSML":
     case "CW":
-    case "danh-muc":
+    // case "danh-muc":
       return <TableMarketWatch />;
-      // case "danh-muc":
-      //   return <TableDanhMuc/>;
+      case "danh-muc":
+        return <TableDanhMuc/>;
     case "thong-ke-index":
     case "thong-ke-gia":
     case "thong-ke-dat-lenh":
@@ -110,6 +107,7 @@ const LayoutMarketWatch: React.FC = () => {
     value: "",
     status: false,
   });
+  
   // tinh height khi đổi từ màn hình này sang màn hình khác
   useEffect(() => {
     function handleResize() {
@@ -123,7 +121,7 @@ const LayoutMarketWatch: React.FC = () => {
       });
       // console.log(window.innerHeight)
     }
-    console.log(heightComponent);
+    // console.log(heightComponent);
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -174,7 +172,6 @@ const LayoutMarketWatch: React.FC = () => {
       heightTable: height - 27,
       orderForm: true,
     });
-    console.log(heightComponent);
   };
   // show hide order
   const hideOrderForm = () => {
@@ -265,7 +262,7 @@ const LayoutMarketWatch: React.FC = () => {
         
       {/* marketwatch */}
       <div
-        className="relative overflow-hidden text-white resize panel-horizontally bg-BGTableMarket"
+        className="resize panel-horizontally bg-BGTableMarket text-white relative z-50 overflow-hidden"
         style={{ height: heightComponent.heightMarketWatch }}
       >
         {/* priceboard */}
@@ -394,7 +391,7 @@ const LayoutMarketWatch: React.FC = () => {
             }`}
           >
             <div
-              className="relative left-[49%]"
+              className="relative left-[49%] z-40"
               id="divArrowBottomDown"
               style={{ display: heightComponent.orderForm ? "block" : "none" }}
               onClick={hideOrderForm}

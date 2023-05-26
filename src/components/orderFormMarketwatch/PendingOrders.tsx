@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import excell from "../../images/excel.png";
 import pfd from "../../images/pdf.png";
 import * as XLSX from "xlsx";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
 import axios from "axios";
 import _ from "lodash";
-import { uniqBy } from "lodash";
+import { uniqBy, filter, sortBy } from "lodash";
 const PendingOrders = () => {
   const [data, setData] = useState([]);
   const [dataAfter, setDataAfter] = useState({
@@ -33,24 +31,6 @@ const PendingOrders = () => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get("http://localhost:3005/items");
-        setData(data);
-        console.log("data", data);
-        setDataAfter((prevState) => ({
-          ...prevState,
-          dataCoppy: data,
-        }));
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
-    fetchData();
-  }, []);
-
   const hanDelSubmit = () => {
     let filteredData: any = [...dataAfter.dataCoppy];
     if (dataAfter.dataFiter) {
@@ -98,27 +78,26 @@ const PendingOrders = () => {
   };
 
   const handleExportToPDF = () => {
-    const table = document.getElementById("table-id");
-    const doc: any = new jsPDF("p", "pt");
-    doc.addFont("Helvetica", "Helvetica", "normal");
-    doc.setFont("Helvetica");
-    if (table) {
-      doc.autoTable({
-        html: table,
-        startX: 20,
-        styles: {
-          size: 10,
-          fontSize: 4,
-          cellPadding: 6,
-          fillColor: "gray",
-          font: "Helvetica",
-          lowercase: true,
-        },
-        tableWidth: "auto",
-        margin: { top: 20 },
-      });
-    }
-    doc.save("filename.pdf");
+    // const table = document.getElementById('table-id');
+    //   const doc: any = new jsPDF('p', 'pt');
+    //   doc.addFont('Helvetica', 'Helvetica', 'normal')
+    //   doc.setFont('Helvetica')
+    //   if (table) {
+    //     doc.autoTable({
+    //     html: table,
+    //     startX: 20,
+    //     styles: {
+    //       size:10,
+    //       fontSize: 4,
+    //       cellPadding: 6,
+    //       fillColor: 'gray',
+    //        font: 'Helvetica', lowercase: true,
+    //     },
+    //      tableWidth: 'auto',
+    //      margin: { top: 20 },
+    //   });
+    // }
+    // doc.save('filename.pdf');
   };
   return (
     <div>

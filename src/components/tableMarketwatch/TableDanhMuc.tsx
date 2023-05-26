@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {  useEffect,  useState } from "react";
 import {
   RootState,
   useAppDispatch,
   useAppSelector,
 } from "../../store/configureStore";
-// import { fetchTableHNXAsync } from "./tableSlice";
-import { useDispatch } from "react-redux";
 import {
   checkSTTMarket,
   formatNumber,
@@ -18,20 +16,13 @@ import {
 import "../../styles/MW.css";
 import axios from "axios";
 import { ObjectMenuHSX } from "../../models/modelListMenuHSX";
-
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { DataTable } from "../../models/modelTableHNX";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
-// import { Tooltip } from "@mui/material";
-import { setStatusChart } from "../menuBarMW/menuSlice";
 import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
-import { Root } from "../../models/root";
-import "react-tooltip/dist/react-tooltip.css";
-import { fetchDataTableHNXAsync, fetchDataTableHSXAsync } from "./tableSlice";
-import { dispatchDataTable } from "./tableThunk";
-
+import {  fetchTableHNXAsync, fetchTableHSXAsync, productHSXSelectors, productSelectors, } from "./tableSlice";
+import { DataTable } from "../../models/modelTableHNX";
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
@@ -77,58 +68,38 @@ const showKLPT = (value: string) => {
 };
 
 const TableDanhMuc = () => {
-  const dataTableHNX = useSelector((state: RootState) => state.table.tableHNX);
-  const dataTableHSX = useSelector((state: RootState) => state.table.tableHSX);
+  const dispatch = useAppDispatch();
+  const tableData = useSelector(productSelectors.selectAll);
+  const tableDataHSX = useSelector(productHSXSelectors.selectAll);
+  console.log(tableData,tableDataHSX)
+ useEffect(() => {
+  dispatch(fetchTableHNXAsync("BCC,AAV,BCM,CEO"));
+  dispatch(fetchTableHSXAsync("BCC,AAV,BCM,CEO"));
+}, [ dispatch]);
+
+
   const [sortedColumn, setSortedColumn] = useState("");
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
-  const dispatch = useAppDispatch();
-  const [products, setProducts] = useState<any[]>([]);
-  const codeList = useSelector((state: RootState) => state.codeList.codeList);
-  useEffect(() => {
-    dispatch(fetchDataTableHNXAsync());
-    dispatch(fetchDataTableHSXAsync());
-  }, [dispatch]);
-
-
-  const handleClick = (dataTable: any) => {
-    console.log("dataTable",dataTable);
-    // dispatch(dispatchDataTable());
-  };
-
   
-  var arrS = codeList.split(",");
-  var arr_names: string[] = new Array(arrS.length);
-  // const dataHSX = await resHSX.json();
-  // const dataHNX = await resHNX.json();
-  //  duy nhất 1 lần
-  for (let i = 0; i < dataTableHSX.length; i++) {
-    const cSym = dataTableHSX[i]; // mã ck
-    if (arrS.includes(cSym)) {
-      arr_names[arrS.indexOf(cSym)] = dataTableHSX[i];
-    }
-  }
+  const [products, setProducts] = useState<any[]>([]);
+    const codeList = useSelector(((state: RootState) => state.codeList.codeList))
 
-  for (let i = 0; i < dataTableHNX.length; i++) {
-    const cSym = dataTableHNX[i]; // mã ck
-    if (arrS.includes(cSym)) {
-      arr_names[arrS.indexOf(cSym)] = dataTableHNX[i];
-    }
-  }
-  setProducts(arr_names);
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const responsesttHNX = await axios.get(
-          `http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`
-        );
-        setStatusMarket(responsesttHNX.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchData();
-  }, []);
-
+    var arrS = codeList.split(',');
+    var arr_names:DataTable[] = new Array(arrS.length)  
+    useEffect(() => {
+        async function fetchData() {
+          try {
+            const responsesttHNX = await axios.get(
+              `http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`
+            );
+            setStatusMarket(responsesttHNX.data);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        fetchData();
+      }, []);
+ 
   const fetchDataCompany = async () => {
     await dispatch(fetchCompanyAsync());
   };
@@ -266,7 +237,7 @@ const TableDanhMuc = () => {
       setorder("DSC");
     }
   };
-
+  //  if (!productsLoaded) return <LoadingComponent message='Loading products...' />
   return (
     <div>
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -878,7 +849,7 @@ const TableDanhMuc = () => {
                 ref={provider.innerRef}
                 {...provider.droppableProps}
               >
-                {products?.map((dataTable: any, index) => (
+                {tableData?.map((dataTable: any, index) => (
                   <Draggable
                     key={dataTable.RowID}
                     draggableId={dataTable.RowID}
