@@ -698,7 +698,7 @@ const exChangeConvert = (number:number) => {
     }
 }
 const listDataCompany = mapCompanyName();
-console.log(listDataCompany)
+//console.log(listDataCompany)
 const getExchangeName = (vEx:string) => {
     for (var i = 0; i < ARRAY_EXCHANGE.length; i++)
         if (vEx === ARRAY_EXCHANGE[i][0])

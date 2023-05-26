@@ -26,7 +26,7 @@ type ChartMarketwatchProps = {
 const ChartMarketwatch = () => {
   const stockCode = useSelector( (state: RootState) => state.chart.code);
  const symbolNew =  stockCode ==='' ? 'FTS':stockCode
-  console.log(stockCode)
+ // console.log(stockCode)
   // const [posts, setPosts] = useState<Post[]>([]);
   const [dataChart, setDataChart] = useState<Data[]>([]);
   const dispatch = useAppDispatch();
@@ -39,7 +39,7 @@ const ChartMarketwatch = () => {
     };
     fetchData();
   }, [stockCode]);
-  console.log(dataChart)
+  //console.log(dataChart)
   return (
     <section className="chart-layout">
       <div className="chart-layout-left float-left ">

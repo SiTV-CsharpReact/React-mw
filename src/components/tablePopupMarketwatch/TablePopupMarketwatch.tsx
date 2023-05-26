@@ -1,112 +1,114 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../store/configureStore'
-import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../store/configureStore";
+import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
+import "./TablePopup.scss";
+import { showDetailStock } from "../popupTableMarketwatch/popupTableSlice";
+import TableDetailPopup from "./TableDetailPopup";
+import TableBasicPopup from "./TableBasicPopup";
+import TableReportingPopup from "./TableReportingPopup";
+import TableGDTTPopup from "./TableGDTTPopup";
+import TableGDLLPopup from "./TableGDLLPopup";
+import TableKLTTGPopup from "./TableKLTTGPopup";
 interface DraggableProps {
-    initialPosition?: { x: number; y: number };
-    onDrag?: (event: DraggableEvent, data: DraggableData) => void;
-    children: React.ReactNode;
-  }
-const TablePopupMarketwatch = () => {
-    const [position, setPosition] = useState({ x: 0, y: 0 });
-
-    const handleDrag = (e: DraggableEvent, ui: DraggableData) => {
-        const { x, y } = position;
-        setPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
-     
-        // if (onDrag) {
-        //   onDrag(e, ui);
-        // }
-      };
-    // const componentVisible = useSelector(
-    //     (state: RootState) => state.chart.visible
-    //   );
-    // const status = useSelector(((state: RootState) => state.popupTable.visible))
-    // console.log(status)
-  return (
-    <Draggable onDrag={handleDrag}>
-    <div  style={{
-        // display: status ? "block" : "none",
-        width:1000,
-        height:600,
-        background:'#fff',
-        position:'absolute',
-        zIndex:1000,
-        top: '50%',
-  left: '50%',
- transform: 'translate(-50%, -50%)'
-      }}>
-        TablePopupMarketwatch</div>
-        </Draggable>
-  )
+  initialPosition?: { x: number; y: number };
+  onDrag?: (event: DraggableEvent, data: DraggableData) => void;
+  children: React.ReactNode;
 }
+const TablePopupMarketwatch = () => {
+  const dispatch = useAppDispatch();
+  const stockDetail = useSelector((state:RootState)=>state.popupTable.code)
+  const [position, setPosition] = useState({
+    x: -window.innerWidth / 3,
+    y: -window.innerHeight / 2 + 40,
+  });
 
-export default React.memo(TablePopupMarketwatch)
-// import * as React from 'react';
-// import Button from '@mui/material/Button';
-// import Dialog from '@mui/material/Dialog';
-// import DialogActions from '@mui/material/DialogActions';
-// import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
-// import DialogTitle from '@mui/material/DialogTitle';
-// import Paper, { PaperProps } from '@mui/material/Paper';
-// import Draggable from 'react-draggable';
-// import { useSelector } from 'react-redux';
-// import { RootState, useAppDispatch } from '../../store/configureStore';
-// import {showDetailStock } from '../popupTableMarketwatch/popupTableSlice';
+  const handleDrag = (e: DraggableEvent, ui: DraggableData) => {
+    const { x, y } = position;
+    setPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
 
-// function PaperComponent(props: PaperProps) {
-//   return (
-//     <Draggable
-//       handle="#draggable-dialog-title"
-//       cancel={'[class*="MuiDialogContent-root"]'}
-//     >
-//       <Paper {...props} />
-//     </Draggable>
-//   );
-// }
+    // if (onDrag) {
+    //   onDrag(e, ui);
+    // }
+  };
+  // const componentVisible = useSelector(
+  //     (state: RootState) => state.chart.visible
+  //   );
+  // const status = useSelector(((state: RootState) => state.popupTable.visible))
+  // console.log(status)
+  return (
+    <Draggable handle=".pu-header" position={position} onDrag={handleDrag}>
+      <div className="pu-window text-[#B9B9B9]" >
+        <div className="pu-header">
+          <div className="pu-grtitle flex">
+            <div className="m-auto">
+              <div className="pu-div-search">
+                <div
+                  className="ms-ctn form-control relative"
+                  style={{}}
+                  id="ipSearchCode"
+                >
+                  <div className="ms-sel-ctn">
+                    <input
+                      type="text"
+                      placeholder="Nhập mã Chứng khoán"
+                      autoComplete="nofill"
+                    />
+                  </div>
+                  <div className="ms-trigger">
+                    <div className="fa fa-search" />
+                  </div>
+                </div>
+              </div>
+              <div className="pu-div-title inline-block">
+                <h2 className="pu-title">
+                  {/* x: {position.x.toFixed(0)}, y: {position.y.toFixed(0)} */}
+                  {stockDetail} - HOSE - Tổng Công ty Cổ phần Bảo hiểm Ngân hàng Đầu tư và
+                  Phát triển Việt Nam
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div className="pu-div-button">
+            <i
+              className="fa fa-refresh fa-lg !text-sm"
+              title="Cập nhật lại dữ liệu"
+            />
+            <span
+              className="pu-close"
+              title="Đóng cửa sổ"
+              onClick={() => dispatch(showDetailStock(""))}
+            >
+              <i className="fa fa-times fa-lg !text-sm" />
+            </span>
+          </div>
+        </div>
 
-// export default function DraggableDialog() {
-//        const status = useSelector(((state: RootState) => state.popupTable.visible))
-//        const dispatch = useAppDispatch();
-//        console.log(status)
-// //   const [open, setOpen] = React.useState(false);
+        <div>
+         <TableDetailPopup/>
+        </div>
+        <div className="pu-info flex">
+           <div className="pu-basic w-[311px] mx-1">
+            <TableBasicPopup/>
+            <TableReportingPopup/>
+           </div>
+           <div className="pu-hrz-realtime w-[293px] mx-1">
+            <div className="pu-vertical pu-div-realtime">
+            <TableKLTTGPopup/>
+            </div>
+        
+            <div className="pu-div-PT">
+            <TableGDTTPopup/>
+            </div>
+            <div className="pu-vertical pu-div-oddlot">
+            <TableGDLLPopup/>
+            </div>
+           
+           </div>
+        </div>
+      </div>
+    </Draggable>
+  );
+};
 
-// //   const handleClickOpen = () => {
-// //     setOpen(true);
-// //   };
-
-// //   const handleClose = () => {
-// //     setOpen(false);
-// //   };
-
-//   return (
-//     <div>
-//       {/* <Button variant="outlined" onClick={handleClickOpen}>
-//         Open draggable dialog
-//       </Button> */}
-//       <div
-//         open={status}
-      
-//         PaperComponent={PaperComponent}
-//         aria-labelledby="draggable-dialog-title"
-//       >
-//         <div style={{ cursor: 'move' }} id="draggable-dialog-title">
-//           Subscribe
-//         </div>
-//         <div>
-//           <div>
-//             To subscribe to this website, please enter your email address here. We
-//             will send updates occasionally.
-//           </div>
-//         </div>
-//         <div>
-//           <Button autoFocus onClick={() => dispatch(showDetailStock(''))}>
-//             Cancel
-//           </Button>
-//           {/* <Button onClick={handleClose}>Subscribe</Button> */}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
+export default React.memo(TablePopupMarketwatch);

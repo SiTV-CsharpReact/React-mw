@@ -6,11 +6,11 @@ export const fetchCategoryAsync = createAsyncThunk<CategoriesMarketWatch>(
   "table/fecthCategory",
   async () => {
     const res = await agent.Category.get();
-    //console.log(res);
+    console.log(res);
     return res;
   }
 );
-export const danhmucSlice = createSlice({
+export const tablePopupSlice = createSlice({
   name: "table_fecthCategory",
   initialState: {
     isLoading: false,
@@ -54,4 +54,4 @@ export const danhmucSlice = createSlice({
   },
 });
 
-export default danhmucSlice;
+export default tablePopupSlice;

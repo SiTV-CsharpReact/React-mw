@@ -8,6 +8,8 @@ import chartMarketwatchSlice from '../components/chartMarketwatch/chartMarketwat
 import companySlice from '../components/companyMarketwatch/companyMarketwatchSlice';
 import popupTableSlice from '../components/popupTableMarketwatch/popupTableSlice';
 import codeListSlice from '../components/menuBarMW/codeListSlice';
+import danhmucSlice from '../components/menuBarMW/danhmucSlice';
+import ministrySlice from '../components/menuBarMW/ministrySlice';
 
 export const store = configureStore({
     reducer:{
@@ -18,7 +20,9 @@ export const store = configureStore({
         layoutmarketwatch: LayoutMarketWatchSLice.reducer,
         chart:chartMarketwatchSlice.reducer,
         popupTable:popupTableSlice.reducer,
-        codeList:codeListSlice.reducer
+        codeList:codeListSlice.reducer,
+        categories:danhmucSlice.reducer,
+        ministry:ministrySlice.reducer
     }
 })
 export type RootState = ReturnType<typeof store.getState>;

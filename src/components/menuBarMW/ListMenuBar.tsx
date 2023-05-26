@@ -2,23 +2,27 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import MenuBar from "./MenuBar";
+import { RootState, useAppDispatch } from "../../store/configureStore";
+import { useSelector } from "react-redux";
+import { fetchCategoryAsync } from "./danhmucSlice";
+import { fetchMinistryAsync } from "./ministrySlice";
 
 const ListMenuBar = () => {
-  const [data, setData] = useState<{ Data: any[] }>({ Data: [] });
+  // const [data, setData] = useState<{ Data: any[] }>({ Data: [] });
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const response = await axios.get(
-  //         "http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C000700"
-  //       );
-  //       setData(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   fetchData();
-  // }, []);
+  const dispatch = useAppDispatch();
+  // const { isLoadingMinistry, dataMinistry, statusMinistry } = useSelector(
+  //   (state: RootState) => state.ministry
+  // );
+  const { isLoading, data, status } = useSelector(
+    (state: RootState) => state.categories
+  );
+  
+//  console.log({ isLoading, data, status })
+ useEffect(() => {
+  dispatch(fetchCategoryAsync());
+  dispatch(fetchMinistryAsync());
+}, [dispatch]);
   
   // sort data with Default_MarketWatch = 1 to the top
   const sortedData = [...data.Data].sort((a, b) => {
@@ -31,6 +35,10 @@ const ListMenuBar = () => {
     name: item.Name,
     path: `/chung-khoan/${item.List}`,
   }));
+  // const childrenMinistry = dataMinistry.Data.Data.map((item) => ({
+  //   name: item.MinistryName,
+  //   path: `/chung-khoan/${item.MinistryID}`,
+  // }));
   
   const menuItems = [
     {
@@ -111,7 +119,7 @@ const ListMenuBar = () => {
       },
       {
         name: "Ngành",
-        path: "/nganh",
+        path: "/co-phieu-nganh",
         children: [
           {
             name: "Bán lẻ",

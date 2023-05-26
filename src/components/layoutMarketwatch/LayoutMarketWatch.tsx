@@ -34,13 +34,13 @@ import PopupTableMarketwatch from "../popupTableMarketwatch/popupTableMarketwatc
 import { resizeState } from "../../models/resizeWindow";
 import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatch";
 import { DraggableData, DraggableEvent } from "react-draggable";
-import TableMarketWatchTest from "../tableMarketwatch/TableMarketWatchTest";
 function RenderTable() {
   const params = useParams<{ id: string }>();
+  //console.log(params)
   // console.log(params);
   const paramstock = stocks.find((paramstock) => paramstock.id === params.id);
   const paramTable = paramstock?.id;
-  console.log(paramTable)
+  // console.log(paramTable)
   switch (paramTable) {
     case "thoa-thuan-hnx":
     case "thoa-thuan-hsx":
@@ -60,7 +60,7 @@ function RenderTable() {
     case "VNSML":
     case "CW":
     case "danh-muc":
-      return <TableMarketWatchTest/>;
+      return <TableMarketWatch />;
     case "thong-ke-index":
     case "thong-ke-gia":
     case "thong-ke-dat-lenh":
@@ -119,7 +119,7 @@ const LayoutMarketWatch: React.FC = () => {
       });
       // console.log(window.innerHeight)
     }
-    console.log(heightComponent);
+    // console.log(heightComponent);
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -232,7 +232,7 @@ const LayoutMarketWatch: React.FC = () => {
     if (trValue) {
       setSelectedValue({
         x: e.clientX,
-        y: e.clientY,
+        y: e.clientY-40,
         value: trValue,
         status: true,
       });
@@ -247,7 +247,7 @@ const LayoutMarketWatch: React.FC = () => {
   const status = useSelector(((state: RootState) => state.popupTable.visible))
   //console.log(heightComponent);
   return (
-    <div>
+    <div className="relative">
       {/* popup theo table */}
       <PopupTableMarketwatch
         selectedValue={selectedValue}
@@ -297,7 +297,7 @@ const LayoutMarketWatch: React.FC = () => {
                 <div className="flex ">
                   <ListMenuBar />
                   <DanhMuc />
-
+                  <CompleteStock/>
                   {heightComponent.heightExpand === 27 ? (
                     <div>
                       <Tooltip title="Hiện thị index">
@@ -586,4 +586,4 @@ const LayoutMarketWatch: React.FC = () => {
     </div>
   );
 };
-export default LayoutMarketWatch;
+export default React.memo(LayoutMarketWatch);

@@ -39,7 +39,7 @@ export const companySlice = createSlice({
         builder
         .addCase(fetchCompanyAsync.pending, (state, action) => {
             state.productsLoaded = false;
-            console.log(action.payload);
+            //console.log(action.payload);
             state.status = "loading";
         })
             .addCase(fetchCompanyAsync.fulfilled, (state, action) => {

@@ -13,8 +13,7 @@ const codeListSlice = createSlice({
     initialState,
     reducers: {
         listStock: (state, action: PayloadAction<string>) => {
-            state.codeList = action.payload;
-            console.log( action.payload)
+            state.codeList = action.payload;       
           },
    
     },

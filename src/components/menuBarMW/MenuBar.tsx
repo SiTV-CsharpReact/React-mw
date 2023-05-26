@@ -24,7 +24,7 @@ const MenuBar: React.FC<Props>  = ({items}) => {
       // Load active item from localStorage
       const activeItem = localStorage.getItem("activePriceboardTab");
       const activeItemChild = localStorage.getItem("activePriceboardTabMenu");
-      console.log(activeItem)
+      // console.log(activeItem)
       if (activeItem) {
         setActiveMenuItem(activeItem);
       }
@@ -102,7 +102,10 @@ const MenuBar: React.FC<Props>  = ({items}) => {
       </div>
     );
   };
-    return <div className='flex menu-table'>{items.map((item) => renderMenuItem(item))}</div>;
+    return <div className='flex menu-table'>
+      {items.map((item) => renderMenuItem(item))}
+      
+      </div>;
 }
 
-export default MenuBar
+export default React.memo(MenuBar)
