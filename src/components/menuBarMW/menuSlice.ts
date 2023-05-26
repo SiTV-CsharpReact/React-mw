@@ -9,7 +9,6 @@ interface TableState {
 function getAxiosParams(tableParams: TableParams) {
   const params = new URLSearchParams();
 
-  console.log(params);
 
   if (tableParams.s) params.append("s", tableParams.s?.toString());
 
