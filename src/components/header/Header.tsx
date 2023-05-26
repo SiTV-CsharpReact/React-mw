@@ -9,11 +9,13 @@ import "font-awesome/css/font-awesome.min.css";
 import ListService from "./ListService";
 import NotiHeader from "./NotiHeader";
 import ProfileAccount from "./ProfileAccount";
-
 import useDarkMode from "./useDarkMode";
+
 const Header = () => {
   const { mode } = useDarkMode();
   console.log(mode);
+
+  // const { mode } = useAppSelector((state) => state.mode);
 
   return (
     <Box

@@ -7,12 +7,20 @@ import menuImage from "../../images/menu.png";
 import avatarImage from "../../images/avatar_ano.png";
 import { useTranslation } from "react-i18next";
 import useDarkMode from "./useDarkMode";
-const ProfileAccount = () => {
+
+interface Mode {
+  mode: string;
+}
+// import { changeTheme } from "./DarkModeSlice";
+const ProfileAccount: any = () => {
   const { i18n } = useTranslation(["home", "report"]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openAccount, setOpenAccount] = useState(false);
-  const { mode, toogleSwitch } = useDarkMode();
-  console.log(mode);
+  // const mode = "light";
+  const { toogleSwitch, mode } = useDarkMode();
+
+  // const { mode } = useAppSelector((state) => state.mode);
+  // const dispatch = useDispatch();
 
   const openPopupAccount = Boolean(anchorEl);
   const handleClickAccount = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -25,6 +33,11 @@ const ProfileAccount = () => {
     console.log("oke");
     i18n.changeLanguage(lng);
   };
+
+  const changeTheme = (theme: string) => {
+    // dispatch(changeModeTheme(theme));
+  };
+
   return (
     <Box>
       <Tooltip title="Thông tin tài khoản">

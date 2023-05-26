@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { formatNumber } from "../../utils/util";
-import useDarkMode from "../header/useDarkMode";
 
 interface Data {
   ABUY_STOCK: number;
@@ -24,7 +23,8 @@ interface Props {
   item: Data;
 }
 const TbodyAssetValue: any = (props: Props) => {
-  const { mode } = useDarkMode();
+  const mode = "light";
+
   const [drop, setDrop] = useState<boolean>(false);
   const [drop2, setDrop2] = useState<boolean>(false);
   const [mouse, setMouse] = useState<boolean>(false);

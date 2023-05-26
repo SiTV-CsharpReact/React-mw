@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/configureStore";
 import { formatNumber } from "../../utils/util";
-import useDarkMode from "../header/useDarkMode";
 
 const TableAssetReport = () => {
   const { assetReport } = useAppSelector((state) => state.report);
@@ -9,7 +8,7 @@ const TableAssetReport = () => {
   const [short, setShort] = useState(false);
   const [sort, setSort] = useState("asc");
   const [label, setLabel] = useState("");
-  const { mode } = useDarkMode();
+  const mode = "light";
   const handleSort = (key: string) => {
     // console.log(t);
     setLabel(key);

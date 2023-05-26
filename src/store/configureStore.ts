@@ -14,6 +14,7 @@ import { marketHSXSlice } from "../components/indexMarketWatch/marketHSXSlice";
 import showMarketWatchSlice from "../components/indexMarketWatch/marketShowSlice";
 import marketHNXSlice from "../components/indexMarketWatch/marketHNXSlice";
 import assetReportSlice from "../components/AssetReport/AssetReportSlice";
+import changeThemeModeSlice from "../components/header/DarkModeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -31,6 +32,7 @@ export const store = configureStore({
     marketHNX: marketHNXSlice.reducer,
     show: showMarketWatchSlice.reducer,
     report: assetReportSlice.reducer,
+    // mode: changeThemeModeSlice.reducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

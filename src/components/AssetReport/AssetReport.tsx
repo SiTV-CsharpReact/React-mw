@@ -2,13 +2,14 @@ import { useEffect } from "react";
 import "./style.AssetReport.scss";
 import TableAssetValue from "./TableAssetValue";
 import TableAssetReport from "./TableAssetReport";
-import { useAppDispatch } from "../../store/configureStore";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { fetchAssetReport } from "./AssetReportSlice";
 import ChartAssetReport from "./ChartAssetReport";
-import useDarkMode from "../header/useDarkMode";
+
 
 const AssetReport = () => {
-  const { mode } = useDarkMode();
+  const mode = "light";
+  // const { mode } = useDarkMode();
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchAssetReport());

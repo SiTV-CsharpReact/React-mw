@@ -67,7 +67,7 @@ export const INDEX_TYPE: INDEX = {
 const data =
   localStorage.getItem("setting_table") !== null
     ? JSON.parse(localStorage.getItem("setting_table") as string)
-    : {};
+    : INDEX_TYPE;
 
 const initialState = {
   INDEX: data,

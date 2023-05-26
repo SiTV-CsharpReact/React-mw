@@ -1,10 +1,9 @@
 import { useAppSelector } from "../../store/configureStore";
-import useDarkMode from "../header/useDarkMode";
 import TbodyAssetValue from "./TbodyAssetValue";
 
 const TableAssetValue = () => {
-  const { mode } = useDarkMode();
   const { assetReport } = useAppSelector((state) => state.report);
+  const mode = "light";
 
   return (
     <div className={`report__tabcondition__left ${mode}-bg`}>

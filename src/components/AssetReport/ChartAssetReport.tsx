@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import ChartReport from "./ChartReport";
-import useDarkMode from "../header/useDarkMode";
 
 const ChartAssetReport = () => {
   const [date, setDate] = useState("20");
-  const { mode } = useDarkMode();
+  const mode = "light";
 
   return (
     <div className={`report__tabcondition__right ${mode}-bg`}>
