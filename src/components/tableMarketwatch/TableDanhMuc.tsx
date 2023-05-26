@@ -1,6 +1,6 @@
 import React, {  useEffect,  useState } from "react";
 import {
-  RootState,
+
   useAppDispatch,
   useAppSelector,
 } from "../../store/configureStore";
@@ -18,7 +18,7 @@ import axios from "axios";
 import { ObjectMenuHSX } from "../../models/modelListMenuHSX";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
-import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
+import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 import {  fetchTableHNXAsync, fetchTableHSXAsync, productHSXSelectors, productSelectors, } from "./tableSlice";
@@ -68,8 +68,8 @@ const showKLPT = (value: string) => {
 };
 const TableDanhMuc = () => {
   const dispatch = useAppDispatch();
-  const tableData = useSelector(productSelectors.selectAll);
-  const tableDataHSX = useSelector(productHSXSelectors.selectAll);
+  const tableData = useAppSelector(productSelectors.selectAll);
+  const tableDataHSX = useAppSelector(productHSXSelectors.selectAll);
   console.log(tableData,tableDataHSX)
  useEffect(() => {
   dispatch(fetchTableHNXAsync("BCC,AAV,BCM,CEO"));
@@ -81,7 +81,7 @@ const TableDanhMuc = () => {
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
   
   const [products, setProducts] = useState<any[]>([]);
-    const codeList = useSelector(((state: RootState) => state.codeList.codeList))
+    const codeList = useAppSelector(((state) => state.codeList.codeList))
 
     var arrS = codeList.split(',');
     var arr_names:DataTable[] = new Array(arrS.length)  
@@ -899,7 +899,7 @@ const TableDanhMuc = () => {
                             className="pl-0.5"
                             onDoubleClick={() =>
                               dispatch(
-                                showChartMarketwatch(dataTable.Info[0][1])
+                                statusChartMarketwatch(dataTable.Info[0][1])
                               )
                             }
                           >

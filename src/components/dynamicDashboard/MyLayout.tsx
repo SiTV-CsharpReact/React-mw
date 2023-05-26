@@ -1,7 +1,7 @@
 import React from "react";
 import { Actions, IJsonModel, Layout, Model, TabNode } from "flexlayout-react";
 import OrderFormMarketWatch from "../orderFormMarketwatch/OrderFormMarketWatch";
-import BoxTest from "./BoxTest";
+import TablePrice from "./TablePrice";
 import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import "./dynamic.scss";
 import TableTotalMonney from "../orderFormMarketwatch/TableTotalMonney";
@@ -105,7 +105,7 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
       return <OrderFormMarketWatch />;
     }
     if (component === "tableprice") {
-      return <BoxTest />;
+      return <TablePrice />;
     }
     if (component === "pendingorder") {
       return <PendingOrders />;

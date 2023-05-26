@@ -15,18 +15,20 @@ import assetReportSlice from "../components/AssetReport/AssetReportSlice";
 
 export const store = configureStore({
   reducer: {
+    //trang chủ marketwatch
     // Get danh sách công ty để map với stockcode 
     company: companySlice.reducer,
     // Get Data Table market watch
     table: tableSlice.reducer,
-    // 
-    menu: menuSlice.reducer,
     // show hide chart 
     chart: chartMarketwatchSlice.reducer,
     // Popup theo mã 
     popupTable: popupTableSlice.reducer,
+    // code list khi click danh mục
     codeList: codeListSlice.reducer,
+    // list menu danh mục 
     categories: danhmucSlice.reducer,
+    // list mã nghành 
     ministry: ministrySlice.reducer,
     // Get data Index của sàn hsx
     marketHSX: marketHSXSlice.reducer,

@@ -48,7 +48,7 @@ const dispatch  = useAppDispatch()
   const renderMenuItem = (item:any, key : number) => {
     return (
       <div
-        key={item.path}
+        key={key}
         className={`group list-sub-menu ${ IsActiveMenu === key? 'active' : ''} `}
         onClick={() => handleItemClick(item.path , key)}
       >
@@ -79,7 +79,7 @@ const dispatch  = useAppDispatch()
                 className={`${ index % 2 === 0 ? "float-left" : "float-right" }`}
                 onClick={() => handleItemChildClick(child.name ,child.query,item.floor )}
                 >
-                  <Link  to="" 
+                  <Link to=""
                   className={`${ activeMenuItemName === child.name ? 'active' : ''} `}
                    >
                   {child.name}

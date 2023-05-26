@@ -190,4 +190,4 @@ const ProfileAccount = () => {
   )
 }
 
-export default ProfileAccount
+export default React.memo(ProfileAccount)

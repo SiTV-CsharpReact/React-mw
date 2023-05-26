@@ -161,7 +161,8 @@ export const tableSlice = createSlice({
                 state.ListDataTable = data?.product
                 state.NameFloor = data?.NameFloor
               }
-            }else{
+            }
+            else{
               if(data?.NameFloor === "HSX"){
                 state.DataPt = data.product?.DataPt?.PUT_EXEC
                 state.DataBi = data.product?.DataBi

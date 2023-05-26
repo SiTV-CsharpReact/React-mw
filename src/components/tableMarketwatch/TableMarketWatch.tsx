@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
-  RootState,
   useAppDispatch,
   useAppSelector,
 } from "../../store/configureStore";
@@ -21,8 +20,7 @@ import { ObjectMenuHSX } from "../../models/modelListMenuHSX";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
 // import { Tooltip } from "@mui/material";
-import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
-import { useSelector } from "react-redux";
+import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 import { Root } from "../../models/root";
 import { getDataTable } from "./tableSlice";
@@ -64,15 +62,11 @@ const showKLPT = (value: string) => {
       }
       if (elementKhopLenhPT) elementKhopLenhPT.innerHTML = "%";
     }
-    // if(element) {
-    //   element.classList.remove("d-block-kl")
-    //   element.classList.add("d-none-kl")
-    // }
   }
 };
 const TableMarketWatch = () => {
   const btnRef = useRef(null);
-  const dataTable = useSelector((state: RootState) => state.table.ListDataTable);
+  const dataTable = useAppSelector((state) => state.table.ListDataTable);
   const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
   // console.log(height)
   // const [popupVisible, setPopupVisible] = useState(false);
@@ -83,11 +77,11 @@ const TableMarketWatch = () => {
   const dispatch = useAppDispatch();
   const [products, setProducts] = useState<any[]>([]);
  // const { productsLoaded,productParams} = useAppSelector(state => state.table); //const  products = useAppSelector(state => state.table.table);
-  const codeList = useSelector((state: RootState) => state.codeList.codeList);
+  const codeList = useAppSelector((state) => state.codeList.codeList);
   // console.log(codeList, "okko")
   const handleDoubleClick = (e: any, val: any) => {
     if (e.detail === 2) {
-      dispatch(showChartMarketwatch(val));
+      dispatch(statusChartMarketwatch(val));
     }
   };
   // call api 
@@ -223,7 +217,7 @@ const TableMarketWatch = () => {
   //   // const data = await res.json();
   //   // setProducts(data);
   // };
-  const company = useSelector((state: RootState) => state.company.data);
+  const company = useAppSelector((state) => state.company.data);
   // console.log(company)
   // const company = useSelector((state=> state?.company))
 

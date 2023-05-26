@@ -2,7 +2,7 @@ import React from 'react'
 import ListMenuBar from '../menuBarMW/ListMenuBar'
 import TableMarketWatch from '../tableMarketwatch/TableMarketWatch'
 
-const BoxTest = () => {
+const TablePrice = () => {
   return (
     <div><ListMenuBar/>
     <TableMarketWatch/>
@@ -10,4 +10,4 @@ const BoxTest = () => {
   )
 }
 
-export default BoxTest
+export default TablePrice
