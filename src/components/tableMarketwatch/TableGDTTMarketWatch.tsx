@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { stocks } from "../../models/marketwacthTable";
 import "./table.scss";
 import { formatNumber } from "../../utils/util";
 import { useAppSelector ,RootState } from "../../store/configureStore";

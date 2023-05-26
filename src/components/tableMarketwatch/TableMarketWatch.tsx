@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   RootState,
   useAppDispatch,
@@ -15,16 +15,12 @@ import {
   tinhGiaTC,
 } from "../../utils/util";
 import "../../styles/MW.css";
-import axios from "axios";
+
 import { ObjectMenuHSX } from "../../models/modelListMenuHSX";
-import { useParams } from "react-router-dom";
-import { stocks } from "../../models/marketwacthTable";
-import HeaderMarketW from "../headerMarketwatch/HeaderMarket";
+
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { DataTable } from "../../models/modelTableHNX";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
 // import { Tooltip } from "@mui/material";
-import { setStatusChart } from "../menuBarMW/menuSlice";
 import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
@@ -87,9 +83,7 @@ const TableMarketWatch = () => {
   const [companyStock, setCompanyStock] = useState<Root | null>(null);
   const dispatch = useAppDispatch();
   const [products, setProducts] = useState<any[]>([]);
-  const params = useParams<{ id: string }>();
-  const paramstock = stocks.find((paramstock) => paramstock.id === params.id);
-  const [dataCompany, setDataCompany] = useState([]); // const { productsLoaded,productParams} = useAppSelector(state => state.table); //const  products = useAppSelector(state => state.table.table);
+ // const { productsLoaded,productParams} = useAppSelector(state => state.table); //const  products = useAppSelector(state => state.table.table);
   const codeList = useSelector((state: RootState) => state.codeList.codeList);
   // console.log(codeList, "okko")
   const handleDoubleClick = (e: any, val: any) => {
@@ -98,13 +92,16 @@ const TableMarketWatch = () => {
     }
   };
   // call api 
-  useEffect(() => {
+  const handelGetData = useCallback(()=>{
     let data = {
       Floor : "HSX",
       Query : "s=quote&l=All"
     }
     dispatch(getDataTable(data))
-  }, []);
+  }, [dispatch])
+  useEffect(() => {
+    handelGetData()
+  }, [dispatch, handelGetData]);
   const fetchDataCompany = async () => {
     await dispatch(fetchCompanyAsync());
   };
