@@ -17,6 +17,7 @@ function App() {
         <Route path="/report/ClientActivityRange" element={<SlidesMarketWatch />} />
         <Route path="/report/TradeLog" element={<DraggableDiv />} />
         <Route path="/report/PendingSettlement" element={<MySwiper />} />
+        
         {/* <Route path="/chung-khoan" element={<LayoutMarketWatch />} />    */}
       </Routes>
       </AppProvider>

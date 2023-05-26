@@ -20,6 +20,8 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/react-slick": "^0.23.10",
     "@types/swiper": "^6.0.0",
+    "ag-grid-enterprise": "^29.3.5",
+    "ag-grid-react": "^29.3.5",
     "aspnet-signalr-reactjs": "^1.3.0",
     "autoprefixer": "^10.4.13",
     "axios": "^1.3.4",

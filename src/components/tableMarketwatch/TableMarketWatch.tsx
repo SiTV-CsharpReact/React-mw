@@ -326,32 +326,6 @@ const TableMarketWatch = () => {
     setProducts(newData);
   };
 
-  // const handleDragEnd = (e: any) => {
-  //   if (!e.destination) return;
-  //   let tempData = Array.from(products);
-  //   let [source_data] = tempData.splice(e.source.index, 1);
-  //   tempData.splice(e.destination.index, 0, source_data);
-  //   setProducts(tempData);
-  // };
-
-  // const handleDragEnd = (e: any) => {
-  //   if (!e.destination) return;
-  //   let tempData = Array.from(products);
-  //   let [source_data] = tempData.splice(e.source.index, 1);
-  //   tempData.splice(e.destination.index, 0, source_data);
-  
-  //   const lastIndexInPinnedIndexes = pinnedIndexes[pinnedIndexes.length - 1];
-  //   if (e.destination.index === lastIndexInPinnedIndexes) {
-  //     // Phần tử được kéo đến vị trí cuối cùng của pinnedIndexes
-  //     const draggedItem = tempData[e.destination.index];
-  //     tempData[e.destination.index] = {
-  //       ...draggedItem,
-  //       pinned: false // Chuyển trạng thái pinned thành false
-  //     };
-  //   }
-    
-  //   setProducts(tempData);
-  // };
   const handleDragEnd = (e: any) => {
     if (!e.destination) return;
     const { index: sourceIndex } = e.source;
@@ -663,7 +637,7 @@ const TableMarketWatch = () => {
                 }`}
                 rowSpan={2}
                 onClick={() => sortData("26")}
-              >
+              >setColorMarket
                 NN mua
                 {sortedColumn === "26" ? (
                   order === "ASC" ? (

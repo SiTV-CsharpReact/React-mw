@@ -70,7 +70,7 @@ const checkZeroLast =  (value:number, numberFixed?:number) => {
 }
 export const setColorMarket =(tc:number,price:number,tran:number,san:number) =>{
     // console.log(tc,price,tran,san)
-     let Color ="text-white";
+     let Color ="text-black";
     // if(price=== san){
     //     Color="text-blue"
     // }
@@ -95,6 +95,41 @@ export const setColorMarket =(tc:number,price:number,tran:number,san:number) =>{
     }
     return Color;
 }
+export const setColorMarkettest = (field:string,params: any) => {
+  var { value, data } = params;
+  const { TC, Tran, San } = data;
+
+  const check = ["GiaKhop", "G1","G2","G3","GiaKhop","GiaKhop","G1B","G2B","G3B"];
+  const unCheck = ["MCK", "KL1","KL2","KL3","KLKhop","Chenhlech","KL1B","KL2B","KL3B"];
+
+  if(field){
+    
+      if (check.indexOf(field) !== -1) {
+
+      }else{
+        value = data[check[unCheck.indexOf(field)]];
+      }
+  }
+
+if (Number(value) === 0) {
+  return "#ffffff";
+} else if (Number(value) === Number(San)) {
+  return "#66ccff";
+} else if (Number(value) === Number(Tran)) {
+  return "#ff00ff";
+} else if (Number(value) === Number(TC)) {
+  return "#f7ff31";
+} else if (Number(value) > Number(TC)) {
+  return "#00ff00";
+} else if (Number(value) < Number(TC) && Number(value) > Number(San)) {
+  return "#ff0000";
+}
+  
+
+  return ""; // Trả về chuỗi trống nếu không khớp với bất kỳ điều kiện nào
+};
+
+  
 export const setColorMenuMarket =(value?:string)=>{
    
     let Color ="text-yellow";

@@ -34,6 +34,7 @@ import PopupTableMarketwatch from "../popupTableMarketwatch/popupTableMarketwatc
 import { resizeState } from "../../models/resizeWindow";
 import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatch";
 import { DraggableData, DraggableEvent } from "react-draggable";
+import TableMarketWatchTest from "../tableMarketwatch/TableMarketWatchTest";
 function RenderTable() {
   const params = useParams<{ id: string }>();
   // console.log(params);
@@ -59,7 +60,7 @@ function RenderTable() {
     case "VNSML":
     case "CW":
     case "danh-muc":
-      return <TableMarketWatch />;
+      return <TableMarketWatchTest/>;
     case "thong-ke-index":
     case "thong-ke-gia":
     case "thong-ke-dat-lenh":
