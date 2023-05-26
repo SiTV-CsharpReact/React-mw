@@ -3,34 +3,12 @@ import { useParams } from "react-router-dom";
 import { stocks } from "../../models/marketwacthTable";
 import "./table.scss";
 import { formatNumber } from "../../utils/util";
+import { useAppSelector ,RootState } from "../../store/configureStore";
 
 const TableGDTTMarketWatch = () => {
-  const params = useParams<{ id: string }>();
-  const paramstock = stocks.find((paramstock) => paramstock.id === params.id);
-  const [products, setProducts] = useState([]);
-  const [prices, setPrices] = useState<any[]>([]);
-  const [floor,setFloor]=useState("");
-  useEffect(()=>{
-    if(paramstock){
-     if(paramstock.id){
-       fetchTable(paramstock.id)
-     }
-     else{
-       fetchTable("HNX")
-     }
-    }
-   },[paramstock?.id])
-  const fetchTable = async(param:string) => {
-     let valueParamPrice = param  === "thoa-thuan-hsx" ? "hsx":"hnx"
-     setFloor(valueParamPrice)
-      const res = await fetch(`http://marketstream.fpts.com.vn/${valueParamPrice}/data.ashx?s=pt`);
-      const resPrice = await fetch(`http://marketstream.fpts.com.vn/${valueParamPrice}/data.ashx?s=bi`);
-      const data = await res.json();
-    const dataPrice = await resPrice.json();
-      setProducts(data.sort())
-    setPrices(dataPrice.sort())
-    }
-    console.log(products)
+  const prices = useAppSelector((state: RootState) => state.table.DataBi);
+  const products = useAppSelector((state: RootState) => state.table.DataPt);
+  const floor = useAppSelector((state: RootState) => state.table.NameFloor);
   return (
     <div id="dvFixedH">
       <div className="dvContentLP border-t border-borderHeadTableMarket">
@@ -39,20 +17,8 @@ const TableGDTTMarketWatch = () => {
           <input placeholder="Nhập mã cần tìm" className="col-span-1 w-44 h-24 pl-1"></input>
 
           </div>
-        
-  
-          {/* {prices?.map((price:any)=>(
-              <div key={} className="col-span-2 flex justify-around font-bold">
-           <span>
-           Tổng KL GDTT :  
-           <label> {formatNumber(price[3].f240) }</label>    
-         </span>
-         <span>
-            Tổng KL GDTT : <label> { formatNumber(price[3].f241)}</label>
-          </span>
-         </div>
-          ))} */}
-             {floor === "hnx" ? <div  className="col-span-2 flex justify-around font-bold pt-1">
+             {floor === "hnx" ?
+              <div  className="col-span-2 flex justify-around font-bold pt-1">
            <span>
            Tổng KL GDTT :  
            <label> {formatNumber(prices[4]?.f240) }</label>    
@@ -70,7 +36,7 @@ const TableGDTTMarketWatch = () => {
           </span>
          </div>
 
-        }
+       } 
         
           <div className="col-span-1">
 
@@ -117,8 +83,9 @@ const TableGDTTMarketWatch = () => {
                   <th className="hbrb">Tổng GT</th>
                 </tr>
               </thead>
+               {products != null ? 
               <tbody id="tbdPT_HA" >
-                {products?.map((product:any)=>(
+                {products .length >0 ? products?.map((product:any)=>(
                   <tr key={product.RowID}>
                     <td>{product.Info[0][1]}</td>  
                     <td className="text-right">{formatNumber(product.Info[7][1])}</td>
@@ -126,8 +93,9 @@ const TableGDTTMarketWatch = () => {
                     <td className="text-right">{formatNumber(product.Info[8][1])}</td>
                     <td className="text-right">{formatNumber(product.Info[9][1])}</td>
                   </tr>
-                ))}
+                )) : ""}
                 </tbody>
+                : "" }
             </table>
           </div>
           <div className="col-span-1 pl-2">
