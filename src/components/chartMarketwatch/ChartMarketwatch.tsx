@@ -4,12 +4,7 @@ import ImagePriceBoard from "../../images/calendar-7-32.png";
 import DateTime from "../menuBarMW/DateTime";
 import "./chartMarketwatch.scss";
 import {  useAppDispatch } from "../../store/configureStore";
-import { setStatusChart } from "../menuBarMW/menuSlice";
-import FooterMarket from "../footerMarketwatch/FooterMarket";
-import FooterChart from "../footerMarketwatch/FooterChart";
-import MenuMarketWatch from "../indexMarketWatch/MenuMarketWatch";
-import { useSelector } from "react-redux";
-import {showChartMarketwatch } from "./chartMarketwatchSlice";
+import {statusChartMarketwatch } from "./chartMarketwatchSlice";
 import SlidesMarketWatch from "../indexMarketWatch/SlidesMarketWatch";
 import SlidesIndexChartMarketwatch from "./SlidesIndexChartMarketwatch";
 import ReactApexChart from 'react-apexcharts';
@@ -40,7 +35,7 @@ const ChartMarketwatch = () => {
             <Tooltip title="Hiển thị bảng giá">
               <button
                 className="p-[5px] h-30 w-[30] hover:bg-spnTitlePanelBottom"
-                onClick={() => dispatch(showChartMarketwatch(''))}
+                onClick={() => dispatch(statusChartMarketwatch(''))}
               >
                 <img src={ImagePriceBoard} height={20} width={20} alt="" />
               </button>

@@ -4,9 +4,8 @@ import ImageBuySell from "../../images/ppc-optimization-32.png";
 import ImageHandShake from "../../images/handshake-32.png";
 import { formatNumber, setColorMarket } from "../../utils/util";
 import ImagePriceBoard from "../../images/calendar-7-32.png";
-import { useSelector } from "react-redux";
 import axios from "axios";
-import { RootState } from "../../store/configureStore";
+import { useAppSelector } from "../../store/configureStore";
 
 interface Data {
   RowID: string;
@@ -14,20 +13,9 @@ interface Data {
 }
 
 const TableWithChart = () => {
-  const stockCode = useSelector((state: RootState) => state.chart.code);
+  const stockCode = useAppSelector((state) => state.chart.code);
   const [dataChart, setDataChart] = useState<Data[]>([]);
-  // const symbolNew = stockCode === "" ? "FTS" : stockCode;
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await axios.get<Data[]>(
-  //       `http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${symbolNew}`
-  //     );
-  //     setDataChart(response.data);
-  //   };
-  //   fetchData();
-  // }, [stockCode, symbolNew]);
-
+  const symbolNew = stockCode === "" ? "FTS" : stockCode;
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get<Data[]>(

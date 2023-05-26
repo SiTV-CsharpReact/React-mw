@@ -245,4 +245,4 @@ const ProfileAccount: any = () => {
   );
 };
 
-export default ProfileAccount;
+export default React.memo(ProfileAccount)

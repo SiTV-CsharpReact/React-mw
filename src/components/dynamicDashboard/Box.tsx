@@ -1,7 +1,7 @@
 import React from "react";
 import { Actions, IJsonModel, Layout, Model, TabNode } from "flexlayout-react";
 import OrderFormMarketWatch from "../orderFormMarketwatch/OrderFormMarketWatch";
-import BoxTest from "./BoxTest";
+import BoxTest from "./TablePrice";
 import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import "./dynamic.scss";
 type Tab = {

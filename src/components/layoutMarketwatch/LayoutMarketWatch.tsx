@@ -10,9 +10,8 @@ import { useParams } from "react-router-dom";
 import { stocks } from "../../models/marketwacthTable";
 import TableGDTTMarketWatch from "../tableMarketwatch/TableGDTTMarketWatch";
 import TableThongKeMarketWatch from "../tableMarketwatch/TableThongKeMarketWatch";
-import { useDispatch, useSelector } from "react-redux";
 import {
-  RootState,
+
   useAppDispatch,
   useAppSelector,
 } from "../../store/configureStore";
@@ -26,7 +25,7 @@ import ListMenuBar from "../menuBarMW/ListMenuBar";
 import DanhMuc from "../menuBarMW/DanhMuc";
 import SettingTable from "../menuBarMW/SettingTable";
 import DateTime from "../menuBarMW/DateTime";
-import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
+import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import PopupTableMarketwatch from "../popupTableMarketwatch/popupTableMarketwatch";
 import { resizeState } from "../../models/resizeWindow";
 import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatch";
@@ -50,38 +49,6 @@ function RenderTable() {
     default:
       break;
   }
-  // console.log(paramTable)
-  // switch (paramTable) {
-  //   case "thoa-thuan-hnx":
-  //   case "thoa-thuan-hsx":
-  //   case "thoa-thuan-upcom":
-  //     return <TableGDTTMarketWatch />;
-  //   case "HNX":
-  //   case "HNX30":
-  //   case "BOND":
-  //   case "UPCOM":
-  //   case "HSX":
-  //   case "VNI":
-  //   case "VN30":
-  //   case "VNXALL":
-  //   case "VN100":
-  //   case "VNALL":
-  //   case "VNMID":
-  //   case "VNSML":
-  //   case "CW":
-  //   // case "danh-muc":
-  //     return <TableMarketWatch />;
-  //     case "danh-muc":
-  //       return <TableDanhMuc/>;
-  //   case "thong-ke-index":
-  //   case "thong-ke-gia":
-  //   case "thong-ke-dat-lenh":
-  //   case "giao-dich-khop-lenh-ndtnn":
-  //   case "giao-dich-thoa-thuan-ndtnn":
-  //     return <TableThongKeMarketWatch />;
-  //   default:
-  //     break;
-  // }
 }
 const heightHeader = 40; //height header
 const heightPannelLink = 35;
@@ -232,9 +199,7 @@ const LayoutMarketWatch: React.FC = () => {
   };
   // show popup theo mã
 
-  const componentVisible = useSelector(
-    (state: RootState) => state.chart.visible
-  );
+  const componentVisible = useAppSelector((state) => state.chart.visible);
   const hideShowOrderForm = heightComponent.orderForm;
   // show hide menu tab
   const showPendingOrder = () => {
@@ -266,7 +231,7 @@ const LayoutMarketWatch: React.FC = () => {
   const handleDragable = (event: DraggableEvent, data: DraggableData) => {
     console.log(`x: ${data.x}, y: ${data.y}`);
   };
-  const status = useSelector((state: RootState) => state.popupTable.visible);
+  const status = useAppSelector((state) => state.popupTable.visible);
   //console.log(heightComponent);
   return (
     <div className="relative">
@@ -276,15 +241,10 @@ const LayoutMarketWatch: React.FC = () => {
         setSelectedValueProp={setSelectedValue}
       />
       {status ? (
-        <TablePopupMarketwatch
-
-        //  defaultPosition={{ x: 0, y: 0 }}
-        //  onDrag={handleDragable}
-        />
+        <TablePopupMarketwatch/>
       ) : (
         ""
       )}
-
       {/* marketwatch */}
       <div
         className="resize panel-horizontally bg-BGTableMarket text-white relative z-50 overflow-hidden"
@@ -361,7 +321,7 @@ const LayoutMarketWatch: React.FC = () => {
                     <Tooltip title="Đồ thị">
                       <button
                         className="btn btn-sm btn-chart"
-                        onClick={() => dispatch(showChartMarketwatch(""))}
+                        onClick={() => dispatch(statusChartMarketwatch(""))}
                       >
                         <img src={LineChart} width={20} height={20} alt="" />
                       </button>
