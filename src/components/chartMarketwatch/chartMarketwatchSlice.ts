@@ -22,6 +22,5 @@ const chartMarketwatchSlice = createSlice({
   },
 });
 
-export const { showChartMarketwatch } =
-  chartMarketwatchSlice.actions;
+export const { showChartMarketwatch  } = chartMarketwatchSlice.actions;
 export default chartMarketwatchSlice;

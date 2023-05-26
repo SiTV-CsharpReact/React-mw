@@ -5,6 +5,8 @@ import  { listStock } from "./codeListSlice";
 import { fetchCategoryAsync } from "./danhmucSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { fetchTableHNXAsync, fetchTableHSXAsync, setProductParams } from "../tableMarketwatch/tableSlice";
+// import { fetchDataTableHNXAsync, } from "../tableMarketwatch/tableSlice";
 
 const DanhMuc = () => {
   const navigate = useNavigate();
@@ -17,11 +19,13 @@ const DanhMuc = () => {
  useEffect(() => {
   dispatch(fetchCategoryAsync());
 }, [dispatch]);
-function handleDispatch() {
+function handleDispatch(item:string) {
+  dispatch(fetchTableHNXAsync(item))
+  dispatch(fetchTableHSXAsync(item))
   // Xử lý logic của dispatch
 
   // Chuyển hướng đến trang chủ
-  navigate('/chung-khoan/danh-muc');
+  // navigate('/chung-khoan/danh-muc');
   
 }
   return (
@@ -29,9 +33,9 @@ function handleDispatch() {
     <span className="text-13px">Danh mục</span>
       <ul className="absolute hidden text-black group-hover:block z-40 sub-menu">
       {data && data.Data.map((item: any, index: number) => (
-          <React.Fragment key={item.Score}>
+          <React.Fragment key={index}>
             <li className="relative">
-              <Link to="/chung-khoan/danh-muc" className=" "  onClick={() => dispatch(listStock(item.List))}> 
+              <Link to="/chung-khoan/danh-muc" className=" "  onClick={() => handleDispatch(item.List)}> 
               {/* <Link to="/chung-khoan/danh-muc" className=" "  onClick={() =>console.log("ok",item.List)}>  */}
                 {item.Name}
               </Link>  
@@ -39,6 +43,7 @@ function handleDispatch() {
             </li>
           </React.Fragment>
         ))}
+         
         <li className="relative">
           <input className="textBox" placeholder="Thêm danh mục"></input>
           <span id="btAdd" className="imgAdd keep">

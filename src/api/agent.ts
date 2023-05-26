@@ -9,12 +9,12 @@ const requests = {
     delete: (url: string) => axios.delete(url).then(responseBody),
 }
 const TableHNX = {
-    list: (params: URLSearchParams) => requests.get(BASE_URL, params),
+    list: (params: URLSearchParams) => requests.get(BASE_URL+'hnx/data.ashx', params),
     get: () => requests.get(BASE_URL+'/hnx/data.ashx?s=quote&l=HNXIndex'),
 }
 const TableHSX = {
-    list: (params: URLSearchParams) => requests.get(BASE_URL, params),
-    get: () => requests.get(BASE_URL+'/hsx/ApiData/get_cache_stockinfo'),
+    list: (params: URLSearchParams) => requests.get(BASE_URL+'hsx/data.ashx', params),
+    get: () => requests.get(BASE_URL+'/hsx/data.ashx?s=quote&l=All'),
 }
 const Company ={
     get: () => requests.get('http://localhost:8430/api/stock/v1/cache/stock_info_cn/eztrade?code=ALL'),
@@ -25,12 +25,21 @@ const Category ={
 const Ministry ={
     get: () => requests.get('http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/s5g/default/ministry'),
 }
+const ListDataTable = {
+    list: (floor :  string ,valueParam :  string  ) => requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?${valueParam}`)
+}
+const dataGDTTtable = {
+    listPt : (floor : string)=>requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=pt`),
+    listBi : (floor : string)=>requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=bi`)
+}
 const agent = {
     TableHNX,
     TableHSX,
     Company,
     Category,
-    Ministry
+    Ministry,
+    ListDataTable,
+    dataGDTTtable
 }
 export default agent;
 // import axios, { AxiosInstance, AxiosResponse } from "axios";

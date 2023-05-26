@@ -9,7 +9,6 @@ import TableTotalMonney from "./TableTotalMonney";
 import './styleOrderForm.scss'
 import IconNext from "../../images/icon-next.png";
 import { RootState, useAppDispatch, useAppSelector } from "../../store/configureStore";
-import { decrement, increment } from "./counterSlice";
 import StockBalance from "./StockBalance";
 import RecordPending from "./RecordPending";
 import { AppContext } from "../../Context/AppContext";

@@ -1,100 +1,92 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import menuItems from './helper/ListMenu';
+import { useAppDispatch } from '../../store/configureStore';
+import { getDataTable } from '../tableMarketwatch/tableSlice';
 
-interface MenuItem {
+interface MenuItem{
   name: string;
   path: string;
+  query: string;
+  floor: string
   children?: MenuItem[];
 }
 
-interface Props {
-  items: MenuItem[];
-}
 
-// const activeItem = localStorage.getItem("activePriceboardTab");
-// const activeItemChild = localStorage.getItem("activePriceboardTabMenu");
-
-const MenuBar: React.FC<Props>  = ({items}) => {
-  
-  const activeItem = localStorage.getItem("activePriceboardTab");
-  const activeItemChild = localStorage.getItem("activePriceboardTabMenu");
-  const [activeMenuItem, setActiveMenuItem] = useState<string | null>(null);
-    const [activeMenuItemChild, setActiveMenuItemChild] = useState<string | null>(null);
+const MenuBar = () => {
+const dispatch  = useAppDispatch()
+  const activeItem = localStorage.setItem("activePriceboarFloor", "HSX");
+  const activeItemChild = localStorage.setItem("activePriceboardTabMenu", "");
+  const [IsActiveMenu , setIsActiveMenu]= useState<number>(0); 
+  const [activeNamePath, setactiveNameFloor] = useState<string | null>(null); // ten san 
+    const [activeMenuItemName, setActiveMenuItemChild] = useState<string | null>(null);// teen menu item 
     useEffect(() => {
-      // Load active item from localStorage
-      const activeItem = localStorage.getItem("activePriceboardTab");
-      const activeItemChild = localStorage.getItem("activePriceboardTabMenu");
-      // console.log(activeItem)
+      const activeItem = localStorage.getItem("activePriceboarFloor"); // ten san 
+      const activeItemChild = localStorage.getItem("activePriceboardTabMenu"); // ten menu item 
       if (activeItem) {
-        setActiveMenuItem(activeItem);
+        setactiveNameFloor(activeItem);
       }
       if (activeItemChild) {
         setActiveMenuItemChild(activeItemChild);
       }
     }, []);
-  const handleItemClick = (path: string) => {
-    
-    setActiveMenuItem(path);
-    localStorage.setItem("activePriceboardTab", path);
-    console.log(path)
+  const handleItemClick = (path: string, key:number) => {
+    setIsActiveMenu(key)
+    setactiveNameFloor(path);
+    localStorage.setItem("activePriceboarFloor", path);
   };
-  const handleItemChildClick = (path: string,name:string) => {
-    setActiveMenuItemChild(path);
+  // call api 
+  const handleItemChildClick =  async (name:string , query:string , floor : string , ) => {
+    setActiveMenuItemChild(name);
     localStorage.setItem("activePriceboardTabMenu", name);
-    //localStorage.setItem("activePriceboardTab", path);
-    console.log(path)
+    let data = {
+      Floor :floor,
+      Query:query
+    }
+   await dispatch(getDataTable(data)) 
   };
-  const renderMenuItemChild =(item:MenuItem) =>{
-    //console.log(item)
-    //console.log(Object.keys(item))
-    return(
-      <li  key={item.path}
-      
-      onClick={() => handleItemChildClick(item.path,item.name)}
-      >
-        <Link  to={item.path} 
-        className={`${ activeMenuItemChild === item.path ? 'active' : ''} `}
-         >
-        {item.name}
-        </Link>
-      </li>
-    )
-  }
-  const renderMenuItemChildS =(item:MenuItem,index:number) =>{
-    return(
-      <li  key={index}
-      className={`${ index % 2 === 0 ? "float-left" : "float-right" }`}
-      onClick={() => handleItemChildClick(item.path,item.name)}
-      >
-        <Link  to={item.path} 
-        className={`${ activeMenuItemChild === item.path ? 'active' : ''} `}
-         >
-        {item.name}
-        </Link>
-      </li>
-    )
-  }
-  const renderMenuItem = (item: MenuItem) => {
- 
-    // const isActive = item.path === activeItem;
+  const renderMenuItem = (item:any, key : number) => {
     return (
       <div
         key={item.path}
-        className={`group list-sub-menu ${ activeMenuItem === item.path ? 'active' : ''} `}
-
-        onClick={() => handleItemClick(item.path)}
+        className={`group list-sub-menu ${ IsActiveMenu === key? 'active' : ''} `}
+        onClick={() => handleItemClick(item.path , key)}
       >
-        <span  className='text-13px' >{item.name}{ activeMenuItem === item.path ? activeItemChild?.replace("",": ") : ''}</span>
-      {item.children && item.children.length <=9 ? (
-          // <ul className={`${isActive ? "active" : ""} sub-menu`}>
-            <ul className='absolute hidden text-black group-hover:block z-40 sub-menu'>
-            {item.children?.map((child) => renderMenuItemChild(child))}
-            
+        <span  className='text-13px' >{item.name}{ activeNamePath === item.path ? activeMenuItemName?.replace("",": ") : ''}</span>
+         {item.children && item.children.length <=9 ? (
+            <ul className='absolute hidden text-black group-hover:block z-40 sub-menu' key={item.path}>
+            {item.children?.map((child:any, index:number) => {
+               return(
+                <li  key={item.path}
+                
+                onClick={() => handleItemChildClick(child.name,child.query , item.floor   )}
+                >
+                  <Link to=""
+                  className={`${ activeMenuItemName === child.name ? 'active' : ''} `}
+                   >
+                  {child.name}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
         ):(
-        <div>
-           <ul className='absolute hidden text-black group-hover:block z-40 sub-menu dropdown-menu-price'>
-            {item.children?.map((child,index) => renderMenuItemChildS(child,index))}
+        <div key={item.path}>
+           <ul className='absolute hidden text-black group-hover:block z-40 sub-menu dropdown-menu-price' key={item.path}>
+            {item.children?.map((child:any,index:number) =>{
+              return(
+                <li  key={index}
+                className={`${ index % 2 === 0 ? "float-left" : "float-right" }`}
+                onClick={() => handleItemChildClick(child.name ,child.query,item.floor )}
+                >
+                  <Link  to="" 
+                  className={`${ activeMenuItemName === child.name ? 'active' : ''} `}
+                   >
+                  {child.name}
+                  </Link>
+                </li>
+              )
+            })}
             
           </ul>
         </div>
@@ -103,8 +95,7 @@ const MenuBar: React.FC<Props>  = ({items}) => {
     );
   };
     return <div className='flex menu-table'>
-      {items.map((item) => renderMenuItem(item))}
-      
+      {menuItems.map((item,key) => renderMenuItem(item,key))}
       </div>;
 }
 

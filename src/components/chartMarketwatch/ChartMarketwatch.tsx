@@ -1,5 +1,5 @@
 import { Tooltip } from "@mui/material";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ImagePriceBoard from "../../images/calendar-7-32.png";
 import DateTime from "../menuBarMW/DateTime";
 import "./chartMarketwatch.scss";
@@ -8,14 +8,20 @@ import { setStatusChart } from "../menuBarMW/menuSlice";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
 import FooterChart from "../footerMarketwatch/FooterChart";
 import MenuMarketWatch from "../indexMarketWatch/MenuMarketWatch";
-import { showChartMarketwatch } from "./chartMarketwatchSlice";
+import { useSelector } from "react-redux";
+import {showChartMarketwatch } from "./chartMarketwatchSlice";
 import SlidesMarketWatch from "../indexMarketWatch/SlidesMarketWatch";
 import SlidesIndexChartMarketwatch from "./SlidesIndexChartMarketwatch";
+import ReactApexChart from 'react-apexcharts';
 import TableWithChart from "./TableWithChart";
-
+interface Data {
+  RowID: string;
+  Info: string[][];
+}
 type ChartMarketwatchProps = {
   stock: string;
 };
+ 
 const ChartMarketwatch = () => {
   // const [posts, setPosts] = useState<Post[]>([]);
   // const [dataChart, setDataChart] = useState<Data[]>([]);

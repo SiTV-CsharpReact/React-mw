@@ -3,130 +3,186 @@ import {
     createEntityAdapter,
     createSlice,
 } from "@reduxjs/toolkit";
-import { DataTable, ProductParams } from "../../models/modelTableHNX";
+import { DataTable, DataGDTT } from "../../models/modelTableHNX";
 import agent from "../../api/agent";
 import { TableParams } from "../../models/modelLinkTable";
 import { RootState } from "../../store/configureStore";
 
 interface TableState {
     productsLoaded: boolean;
-    table: DataTable[];
-    productParams: ProductParams;
+    ListDataTable: DataTable[];
+    productParams: TableParams;
     status: string;
+    index : number;
+    floor:  string ;
+    NameFloor :  string ;
+    DataPt : DataTable[];
+    DataBi : DataGDTT[]
 }
-const productsAdapter = createEntityAdapter<DataTable>();
-function getAxiosParams(tableParams: TableParams) {
-    const params = new URLSearchParams();
-    console.log(params);
-    if (tableParams.s) params.append("s", tableParams.s?.toString());
-    if (tableParams.l) params.append("l", tableParams.l?.toString());
-    return params;
+type params = {
+  Floor :string,
+  Query:string
 }
-const fetchTableHNXAsync = createAsyncThunk<DataTable[],void,{ state: RootState }>(
-    "table/fecthTable",
-    async (_, thunkAPI) => {
-        const params = getAxiosParams(thunkAPI.getState().table.productParams);
-        console.log(params)
-        try {
-            const response = await agent.TableHNX.list(params);
-            const data = await response.json();
-            console.log("oke"); 
-            return data; // console.log(response.items)
-        } catch (error: any) {
-            return thunkAPI.rejectWithValue({ error: error.data });
-        }
+const dataTableAdapter = createEntityAdapter<DataTable>({
+    selectId: (dataTable) => dataTable.RowID || '', // Chỉ định trường khóa
+  });
+  const dataTableHSXAdapter = createEntityAdapter<DataTable>({
+    selectId: (dataTable) => dataTable.RowID || '', // Chỉ định trường khóa
+  });
+export const fetchTableHNXAsync = createAsyncThunk<
+  DataTable[],
+  string,
+  { state: RootState }
+>(
+  "table/fetchTableHNXAsync",
+  async (params, thunkAPI) => {
+    const urlParams = new URLSearchParams();
+    urlParams.append("s", "quote");
+    urlParams.append("l", params);
+    try {
+      const responseHNX = await agent.TableHNX.list(urlParams);
+    
+      console.log(responseHNX)
+      return responseHNX;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({ error: error.data });
     }
-);
-const fetchTableHSXAsync = createAsyncThunk<DataTable[],void,{ state: RootState }>(
-    "table/fecthTable",
-    async (_, thunkAPI) => {
-        const params = getAxiosParams(thunkAPI.getState().table.productParams);
-        console.log(params)
-        try {
-            const response = await agent.TableHNX.list(params);
-            const data = await response.json();
-            console.log("oke"); 
-            //thunkAPI.dispatch(setMetaData(response.metaData));
-            return data; // console.log(response.items)
-        } catch (error: any) {
-            return thunkAPI.rejectWithValue({ error: error.data });
-        }
-    }
-);
-export const fetchDataTableHNXAsync = createAsyncThunk<[]>(
-    "table/fecthTableHNX",
-  async () => {
-    const res = await agent.TableHNX.get();
-    console.log(res);
-    return res;
   }
 );
-export const fetchDataTableHSXAsync = createAsyncThunk<[]>(
-    "table/fecthTableHSX",
-  async () => {
-    const res = await agent.TableHSX.get();
-    console.log(res);
-    return res;
+export const fetchTableHSXAsync = createAsyncThunk<
+  DataTable[],
+  string,
+  { state: RootState }
+>(
+  "table/fetchTableHSXAsync",
+  async (params, thunkAPI) => {
+    const urlParams = new URLSearchParams();
+    urlParams.append("s", "quote");
+    urlParams.append("l", params);
+    try {
+      const responseHNX = await agent.TableHSX.list(urlParams);
+    
+      console.log(responseHNX)
+      return responseHNX;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({ error: error.data });
+    }
   }
 );
+export const getDataTable = createAsyncThunk("table/getDataTable" , async (Param :params)=>{
+    try {
+      if(Param.Query === "thoa-thuan-hsx"){
+            const DataBi = await agent.dataGDTTtable.listBi(Param.Floor)
+            const DataPt = await agent.dataGDTTtable.listPt(Param.Floor)
+            let data = {
+                index : 1,
+                floor :"GDTT",
+                NameFloor : Param.Floor,
+                product : {
+                  DataBi,
+                  DataPt : DataPt  
+                }  
+             }
+            
+             return  data
+      }else{  
+            const result = await agent.ListDataTable.list(Param.Floor , Param.Query)
+            let data = {
+              index : 0,
+              floor :"MAIN",
+              NameFloor : Param.Floor,
+              product : result
+            }
+
+            return data         
+        }
+    } catch (error) {
+        console.log('lỗi table silce', error);
+    }
+
+})
+
 function initParams() {
     return {
         s: "quote",
         l: "HNXIndex",
-    }; // s=quote&l=HNXIndex
+    };
 }
 
 export const tableSlice = createSlice({
     name: "table",
-    initialState:{
+    initialState:dataTableAdapter.getInitialState<TableState>({
         productsLoaded: false,
-        tableHNX: [] as  DataTable[],
-        tableHSX: [] as  DataTable[],
-        status: "oke",
+        ListDataTable: [] as  DataTable[],
+        status: "idle",
+        index : 0,
+        floor : 'MAIN',
+        DataBi :  [] as DataGDTT[],
+        DataPt :  [] as DataTable[],
+        NameFloor : "",
         productParams: initParams(),
-    },
+    }),
     reducers: {
         setProductParams: (state, action) => {
-            //console.log(state.productParams);
             state.productsLoaded = false;
-            //state.productParams = { ...state.productParams, ...action.payload };
+            state.productParams = { ...state.productParams, ...action.payload };
         },
     },
 
     extraReducers: (builder) => {
         builder
-        .addCase(fetchTableHNXAsync.fulfilled, (state, action) => {
-            state.productsLoaded = true;
-            console.log('data',action.payload);
-            //productsAdapter.setAll(state, action.payload);
-            state.tableHNX = action.payload;
-            state.status = "idle";
-        })
-        .addCase(fetchDataTableHNXAsync.pending, (state) => {
+          .addCase(getDataTable.pending , (state, action) =>{
+            state.productsLoaded = false;
             state.status = "loading";
-        })
-        .addCase(fetchDataTableHNXAsync.fulfilled, (state, action) => {
+          })
+          .addCase(getDataTable.fulfilled , (state, action) =>{
             state.productsLoaded = true;
-            console.log(action.payload);
-            //productsAdapter.setAll(state, action.payload);
-            state.tableHNX = action.payload;
             state.status = "idle";
-        })
-        .addCase(fetchDataTableHSXAsync.fulfilled, (state, action) => {
-            state.productsLoaded = true;
-            console.log(action.payload);
-            //productsAdapter.setAll(state, action.payload);
-            state.tableHSX = action.payload;
-            state.status = "idle";
-        })
+            let data = action.payload
+            if(data?.index === 0){
+              if(data.NameFloor === "HNX"){
+                data?.product.map((obj:DataTable) =>
+                      obj.Info?.sort((a: any, b: any) => {
+                        const indexA = Number(a[0]);
+                        const indexB = Number(b[0]);
+                        if (indexA < indexB) {
+                          return -1;
+                        }
+                        if (indexA > indexB) {
+                          return 1;
+                        }
+                        return 0;
+                      }) )
+                     state.floor = "MAIN"
+                     state.ListDataTable = data?.product
+                     state.NameFloor = data?.NameFloor
+              }else{
+                state.floor = "MAIN"
+                state.ListDataTable = data?.product
+                state.NameFloor = data?.NameFloor
+              }
+            }else{
+              if(data?.NameFloor === "HSX"){
+                state.DataPt = data.product?.DataPt?.PUT_EXEC
+                state.DataBi = data.product?.DataBi
+                state.floor = "GDTT" 
+                state.NameFloor = "HSX"
+              }else{
+                state.DataPt = data?.product?.DataPt
+                state.DataBi = data?.product?.DataBi
+                state.floor = "GDTT"
+                state.NameFloor = "HNX"
+              }
+         
+            }
+          })
+          .addCase(getDataTable.rejected , (state, action) =>{
+
+          })
     },
 });
 
 export default tableSlice;
-// export const productSelectors = productsAdapter.getSelectors(
-//     (state: RootState) => state.table
-// );
-
-//console.log(productSelectors);
-//export const { setProductParams } = tableSlice.actions;
-// export const { setProductParams } = tableSlice.actions;
+export const productSelectors = dataTableAdapter.getSelectors((state: RootState) =>state.table)
+export const productHSXSelectors = dataTableHSXAdapter.getSelectors((state: RootState) =>state.table)
+export const {setProductParams} = tableSlice.actions;

@@ -3,7 +3,7 @@ import { useAppSelector } from "../../store/configureStore";
 import { formatNumber } from "../../utils/util";
 
 const TableAssetReport = () => {
-  const { assetReport } = useAppSelector((state) => state.report);
+  const { assetReport } = useAppSelector((state) => state.assetReport);
   const [data, setData] = useState([]);
   const [short, setShort] = useState(false);
   const [sort, setSort] = useState("asc");

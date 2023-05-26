@@ -2,14 +2,15 @@ import { useAppSelector } from "../../store/configureStore";
 import TbodyAssetValue from "./TbodyAssetValue";
 
 const TableAssetValue = () => {
-  const { assetReport } = useAppSelector((state) => state.report);
+  // const { assetReport } = useAppSelector((state) => state.report);
   const mode = "light";
+  const { assetReport } = useAppSelector((state) => state.assetReport);
 
   return (
     <div className={`report__tabcondition__left ${mode}-bg`}>
       <div>
-        {assetReport?.Table?.map((item: any, indx: number) => (
-          <table key={indx}>
+        {assetReport?.Table?.map((item: any, index: number) => (
+          <table key={index}>
             <TbodyAssetValue table="tb1" item={item} />
             <TbodyAssetValue table="tb2" item={item} />
             <TbodyAssetValue table="tb3" item={item} />

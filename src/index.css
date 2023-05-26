@@ -277,6 +277,30 @@ th.sort-table.active::after {
 }
 .headerSortUp{
     position: relative;
+    
+}
+.anticon-calendar{
+    opacity: 0;
+}
+.css-dev-only-do-not-override-15rg2km{
+    height:25px;
+    top:4px;
+    border-radius: 2px;
+}
+.ant-picker-footer-extra{
+    display:none;
+}
+.ant-picker-prev-icon,.ant-picker-next-icon{
+    opacity: 0;
+}
+.ant-picker-cell:hover{
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 5px;
+    color:white;
+}
+.select-aua{
+    line-height: 50px;
+    -webkit-appearance: menulist-button;  
 }
 
 @tailwind base;

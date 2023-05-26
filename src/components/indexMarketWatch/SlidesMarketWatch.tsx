@@ -2,18 +2,13 @@ import React, {
   useCallback,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import Slider from "react-slick";
 import "./slide.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ObjectMenuHNX, ObjectMenuHSX } from "../../models/modelListMenuHSX";
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/pagination";
-import axios from "axios";
+
 import {
   setColorMenuMarket,
   iconColorMenuMarket,
@@ -21,7 +16,7 @@ import {
   fStatusMarketUPCOM,
 } from "../../utils/util";
 import { AppContext } from "../../Context/AppContext";
-import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { RootState, useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { fetchHSXMarketAsync } from "./marketHSXSlice";
 import { fetchHNXMarketAsync } from "./marketHNXSlice";
 
@@ -45,7 +40,7 @@ const SlidesMarketWatch = () => {
   const {
     marketHNX: { valueHNX },
   } = useAppSelector((state) => state.marketHNX);
-  const { INDEX } = useAppSelector((state) => state.show);
+  const { INDEX } = useAppSelector((state:RootState) => state.settingMarketwatch);
   useEffect(() => {
     dispatch(fetchHSXMarketAsync());
   }, [dispatch]);
@@ -192,7 +187,6 @@ const SlidesMarketWatch = () => {
         onMouseEnter={handleHoverLeft}
         onMouseLeave={handleLeaveLeft}
       />
-
       <ul className="my-1 col-priceboard class-chart">
         <Slider
           {...(settings as any)}

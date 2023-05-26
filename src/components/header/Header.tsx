@@ -11,6 +11,9 @@ import NotiHeader from "./NotiHeader";
 import ProfileAccount from "./ProfileAccount";
 import useDarkMode from "./useDarkMode";
 
+import { useAppDispatch } from "../../store/configureStore";
+import { setStatusChart } from "../menuBarMW/menuSlice";
+import React from "react";
 const Header = () => {
   const { mode } = useDarkMode();
   console.log(mode);
@@ -61,4 +64,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default React.memo(Header);

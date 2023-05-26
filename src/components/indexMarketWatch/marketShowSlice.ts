@@ -73,21 +73,18 @@ const initialState = {
   INDEX: data,
 };
 
-export const showMarketWatchSlice = createSlice({
-  name: "market_watch",
+export const settingMarketWatchSlice = createSlice({
+  name: "setting/table_marketwatch",
   initialState,
   reducers: {
-    addMarket: (state, action) => {
+    paramsMarketwatch: (state, action) => {
       state.INDEX = action.payload;
       localStorage.setItem("setting_table", JSON.stringify(state.INDEX));
     },
-    // settingDefaultMarket: (state, action) => {
-    //   state.INDEX = action.payload;
-    //   localStorage.setItem("setting_table", JSON.stringify(state.INDEX));
-    // },
+ 
   },
 });
 
-export const { addMarket } = showMarketWatchSlice.actions;
+export const { paramsMarketwatch } = settingMarketWatchSlice.actions;
 
-export default showMarketWatchSlice;
+export default settingMarketWatchSlice;

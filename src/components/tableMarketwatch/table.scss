@@ -145,10 +145,14 @@ div#dvContentLP {
 
 .label_price {
     color: white;
-    float: left;
+    display:flex;
     margin: 0 10px 0 3px;
     font-size: 9pt;
     line-height: 3em;
+    width: 100px;
+    padding-left: 2px;
+
+
 }
 
 .button_Statistics {
