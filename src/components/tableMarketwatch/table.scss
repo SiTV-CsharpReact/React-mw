@@ -1,3 +1,4 @@
+
 .table-priceboard {
     // border: 1px solid #858585 !Important;
     background-color: #1d1d1d;
@@ -70,7 +71,7 @@ div#dvContentLP {
 }
 
 .table-priceboard thead tr th {
-    border: 1px solid #858585 !Important;
+    border: 1px solid #858585;
 }
 
 .context-menu-list {
@@ -144,10 +145,14 @@ div#dvContentLP {
 
 .label_price {
     color: white;
-    float: left;
+    display:flex;
     margin: 0 10px 0 3px;
     font-size: 9pt;
     line-height: 3em;
+    width: 100px;
+    padding-left: 2px;
+
+
 }
 
 .button_Statistics {
@@ -278,6 +283,36 @@ tr.border-bottom ~ tr.border-bottom {
         opacity: 1;
     }
 }
+
+.table-priceboard {
+    border: 1px solid #858585 !Important;
+}
+.table {
+    margin-bottom: 5px;
+}
+#dvFixedH {
+    margin: 0 !important;
+    background: #131722;
+    max-width: 100%;
+    overflow-x: auto;
+}
+#dvFixedH #dvContentLP {
+    min-width: 960px;
+}
+div#dvContentLP {
+    overflow-x: auto !important;
+    position: relative;
+    /* top: 30px; */
+    z-index: 1;
+    min-height: 200px;
+}
+.table-responsive {
+    border: none !important;
+}
+tr.border-bottom:last-child {
+    border-bottom: 1px double #00ff00 !important;
+  }
+  
 /* Tùy chỉnh thanh cuộn */
 .dvContentLP::-webkit-scrollbar {
     width: 10px;
@@ -294,6 +329,8 @@ tr.border-bottom ~ tr.border-bottom {
         
      }
   }
+
+
 // .has-symbol.company-tooltip[data-tooltip]::after {
 //     bottom: -20%;
 //     left: 50%;

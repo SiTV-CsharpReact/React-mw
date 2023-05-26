@@ -1,0 +1,173 @@
+.main-wrappers{
+    height: calc(100vh - 40px);
+}
+.custom-layout-page {
+    // height: calc(100vh - 67px);
+    border-color: #020210;
+    // height: 100%;
+    background-color: #020210;
+    border-top-width: 0.25rem;
+}
+.layout-wrapper {
+    position: relative;
+    background-color: #020210;
+    border-color: #020210;
+    height: calc(100vh - 66px);
+    border-top-width: 0.25rem;
+}
+.bg-secondary {
+    background-color: #282828;
+}
+.custom-layout-page .layout-tabs .layout-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 4.5rem;
+    max-width: 7rem;
+    line-height: 1.1rem;
+    text-align: center;
+    color:#c1c1c1
+}
+.custom-layout-page .layout-tabs .tab {
+    position: relative;
+    font-weight: 500;
+    height: 100%;
+    background-color: #404245;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    border-right-width: 1px;
+    border-color: #282828;
+    padding: 0.125rem 0.5rem;
+    min-width: 5rem;
+}
+.bg-explain {
+    background-color: #3f3f3f;
+}
+.list-widgets-container {
+    height: 100%;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: #c1c1c1;
+}
+.space-x-5>:not([hidden])~:not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(1.25rem*var(--tw-space-x-reverse));
+    margin-left: calc(1.25rem*(1 - var(--tw-space-x-reverse)));
+}
+.dropdown-dynamic-menu{
+    position: absolute;
+    right: 0;
+    transform-origin: top right;
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    background-color: #282828;
+    color: #fff;
+    height: calc(100vh - 90px);
+    /* display: none; */
+    width: 14rem;
+    z-index: 999;
+}
+.bg-invert{
+    background-color: #646464;
+}
+.list-widget {
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+    padding-bottom: 0.5rem;
+    font-size: .813rem;
+    line-height: 1.125rem;
+    max-height: calc(100vh - 69px);
+    overflow: auto;
+}
+.list-widgets-container .input-search-widget {
+    border-radius: 0.25rem;
+    border-width: 1px;
+    border-color: #4d5259;
+    background-color: #282828;
+}
+.input-search-widget {
+    width: 9rem;
+    font-size: .813rem;
+    line-height: 1.125rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 1.5rem;
+}
+.list-widgets-container {
+    height: 100%;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: #c1c1c1;
+}
+
+.space-x-5>:not([hidden])~:not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(1.25rem*var(--tw-space-x-reverse));
+    margin-left: calc(1.25rem*(1 - var(--tw-space-x-reverse)));
+}
+.list-widgets-container .dropdown-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
+.focus\:text-color-highlight:focus, .hover\:text-color-highlight:hover {
+    color: #fff;
+}
+.border-invert {
+    border-color: #646464;
+}
+.group:hover .group-hover\:text-color-highlight {
+    color: #fff;
+}
+.custom-layout-page .layout-wrapper .flexlayout__tab_button {
+    background-color: #3f3f3f;
+    color: #fff;
+    // border-bottom-width: 3px;
+    // border-color: #0055ba;
+    border-radius: 0;
+    padding-left: 0.25rem;
+}
+.custom-layout-page .layout-wrapper .flexlayout__tab_button--selected {
+    font-weight: 500;
+    color: #fff;
+    background-color:#282828;
+    border-bottom-width: 2px;
+    border-color: #3391ff;
+}
+.custom-layout-page .layout-wrapper .flexlayout__tabset_tabbar_outer {
+    background-color: #3f3f3f;
+    background-image: none;
+}
+.custom-layout-page .layout-wrapper .flexlayout__tabset_tab_divider {
+    width: 0;
+}
+.custom-layout-page .layout-wrapper .flexlayout__splitter {
+    background-color: #020210;
+    // width: 4px ;
+}
+.custom-layout-page .layout-wrapper .flexlayout__splitter:hover {
+    // background-color: #020210!important;
+    background-color: #646464!important;
+}
+.custom-layout-page .layout-wrapper .flexlayout__tab_button_trailing {
+    color: #fff;
+    &:hover{
+       background-color:  #646464;
+       color: #fff;
+    }
+}
+.custom-layout-page .layout-wrapper .flexlayout__tabset_tabbar_inner_tab_container {
+    border-width: 0;
+    padding-left: 0;
+}
+// .bg-explain {
+//     background-color: #3f3f3f;
+// }
+// .main-wrapper {
+//     height: calc(100vh - 57px);
+// }

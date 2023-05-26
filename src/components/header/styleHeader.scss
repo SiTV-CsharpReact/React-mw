@@ -1,0 +1,37 @@
+header {
+  &.dark-header {
+    background: #303030 !important;
+    .header-left {
+      .dark-text {
+        color: #fff !important;
+      }
+    }
+    .header-center {
+      ul {
+        li {
+          background: none;
+          a {
+            color: #fff !important;
+          }
+          ul {
+            background: #202020;
+          }
+        }
+      }
+    }
+    .header-right {
+      button {
+        > div {
+          color: #fff !important;
+        }
+      }
+    }
+  }
+}
+
+.dark-header {
+  background: #303030 !important;
+}
+.dark-text{
+    color: #fff !important;
+}

@@ -56,7 +56,7 @@ const NotiHeader = () => {
               ></Box>   
               <i className="fa fa-bell text-large text-iconNoti" aria-hidden="true"></i>
               <span className="bell_count hidden__elem flex absolute top-0.5 right-1" id="bellCount" style={{ display: anchorEl ? "none" :"" }}><span className="noti__value" id="notificationsCountValue">6</span></span>
-              <div id="tooltip-exchange" style={{zIndex: 5, position: 'absolute', right: '-52px', top: '31px', display: anchorEl ? "none" :""}}>
+              <div id="tooltip-exchange" style={{zIndex: 5, position: 'absolute', right: '-52px', top: '31px', display: !anchorEl ? "none" :""}}>
         <div style={{zIndex: 4, position: 'relative'}} id="spnTextTooltip" className='text-spnTitlePanelBottom'>
           <span className='bg-spnTitlePanelBottom text-13px' style={{color: 'white', padding: '8px 5px', borderRadius: '5px', boxShadow: '3px -2px 8px 1px #888'}}>
             Bật để nhận thông báo
@@ -622,4 +622,4 @@ const NotiHeader = () => {
   )
 }
 
-export default NotiHeader
+export default React.memo(NotiHeader)

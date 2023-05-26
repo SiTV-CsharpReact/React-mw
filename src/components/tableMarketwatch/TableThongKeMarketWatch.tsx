@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { stocks } from "../../models/marketwacthTable";
+import { DatePicker, Space } from 'antd';
+import dayjs, { Dayjs } from 'dayjs';
+const { RangePicker } = DatePicker;
 
 const TableThongKeMarketWatch = () => {
     const [products, setProducts] = useState([]);
@@ -24,7 +27,6 @@ const TableThongKeMarketWatch = () => {
      //     dispatch(fetchTableHNXAsync())
      //     //dispatch(fetchStatusAsync())
      // },[dispatch])
-     
      const fetchTable = async(param:string) => {
        let valueParam ="thong-ke-index";
         switch(param) {
@@ -49,16 +51,18 @@ const TableThongKeMarketWatch = () => {
          const res = await fetch(`http://marketstream.fpts.com.vn/hnx/data.ashx?${valueParam}`);
          const data = await res.json();
          setProducts(data)
-       }
+     }
+      
+     const defaultDate: Dayjs = dayjs();
   return (
     <div>
       <div
         id="dvSTTIndex"
-        className="grid grid-cols-6 gap-4 col-priceboard py-2.5 px-0.5"
+        className="grid grid-cols-6 gap-3 col-priceboard py-2.5 px-0.5"
         style={{}}
       >
         <div
-          className="form-group flex col-xs-2 col-sm-2 col-priceboard div-group-stt-price"
+          className="flex form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price"
           style={{}}
         >
           <label className="label_price col-priceboard">Sàn</label>
@@ -81,7 +85,7 @@ const TableThongKeMarketWatch = () => {
           </select>
         </div>
         <div
-          className="form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price flex"
+          className="flex form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price"
           style={{}}
         >
           <label className="label_price col-priceboard">Đợt</label>
@@ -95,26 +99,26 @@ const TableThongKeMarketWatch = () => {
           </select>
         </div>
         <div
-          className="form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price flex"
+          className="flex form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price"
           style={{}}
         >
+
           <label className="label_price col-priceboard">Từ ngày</label>
-          <input
-            type="text"
-            className="col-xs-8 col-sm-8 input ipDatePicker"
-            id="ipStartDateHIST_INDEX"
-          />
+          <Space direction="vertical" size={12}>
+            <DatePicker defaultValue={defaultDate} showToday ={true} renderExtraFooter={() => 'extra footer'} />
+          </Space>
         </div>
         <div
-          className="form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price flex"
+          className="flex form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price"
           style={{}}
         >
           <label className="label_price col-priceboard">Đến ngày</label>
-          <input
-            type="text"
-            className="col-xs-8 col-sm-8 input ipDatePicker"
-            id="ipEndDateHIST_INDEX"
-          />
+         
+           <Space direction="vertical" size={12}>
+            <DatePicker showToday ={true} defaultValue={defaultDate} renderExtraFooter={() => 'extra footer'} />
+          </Space>
+
+
         </div>
         <div className="form-group col-xs-2 col-sm-2 col-priceboard" style={{}}>
           <button
