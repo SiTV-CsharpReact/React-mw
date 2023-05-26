@@ -10,8 +10,12 @@ import { useParams } from "react-router-dom";
 import { stocks } from "../../models/marketwacthTable";
 import TableGDTTMarketWatch from "../tableMarketwatch/TableGDTTMarketWatch";
 import TableThongKeMarketWatch from "../tableMarketwatch/TableThongKeMarketWatch";
-import {  useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../store/configureStore";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "../../store/configureStore";
 import ChartMarketwatch from "../chartMarketwatch/ChartMarketwatch";
 import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import IntradayOrder from "../orderFormMarketwatch/IntradayOrder";
@@ -34,43 +38,50 @@ import LineChart from "../../images/line-chart-32.png";
 import Close from "../../images/x28.png";
 
 function RenderTable() {
-  const params = useParams<{ id: string }>();
-  //console.log(params)
-  // console.log(params);
-  const paramstock = stocks.find((paramstock) => paramstock.id === params.id);
-  const paramTable = paramstock?.id;
-  // console.log(paramTable)
-  switch (paramTable) {
-    case "thoa-thuan-hnx":
-    case "thoa-thuan-hsx":
-    case "thoa-thuan-upcom":
-      return <TableGDTTMarketWatch />;
-    case "HNX":
-    case "HNX30":
-    case "BOND":
-    case "UPCOM":
-    case "HSX":
-    case "VNI":
-    case "VN30":
-    case "VNXALL":
-    case "VN100":
-    case "VNALL":
-    case "VNMID":
-    case "VNSML":
-    case "CW":
-    // case "danh-muc":
+  const floor = useAppSelector((state) => state.table.floor);
+
+  switch (floor) {
+    case "MAIN":
       return <TableMarketWatch />;
-      case "danh-muc":
-        return <TableDanhMuc/>;
-    case "thong-ke-index":
-    case "thong-ke-gia":
-    case "thong-ke-dat-lenh":
-    case "giao-dich-khop-lenh-ndtnn":
-    case "giao-dich-thoa-thuan-ndtnn":
-      return <TableThongKeMarketWatch />;
+      break;
+    case "GDTT":
+      return <TableGDTTMarketWatch />;
+      break;
     default:
       break;
   }
+  // console.log(paramTable)
+  // switch (paramTable) {
+  //   case "thoa-thuan-hnx":
+  //   case "thoa-thuan-hsx":
+  //   case "thoa-thuan-upcom":
+  //     return <TableGDTTMarketWatch />;
+  //   case "HNX":
+  //   case "HNX30":
+  //   case "BOND":
+  //   case "UPCOM":
+  //   case "HSX":
+  //   case "VNI":
+  //   case "VN30":
+  //   case "VNXALL":
+  //   case "VN100":
+  //   case "VNALL":
+  //   case "VNMID":
+  //   case "VNSML":
+  //   case "CW":
+  //   // case "danh-muc":
+  //     return <TableMarketWatch />;
+  //     case "danh-muc":
+  //       return <TableDanhMuc/>;
+  //   case "thong-ke-index":
+  //   case "thong-ke-gia":
+  //   case "thong-ke-dat-lenh":
+  //   case "giao-dich-khop-lenh-ndtnn":
+  //   case "giao-dich-thoa-thuan-ndtnn":
+  //     return <TableThongKeMarketWatch />;
+  //   default:
+  //     break;
+  // }
 }
 const heightHeader = 40; //height header
 const heightPannelLink = 35;
@@ -90,7 +101,8 @@ const initialState: resizeState = {
   heightWindow: heightWindow,
   heightMarketWatch: heightWindow - heightHeader,
   heightPriceBoard: ((heightWindow - heightHeader) / 10) * 5.7,
-  heightOrderForm: ((heightWindow - heightHeader) / 10) * 4.3 - heightPannelLink,
+  heightOrderForm:
+    ((heightWindow - heightHeader) / 10) * 4.3 - heightPannelLink,
   heightPannelLink: heightPannelLink,
   heightArrow: heightArrow,
   heightExpand: expand,
@@ -107,7 +119,7 @@ const LayoutMarketWatch: React.FC = () => {
     value: "",
     status: false,
   });
-  
+
   // tinh height khi đổi từ màn hình này sang màn hình khác
   useEffect(() => {
     function handleResize() {
@@ -179,7 +191,10 @@ const LayoutMarketWatch: React.FC = () => {
       ...heightComponent,
       orderForm: !heightComponent.orderForm,
       heightPriceBoard: heightComponent.heightMarketWatch - heightArrow,
-      heightTable: heightComponent.heightMarketWatch - heightArrow - heightComponent.heightExpand,
+      heightTable:
+        heightComponent.heightMarketWatch -
+        heightArrow -
+        heightComponent.heightExpand,
     });
   };
   const showOrderForm = () => {
@@ -187,8 +202,14 @@ const LayoutMarketWatch: React.FC = () => {
       ...heightComponent,
       orderForm: !heightComponent.orderForm,
       heightPriceBoard:
-        heightComponent.heightMarketWatch -heightComponent.heightOrderForm - heightPannelLink,
-      heightTable:heightComponent.heightMarketWatch -heightComponent.heightOrderForm - heightPannelLink -heightComponent.heightExpand,
+        heightComponent.heightMarketWatch -
+        heightComponent.heightOrderForm -
+        heightPannelLink,
+      heightTable:
+        heightComponent.heightMarketWatch -
+        heightComponent.heightOrderForm -
+        heightPannelLink -
+        heightComponent.heightExpand,
     });
   };
   // tính height khi click expand
@@ -227,13 +248,13 @@ const LayoutMarketWatch: React.FC = () => {
   };
 
   const handleContextMenu = (e: any) => {
-    e.preventDefault(); 
+    e.preventDefault();
     const trValue = e.target.parentElement.getAttribute("data-tr-value");
-    console.log(trValue)
+    console.log(trValue);
     if (trValue) {
       setSelectedValue({
         x: e.clientX,
-        y: e.clientY-40,
+        y: e.clientY - 40,
         value: trValue,
         status: true,
       });
@@ -245,7 +266,7 @@ const LayoutMarketWatch: React.FC = () => {
   const handleDragable = (event: DraggableEvent, data: DraggableData) => {
     console.log(`x: ${data.x}, y: ${data.y}`);
   };
-  const status = useSelector(((state: RootState) => state.popupTable.visible))
+  const status = useSelector((state: RootState) => state.popupTable.visible);
   //console.log(heightComponent);
   return (
     <div className="relative">
@@ -254,12 +275,16 @@ const LayoutMarketWatch: React.FC = () => {
         selectedValue={selectedValue}
         setSelectedValueProp={setSelectedValue}
       />
-      {status ? <TablePopupMarketwatch
+      {status ? (
+        <TablePopupMarketwatch
 
-//  defaultPosition={{ x: 0, y: 0 }}
-//  onDrag={handleDragable}
- />:''}
-        
+        //  defaultPosition={{ x: 0, y: 0 }}
+        //  onDrag={handleDragable}
+        />
+      ) : (
+        ""
+      )}
+
       {/* marketwatch */}
       <div
         className="resize panel-horizontally bg-BGTableMarket text-white relative z-50 overflow-hidden"
@@ -298,7 +323,7 @@ const LayoutMarketWatch: React.FC = () => {
                 <div className="flex ">
                   <ListMenuBar />
                   <DanhMuc />
-                  <CompleteStock/>
+                  <CompleteStock />
                   {heightComponent.heightExpand === 27 ? (
                     <div>
                       <Tooltip title="Hiện thị index">
