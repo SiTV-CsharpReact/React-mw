@@ -25,6 +25,8 @@
 .report__tabcondition_BCTS {
   display: grid;
   margin-top: 6px;
+  grid-template-columns: 395px 1fr;
+  gap: 15px;
   @media screen and (min-width: 1700px) and (max-width: 1950px) {
     grid-template-columns: 400px 1fr;
   }

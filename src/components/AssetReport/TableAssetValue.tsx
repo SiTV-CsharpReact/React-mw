@@ -3,7 +3,7 @@ import TbodyAssetValue from "./TbodyAssetValue";
 
 const TableAssetValue = () => {
   // const { assetReport } = useAppSelector((state) => state.report);
-  const mode = "light";
+  const { mode } = useAppSelector((state) => state.settingColorMode);
   const { assetReport } = useAppSelector((state) => state.assetReport);
 
   return (

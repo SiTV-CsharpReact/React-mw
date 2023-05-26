@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { stat } from "fs";
 
 interface ModeState {
   mode: string;
@@ -19,7 +18,7 @@ export const changeThemeModeSlice = createSlice({
   reducers: {
     changeModeTheme: (state, action: PayloadAction<string>) => {
       state.mode = action.payload;
-      localStorage.setItem("theme", JSON.stringify(state.mode));
+      localStorage.setItem("theme", state.mode);
     },
   },
 });

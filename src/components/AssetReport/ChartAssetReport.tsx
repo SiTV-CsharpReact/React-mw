@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import ChartReport from "./ChartReport";
+import { useAppSelector } from "../../store/configureStore";
 
 const ChartAssetReport = () => {
   const [date, setDate] = useState("20");
-  const mode = "light";
+  const { mode } = useAppSelector((state) => state.settingColorMode);
 
   return (
     <div className={`report__tabcondition__right ${mode}-bg`}>

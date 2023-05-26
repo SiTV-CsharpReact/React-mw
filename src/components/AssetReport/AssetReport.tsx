@@ -6,10 +6,8 @@ import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { fetchAssetReport } from "./AssetReportSlice";
 import ChartAssetReport from "./ChartAssetReport";
 
-
 const AssetReport = () => {
-  const mode = "light";
-  // const { mode } = useDarkMode();
+  const { mode } = useAppSelector((state) => state.settingColorMode);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchAssetReport());

@@ -15,8 +15,8 @@ const root = ReactDOM.createRoot(
 root.render(
   // <React.StrictMode>
   <BrowserRouter>
-    <Header />
     <Provider store={store}>
+      <Header />
       <App />
     </Provider>
   </BrowserRouter>

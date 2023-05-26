@@ -16,8 +16,7 @@ interface Data {
 const TableWithChart = () => {
   const stockCode = useSelector((state: RootState) => state.chart.code);
   const [dataChart, setDataChart] = useState<Data[]>([]);
-  const symbolNew = stockCode === "" ? "FTS" : stockCode;
-  console.log(dataChart);
+  // const symbolNew = stockCode === "" ? "FTS" : stockCode;
 
   // useEffect(() => {
   //   const fetchData = async () => {

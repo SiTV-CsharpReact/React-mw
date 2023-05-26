@@ -10,15 +10,14 @@ import ListService from "./ListService";
 import NotiHeader from "./NotiHeader";
 import ProfileAccount from "./ProfileAccount";
 import useDarkMode from "./useDarkMode";
-
-import { useAppDispatch } from "../../store/configureStore";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { setStatusChart } from "../menuBarMW/menuSlice";
 import React from "react";
 const Header = () => {
-  const { mode } = useDarkMode();
-  console.log(mode);
+  // const { mode } = useDarkMode();
+  // console.log(mode);
 
-  // const { mode } = useAppSelector((state) => state.mode);
+  const { mode } = useAppSelector((state) => state.settingColorMode);
 
   return (
     <Box

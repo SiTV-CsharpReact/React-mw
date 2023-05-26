@@ -7,19 +7,18 @@ import menuImage from "../../images/menu.png";
 import avatarImage from "../../images/avatar_ano.png";
 import { useTranslation } from "react-i18next";
 import useDarkMode from "./useDarkMode";
-import { useAppSelector } from "../../store/configureStore";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { changeModeTheme } from "./DarkModeSlice";
 
 // import { changeTheme } from "./DarkModeSlice";
 const ProfileAccount: any = () => {
   const { i18n } = useTranslation(["home", "report"]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openAccount, setOpenAccount] = useState(false);
-  const mode = "light";
+  // const mode = "light";
   // const { toogleSwitch, mode } = useDarkMode();
-  // const { mode } = useAppSelector((state) => state.settingColorMode);
-
-  // const { mode } = useAppSelector((state) => state.mode);
-  // const dispatch = useDispatch();
+  const { mode } = useAppSelector((state) => state.settingColorMode);
+  const dispatch = useAppDispatch();
 
   const openPopupAccount = Boolean(anchorEl);
   const handleClickAccount = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -34,7 +33,7 @@ const ProfileAccount: any = () => {
   };
 
   const changeTheme = (theme: string) => {
-    // dispatch(changeModeTheme(theme));
+    dispatch(changeModeTheme(theme));
   };
 
   return (
@@ -215,15 +214,15 @@ const ProfileAccount: any = () => {
                 className="px-3 text-textLanguage absolute left-[200px]"
                 // onClick={() => changeLanguage("VN")}
               >
-                {/* <span className="mx-1" onClick={() => toogleSwitch("light")}>
+                <span className="mx-1" onClick={() => changeTheme("light")}>
                   <i className="fa fa-sun-o" aria-hidden="true"></i>
                 </span>
-                <span className="mx-1" onClick={() => toogleSwitch("dark")}>
+                <span className="mx-1" onClick={() => changeTheme("dark")}>
                   <i className="fa fa-moon-o" aria-hidden="true"></i>
                 </span>
-                <span className="mx-1" onClick={() => toogleSwitch("green")}>
+                <span className="mx-1" onClick={() => changeTheme("green")}>
                   <i className="fa fa-meh-o" aria-hidden="true"></i>
-                </span> */}
+                </span>
               </span>
               {/* <span>|</span> */}
             </li>

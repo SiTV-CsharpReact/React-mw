@@ -8,7 +8,7 @@ const TableAssetReport = () => {
   const [short, setShort] = useState(false);
   const [sort, setSort] = useState("asc");
   const [label, setLabel] = useState("");
-  const mode = "light";
+  const { mode } = useAppSelector((state) => state.settingColorMode);
   const handleSort = (key: string) => {
     // console.log(t);
     setLabel(key);
@@ -52,7 +52,7 @@ const TableAssetReport = () => {
                   <span className={`font-bold ${mode}-text`}>
                     CHI TIẾT CHỨNG KHOÁN
                     <span
-                      className="font-medium cursor-pointer text-normalText underline italic"
+                      className={`font-medium cursor-pointer text-normalText underline italic ${mode}-text ml-2`}
                       onClick={() => setShort(!short)}
                     >
                       (Xem đầy đủ)
@@ -60,7 +60,7 @@ const TableAssetReport = () => {
                   </span>
                 </div>
               </td>
-              <td colSpan={4} className="!text-center">
+              <td colSpan={4} className={`!text-center ${mode}-text`}>
                 <div>
                   <strong>LÃI/LỖ DỰ KIẾN</strong>
                 </div>
@@ -68,19 +68,19 @@ const TableAssetReport = () => {
             </tr>
             <tr>
               <td
-                className="!text-center font-bold !text-xs"
+                className={`!text-center !text-xs  ${mode}-bg`}
                 style={{ width: "5%" }}
                 onClick={() => handleSort("ASTOCKCODE")}
               >
-                <div className="flex items-center justify-between pl-2">
-                  <span className="flex-1 text-center">Mã CK</span>
-                  <span className="relative">
+                <div className={`relative ${mode}-text`}>
+                  Mã CK
+                  <span className="absolute top-1/2 translate-y-1/2 right-2">
                     {label !== "ASTOCKCODE" ? (
                       <>
-                        <span className="absolute -top-[9px] -left-2">
+                        <span className="absolute top-[65%] -translate-y-[65%]">
                           <i className="fa fa-caret-up" aria-hidden="true"></i>
                         </span>
-                        <span className="absolute -bottom-[9px] -left-2">
+                        <span className="absolute -bottom-[65%] translate-y-[65%]">
                           <i
                             className="fa fa-caret-down"
                             aria-hidden="true"
@@ -88,31 +88,31 @@ const TableAssetReport = () => {
                         </span>
                       </>
                     ) : label === "ASTOCKCODE" && sort === "asc" ? (
-                      <span className="absolute top-1/2 -translate-y-1/2 -left-2">
-                        <i className="fa fa-caret-up" aria-hidden="true"></i>
+                      <span className="absolute -top-2">
+                        <i className="fa fa-caret-down" aria-hidden="true"></i>
                       </span>
                     ) : (
-                      <span className="absolute -bottom-1/2 translate-y-1/2 -left-2">
-                        <i className="fa fa-caret-down" aria-hidden="true"></i>
+                      <span className="absolute -bottom-2">
+                        <i className="fa fa-caret-up" aria-hidden="true"></i>
                       </span>
                     )}
                   </span>
                 </div>
               </td>
               <td
-                className="!text-center font-bold !text-xs"
+                className={`!text-center !text-xs ${mode}-text ${mode}-bg`}
                 style={{ width: "6%" }}
                 onClick={() => handleSort("ATRADING_READY_TOTAL")}
               >
-                <div className="flex items-center justify-between pl-2">
-                  <span className="text-center flex-1">CK có sẵn</span>
-                  <span className="relative">
+                <div className="relative">
+                  CK có sẵn
+                  <span className="absolute top-1/2 translate-y-1/2 right-2">
                     {label !== "ATRADING_READY_TOTAL" ? (
                       <>
-                        <span className="absolute -top-[9px] -left-2">
+                        <span className="absolute top-[65%] -translate-y-[65%]">
                           <i className="fa fa-caret-up" aria-hidden="true"></i>
                         </span>
-                        <span className="absolute -bottom-[9px] -left-2">
+                        <span className="absolute -bottom-[65%] translate-y-[65%]">
                           <i
                             className="fa fa-caret-down"
                             aria-hidden="true"
@@ -120,121 +120,63 @@ const TableAssetReport = () => {
                         </span>
                       </>
                     ) : label === "ATRADING_READY_TOTAL" && sort === "asc" ? (
-                      <span className="absolute top-1/2 -translate-y-1/2 -left-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="11"
-                          height="11"
-                          fill="currentColor"
-                          className="bi bi-caret-up"
-                          viewBox="0 0 52 52"
-                          enableBackground="0 0 52 52"
-                          cursor="pointer"
-                        >
-                          <path
-                            d="M43.7,38H8.3c-1,0-1.7-1.3-0.9-2.2l17.3-21.2c0.6-0.8,1.9-0.8,2.5,0l17.5,21.2C45.4,36.7,44.8,38,43.7,38z"
-                            fill="#717171"
-                          />
-                        </svg>
+                      <span className="absolute -top-2">
+                        <i className="fa fa-caret-down" aria-hidden="true"></i>
                       </span>
                     ) : (
-                      <span className="absolute -bottom-1/2 translate-y-1/2 -left-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="11"
-                          height="11"
-                          fill="currentColor"
-                          className="bi bi-caret-down"
-                          viewBox="0 0 52 52"
-                          enableBackground="0 0 52 52"
-                          cursor="pointer"
-                        >
-                          <path
-                            d="M8.3,14h35.4c1,0,1.7,1.3,0.9,2.2L27.3,37.4c-0.6,0.8-1.9,0.8-2.5,0L7.3,16.2C6.6,15.3,7.2,14,8.3,14z"
-                            fill="#717171"
-                          />
-                        </svg>
+                      <span className="absolute -bottom-2">
+                        <i className="fa fa-caret-up" aria-hidden="true"></i>
                       </span>
                     )}
                   </span>
                 </div>
               </td>
               <td
-                className="!text-center font-bold !text-xs"
+                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
                 style={{ width: "6%" }}
                 onClick={() => handleSort("AWAIT_REC_RIGHT")}
               >
-                <div className="flex items-center justify-between pl-1">
-                  <span className="flex-1 text-center">CK chở về</span>
-                  <span className="relative">
-                    <span className="relative">
-                      {label !== "AWAIT_REC_RIGHT" ? (
-                        <>
-                          <span className="absolute -top-[9px] -left-2">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="11"
-                              height="11"
-                              fill="currentColor"
-                              className="bi bi-caret-up"
-                              viewBox="0 0 52 52"
-                              enableBackground="0 0 52 52"
-                              cursor="pointer"
-                            >
-                              <path
-                                d="M43.7,38H8.3c-1,0-1.7-1.3-0.9-2.2l17.3-21.2c0.6-0.8,1.9-0.8,2.5,0l17.5,21.2C45.4,36.7,44.8,38,43.7,38z"
-                                fill="#717171"
-                              />
-                            </svg>
-                          </span>
-                          <span className="absolute -bottom-[9px] -left-2">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="11"
-                              height="11"
-                              fill="currentColor"
-                              className="bi bi-caret-down"
-                              viewBox="0 0 52 52"
-                              enableBackground="0 0 52 52"
-                              cursor="pointer"
-                            >
-                              <path
-                                d="M8.3,14h35.4c1,0,1.7,1.3,0.9,2.2L27.3,37.4c-0.6,0.8-1.9,0.8-2.5,0L7.3,16.2C6.6,15.3,7.2,14,8.3,14z"
-                                fill="#717171"
-                              />
-                            </svg>
-                          </span>
-                        </>
-                      ) : label === "AWAIT_REC_RIGHT" && sort === "asc" ? (
-                        <span className="absolute top-1/2 -translate-y-1/2 -left-2">
+                <div className="relative">
+                  CK chở về
+                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                    {label !== "AWAIT_REC_RIGHT" ? (
+                      <>
+                        <span className="absolute top-[65%] -translate-y-[65%]">
                           <i className="fa fa-caret-up" aria-hidden="true"></i>
                         </span>
-                      ) : (
-                        <span className="absolute -bottom-1/2 translate-y-1/2 -left-2">
+                        <span className="absolute -bottom-[65%] translate-y-[65%]">
                           <i
                             className="fa fa-caret-down"
                             aria-hidden="true"
                           ></i>
                         </span>
-                      )}
-                    </span>
+                      </>
+                    ) : label === "AWAIT_REC_RIGHT" && sort === "asc" ? (
+                      <span className="absolute -top-2">
+                        <i className="fa fa-caret-down" aria-hidden="true"></i>
+                      </span>
+                    ) : (
+                      <span className="absolute -bottom-2">
+                        <i className="fa fa-caret-up" aria-hidden="true"></i>
+                      </span>
+                    )}
                   </span>
                 </div>
               </td>
               <td
-                className="!text-center font-bold !text-xs"
+                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
                 style={{ width: "5%" }}
                 onClick={() => handleSort("ATOTAL_AMOUNT")}
               >
-                <div className="flex items-center justify-between pl-2">
-                  <span className="text-center flex-1">Tổng KL</span>
-                  <span className="relative">
+                <div className="relative">
+                  Tổng KL
+                  <span className="absolute top-1/2 translate-y-1/2 right-2">
                     {label !== "ATOTAL_AMOUNT" ? (
                       <>
-                        <span className="absolute -top-[9px] -left-2">
+                        <span className="absolute top-[65%] -translate-y-[65%]">
                           <i className="fa fa-caret-up" aria-hidden="true"></i>
                         </span>
-                        <span className="absolute -bottom-[9px] -left-2">
+                        <span className="absolute -bottom-[65%] translate-y-[65%]">
                           <i
                             className="fa fa-caret-down"
                             aria-hidden="true"
@@ -242,65 +184,37 @@ const TableAssetReport = () => {
                         </span>
                       </>
                     ) : label === "ATOTAL_AMOUNT" && sort === "asc" ? (
-                      <span className="absolute top-1/2 -translate-y-1/2 -left-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="11"
-                          height="11"
-                          fill="currentColor"
-                          className="bi bi-caret-up"
-                          viewBox="0 0 52 52"
-                          enableBackground="0 0 52 52"
-                          cursor="pointer"
-                        >
-                          <path
-                            d="M43.7,38H8.3c-1,0-1.7-1.3-0.9-2.2l17.3-21.2c0.6-0.8,1.9-0.8,2.5,0l17.5,21.2C45.4,36.7,44.8,38,43.7,38z"
-                            fill="#717171"
-                          />
-                        </svg>
+                      <span className="absolute -top-2">
+                        <i className="fa fa-caret-down" aria-hidden="true"></i>
                       </span>
                     ) : (
-                      <span className="absolute -bottom-1/2 translate-y-1/2 -left-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="11"
-                          height="11"
-                          fill="currentColor"
-                          className="bi bi-caret-down"
-                          viewBox="0 0 52 52"
-                          enableBackground="0 0 52 52"
-                          cursor="pointer"
-                        >
-                          <path
-                            d="M8.3,14h35.4c1,0,1.7,1.3,0.9,2.2L27.3,37.4c-0.6,0.8-1.9,0.8-2.5,0L7.3,16.2C6.6,15.3,7.2,14,8.3,14z"
-                            fill="#717171"
-                          />
-                        </svg>
+                      <span className="absolute -bottom-2">
+                        <i className="fa fa-caret-up" aria-hidden="true"></i>
                       </span>
                     )}
                   </span>
                 </div>
               </td>
               <td
-                className="!text-center font-bold !text-xs"
+                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
                 style={{ width: "5%" }}
               >
                 <div>Giá TT</div>
               </td>
               <td
-                className="!text-center font-bold !text-xs"
+                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
                 style={{ width: "6%" }}
                 onClick={() => handleSort("AMARKET_VALUE")}
               >
-                <div className="flex items-center justify-between pl-2">
-                  <span className="text-center flex-1">Thành tiền</span>
-                  <span className="relative">
+                <div className="relative">
+                  Thành tiền
+                  <span className="absolute top-1/2 translate-y-1/2 right-2">
                     {label !== "AMARKET_VALUE" ? (
                       <>
-                        <span className="absolute -top-[9px]  -left-2">
+                        <span className="absolute top-[65%] -translate-y-[65%]">
                           <i className="fa fa-caret-up" aria-hidden="true"></i>
                         </span>
-                        <span className="absolute -bottom-[9px] -left-2">
+                        <span className="absolute -bottom-[65%] translate-y-[65%]">
                           <i
                             className="fa fa-caret-down"
                             aria-hidden="true"
@@ -308,65 +222,37 @@ const TableAssetReport = () => {
                         </span>
                       </>
                     ) : label === "AMARKET_VALUE" && sort === "asc" ? (
-                      <span className="absolute top-1/2 -translate-y-1/2 -left-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="11"
-                          height="11"
-                          fill="currentColor"
-                          className="bi bi-caret-up"
-                          viewBox="0 0 52 52"
-                          enableBackground="0 0 52 52"
-                          cursor="pointer"
-                        >
-                          <path
-                            d="M43.7,38H8.3c-1,0-1.7-1.3-0.9-2.2l17.3-21.2c0.6-0.8,1.9-0.8,2.5,0l17.5,21.2C45.4,36.7,44.8,38,43.7,38z"
-                            fill="#717171"
-                          />
-                        </svg>
+                      <span className="absolute -top-2">
+                        <i className="fa fa-caret-down" aria-hidden="true"></i>
                       </span>
                     ) : (
-                      <span className="absolute -bottom-1/2 translate-y-1/2 -left-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="11"
-                          height="11"
-                          fill="currentColor"
-                          className="bi bi-caret-down"
-                          viewBox="0 0 52 52"
-                          enableBackground="0 0 52 52"
-                          cursor="pointer"
-                        >
-                          <path
-                            d="M8.3,14h35.4c1,0,1.7,1.3,0.9,2.2L27.3,37.4c-0.6,0.8-1.9,0.8-2.5,0L7.3,16.2C6.6,15.3,7.2,14,8.3,14z"
-                            fill="#717171"
-                          />
-                        </svg>
+                      <span className="absolute -bottom-2">
+                        <i className="fa fa-caret-up" aria-hidden="true"></i>
                       </span>
                     )}
                   </span>
                 </div>
               </td>
               <td
-                className="!text-center font-bold !text-xs"
+                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
                 style={{ width: "5%" }}
               >
                 <div>Giá vốn TB</div>
               </td>
               <td
-                className="!text-center font-bold !text-xs"
+                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
                 style={{ width: "8%" }}
                 onClick={() => handleSort("AROOT_VALUE")}
               >
-                <div className="flex items-center justify-between pl-2">
-                  <span className="text-center flex-1">Tổng giá vốn</span>
-                  <span className="relative">
+                <div className="relative">
+                  Tổng giá vốn
+                  <span className="absolute top-1/2 translate-y-1/2 right-2">
                     {label !== "AROOT_VALUE" ? (
                       <>
-                        <span className="absolute -top-[9px] -left-2">
+                        <span className="absolute top-[65%] -translate-y-[65%]">
                           <i className="fa fa-caret-up" aria-hidden="true"></i>
                         </span>
-                        <span className="absolute -bottom-[9px] -left-2">
+                        <span className="absolute -bottom-[65%] translate-y-[65%]">
                           <i
                             className="fa fa-caret-down"
                             aria-hidden="true"
@@ -374,59 +260,31 @@ const TableAssetReport = () => {
                         </span>
                       </>
                     ) : label === "AROOT_VALUE" && sort === "asc" ? (
-                      <span className="absolute top-1/2 -translate-y-1/2 -left-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="11"
-                          height="11"
-                          fill="currentColor"
-                          className="bi bi-caret-up"
-                          viewBox="0 0 52 52"
-                          enableBackground="0 0 52 52"
-                          cursor="pointer"
-                        >
-                          <path
-                            d="M43.7,38H8.3c-1,0-1.7-1.3-0.9-2.2l17.3-21.2c0.6-0.8,1.9-0.8,2.5,0l17.5,21.2C45.4,36.7,44.8,38,43.7,38z"
-                            fill="#717171"
-                          />
-                        </svg>
+                      <span className="absolute -top-2">
+                        <i className="fa fa-caret-down" aria-hidden="true"></i>
                       </span>
                     ) : (
-                      <span className="absolute -bottom-1/2 translate-y-1/2 -left-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="11"
-                          height="11"
-                          fill="currentColor"
-                          className="bi bi-caret-down"
-                          viewBox="0 0 52 52"
-                          enableBackground="0 0 52 52"
-                          cursor="pointer"
-                        >
-                          <path
-                            d="M8.3,14h35.4c1,0,1.7,1.3,0.9,2.2L27.3,37.4c-0.6,0.8-1.9,0.8-2.5,0L7.3,16.2C6.6,15.3,7.2,14,8.3,14z"
-                            fill="#717171"
-                          />
-                        </svg>
+                      <span className="absolute -bottom-2">
+                        <i className="fa fa-caret-up" aria-hidden="true"></i>
                       </span>
                     )}
                   </span>
                 </div>
               </td>
               <td
-                className="!text-center font-bold !text-xs"
+                className={`!text-center !text-xs ${mode}-text ${mode}-bg`}
                 style={{ width: "5%" }}
                 onClick={() => handleSort("APROFIT_LOSS_VAL")}
               >
-                <div className="flex items-center justify-between pl-2">
-                  <span className="text-center flex-1">Lãi/Lỗ</span>
-                  <span className="relative">
+                <div className="relative">
+                  Lãi/Lỗ
+                  <span className="absolute top-1/2 translate-y-1/2 right-2">
                     {label !== "APROFIT_LOSS_VAL" ? (
                       <>
-                        <span className="absolute -top-[9px] -left-2">
+                        <span className="absolute top-[65%] -translate-y-[65%]">
                           <i className="fa fa-caret-up" aria-hidden="true"></i>
                         </span>
-                        <span className="absolute -bottom-[9px] -left-2">
+                        <span className="absolute -bottom-[65%] translate-y-[65%]">
                           <i
                             className="fa fa-caret-down"
                             aria-hidden="true"
@@ -434,104 +292,46 @@ const TableAssetReport = () => {
                         </span>
                       </>
                     ) : label === "APROFIT_LOSS_VAL" && sort === "asc" ? (
-                      <span className="absolute top-1/2 -translate-y-1/2 -left-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="11"
-                          height="11"
-                          fill="currentColor"
-                          className="bi bi-caret-up"
-                          viewBox="0 0 52 52"
-                          enableBackground="0 0 52 52"
-                          cursor="pointer"
-                        >
-                          <path
-                            d="M43.7,38H8.3c-1,0-1.7-1.3-0.9-2.2l17.3-21.2c0.6-0.8,1.9-0.8,2.5,0l17.5,21.2C45.4,36.7,44.8,38,43.7,38z"
-                            fill="#717171"
-                          />
-                        </svg>
+                      <span className="absolute -top-2">
+                        <i className="fa fa-caret-down" aria-hidden="true"></i>
                       </span>
                     ) : (
-                      <span className="absolute -bottom-1/2 translate-y-1/2 -left-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="11"
-                          height="11"
-                          fill="currentColor"
-                          className="bi bi-caret-down"
-                          viewBox="0 0 52 52"
-                          enableBackground="0 0 52 52"
-                          cursor="pointer"
-                        >
-                          <path
-                            d="M8.3,14h35.4c1,0,1.7,1.3,0.9,2.2L27.3,37.4c-0.6,0.8-1.9,0.8-2.5,0L7.3,16.2C6.6,15.3,7.2,14,8.3,14z"
-                            fill="#717171"
-                          />
-                        </svg>
+                      <span className="absolute -bottom-2">
+                        <i className="fa fa-caret-up" aria-hidden="true"></i>
                       </span>
                     )}
                   </span>
                 </div>
               </td>
               <td
-                className="!text-center font-bold !text-xs"
+                className={`!text-center !text-xs ${mode}-text ${mode}-bg`}
                 style={{ width: "5%" }}
                 onClick={() => handleSort("APROFIT_LOSS_RATE")}
               >
-                <div className="flex items-center justify-between pl-1">
-                  <span className="text-center flex-1"> % Lãi/Lỗ</span>
-                  <span className="relative">
-                    <span className="relative">
-                      {label !== "APROFIT_LOSS_RATE" ? (
-                        <>
-                          <span className="absolute -top-[9px] -left-2">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="11"
-                              height="11"
-                              fill="currentColor"
-                              className="bi bi-caret-up"
-                              viewBox="0 0 52 52"
-                              enableBackground="0 0 52 52"
-                              cursor="pointer"
-                            >
-                              <path
-                                d="M43.7,38H8.3c-1,0-1.7-1.3-0.9-2.2l17.3-21.2c0.6-0.8,1.9-0.8,2.5,0l17.5,21.2C45.4,36.7,44.8,38,43.7,38z"
-                                fill="#717171"
-                              />
-                            </svg>
-                          </span>
-                          <span className="absolute -bottom-[9px] -left-2">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="11"
-                              height="11"
-                              fill="currentColor"
-                              className="bi bi-caret-down"
-                              viewBox="0 0 52 52"
-                              enableBackground="0 0 52 52"
-                              cursor="pointer"
-                            >
-                              <path
-                                d="M8.3,14h35.4c1,0,1.7,1.3,0.9,2.2L27.3,37.4c-0.6,0.8-1.9,0.8-2.5,0L7.3,16.2C6.6,15.3,7.2,14,8.3,14z"
-                                fill="#717171"
-                              />
-                            </svg>
-                          </span>
-                        </>
-                      ) : label === "APROFIT_LOSS_RATE" && sort === "asc" ? (
-                        <span className="absolute top-1/2 -translate-y-1/2 -left-2">
+                <div className="relative">
+                  % Lãi/Lỗ
+                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                    {label !== "APROFIT_LOSS_RATE" ? (
+                      <>
+                        <span className="absolute top-[65%] -translate-y-[65%]">
                           <i className="fa fa-caret-up" aria-hidden="true"></i>
                         </span>
-                      ) : (
-                        <span className="absolute -bottom-1/2 translate-y-1/2 -left-2">
+                        <span className="absolute -bottom-[65%] translate-y-[65%]">
                           <i
                             className="fa fa-caret-down"
                             aria-hidden="true"
                           ></i>
                         </span>
-                      )}
-                    </span>
+                      </>
+                    ) : label === "APROFIT_LOSS_RATE" && sort === "asc" ? (
+                      <span className="absolute -top-2">
+                        <i className="fa fa-caret-down" aria-hidden="true"></i>
+                      </span>
+                    ) : (
+                      <span className="absolute -bottom-2">
+                        <i className="fa fa-caret-up" aria-hidden="true"></i>
+                      </span>
+                    )}
                   </span>
                 </div>
               </td>
@@ -540,14 +340,30 @@ const TableAssetReport = () => {
           <tbody>
             {data?.map((item: any, index: number) => (
               <tr key={item.ASTOCKCODE}>
-                <td className="!text-center !text-xs">{item.ASTOCKCODE}</td>
-                <td className="!text-xs">{item.ATRADING_READY_TOTAL}</td>
-                <td className="!text-xs">{item.ATRANSFER_RESTRICTED}</td>
-                <td className="!text-xs">{item.ATOTAL_AMOUNT}</td>
-                <td className="!text-xs">{formatNumber(item.AMARKET_PRICE)}</td>
-                <td className="!text-xs">{formatNumber(item.AMARKET_VALUE)}</td>
-                <td className="!text-xs">{formatNumber(item.AAVG_PRICE)}</td>
-                <td className="!text-xs">{formatNumber(item.AROOT_VALUE)}</td>
+                <td className={`!text-center !text-xs ${mode}-text`}>
+                  {item.ASTOCKCODE}
+                </td>
+                <td className={`${mode}-text !text-xs`}>
+                  {item.ATRADING_READY_TOTAL}
+                </td>
+                <td className={`${mode}-text !text-xs`}>
+                  {item.ATRANSFER_RESTRICTED}
+                </td>
+                <td className={`${mode}-text !text-xs`}>
+                  {item.ATOTAL_AMOUNT}
+                </td>
+                <td className={`${mode}-text !text-xs`}>
+                  {formatNumber(item.AMARKET_PRICE)}
+                </td>
+                <td className={`${mode}-text !text-xs`}>
+                  {formatNumber(item.AMARKET_VALUE)}
+                </td>
+                <td className={`${mode}-text !text-xs`}>
+                  {formatNumber(item.AAVG_PRICE)}
+                </td>
+                <td className={`${mode}-text !text-xs`}>
+                  {formatNumber(item.AROOT_VALUE)}
+                </td>
                 <td
                   className={`!text-xs ${
                     item.APROFIT_LOSS_VAL < 0

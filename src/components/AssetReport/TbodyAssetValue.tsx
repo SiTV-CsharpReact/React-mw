@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { formatNumber } from "../../utils/util";
+import { useAppSelector } from "../../store/configureStore";
 
 interface Data {
   ABUY_STOCK: number;
@@ -23,7 +24,7 @@ interface Props {
   item: Data;
 }
 const TbodyAssetValue: any = (props: Props) => {
-  const mode = "light";
+  const { mode } = useAppSelector((state) => state.settingColorMode);
 
   const [drop, setDrop] = useState<boolean>(false);
   const [drop2, setDrop2] = useState<boolean>(false);
