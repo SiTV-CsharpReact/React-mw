@@ -120,7 +120,7 @@ const PendingOrders = () => {
         <div className="flex items-center gap-4">
           <div className="">
             <label
-              className="block mb-2 text-[12px]] leading-3 font-semibold text-[#333333]"
+              className="block mb-2 text-[10px]] leading-3 font-semibold text-[#333333]"
               htmlFor=""
             >
               Sàn GD
