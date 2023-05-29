@@ -26,7 +26,7 @@ function Clock() {
     });
     //const formattedDate = `${time.getDate()}/${time.getMonth() + 1}/${time.getFullYear()}`;
     return (
-      <div className="flex float-right pr-4">
+      <div className="flex float-right pr-4 text-white">
         <label id="lbTradingDate"></label>
         <span className="text-xs font-bold px-1.5" id="lbDate">
           {formattedDate}
