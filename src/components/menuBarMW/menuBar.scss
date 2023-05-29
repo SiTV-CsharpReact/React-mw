@@ -77,9 +77,10 @@ input[type=checkbox].priceboard2 {
    display: inline-block;
    color:#fff;
    cursor: pointer;
-   border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
+   border-top-left-radius: 0.125rem;
+    border-top-right-radius: 0.125rem;
     border-right: 1px solid #000;
+    white-space: nowrap;
     &:hover{
         background-color: #404040;
     }

@@ -232,6 +232,7 @@ const LayoutMarketWatch: React.FC = () => {
     console.log(`x: ${data.x}, y: ${data.y}`);
   };
   const status = useAppSelector((state) => state.popupTable.visible);
+  // console.log(status)
   //console.log(heightComponent);
   return (
     <div className="relative">

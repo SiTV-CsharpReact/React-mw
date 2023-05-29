@@ -1,6 +1,6 @@
 header {
   &.dark-header {
-    background: #303030 !important;
+    background: #0a1929 !important;
     .header-left {
       .dark-text {
         color: #fff !important;
@@ -27,10 +27,14 @@ header {
       }
     }
   }
+  &.green-header{
+    background: #0a1929 !important;
+    
+  }
 }
 
 .dark-header {
-  background: #303030 !important;
+  background: #0a1929 !important;
 }
 .dark-text{
     color: #fff !important;

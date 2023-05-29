@@ -24,6 +24,7 @@ import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlic
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 import { Root } from "../../models/root";
 import { getDataTable } from "./tableSlice";
+import LoadingComponent from "../../layout/LoaddingComponent";
 
 const showKLPT = (value: string) => {
   // console.log(value);
@@ -66,7 +67,8 @@ const showKLPT = (value: string) => {
 };
 const TableMarketWatch = () => {
   const btnRef = useRef(null);
-  const dataTable = useAppSelector((state) => state.table.ListDataTable);
+  const dataTables = useAppSelector((state) => state.table.ListDataTable);
+  const {productsLoaded} = useAppSelector((state) => state.table);
   const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
   // console.log(height)
   // const [popupVisible, setPopupVisible] = useState(false);
@@ -223,19 +225,6 @@ const TableMarketWatch = () => {
 
   // sort products
   const fetchTable =async (param: string) =>{}
-  products.forEach((obj) =>
-    obj.Info.sort((a: any, b: any) => {
-      const indexA = Number(a[0]);
-      const indexB = Number(b[0]);
-      if (indexA < indexB) {
-        return -1;
-      }
-      if (indexA > indexB) {
-        return 1;
-      }
-      return 0;
-    })
-  );
   const [lastCheckboxChecked, setLastCheckboxChecked] = useState("");
 
   const handleTypeOptionClick = (type: string) => {
@@ -350,6 +339,7 @@ const TableMarketWatch = () => {
       setorder("DSC");
     }
   };
+  if(!productsLoaded) return <>Loading Bảng giá</>
   return (
     <div>
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -1015,7 +1005,7 @@ const TableMarketWatch = () => {
               </th>
             </tr>
           </thead>
-          {dataTable ? 
+          {dataTables ? 
               <Droppable droppableId="droppable-1">
           
                 {(provider) => (
@@ -1025,7 +1015,7 @@ const TableMarketWatch = () => {
                     ref={provider.innerRef}
                     {...provider.droppableProps}
                   >
-                    {dataTable?.map((dataTable: any, index) => (
+                    {dataTables?.map((dataTable: any, index) => (
                       <Draggable
                         key={dataTable.RowID}
                         draggableId={dataTable.RowID}

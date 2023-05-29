@@ -27,6 +27,7 @@ interface Props {
           document.removeEventListener("mousedown", handleClickOutside);
         };
       }, [popupRef]);
+      console.log(selectedValue)
   return (
     <div
         className={`popup z-[1000]`}
