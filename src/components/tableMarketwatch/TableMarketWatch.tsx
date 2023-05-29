@@ -223,19 +223,19 @@ const TableMarketWatch = () => {
 
   // sort products
   const fetchTable =async (param: string) =>{}
-  products.forEach((obj) =>
-    obj.Info.sort((a: any, b: any) => {
-      const indexA = Number(a[0]);
-      const indexB = Number(b[0]);
-      if (indexA < indexB) {
-        return -1;
-      }
-      if (indexA > indexB) {
-        return 1;
-      }
-      return 0;
-    })
-  );
+  // products.forEach((obj) =>
+  //   obj.Info.sort((a: any, b: any) => {
+  //     const indexA = Number(a[0]);
+  //     const indexB = Number(b[0]);
+  //     if (indexA < indexB) {
+  //       return -1;
+  //     }
+  //     if (indexA > indexB) {
+  //       return 1;
+  //     }
+  //     return 0;
+  //   })
+  // );
   const [lastCheckboxChecked, setLastCheckboxChecked] = useState("");
   const [pinnedIndexes, setPinnedIndexes] = useState<number[]>([]);
 
@@ -383,6 +383,7 @@ const TableMarketWatch = () => {
       setorder("DSC");
     }
   };
+  
   return (
     <div>
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -1071,10 +1072,10 @@ const TableMarketWatch = () => {
 
                             className={`${
                               (index < products.length - 1 &&
-                                dataTable.pinned === products[index + 1].pinned) ||
+                                products[index + 1]?.pinned === dataTable.pinned)||
                               !dataTable.pinned
                                 ? ""
-                                : index === products.length - 1 && !dataTable.pinned
+                                : index === products.length - 1 && !dataTable?.pinned
                                 ? ""
                                 : "border-bottom"
                             }`}

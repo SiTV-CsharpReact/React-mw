@@ -177,7 +177,7 @@ const TableMarketWatchTest = () => {
           suppressMenu: true,
           width: 50,
           minWidth: 50,
-          heigth: 30,
+          height: 30,
           maxWidth: 100,
           headerClass: "custom-header",
           cellClass: "score-cell",
@@ -186,17 +186,21 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("", params),
             textAlign: "right",
           }),
-          cellRendererParams: (params: any) => {
-            const dataIndex = params.columnApi
-              .getAllColumns()
-              .findIndex((column: any) => column.colDef.field === "G3");
-            console.log("Check", dataIndex);
-            return {
-              "data-index": dataIndex,
-            };
+          cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
           },
-          
-              
         },
         {
           field: "KL3",
@@ -213,8 +217,23 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("KL3", params),
             textAlign: "right",
           }),
-        
+          cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
+          },
         },
+        
         {
           field: "G2",
           headerName: "G2",
@@ -229,6 +248,21 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("G2", params),
             textAlign: "right",
           }),
+          cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
+          },
         },
 
         {
@@ -245,6 +279,21 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("KL2", params),
             textAlign: "right",
           }),
+          cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
+          },
         },
         {
           field: "G1",
@@ -260,6 +309,21 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("G1", params),
             textAlign: "right",
           }),
+          cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
+          },
         },
         {
           field: "KL1",
@@ -275,6 +339,21 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("KL1", params),
             textAlign: "right",
           }),
+          cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
+          },
         },
       ],
     },
@@ -297,6 +376,21 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("", params),
             textAlign: "right",
           }),
+          cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
+          },
         },
         {
           field: "KLKhop",
@@ -312,6 +406,21 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("KLKhop", params),
             textAlign: "right",
           }),
+          cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
+          },
         },
         {
           field: "Chenhlech",
@@ -339,6 +448,21 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("Chenhlech", params),
             textAlign: "right",
           }),
+           cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
+          },
         },
       ],
     },
@@ -362,6 +486,21 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("", params),
             textAlign: "right",
           }),
+           cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
+          },
         },
         {
           field: "KL1B",
@@ -377,6 +516,21 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("KL1B", params),
             textAlign: "right",
           }),
+          cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
+          },
         },
         {
           field: "G2B",
@@ -392,6 +546,21 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("", params),
             textAlign: "right",
           }),
+          cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
+          },
         },
         {
           field: "KL2B",
@@ -407,6 +576,21 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("KL2B", params),
             textAlign: "right",
           }),
+          cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
+          },
         },
         {
           field: "G3B",
@@ -422,6 +606,21 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("", params),
             textAlign: "right",
           }),
+          cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
+          },
         },
         {
           field: "KL3B",
@@ -437,6 +636,21 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("KL3B", params),
             textAlign: "right",
           }),
+          cellRenderer: (params: any) => {
+            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+    
+            console.log("Column Index:", dataIndex);
+    
+            const value = params.value; // Get the value of the cell
+    
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {value}
+              </div>
+            );
+          },
         },
       ],
     },
@@ -450,6 +664,7 @@ const TableMarketWatchTest = () => {
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
+      
     },
     {
       field: "MOC",
@@ -474,6 +689,21 @@ const TableMarketWatchTest = () => {
         color: setColorMarkettest("", params),
         textAlign: "right",
       }),
+      cellRenderer: (params: any) => {
+        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+
+        console.log("Column Index:", dataIndex);
+
+        const value = params.value; // Get the value of the cell
+
+        return (
+          <div data-index={dataIndex} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
       suppressMenu: true,
     },
     {
@@ -489,6 +719,21 @@ const TableMarketWatchTest = () => {
         color: setColorMarkettest("", params),
         textAlign: "right",
       }),
+      cellRenderer: (params: any) => {
+        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+
+        console.log("Column Index:", dataIndex);
+
+        const value = params.value; // Get the value of the cell
+
+        return (
+          <div data-index={dataIndex} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
       suppressMenu: true,
     },
     {
@@ -500,6 +745,21 @@ const TableMarketWatchTest = () => {
       cellClass: "score-cell tc-cell",
       headerClass: "custom-header tc-header",
       suppressMenu: true,
+      cellRenderer: (params: any) => {
+        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+
+        console.log("Column Index:", dataIndex);
+
+        const value = params.value; // Get the value of the cell
+
+        return (
+          <div data-index={dataIndex} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
     {
       field: "NNBan",
@@ -511,6 +771,21 @@ const TableMarketWatchTest = () => {
 
       headerClass: "custom-header tc-header",
       suppressMenu: true,
+      cellRenderer: (params: any) => {
+        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+
+        console.log("Column Index:", dataIndex);
+
+        const value = params.value; // Get the value of the cell
+
+        return (
+          <div data-index={dataIndex} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
     {
       field: "RoomCL",
@@ -521,6 +796,21 @@ const TableMarketWatchTest = () => {
       cellClass: "score-cell tc-cell",
       headerClass: "custom-header  tc-header",
       suppressMenu: true,
+      cellRenderer: (params: any) => {
+        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
+        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
+        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+
+        console.log("Column Index:", dataIndex);
+
+        const value = params.value; // Get the value of the cell
+
+        return (
+          <div data-index={dataIndex} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
 
     // { field: "RowID", headerName: "RowID", cellClass: "score-cell" },
