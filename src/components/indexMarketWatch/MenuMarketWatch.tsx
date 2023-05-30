@@ -518,38 +518,7 @@ const MenuMarketWatch = () => {
             document
               .getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)
               ?.classList.add(textColor);
-            // if(arrInfo === 2){
-            //   checkSTTMarket(arrValue,valueHSX?.STAT_ControlCode)
-
-            // }
-            //checkSTTMarket(valueHSX?.STAT_ControlCode,)
-            //{checkSTTMarket(formatNumberMarket(dataTable.Info[0][1]),statusMarket?.STAT_ControlCode,(dataTable.Info[1][1]))}
-
-            //   const statusMarketW =valueHSX?.STAT_ControlCode
-            //   console.log(statusMarketW,arrInfo)
-            //   if((arrInfo === 2 && statusMarketW=== "A") || "P"){
-            //     tdIndex.innerHTML = `${checkSTTMarketValue(arrValue.toString(),statusMarketW,)}`
-            //     const textColor=  colorTextTD(valueTC,valueTran,valueSan,arrValue)
-            //     // eslint-disable-next-line array-callback-return
-            //    arrayColor.map((arrayColorText:string)=>{
-            //     tdIndex.classList.remove(arrayColorText)
-            //     document.getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)?.classList.remove(arrayColorText)
-            // })
-            // tdIndex.classList.add(textColor)
-            // document.getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)?.classList.add(textColor)
-            //   }
-            //   else if((arrInfo === 0 && statusMarketW === "A") || "P"){
-            //     tdIndex.innerHTML = `${checkSTTMarketValue(arrValue.toString(),statusMarketW,)}`
-            //     const textColor=  colorTextTD(valueTC,valueTran,valueSan,arrValue)
-            //     // eslint-disable-next-line array-callback-return
-            //    arrayColor.map((arrayColorText:string)=>{
-            //     tdIndex.classList.remove(arrayColorText)
-            //     document.getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)?.classList.remove(arrayColorText)
-            // })
-            // tdIndex.classList.add(textColor)
-            // document.getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)?.classList.add(textColor)
-            //   }
-            // tdIndex.style.color = textColor
+         
           }
         }
       }

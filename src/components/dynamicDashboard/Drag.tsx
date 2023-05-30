@@ -8,7 +8,7 @@ import TableMarketWatch from "../tableMarketwatch/TableMarketWatch";
 import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import MenuBar from "../menuBarMW/MenuBar";
 import ListMenuBar from "../menuBarMW/ListMenuBar";
-import BoxTest from "./BoxTest";
+import BoxTest from "./TablePrice";
 import FlexLayout from "flexlayout-react";
 
 var json: IJsonModel = {

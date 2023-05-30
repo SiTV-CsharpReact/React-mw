@@ -5,237 +5,19 @@ import { useTranslation } from "react-i18next";
 const ListMenu = () => {
   const { t } = useTranslation(["home"]);
   return (
-    // <div className="pl-2.5 flex">
-    //   <div className="group inline-block py-2 px-2 border-r border-borderListMenu ">
-    //     <span className="uppercase size hover-text-blue "> Lịch sử GD </span>
-    //     <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50 boxShadow ">
-    //       <li className="border-bottom-menu ">
-    //         <Link className=" listmenu-item size-li " to="#">
-    //           Lịch sử đặt lệnh
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className="listmenu-item size-li " to="#">
-    //           Lịch sử khớp lệnh
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className="rounded-b listmenu-item size-li  " to="#">
-    //           Lệnh chờ khớp thanh toán
-    //         </Link>
-    //       </li>
-    //     </ul>
-    //   </div>
-    //   <div className="group inline-block py-2  px-2 border-r border-borderListMenu">
-    //     <span className="  uppercase size hover-text-blue"> GD tiền </span>
-    //     <ul className="absolute hidden text-gray-700 pt-2 boxShadow group-hover:block z-50 ">
-    //       <li className="border-bottom-menu">
-    //         <Link className="listmenu-item size-li " to="#">
-    //           Chuyển tiền
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" listmenu-item size-li " to="#">
-    //           Chuyển tiền ký quỹ CK phái sinh
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" listmenu-item size-li " to="#">
-    //           GD tiền
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className="listmenu-item size-li " to="#">
-    //           Lịch sử chuyển tiền
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" listmenu-item size-li" to="#">
-    //           Tiền cho vay - EzSaving
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" listmenu-item size-li " to="#">
-    //           Tất toán tiền cho vay
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className="listmenu-item size-li " to="#">
-    //           Danh sách hợp đồng cho vay
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" listmenu-item size-li " to="#">
-    //           Ứng trước tiền cổ tức
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className="rounded-b listmenu-item size-li " to="#">
-    //           Lịch sử ứng trước tiền cổ tức
-    //         </Link>
-    //       </li>
-    //     </ul>
-    //   </div>
-    //   <div className="group inline-block py-2 px-2 border-r border-borderListMenu">
-    //     <span className="  uppercase  size  hover-text-blue"> GD đặc biệt</span>
-    //     <ul className="absolute hidden text-gray-700 pt-2 boxShadow group-hover:block z-50">
-    //       <li>
-    //         <Link className="rounded-t listmenu-item size-li " to="#">
-    //           Lịch sử bán CK lô lẻ
-    //         </Link>
-    //       </li>
-    //       <li className="border-bottom-menu">
-    //         <Link className="listmenu-item size-li " to="#">
-    //           Thực hiện quyền
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" listmenu-item size-li  " to="#">
-    //           Đặt lệnh điều kiện
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className="listmenu-item size-li " to="#">
-    //           Sổ lệnh điều kiện
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className="rounded-b listmenu-item size-li " to="#">
-    //           Lưu ký trực tuyến
-    //         </Link>
-    //       </li>
-    //     </ul>
-    //   </div>
-    //   <div className="group inline-block py-2  px-2 border-r border-borderListMenu">
-    //     <span className="  uppercase size hover-text-blue"> Quản lý tk </span>
-    //     <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50 ">
-    //       <li className="border-bottom-menu">
-    //         <Link className=" listmenu-item  size-li" to="#">
-    //           Báo cáo tổng hợp số dư giao dịch
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link to="/report-bcts" className="listmenu-item  size-li">
-    //           Báo cáo tài sản
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" listmenu-item  size-li" to="#">
-    //           Báo cáo biến động tài sản ròng
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" listmenu-item  size-li" to="#">
-    //           Báo cáo lãi lỗ thực hiện
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className="listmenu-item  size-li" to="#">
-    //           Báo cáo tổng hợp giao dịch theo mã chứng khoán
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" listmenu-item  size-li" to="#">
-    //           Số dư chứng khoán
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" listmenu-item  size-li" to="#">
-    //           Số dư tiền
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className="listmenu-item  size-li" to="#">
-    //           Sao kê chứng khoán
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" listmenu-item  size-li" to="#">
-    //           Sao kê tiền
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" listmenu-item  size-li" to="#">
-    //           Tra cứu phí lưu ký
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className="listmenu-item size-li" to="#">
-    //           Tra cứu tình trạng chứng quyền
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" rounded-b listmenu-item  size-li" to="#">
-    //           Tra cứu biểu phí
-    //         </Link>
-    //       </li>
-    //     </ul>
-    //   </div>
-    //   <div className="group inline-block py-2  px-2 border-r border-borderListMenu">
-    //     <span className="  uppercase  size hover-text-blue">
-    //       QUẢN LÝ KÝ QUỸ{" "}
-    //     </span>
-    //     <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50">
-    //       <li className="border-bottom-menu">
-    //         <Link className="listmenu-item  size-li" to="#">
-    //           Tra cứu lãi vay
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className="listmenu-item  size-li" to="#">
-    //           Tra cứu chi tiết tài khoản ký quỹ
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" rounded-b listmenu-item  size-li" to="#">
-    //           Sao kê tiền vay ký quỹ
-    //         </Link>
-    //       </li>
-    //     </ul>
-    //   </div>
-    //   <div className="group inline-block py-2  px-2 border-r border-borderListMenu">
-    //     <span className="  uppercase  size hover-text-blue">Tư vấn đầu tư</span>
-    //     <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50"></ul>
-    //   </div>
-    //   <div className="group inline-block py-2  px-2">
-    //     <span className="  uppercase  size hover-text-blue">Hỗ trợ</span>
-    //     <ul className="absolute hidden text-gray-700 pt-2 group-hover:block z-50">
-    //       <li className="border-bottom-menu ">
-    //         <Link className="listmenu-item  size-li" to="#">
-    //           Sản phẩm dịch vụ trực tuyến
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className="listmenu-item  size-li" to="#">
-    //           Hướng dẫn nhà đầu tư
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className="listmenu-item  size-li" to="#">
-    //           Sản phẩm dịch vụ cho tổ chức
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link className=" rounded-b listmenu-item  size-li" to="#">
-    //           Hướng dẫn sử dụng dịch vụ
-    //         </Link>
-    //       </li>
-    //     </ul>
-    //   </div>
-    // </div>
     <div className="header-center">
     <ul>
       <li className="ezfu-hover-giaodichchungkhoan">
         <a>{t("home:menu.LichSuGD")}</a>
         <ul>
           <li>
-            <Link  to="/report/ClientActivityRange">Lịch sử đặt lệnh</Link>
+            <Link  to="/report/ClientActivityRange">{t("home:menu.LichSUDL")}</Link>
           </li>
           <li>
-            <Link  to="/report/TradeLog">Lịch sử khớp lệnh</Link>
+            <Link  to="/report/TradeLog">{t("home:menu.LichSUKL")}</Link>
           </li>
           <li>
-            <Link  to="/report/PendingSettlement">Lệnh khớp chờ t.toán</Link>
+            <Link  to="/report/PendingSettlement">{t("home:menu.LishSuTT")}</Link>
           </li>
         </ul>
       </li>
@@ -243,34 +25,34 @@ const ListMenu = () => {
         <a> {t("home:menu.GDTien")}</a>
         <ul>
           <li>
-            <Link  to="/transfer">Chuyển tiền</Link>
+            <Link  to="/transfer">{t("home:menu.Chuyentien")}</Link>
           </li>
           <li>
-            <Link  to="/transfer/template">Mẫu chuyển tiền</Link>
+            <Link  to="/transfer/template">{t("home:menu.Mauchuyentien")}</Link>
           </li>
           <li>
-            <Link  to="/transfer/home/transferds">Chuyển tiền ký quỹ CK phái sinh</Link>
+            <Link  to="/transfer/home/transferds">{t("home:menu.ChuyentienPPX")}</Link>
           </li>
           <li>
-            <Link  to="/transfer/history">Lịch sử chuyển tiền</Link>
+            <Link  to="/transfer/history">{t("home:menu.LichsuCT")}</Link>
           </li>
           <li>
-            <Link  to="/transfer/ordersavings" className="Foreign-Hide">Tiền cho vay - EzSaving  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
+            <Link  to="/transfer/ordersavings" className="Foreign-Hide">{t("home:menu.TienchoVay")} <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <Link  to="/transfer/finalizesavings" className="Foreign-Hide">Tất toán tiền cho vay  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
+            <Link  to="/transfer/finalizesavings" className="Foreign-Hide">{t("home:menu.TatToanTV")}  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <Link  to="/transfer/savingshistory" className="Foreign-Hide">Danh sách hợp đồng cho vay  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
+            <Link  to="/transfer/savingshistory" className="Foreign-Hide">{t("home:menu.DanhsachHDCV")}  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
             <Link  to="/report/AdvReport" className="MarPro-Hide" style={{display: 'none'}}>Lịch sử ứng trước tiền bán CK</Link>
           </li>
           <li>
-            <Link  to="/rightscustody/AdvanceOrderForm">Ứng trước tiền cổ tức</Link>
+            <Link  to="/rightscustody/AdvanceOrderForm">{t("home:menu.UTTTC")}</Link>
           </li>
           <li>
-            <Link  to="/rightscustody/AdvanceHistory">Lịch sử ứng trước tiền cổ tức</Link>
+            <Link  to="/rightscustody/AdvanceHistory">{t("home:menu.LSUTTTC")}</Link>
           </li>
         </ul>
       </li>

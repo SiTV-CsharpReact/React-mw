@@ -12,20 +12,15 @@ interface ComponentState {
     code: '',
   };
 const chartMarketwatchSlice = createSlice({
-    name: 'component',
-    initialState,
-    reducers: {
-        showChartMarketwatch: (state, action: PayloadAction<string>) => {
-            state.visible = !action.payload;
-            state.code = action.payload;
-            console.log( action.payload)
-          },
-          hideChartMarketwatch: (state) => {
-            state.visible = false;
-            state.code = '';
-          },
-    },
+  name: "show_hide_marketwatch",
+  initialState,
+  reducers: {
+    statusChartMarketwatch: (state, action: PayloadAction<string>) => {
+      state.visible = !state.visible;
+      state.code = action.payload;
+    }
+  }
 });
 
-export const { showChartMarketwatch, hideChartMarketwatch  } = chartMarketwatchSlice.actions;
+export const { statusChartMarketwatch  } = chartMarketwatchSlice.actions;
 export default chartMarketwatchSlice;

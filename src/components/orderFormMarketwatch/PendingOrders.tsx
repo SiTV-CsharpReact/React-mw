@@ -19,10 +19,11 @@ const PendingOrders = () => {
   }, []);
   const fetchDataValue = async () => {
     try {
-      const response = await axios.get("http://localhost:3005/items");
+      const response = await axios.get("http://localhost:3006/items");
       console.log("response", response);
       const jsonData = response.data;
       const uniqueData = uniqBy(jsonData, "ASTOCKCODE");
+      console.log("uniqueData",uniqueData)
       setDataAfter((prevState: any) => ({
         ...prevState,
         dataValue: uniqueData,
@@ -99,6 +100,7 @@ const PendingOrders = () => {
     // }
     // doc.save('filename.pdf');
   };
+  console.log(data)
   return (
     <div>
       <div className="flex justify-between pl-8 mt-2">
@@ -133,7 +135,7 @@ const PendingOrders = () => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="border !p-0 leading-1 !text-sm border-inherit rounded-md !pl-2  text-start shadow-sm h-[30px] !border-gray-400"
+              className="border !p-0 leading-1 !text-sm border-inherit rounded-md !pl-2  text-start shadow-sm h-[28px] !border-gray-400"
               name=""
               id="sanGD"
             >
@@ -164,7 +166,7 @@ const PendingOrders = () => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className=" !p-0 !pr-10 !pl-3 !text-sm border rounded-md border-inherit shadow-sm h-[30px] !border-gray-400"
+              className=" !p-0 !pr-10 !pl-3 !text-sm border rounded-md border-inherit shadow-sm h-[28px] !border-gray-400"
               name=""
               id=""
             >
@@ -198,17 +200,17 @@ const PendingOrders = () => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="!p-0 !pr-10 !pl-3 !text-sm border rounded-md border-inherit shadow-sm h-[30px] !border-gray-400"
+              className="!p-0 !pr-10 !pl-3 !text-sm border rounded-md border-inherit shadow-sm h-[28px] !border-gray-400"
               name=""
               id=""
             >
-              <option className="text-[10px] pb-2" value="">
+              <option className="text-[12px] pb-2" value="">
                 Tất cả
               </option>
-              <option className="text-[10px] pb-2" value="desc">
+              <option className="text-[12px] pb-2" value="desc">
                 Mã CK
               </option>
-              <option className="text-[10px] pb-2" value="asc">
+              <option className="text-[12px] pb-2" value="asc">
                 Số lượng
               </option>
             </select>
@@ -229,14 +231,14 @@ const PendingOrders = () => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="!p-0 !pr-10 !pl-3 !text-sm border !border-gray-400 rounded-md border-inherit shadow-sm h-[30px]"
+              className="!p-0 !pr-10 !pl-3 !text-sm border !border-gray-400 rounded-md border-inherit shadow-sm h-[28px]"
               name=""
               id=""
             >
-              <option className="text-[11px] text-gray-500" value="asc">
+              <option className="text-[12px] text-gray-500" value="asc">
                 Tăng dần
               </option>
-              <option className="text-[11px] pb-0 text-gray-500" value="desc">
+              <option className="text-[12px] pb-0 text-gray-500" value="desc">
                 Giảm dần
               </option>
             </select>
@@ -445,7 +447,7 @@ const PendingOrders = () => {
             <tr style={{ border: "1px solid #ccc" }} className="bg-[rgb(251,246,213)]">
               <td style={{ border: "1px solid #ccc" }}></td>
               <td className="text-center " style={{ border: "1px solid #ccc" }}>
-              <p className="p-[1px] px-[4px] mx-auto my-1 text-center text-gray-600 bg-white border border-gray-700 rounded-sm cursor-pointer w-fit "> Hủy </p>
+              <p className="p-[.5px] px-[4px] mx-auto my-[1px] text-center text-gray-600 bg-white border border-gray-700 rounded-sm cursor-pointer w-fit "> Hủy </p>
               </td>
               <td style={{ border: "1px solid #ccc" }}></td>
               <td style={{ border: "1px solid #ccc" }}></td>

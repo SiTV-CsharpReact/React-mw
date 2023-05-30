@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   RootState,
   useAppDispatch,
@@ -19,19 +19,19 @@ import axios from "axios";
 import { ObjectMenuHSX } from "../../models/modelListMenuHSX";
 import { useParams } from "react-router-dom";
 import { stocks } from "../../models/marketwacthTable";
-import HeaderMarketW from "../headerMarketwatch/HeaderMarket";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { DataTable } from "../../models/modelTableHNX";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
 // import { Tooltip } from "@mui/material";
 import { setStatusChart } from "../menuBarMW/menuSlice";
-import { showChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
+import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 import { Root } from "../../models/root";
 import { dispatchDataTable } from "./tableThunk";
 import { useDispatch } from "react-redux";
 import { dispatchDataTableBuy } from "./tableBuy";
+import { getDataTable } from "./tableSlice";
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
@@ -77,20 +77,15 @@ const showKLPT = (value: string) => {
 };
   
 const TableMarketWatch = () => {
-  // 
+  //
+
+  const dataTables = useAppSelector((state) => state.table.ListDataTable);
+
   const { INDEX } = useAppSelector((state: RootState) => state.settingMarketwatch);
   const [sortedColumn, setSortedColumn] = useState("");
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
   const dispatch = useAppDispatch();
-  const handleClick = (dataTable: any) => {
-    console.log("dataTable",dataTable)
-    dispatch(dispatchDataTable(dataTable));
-  };
-   const handleClickBuy = (dataTable: any) => {
-    console.log("dataTable",dataTable)
-     dispatch(dispatchDataTableBuy(dataTable))
-       ;
-  };
+
   const [products, setProducts] = useState<any[]>([]);
   const params = useParams<{ id: string }>();
   const paramstock = stocks.find((paramstock) => paramstock.id === params.id);
@@ -98,32 +93,20 @@ const TableMarketWatch = () => {
   // console.log(codeList, "okko")
   const handleDoubleClick = (e: any, val: any) => {
     if (e.detail === 2) {
-      dispatch(showChartMarketwatch(val));
+      dispatch(statusChartMarketwatch(val));
     }
   };
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const responsesttHNX = await axios.get(
-          `http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`
-        );
-        setStatusMarket(responsesttHNX.data);
-      } catch (error) {
-        console.log(error);
-      }
+    // call api 
+  const handelGetData = useCallback(()=>{
+    let data = {
+      Floor : "HSX",
+      Query : "s=quote&l=All"
     }
-    fetchData();
-  }, [paramstock?.id]);
+    dispatch(getDataTable(data))
+  }, [dispatch])
   useEffect(() => {
-    if (paramstock) {
-      if (paramstock.id) {
-        fetchTable(paramstock.id);
-      } else {
-        fetchTable("HNX");
-      }
-    }
-  }, [paramstock?.id, dispatch]);
-
+    handelGetData()
+  }, [dispatch, handelGetData]);
   const fetchDataCompany = async () => {
     await dispatch(fetchCompanyAsync());
   };
@@ -133,122 +116,169 @@ const TableMarketWatch = () => {
       fetchDataCompany();
     }
   }, []);
-  const fetchTable = async (param: string) => {
-    let valueParam = "HNX";
-    let valueSan = "hsx";
-    switch (param) {
-      case "HNX":
-        valueParam = "s=quote&l=HNXIndex";
-        valueSan = "hnx";
-        break;
-      case "HNX30":
-        valueParam = "s=quote&l=HNX30";
-        valueSan = "hnx";
-        break;
-      case "BOND":
-        valueParam = "s=quote&l=BOND";
-        valueSan = "hnx";
-        break;
-      case "UPCOM":
-        valueParam = "s=quote&l=HNXUpcomIndex";
-        valueSan = "hnx";
-        break;
-      case "HSX":
-        valueParam = "s=quote&l=All";
-        valueSan = "hsx";
-        break;
-      case "VNI":
-        valueParam = "s=quote&l=All";
-        valueSan = "hsx";
-        break;
-      case "VN30":
-        valueParam = "s=quote&l=VN30";
-        valueSan = "hsx";
-        break;
-      case "VNXALL":
-        valueParam = "s=quote&l=VNXALL";
-        valueSan = "hsx";
-        break;
-      case "VN100":
-        valueParam = "s=quote&l=VN100";
-        valueSan = "hsx";
-        break;
-      case "VNALL":
-        valueParam = "s=quote&l=VNALL";
-        valueSan = "hsx";
-        break;
-      case "VNMID":
-        valueParam = "s=quote&l=VNMID";
-        valueSan = "hsx";
-        break;
-      case "VNSML":
-        valueParam = "s=quote&l=VNSML";
-        valueSan = "hsx";
-        break;
-      case "CW":
-        valueParam =
-          "s=quote&l=CACB2208,CACB2301,CFPT2210,CFPT2212,CFPT2213,CFPT2214,CFPT2301,CFPT2302,CFPT2303,CHPG2225,CHPG2226,CHPG2227,CHPG2301,CHPG2302,CHPG2303,CHPG2304,CHPG2305,CHPG2306,CMBB2211,CMBB2213,CMBB2214,CMBB2215,CMBB2301,CMBB2302,CMBB2303,CMSN2214,CMSN2215,CMWG2213,CMWG2214,CMWG2215,CMWG2301,CMWG2302,CPOW2210,CSTB2224,CSTB2225,CSTB2301,CSTB2302,CSTB2303,CTCB2212,CTCB2214,CTCB2215,CTCB2216,CTCB2301,CTPB2301,CVHM2216,CVHM2218,CVHM2219,CVHM2220,CVIB2201,CVIB2301,CVNM2211,CVNM2212,CVPB2212,CVPB2214,CVPB2301,CVPB2302,CVRE2216,CVRE2219,CVRE2220,CVRE2221,CVRE2301";
-        valueSan = "hsx";
-        break;
-      case "danh-muc":
-        //BIC,AAV,ASA,ADC,AAM,BID,FID,ABT
-        valueParam = `s=quote&l=${codeList}`;
-        // valueSan = "hsx";
-        break;
-      default:
-        break;
-    }
-    // let res =[];
-    if (param === "danh-muc") {
-      //console.log("oke")
-      const resHNX = await fetch(
-        `http://marketstream.fpts.com.vn/hnx/data.ashx?${valueParam}`
-      );
-      // resHNX = [AAA, AAV]
-      const resHSX = await fetch(
-        `http://marketstream.fpts.com.vn/hsx/data.ashx?${valueParam}`
-      );
-      // resHNX = [AAB, AAC]
-      // resHNX +resHNX = [AAA, AAV, AAB, AAC]
-      // [BIC,AAV,ASA,ADC,AAM,BID,FID,ABT]
-      var arrS = codeList.split(",");
-      var arr_names: DataTable[] = new Array(arrS.length);
-      const dataHSX = await resHSX.json();
-      const dataHNX = await resHNX.json();
-      //  duy nhất 1 lần
-      for (let i = 0; i < dataHSX.length; i++) {
-        const cSym = dataHSX[i]?.Info[0][1]; // mã ck
-        if (arrS.includes(cSym)) {
-          arr_names[arrS.indexOf(cSym)] = dataHSX[i];
-        }
-      }
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const responsesttHNX = await axios.get(
+  //         `http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`
+  //       );
+  //       setStatusMarket(responsesttHNX.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  //   fetchData();
+  // }, [paramstock?.id]);
+  // useEffect(() => {
+  //   if (paramstock) {
+  //     if (paramstock.id) {
+  //       fetchTable(paramstock.id);
+  //     } else {
+  //       fetchTable("HNX");
+  //     }
+  //   }
+  // }, [paramstock?.id, dispatch]);
 
-      for (let i = 0; i < dataHNX.length; i++) {
-        const cSym = dataHNX[i]?.RowID; // mã ck
-        if (arrS.includes(cSym)) {
-          arr_names[arrS.indexOf(cSym)] = dataHNX[i];
-        }
-      }
-      setProducts(arr_names);
-    } else {
-      if (valueParam) {
-        const res = await fetch(
-          `http://marketstream.fpts.com.vn/${valueSan}/data.ashx?${valueParam}`
-        );
-        const data = await res.json();
-        setProducts(data);
-      }
-    }
+  // const fetchDataCompany = async () => {
+  //   await dispatch(fetchCompanyAsync());
+  // };
+  // Call `fetchData` to fetch data when component mounts
+  // useEffect(() => {
+  //   if (!localStorage.getItem("CacheSi")) {
+  //     fetchDataCompany();
+  //   }
+  // }, []);
+  // const fetchTable = async (param: string) => {
+  //   let valueParam = "HNX";
+  //   let valueSan = "hsx";
+  //   switch (param) {
+  //     case "HNX":
+  //       valueParam = "s=quote&l=HNXIndex";
+  //       valueSan = "hnx";
+  //       break;
+  //     case "HNX30":
+  //       valueParam = "s=quote&l=HNX30";
+  //       valueSan = "hnx";
+  //       break;
+  //     case "BOND":
+  //       valueParam = "s=quote&l=BOND";
+  //       valueSan = "hnx";
+  //       break;
+  //     case "UPCOM":
+  //       valueParam = "s=quote&l=HNXUpcomIndex";
+  //       valueSan = "hnx";
+  //       break;
+  //     case "HSX":
+  //       valueParam = "s=quote&l=All";
+  //       valueSan = "hsx";
+  //       break;
+  //     case "VNI":
+  //       valueParam = "s=quote&l=All";
+  //       valueSan = "hsx";
+  //       break;
+  //     case "VN30":
+  //       valueParam = "s=quote&l=VN30";
+  //       valueSan = "hsx";
+  //       break;
+  //     case "VNXALL":
+  //       valueParam = "s=quote&l=VNXALL";
+  //       valueSan = "hsx";
+  //       break;
+  //     case "VN100":
+  //       valueParam = "s=quote&l=VN100";
+  //       valueSan = "hsx";
+  //       break;
+  //     case "VNALL":
+  //       valueParam = "s=quote&l=VNALL";
+  //       valueSan = "hsx";
+  //       break;
+  //     case "VNMID":
+  //       valueParam = "s=quote&l=VNMID";
+  //       valueSan = "hsx";
+  //       break;
+  //     case "VNSML":
+  //       valueParam = "s=quote&l=VNSML";
+  //       valueSan = "hsx";
+  //       break;
+  //     case "CW":
+  //       valueParam =
+  //         "s=quote&l=CACB2208,CACB2301,CFPT2210,CFPT2212,CFPT2213,CFPT2214,CFPT2301,CFPT2302,CFPT2303,CHPG2225,CHPG2226,CHPG2227,CHPG2301,CHPG2302,CHPG2303,CHPG2304,CHPG2305,CHPG2306,CMBB2211,CMBB2213,CMBB2214,CMBB2215,CMBB2301,CMBB2302,CMBB2303,CMSN2214,CMSN2215,CMWG2213,CMWG2214,CMWG2215,CMWG2301,CMWG2302,CPOW2210,CSTB2224,CSTB2225,CSTB2301,CSTB2302,CSTB2303,CTCB2212,CTCB2214,CTCB2215,CTCB2216,CTCB2301,CTPB2301,CVHM2216,CVHM2218,CVHM2219,CVHM2220,CVIB2201,CVIB2301,CVNM2211,CVNM2212,CVPB2212,CVPB2214,CVPB2301,CVPB2302,CVRE2216,CVRE2219,CVRE2220,CVRE2221,CVRE2301";
+  //       valueSan = "hsx";
+  //       break;
+  //     case "danh-muc":
+  //       //BIC,AAV,ASA,ADC,AAM,BID,FID,ABT
+  //       valueParam = `s=quote&l=${codeList}`;
+  //       // valueSan = "hsx";
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   // let res =[];
+  //   if (param === "danh-muc") {
+  //     //console.log("oke")
+  //     const resHNX = await fetch(
+  //       `http://marketstream.fpts.com.vn/hnx/data.ashx?${valueParam}`
+  //     );
+  //     // resHNX = [AAA, AAV]
+  //     const resHSX = await fetch(
+  //       `http://marketstream.fpts.com.vn/hsx/data.ashx?${valueParam}`
+  //     );
+  //     // resHNX = [AAB, AAC]
+  //     // resHNX +resHNX = [AAA, AAV, AAB, AAC]
+  //     // [BIC,AAV,ASA,ADC,AAM,BID,FID,ABT]
+  //     var arrS = codeList.split(",");
+  //     var arr_names: DataTable[] = new Array(arrS.length);
+  //     const dataHSX = await resHSX.json();
+  //     const dataHNX = await resHNX.json();
+  //     //  duy nhất 1 lần
+  //     for (let i = 0; i < dataHSX.length; i++) {
+  //       const cSym = dataHSX[i]?.Info[0][1]; // mã ck
+  //       if (arrS.includes(cSym)) {
+  //         arr_names[arrS.indexOf(cSym)] = dataHSX[i];
+  //       }
+  //     }
 
-    // const resHSX = await fetch(
-    //   `http://marketstream.fpts.com.vn/${valueSan}/data.ashx?${valueParam}`
-    // );
-    // const data = await res.json();
-    // setProducts(data);
-  };
+  //     for (let i = 0; i < dataHNX.length; i++) {
+  //       const cSym = dataHNX[i]?.RowID; // mã ck
+  //       if (arrS.includes(cSym)) {
+  //         arr_names[arrS.indexOf(cSym)] = dataHNX[i];
+  //       }
+  //     }
+  //     setProducts(arr_names);
+  //   } else {
+  //     if (valueParam) {
+  //       const res = await fetch(
+  //         `http://marketstream.fpts.com.vn/${valueSan}/data.ashx?${valueParam}`
+  //       );
+  //       const data = await res.json();
+  //       setProducts(data);
+  //     }
+  //   }
+
+  //   // const resHSX = await fetch(
+  //   //   `http://marketstream.fpts.com.vn/${valueSan}/data.ashx?${valueParam}`
+  //   // );
+  //   // const data = await res.json();
+  //   // setProducts(data);
+  // };
   const company = useSelector((state: RootState) => state.company.data);
   // console.log(company)
   // const company = useSelector((state=> state?.company))
+
+
+   // su kien click mua ban ma
+    const handleClick = (dataTable: any) => {
+    console.log("dataTable",dataTable)
+    dispatch(dispatchDataTable(dataTable));
+  };
+   const handleClickBuy = (dataTable: any) => {
+    console.log("dataTable",dataTable)
+     dispatch(dispatchDataTableBuy(dataTable))
+       ;
+  };
+
+
+
 
   // sort products
   products.forEach((obj) =>
@@ -863,7 +893,7 @@ const TableMarketWatch = () => {
               <th className="border border-borderHeadTableMarket text-textHeadTableMarket bg-BGTableHoverMarket relative sort-table w-12 min-w-[50px]">
                 <div className="flex justify-between pt-[20px]">
                   <button
-                    className="inset-y-0 absolute left-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL "
+                    className="absolute inset-y-0 left-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL "
                     onClick={() => showKLPT("showPT")}
                   >
                     <div className="arrow arrow-left"></div>
@@ -886,7 +916,7 @@ const TableMarketWatch = () => {
                   </div>
 
                   <button
-                    className="inset-y-0 absolute right-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL sort-table"
+                    className="absolute inset-y-0 right-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL sort-table"
                     onClick={() => showKLPT("showPT")}
                   >
                     <div className="arrow arrow-right"></div>
@@ -1051,7 +1081,7 @@ const TableMarketWatch = () => {
                 ref={provider.innerRef}
                 {...provider.droppableProps}
               >
-                {products?.map((dataTable: any, index) => (
+                {dataTables?.map((dataTable: any, index) => (
                   <Draggable
                     key={dataTable.RowID}
                     draggableId={dataTable.RowID}
@@ -1116,7 +1146,7 @@ const TableMarketWatch = () => {
                           {...provider.dragHandleProps}
                           data-sort={dataTable.Info[13][1]}
                           id={`${dataTable.RowID}_TC`}
-                          className=" text-right bg-BGTableHoverMarket text-textTableMarketTC"
+                          className="text-right bg-BGTableHoverMarket text-textTableMarketTC"
                         >
                           {formatNumber(dataTable.Info[1][1])}
                         </td>
@@ -1125,7 +1155,7 @@ const TableMarketWatch = () => {
                           {...provider.dragHandleProps}
                           data-sort={dataTable.Info[15][1]}
                           id={`${dataTable.RowID}_Tran`}
-                          className=" text-right bg-BGTableHoverMarket text-textTableMarketTran"
+                          className="text-right bg-BGTableHoverMarket text-textTableMarketTran"
                         >
                           {formatNumber(dataTable.Info[2][1])}
                         </td>
@@ -1134,7 +1164,7 @@ const TableMarketWatch = () => {
                           {...provider.dragHandleProps}
                           data-sort={dataTable.Info[14][1]}
                           id={`${dataTable.RowID}_San`}
-                          className=" text-right bg-BGTableHoverMarket text-textTableMarketSan"
+                          className="text-right bg-BGTableHoverMarket text-textTableMarketSan"
                         >
                           {formatNumber(dataTable.Info[3][1])}
                         </td>
@@ -1440,7 +1470,7 @@ const TableMarketWatch = () => {
                           {...provider.dragHandleProps}
                           data-sort={dataTable.Info[20][1]}
                           id={`${dataTable.RowID}_${dataTable.Info[21][0]}`}
-                          className=" text-right bg-BGTableHoverMarket "
+                          className="text-right bg-BGTableHoverMarket"
                         >
                           {formatNumberMarket(dataTable.Info[21][1])}
                         </td>
@@ -1494,7 +1524,7 @@ const TableMarketWatch = () => {
                             {...provider.dragHandleProps}
                             data-sort={dataTable.Info[25][1]}
                             id={`${dataTable.RowID}_${dataTable.Info[26][0]}`}
-                            className=" text-right bg-BGTableHoverMarket"
+                            className="text-right bg-BGTableHoverMarket"
                           >
                             {formatNumberMarket(dataTable.Info[26][1])}
                           </td>
@@ -1504,7 +1534,7 @@ const TableMarketWatch = () => {
                             {...provider.dragHandleProps}
                             data-sort={dataTable.Info[26][1]}
                             id={`${dataTable.RowID}_${dataTable.Info[27][0]}`}
-                            className=" text-right bg-BGTableHoverMarket"
+                            className="text-right bg-BGTableHoverMarket"
                           >
                             {formatNumberMarket(dataTable.Info[27][1])}
                           </td>
@@ -1514,7 +1544,7 @@ const TableMarketWatch = () => {
                             {...provider.dragHandleProps}
                             data-sort={dataTable.Info[27][1]}
                             id={`${dataTable.RowID}_${dataTable.Info[28][0]}`}
-                            className=" text-right bg-BGTableHoverMarket"
+                            className="text-right bg-BGTableHoverMarket"
                           >
                             {formatNumberMarket(dataTable.Info[28][1])}
                           </td>

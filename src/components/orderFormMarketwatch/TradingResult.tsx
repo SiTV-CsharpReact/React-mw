@@ -285,7 +285,7 @@ const TradingResult = () => {
     <div className="min-h-[500px]">
       <div className="flex items-center justify-between">
         <div>
-          <p  className="text-[15px] text-[#2371AF] cursor-pointer underline	pl-5">
+          <p   className="text-[15px] text-[#2371AF] cursor-pointer underline	pl-5">
             Xem đầy đủ
           </p>
         </div>
@@ -315,7 +315,7 @@ const TradingResult = () => {
         {/* buy */}
         <div className="w-1/2 border-gray-300 h-fit">
           <div className="flex relative   border-gray-300 gap-1 h-[30px] items-center bg-[#2371AF] ">
-            <p className="mx-auto font-semibold text-center text-white">MUA</p>
+            <p className="mx-auto !text-sm font-bold text-center text-white">MUA</p>
             <i className="fa absolute fa-info-circle left-[52.5%] top-2  text-white"></i>
           </div>
 
@@ -353,7 +353,7 @@ const TradingResult = () => {
         {/* sell */}
         <div className="w-1/2 border-gray-300 max-h-fit">
           <div className="flex relative gap-1 mx-auto  h-[30px] items-center bg-[#9C0A0A] ">
-            <p className="mx-auto font-semibold text-white ">BÁN </p>
+            <p className="mx-auto font-bold text-white ">BÁN </p>
             <i className="fa absolute fa-info-circle left-[52.5%] top-2  text-white"></i>
           </div>
 

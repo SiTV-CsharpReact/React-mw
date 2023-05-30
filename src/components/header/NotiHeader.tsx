@@ -622,4 +622,4 @@ const NotiHeader = () => {
   )
 }
 
-export default NotiHeader
+export default React.memo(NotiHeader)

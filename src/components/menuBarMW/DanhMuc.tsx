@@ -5,11 +5,10 @@ import  { listStock } from "./codeListSlice";
 import { fetchCategoryAsync } from "./danhmucSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchTableHNXAsync, fetchTableHSXAsync, setProductParams } from "../tableMarketwatch/tableSlice";
+import { fetchTableHNXAsync, fetchTableHSXAsync, getDataTable, setProductParams } from "../tableMarketwatch/tableSlice";
 // import { fetchDataTableHNXAsync, } from "../tableMarketwatch/tableSlice";
 
 const DanhMuc = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isLoading, data, status } = useSelector(
     (state: RootState) => state.categories
@@ -28,6 +27,20 @@ function handleDispatch(item:string) {
   // navigate('/chung-khoan/danh-muc');
   
 }
+
+const handleItemChildClick = async (
+  name: string,
+  query: string,
+  floor: string
+) => {
+  // setActiveMenuItemChild(name);
+  localStorage.setItem("activePriceboardTabMenu", name);
+  let data = {
+    Floor: floor,
+    Query: query,
+  };
+  await dispatch(getDataTable(data));
+};
   return (
     <div className="group list-sub-menu">
     <span className="text-13px">Danh mục</span>
@@ -35,8 +48,8 @@ function handleDispatch(item:string) {
       {data && data.Data.map((item: any, index: number) => (
           <React.Fragment key={index}>
             <li className="relative">
-              <Link to="/chung-khoan/danh-muc" className=" "  onClick={() => handleDispatch(item.List)}> 
-              {/* <Link to="/chung-khoan/danh-muc" className=" "  onClick={() =>console.log("ok",item.List)}>  */}
+              <Link to="" className=" "  onClick={() => handleItemChildClick(item.name,'danh-muc','danh-muc')}> 
+          
                 {item.Name}
               </Link>  
               <span id={`btDel${index}`} className="imgDel keep" />

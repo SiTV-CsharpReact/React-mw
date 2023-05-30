@@ -13,7 +13,7 @@ import FooterMarket from "../footerMarketwatch/FooterMarket";
 import FooterChart from "../footerMarketwatch/FooterChart";
 import MenuMarketWatch from "../indexMarketWatch/MenuMarketWatch";
 import { useSelector } from "react-redux";
-import { hideChartMarketwatch } from "./chartMarketwatchSlice";
+import { statusChartMarketwatch } from "./chartMarketwatchSlice";
 import SlidesMarketWatch from "../indexMarketWatch/SlidesMarketWatch";
 import SlidesIndexChartMarketwatch from "./SlidesIndexChartMarketwatch";
 import ReactApexChart from 'react-apexcharts';
@@ -82,7 +82,7 @@ const ChartMarketwatch = () => {
             <Tooltip title="Hiển thị bảng giá">
               <button
                 className="p-[5px] h-30 w-[30] hover:bg-spnTitlePanelBottom"
-                onClick={() => dispatch(hideChartMarketwatch())}
+                onClick={() => dispatch(statusChartMarketwatch(''))}
               >
                 <img src={ImagePriceBoard} height={20} width={20} alt="" />
               </button>

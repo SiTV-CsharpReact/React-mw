@@ -13,20 +13,22 @@ import AssetReport from "./components/AssetReport/AssetReport";
 function App() {
   return (
     <div>
-      
-        <AppProvider>
-      <Routes>
-        <Route path="/" element={<Navigate to="/chung-khoan/HSX" />} />
-        <Route path="/chung-khoan" element={<Navigate to="/chung-khoan/HSX" />} />
-        <Route path="/chung-khoan/:id" element={<LayoutMarketWatch />} />   
-        <Route path="/dynamic-dashboard-test" element={<DynamicDashboard />} /> 
-        <Route path="/dynamic-dashboard" element={<MyLayout />} /> 
-        {/* <Route path="/chung-khoan/danh-muc/:id" element={<LayoutMarketWatch />} /> */}
-        <Route path="/report/ClientActivityRange" element={<SlidesMarketWatch />} />
-        <Route path="/report/TradeLog" element={<DraggableDiv />} />
-        <Route path="/report/AssetReport2" element={<AssetReport />} />
-        {/* <Route path="/chung-khoan" element={<LayoutMarketWatch />} />    */}
-      </Routes>
+      <AppProvider>
+        <Routes>
+          <Route path="/" element={<LayoutMarketWatch />} />
+          <Route
+            path="/dynamic-dashboard-test"
+            element={<DynamicDashboard />}
+          />
+          <Route path="/dynamic-dashboard" element={<MyLayout />} />
+
+          <Route
+            path="/report/ClientActivityRange"
+            element={<SlidesMarketWatch />}
+          />
+          <Route path="/report/TradeLog" element={<DraggableDiv />} />
+          <Route path="/report/AssetReport2" element={<AssetReport />} />
+        </Routes>
       </AppProvider>
     </div>
   );

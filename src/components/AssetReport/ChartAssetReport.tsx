@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import ChartReport from "./ChartReport";
+import { useAppSelector } from "../../store/configureStore";
 
 const ChartAssetReport = () => {
   const [date, setDate] = useState("20");
-  console.log(date);
+  const { mode } = useAppSelector((state) => state.settingColorMode);
 
   return (
-    <div className="report__tabcondition__right">
+    <div className={`report__tabcondition__right ${mode}-bg`}>
       <div className="report__tabcondition__detail_CK">
         <div></div>
         <div className="text-center">
-          <span className="font-bold text-black">
+          <span className={`font-bold text-black  ${mode}-text`}>
             THỐNG KÊ GIÁ TRỊ TÀI SẢN RÒNG
           </span>
         </div>
