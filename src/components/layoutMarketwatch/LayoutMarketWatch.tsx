@@ -35,13 +35,14 @@ import TableDanhMuc from "../tableMarketwatch/TableDanhMuc";
 //image
 import LineChart from "../../images/line-chart-32.png";
 import Close from "../../images/x28.png";
+import TableMarketWatchTest from "../tableMarketwatch/TableMarketWatchTest";
 
 function RenderTable() {
   const floor = useAppSelector((state) => state.table.floor);
 
   switch (floor) {
     case "MAIN":
-      return <TableMarketWatch />;
+      return <TableMarketWatchTest />;
       break;
     case "GDTT":
       return <TableGDTTMarketWatch />;

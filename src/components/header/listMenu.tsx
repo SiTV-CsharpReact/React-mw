@@ -11,13 +11,13 @@ const ListMenu = () => {
         <a>{t("home:menu.LichSuGD")}</a>
         <ul>
           <li>
-            <Link  to="/report/ClientActivityRange">Lịch sử đặt lệnh</Link>
+            <Link  to="/report/ClientActivityRange">{t("home:menu.LichSUDL")}</Link>
           </li>
           <li>
-            <Link  to="/report/TradeLog">Lịch sử khớp lệnh</Link>
+            <Link  to="/report/TradeLog">{t("home:menu.LichSUKL")}</Link>
           </li>
           <li>
-            <Link  to="/report/PendingSettlement">Lệnh khớp chờ t.toán</Link>
+            <Link  to="/report/PendingSettlement">{t("home:menu.LishSuTT")}</Link>
           </li>
         </ul>
       </li>
@@ -25,34 +25,34 @@ const ListMenu = () => {
         <a> {t("home:menu.GDTien")}</a>
         <ul>
           <li>
-            <Link  to="/transfer">Chuyển tiền</Link>
+            <Link  to="/transfer">{t("home:menu.Chuyentien")}</Link>
           </li>
           <li>
-            <Link  to="/transfer/template">Mẫu chuyển tiền</Link>
+            <Link  to="/transfer/template">{t("home:menu.Mauchuyentien")}</Link>
           </li>
           <li>
-            <Link  to="/transfer/home/transferds">Chuyển tiền ký quỹ CK phái sinh</Link>
+            <Link  to="/transfer/home/transferds">{t("home:menu.ChuyentienPPX")}</Link>
           </li>
           <li>
-            <Link  to="/transfer/history">Lịch sử chuyển tiền</Link>
+            <Link  to="/transfer/history">{t("home:menu.LichsuCT")}</Link>
           </li>
           <li>
-            <Link  to="/transfer/ordersavings" className="Foreign-Hide">Tiền cho vay - EzSaving  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
+            <Link  to="/transfer/ordersavings" className="Foreign-Hide">{t("home:menu.TienchoVay")} <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <Link  to="/transfer/finalizesavings" className="Foreign-Hide">Tất toán tiền cho vay  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
+            <Link  to="/transfer/finalizesavings" className="Foreign-Hide">{t("home:menu.TatToanTV")}  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <Link  to="/transfer/savingshistory" className="Foreign-Hide">Danh sách hợp đồng cho vay  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
+            <Link  to="/transfer/savingshistory" className="Foreign-Hide">{t("home:menu.DanhsachHDCV")}  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
             <Link  to="/report/AdvReport" className="MarPro-Hide" style={{display: 'none'}}>Lịch sử ứng trước tiền bán CK</Link>
           </li>
           <li>
-            <Link  to="/rightscustody/AdvanceOrderForm">Ứng trước tiền cổ tức</Link>
+            <Link  to="/rightscustody/AdvanceOrderForm">{t("home:menu.UTTTC")}</Link>
           </li>
           <li>
-            <Link  to="/rightscustody/AdvanceHistory">Lịch sử ứng trước tiền cổ tức</Link>
+            <Link  to="/rightscustody/AdvanceHistory">{t("home:menu.LSUTTTC")}</Link>
           </li>
         </ul>
       </li>

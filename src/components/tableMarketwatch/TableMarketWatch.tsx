@@ -226,6 +226,7 @@ const TableMarketWatch = () => {
   // sort products
   const fetchTable =async (param: string) =>{}
   const [lastCheckboxChecked, setLastCheckboxChecked] = useState("");
+  const [pinnedIndexes, setPinnedIndexes] = useState<number[]>([]);
 
   const handleTypeOptionClick = (type: string) => {
     // update the last checkbox checked
@@ -253,12 +254,18 @@ const TableMarketWatch = () => {
         return a.originalIndex - b.originalIndex;
       }
     });
+    const newPinnedIndexes = newData
+    .map((item, index) => (item.pinned ? index : -1)) // Lấy chỉ mục của các phần tử có pinned = true
+    .filter((index) => index !== -1); // Lọc bỏ các chỉ mục không có pinned = true
 
+    setPinnedIndexes([...newPinnedIndexes]);
+    console.log(pinnedIndexes)
     setProducts(newData);
 
     if (!newData.find((item) => item.pinned)) {
       handleResetClick();
     }
+
   };
 
   const handleResetClick = () => {
@@ -273,11 +280,37 @@ const TableMarketWatch = () => {
 
   const handleDragEnd = (e: any) => {
     if (!e.destination) return;
-    let tempData = Array.from(products);
-    let [source_data] = tempData.splice(e.source.index, 1);
-    tempData.splice(e.destination.index, 0, source_data);
-    setProducts(tempData);
+    const { index: sourceIndex } = e.source;
+    const { index: destinationIndex } = e.destination;
+  
+    // Tạo một bản sao của mảng products
+    const updatedProducts = Array.from(products);
+  
+    // Lấy phần tử được kéo
+    const draggedItem = updatedProducts[sourceIndex];
+  
+    // Kiểm tra nếu phần tử được kéo nằm dưới pinnedIndexes
+    if (pinnedIndexes.includes(sourceIndex)) {
+      console.log(pinnedIndexes)
+      // Kiểm tra nếu vị trí đích nằm dưới pinnedIndexes
+      if (destinationIndex > Math.max(...pinnedIndexes)) {
+        // Chuyển trạng thái pinned thành false
+        draggedItem.pinned = false;
+      }
+    }
+  
+    // Di chuyển phần tử đến vị trí đích
+    updatedProducts.splice(sourceIndex, 1);
+    updatedProducts.splice(destinationIndex, 0, draggedItem);
+  
+    // Cập nhật state products
+    setProducts(updatedProducts);
   };
+  
+  
+  
+  
+
 
   const [order, setorder] = useState("ASC");
   const sorting = (col: any) => {
@@ -1028,10 +1061,10 @@ const TableMarketWatch = () => {
 
                             className={`${
                               (index < products.length - 1 &&
-                                dataTable.pinned === products[index + 1].pinned) ||
+                                products[index + 1]?.pinned === dataTable.pinned)||
                               !dataTable.pinned
                                 ? ""
-                                : index === products.length - 1 && !dataTable.pinned
+                                : index === products.length - 1 && !dataTable?.pinned
                                 ? ""
                                 : "border-bottom"
                             }`}
