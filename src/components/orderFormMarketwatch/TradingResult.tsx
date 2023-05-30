@@ -14,8 +14,19 @@ const Tbody = (props:any) => {
   return (
     <>
       <tr onClick={() => setDrop(!drop)}>
-        <td className="border  font-bold text-[#2371AF] border-gray-300 text-start pl-1  pr-2">{props.item.ASTOCKCODE}</td>
-        <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{formatNumber(
+        <td className="border  font-bold text-[#2371AF] relative border-gray-300 text-start pl-1  pr-2">{props.item.ASTOCKCODE}
+          
+          {props.data.filter((e: any) => e.ASTOCKCODE === props.item.ASTOCKCODE).length === 1 ? <></> : <>
+            {
+              drop ? <i
+  className="absolute text-down-text fa fa-caret-down text-iconShowOrder text-sm right-[7px] bottom-[0px] cursor-pointer"
+ 
+          ></i> : <i className="absolute text-down-text fa fa-caret-up text-iconShowOrder text-sm right-[7px] bottom-[0px] cursor-pointer"></i>
+          }
+          </>}
+        </td>
+
+        <td className="border   font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{formatNumber(
           props.data
         .filter(( e : any) => e.ASTOCKCODE === props.item.ASTOCKCODE).reduce((a:any,b:any)=>a+b.AQUANTITY,0)
         )}</td>
@@ -72,12 +83,23 @@ const TbodySell = (props:any) => {
   return (
     <>
       <tr onClick={() => setDropSell(!dropSell)}>
-        <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-start pl-1  pr-2">{formatNumber( props.item.ASTOCKCODE)}</td>
-        <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">
+        <td className="border relative  font-bold text-[#9C0A0A] border-gray-300 text-start pl-1  pr-2">{formatNumber(props.item.ASTOCKCODE)}
+        {props.data.filter((e: any) => e.ASTOCKCODE === props.item.ASTOCKCODE).length === 1 ? <></> : <>
+            {
+              dropSell ? <i
+  className="absolute text-down-text fa fa-caret-down text-iconShowOrder text-sm right-[7px] bottom-[0px] cursor-pointer"
+ 
+          ></i> : <i className="absolute text-down-text fa fa-caret-up text-iconShowOrder text-sm right-[7px] bottom-[0px] cursor-pointer"></i>
+          }
+          </>}
+        </td>
+         
+        <td className="border   font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">
           {formatNumber(
           props.data
         .filter(( e : any) => e.ASTOCKCODE === props.item.ASTOCKCODE).reduce((a:any,b:any)=>a+b.AQUANTITY,0)
-        )}
+          )}
+          
         </td>
         <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">
           {formatNumber(

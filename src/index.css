@@ -302,7 +302,9 @@ th.sort-table.active::after {
     line-height: 50px;
     -webkit-appearance: menulist-button;  
 }
-
+.text-down-text:before{
+    font-size:20px !important;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
