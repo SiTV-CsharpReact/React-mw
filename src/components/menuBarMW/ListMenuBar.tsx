@@ -27,10 +27,6 @@ const ListMenuBar = () => {
     if (b.Default_MarketWatch === "1") return 1;
     return 0;
   });
-  
-
-
- 
   return (
     <div>
       <MenuBar />

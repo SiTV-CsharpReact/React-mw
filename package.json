@@ -20,6 +20,9 @@
     "@types/react-dom": "^18.0.0",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-slick": "^0.23.10",
+    "ag-grid-community": "^29.3.5",
+    "ag-grid-enterprise": "^29.3.5",
+    "ag-grid-react": "^29.3.5",
     "antd": "^5.5.0",
     "apexcharts": "^3.40.0",
     "autoprefixer": "^10.4.13",
@@ -39,8 +42,10 @@
     "lodash": "^4.17.21",
     "pdfkit": "^0.13.0",
     "postcss": "^8.4.21",
+    "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
+    "react-autosuggest": "^10.1.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.7.2",
     "react-chartjs-2": "^5.2.0",
@@ -63,7 +68,8 @@
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0",
     "websocket": "^1.0.34",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "yarn": "^1.22.19"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -95,6 +101,7 @@
     "@svgr/webpack": "^7.0.0",
     "@types/chart.js": "^2.9.37",
     "@types/lodash": "^4.14.194",
+    "@types/react-autosuggest": "^10.1.6",
     "@types/react-beautiful-dnd": "^13.1.4",
     "@types/react-datepicker": "^4.11.2",
     "@types/react-dnd": "^3.0.2",

@@ -215,4 +215,4 @@ const ListService = () => {
   )
 }
 
-export default ListService
+export default React.memo(ListService)

@@ -1,26 +1,26 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
 
 interface ComponentState {
-  visible: boolean;
-  code: string;
-}
-
-const initialState: ComponentState = {
-  visible: false,
-  code: "",
-};
+    visible: boolean;
+    code: string;
+  }
+  
+  const initialState: ComponentState = {
+    visible: false,
+    code: '',
+  };
 const chartMarketwatchSlice = createSlice({
-  name: "component",
+  name: "show_hide_marketwatch",
   initialState,
   reducers: {
-    showChartMarketwatch: (state, action: PayloadAction<string>) => {
+    statusChartMarketwatch: (state, action: PayloadAction<string>) => {
       state.visible = !state.visible;
       state.code = action.payload;
-      // console.log(action.payload);
-    },
-
-  },
+    }
+  }
 });
 
-export const { showChartMarketwatch  } = chartMarketwatchSlice.actions;
+export const { statusChartMarketwatch  } = chartMarketwatchSlice.actions;
 export default chartMarketwatchSlice;

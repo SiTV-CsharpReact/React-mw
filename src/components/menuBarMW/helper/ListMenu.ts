@@ -281,13 +281,13 @@ const menuItems = [
   },
   {
     name: "Thống kê",
-    path: "/hehe",
+    path: "/thong-ke-index",
     floor: "",
     children: [
       {
         name: "Thống kê Index",
         path: "/chung-khoan/thong-ke-index",
-        query : ""
+        query : "s=quote&l=HNXUpcomIndex"
       },
       {
         name: "Thống kê Giá",

@@ -26,51 +26,7 @@ type params = {
 const dataTableAdapter = createEntityAdapter<DataTable>({
     selectId: (dataTable) => dataTable.RowID || '', // Chỉ định trường khóa
   });
-  const dataTableHSXAdapter = createEntityAdapter<DataTable>({
-    selectId: (dataTable) => dataTable.RowID || '', // Chỉ định trường khóa
-  });
-export const fetchTableHNXAsync = createAsyncThunk<
-  DataTable[],
-  string,
-  { state: RootState }
->(
-  "table/fetchTableHNXAsync",
-  async (params, thunkAPI) => {
-    const urlParams = new URLSearchParams();
-    urlParams.append("s", "quote");
-    urlParams.append("l", params);
-    try {
-      const responseHNX = await agent.TableHNX.list(urlParams);
-    
-      console.log(responseHNX)
-      return responseHNX;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue({ error: error.data });
-    }
-  }
-);
-export const fetchTableHSXAsync = createAsyncThunk<
-  DataTable[],
-  string,
-  { state: RootState }
->(
-  "table/fetchTableHSXAsync",
-  async (params, thunkAPI) => {
-    const urlParams = new URLSearchParams();
-    urlParams.append("s", "quote");
-    urlParams.append("l", params);
-    try {
-      const responseHNX = await agent.TableHSX.list(urlParams);
-    
-      console.log(responseHNX)
-      return responseHNX;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue({ error: error.data });
-    }
-  }
-);
 export const getDataTable = createAsyncThunk("table/getDataTable" , async (Param :params)=>{
-  console.log(Param)
     try {
       console.log(Param.Query)
       if(Param.Query === "thoa-thuan-hsx"){
@@ -88,41 +44,14 @@ export const getDataTable = createAsyncThunk("table/getDataTable" , async (Param
             
              return  data
       }
-      else if( Param.Floor === "danh-muc"){
-        const DataHNX = await agent.ListDataTable.list("hnx" , `s=quote&l=${Param.Query}`)
-        const DataHSX = await agent.ListDataTable.list("hsx" , `s=quote&l=${Param.Query}`)
-              var arrS = Param.Query.split(",");
-      var arr_names: DataTable[] = new Array(arrS.length);
-      for (let i = 0; i < DataHSX.length; i++) {
-        const cSym = DataHSX[i]?.Info[0][1]; // mã ck
-        if (arrS.includes(cSym)) {
-          arr_names[arrS.indexOf(cSym)] = DataHSX[i];
-        }
-      }
-
-      for (let i = 0; i < DataHNX.length; i++) {
-        const cSym = DataHNX[i]?.RowID; // mã ck
-        if (arrS.includes(cSym)) {
-          arr_names[arrS.indexOf(cSym)] = DataHNX[i];
-        }
-      }
-        DataHNX?.map((obj:DataTable) =>
-        obj.Info?.sort((a: any, b: any) => {
-          const indexA = Number(a[0]);
-          const indexB = Number(b[0]);
-          if (indexA < indexB) {
-            return -1;
-          }
-          if (indexA > indexB) {
-            return 1;
-          }
-          return 0;
-        }) )
+      else if(Param.Query === "danh-muc"){
+        const DataHNX = await agent.ListDataTable.list("hnx" , "s=quote&l=HNXIndex")
+        const DataHSX = await agent.ListDataTable.list("hsx" , "s=quote&l=HNXIndex")
         let data = {
           index : 0,
-          floor :"MAIN",
+          floor :"Danh-muc",
           NameFloor : Param.Floor,
-          product : arr_names
+          product : DataHNX
         }
 
         return data   
@@ -152,7 +81,7 @@ function initParams() {
     };
 }
 
-export const tableSlice = createSlice({
+export const tableDanhMucSlice = createSlice({
     name: "table",
     initialState:dataTableAdapter.getInitialState<TableState>({
         productsLoaded: false,
@@ -226,7 +155,5 @@ export const tableSlice = createSlice({
     },
 });
 
-export default tableSlice;
-export const productSelectors = dataTableAdapter.getSelectors((state: RootState) =>state.table)
-export const productHSXSelectors = dataTableHSXAdapter.getSelectors((state: RootState) =>state.table)
-export const {setProductParams} = tableSlice.actions;
+export default tableDanhMucSlice;
+export const {setProductParams} = tableDanhMucSlice.actions;

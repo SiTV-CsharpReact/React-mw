@@ -54,10 +54,8 @@ const MenuBar = () => {
     return (
       <div
         key={key}
-        className={`group list-sub-menu ${
-          IsActiveMenu === key ? "active" : ""
-        } `}
-        onClick={() => handleItemClick(item.path, key)}
+        className={`group list-sub-menu ${ IsActiveMenu === key? 'active' : ''} `}
+        onClick={() => handleItemClick(item.path , key)}
       >
         <span className="text-13px">
           {item.name}
@@ -90,36 +88,26 @@ const MenuBar = () => {
               );
             })}
           </ul>
-        ) : (
-          <div key={item.path}>
-            <ul
-              className="absolute hidden text-black group-hover:block z-40 sub-menu dropdown-menu-price"
-              key={item.path}
-            >
-              {item.children?.map((child: any, index: number) => {
-                return (
-                  <li
-                    key={index}
-                    className={`${
-                      index % 2 === 0 ? "float-left" : "float-right"
-                    }`}
-                    onClick={() =>
-                      handleItemChildClick(child.name, child.query, item.floor)
-                    }
-                  >
-                    <Link
-                      to=""
-                      className={`${
-                        activeMenuItemName === child.name ? "active" : ""
-                      } `}
-                    >
-                      {child.name}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+        ):(
+        <div key={item.path}>
+           <ul className='absolute hidden text-black group-hover:block z-40 sub-menu dropdown-menu-price' key={item.path}>
+            {item.children?.map((child:any,index:number) =>{
+              return(
+                <li  key={index}
+                className={`${ index % 2 === 0 ? "float-left" : "float-right" }`}
+                onClick={() => handleItemChildClick(child.name ,child.query,item.floor )}
+                >
+                  <Link to=""
+                  className={`${ activeMenuItemName === child.name ? 'active' : ''} `}
+                   >
+                  {child.name}
+                  </Link>
+                </li>
+              )
+            })}
+            
+          </ul>
+        </div>
         )}
       </div>
     );

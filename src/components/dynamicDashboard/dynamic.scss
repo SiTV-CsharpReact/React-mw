@@ -39,6 +39,7 @@
     border-color: #282828;
     padding: 0.125rem 0.5rem;
     min-width: 5rem;
+    color: #fff;
 }
 .bg-explain {
     background-color: #3f3f3f;
@@ -127,8 +128,8 @@
 .custom-layout-page .layout-wrapper .flexlayout__tab_button {
     background-color: #3f3f3f;
     color: #fff;
-    border-bottom-width: 1px;
-    border-color: #0055ba;
+    // border-bottom-width: 3px;
+    // border-color: #0055ba;
     border-radius: 0;
     padding-left: 0.25rem;
 }
@@ -136,7 +137,8 @@
     font-weight: 500;
     color: #fff;
     background-color:#282828;
-    color: #fff;
+    border-bottom-width: 2px;
+    border-color: #3391ff;
 }
 .custom-layout-page .layout-wrapper .flexlayout__tabset_tabbar_outer {
     background-color: #3f3f3f;

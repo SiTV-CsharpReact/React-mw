@@ -12,22 +12,26 @@ import { marketHSXSlice } from "../components/indexMarketWatch/marketHSXSlice";
 import settingMarketWatchSlice from "../components/indexMarketWatch/marketShowSlice";
 import marketHNXSlice from "../components/indexMarketWatch/marketHNXSlice";
 import assetReportSlice from "../components/AssetReport/AssetReportSlice";
+import { dataSlice } from '../components/tableMarketwatch/tableThunk';
+import {tableBuy} from '../components/tableMarketwatch/tableBuy';
 import changeThemeModeSlice from "../components/header/DarkModeSlice";
 
 export const store = configureStore({
   reducer: {
-    // Get danh sách công ty để map với stockcode
+    //trang chủ marketwatch
+    // Get danh sách công ty để map với stockcode 
     company: companySlice.reducer,
     // Get Data Table market watch
     table: tableSlice.reducer,
-    //
-    menu: menuSlice.reducer,
-    // show hide chart
+    // show hide chart 
     chart: chartMarketwatchSlice.reducer,
     // Popup theo mã
     popupTable: popupTableSlice.reducer,
+    // code list khi click danh mục
     codeList: codeListSlice.reducer,
+    // list menu danh mục 
     categories: danhmucSlice.reducer,
+    // list mã nghành 
     ministry: ministrySlice.reducer,
     // Get data Index của sàn hsx
     marketHSX: marketHSXSlice.reducer,
@@ -36,7 +40,10 @@ export const store = configureStore({
     // cài đặt giao diện trang marketwatch
     settingMarketwatch: settingMarketWatchSlice.reducer,
     //báo cáo tài sản
-    assetReport: assetReportSlice.reducer,
+        assetReport: assetReportSlice.reducer,
+    
+         dataTable: dataSlice.reducer,
+         dataBuy:tableBuy.reducer,
     // change theme 
     settingColorMode: changeThemeModeSlice.reducer,
   },
