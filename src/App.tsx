@@ -13,6 +13,7 @@ function App() {
       <AppProvider>
         <Routes>
           <Route path="/" element={<LayoutMarketWatch />} />
+          {/* <Route path="/Table" element={<TableMarketWatchT />} /> */}
           <Route
             path="/dynamic-dashboard-test"
             element={<DynamicDashboard />}
