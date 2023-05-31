@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
+  RootState,
   useAppDispatch,
   useAppSelector,
 } from "../../store/configureStore";
@@ -14,18 +15,23 @@ import {
   tinhGiaTC,
 } from "../../utils/util";
 import "../../styles/MW.css";
-
+import axios from "axios";
 import { ObjectMenuHSX } from "../../models/modelListMenuHSX";
-
+import { useParams } from "react-router-dom";
+import { stocks } from "../../models/marketwacthTable";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DataTable } from "../../models/modelTableHNX";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
 // import { Tooltip } from "@mui/material";
+import { setStatusChart } from "../menuBarMW/menuSlice";
 import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
+import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 import { Root } from "../../models/root";
+import { dispatchDataTable } from "./tableThunk";
+import { useDispatch } from "react-redux";
+import { dispatchDataTableBuy } from "./tableBuy";
 import { getDataTable } from "./tableSlice";
-import LoadingComponent from "../../layout/LoaddingComponent";
-
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
@@ -63,30 +69,34 @@ const showKLPT = (value: string) => {
       }
       if (elementKhopLenhPT) elementKhopLenhPT.innerHTML = "%";
     }
+    // if(element) {
+    //   element.classList.remove("d-block-kl")
+    //   element.classList.add("d-none-kl")
+    // }
   }
 };
+  
 const TableMarketWatch = () => {
-  const btnRef = useRef(null);
+  //
+
   const dataTables = useAppSelector((state) => state.table.ListDataTable);
-  const {productsLoaded} = useAppSelector((state) => state.table);
-  const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
-  // console.log(height)
-  // const [popupVisible, setPopupVisible] = useState(false);
-  // const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 ,value:""});
-  //const [selectedRowId, setSelectedRowId] = useState<string | null>(null);
+
+  const { INDEX } = useAppSelector((state: RootState) => state.settingMarketwatch);
   const [sortedColumn, setSortedColumn] = useState("");
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
   const dispatch = useAppDispatch();
+
   const [products, setProducts] = useState<any[]>([]);
- // const { productsLoaded,productParams} = useAppSelector(state => state.table); //const  products = useAppSelector(state => state.table.table);
-  const codeList = useAppSelector((state) => state.codeList.codeList);
+  const params = useParams<{ id: string }>();
+  const paramstock = stocks.find((paramstock) => paramstock.id === params.id);
+  const codeList = useSelector((state: RootState) => state.codeList.codeList);
   // console.log(codeList, "okko")
   const handleDoubleClick = (e: any, val: any) => {
     if (e.detail === 2) {
       dispatch(statusChartMarketwatch(val));
     }
   };
-  // call api 
+    // call api 
   const handelGetData = useCallback(()=>{
     let data = {
       Floor : "HSX",
@@ -106,6 +116,38 @@ const TableMarketWatch = () => {
       fetchDataCompany();
     }
   }, []);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const responsesttHNX = await axios.get(
+  //         `http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`
+  //       );
+  //       setStatusMarket(responsesttHNX.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  //   fetchData();
+  // }, [paramstock?.id]);
+  // useEffect(() => {
+  //   if (paramstock) {
+  //     if (paramstock.id) {
+  //       fetchTable(paramstock.id);
+  //     } else {
+  //       fetchTable("HNX");
+  //     }
+  //   }
+  // }, [paramstock?.id, dispatch]);
+
+  // const fetchDataCompany = async () => {
+  //   await dispatch(fetchCompanyAsync());
+  // };
+  // Call `fetchData` to fetch data when component mounts
+  // useEffect(() => {
+  //   if (!localStorage.getItem("CacheSi")) {
+  //     fetchDataCompany();
+  //   }
+  // }, []);
   // const fetchTable = async (param: string) => {
   //   let valueParam = "HNX";
   //   let valueSan = "hsx";
@@ -219,14 +261,41 @@ const TableMarketWatch = () => {
   //   // const data = await res.json();
   //   // setProducts(data);
   // };
-  const company = useAppSelector((state) => state.company.data);
+  const company = useSelector((state: RootState) => state.company.data);
   // console.log(company)
   // const company = useSelector((state=> state?.company))
 
+
+   // su kien click mua ban ma
+    const handleClick = (dataTable: any) => {
+    console.log("dataTable",dataTable)
+    dispatch(dispatchDataTable(dataTable));
+  };
+   const handleClickBuy = (dataTable: any) => {
+    console.log("dataTable",dataTable)
+     dispatch(dispatchDataTableBuy(dataTable))
+       ;
+  };
+
+
+
+
   // sort products
-  const fetchTable =async (param: string) =>{}
+  products.forEach((obj) =>
+    obj.Info.sort((a: any, b: any) => {
+      const indexA = Number(a[0]);
+      const indexB = Number(b[0]);
+      if (indexA < indexB) {
+        return -1;
+      }
+      if (indexA > indexB) {
+        return 1;
+      }
+      return 0;
+    })
+  );
+  console.log(products);
   const [lastCheckboxChecked, setLastCheckboxChecked] = useState("");
-  const [pinnedIndexes, setPinnedIndexes] = useState<number[]>([]);
 
   const handleTypeOptionClick = (type: string) => {
     // update the last checkbox checked
@@ -254,18 +323,12 @@ const TableMarketWatch = () => {
         return a.originalIndex - b.originalIndex;
       }
     });
-    const newPinnedIndexes = newData
-    .map((item, index) => (item.pinned ? index : -1)) // Lấy chỉ mục của các phần tử có pinned = true
-    .filter((index) => index !== -1); // Lọc bỏ các chỉ mục không có pinned = true
 
-    setPinnedIndexes([...newPinnedIndexes]);
-    console.log(pinnedIndexes)
     setProducts(newData);
 
     if (!newData.find((item) => item.pinned)) {
       handleResetClick();
     }
-
   };
 
   const handleResetClick = () => {
@@ -280,37 +343,11 @@ const TableMarketWatch = () => {
 
   const handleDragEnd = (e: any) => {
     if (!e.destination) return;
-    const { index: sourceIndex } = e.source;
-    const { index: destinationIndex } = e.destination;
-  
-    // Tạo một bản sao của mảng products
-    const updatedProducts = Array.from(products);
-  
-    // Lấy phần tử được kéo
-    const draggedItem = updatedProducts[sourceIndex];
-  
-    // Kiểm tra nếu phần tử được kéo nằm dưới pinnedIndexes
-    if (pinnedIndexes.includes(sourceIndex)) {
-      console.log(pinnedIndexes)
-      // Kiểm tra nếu vị trí đích nằm dưới pinnedIndexes
-      if (destinationIndex > Math.max(...pinnedIndexes)) {
-        // Chuyển trạng thái pinned thành false
-        draggedItem.pinned = false;
-      }
-    }
-  
-    // Di chuyển phần tử đến vị trí đích
-    updatedProducts.splice(sourceIndex, 1);
-    updatedProducts.splice(destinationIndex, 0, draggedItem);
-  
-    // Cập nhật state products
-    setProducts(updatedProducts);
+    let tempData = Array.from(products);
+    let [source_data] = tempData.splice(e.source.index, 1);
+    tempData.splice(e.destination.index, 0, source_data);
+    setProducts(tempData);
   };
-  
-  
-  
-  
-
 
   const [order, setorder] = useState("ASC");
   const sorting = (col: any) => {
@@ -372,10 +409,6 @@ const TableMarketWatch = () => {
       setorder("DSC");
     }
   };
-/* The above code is a comment in TypeScript React code. It is not doing anything in the code itself.
-It is just a comment that explains that if the products are not loaded, the component will display
-"Loading Bảng giá". */
-  // if(!productsLoaded) return <>Loading Bảng giá</>
   return (
     <div>
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -860,7 +893,7 @@ It is just a comment that explains that if the products are not loaded, the comp
               <th className="border border-borderHeadTableMarket text-textHeadTableMarket bg-BGTableHoverMarket relative sort-table w-12 min-w-[50px]">
                 <div className="flex justify-between pt-[20px]">
                   <button
-                    className="inset-y-0 absolute left-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL "
+                    className="absolute inset-y-0 left-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL "
                     onClick={() => showKLPT("showPT")}
                   >
                     <div className="arrow arrow-left"></div>
@@ -883,7 +916,7 @@ It is just a comment that explains that if the products are not loaded, the comp
                   </div>
 
                   <button
-                    className="inset-y-0 absolute right-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL sort-table"
+                    className="absolute inset-y-0 right-0 w-4 bg-BGTableHoverMarket hover:bg-hoverKL sort-table"
                     onClick={() => showKLPT("showPT")}
                   >
                     <div className="arrow arrow-right"></div>
@@ -1041,471 +1074,489 @@ It is just a comment that explains that if the products are not loaded, the comp
               </th>
             </tr>
           </thead>
-          {dataTables ? 
-              <Droppable droppableId="droppable-1">
-          
-                {(provider) => (
-              
-                  <tbody
-                    className="text-capitalize"
-                    ref={provider.innerRef}
-                    {...provider.droppableProps}
+          <Droppable droppableId="droppable-1">
+            {(provider) => (
+              <tbody
+                className="text-capitalize"
+                ref={provider.innerRef}
+                {...provider.droppableProps}
+              >
+                {dataTables?.map((dataTable: any, index) => (
+                  <Draggable
+                    key={dataTable.RowID}
+                    draggableId={dataTable.RowID}
+                    index={index}
                   >
-                    {dataTables?.map((dataTable: any, index) => (
-                      <Draggable
+                    {(provider) => (
+                      <tr
+                        data-tr-value={dataTable.Info[0][1]}
+                        // không đc pinned || không phải tr cuối cùng && tr hiện tại giống với tr sau || tr cuối cùng k đc pinned-> ''
+
+                        className={`${
+                          (index < products.length - 1 &&
+                            dataTable.pinned === products[index + 1].pinned) ||
+                          !dataTable.pinned
+                            ? ""
+                            : index === products.length - 1 && !dataTable.pinned
+                            ? ""
+                            : "border-bottom"
+                        }`}
                         key={dataTable.RowID}
-                        draggableId={dataTable.RowID}
-                        index={index}
+                        id={`tr${dataTable.RowID}`}
+                        {...provider.draggableProps}
+                        ref={provider.innerRef}
+
+                        // style={{ backgroundColor: selectedRowId === dataTable.RowID ? 'yellow' : 'white' }}
                       >
-                        {(provider) => (
-                          <tr
-                            data-tr-value={dataTable.Info[0][1]}
-                            // không đc pinned || không phải tr cuối cùng && tr hiện tại giống với tr sau || tr cuối cùng k đc pinned-> ''
+                        <td
+                          {...provider.dragHandleProps}
+                          className={`${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[11][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )} text-left has-symbol company-tooltip`}
+                          data-tooltip={getCompanyNameByCode(
+                            dataTable.Info[0][1]
+                          ).toString()}
+                          id={`${dataTable.Info[1][1]}`}
+                        >
+                          {/* <ReactTooltip id="my-tooltip"  className="example" classNameArrow="arrow__tooltip"  place="bottom"/> */}
+                          <input
+                            type="checkbox"
+                            id={`cb${dataTable.RowID}`}
+                            onClick={() =>
+                              handleTypeOptionClick(dataTable.RowID)
+                            }
+                            className="cbTop priceboard"
+                          ></input>
 
-                            className={`${
-                              (index < products.length - 1 &&
-                                products[index + 1]?.pinned === dataTable.pinned)||
-                              !dataTable.pinned
-                                ? ""
-                                : index === products.length - 1 && !dataTable?.pinned
-                                ? ""
-                                : "border-bottom"
-                            }`}
-                            key={dataTable.RowID}
-                            id={`tr${dataTable.RowID}`}
-                            {...provider.draggableProps}
-                            ref={provider.innerRef}
-
-                            // style={{ backgroundColor: selectedRowId === dataTable.RowID ? 'yellow' : 'white' }}
+                          <span
+                            className="pl-0.5"
+                            onDoubleClick={(e) =>
+                              handleDoubleClick(e, dataTable.Info[0][1])
+                            }
                           >
-                            <td
-                              {...provider.dragHandleProps}
-                              className={`${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[11][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )} text-left has-symbol company-tooltip`}
-                              data-tooltip={getCompanyNameByCode(
-                                dataTable.Info[0][1]
-                              ).toString()}
-                              id={`${dataTable.Info[1][1]}`}
-                            >
-                              {/* <ReactTooltip id="my-tooltip"  className="example" classNameArrow="arrow__tooltip"  place="bottom"/> */}
-                              <input
-                                type="checkbox"
-                                id={`cb${dataTable.RowID}`}
-                                onClick={() =>
-                                  handleTypeOptionClick(dataTable.RowID)
-                                }
-                                className="cbTop priceboard"
-                              ></input>
+                            {" "}
+                            {dataTable.Info[0][1]}
+                          </span>
+                        </td>
+                        {/* TTham chiếu */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[13][1]}
+                          id={`${dataTable.RowID}_TC`}
+                          className="text-right bg-BGTableHoverMarket text-textTableMarketTC"
+                        >
+                          {formatNumber(dataTable.Info[1][1])}
+                        </td>
+                        {/* Trần */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[15][1]}
+                          id={`${dataTable.RowID}_Tran`}
+                          className="text-right bg-BGTableHoverMarket text-textTableMarketTran"
+                        >
+                          {formatNumber(dataTable.Info[2][1])}
+                        </td>
+                        {/* Sàn */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[14][1]}
+                          id={`${dataTable.RowID}_San`}
+                          className="text-right bg-BGTableHoverMarket text-textTableMarketSan"
+                        >
+                          {formatNumber(dataTable.Info[3][1])}
+                        </td>
+                        {/* D4 Mua*/}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[4][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[4][0]}`}
+                          className={`text-right ${
+                            INDEX.cbcol4 ? "" : "hidden"
+                          }`}
+                        >
+                          {formatNumberMarket(dataTable.Info[4][1])}
+                        </td>
+                        {/* G3 Mua*/}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[8][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[5][0]}`}
+                          className={` text-right ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[5][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                          onClick={() => handleClick({ma:dataTable.Info[0][1] , price:dataTable.Info[5][1]})}
+                          //{ma:dataTable.Info[0][1] , price:dataTable.Info[1][1]})
 
-                              <span
-                                className="pl-0.5"
-                                onDoubleClick={(e) =>
-                                  handleDoubleClick(e, dataTable.Info[0][1])
-                                }
-                              >
-                                {" "}
-                                {dataTable.Info[0][1]}
-                              </span>
-                            </td>
-                            {/* TTham chiếu */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[13][1]}
-                              id={`${dataTable.RowID}_TC`}
-                              className=" text-right bg-BGTableHoverMarket text-textTableMarketTC"
+                        >
+                          {formatNumberMarket(dataTable.Info[5][1])}
+                        </td>
+                        {/* KL3 */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[9][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[6][0]}`}
+                          className={` text-right ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[5][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                          onClick={() => handleClick({ma:dataTable.Info[0][1] , price:dataTable.Info[5][1]})}
+
+
+                        >
+                          {formatNumberMarket(dataTable.Info[6][1])}
+                        </td>
+                        {/* G2 */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[4][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[7][0]}`}
+                          className={` text-right ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[7][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                              onClick={() => handleClick({ma:dataTable.Info[0][1] , price:dataTable.Info[7][1]})}
+                              //
+
+                        >
+                          {formatNumberMarket(dataTable.Info[7][1])}
+                        </td>
+                        {/* KL2 */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[5][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[8][0]}`}
+                          className={` text-right ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[7][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                          onClick={() => handleClick({ma:dataTable.Info[0][1] , price:dataTable.Info[7][1]})}
+                            //{ma:dataTable.Info[0][1] , price:dataTable.Info[1][1]}
+                        >
+                          {formatNumberMarket(dataTable.Info[8][1])}
+                        </td>
+                        {/* G1 */}
+                        <td
+                          {...provider.dragHandleProps}
+                          id={`${dataTable.RowID}_${dataTable.Info[9][0]}`}
+                          className={` text-right ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[9][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                              onClick={() => handleClick({ma:dataTable.Info[0][1] , price:dataTable.Info[9][1]})}
+                        >
+                          {checkSTTMarket(
+                            formatNumberMarket(dataTable.Info[9][1]),
+                            statusMarket?.STAT_ControlCode,
+                            dataTable.Info[10][1]
+                          )}
+                          {/* {formatNumberMarket(dataTable.RowID)} */}
+                        </td>
+                        {/* KL1 */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[1][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[10][0]}`}
+                          className={` text-right ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[9][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                          onClick={() => handleClick({ma:dataTable.Info[0][1] , price:dataTable.Info[1][1]})}
+
+                        >
+                          {formatNumberMarket(dataTable.Info[10][1])}
+                        </td>
+                        {/* Gia Khơp lenh */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[18][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[11][0]}`}
+                          className={` text-right bg-BGTableHoverMarket ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[11][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                        >
+                          {formatNumberMarket(dataTable.Info[11][1])}
+                        </td>
+                        {/* KL */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[19][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[12][0]}`}
+                          className={` text-right bg-BGTableHoverMarket ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[11][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                        >
+                          {formatNumberMarket(dataTable.Info[12][1])}
+                        </td>
+                        {/* +-*/}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={tinhGiaTC(
+                            dataTable.Info[1][1],
+                            dataTable.Info[11][1]
+                          )}
+                          className={` text-right bg-BGTableHoverMarket ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[11][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                        >
+                          <span>
+                            <div
+                              className="price-ot d-block-kl"
+                              id={`${dataTable.RowID}_PT`}
                             >
-                              {formatNumber(dataTable.Info[1][1])}
-                            </td>
-                            {/* Trần */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[15][1]}
-                              id={`${dataTable.RowID}_Tran`}
-                              className=" text-right bg-BGTableHoverMarket text-textTableMarketTran"
-                            >
-                              {formatNumber(dataTable.Info[2][1])}
-                            </td>
-                            {/* Sàn */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[14][1]}
-                              id={`${dataTable.RowID}_San`}
-                              className=" text-right bg-BGTableHoverMarket text-textTableMarketSan"
-                            >
-                              {formatNumber(dataTable.Info[3][1])}
-                            </td>
-                            {/* D4 Mua*/}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[4][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[4][0]}`}
-                              className={`text-right ${
-                                INDEX.cbcol4 ? "" : "hidden"
-                              }`}
-                            >
-                              {formatNumberMarket(dataTable.Info[4][1])}
-                            </td>
-                            {/* G3 Mua*/}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[8][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[5][0]}`}
-                              className={` text-right ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[5][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                              onClick={() => {
-                                console.log({
-                                  a: dataTable.Info[1][1],
-                                  b: dataTable.Info[5][1],
-                                  c: dataTable.Info[2][1],
-                                  d: dataTable.Info[3][1],
-                                });
-                              }}
-                            >
-                              {formatNumberMarket(dataTable.Info[5][1])}
-                            </td>
-                            {/* KL3 */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[9][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[6][0]}`}
-                              className={` text-right ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[5][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                            >
-                              {formatNumberMarket(dataTable.Info[6][1])}
-                            </td>
-                            {/* G2 */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[4][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[7][0]}`}
-                              className={` text-right ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[7][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                            >
-                              {formatNumberMarket(dataTable.Info[7][1])}
-                            </td>
-                            {/* KL2 */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[5][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[8][0]}`}
-                              className={` text-right ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[7][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                            >
-                              {formatNumberMarket(dataTable.Info[8][1])}
-                            </td>
-                            {/* G1 */}
-                            <td
-                              {...provider.dragHandleProps}
-                              id={`${dataTable.RowID}_${dataTable.Info[9][0]}`}
-                              className={` text-right ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[9][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                            >
-                              {checkSTTMarket(
-                                formatNumberMarket(dataTable.Info[9][1]),
-                                statusMarket?.STAT_ControlCode,
-                                dataTable.Info[10][1]
-                              )}
-                              {/* {formatNumberMarket(dataTable.RowID)} */}
-                            </td>
-                            {/* KL1 */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[1][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[10][0]}`}
-                              className={` text-right ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[9][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                            >
-                              {formatNumberMarket(dataTable.Info[10][1])}
-                            </td>
-                            {/* Gia Khơp lenh */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[18][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[11][0]}`}
-                              className={` text-right bg-BGTableHoverMarket ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[11][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                            >
-                              {formatNumberMarket(dataTable.Info[11][1])}
-                            </td>
-                            {/* KL */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[19][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[12][0]}`}
-                              className={` text-right bg-BGTableHoverMarket ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[11][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                            >
-                              {formatNumberMarket(dataTable.Info[12][1])}
-                            </td>
-                            {/* +-*/}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={tinhGiaTC(
+                              {tinhGiaTC(
                                 dataTable.Info[1][1],
                                 dataTable.Info[11][1]
                               )}
-                              className={` text-right bg-BGTableHoverMarket ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[11][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
+                            </div>
+                            <div
+                              className="price-change d-none-kl"
+                              id={`${dataTable.RowID}_CT`}
                             >
-                              <span>
-                                <div
-                                  className="price-ot d-block-kl"
-                                  id={`${dataTable.RowID}_PT`}
-                                >
-                                  {tinhGiaTC(
-                                    dataTable.Info[1][1],
-                                    dataTable.Info[11][1]
-                                  )}
-                                </div>
-                                <div
-                                  className="price-change d-none-kl"
-                                  id={`${dataTable.RowID}_CT`}
-                                >
-                                  {tinhGiaCT(
-                                    dataTable.Info[1][1],
-                                    dataTable.Info[11][1]
-                                  )}
-                                </div>
-                              </span>
-                            </td>
-                            {/* G1 Ban*/}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[2][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[14][0]}`}
-                              className={` text-right ${setColorMarket(
+                              {tinhGiaCT(
                                 dataTable.Info[1][1],
-                                dataTable.Info[14][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                            >
-                              {checkSTTMarket(
-                                formatNumberMarket(dataTable.Info[14][1]),
-                                statusMarket?.STAT_ControlCode,
-                                dataTable.Info[15][1]
+                                dataTable.Info[11][1]
                               )}
-                            </td>
-                            {/* KL1 */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[3][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[15][0]}`}
-                              className={` text-right ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[14][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                            >
-                              {formatNumberMarket(dataTable.Info[15][1])}
-                            </td>
-                            {/* G2 */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[6][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[16][0]}`}
-                              className={` text-right ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[16][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                            >
-                              {formatNumberMarket(dataTable.Info[16][1])}
-                            </td>
-                            {/* KL2 */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[7][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[17][0]}`}
-                              className={` text-right ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[16][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                            >
-                              {formatNumberMarket(dataTable.Info[17][1])}
-                            </td>
-                            {/* G3 */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[10][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[18][0]}`}
-                              className={` text-right ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[18][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                            >
-                              {formatNumberMarket(dataTable.Info[18][1])}
-                            </td>
-                            {/* KL3 */}
-                            {/* đâsd */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[11][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[19][0]}`}
-                              className={` text-right ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[18][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                            >
-                              {formatNumberMarket(dataTable.Info[19][1])}
-                            </td>
-                            {/* TKL */}
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[20][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[20][0]}`}
-                              className={` text-right ${
-                                INDEX.cbcol20 ? "" : "hidden"
-                              } ${setColorMarket(
-                                dataTable.Info[1][1],
-                                dataTable.Info[20][1],
-                                dataTable.Info[2][1],
-                                dataTable.Info[3][1]
-                              )}`}
-                            >
-                              {formatNumberMarket(dataTable.Info[20][1])}
-                            </td>
-                            <td
-                              {...provider.dragHandleProps}
-                              data-sort={dataTable.Info[20][1]}
-                              id={`${dataTable.RowID}_${dataTable.Info[21][0]}`}
-                              className=" text-right bg-BGTableHoverMarket "
-                            >
-                              {formatNumberMarket(dataTable.Info[21][1])}
-                            </td>
-                            {INDEX.cbcol22 && (
-                              <td
-                                {...provider.dragHandleProps}
-                                data-sort={dataTable.Info[21][1]}
-                                id={`${dataTable.RowID}_${dataTable.Info[22][0]}`}
-                                className={` text-right bg-BGTableHoverMarket ${setColorMarket(
-                                  dataTable.Info[1][1],
-                                  dataTable.Info[22][1],
-                                  dataTable.Info[2][1],
-                                  dataTable.Info[3][1]
-                                )}`}
-                              >
-                                {formatNumberMarket(dataTable.Info[22][1])}
-                              </td>
-                            )}
-                            {INDEX.cbcol23 && (
-                              <td
-                                {...provider.dragHandleProps}
-                                data-sort={dataTable.Info[22][1]}
-                                id={`${dataTable.RowID}_${dataTable.Info[23][0]}`}
-                                className={` text-right bg-BGTableHoverMarket ${setColorMarket(
-                                  dataTable.Info[1][1],
-                                  dataTable.Info[23][1],
-                                  dataTable.Info[2][1],
-                                  dataTable.Info[3][1]
-                                )}`}
-                              >
-                                {formatNumberMarket(dataTable.Info[23][1])}
-                              </td>
-                            )}
-                            {INDEX.cbcol24 && (
-                              <td
-                                {...provider.dragHandleProps}
-                                data-sort={dataTable.Info[23][1]}
-                                id={`${dataTable.RowID}_${dataTable.Info[24][0]}`}
-                                className={` text-right bg-BGTableHoverMarket ${setColorMarket(
-                                  dataTable.Info[1][1],
-                                  dataTable.Info[24][1],
-                                  dataTable.Info[2][1],
-                                  dataTable.Info[3][1]
-                                )}`}
-                              >
-                                {formatNumberMarket(dataTable.Info[24][1])}
-                              </td>
-                            )}
-                            {INDEX.cbcol26 && (
-                              <td
-                                {...provider.dragHandleProps}
-                                data-sort={dataTable.Info[25][1]}
-                                id={`${dataTable.RowID}_${dataTable.Info[26][0]}`}
-                                className=" text-right bg-BGTableHoverMarket"
-                              >
-                                {formatNumberMarket(dataTable.Info[26][1])}
-                              </td>
-                            )}
-                            {INDEX.cbcol27 && (
-                              <td
-                                {...provider.dragHandleProps}
-                                data-sort={dataTable.Info[26][1]}
-                                id={`${dataTable.RowID}_${dataTable.Info[27][0]}`}
-                                className=" text-right bg-BGTableHoverMarket"
-                              >
-                                {formatNumberMarket(dataTable.Info[27][1])}
-                              </td>
-                            )}
-                            {INDEX.cbcol28 && (
-                              <td
-                                {...provider.dragHandleProps}
-                                data-sort={dataTable.Info[27][1]}
-                                id={`${dataTable.RowID}_${dataTable.Info[28][0]}`}
-                                className=" text-right bg-BGTableHoverMarket"
-                              >
-                                {formatNumberMarket(dataTable.Info[28][1])}
-                              </td>
-                            )}
-                          </tr>
+                            </div>
+                          </span>
+                        </td>
+                        {/* G1 Ban*/}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[2][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[14][0]}`}
+                          className={` text-right ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[14][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                         onClick={() => handleClickBuy({ma:dataTable.Info[0][1] , price:dataTable.Info[14][1]})}
+                            //{ma:dataTable.Info[0][1] , price:dataTable.Info[14][1]}
+
+                        >
+                          {checkSTTMarket(
+                            formatNumberMarket(dataTable.Info[14][1]),
+                            statusMarket?.STAT_ControlCode,
+                            dataTable.Info[15][1]
+                          )}
+                        </td>
+                        {/* KL1 */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[3][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[15][0]}`}
+                          className={` text-right ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[14][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                        onClick={() => handleClickBuy({ma:dataTable.Info[0][1] , price:dataTable.Info[14][1]})}
+
+
+                        >
+                          {formatNumberMarket(dataTable.Info[15][1])}
+                        </td>
+                        {/* G2 */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[6][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[16][0]}`}
+                          className={` text-right ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[16][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                          onClick={() => handleClickBuy({ma:dataTable.Info[0][1] , price:dataTable.Info[16][1]})}
+                          //
+
+                        >
+                          {formatNumberMarket(dataTable.Info[16][1])}
+                        </td>
+                        {/* KL2 */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[7][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[17][0]}`}
+                          className={` text-right ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[16][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                        onClick={() => handleClickBuy({ma:dataTable.Info[0][1] , price:dataTable.Info[16][1]})}
+
+
+                        >
+                          {formatNumberMarket(dataTable.Info[17][1])}
+                        </td>
+                        {/* G3 */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[10][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[18][0]}`}
+                          className={` text-right ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[18][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                         onClick={() => handleClickBuy({ma:dataTable.Info[0][1] , price:dataTable.Info[18][1]})}
+                            //{ma:dataTable.Info[0][1] , price:dataTable.Info[18][1]}
+                        >
+                          {formatNumberMarket(dataTable.Info[18][1])}
+                        </td>
+                        {/* KL3 */}
+                        {/* đâsd */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[11][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[19][0]}`}
+                          className={` text-right ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[18][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                           onClick={() => handleClickBuy({ma:dataTable.Info[0][1] , price:dataTable.Info[18][1]})}
+
+
+                        >
+                          {formatNumberMarket(dataTable.Info[19][1])}
+                        </td>
+                        {/* TKL */}
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[20][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[20][0]}`}
+                          className={` text-right ${
+                            INDEX.cbcol20 ? "" : "hidden"
+                          } ${setColorMarket(
+                            dataTable.Info[1][1],
+                            dataTable.Info[20][1],
+                            dataTable.Info[2][1],
+                            dataTable.Info[3][1]
+                          )}`}
+                        >
+                          {formatNumberMarket(dataTable.Info[20][1])}
+                        </td>
+                        <td
+                          {...provider.dragHandleProps}
+                          data-sort={dataTable.Info[20][1]}
+                          id={`${dataTable.RowID}_${dataTable.Info[21][0]}`}
+                          className="text-right bg-BGTableHoverMarket"
+                        >
+                          {formatNumberMarket(dataTable.Info[21][1])}
+                        </td>
+                        {INDEX.cbcol22 && (
+                          <td
+                            {...provider.dragHandleProps}
+                            data-sort={dataTable.Info[21][1]}
+                            id={`${dataTable.RowID}_${dataTable.Info[22][0]}`}
+                            className={` text-right bg-BGTableHoverMarket ${setColorMarket(
+                              dataTable.Info[1][1],
+                              dataTable.Info[22][1],
+                              dataTable.Info[2][1],
+                              dataTable.Info[3][1]
+                            )}`}
+                          >
+                            {formatNumberMarket(dataTable.Info[22][1])}
+                          </td>
                         )}
-                      </Draggable>
-                    ))}
-                    {provider.placeholder}
-                  </tbody>
-                )}
-                
-              </Droppable>
-          : "" }
+                        {INDEX.cbcol23 && (
+                          <td
+                            {...provider.dragHandleProps}
+                            data-sort={dataTable.Info[22][1]}
+                            id={`${dataTable.RowID}_${dataTable.Info[23][0]}`}
+                            className={` text-right bg-BGTableHoverMarket ${setColorMarket(
+                              dataTable.Info[1][1],
+                              dataTable.Info[23][1],
+                              dataTable.Info[2][1],
+                              dataTable.Info[3][1]
+                            )}`}
+                          >
+                            {formatNumberMarket(dataTable.Info[23][1])}
+                          </td>
+                        )}
+                        {INDEX.cbcol24 && (
+                          <td
+                            {...provider.dragHandleProps}
+                            data-sort={dataTable.Info[23][1]}
+                            id={`${dataTable.RowID}_${dataTable.Info[24][0]}`}
+                            className={` text-right bg-BGTableHoverMarket ${setColorMarket(
+                              dataTable.Info[1][1],
+                              dataTable.Info[24][1],
+                              dataTable.Info[2][1],
+                              dataTable.Info[3][1]
+                            )}`}
+                          >
+                            {formatNumberMarket(dataTable.Info[24][1])}
+                          </td>
+                        )}
+                        {INDEX.cbcol26 && (
+                          <td
+                            {...provider.dragHandleProps}
+                            data-sort={dataTable.Info[25][1]}
+                            id={`${dataTable.RowID}_${dataTable.Info[26][0]}`}
+                            className="text-right bg-BGTableHoverMarket"
+                          >
+                            {formatNumberMarket(dataTable.Info[26][1])}
+                          </td>
+                        )}
+                        {INDEX.cbcol27 && (
+                          <td
+                            {...provider.dragHandleProps}
+                            data-sort={dataTable.Info[26][1]}
+                            id={`${dataTable.RowID}_${dataTable.Info[27][0]}`}
+                            className="text-right bg-BGTableHoverMarket"
+                          >
+                            {formatNumberMarket(dataTable.Info[27][1])}
+                          </td>
+                        )}
+                        {INDEX.cbcol28 && (
+                          <td
+                            {...provider.dragHandleProps}
+                            data-sort={dataTable.Info[27][1]}
+                            id={`${dataTable.RowID}_${dataTable.Info[28][0]}`}
+                            className="text-right bg-BGTableHoverMarket"
+                          >
+                            {formatNumberMarket(dataTable.Info[28][1])}
+                          </td>
+                        )}
+                      </tr>
+                    )}
+                  </Draggable>
+                ))}
+                {provider.placeholder}
+              </tbody>
+            )}
+          </Droppable>
         </table>
       </DragDropContext>
       <FooterMarket />
@@ -1514,3 +1565,49 @@ It is just a comment that explains that if the products are not loaded, the comp
 };
 
 export default React.memo(TableMarketWatch);
+
+//     const param = window.location.search;
+//     const urlParams = new URLSearchParams(param);
+// console.log(urlParams)
+//const productssss = useAppSelector(productSelectors.selectAll);
+//const  statusMarket = useAppSelector(state => state.table.table);
+//console.log(products)
+// useEffect(()=>{
+//     dispatch(fetchTableHNXAsync())
+//     //dispatch(fetchStatusAsync())
+// },[dispatch])
+
+// a === b ? 0 :
+//console.log("product", products);
+//   const sortData = (param:string) => {
+//     Number(param)
+//     if (order === "ASC") {
+// const sortedData = [...products].sort((a, b) =>
+// ((b.Info[param][1]) - (a.Info[param][1]))
+//   );
+//       setProducts(sortedData);
+//       console.log("aa",sortedData);
+//       setorder("DSC");
+//     }else {
+//       const sortedData = [...products].sort((a, b) =>
+// ((a.Info[param][1]) - (b.Info[param][1]))
+//   );
+//       setProducts(sortedData);
+//       console.log("aa",sortedData);
+//       setorder("ASC");
+
+//     }
+//   };
+
+// const renderTableData = () => {
+//   return data.map((item) => {
+//     const { id, name, typescript } = item;
+//     return (
+//       <tr key={id}>
+//         <td>{id}</td>
+//         <td onClick={() => handleClick(id)}>{name}</td>
+//         <td>{typescript ? "Yes" : "No"}</td>
+//       </tr>
+//     );
+//   });
+// };

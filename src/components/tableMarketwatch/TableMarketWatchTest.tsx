@@ -225,7 +225,7 @@ const TableMarketWatchTest = () => {
     
             console.log("Column Index:", dataIndex);
     
-            const value = params.value; // Get the value of the cell
+            const value = params.value; 
     
             return (
               <div data-index={dataIndex} className="custom-cell">

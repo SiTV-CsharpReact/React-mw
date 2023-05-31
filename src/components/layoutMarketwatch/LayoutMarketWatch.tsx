@@ -250,7 +250,7 @@ const LayoutMarketWatch: React.FC = () => {
       )}
       {/* marketwatch */}
       <div
-        className="resize panel-horizontally bg-BGTableMarket text-white relative z-50 overflow-hidden"
+        className="relative z-50 overflow-hidden text-white resize panel-horizontally bg-BGTableMarket"
         style={{ height: heightComponent.heightMarketWatch }}
       >
         {/* priceboard */}
@@ -348,7 +348,7 @@ const LayoutMarketWatch: React.FC = () => {
                 </div>
               </div>
               <div
-                className="relative z-10 overflow-auto  table_market"
+                className="relative z-10 overflow-auto table_market"
                 id="tableHNX"
                 onContextMenu={handleContextMenu}
               >
@@ -521,7 +521,7 @@ const LayoutMarketWatch: React.FC = () => {
           </div>
           {/* form lệnh */}
           <div
-            className="pb-5 overflow-auto text-black  divBot panel-footer__ordrp"
+            className="pb-5 overflow-auto text-black divBot panel-footer__ordrp"
             style={{
               display: hideShowOrderForm ? "block" : "none",
               height: heightComponent.heightOrderForm,

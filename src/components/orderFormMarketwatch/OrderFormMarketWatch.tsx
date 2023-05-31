@@ -1,4 +1,4 @@
-import { memo, useContext, useState } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 import "flowbite";
 import React from "react";
 import Switch from "@mui/material/Switch";
@@ -13,6 +13,7 @@ import StockBalance from "./StockBalance";
 import RecordPending from "./RecordPending";
 import { AppContext } from "../../Context/AppContext";
 import { useSelector } from "react-redux";
+
 type Props ={
   windowHeight:number,
   heightOrderForm:number
@@ -31,6 +32,21 @@ const OrderMarketW = () => {
   //const dispatch = useAppDispatch();
   //const {data} = useAppSelector(state => state.counter);
   const [counter, setCounter] = useState(0);
+  const { dataTable } = useAppSelector(state => state.dataTable);
+  const { dataBuy  } = useAppSelector(state => state.dataBuy);
+  console.log("dataBuy",dataBuy)
+   
+    useEffect(() => {
+  if (dataTable) {
+    setColor(false);
+  } 
+}, [dataTable]);
+  
+useEffect(() => {
+   if (dataBuy) {
+    setColor(true);
+  }
+}, [dataBuy]);
 
   const incrementCounter = () => {
     setCounter(counter + 1);
@@ -144,14 +160,24 @@ const OrderMarketW = () => {
                   id="txtSymbolBase"
                 >
                   <div className="ms-sel-ctn">
-                    <input
+                    {/* <input
                       type="text"
                       className="form-control ui-autocomplete-input size-input p-[2px] w-[100%] mr-[14px] rounded-md pl-[8px]  "
                       placeholder="Mã CK"
                       id="txtSymbol"
                       name="txtSymbol"
                       data-old=""
-                    />
+                    /> */}
+                         <input
+                        type="text"
+                        className="form-control ui-autocomplete-input size-input p-[2px] w-[100%] mr-[14px] rounded-md pl-[8px]"
+                        placeholder="Mã CK"
+                        id="txtSymbol"
+                          name="txtSymbol"
+                     // value={dataTable.ma ? dataTable.ma : dataBuy.ma ? dataBuy.ma : ""}
+                         value={dataTable.ma ? dataTable.ma : dataBuy.ma ? dataBuy.ma : ""}
+                        // value={(dataTable?.ma && dataTable?.price) || (dataBuy?.ma && dataBuy?.price) || ""}
+                      />
                   </div>
                 </div>
               </div>
@@ -159,7 +185,7 @@ const OrderMarketW = () => {
             <div className="inpBalance text-center w-1/4">
               <div id="divMaxOrder ">
                 <span className=" text-xs " id="fillMaxOrder">
-                  Tối đa: <span id="spnMaxOrder"> 0</span>
+                  Tối đa: <span id="spnMaxOrder">  0</span>
                 </span>
               </div>
               <div className="container-spinner fix-margin ">
@@ -233,12 +259,19 @@ const OrderMarketW = () => {
               <div className="container-spinner fix-margin">
                 <div className="ms-ctn form-control " id="txtPriceBase">
                   <div className="ms-sel-ctn">
-                    <input
-                      type="text"
-                      className="form-control ui-autocomplete-input size-input p-[2px] w-[100%] rounded-md p-[1px] tttt pl-[9px] "
-                      placeholder="Giá"
-                      id="txtPrice"
-                    />
+                                <input
+                type="text"
+                className="form-control ui-autocomplete-input size-input p-[2px] w-[100%] rounded-md p-[1px] tttt pl-[9px]"
+                placeholder="Giá"
+                id="txtPrice"
+               //  value={(dataTable?.ma && dataTable?.price) || (dataBuy?.ma && dataBuy?.price) || ""}
+
+                value={dataTable.price ? dataTable.price : dataBuy.price ? dataBuy.price : ""}
+
+
+                          
+              />
+
                   </div>
                 </div>
                 <div id="divAutoPrice"></div>

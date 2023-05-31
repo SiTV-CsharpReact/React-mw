@@ -19,10 +19,11 @@ const PendingOrders = () => {
   }, []);
   const fetchDataValue = async () => {
     try {
-      const response = await axios.get("http://localhost:3005/items");
+      const response = await axios.get("http://localhost:3006/items");
       console.log("response", response);
       const jsonData = response.data;
       const uniqueData = uniqBy(jsonData, "ASTOCKCODE");
+      console.log("uniqueData",uniqueData)
       setDataAfter((prevState: any) => ({
         ...prevState,
         dataValue: uniqueData,
@@ -99,6 +100,7 @@ const PendingOrders = () => {
     // }
     // doc.save('filename.pdf');
   };
+  console.log(data)
   return (
     <div>
       <div className="flex justify-between pl-8 mt-2">
@@ -117,15 +119,15 @@ const PendingOrders = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 mr-5">
           <div className="">
             <label
-              className="block mb-2 text-[12px]] leading-3 font-semibold text-[#333333]"
+              className="block mb-2 text-[11px] leading-3 !font-bold text-black"
               htmlFor=""
             >
               Sàn GD
             </label>
-            <select
+            <select 
               onChange={(e) =>
                 setDataAfter((prevState) => ({
                   ...prevState,
@@ -133,17 +135,17 @@ const PendingOrders = () => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="border leading-1 border-inherit rounded-md h-[37px]"
+              className="border !p-0 leading-1 !text-sm border-inherit rounded-md !pl-2  text-start shadow-sm h-[28px]"
               name=""
               id="sanGD"
             >
-              <option className="text-[10px] pb-2" value="">
+              <option className="text-[15px] pb-2" value="">
                 Tất cả
               </option>
-              <option value="HNX.LISTED" className="text-[10px] pb-2">
+              <option value="HNX.LISTED" className="text-[11px] pb-2">
                 HNX.LISTED
               </option>
-              <option value="HSX" className="text-[10px] pb-2">
+              <option value="HSX" className="text-[11px] pb-2">
                 HSX
               </option>
             </select>
@@ -151,7 +153,7 @@ const PendingOrders = () => {
 
           <div>
             <label
-              className="block mb-2 text-[12px] leading-3 font-semibold text-[#333333]"
+              className="block mb-2 text-[11px] leading-3 font-bold text-black"
               htmlFor=""
             >
               Mã CK
@@ -164,11 +166,11 @@ const PendingOrders = () => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="h-[37px] border rounded-md border-inherit"
+              className=" !p-0 !pr-10 !pl-3 !text-sm border rounded-md border-inherit shadow-sm h-[28px] "
               name=""
               id=""
             >
-              <option className="text-[10px] pb-2" value="">
+              <option className="text-[12px] pb-2" value="">
                 Tất cả
               </option>
               {dataAfter.dataValue.map((items: any, index: number) => (
@@ -185,7 +187,7 @@ const PendingOrders = () => {
 
           <div className="">
             <label
-              className="block mb-2 text-[12px] leading-3 font-semibold text-[#333333]"
+              className="block mb-2 text-[11px] leading-3 font-semibold text-black"
               htmlFor=""
             >
               Sắp xếp theo
@@ -198,17 +200,17 @@ const PendingOrders = () => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="h-[37px] border rounded-md border-inherit"
+              className="!p-0 !pr-10 !pl-3 !text-sm border rounded-md border-inherit shadow-sm h-[28px] "
               name=""
               id=""
             >
-              <option className="text-[10px] pb-2" value="">
+              <option className="text-[12px] pb-2" value="">
                 Tất cả
               </option>
-              <option className="text-[10px] pb-2" value="desc">
+              <option className="text-[12px] pb-2" value="desc">
                 Mã CK
               </option>
-              <option className="text-[10px] pb-2" value="asc">
+              <option className="text-[12px] pb-2" value="asc">
                 Số lượng
               </option>
             </select>
@@ -216,7 +218,7 @@ const PendingOrders = () => {
 
           <div>
             <label
-              className="block mb-2 text-[12px] leading-3 font-semibold text-[#333333]"
+              className="block mb-2 text-[11px] leading-3 !font-bold text-black"
               htmlFor=""
             >
               Tự sắp xếp
@@ -229,14 +231,14 @@ const PendingOrders = () => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="h-[37px] border rounded-md border-inherit"
+              className="!p-0 !pr-10 !pl-3 !text-sm border  rounded-md border-inherit shadow-sm h-[28px]"
               name=""
               id=""
             >
-              <option className="text-[10px] text-gray-500" value="asc">
+              <option className="text-[12px] text-gray-500" value="asc">
                 Tăng dần
               </option>
-              <option className="text-[10px] pb-0 text-gray-500" value="desc">
+              <option className="text-[12px] pb-0 text-gray-500" value="desc">
                 Giảm dần
               </option>
             </select>
@@ -244,7 +246,7 @@ const PendingOrders = () => {
 
           <button
             onClick={hanDelSubmit}
-            className="p-2 cursor-pointer mt-5 pl-5 pr-5 rounded-md text-white text-[13px] font-medium uppercase bg-[#0055ba]"
+            className="px-2 py-1 cursor-pointer mt-5 pl-5 pr-5 rounded-md text-white text-[13px] font-medium uppercase bg-[#0055ba]"
           >
             Cập nhật
           </button>
@@ -272,80 +274,80 @@ const PendingOrders = () => {
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px]">Sửa</span>
+                <span className="text-[12px] !font-bold text-black">Sửa</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px] block ">Hủy</span>
+                <span className="text-[12px] block !font-bold text-black">Hủy</span>
                 <input className="rounded-sm" type="checkbox" />
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px]">Mã CK </span>
+                <span className="text-[12px] !font-bold text-black">Mã CK </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px]"> Lệnh đặt</span>
+                <span className="text-[12px ] !font-bold text-black"> Lệnh đặt</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px]">Loại GD </span>
+                <span className="text-[12px] !font-bold text-black">Loại GD </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px]"> KL chờ </span>
+                <span className="text-[12px] !font-bold text-black"> KL chờ </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px]">KL đặt </span>
+                <span className="text-[12px] !font-bold text-black">KL đặt </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px]">Giá </span>
+                <span className="text-[12px ] !font-bold text-black">Giá </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px]">Tình trạng lệnh</span>
+                <span className="text-[12px] !font-bold text-black">Tình trạng lệnh</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px]">Diễn giải</span>
+                <span className="text-[12px] !font-bold text-black">Diễn giải</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px]">Sàn GD</span>
+                <span className="text-[12px] !font-bold text-black">Sàn GD</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px]">SHL Tại sàn</span>
+                <span className="text-[12px ] !font-bold text-black">SHL Tại sàn</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px]">Thời gian đặt lệnh</span>
+                <span className="text-[12px] !font-bold text-black">Thời gian đặt lệnh</span>
               </th>
             </tr>
           </thead>
@@ -442,6 +444,23 @@ const PendingOrders = () => {
                 </tr>
               );
             })}
+            <tr style={{ border: "1px solid #ccc" }} className="bg-[rgb(251,246,213)]">
+              <td style={{ border: "1px solid #ccc" }}></td>
+              <td className="text-center " style={{ border: "1px solid #ccc" }}>
+              <p className="p-[.5px] px-[4px] mx-auto my-[1px] text-center text-gray-600 bg-white border border-gray-700 rounded-sm cursor-pointer w-fit "> Hủy </p>
+              </td>
+              <td style={{ border: "1px solid #ccc" }}></td>
+              <td style={{ border: "1px solid #ccc" }}></td>
+              <td style={{ border: "1px solid #ccc" }}></td>
+              <td style={{ border: "1px solid #ccc" }}></td>
+              <td style={{ border: "1px solid #ccc" }}></td>
+              <td style={{ border: "1px solid #ccc" }}></td>
+              <td style={{ border: "1px solid #ccc" }}></td>
+              <td style={{ border: "1px solid #ccc" }}></td>
+              <td style={{ border: "1px solid #ccc" }}></td>
+              <td style={{ border: "1px solid #ccc" }}></td>
+              <td style={{ border: "1px solid #ccc" }}></td>
+            </tr>
           </tbody>
         </table>
       </div>
