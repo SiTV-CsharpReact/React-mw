@@ -12,6 +12,8 @@ import { marketHSXSlice } from "../components/indexMarketWatch/marketHSXSlice";
 import settingMarketWatchSlice from "../components/indexMarketWatch/marketShowSlice";
 import marketHNXSlice from "../components/indexMarketWatch/marketHNXSlice";
 import assetReportSlice from "../components/AssetReport/AssetReportSlice";
+import { dataSlice } from '../components/tableMarketwatch/tableThunk';
+import {tableBuy} from '../components/tableMarketwatch/tableBuy';
 import changeThemeModeSlice from "../components/header/DarkModeSlice";
 
 export const store = configureStore({
@@ -38,7 +40,10 @@ export const store = configureStore({
     // cài đặt giao diện trang marketwatch
     settingMarketwatch: settingMarketWatchSlice.reducer,
     //báo cáo tài sản
-    assetReport: assetReportSlice.reducer,
+        assetReport: assetReportSlice.reducer,
+    
+         dataTable: dataSlice.reducer,
+         dataBuy:tableBuy.reducer,
     // change theme 
     settingColorMode: changeThemeModeSlice.reducer,
   },
