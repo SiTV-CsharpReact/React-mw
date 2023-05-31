@@ -46,10 +46,10 @@ const Tbody = (props:any) => {
         }</td>
         <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{
            formatNumber(
-          props.data.filter((e:any)=> e.ASTOCKCODE === props.item.ASTOCKCODE).reduce((a:any,b:any) => a+b.ATOTALVALUE,0)
+          props.data.filter((e:any)=> e.ASTOCKCODE === props.item.ASTOCKCODE).reduce((a:any,b:any) => a+b.AORDERID,0)
         )
         }</td>
-        <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{props.item.AMATCH_TIME}</td>
+        <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2"> {props.data.filter((e:any)=> e.ASTOCKCODE === props.item.ASTOCKCODE).length<=1 ? props.item.AMATCH_TIME : '' } </td>
       </tr>
     
       {
@@ -62,7 +62,7 @@ const Tbody = (props:any) => {
             <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{formatNumber(x.AQUANTITY)}</td>
             <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{formatNumber(x.APRICE)}</td>
             <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{formatNumber(x.ATOTALVALUE)}</td>
-            <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{formatNumber(x.ATOTALVALUE)}</td>
+            <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{formatNumber(x.AORDERID)}</td>
             <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{x.AMATCH_TIME}</td>
           </tr>
         )) : props.data
@@ -74,7 +74,7 @@ const Tbody = (props:any) => {
             <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{formatNumber(x.AQUANTITY)}</td>
             <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{formatNumber(x.APRICE)}</td>
             <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{formatNumber(x.ATOTALVALUE)}</td>
-            <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{formatNumber(x.ATOTALVALUE)}</td>
+            <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{formatNumber(x.AORDERID)}</td>
             <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">{x.AMATCH_TIME}</td>
           </tr>
         ))
@@ -126,11 +126,12 @@ const TbodySell = (props:any) => {
         <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">
           {
           formatNumber(
-          props.data.filter((e:any)=> e.ASTOCKCODE === props.item.ASTOCKCODE).reduce((a:any,b:any) => a+b.ATOTALVALUE,0)
+          props.data.filter((e:any)=> e.ASTOCKCODE === props.item.ASTOCKCODE).reduce((a:any,b:any) => a+b.AORDERID,0)
         )
         }
         </td>
-        <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{ props.item.AMATCH_TIME}</td>
+        <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{props.data.filter((e:any)=> e.ASTOCKCODE === props.item.ASTOCKCODE).length<=1 ? props.item.AMATCH_TIME : '' }</td>
+        
       </tr>
       {
         props.data
@@ -142,9 +143,9 @@ const TbodySell = (props:any) => {
             <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{formatNumber(x.AQUANTITY)}</td>
             <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{formatNumber(x.APRICE)}</td>
             <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{formatNumber(x.ATOTALVALUE)}</td>
-            <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{formatNumber(x.ATOTALVALUE)}</td>
+            <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{formatNumber(x.AORDERID)}</td>
             <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{x.AMATCH_TIME}</td>
-          </tr>
+          </tr> 
         )) : props.data
             .filter((e: any) => e.ASTOCKCODE === props.item.ASTOCKCODE)
             .slice(1)
@@ -154,7 +155,7 @@ const TbodySell = (props:any) => {
             <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{formatNumber(x.AQUANTITY)}</td>
             <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{formatNumber(x.APRICE)}</td>
             <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{formatNumber(x.ATOTALVALUE)}</td>
-            <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{formatNumber(x.ATOTALVALUE)}</td>
+            <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{formatNumber(x.AORDERID)}</td>
             <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{x.AMATCH_TIME}</td>
           </tr>
         ))
