@@ -48,7 +48,7 @@ const handleItemChildClick = async (
       {data && data.Data.map((item: any, index: number) => (
           <React.Fragment key={index}>
             <li className="relative">
-              <Link to="" className=" "  onClick={() => handleItemChildClick(item.name,'danh-muc','danh-muc')}> 
+              <Link to="" className=" "  onClick={() => handleItemChildClick(item.name,item.List,'danh-muc')}> 
           
                 {item.Name}
               </Link>  

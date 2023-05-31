@@ -27,7 +27,7 @@ interface Props {
           document.removeEventListener("mousedown", handleClickOutside);
         };
       }, [popupRef]);
-      console.log(selectedValue)
+      // console.log(selectedValue)
   return (
     <div
         className={`popup z-[1000]`}
@@ -92,4 +92,4 @@ interface Props {
   )
 }
 
-export default PopupTableMarketwatch
+export default React.memo(PopupTableMarketwatch)

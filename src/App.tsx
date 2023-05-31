@@ -10,12 +10,14 @@ import TableDanhMuc from "./components/tableMarketwatch/TableDanhMuc";
 import DynamicDashboard from "./components/dynamicDashboard/DynamicDashboard";
 import MyLayout from "./components/dynamicDashboard/MyLayout";
 import AssetReport from "./components/AssetReport/AssetReport";
+import TableMarketWatchTest from "./components/tableMarketwatch/TableMarketWatchTest";
 function App() {
   return (
     <div>
       <AppProvider>
         <Routes>
           <Route path="/" element={<LayoutMarketWatch />} />
+          <Route path="/test" element={<TableMarketWatchTest />} />
           <Route
             path="/dynamic-dashboard-test"
             element={<DynamicDashboard />}
