@@ -1,4 +1,7 @@
 .navigation {
+  .dark-text {
+    color: #fff !important;
+  }
   li {
     // position: relative;
     &::before {
@@ -33,10 +36,18 @@
 }
 
 .report__tabcondition__left {
+  .dark-text {
+    color: #fff !important;
+  }
+  &.dark-bg{
+    border: 1px solid #515151 !important;
+  }
   width: 100%;
   padding-right: 5px;
   line-height: 25px;
   background: #ececec;
+  border: 1px solid #ececec;
+  border-radius: 2px;
 
   > div {
     margin-right: 10px;
@@ -58,6 +69,9 @@
   padding: 10px 5px;
   background: #ececec;
   font-size: 12px;
+  .dark-text {
+    color: #fff !important;
+  }
   .report__tabcondition__detail_CK {
     display: flex;
     align-items: center;
@@ -89,7 +103,10 @@
 }
 
 .table_detail_BCTS {
-  height: 497px;
+  .dark-text {
+    color: #b2b6bf !important;
+  }
+  height: 503px;
   overflow: auto;
   position: relative;
   width: 100%;
@@ -115,23 +132,38 @@
   }
   &.dark-bg {
     > table {
+      td {
+        border: 1px solid #515151;
+      }
       thead {
         background: #303030 !important;
+        tr {
+          background: #141d27;
+        }
+        // td {
+        //   color: #b2b6bf !important;
+        //   > div {
+        //     color: #b2b6bf !important;
+        //     span {
+        //       color: #b2b6bf !important;
+        //     }
+        //   }
+        // }
       }
       tbody {
-        background: #303030 !important;
+        background: #0d141e !important;
         tr:hover {
           background: none;
         }
         tr:nth-child(even) {
-          background: #1e1e1e;
+          background: #05070b;
         }
       }
       tfoot {
         tr {
           td {
-            background-color: #303030 !important;
-            color: #fff;
+            background-color: #141d27 !important;
+            color: #b2b6bf;
           }
         }
       }
@@ -155,7 +187,7 @@
     td {
       padding: 1px 5px;
       font-size: 10pt;
-      border: 1px solid rgb(222, 222, 222);
+      border: 1px solid #e0e0e0;
       color: #000;
       text-align: right;
     }
@@ -217,7 +249,7 @@
 }
 
 .dark-bg {
-  background: #303030 !important;
+  background: #0a1929 !important;
   .navigation {
     li {
       &::before {
@@ -236,9 +268,7 @@
     }
   }
 }
-.dark-text {
-  color: #fff !important;
-}
+
 .light-text {
   color: #000 !important;
 }

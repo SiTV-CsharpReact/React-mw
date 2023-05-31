@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import Slider from "react-slick";
 import "./slide.scss";
 import "slick-carousel/slick/slick.css";
@@ -16,7 +11,11 @@ import {
   fStatusMarketUPCOM,
 } from "../../utils/util";
 import { AppContext } from "../../Context/AppContext";
-import { RootState, useAppDispatch, useAppSelector } from "../../store/configureStore";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "../../store/configureStore";
 import { fetchHSXMarketAsync } from "./marketHSXSlice";
 import { fetchHNXMarketAsync } from "./marketHNXSlice";
 
@@ -40,10 +39,13 @@ const SlidesMarketWatch = () => {
   const {
     marketHNX: { valueHNX },
   } = useAppSelector((state) => state.marketHNX);
-  const { INDEX } = useAppSelector((state:RootState) => state.settingMarketwatch);
+  const { INDEX } = useAppSelector(
+    (state: RootState) => state.settingMarketwatch
+  );
   useEffect(() => {
     dispatch(fetchHSXMarketAsync());
   }, [dispatch]);
+
 
   useEffect(() => {
     // async function fetchData() {
