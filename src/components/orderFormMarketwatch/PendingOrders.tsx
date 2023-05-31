@@ -135,7 +135,7 @@ const PendingOrders = () => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="border !p-0 leading-1 !text-sm border-inherit rounded-md !pl-2  text-start shadow-sm h-[28px] !border-gray-400"
+              className="border !p-0 leading-1 !text-sm border-inherit rounded-md !pl-2  text-start shadow-sm h-[28px]"
               name=""
               id="sanGD"
             >
@@ -166,7 +166,7 @@ const PendingOrders = () => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className=" !p-0 !pr-10 !pl-3 !text-sm border rounded-md border-inherit shadow-sm h-[28px] !border-gray-400"
+              className=" !p-0 !pr-10 !pl-3 !text-sm border rounded-md border-inherit shadow-sm h-[28px] "
               name=""
               id=""
             >
@@ -200,7 +200,7 @@ const PendingOrders = () => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="!p-0 !pr-10 !pl-3 !text-sm border rounded-md border-inherit shadow-sm h-[28px] !border-gray-400"
+              className="!p-0 !pr-10 !pl-3 !text-sm border rounded-md border-inherit shadow-sm h-[28px] "
               name=""
               id=""
             >
@@ -231,7 +231,7 @@ const PendingOrders = () => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="!p-0 !pr-10 !pl-3 !text-sm border !border-gray-400 rounded-md border-inherit shadow-sm h-[28px]"
+              className="!p-0 !pr-10 !pl-3 !text-sm border  rounded-md border-inherit shadow-sm h-[28px]"
               name=""
               id=""
             >

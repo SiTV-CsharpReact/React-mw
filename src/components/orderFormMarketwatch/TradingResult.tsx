@@ -10,7 +10,13 @@ import { formatNumber } from "../../utils/util";
 const Tbody = (props:any) => {
   const [drop, setDrop] = React.useState(false);
   console.log(props.data.filter((e : any) => e.ASTOCKCODE === props.item.ASTOCKCODE).slice(1));
-  
+    useEffect(() => {
+    if (props.drop) {
+      setDrop(true);
+    } else {
+      setDrop(false);
+    }
+  }, [props.drop]);
   return (
     <>
       <tr onClick={() => setDrop(!drop)}>
@@ -79,7 +85,13 @@ const Tbody = (props:any) => {
 const TbodySell = (props:any) => {
   const [dropSell, setDropSell] = React.useState(false);
   console.log(props.data.filter((e : any) => e.ASTOCKCODE === props.item.ASTOCKCODE).slice(1));
-
+    useEffect(() => {
+    if (props.dropSell) {
+      setDropSell(true);
+    } else {
+      setDropSell(false);
+    }
+  }, [props.dropSell]);
   return (
     <>
       <tr onClick={() => setDropSell(!dropSell)}>
@@ -147,24 +159,13 @@ const TbodySell = (props:any) => {
           </tr>
         ))
       }
-    
-      {/* {props.data
-        .filter(( e : any) => e.ASTOCKCODE === props.item.ASTOCKCODE)
-        .map((x : any,index:any) => (
-          <tr key={index} style={{ display: `${dropSell ? "" : "none"}` }}>
-            <td className="  font-bold text-[#9C0A0A] border-gray-300 text-start pl-1  pr-2"></td>
-            <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{x.AQUANTITY}</td>
-            <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{x.APRICE}</td>
-            <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{x.ATOTALVALUE}</td>
-            <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{x.ATOTALVALUE}</td>
-            <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">{x.AMATCH_TIME}</td>
-          </tr>
-        ))} */}
     </>
   );
 };
 const TradingResult = () => {
   const [dataArr, setDataArr] = useState([])
+  const [drop, setDrop] = useState(false);
+  const [dropSell, setDropSell] = useState(false);
   const [dataTotal, setDataTotal] = useState([])
   const[dataTotalSell, setDataTotalSell] = useState([])
   const [dataArrSell,setDataArrSell] = useState([])
@@ -278,14 +279,16 @@ const TradingResult = () => {
     }
     return 0;
   };
-  
-
+  const handelSetDrop = () => {
+    setDrop(!drop);
+    setDropSell(!dropSell);
+  };
 
   return (
     <div className="min-h-[500px]">
       <div className="flex items-center justify-between">
         <div>
-          <p   className="text-[15px] text-[#2371AF] cursor-pointer underline	pl-5">
+          <p  onClick={handelSetDrop}  className="text-[15px] text-[#2371AF] cursor-pointer underline	pl-5">
             Xem đầy đủ
           </p>
         </div>
@@ -332,7 +335,8 @@ const TradingResult = () => {
             </thead>
             <tbody >
               {data.map((item: any) => (
-            <Tbody data={dataArr} key={item.id} item={item} />
+  
+            <Tbody drop={drop}  data={dataArr} key={item.id} item={item} />
               ))}
          <tr className="bg-[#F3F3F3]">
                 <td className="pl-1 font-bold border border-gray-300 ">Tổng</td>
@@ -370,7 +374,7 @@ const TradingResult = () => {
             </thead>
             <tbody>
               {dataSell.map((item: any) => (
-            <TbodySell data={dataArrSell} key={item.id} item={item} />
+            <TbodySell dropSell={dropSell} data={dataArrSell} key={item.id} item={item} />
               ))}
                <tr className="bg-[#F3F3F3]">
                 <td className="pl-1 font-bold border border-gray-300 ">Tổng</td>
