@@ -7,6 +7,7 @@ import axios from "axios";
 import _ from "lodash";
 import { uniqWith, isEqual } from "lodash";
 import { formatNumber } from "../../utils/util";
+import PdfandExcel from "./PdfandExcel";
 const Tbody = (props:any) => {
   const [drop, setDrop] = React.useState(false);
   console.log(props.data.filter((e : any) => e.ASTOCKCODE === props.item.ASTOCKCODE).slice(1));
@@ -294,25 +295,10 @@ const TradingResult = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-3 mt-2">
-          <button className="p-1 cursor-pointer  pl-5 pr-5 rounded-md text-white text-[13px] font-medium uppercase bg-[#0055ba]">
-            Cập nhật
-          </button>
-          <form className="flex gap-2 mr-8">
-            <img
-              className="cursor-pointer "
-              onClick={handleExportToExcel}
-              src={excell}
-              alt="excel"
-            />
-            <img
-              className="cursor-pointer "
-              onClick={handleExportToPDF}
-              src={pfd}
-              alt="pfd"
-            />
-          </form>
-        </div>
+        <div>
+          <PdfandExcel/>
+            </div>
+
       </div>
 
       <div className="flex gap-3 mx-auto mt-2 ml-5 mr-5 ">
