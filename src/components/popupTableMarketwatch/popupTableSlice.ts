@@ -17,7 +17,7 @@ const popupTableSlice = createSlice({
         showDetailStock: (state, action: PayloadAction<string>) => {
             state.visible = !state.visible;
             state.code = action.payload;
-            console.log( action.payload)
+            // console.log( action.payload)
           },
    
     },

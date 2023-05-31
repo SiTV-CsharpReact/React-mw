@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
+// import "ag-grid-community/styles/ag-grid.css";
+// import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./table.scss";
 import { setColorMarkettest } from "../../utils/util";
 import { ColSpanParams } from "ag-grid-enterprise";
 import { ColDef, ColGroupDef } from "ag-grid-community";
-
+import { LicenseManager } from 'ag-grid-enterprise';
+LicenseManager.setLicenseKey('SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb');
 type RowData = {
   MCK: string;
   TC: string;
@@ -817,7 +818,7 @@ const TableMarketWatchTest = () => {
   ];
 
   const fetchData = () => {
-    fetch("http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=HNX30")
+    fetch("http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=HNXIndex")
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data); // Xem dữ liệu trả về từ API trong console

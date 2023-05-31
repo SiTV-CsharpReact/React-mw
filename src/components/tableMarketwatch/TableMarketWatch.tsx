@@ -372,7 +372,10 @@ const TableMarketWatch = () => {
       setorder("DSC");
     }
   };
-  if(!productsLoaded) return <>Loading Bảng giá</>
+/* The above code is a comment in TypeScript React code. It is not doing anything in the code itself.
+It is just a comment that explains that if the products are not loaded, the component will display
+"Loading Bảng giá". */
+  // if(!productsLoaded) return <>Loading Bảng giá</>
   return (
     <div>
       <DragDropContext onDragEnd={handleDragEnd}>

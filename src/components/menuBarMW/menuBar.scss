@@ -220,6 +220,7 @@ input[type=checkbox].priceboard2 {
     margin: 3px 0;
     width: 100%;
     font-size: 9pt; 
+    color: #000;
 }
 & .ms-sel-ctn{
     margin-left: -7px;
@@ -284,3 +285,82 @@ text-transform: uppercase;
     color: #0c7229;
     float: left;
 }
+
+
+
+//oke
+.react-autosuggest__suggestions-container {
+    position: relative;
+    top: 26px;
+    width: 400px;
+    max-height: 400px;
+    overflow: auto;
+    border-radius: 5px;
+    background: #fff;
+    color: #000;
+}
+  
+  .react-autosuggest__input {
+    width: 180px;
+    height: 25px;
+    padding: 2px 5px;
+    font-family: Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    text-transform: uppercase;
+    // border: 1px solid #aaa;
+    // border-radius: 4px;
+    color: #000;
+    &::placeholder{
+        text-transform: none; /* Giữ nguyên chữ viết thường */
+    }
+  }
+  
+  .react-autosuggest__input--focused {
+    outline: none;
+  }
+  
+  .react-autosuggest__input--open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .react-autosuggest__suggestions-container {
+    display: none;
+  }
+  
+  .react-autosuggest__suggestions-container--open {
+    display: block;
+    position: absolute;
+    top: 27px;
+    min-width: 450px;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    font-family: Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    z-index: 2000;
+    color: #000;
+  }
+  
+  .react-autosuggest__suggestions-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .react-autosuggest__suggestion {
+    cursor: pointer;
+    padding: 2px 5px;
+    font-size: 9pt;
+    &:hover{
+        background-color: #63a9e066;
+    }
+  }
+  
+  .react-autosuggest__suggestion--highlighted {
+    background-color: #ddd;
+  }
+  

@@ -36,13 +36,14 @@ import TableDanhMuc from "../tableMarketwatch/TableDanhMuc";
 import LineChart from "../../images/line-chart-32.png";
 import Close from "../../images/x28.png";
 import TableMarketWatchTest from "../tableMarketwatch/TableMarketWatchTest";
+import DropDown from "../menuBarMW/DropDown";
 
 function RenderTable() {
   const floor = useAppSelector((state) => state.table.floor);
 
   switch (floor) {
     case "MAIN":
-      return <TableMarketWatchTest />;
+      return <TableMarketWatch />;
       break;
     case "GDTT":
       return <TableGDTTMarketWatch />;
@@ -286,6 +287,7 @@ const LayoutMarketWatch: React.FC = () => {
                   <ListMenuBar />
                   <DanhMuc />
                   <CompleteStock />
+                  <DropDown/>
                   {heightComponent.heightExpand === 27 ? (
                     <div>
                       <Tooltip title="Hiện thị index">
