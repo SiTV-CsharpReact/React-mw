@@ -7,8 +7,12 @@ import "./table.scss";
 import { setColorMarkettest } from "../../utils/util";
 import { ColSpanParams } from "ag-grid-enterprise";
 import { ColDef, ColGroupDef } from "ag-grid-community";
-import { LicenseManager } from 'ag-grid-enterprise';
-LicenseManager.setLicenseKey('SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb');
+import { LicenseManager } from "ag-grid-enterprise";
+import PopupStock from "./PopupStock";
+
+LicenseManager.setLicenseKey(
+  "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
+);
 type RowData = {
   MCK: string;
   TC: string;
@@ -44,8 +48,6 @@ type RowData = {
   CGKGN: string;
   RowID: string;
 };
-
-
 
 const showKLPT = (value: string) => {
   // console.log(value);
@@ -130,11 +132,8 @@ const TableMarketWatchTest = () => {
   const containerStyle = { width: "100%", height: "100%" };
   const gridStyle = { height: "100%", width: "100%" };
   const gridApi = useRef<any>(null); // Declare gridApi reference
-
   const [rowData, setRowData] = useState<RowData[]>([]);
-  const gridApiRef = useRef<any>(null);
 
-  
   const columnDefs = [
     {
       field: "MCK",
@@ -153,7 +152,19 @@ const TableMarketWatchTest = () => {
           textAlign: "left",
         };
       },
-   
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.MCK; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+
+        //console.log("Column Index:", dataIndex);
+
+        const value = params.value; // Get the value of the cell
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
 
     {
@@ -174,7 +185,19 @@ const TableMarketWatchTest = () => {
         fontWeight: "",
         color: setColorMarkettest("", params),
       }),
-      
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.TC; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+
+        console.log("Column Index:", dataIndex);
+
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
     {
       field: "Tran",
@@ -190,6 +213,19 @@ const TableMarketWatchTest = () => {
         color: setColorMarkettest("", params),
         textAlign: "right",
       }),
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.Tran; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+
+        console.log("Column Index:", dataIndex);
+
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
     {
       field: "San",
@@ -205,6 +241,19 @@ const TableMarketWatchTest = () => {
         color: setColorMarkettest("", params),
         textAlign: "right",
       }),
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.San; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+
+        console.log("Column Index:", dataIndex);
+
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
 
     {
@@ -228,18 +277,18 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-          
-            
             const dataIndex = RowDataIndex.G3; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
 
-    
             //console.log("Column Index:", dataIndex);
 
-    
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
@@ -250,6 +299,7 @@ const TableMarketWatchTest = () => {
           headerName: "KL3",
           suppressMenu: true,
           width: 62,
+
           minWidth: 50,
           heigth: 34,
           maxWidth: 100,
@@ -261,24 +311,24 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            
-
-            
             const dataIndex = RowDataIndex.KL3; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
-    
+
             console.log("Column Index:", dataIndex);
 
-    
-            const value = params.value; 
-    
+            const value = params.value;
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
           },
         },
-        
+
         {
           field: "G2",
           headerName: "G2",
@@ -294,18 +344,18 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            
-
-            
             const dataIndex = RowDataIndex.G2; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
+
             //console.log("Column Index:", dataIndex);
 
-    
-            const value = params.value; // Get the value of the cell
-    
+            const value = params.value;
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
@@ -327,18 +377,18 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            
-
-            
             const dataIndex = RowDataIndex.KL2; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
+
             //console.log("Column Index:", dataIndex);
 
-    
-            const value = params.value; // Get the value of the cell
-    
+            const value = params.value;
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
@@ -359,18 +409,18 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            
-
-            
             const dataIndex = RowDataIndex.G1; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
+
             //console.log("Column Index:", dataIndex);
 
-    
-            const value = params.value; // Get the value of the cell
-    
+            const value = params.value;
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
@@ -391,18 +441,18 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            
-
-            
             const dataIndex = RowDataIndex.KL1; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
+
             //console.log("Column Index:", dataIndex);
 
-    
-            const value = params.value; // Get the value of the cell
-    
+            const value = params.value;
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
@@ -430,18 +480,18 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            
-
-            
             const dataIndex = RowDataIndex.GiaKhop; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
+
             //console.log("Column Index:", dataIndex);
 
-    
-            const value = params.value; // Get the value of the cell
-    
+            const value = params.value;
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
@@ -462,18 +512,18 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            
-
-            
             const dataIndex = RowDataIndex.KLKhop; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
+
             //console.log("Column Index:", dataIndex);
 
-    
-            const value = params.value; // Get the value of the cell
-    
+            const value = params.value;
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
@@ -505,19 +555,19 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("Chenhlech", params),
             textAlign: "right",
           }),
-           cellRenderer: (params: any) => {
-            
-
-            
+          cellRenderer: (params: any) => {
             const dataIndex = RowDataIndex.Chenhlech; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
+
             //console.log("Column Index:", dataIndex);
 
-    
-            const value = params.value; // Get the value of the cell
-    
+            const value = params.value;
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
@@ -545,19 +595,19 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("", params),
             textAlign: "right",
           }),
-           cellRenderer: (params: any) => {
-            
-
-            
+          cellRenderer: (params: any) => {
             const dataIndex = RowDataIndex.G1B; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
+
             //console.log("Column Index:", dataIndex);
 
-    
-            const value = params.value; // Get the value of the cell
-    
+            const value = params.value;
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
@@ -578,18 +628,18 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            
-
-            
             const dataIndex = RowDataIndex.KL1B; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
+
             //console.log("Column Index:", dataIndex);
 
-    
-            const value = params.value; // Get the value of the cell
-    
+            const value = params.value;
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
@@ -610,18 +660,18 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            
-
-            
             const dataIndex = RowDataIndex.G2B; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
+
             //console.log("Column Index:", dataIndex);
 
-    
-            const value = params.value; // Get the value of the cell
-    
+            const value = params.value;
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
@@ -642,18 +692,18 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            
-
-            
             const dataIndex = RowDataIndex.KL2B; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
+
             //console.log("Column Index:", dataIndex);
 
-    
-            const value = params.value; // Get the value of the cell
-    
+            const value = params.value;
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
@@ -674,18 +724,18 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            
-
-            
             const dataIndex = RowDataIndex.G3B; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
+
             //console.log("Column Index:", dataIndex);
 
-    
-            const value = params.value; // Get the value of the cell
-    
+            const value = params.value;
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
@@ -706,18 +756,18 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            
-
-            
             const dataIndex = RowDataIndex.KL3B; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
+
             //console.log("Column Index:", dataIndex);
 
-    
-            const value = params.value; // Get the value of the cell
-    
+            const value = params.value;
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {value}
               </div>
             );
@@ -735,7 +785,19 @@ const TableMarketWatchTest = () => {
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
-      
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.TKL; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
+
+        //console.log("Column Index:", dataIndex);
+
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
     {
       field: "MOC",
@@ -746,6 +808,19 @@ const TableMarketWatchTest = () => {
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.MOC; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
+
+        //console.log("Column Index:", dataIndex);
+
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
     {
       field: "CaoNhat",
@@ -761,16 +836,14 @@ const TableMarketWatchTest = () => {
         textAlign: "right",
       }),
       cellRenderer: (params: any) => {
-        
-            const dataIndex = RowDataIndex.CaoNhat; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
+        const dataIndex = RowDataIndex.CaoNhat; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
 
         //console.log("Column Index:", dataIndex);
 
-
-        const value = params.value; // Get the value of the cell
-
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} className="custom-cell">
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
             {value}
           </div>
         );
@@ -791,16 +864,14 @@ const TableMarketWatchTest = () => {
         textAlign: "right",
       }),
       cellRenderer: (params: any) => {
-       
-            const dataIndex = RowDataIndex.ThapNhat; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
+        const dataIndex = RowDataIndex.ThapNhat; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
 
         //console.log("Column Index:", dataIndex);
 
-
-        const value = params.value; // Get the value of the cell
-
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} className="custom-cell">
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
             {value}
           </div>
         );
@@ -817,16 +888,14 @@ const TableMarketWatchTest = () => {
       headerClass: "custom-header tc-header",
       suppressMenu: true,
       cellRenderer: (params: any) => {
-     
-            const dataIndex = RowDataIndex.NNMua; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
+        const dataIndex = RowDataIndex.NNMua; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
 
         console.log("Column Index:", dataIndex);
 
-
-        const value = params.value; // Get the value of the cell
-
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} className="custom-cell">
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
             {value}
           </div>
         );
@@ -843,17 +912,14 @@ const TableMarketWatchTest = () => {
       headerClass: "custom-header tc-header",
       suppressMenu: true,
       cellRenderer: (params: any) => {
-        
-        
-            const dataIndex = RowDataIndex.NNBan; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
+        const dataIndex = RowDataIndex.NNBan; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
 
         //console.log("Column Index:", dataIndex);
 
-
-        const value = params.value; // Get the value of the cell
-
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} className="custom-cell">
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
             {value}
           </div>
         );
@@ -869,17 +935,14 @@ const TableMarketWatchTest = () => {
       headerClass: "custom-header  tc-header",
       suppressMenu: true,
       cellRenderer: (params: any) => {
-        
-        
-            const dataIndex = RowDataIndex.RoomCL; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
+        const dataIndex = RowDataIndex.RoomCL; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
 
         //console.log("Column Index:", dataIndex);
 
-
-        const value = params.value; // Get the value of the cell
-
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} className="custom-cell">
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
             {value}
           </div>
         );
@@ -984,7 +1047,7 @@ const TableMarketWatchTest = () => {
             });
 
             setRowData(mergedArray);
-           console.log("testne", mergedArray);
+            console.log("testne", mergedArray);
           }
         } else {
           console.error("Invalid data format");
@@ -1005,7 +1068,18 @@ const TableMarketWatchTest = () => {
     filter: true,
     autoSize: true,
   };
+  const gridOptions = {
+    // Các cấu hình khác của ag-Grid
 
+    suppressCellSelection: true,
+    suppressRowClickSelection: true,
+    suppressContextMenu: true,
+    suppressCellContextMenu: true,
+    suppressRowContextMenu: true,
+  };
+  document.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+  });
   return (
     <div style={containerStyle}>
       <div style={gridStyle} className="ag-theme-alpine-dark">
@@ -1018,6 +1092,7 @@ const TableMarketWatchTest = () => {
           rowDragMultiRow={true}
           rowSelection={"multiple"}
           animateRows={true}
+          gridOptions={gridOptions}
           onGridReady={(params: any) => {
             params.api.sizeColumnsToFit(undefined, {
               suppressSizeToFit: false,

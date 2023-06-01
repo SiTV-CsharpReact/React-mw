@@ -43,7 +43,7 @@ function RenderTable() {
 
   switch (floor) {
     case "MAIN":
-      return <TableMarketWatch />;
+      return <TableMarketWatchTest />;
       break;
     case "GDTT":
       return <TableGDTTMarketWatch />;
@@ -214,10 +214,34 @@ const LayoutMarketWatch: React.FC = () => {
     setHeightComponent({ ...heightComponent, orderCount: 3 });
   };
 
+  // const handleContextMenu = (e: any) => {
+  //   e.preventDefault();
+  //   var vCell = e.target;
+  //   if (vCell.classList.contains(`custom-cell`)) {
+  //     vCell = vCell.parentElement;
+  //   }
+  //   const rowID = vCell.querySelector(`div.custom-cell`).dataset.comp;
+  //   const trValue = document.querySelector(`div[data-index="0"][data-comp="${rowID}"]`)?.innerHTML
+  //   console.log("click",trValue);
+  //   if (trValue) {
+  //     setSelectedValue({
+  //       x: e.clientX,
+  //       y: e.clientY - 40,
+  //       value: trValue,
+  //       status: true,
+  //     });
+  //   }
+  // };
   const handleContextMenu = (e: any) => {
     e.preventDefault();
-    const trValue = e.target.parentElement.getAttribute("data-tr-value");
-    console.log(trValue);
+    const vCell = e.target.classList.contains('custom-cell')
+      ? e.target.parentElement
+      : e.target;
+    const rowID = vCell.querySelector('div.custom-cell').dataset.comp;
+    const trValue = document.querySelector(
+      `div[data-index="0"][data-comp="${rowID}"]`
+    )?.innerHTML;
+    console.log('click', trValue);
     if (trValue) {
       setSelectedValue({
         x: e.clientX,
@@ -227,6 +251,7 @@ const LayoutMarketWatch: React.FC = () => {
       });
     }
   };
+  
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     draggingRef.current = false;
   };
