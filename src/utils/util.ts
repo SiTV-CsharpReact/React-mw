@@ -1,4 +1,4 @@
-import { g_ARRAY_COLOR_CLASS, g_ID_TD_STAT_CONTROLCODE, g_arrHAMarketStatus, g_arrUPMarketStatus } from "../configs/app.config";
+import { g_ARRAY_COLOR_CLASS, g_ID_TD_STAT_CONTROLCODE, g_arrHAMarketStatus, g_arrHOMarketStatus, g_arrUPMarketStatus } from "../configs/app.config";
 
 export function formatNumber(number:any) {
     if (!number || number === 0 || number === "0")
@@ -215,21 +215,22 @@ export const fStatusMarketHNX = (value?:string) =>{
   }
   // status HSX
   export const fStatusMarketHSX = (value?:string) =>{
+    // console.log(value)
     let valueStatus = ""
-    g_arrHAMarketStatus.map((g_HSXStatus)=>{
+    g_arrHOMarketStatus.map((g_HSXStatus)=>{
       //console.log(g_HNXStatus[0])
          
           if(g_HSXStatus[0] === value){
             valueStatus= g_HSXStatus[1]
-          }
-          else{
-            valueStatus =""
+            // console.log(valueStatus)
           }
     })
+   
     return valueStatus
   }
   //status sàn UPCOM
   export const fStatusMarketUPCOM = (value?:string) =>{
+    console.log(value)
     let valueStatus = ""
     g_arrUPMarketStatus.map((g_UPCStatus)=>{
       //console.log(g_HNXStatus[0])
@@ -239,7 +240,9 @@ export const fStatusMarketHNX = (value?:string) =>{
           }
           
     })
-    return valueStatus
+    console.log(valueStatus)
+    return valueStatus;
+
   }
   export const HNXStatus =() =>{
     

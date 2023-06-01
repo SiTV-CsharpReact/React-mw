@@ -163,6 +163,7 @@ const SlidesMarketWatch = () => {
           ref={(slider) => setSliderRef(slider)}
         >
           {INDEX.VNXALL && (
+            console.log(fStatusMarketHSX(valueHSX?.STAT_ControlCode)),
             <SlideMarketItem
               name="VNXALL:"
               id={VNXALL}
