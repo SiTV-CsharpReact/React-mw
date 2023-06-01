@@ -42,7 +42,8 @@ function RenderTable() {
   const floor = useAppSelector((state) => state.table.floor);
   switch (floor) {
     case "MAIN":
-      return <TableMarketWatch />;
+      return <TableMarketWatchTest />;
+      break;
     case "GDTT":
       return <TableGDTTMarketWatch />;
     default:
@@ -193,13 +194,44 @@ const LayoutMarketWatch: React.FC = () => {
   const componentVisible = useAppSelector((state) => state.chart.visible);
   const hideShowOrderForm = heightComponent.orderForm;
   // show hide menu tab
-  const showTab =(orderCount:number)=>{
-    dispatch(setOrderCount(orderCount))
-  }
+  // const showPendingOrder = () => {
+  //   setHeightComponent({ ...heightComponent, orderCount: 1 });
+  // };
+  // const showTradingResult = () => {
+  //   setHeightComponent({ ...heightComponent, orderCount: 2 });
+  // };
+  // const showIntradayOrder = () => {
+  //   setHeightComponent({ ...heightComponent, orderCount: 3 });
+  // };
+
+  // const handleContextMenu = (e: any) => {
+  //   e.preventDefault();
+  //   var vCell = e.target;
+  //   if (vCell.classList.contains(`custom-cell`)) {
+  //     vCell = vCell.parentElement;
+  //   }
+  //   const rowID = vCell.querySelector(`div.custom-cell`).dataset.comp;
+  //   const trValue = document.querySelector(`div[data-index="0"][data-comp="${rowID}"]`)?.innerHTML
+  //   console.log("click",trValue);
+  //   if (trValue) {
+  //     setSelectedValue({
+  //       x: e.clientX,
+  //       y: e.clientY - 40,
+  //       value: trValue,
+  //       status: true,
+  //     });
+  //   }
+  // };
   const handleContextMenu = (e: any) => {
     e.preventDefault();
-    const trValue = e.target.parentElement.getAttribute("data-tr-value");
-
+    const vCell = e.target.classList.contains('custom-cell')
+      ? e.target.parentElement
+      : e.target;
+    const rowID = vCell.querySelector('div.custom-cell').dataset.comp;
+    const trValue = document.querySelector(
+      `div[data-index="0"][data-comp="${rowID}"]`
+    )?.innerHTML;
+    console.log('click', trValue);
     if (trValue) {
       setSelectedValue({
         x: e.clientX,
@@ -209,6 +241,10 @@ const LayoutMarketWatch: React.FC = () => {
       });
     }
   };
+  const showTab =(orderCount:number)=>{
+    dispatch(setOrderCount(orderCount))
+  }
+  
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     draggingRef.current = false;
   };
@@ -459,8 +495,7 @@ const LayoutMarketWatch: React.FC = () => {
                 <div
                   className="cursor-pointer h-[35px] w-[45px] ml-4 hover:bg-white "
                   style={{
-                    display:
-                    orderCount === 0 ? "none" : "block",
+                    display:orderCount === 0 ? "none" : "block",
                   }}
                   onClick={()=> showTab(0)}
                 >
