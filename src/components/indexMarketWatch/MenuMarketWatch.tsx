@@ -77,7 +77,7 @@ const MenuMarketWatch = () => {
     //   console.log(data);
     // });
     const socketHSX = new WebSocket(
-      "ws://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=bDYLcs%2B7ou7yVBAIId%2BQc%2FRWcWGpCc5WZoMWYn%2BqCRcgH7mAlK5EYGdCRmUwTy5zHRnKY9S3uIzDqCvirVHN9TW5ATENCpjtP4%2BDH2AgCHa1D78%2BhMHj59nTqayG1xsd&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=7"
+      "wss://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=O%2FbheVsS%2BYfGUcfLBB4XYSqfznbmh0o993gEq3K4syz1h%2BcKo4YcRU0uAsKEbfG3iqFP7ZPKpl1vVl81CGp7onT4VwqRqeTa%2BIP6PzFjQz2NBsJ0D4HxINSh38mqh8%2B1&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=4"
     );
     socketHSX.onopen = () => {
       console.log("WebSocket connection established.");
@@ -97,7 +97,7 @@ const MenuMarketWatch = () => {
   }, []);
   useEffect(() => {
     const socketHNX = new WebSocket(
-      "ws://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=bdy3U9a%2F0tpzX9q9z729layK8mNDzAHxk8FGdgJ%2F8tl%2BXZ7%2B5KlJ2TSoivItO6rBwNIQvfCBVqiqQ3i9Te9pWFjWZnFmi0l5JNURAZTmLMm9OVwjF1Y%2FrBUaZGPghyOv&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=6"
+      "wss://eztrade.fpts.com.vn/hnx/signalr/reconnect?transport=webSockets&messageId=d-51F38660-B%2CC7FF%7CD0z%2C0%7CD00%2C3&clientProtocol=1.5&connectionToken=%2FuJ5gesdkaytxqAqXq4Usxt2SfoEO9VlXne4p2DLJSw9bTsV2oJWcRMiURcc8R54YNwQGlybLLCD1uMHQsMoOCrUJGXwJIKteyq81DRzNURIPsMZjPcG8d6jBdPTdE%2FJ&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=4"
     );
     socketHNX.onopen = () => {
       console.log("WebSocket connection established.");
@@ -421,14 +421,33 @@ const MenuMarketWatch = () => {
 
     return Color;
   };
+  ;
+  
   const updateDataTable = (
     arrRowID: string,
     arrInfo: number,
     arrValue: number
   ) => {
     // getID các giá trị cần lấy
+    // const arrayPrice = [5, 7, 9, 11, 14, 16, 18];
     const tdIndex = document.getElementById(`${arrRowID}_${arrInfo}`);
+    // const valueTC = document.querySelector(`div[data-index="5"][aria-rowindex="BCC"]`)?.innerHTML;
+    const valueTCS = document.querySelector(`div[data-index="${arrInfo}"][aria-rowindex="${arrRowID}"]`) as HTMLElement;
+    if(valueTCS){
+      valueTCS.innerHTML = arrValue.toString();
+      // gán màu bg
+      const test =  valueTCS.parentElement;
+      if(test){
+        test.style.backgroundColor = "#888888";
+        setTimeout(function () {
+          test.style.backgroundColor = "";
+        }, 500);
+      }
+      // sau 0.5s xóa màu bg
+      
+    }
     const valueTC = document.getElementById(`${arrRowID}_TC`)?.innerHTML;
+
     const valueTran = document.getElementById(`${arrRowID}_Tran`)?.innerHTML;
     const valueSan = document.getElementById(`${arrRowID}_San`)?.innerHTML;
     const valuePT = document.getElementById(`${arrRowID}_PT`);
@@ -526,8 +545,11 @@ const MenuMarketWatch = () => {
   };
 
   const updateQuote = (objRealtime: any) => {
+    // objRealtime = {"RowID":"BCC","Info":[[5,83.5],[7,83.6],[8,100],[11,84.1],[12,101900],[15,77500],[16,84.2],[17,12900],[18,84.3],[19,2000],[20,0],[21,839400],[22,84.2]]};
+    //  updateTableHNX(objRealtime)
+   
     var dataHNXRealTime = JSON.parse(objRealtime);
-    let arrDatas = [];
+    var arrDatas = [];
     if (typeof dataHNXRealTime !== "undefined") {
       const dataRT = Object.keys(dataHNXRealTime);
 
@@ -548,7 +570,7 @@ const MenuMarketWatch = () => {
     } else {
       // console.log(dataHNXRealTime)
     }
-  };
+   };
 
   const updateDataRealTime = (objRealtime: any) => {
     var dataHNXRealTime = JSON.parse(objRealtime);

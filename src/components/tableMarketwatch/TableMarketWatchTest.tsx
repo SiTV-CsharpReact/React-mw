@@ -44,6 +44,9 @@ type RowData = {
   CGKGN: string;
   RowID: string;
 };
+
+
+
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
@@ -89,12 +92,49 @@ const showKLPT = (value: string) => {
 };
 
 const TableMarketWatchTest = () => {
+  const RowDataIndex = {
+    MCK: 0,
+    TC: 1,
+    Tran: 2,
+    San: 3,
+    KL4: 4,
+    G3: 5,
+    KL3: 19,
+    G2: 7,
+    KL2: 8,
+    G1: 9,
+    KL1: 10,
+    GiaKhop: 11,
+    KLKhop: 12,
+    Chenhlech: 13,
+    G1B: 14,
+    KL1B: 15,
+    G2B: 16,
+    KL2B: 17,
+    G3B: 18,
+    KL3B: 19,
+    KL4B: 20,
+    TKL: 21,
+    MOC: 22,
+    CaoNhat: 23,
+    ThapNhat: 24,
+    GTB: 25,
+    NNMua: 26,
+    NNBan: 27,
+    RoomCL: 28,
+    GDK: 29,
+    Quyen: 30,
+    CGKGN: 31,
+    RowID: String,
+  };
   const containerStyle = { width: "100%", height: "100%" };
   const gridStyle = { height: "100%", width: "100%" };
   const gridApi = useRef<any>(null); // Declare gridApi reference
 
   const [rowData, setRowData] = useState<RowData[]>([]);
+  const gridApiRef = useRef<any>(null);
 
+  
   const columnDefs = [
     {
       field: "MCK",
@@ -188,16 +228,18 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+          
+            
+            const dataIndex = RowDataIndex.G3; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+
     
-            console.log("Column Index:", dataIndex);
+            //console.log("Column Index:", dataIndex);
+
     
             const value = params.value; // Get the value of the cell
-    
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
+              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
                 {value}
               </div>
             );
@@ -219,11 +261,13 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            
+
+            
+            const dataIndex = RowDataIndex.KL3; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
     
             console.log("Column Index:", dataIndex);
+
     
             const value = params.value; 
     
@@ -250,11 +294,13 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            
+
+            
+            const dataIndex = RowDataIndex.G2; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
     
-            console.log("Column Index:", dataIndex);
+            //console.log("Column Index:", dataIndex);
+
     
             const value = params.value; // Get the value of the cell
     
@@ -281,11 +327,13 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            
+
+            
+            const dataIndex = RowDataIndex.KL2; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
     
-            console.log("Column Index:", dataIndex);
+            //console.log("Column Index:", dataIndex);
+
     
             const value = params.value; // Get the value of the cell
     
@@ -311,11 +359,13 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            
+
+            
+            const dataIndex = RowDataIndex.G1; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
     
-            console.log("Column Index:", dataIndex);
+            //console.log("Column Index:", dataIndex);
+
     
             const value = params.value; // Get the value of the cell
     
@@ -341,11 +391,13 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            
+
+            
+            const dataIndex = RowDataIndex.KL1; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
     
-            console.log("Column Index:", dataIndex);
+            //console.log("Column Index:", dataIndex);
+
     
             const value = params.value; // Get the value of the cell
     
@@ -378,11 +430,13 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            
+
+            
+            const dataIndex = RowDataIndex.GiaKhop; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
     
-            console.log("Column Index:", dataIndex);
+            //console.log("Column Index:", dataIndex);
+
     
             const value = params.value; // Get the value of the cell
     
@@ -408,11 +462,13 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            
+
+            
+            const dataIndex = RowDataIndex.KLKhop; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
     
-            console.log("Column Index:", dataIndex);
+            //console.log("Column Index:", dataIndex);
+
     
             const value = params.value; // Get the value of the cell
     
@@ -450,11 +506,13 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
            cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            
+
+            
+            const dataIndex = RowDataIndex.Chenhlech; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
     
-            console.log("Column Index:", dataIndex);
+            //console.log("Column Index:", dataIndex);
+
     
             const value = params.value; // Get the value of the cell
     
@@ -488,11 +546,13 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
            cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            
+
+            
+            const dataIndex = RowDataIndex.G1B; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
     
-            console.log("Column Index:", dataIndex);
+            //console.log("Column Index:", dataIndex);
+
     
             const value = params.value; // Get the value of the cell
     
@@ -505,7 +565,7 @@ const TableMarketWatchTest = () => {
         },
         {
           field: "KL1B",
-          headerName: "KL1B",
+          headerName: "KL1",
           suppressMenu: true,
           width: 50,
           minWidth: 50,
@@ -518,11 +578,13 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            
+
+            
+            const dataIndex = RowDataIndex.KL1B; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
     
-            console.log("Column Index:", dataIndex);
+            //console.log("Column Index:", dataIndex);
+
     
             const value = params.value; // Get the value of the cell
     
@@ -535,7 +597,7 @@ const TableMarketWatchTest = () => {
         },
         {
           field: "G2B",
-          headerName: "G2B",
+          headerName: "G2",
           suppressMenu: true,
           width: 50,
           minWidth: 50,
@@ -548,11 +610,13 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            
+
+            
+            const dataIndex = RowDataIndex.G2B; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
     
-            console.log("Column Index:", dataIndex);
+            //console.log("Column Index:", dataIndex);
+
     
             const value = params.value; // Get the value of the cell
     
@@ -565,7 +629,7 @@ const TableMarketWatchTest = () => {
         },
         {
           field: "KL2B",
-          headerName: "KL2B",
+          headerName: "KL2",
           suppressMenu: true,
           width: 50,
           minWidth: 50,
@@ -578,11 +642,13 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            
+
+            
+            const dataIndex = RowDataIndex.KL2B; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
     
-            console.log("Column Index:", dataIndex);
+            //console.log("Column Index:", dataIndex);
+
     
             const value = params.value; // Get the value of the cell
     
@@ -595,7 +661,7 @@ const TableMarketWatchTest = () => {
         },
         {
           field: "G3B",
-          headerName: "G3B",
+          headerName: "G3",
           cellClass: "score-cell",
           suppressMenu: true,
           width: 50,
@@ -608,11 +674,13 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            
+
+            
+            const dataIndex = RowDataIndex.G3B; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
     
-            console.log("Column Index:", dataIndex);
+            //console.log("Column Index:", dataIndex);
+
     
             const value = params.value; // Get the value of the cell
     
@@ -625,7 +693,7 @@ const TableMarketWatchTest = () => {
         },
         {
           field: "KL3B",
-          headerName: "KL3B",
+          headerName: "KL3",
           suppressMenu: true,
           width: 60,
           minWidth: 50,
@@ -638,11 +706,13 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            
+
+            
+            const dataIndex = RowDataIndex.KL3B; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
     
-            console.log("Column Index:", dataIndex);
+            //console.log("Column Index:", dataIndex);
+
     
             const value = params.value; // Get the value of the cell
     
@@ -658,7 +728,7 @@ const TableMarketWatchTest = () => {
 
     {
       field: "TKL",
-      headerName: "TKL",
+      headerName: "Tổng KL",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
       width: 60,
@@ -669,7 +739,7 @@ const TableMarketWatchTest = () => {
     },
     {
       field: "MOC",
-      headerName: "MOC",
+      headerName: "Mở Cửa",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
       width: 52,
@@ -679,7 +749,7 @@ const TableMarketWatchTest = () => {
     },
     {
       field: "CaoNhat",
-      headerName: "CaoNhat",
+      headerName: "Cao Nhất",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
       width: 52,
@@ -691,11 +761,11 @@ const TableMarketWatchTest = () => {
         textAlign: "right",
       }),
       cellRenderer: (params: any) => {
-        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+        
+            const dataIndex = RowDataIndex.CaoNhat; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
 
-        console.log("Column Index:", dataIndex);
+        //console.log("Column Index:", dataIndex);
+
 
         const value = params.value; // Get the value of the cell
 
@@ -709,7 +779,7 @@ const TableMarketWatchTest = () => {
     },
     {
       field: "ThapNhat",
-      headerName: "ThapNhat",
+      headerName: "Thấp nhất",
       spanHeaderHeight: true,
       width: 52,
       maxWidth: 100,
@@ -721,11 +791,11 @@ const TableMarketWatchTest = () => {
         textAlign: "right",
       }),
       cellRenderer: (params: any) => {
-        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+       
+            const dataIndex = RowDataIndex.ThapNhat; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
 
-        console.log("Column Index:", dataIndex);
+        //console.log("Column Index:", dataIndex);
+
 
         const value = params.value; // Get the value of the cell
 
@@ -739,7 +809,7 @@ const TableMarketWatchTest = () => {
     },
     {
       field: "NNMua",
-      headerName: "NNMua",
+      headerName: "NN mua",
       spanHeaderHeight: true,
       width: 62,
       maxWidth: 100,
@@ -747,11 +817,11 @@ const TableMarketWatchTest = () => {
       headerClass: "custom-header tc-header",
       suppressMenu: true,
       cellRenderer: (params: any) => {
-        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+     
+            const dataIndex = RowDataIndex.NNMua; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
 
         console.log("Column Index:", dataIndex);
+
 
         const value = params.value; // Get the value of the cell
 
@@ -764,20 +834,21 @@ const TableMarketWatchTest = () => {
     },
     {
       field: "NNBan",
-      headerName: "NNBan",
+      headerName: "NN bán",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
-      width: 73,
+      width: 62,
       maxWidth: 100,
 
       headerClass: "custom-header tc-header",
       suppressMenu: true,
       cellRenderer: (params: any) => {
-        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+        
+        
+            const dataIndex = RowDataIndex.NNBan; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
 
-        console.log("Column Index:", dataIndex);
+        //console.log("Column Index:", dataIndex);
+
 
         const value = params.value; // Get the value of the cell
 
@@ -790,19 +861,20 @@ const TableMarketWatchTest = () => {
     },
     {
       field: "RoomCL",
-      headerName: "RoomCL ",
+      headerName: "Room Còn lại ",
       spanHeaderHeight: true,
-      width: 62,
+      width: 73,
       maxWidth: 100,
       cellClass: "score-cell tc-cell",
       headerClass: "custom-header  tc-header",
       suppressMenu: true,
       cellRenderer: (params: any) => {
-        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
+        
+        
+            const dataIndex = RowDataIndex.RoomCL; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
 
-        console.log("Column Index:", dataIndex);
+        //console.log("Column Index:", dataIndex);
+
 
         const value = params.value; // Get the value of the cell
 
@@ -818,7 +890,7 @@ const TableMarketWatchTest = () => {
   ];
 
   const fetchData = () => {
-    fetch("http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=HNXIndex")
+    fetch("http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=VN30")
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data); // Xem dữ liệu trả về từ API trong console
@@ -912,7 +984,7 @@ const TableMarketWatchTest = () => {
             });
 
             setRowData(mergedArray);
-            console.log("testne", mergedArray);
+           console.log("testne", mergedArray);
           }
         } else {
           console.error("Invalid data format");

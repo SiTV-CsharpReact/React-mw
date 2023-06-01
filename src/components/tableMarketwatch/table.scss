@@ -424,7 +424,6 @@ tr.border-bottom:last-child {
     font-size: 8pt;
     background: #1d1d1d;
     color: white !important;
-    border: 1px solid #858585 !important;
     padding: 8px;
     line-height: 1.42857143;
     vertical-align: top;
@@ -446,13 +445,26 @@ tr.border-bottom:last-child {
     padding: 8px;
     line-height: 1.42857143;
     vertical-align: top;
+  
     text-align: center;
+}
+.ag-header-group-text{
+    margin: 0 auto !important;
+    
+}
+.ag-header-cell-label {
+    text-overflow: clip !important;
+    overflow: visible !important;
+    white-space: normal !important;
 }
 .score-cell {
     font-family: Arial;
     font-size: .688rem;
     text-align: right;
-    border: 1px solid #858585 !important;
+  //  border-right: 1px solid #505050 !important;
+    border-left: 1px solid #505050 !important;
+    // border-bottom: 1px solid #505050 !important;
+
     width: 100%;
     max-width: 100%;
     white-space: nowrap;
@@ -489,16 +501,18 @@ tr.border-bottom:last-child {
   
   .tc-header {
     background-color: #505050; /* Màu nền cho header của trường TC */
-    border: 1px solid #858585 !important;
 
   }
   
   .tc-cell {
     background-color: #505050; /* Màu nền cho cell của trường TC */
-
+   // border-right: 1px solid #858585  !important;
+    border-left: 1px solid #858585  !important;
+   // border-bottom: 1px solid #858585  !important;
   }
   .custom-header {
-    border: 1px solid #858585 !important;
+    border-left: 1px solid #858585 !important;
+
   }
   .ag-theme-alpine-dark{
     --ag-grid-size: 4px !important;
