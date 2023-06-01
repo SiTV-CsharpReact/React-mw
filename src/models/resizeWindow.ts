@@ -1,7 +1,5 @@
 export interface resizeState {
     orderForm: boolean;
-    pendingOrder: boolean;
-    orderCount: number;
     heightWindow: number;
     heightMarketWatch: number;
     heightPriceBoard: number;

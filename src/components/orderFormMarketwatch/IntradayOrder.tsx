@@ -5,7 +5,7 @@ import axios from 'axios'
 const IntradayOrder = () => {
   const [data, setData] = useState([])
    const dataInterday = async() => {
-      const resultData = await axios.get("http://localhost:8080/Data")
+      const resultData = await axios.get("http://localhost:5000/Data")
       const data = resultData.data.Table
       setData(data)
       console.log("resultData",data)
@@ -68,4 +68,4 @@ const IntradayOrder = () => {
   )
 }
 
-export default IntradayOrder
+export default React.memo(IntradayOrder)

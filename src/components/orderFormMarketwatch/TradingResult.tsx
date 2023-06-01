@@ -384,4 +384,4 @@ const TradingResult = () => {
   );
 };
 
-export default TradingResult;
+export default React.memo(TradingResult);

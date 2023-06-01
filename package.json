@@ -76,7 +76,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "json-server db.json --watch --port 5000"
+    "server": "json-server dataIntraday.json --watch --port 5000",
+    "DataResult": "json-server dataResult.json --watch --port 3080",
+    "PendingOrder": "json-server db.json --watch --port 30"
   },
   "eslintConfig": {
     "extends": [

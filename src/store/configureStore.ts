@@ -15,10 +15,13 @@ import assetReportSlice from "../components/AssetReport/AssetReportSlice";
 import { dataSlice } from '../components/tableMarketwatch/tableThunk';
 import {tableBuy} from '../components/tableMarketwatch/tableBuy';
 import changeThemeModeSlice from "../components/header/DarkModeSlice";
+import LayoutMarketWatchSLice from "../components/layoutMarketwatch/LayoutMarketWatchSLice";
 
 export const store = configureStore({
   reducer: {
     //trang chủ marketwatch
+    // layout
+    layout: LayoutMarketWatchSLice.reducer,
     // Get danh sách công ty để map với stockcode 
     company: companySlice.reducer,
     // Get Data Table market watch
@@ -40,10 +43,10 @@ export const store = configureStore({
     // cài đặt giao diện trang marketwatch
     settingMarketwatch: settingMarketWatchSlice.reducer,
     //báo cáo tài sản
-        assetReport: assetReportSlice.reducer,
-    
-         dataTable: dataSlice.reducer,
-         dataBuy:tableBuy.reducer,
+     assetReport: assetReportSlice.reducer,
+    //
+     dataTable: dataSlice.reducer,
+     dataBuy:tableBuy.reducer,
     // change theme 
     settingColorMode: changeThemeModeSlice.reducer,
   },

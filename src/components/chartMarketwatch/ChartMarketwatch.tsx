@@ -71,7 +71,7 @@ const ChartMarketwatch = () => {
   return (
     <section className="chart-layout">
       <div className="float-left chart-layout-left ">
-        <div className="chart-layout-header float-left h-[30px]">
+        <div className="chart-layout-header float-left w-full h-[30px]">
           <div className="float-left w-[900px] index-chart">
             <div>
               <SlidesIndexChartMarketwatch/>

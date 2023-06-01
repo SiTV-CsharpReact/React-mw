@@ -46,25 +46,6 @@ const SlidesMarketWatch = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    // async function fetchData() {
-    //   try {
-    //     setLoading(true);
-    //     const responseHSX = await axios.get(
-    //       `http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`
-    //     );
-    //     const responseHNX = await axios.get(
-    //       `http://marketstream.fpts.com.vn/hnx/data.ashx?s=index`
-    //     );
-
-    //     setValueHSX(responseHSX.data);
-    //     setValueHNX(responseHNX.data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // }
-    // fetchData();
     dispatch(fetchHNXMarketAsync());
   }, [dispatch]);
   useEffect(() => {

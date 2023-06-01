@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import AutoSuggest from "react-autosuggest";
 import './menuBar.scss'
+import { useAppDispatch } from '../../store/configureStore';
 const companies: string[] = [
     "AAV - HNX.NY - Công ty Cổ phần AAV Group",
     "ADC - HNX.NY - Công ty Cổ phần Mỹ thuật và Truyền Thông",
@@ -13,6 +14,7 @@ const companies: string[] = [
     "ARM - HNX.NY - Công ty Cổ phần Xuất nhập khẩu Hàng không",
 ]
 const DropDown = () => {
+  const dispatch = useAppDispatch
     const [value, setValue] = useState("");
     const [suggestions, setSuggestions] = useState<string[]>([]);
   
@@ -48,7 +50,7 @@ const DropDown = () => {
       return <span>{suggestionElements}</span>;
     }
     function handleSuggestionSelected(_: React.FormEvent<any>, { suggestionValue }: { suggestionValue: string }) {
-     console.log("oke")
+     
     }
     
     return (
