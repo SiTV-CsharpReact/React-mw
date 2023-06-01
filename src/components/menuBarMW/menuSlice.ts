@@ -18,10 +18,14 @@ function getAxiosParams(tableParams: TableParams) {
 }
 interface ComponentState {
     statusChart: boolean;
+    keyMenu : number,
+    nameMenu :any,
   }
   
   const initialState: ComponentState = {
     statusChart: true,
+    keyMenu : 0,
+    nameMenu : "",
   };
 const menuSlice = createSlice({
     name: 'component',
@@ -30,8 +34,12 @@ const menuSlice = createSlice({
       setStatusChart(state, action) {
         state.statusChart = action.payload;
       },
+      setActiveMenu  (state, action) {
+        state.nameMenu = action.payload?.nameMenu;
+        state.keyMenu = action.payload?.keyMenu;
+      }
     },
 });
 
-export const { setStatusChart } = menuSlice.actions;
+export const { setStatusChart , setActiveMenu } = menuSlice.actions;
 export default menuSlice;
