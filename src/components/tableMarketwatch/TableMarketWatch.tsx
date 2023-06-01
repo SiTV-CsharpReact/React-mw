@@ -32,6 +32,7 @@ import { dispatchDataTable } from "./tableThunk";
 import { useDispatch } from "react-redux";
 import { dispatchDataTableBuy } from "./tableBuy";
 import { getDataTable } from "./tableSlice";
+import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
@@ -79,37 +80,47 @@ const showKLPT = (value: string) => {
 const TableMarketWatch = () => {
   //
 
-  const dataTables = useAppSelector((state) => state.table.ListDataTable);
-
+  const dataTables = useAppSelector((state :RootState) => state.table.ListDataTable);
   const { INDEX } = useAppSelector((state: RootState) => state.settingMarketwatch);
   const [sortedColumn, setSortedColumn] = useState("");
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
   const dispatch = useAppDispatch();
 
   const [products, setProducts] = useState<any[]>([]);
-  const params = useParams<{ id: string }>();
-  const paramstock = stocks.find((paramstock) => paramstock.id === params.id);
   const codeList = useSelector((state: RootState) => state.codeList.codeList);
-  // console.log(codeList, "okko")
   const handleDoubleClick = (e: any, val: any) => {
     if (e.detail === 2) {
       dispatch(statusChartMarketwatch(val));
     }
   };
     // call api 
-  const handelGetData = useCallback(()=>{
-    let data = {
-      Floor : "HSX",
-      Query : "s=quote&l=All"
-    }
-    dispatch(getDataTable(data))
+  const handelGetData = useCallback(   (Data : any)=>{
+     dispatch(getDataTable(Data))
   }, [dispatch])
   useEffect(() => {
-    handelGetData()
-  }, [dispatch, handelGetData]);
+    async function HanDelCate (){
+      let result = await  dispatch(fetchCategoryAsync());
+      if( result?.payload?.Data[0]?.List ){
+            let data = {
+          Floor : "danh-muc",
+          Query : result?.payload?.Data[0]?.List 
+        }
+        await  handelGetData(data)
+      }else{
+        let data = {
+          Floor : "HSX",
+          Query : "s=quote&l=All"
+        } 
+        await  handelGetData(data)
+      } 
+      
+    }
+    HanDelCate();
+  }, [dispatch]);
   const fetchDataCompany = async () => {
     await dispatch(fetchCompanyAsync());
   };
+
   // Call `fetchData` to fetch data when component mounts
   useEffect(() => {
     if (!localStorage.getItem("CacheSi")) {
@@ -294,7 +305,7 @@ const TableMarketWatch = () => {
       return 0;
     })
   );
-  console.log(products);
+
   const [lastCheckboxChecked, setLastCheckboxChecked] = useState("");
 
   const handleTypeOptionClick = (type: string) => {

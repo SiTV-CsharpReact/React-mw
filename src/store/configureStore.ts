@@ -46,6 +46,8 @@ export const store = configureStore({
          dataBuy:tableBuy.reducer,
     // change theme 
     settingColorMode: changeThemeModeSlice.reducer,
+    // menu bar 
+    menuBar :  menuSlice.reducer
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

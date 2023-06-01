@@ -40,7 +40,6 @@ import DropDown from "../menuBarMW/DropDown";
 
 function RenderTable() {
   const floor = useAppSelector((state) => state.table.floor);
-
   switch (floor) {
     case "MAIN":
       return <TableMarketWatch />;
@@ -80,6 +79,8 @@ const initialState: resizeState = {
 // const LayoutMarketWatch  = () => {
 const LayoutMarketWatch: React.FC = () => {
   const dispatch = useAppDispatch();
+  // gọi danh mục 
+ // row danh mục 
   // tao useState resize khi height window thay đổi
   const [heightComponent, setHeightComponent] = useState(initialState);
   const [selectedValue, setSelectedValue] = useState({
@@ -88,7 +89,7 @@ const LayoutMarketWatch: React.FC = () => {
     value: "",
     status: false,
   });
-
+  
   // tinh height khi đổi từ màn hình này sang màn hình khác
   useEffect(() => {
     function handleResize() {
@@ -217,7 +218,7 @@ const LayoutMarketWatch: React.FC = () => {
   const handleContextMenu = (e: any) => {
     e.preventDefault();
     const trValue = e.target.parentElement.getAttribute("data-tr-value");
-    console.log(trValue);
+
     if (trValue) {
       setSelectedValue({
         x: e.clientX,
@@ -286,7 +287,7 @@ const LayoutMarketWatch: React.FC = () => {
                 <div className="flex ">
                   <ListMenuBar />
                   <DanhMuc />
-                  <CompleteStock />
+                  {/* <CompleteStock /> */}
                   <DropDown/>
                   {heightComponent.heightExpand === 27 ? (
                     <div>

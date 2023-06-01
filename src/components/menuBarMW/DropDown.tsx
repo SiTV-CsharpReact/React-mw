@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import AutoSuggest from "react-autosuggest";
 import './menuBar.scss'
+import { useAppSelector,RootState ,useAppDispatch} from '../../store/configureStore';
+import { getDataTable } from '../tableMarketwatch/tableSlice';
 const companies: string[] = [
     "AAV - HNX.NY - Công ty Cổ phần AAV Group",
     "ADC - HNX.NY - Công ty Cổ phần Mỹ thuật và Truyền Thông",
@@ -15,7 +17,10 @@ const companies: string[] = [
 const DropDown = () => {
     const [value, setValue] = useState("");
     const [suggestions, setSuggestions] = useState<string[]>([]);
-  
+    const { isLoading, data, status, row , name} = useAppSelector(
+      (state: RootState) => state.categories
+    );
+   const dispatch = useAppDispatch()
     function getSuggestions(value: string): string[] {
       return companies.filter(company =>
         company.toLowerCase().startsWith(value.trim().toLowerCase())
@@ -47,9 +52,19 @@ const DropDown = () => {
     
       return <span>{suggestionElements}</span>;
     }
-    function handleSuggestionSelected(_: React.FormEvent<any>, { suggestionValue }: { suggestionValue: string }) {
-     console.log("oke")
-    }
+  async  function handleSuggestionSelected (_: React.FormEvent<any>,   { suggestionValue }: { suggestionValue: string }) {
+      setValue("")   
+      const valueMa = suggestionValue.split("-")  
+      let a  = data?.Data.find((e)=> e.Row == row)
+      let bqueryy:any= a?.List.concat(`,${valueMa[0]}`).trim()
+      let dataSerr = {
+        Floor :  "danh-muc",
+        Query :  bqueryy,
+      }
+      console.log("dataSerr",dataSerr)
+    let resilt =  await dispatch(getDataTable(dataSerr))
+
+    } 
     
     return (
         
