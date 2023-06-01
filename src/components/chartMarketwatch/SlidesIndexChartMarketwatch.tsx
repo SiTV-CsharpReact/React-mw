@@ -5,7 +5,6 @@ const SlidesIndexChartMarketwatch = () => {
   return (
     <>
       <SlidesMarketWatch />
-      {/* <div>SlidesIndexChartMarketwatch</div> */}
     </>
   );
 };

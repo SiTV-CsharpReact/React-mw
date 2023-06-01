@@ -77,7 +77,7 @@ const MenuMarketWatch = () => {
     //   console.log(data);
     // });
     const socketHSX = new WebSocket(
-      "wss://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=O%2FbheVsS%2BYfGUcfLBB4XYSqfznbmh0o993gEq3K4syz1h%2BcKo4YcRU0uAsKEbfG3iqFP7ZPKpl1vVl81CGp7onT4VwqRqeTa%2BIP6PzFjQz2NBsJ0D4HxINSh38mqh8%2B1&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=4"
+      "ws://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=QFYjcEdKNTcQpQ5eM8gSgArpZ8iaLyhAzsOc2yA9Uzj6jAmKV%2Bnt5UMBQQ6IxAg2ytcl36jeKKHXgSbB5HdJNA%2FVdbAn7QKNCQ76UmWHPecxhUD87ZajL354hy24brH6&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=8"
     );
     socketHSX.onopen = () => {
       console.log("WebSocket connection established.");
@@ -97,7 +97,7 @@ const MenuMarketWatch = () => {
   }, []);
   useEffect(() => {
     const socketHNX = new WebSocket(
-      "wss://eztrade.fpts.com.vn/hnx/signalr/reconnect?transport=webSockets&messageId=d-51F38660-B%2CC7FF%7CD0z%2C0%7CD00%2C3&clientProtocol=1.5&connectionToken=%2FuJ5gesdkaytxqAqXq4Usxt2SfoEO9VlXne4p2DLJSw9bTsV2oJWcRMiURcc8R54YNwQGlybLLCD1uMHQsMoOCrUJGXwJIKteyq81DRzNURIPsMZjPcG8d6jBdPTdE%2FJ&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=4"
+      "ws://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=IWiKAtteQ0gfuDm%2Fq6LLyUusRcee06oM2k6xVYIgeWHtlePjfeRZFnHIYmMvGt2F1PSB1EsKRw5wHFLA7D0C6bNau3lUFHlFFPF59RMTl3KHk3PRDqc9rmfE904Oy5NV&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=1"
     );
     socketHNX.onopen = () => {
       console.log("WebSocket connection established.");
@@ -147,115 +147,6 @@ const MenuMarketWatch = () => {
     setIsHoveringLeft(false);
     e.currentTarget.classList.remove("scrollingHotSpotLeftVisible");
   };
-  //console.log(valueHSX, valueHNX)
-  // const updateQuote = (objRoot:any)=>{
-  //   var quoteFlag = 1;
-  // 	try {
-  // 		var arrData = JSON.parse(objRoot.Change);
-
-  // 		// var ChartLayout = document.getElementById("chart-layout");
-  // 		// if (ChartLayout) {
-  // 		// 	if (ChartLayout.style.display != "none") {
-  // 		// 		// chi update vào sidebar khi mở sidebar
-  // 		// 		if (g_SideBar) {
-  // 		// 			g_SideBar.updateQuote(arrData);
-  // 		// 		}
-  // 		// 	}
-  // 		// }
-  // 		for (var i = 0; i < arrData.length; i++) {
-  // 			//console.info(arrData[i]);
-  // 			const vTR = document.getElementById('tr' + arrData[i].RowID) as HTMLTableRowElement;
-  //       // if(vTR && vTR.cells !== void 0){
-  //       //      //console.log(vTR.cells)
-  //       // }
-  // 			if (vTR && vTR.cells !== void 0) {
-  // 				for (var j = 0; j < arrData[i].Info.length; j++) {
-  // 					var vCellIndex = arrData[i].Info[j][0];
-  // 					var vCell = vTR.cells[vCellIndex]; // error js
-  // 					var vValue = arrData[i].Info[j][1];
-  // 					// namld debug
-  // 					//if (vValue === parseFloat(vCell.innerHTML.ReplaceAll(',', ''))) {
-  // 					//    console.log("Loi du lieu khong doi ma van update ", vTR, vCell, vValue);
-  // 					//}
-  // 					vValue = this?.GetPrice(vCellIndex, vValue);
-  // 					var vClass = this?.getClass4UpdateSnapshot(vCellIndex, vValue, vTR.cells[1].innerHTML, vTR.cells[2].innerHTML, vTR.cells[3].innerHTML, vTR);
-
-  // 					// update tooltip
-  // 					//this.updateHistAttr(vCell, objRoot.Time);
-
-  // 					// update gia tri trong TD
-  // 					this.UpdateCell(vCellIndex, vCell, vValue, vClass, quoteFlag);
-  // 					var vCode = vTR.firstChild.getElementsByTagName('span')[0].innerHTML;
-  // 					//if (vCode == 'KTB') {
-  // 					//    console.log('KTBupdate')
-  // 					//}
-  // 					// IF BQ1>0 AND BP1=0 AND Code="P" >> update BP1="ATO"
-  // 					for (var x = 0; x < ARRAY_COL_ATO_ATC_QTTY.length; x++) {
-  // 						if (vCellIndex == ARRAY_COL_ATO_ATC_QTTY[x]) // neu la o QTTY cua cap gia/KL co ATO/ATC
-  // 						{
-  // 							if (parseFloat(vValue) > 0) // neu KL >0 ....
-  // 							{
-  // 								if (vTR.cells[ARRAY_COL_ATO_ATC_QTTY[x] - 1].innerHTML == '') // ... gia cung cap voi no dang la blank >>> phai hien thi la ATO/ATC tuy theo ControlCode
-  // 								{
-  // 									// update color trong TD QUANTITY theo mau ATO/ATC
-  // 									// brd => br_
-  // 									vClass = vClass.substring(0, 2) + g_ARRAY_COLOR_CLASS[6];
-  // 									this.UpdateCell(vCellIndex, vCell, vValue, vClass, quoteFlag);
-  // 									//var vCode = vTR.firstChild.getElementsByTagName('span')[0].innerHTML;
-  // 									//if (vCode == 'KTB') {
-  // 									//    console.log('KTBupdate')
-  // 									//}
-  // 									vValue = this.GetPriceATOATC(vCode, objRoot);
-  // 									vCell = vTR.cells[ARRAY_COL_ATO_ATC_QTTY[x] - 1];
-  // 									vCellIndex = ARRAY_COL_ATO_ATC_QTTY[x] - 1;
-  // 									vClass = g_ARRAY_COL_CLASS[vCellIndex].replace('*', g_ARRAY_COLOR_CLASS[6]);
-
-  // 									vValue = this.CheckUndefined(vValue);
-
-  // 									// update tooltip
-  // 									//this.updateHistAttr(vCell, objRoot.Time);
-
-  // 									// update gia tri trong TD
-  // 									this.UpdateCell(vCellIndex, vCell, vValue, vClass, quoteFlag);
-  // 								}
-  // 							}
-
-  // 							if (parseFloat(vValue) == 0) // neu KL = 0 ....
-  // 							{
-  // 								// gia cung cap voi no la dang hien ATO/ATC
-  // 								if (vTR.cells[ARRAY_COL_ATO_ATC_QTTY[x] - 1].innerHTML == ARRAY_COL_ATO_ATC_DATA[0][2]
-  // 									|| vTR.cells[ARRAY_COL_ATO_ATC_QTTY[x] - 1].innerHTML == ARRAY_COL_ATO_ATC_DATA[1][2]) {
-  // 									// thi phai xoa text ATO/ATC o cell gia
-  // 									vValue = '0';
-  // 									vCell = vTR.cells[ARRAY_COL_ATO_ATC_QTTY[x] - 1];
-  // 									vCellIndex = ARRAY_COL_ATO_ATC_QTTY[x] - 1;
-  // 									vClass = g_ARRAY_COL_CLASS[vCellIndex].replace('*', g_ARRAY_COLOR_CLASS[6]);
-
-  // 									// update tooltip
-  // 									//this.updateHistAttr(vCell, objRoot.Time);
-
-  // 									// update gia tri trong TD
-  // 									this.UpdateCell(vCellIndex, vCell, vValue, vClass, quoteFlag);
-  // 								}
-
-  // 							}
-  // 						}
-  // 					}
-
-  // 					if (vCellIndex == 13) {
-  // 						var _text = this.changeDiffToPercent(parseFloat(vTR.cells[1].innerHTML), parseFloat(vTR.cells[11].innerHTML));
-  // 						vTR.cells[13].innerHTML = _text;
-  // 					}
-
-  // 				}
-  // 			}
-  // 		}
-
-  // 		//console.log("update")
-  // 	} catch (e) {
-  // 		console.log('update ERROR_UPDATESTOCK:---', e, objRoot);
-  // 	}
-  // }
   const updateTableHNX = (dataHNX: any) => {
     // console.log(dataHNX)
     var vTextClass = "",
@@ -431,21 +322,21 @@ const MenuMarketWatch = () => {
     // getID các giá trị cần lấy
     // const arrayPrice = [5, 7, 9, 11, 14, 16, 18];
     const tdIndex = document.getElementById(`${arrRowID}_${arrInfo}`);
-    // const valueTC = document.querySelector(`div[data-index="5"][data-comp="BCC"]`)?.innerHTML;
-    const valueTCS = document.querySelector(`div[data-index="${arrInfo}"][data-comp="${arrRowID}"]`) as HTMLElement;
-    if(valueTCS){
-      valueTCS.innerHTML = arrValue.toString();
-      // gán màu bg
-      const test =  valueTCS.parentElement;
-      if(test){
-        test.style.backgroundColor = "#888888";
-        setTimeout(function () {
-          test.style.backgroundColor = "";
-        }, 500);
-      }
-      // sau 0.5s xóa màu bg
+    // const valueTC = document.querySelector(`div[data-index="5"][aria-rowindex="BCC"]`)?.innerHTML;
+    // const valueTCS = document.querySelector(`div[data-index="${arrInfo}"][aria-rowindex="${arrRowID}"]`) as HTMLElement;
+    // if(valueTCS){
+    //   valueTCS.innerHTML = `${formatNumberMarket(arrValue)}`;
+    //   // gán màu bg
+    //   const test =  valueTCS.parentElement;
+    //   if(test){
+    //     test.style.backgroundColor = "#888888";
+    //     setTimeout(function () {
+    //       test.style.backgroundColor = "";
+    //     }, 500);
+    //   }
+    //   // sau 0.5s xóa màu bg
       
-    }
+    // }
     const valueTC = document.getElementById(`${arrRowID}_TC`)?.innerHTML;
 
     const valueTran = document.getElementById(`${arrRowID}_Tran`)?.innerHTML;

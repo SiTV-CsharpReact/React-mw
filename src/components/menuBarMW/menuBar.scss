@@ -363,4 +363,22 @@ text-transform: uppercase;
   .react-autosuggest__suggestion--highlighted {
     background-color: #ddd;
   }
-  
+//    mew down 
+.react-autosuggest__container{
+    position: relative;
+    margin-left: 3px;
+}
+.react-autosuggest__input{
+    height: 31px;
+    border-radius: 2px;
+}
+.react-autosuggest__input:focus{
+    border-radius: none;
+}
+// background  danh mục 
+.activeBgCate{
+    background-color: #22B14C ;
+}
+.activeBgCate:hover {
+    background-color: #22B14C ;
+}

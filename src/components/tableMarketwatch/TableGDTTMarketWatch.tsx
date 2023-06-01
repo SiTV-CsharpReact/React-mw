@@ -13,29 +13,28 @@ const TableGDTTMarketWatch = () => {
         <div className="grid grid-cols-4 p-3">
           <div className="text-center">
           <input placeholder="Nhập mã cần tìm" className="col-span-1 w-44 h-24 pl-1"></input>
-
           </div>
-             {floor === "hnx" ?
-              <div  className="col-span-2 flex justify-around font-bold pt-1">
-           <span>
-           Tổng KL GDTT :  
-           <label> {formatNumber(prices[4]?.f240) }</label>    
-         </span>
-         <span>
-            Tổng KL GDTT : <label> { formatNumber(prices[4]?.f241)}</label>
-          </span>
-         </div> : <div  className="col-span-2 flex justify-around font-bold pt-1">
-           <span>
-           Tổng KL GDTT :  
-           <label> {formatNumber(prices[4]?.f240) }</label>    
-         </span>
-         <span>
-            Tổng KL GDTT : <label> { formatNumber(prices[4]?.f241)}</label>
-          </span>
-         </div>
-
-       } 
-        
+          {/* check floor  */}
+        {  floor === "hnx" ?         
+               <div  className="col-span-2 flex justify-around font-bold pt-1">
+              <span>
+              Tổng KL GDTT :  
+              <label> {formatNumber(prices[4]?.f240) }</label>    
+            </span>
+            <span>
+                Tổng KL GDTT : <label> { formatNumber(prices[4]?.f241)}</label>
+              </span>
+            </div> : <div  className="col-span-2 flex justify-around font-bold pt-1">
+              <span>
+              Tổng KL GDTT :  
+              <label> {formatNumber(prices[4]?.f240) }</label>    
+            </span>
+            <span>
+                Tổng KL GDTT : <label> { formatNumber(prices[4]?.f241)}</label>
+              </span>
+            </div>
+}
+     
           <div className="col-span-1">
 
           </div>
