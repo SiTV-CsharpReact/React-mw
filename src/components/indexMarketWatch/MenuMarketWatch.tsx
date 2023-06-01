@@ -77,7 +77,7 @@ const MenuMarketWatch = () => {
     //   console.log(data);
     // });
     const socketHSX = new WebSocket(
-      "wss://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=O%2FbheVsS%2BYfGUcfLBB4XYSqfznbmh0o993gEq3K4syz1h%2BcKo4YcRU0uAsKEbfG3iqFP7ZPKpl1vVl81CGp7onT4VwqRqeTa%2BIP6PzFjQz2NBsJ0D4HxINSh38mqh8%2B1&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=4"
+      "ws://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=QFYjcEdKNTcQpQ5eM8gSgArpZ8iaLyhAzsOc2yA9Uzj6jAmKV%2Bnt5UMBQQ6IxAg2ytcl36jeKKHXgSbB5HdJNA%2FVdbAn7QKNCQ76UmWHPecxhUD87ZajL354hy24brH6&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=8"
     );
     socketHSX.onopen = () => {
       console.log("WebSocket connection established.");
@@ -97,7 +97,7 @@ const MenuMarketWatch = () => {
   }, []);
   useEffect(() => {
     const socketHNX = new WebSocket(
-      "wss://eztrade.fpts.com.vn/hnx/signalr/reconnect?transport=webSockets&messageId=d-51F38660-B%2CC7FF%7CD0z%2C0%7CD00%2C3&clientProtocol=1.5&connectionToken=%2FuJ5gesdkaytxqAqXq4Usxt2SfoEO9VlXne4p2DLJSw9bTsV2oJWcRMiURcc8R54YNwQGlybLLCD1uMHQsMoOCrUJGXwJIKteyq81DRzNURIPsMZjPcG8d6jBdPTdE%2FJ&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=4"
+      "ws://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=IWiKAtteQ0gfuDm%2Fq6LLyUusRcee06oM2k6xVYIgeWHtlePjfeRZFnHIYmMvGt2F1PSB1EsKRw5wHFLA7D0C6bNau3lUFHlFFPF59RMTl3KHk3PRDqc9rmfE904Oy5NV&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=1"
     );
     socketHNX.onopen = () => {
       console.log("WebSocket connection established.");
@@ -432,20 +432,20 @@ const MenuMarketWatch = () => {
     // const arrayPrice = [5, 7, 9, 11, 14, 16, 18];
     const tdIndex = document.getElementById(`${arrRowID}_${arrInfo}`);
     // const valueTC = document.querySelector(`div[data-index="5"][aria-rowindex="BCC"]`)?.innerHTML;
-    const valueTCS = document.querySelector(`div[data-index="${arrInfo}"][aria-rowindex="${arrRowID}"]`) as HTMLElement;
-    if(valueTCS){
-      valueTCS.innerHTML = arrValue.toString();
-      // gán màu bg
-      const test =  valueTCS.parentElement;
-      if(test){
-        test.style.backgroundColor = "#888888";
-        setTimeout(function () {
-          test.style.backgroundColor = "";
-        }, 500);
-      }
-      // sau 0.5s xóa màu bg
+    // const valueTCS = document.querySelector(`div[data-index="${arrInfo}"][aria-rowindex="${arrRowID}"]`) as HTMLElement;
+    // if(valueTCS){
+    //   valueTCS.innerHTML = `${formatNumberMarket(arrValue)}`;
+    //   // gán màu bg
+    //   const test =  valueTCS.parentElement;
+    //   if(test){
+    //     test.style.backgroundColor = "#888888";
+    //     setTimeout(function () {
+    //       test.style.backgroundColor = "";
+    //     }, 500);
+    //   }
+    //   // sau 0.5s xóa màu bg
       
-    }
+    // }
     const valueTC = document.getElementById(`${arrRowID}_TC`)?.innerHTML;
 
     const valueTran = document.getElementById(`${arrRowID}_Tran`)?.innerHTML;
