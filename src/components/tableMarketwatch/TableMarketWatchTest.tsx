@@ -889,7 +889,7 @@ const TableMarketWatchTest = () => {
   ];
 
   const fetchData = () => {
-    fetch("http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=HNX30")
+    fetch("http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=VN30")
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data); // Xem dữ liệu trả về từ API trong console

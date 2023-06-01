@@ -431,7 +431,23 @@ const MenuMarketWatch = () => {
     // getID các giá trị cần lấy
     // const arrayPrice = [5, 7, 9, 11, 14, 16, 18];
     const tdIndex = document.getElementById(`${arrRowID}_${arrInfo}`);
-    const valueTC = document.querySelector(`div[data-index="5"][aria-rowindex="BCC"]`)?.innerHTML;
+    // const valueTC = document.querySelector(`div[data-index="5"][aria-rowindex="BCC"]`)?.innerHTML;
+    const valueTCS = document.querySelector(`div[data-index="${arrInfo}"][aria-rowindex="${arrRowID}"]`) as HTMLElement;
+    if(valueTCS){
+      valueTCS.innerHTML = arrValue.toString();
+      // gán màu bg
+      const test =  valueTCS.parentElement;
+      if(test){
+        test.style.backgroundColor = "#888888";
+        setTimeout(function () {
+          test.style.backgroundColor = "";
+        }, 500);
+      }
+      // sau 0.5s xóa màu bg
+      
+    }
+    const valueTC = document.getElementById(`${arrRowID}_TC`)?.innerHTML;
+
     const valueTran = document.getElementById(`${arrRowID}_Tran`)?.innerHTML;
     const valueSan = document.getElementById(`${arrRowID}_San`)?.innerHTML;
     const valuePT = document.getElementById(`${arrRowID}_PT`);
@@ -529,31 +545,31 @@ const MenuMarketWatch = () => {
   };
 
   const updateQuote = (objRealtime: any) => {
-    objRealtime = {"RowID":"BCC","Info":[[5,83.5],[7,83.6],[8,100],[11,84.1],[12,101900],[15,77500],[16,84.2],[17,12900],[18,84.3],[19,2000],[20,0],[21,839400],[22,84.2]]};
-     updateTableHNX(objRealtime)
+    // objRealtime = {"RowID":"BCC","Info":[[5,83.5],[7,83.6],[8,100],[11,84.1],[12,101900],[15,77500],[16,84.2],[17,12900],[18,84.3],[19,2000],[20,0],[21,839400],[22,84.2]]};
+    //  updateTableHNX(objRealtime)
    
-  //   var dataHNXRealTime = JSON.parse(objRealtime);
-  //   var arrDatas = [];
-  //   if (typeof dataHNXRealTime !== "undefined") {
-  //     const dataRT = Object.keys(dataHNXRealTime);
+    var dataHNXRealTime = JSON.parse(objRealtime);
+    var arrDatas = [];
+    if (typeof dataHNXRealTime !== "undefined") {
+      const dataRT = Object.keys(dataHNXRealTime);
 
-  //     if (dataRT.length !== 0) {
-  //       const dataM = dataHNXRealTime.M;
-  //       if (typeof dataM !== "undefined") {
-  //         dataM.map(
-  //           (dataLT: any) => (
-  //             // console.log(dataM),
-  //             (arrDatas = JSON.parse(dataLT.A[0].Change)),
-  //             // console.log(arrDatas),
-  //             arrDatas.map((arrData: any) => updateTableHNX(arrData))
-  //           )
-  //         );
-  //         // console.log(dataM)
-  //       }
-  //     }
-  //   } else {
-  //     // console.log(dataHNXRealTime)
-  //   }
+      if (dataRT.length !== 0) {
+        const dataM = dataHNXRealTime.M;
+        if (typeof dataM !== "undefined") {
+          dataM.map(
+            (dataLT: any) => (
+              // console.log(dataM),
+              (arrDatas = JSON.parse(dataLT.A[0].Change)),
+              // console.log(arrDatas),
+              arrDatas.map((arrData: any) => updateTableHNX(arrData))
+            )
+          );
+          // console.log(dataM)
+        }
+      }
+    } else {
+      // console.log(dataHNXRealTime)
+    }
    };
 
   const updateDataRealTime = (objRealtime: any) => {
