@@ -3152,7 +3152,11 @@ adler-32@~1.3.0:
 
 ag-grid-community@^29.3.5:
   version "29.3.5"
+<<<<<<< HEAD
+  resolved "https://registry.npmjs.org/ag-grid-community/-/ag-grid-community-29.3.5.tgz"
+=======
   resolved "https://registry.yarnpkg.com/ag-grid-community/-/ag-grid-community-29.3.5.tgz#16897896d10fa3ecac79279aad50d3aaa17c5f33"
+>>>>>>> upstream/master
   integrity sha512-LxUo21f2/CH31ACEs1C7Q/ggGGI1fQPSTB4aY5OThmM+lBkygZ7QszBE8jpfgWOIjvjdtcdIeQbmbjkHeMsA7A==
 
 ag-grid-enterprise@^29.3.5:
@@ -5223,7 +5227,11 @@ es6-iterator@^2.0.3:
 
 es6-promise@^4.2.8:
   version "4.2.8"
+<<<<<<< HEAD
+  resolved "https://registry.npmjs.org/es6-promise/-/es6-promise-4.2.8.tgz"
+=======
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.8.tgz#4eb21594c972bc40553d276e510539143db53e0a"
+>>>>>>> upstream/master
   integrity sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==
 
 es6-symbol@^3.1.1, es6-symbol@^3.1.3:
@@ -8188,7 +8196,11 @@ nwsapi@^2.2.0:
 
 object-assign@^3.0.0:
   version "3.0.0"
+<<<<<<< HEAD
+  resolved "https://registry.npmjs.org/object-assign/-/object-assign-3.0.0.tgz"
+=======
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-3.0.0.tgz#9bedd5ca0897949bca47e7ff408062d549f587f2"
+>>>>>>> upstream/master
   integrity sha512-jHP15vXVGeVh1HuaA2wY6lxk+whK/x4KBG88VXeRma7CCun7iGD5qPc4eYykQ9sdQvg8jkwFKsSxHln2ybW3xQ==
 
 object-assign@^4, object-assign@^4.1.1:
@@ -9755,7 +9767,11 @@ react-app-polyfill@^3.0.0:
 
 react-autosuggest@^10.1.0:
   version "10.1.0"
+<<<<<<< HEAD
+  resolved "https://registry.npmjs.org/react-autosuggest/-/react-autosuggest-10.1.0.tgz"
+=======
   resolved "https://registry.yarnpkg.com/react-autosuggest/-/react-autosuggest-10.1.0.tgz#4d25b8acc78bb518eb70189bb96bcd777dc71ffb"
+>>>>>>> upstream/master
   integrity sha512-/azBHmc6z/31s/lBf6irxPf/7eejQdR0IqnZUzjdSibtlS8+Rw/R79pgDAo6Ft5QqCUTyEQ+f0FhL+1olDQ8OA==
   dependencies:
     es6-promise "^4.2.8"
@@ -10023,7 +10039,11 @@ react-tabs@^6.0.1:
 
 react-themeable@^1.1.0:
   version "1.1.0"
+<<<<<<< HEAD
+  resolved "https://registry.npmjs.org/react-themeable/-/react-themeable-1.1.0.tgz"
+=======
   resolved "https://registry.yarnpkg.com/react-themeable/-/react-themeable-1.1.0.tgz#7d4466dd9b2b5fa75058727825e9f152ba379a0e"
+>>>>>>> upstream/master
   integrity sha512-kl5tQ8K+r9IdQXZd8WLa+xxYN04lLnJXRVhHfdgwsUJr/SlKJxIejoc9z9obEkx1mdqbTw1ry43fxEUwyD9u7w==
   dependencies:
     object-assign "^3.0.0"
@@ -10436,7 +10456,11 @@ scroll-into-view-if-needed@^3.0.3:
 
 section-iterator@^2.0.0:
   version "2.0.0"
+<<<<<<< HEAD
+  resolved "https://registry.npmjs.org/section-iterator/-/section-iterator-2.0.0.tgz"
+=======
   resolved "https://registry.yarnpkg.com/section-iterator/-/section-iterator-2.0.0.tgz#bf444d7afeeb94ad43c39ad2fb26151627ccba2a"
+>>>>>>> upstream/master
   integrity sha512-xvTNwcbeDayXotnV32zLb3duQsP+4XosHpb/F+tu6VzEZFmIjzPdNk6/O+QOOx5XTh08KL2ufdXeCO33p380pQ==
 
 select-hose@^2.0.0:
@@ -10553,7 +10577,11 @@ setprototypeof@1.2.0:
 
 shallow-equal@^1.2.1:
   version "1.2.1"
+<<<<<<< HEAD
+  resolved "https://registry.npmjs.org/shallow-equal/-/shallow-equal-1.2.1.tgz"
+=======
   resolved "https://registry.yarnpkg.com/shallow-equal/-/shallow-equal-1.2.1.tgz#4c16abfa56043aa20d050324efa68940b0da79da"
+>>>>>>> upstream/master
   integrity sha512-S4vJDjHHMBaiZuT9NPb616CSmLf618jawtv3sufLl6ivK8WocjAo58cXwbRV1cgqxH0Qbv+iUt6m05eqEa2IRA==
 
 sharp@^0.31.3:

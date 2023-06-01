@@ -68,7 +68,7 @@ const TableAssetReport = () => {
             </tr>
             <tr>
               <td
-                className={`!text-center !text-xs  ${mode}-bg`}
+                className={`!text-center !text-xs`}
                 style={{ width: "5%" }}
                 onClick={() => handleSort("ASTOCKCODE")}
               >
@@ -100,7 +100,7 @@ const TableAssetReport = () => {
                 </div>
               </td>
               <td
-                className={`!text-center !text-xs ${mode}-text ${mode}-bg`}
+                className={`!text-center !text-xs ${mode}-text `}
                 style={{ width: "6%" }}
                 onClick={() => handleSort("ATRADING_READY_TOTAL")}
               >
@@ -132,7 +132,7 @@ const TableAssetReport = () => {
                 </div>
               </td>
               <td
-                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "6%" }}
                 onClick={() => handleSort("AWAIT_REC_RIGHT")}
               >
@@ -164,7 +164,7 @@ const TableAssetReport = () => {
                 </div>
               </td>
               <td
-                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "5%" }}
                 onClick={() => handleSort("ATOTAL_AMOUNT")}
               >
@@ -196,13 +196,13 @@ const TableAssetReport = () => {
                 </div>
               </td>
               <td
-                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "5%" }}
               >
                 <div>Giá TT</div>
               </td>
               <td
-                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "6%" }}
                 onClick={() => handleSort("AMARKET_VALUE")}
               >
@@ -234,13 +234,13 @@ const TableAssetReport = () => {
                 </div>
               </td>
               <td
-                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "5%" }}
               >
                 <div>Giá vốn TB</div>
               </td>
               <td
-                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "8%" }}
                 onClick={() => handleSort("AROOT_VALUE")}
               >
@@ -272,7 +272,7 @@ const TableAssetReport = () => {
                 </div>
               </td>
               <td
-                className={`!text-center !text-xs ${mode}-text ${mode}-bg`}
+                className={`!text-center !text-xs ${mode}-text `}
                 style={{ width: "5%" }}
                 onClick={() => handleSort("APROFIT_LOSS_VAL")}
               >
@@ -304,7 +304,7 @@ const TableAssetReport = () => {
                 </div>
               </td>
               <td
-                className={`!text-center !text-xs ${mode}-text ${mode}-bg`}
+                className={`!text-center !text-xs ${mode}-text `}
                 style={{ width: "5%" }}
                 onClick={() => handleSort("APROFIT_LOSS_RATE")}
               >
@@ -561,7 +561,7 @@ const TableAssetReport = () => {
             <tr role="row" className="font-bold bg-[#ececec]">
               <td
                 rowSpan={2}
-                className={`!text-center !text-xs  ${mode}-bg`}
+                className={`!text-center !text-xs `}
                 style={{ width: "5%" }}
                 onClick={() => handleSort("ASTOCKCODE")}
               >
@@ -594,7 +594,7 @@ const TableAssetReport = () => {
               </td>
               <td
                 rowSpan={2}
-                className={`!text-center !text-xs ${mode}-text ${mode}-bg`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "6.2%" }}
                 onClick={() => handleSort("ATRADING_READY_TOTAL")}
               >
@@ -627,35 +627,35 @@ const TableAssetReport = () => {
               </td>
               <td
                 colSpan={3}
-                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "12%" }}
               >
                 <div>CK mua trở về</div>
               </td>
               <td
                 rowSpan={2}
-                className={`!text-center !text-xs ${mode}-text ${mode}-bg`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "7%" }}
               >
                 <div>CK quyền trở về</div>
               </td>
               <td
                 rowSpan={2}
-                className={`!text-center !text-xs ${mode}-text ${mode}-bg`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "7%" }}
               >
                 <div>CK cầm cố NH</div>
               </td>
               <td
                 rowSpan={2}
-                className={`!text-center !text-xs ${mode}-text ${mode}-bg`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "6%" }}
               >
                 <div>CK hạn chế GD</div>
               </td>
               <td
                 rowSpan={2}
-                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "5.7%" }}
                 onClick={() => handleSort("ATOTAL_AMOUNT")}
               >
@@ -688,14 +688,14 @@ const TableAssetReport = () => {
               </td>
               <td
                 rowSpan={2}
-                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "5%" }}
               >
                 <div>Giá TT</div>
               </td>
               <td
                 rowSpan={2}
-                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "7%" }}
                 onClick={() => handleSort("AMARKET_VALUE")}
               >
@@ -728,14 +728,14 @@ const TableAssetReport = () => {
               </td>
               <td
                 rowSpan={2}
-                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "5%" }}
               >
                 <div>Giá vốn TB</div>
               </td>
               <td
                 rowSpan={2}
-                className={`!text-center !text-xs ${mode}-bg ${mode}-text`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "7.5%" }}
                 onClick={() => handleSort("AROOT_VALUE")}
               >
@@ -768,7 +768,7 @@ const TableAssetReport = () => {
               </td>
               <td
                 rowSpan={2}
-                className={`!text-center !text-xs ${mode}-text ${mode}-bg`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "5%" }}
                 onClick={() => handleSort("APROFIT_LOSS_VAL")}
               >
@@ -801,7 +801,7 @@ const TableAssetReport = () => {
               </td>
               <td
                 rowSpan={2}
-                className={`!text-center !text-xs ${mode}-text ${mode}-bg`}
+                className={`!text-center !text-xs ${mode}-text`}
                 style={{ width: "5.8%" }}
                 onClick={() => handleSort("APROFIT_LOSS_RATE")}
               >

@@ -76,7 +76,6 @@ const ChartMarketwatch = () => {
             <div>
               <SlidesIndexChartMarketwatch/>
             </div>
-            {/* <SlidesMarketWatch/> */}
           </div>
           <div className="float-right">
             <Tooltip title="Hiển thị bảng giá">
