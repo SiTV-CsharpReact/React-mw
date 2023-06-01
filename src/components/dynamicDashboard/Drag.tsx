@@ -88,12 +88,12 @@ const Drag = () => {
       return <BoxTest />;
     }
     if (component === "pendingorder") {
-      return <PendingOrders />;
+      return <PendingOrders value={1} />;
     }
   };
 
   return (
-    <main id="main-wrapper" className="main-wrappers relative w-full">
+    <main id="main-wrapper" className="relative w-full main-wrappers">
       {/* <div>
         <button onClick={add(false)}>add</button>
 			  <button onClick={add(true)}>add2</button>
@@ -101,9 +101,9 @@ const Drag = () => {
         <pre>{JSON.stringify(Object.keys(ref.current||{}).sort())}</pre>
       </div> */}
       <div className="custom-layout-page">
-        <div className="relative flex justify-between items-center bg-secondary h-7">
-          <div className="layout-tabs flex text-13 items-center h-6">
-            <div className="flex group items-center tab">
+        <div className="relative flex items-center justify-between bg-secondary h-7">
+          <div className="flex items-center h-6 layout-tabs text-13">
+            <div className="flex items-center group tab">
               <div
                 className="layout-name group-hover:text-color-highlight"
                 title="Văn Sĩ"
@@ -123,7 +123,7 @@ const Drag = () => {
                 <path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z" />
               </svg>
             </div>
-            {/* <div className="flex group items-center tab">
+            {/* <div className="flex items-center group tab">
               <div
                 className="layout-name group-hover:text-color-highlight"
                 title="Thêm bảng"
@@ -143,7 +143,7 @@ const Drag = () => {
                 <path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z" />
               </svg>
             </div>
-            <div className="flex group items-center tab">
+            <div className="flex items-center group tab">
               <div
                 className="layout-name group-hover:text-color-highlight"
                 title="Thêm bảng"
@@ -163,7 +163,7 @@ const Drag = () => {
                 <path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z" />
               </svg>
             </div>
-            <div className="active flex group items-center tab">
+            <div className="flex items-center active group tab">
               <div
                 className="layout-name group-hover:text-color-highlight"
                 title="Thêm bảng"
@@ -188,7 +188,7 @@ const Drag = () => {
               fill="currentColor"
               strokeWidth={0}
               viewBox="0 0 512 512"
-              className="bg-invert rounded p-1 w-8 h-full text-sm mx-1 cursor-pointer hover:text-color-highlight"
+              className="w-8 h-full p-1 mx-1 text-sm rounded cursor-pointer bg-invert hover:text-color-highlight"
               height="1em"
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
@@ -196,10 +196,10 @@ const Drag = () => {
               <path d="M416 277.333H277.333V416h-42.666V277.333H96v-42.666h138.667V96h42.666v138.667H416v42.666z" />
             </svg>
           </div>
-          <div className="flex items-center justify-end space-x-5 h-full bg-explain w-56 pr-3 rounded-t">
+          <div className="flex items-center justify-end w-56 h-full pr-3 space-x-5 rounded-t bg-explain">
             <div className="list-widgets-container" data-headlessui-state>
               <div
-                className="dropdown-button mt-2 md:mt-0 hover:text-color-highlight"
+                className="mt-2 dropdown-button md:mt-0 hover:text-color-highlight"
                 id="headlessui-menu-button-8"
                 aria-haspopup="true"
                 aria-expanded="false"

@@ -5,7 +5,11 @@ import * as XLSX from "xlsx";
 import axios from "axios";
 import _ from "lodash";
 import { uniqBy, filter, sortBy } from "lodash";
-const PendingOrders = () => {
+type Props ={
+  value: number;
+}
+const PendingOrders: React.FC<Props> = (value) => {
+  // console.log(value.value)
   const [data, setData] = useState([]);
   const [dataAfter, setDataAfter] = useState({
     dataCoppy: [],
@@ -16,7 +20,7 @@ const PendingOrders = () => {
   });
   useEffect(() => {
     fetchDataValue();
-  }, []);
+  }, [value.value===1]);
   const fetchDataValue = async () => {
     try {
       const response = await axios.get("http://localhost:3006/items");
@@ -28,6 +32,7 @@ const PendingOrders = () => {
         ...prevState,
         dataValue: uniqueData,
       }));
+      console.log(dataAfter)
     } catch (error) {
       console.log(error);
     }
@@ -100,7 +105,7 @@ const PendingOrders = () => {
     // }
     // doc.save('filename.pdf');
   };
-  console.log(data)
+  // console.log(data)
   return (
     <div>
       <div className="flex justify-between pl-8 mt-2">

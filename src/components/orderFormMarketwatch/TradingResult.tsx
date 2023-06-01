@@ -10,7 +10,7 @@ import { formatNumber } from "../../utils/util";
 import PdfandExcel from "./PdfandExcel";
 const Tbody = (props:any) => {
   const [drop, setDrop] = React.useState(false);
-  console.log(props.data.filter((e : any) => e.ASTOCKCODE === props.item.ASTOCKCODE).slice(1));
+  // console.log(props.data.filter((e : any) => e.ASTOCKCODE === props.item.ASTOCKCODE).slice(1));
     useEffect(() => {
     if (props.drop) {
       setDrop(true);
@@ -85,7 +85,7 @@ const Tbody = (props:any) => {
 };
 const TbodySell = (props:any) => {
   const [dropSell, setDropSell] = React.useState(false);
-  console.log(props.data.filter((e : any) => e.ASTOCKCODE === props.item.ASTOCKCODE).slice(1));
+  // console.log(props.data.filter((e : any) => e.ASTOCKCODE === props.item.ASTOCKCODE).slice(1));
     useEffect(() => {
     if (props.dropSell) {
       setDropSell(true);

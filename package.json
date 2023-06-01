@@ -69,7 +69,8 @@
     "web-vitals": "^2.1.0",
     "websocket": "^1.0.34",
     "xlsx": "^0.18.5",
-    "yarn": "^1.22.19"
+    "yarn": "^1.22.19",
+    "yup": "^1.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

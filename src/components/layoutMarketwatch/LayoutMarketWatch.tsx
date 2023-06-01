@@ -539,7 +539,7 @@ const LayoutMarketWatch: React.FC = () => {
                 display: heightComponent.orderCount === 1 ? "block" : "none",
               }}
             >
-              <PendingOrders />
+              <PendingOrders value={heightComponent.orderCount}/>
             </div>
             <div
               style={{
