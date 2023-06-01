@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
+// import "ag-grid-community/styles/ag-grid.css";
+// import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./table.scss";
 import { setColorMarkettest } from "../../utils/util";
 import { ColSpanParams } from "ag-grid-enterprise";
 import { ColDef, ColGroupDef } from "ag-grid-community";
-
+import { LicenseManager } from 'ag-grid-enterprise';
+LicenseManager.setLicenseKey('SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb');
 type RowData = {
   MCK: string;
   TC: string;
@@ -268,7 +269,7 @@ const TableMarketWatchTest = () => {
             console.log("Column Index:", dataIndex);
 
     
-            const value = params.value; // Get the value of the cell
+            const value = params.value; 
     
             return (
               <div data-index={dataIndex} className="custom-cell">

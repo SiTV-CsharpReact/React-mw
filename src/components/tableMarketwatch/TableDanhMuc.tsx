@@ -66,6 +66,7 @@ const showKLPT = (value: string) => {
     // }
   }
 };
+
 const TableDanhMuc = () => {
   const dispatch = useAppDispatch();
   const tableData = useAppSelector(productSelectors.selectAll);
@@ -104,7 +105,9 @@ const TableDanhMuc = () => {
   };
   // Call `fetchData` to fetch data when component mounts
   useEffect(() => {
-  if(!localStorage.getItem("CacheSi"))  {fetchDataCompany()} 
+    if (!localStorage.getItem("CacheSi")) {
+      fetchDataCompany();
+    }
   }, []);
   // sort products
   products.forEach((obj) =>
@@ -854,7 +857,7 @@ const TableDanhMuc = () => {
                   >
                     {(provider) => (
                       <tr
-                      data-tr-value={dataTable.Info[0][1]}
+                        data-tr-value={dataTable.Info[0][1]}
                         // không đc pinned || không phải tr cuối cùng && tr hiện tại giống với tr sau || tr cuối cùng k đc pinned-> ''
 
                         className={`${
@@ -873,7 +876,6 @@ const TableDanhMuc = () => {
 
                         // style={{ backgroundColor: selectedRowId === dataTable.RowID ? 'yellow' : 'white' }}
                       >
-                 
                         <td
                           {...provider.dragHandleProps}
                           className={`${setColorMarket(
@@ -882,10 +884,12 @@ const TableDanhMuc = () => {
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )} text-left has-symbol company-tooltip`}
-                          data-tooltip={getCompanyNameByCode(dataTable.Info[0][1]).toString()}
+                          data-tooltip={getCompanyNameByCode(
+                            dataTable.Info[0][1]
+                          ).toString()}
                           id={`${dataTable.Info[1][1]}`}
                         >
-                             {/* <ReactTooltip id="my-tooltip"  className="example" classNameArrow="arrow__tooltip"  place="bottom"/> */}
+                          {/* <ReactTooltip id="my-tooltip"  className="example" classNameArrow="arrow__tooltip"  place="bottom"/> */}
                           <input
                             type="checkbox"
                             id={`cb${dataTable.RowID}`}
@@ -937,15 +941,19 @@ const TableDanhMuc = () => {
                         </td>
                         {/* G3 Mua*/}
                         <td
+                         
                           {...provider.dragHandleProps}
                           data-sort={dataTable.Info[8][1]}
                           id={`${dataTable.RowID}_${dataTable.Info[5][0]}`}
-                          className={` text-right ${setColorMarket(
+                          className={`text-right ${setColorMarket(
                             dataTable.Info[1][1],
                             dataTable.Info[5][1],
                             dataTable.Info[2][1],
                             dataTable.Info[3][1]
                           )}`}
+                          // onClick={() => handleClick(dataTable) }
+                           onClick={() => console.log("oke") }
+                          // 
                         >
                           {formatNumberMarket(dataTable.Info[5][1])}
                         </td>

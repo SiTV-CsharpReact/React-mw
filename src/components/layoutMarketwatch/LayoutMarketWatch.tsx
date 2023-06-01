@@ -36,13 +36,14 @@ import TableDanhMuc from "../tableMarketwatch/TableDanhMuc";
 import LineChart from "../../images/line-chart-32.png";
 import Close from "../../images/x28.png";
 import TableMarketWatchTest from "../tableMarketwatch/TableMarketWatchTest";
+import DropDown from "../menuBarMW/DropDown";
 
 function RenderTable() {
   const floor = useAppSelector((state) => state.table.floor);
 
   switch (floor) {
     case "MAIN":
-      return <TableMarketWatchTest />;
+      return <TableMarketWatch />;
       break;
     case "GDTT":
       return <TableGDTTMarketWatch />;
@@ -249,7 +250,7 @@ const LayoutMarketWatch: React.FC = () => {
       )}
       {/* marketwatch */}
       <div
-        className="resize panel-horizontally bg-BGTableMarket text-white relative z-50 overflow-hidden"
+        className="relative z-50 overflow-hidden text-white resize panel-horizontally bg-BGTableMarket"
         style={{ height: heightComponent.heightMarketWatch }}
       >
         {/* priceboard */}
@@ -286,6 +287,7 @@ const LayoutMarketWatch: React.FC = () => {
                   <ListMenuBar />
                   <DanhMuc />
                   <CompleteStock />
+                  <DropDown/>
                   {heightComponent.heightExpand === 27 ? (
                     <div>
                       <Tooltip title="Hiện thị index">
@@ -346,7 +348,7 @@ const LayoutMarketWatch: React.FC = () => {
                 </div>
               </div>
               <div
-                className="relative z-10 overflow-auto  table_market"
+                className="relative z-10 overflow-auto table_market"
                 id="tableHNX"
                 onContextMenu={handleContextMenu}
               >
@@ -519,7 +521,7 @@ const LayoutMarketWatch: React.FC = () => {
           </div>
           {/* form lệnh */}
           <div
-            className="pb-5 overflow-auto text-black  divBot panel-footer__ordrp"
+            className="pb-5 overflow-auto text-black divBot panel-footer__ordrp"
             style={{
               display: hideShowOrderForm ? "block" : "none",
               height: heightComponent.heightOrderForm,
