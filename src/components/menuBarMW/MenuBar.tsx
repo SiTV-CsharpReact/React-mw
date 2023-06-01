@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import menuItems from "./helper/ListMenu";
-import { useAppDispatch } from "../../store/configureStore";
+import { RootState, useAppDispatch } from "../../store/configureStore";
 import { getDataTable } from "../tableMarketwatch/tableSlice";
+import { useSelector } from "react-redux";
+import { activeMenuDanhmuc } from "./danhmucSlice";
+import { setActiveMenu } from "./menuSlice";
 
 interface MenuItem {
   name: string;
@@ -14,30 +17,25 @@ interface MenuItem {
 
 const MenuBar = () => {
   const dispatch = useAppDispatch();
-  const activeItem = localStorage.setItem("activePriceboarFloor", "HSX");
-  const activeItemChild = localStorage.setItem("activePriceboardTabMenu", "");
-  const [IsActiveMenu, setIsActiveMenu] = useState<number>(0);
-  const [activeNamePath, setactiveNameFloor] = useState<string | null>(null); // ten san
   const [activeMenuItemName, setActiveMenuItemChild] = useState<string | null>(
     null
   ); // teen menu item
-  useEffect(() => {
-    const activeItem = localStorage.getItem("activePriceboarFloor"); // ten san
-    const activeItemChild = localStorage.getItem("activePriceboardTabMenu"); // ten menu item
-    if (activeItem) {
-      setactiveNameFloor(activeItem);
-    }
-    if (activeItemChild) {
-      setActiveMenuItemChild(activeItemChild);
-    }
-  }, []);
+  const {row, name , data}  = useSelector((state : RootState)=>  state.categories)
+  const {keyMenu , nameMenu }  = useSelector((state : RootState)=>  state.menuBar)
   const handleItemClick = (path: string, key: number) => {
-    setIsActiveMenu(key);
-    setactiveNameFloor(path);
-    localStorage.setItem("activePriceboarFloor", path);
+    // setIsActiveMenu(key);
+    // setactiveNameFloor(path);
+    // localStorage.setItem("activePriceboarFloor", path);
+    // click set lại active menu 
+    let activeCate ={
+      row :  null ,
+      name : ""
+    }
+    dispatch(activeMenuDanhmuc(activeCate)) // cập nhật lại active danh mục 
   };
   // call api
   const handleItemChildClick = async (
+    key : number ,
     name: string,
     query: string,
     floor: string
@@ -48,20 +46,25 @@ const MenuBar = () => {
       Floor: floor,
       Query: query,
     };
+    let activeMenu = {
+      nameMenu: name,
+      keyMenu :  key 
+    }
+    dispatch(setActiveMenu(activeMenu)); // cập nhật lại menu 
     await dispatch(getDataTable(data));
   };
   const renderMenuItem = (item: any, key: number) => {
     return (
       <div
         key={key}
-        className={`group list-sub-menu ${ IsActiveMenu === key? 'active' : ''} `}
+
+        className={`group list-sub-menu ${!row && !name && keyMenu === key? 'active' : ''} `}
         onClick={() => handleItemClick(item.path , key)}
       >
         <span className="text-13px">
           {item.name}
-          {activeNamePath === item.path
-            ? activeMenuItemName?.replace("", ": ")
-            : ""}
+          {keyMenu === key?  nameMenu ?  `: ${nameMenu}` : ""  +  nameMenu?.replace(" ", "") 
+            : " "}
         </span>
         {item.children && item.children.length <= 9 ? (
           <ul
@@ -73,7 +76,7 @@ const MenuBar = () => {
                 <li
                   key={index}
                   onClick={() =>
-                    handleItemChildClick(child.name, child.query, item.floor)
+                    handleItemChildClick( key , child.name, child.query, item.floor )
                   }
                 >
                   <Link
@@ -95,7 +98,7 @@ const MenuBar = () => {
               return(
                 <li  key={index}
                 className={`${ index % 2 === 0 ? "float-left" : "float-right" }`}
-                onClick={() => handleItemChildClick(child.name ,child.query,item.floor )}
+                onClick={() => handleItemChildClick(key ,child.name ,child.query,item.floor )}
                 >
                   <Link to=""
                   className={`${ activeMenuItemName === child.name ? 'active' : ''} `}

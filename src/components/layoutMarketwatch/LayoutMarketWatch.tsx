@@ -30,7 +30,6 @@ import PopupTableMarketwatch from "../popupTableMarketwatch/popupTableMarketwatc
 import { resizeState } from "../../models/resizeWindow";
 import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatch";
 import { DraggableData, DraggableEvent } from "react-draggable";
-import CompleteStock from "../menuBarMW/CompleteStock";
 import TableDanhMuc from "../tableMarketwatch/TableDanhMuc";
 //image
 import LineChart from "../../images/line-chart-32.png";
@@ -41,7 +40,6 @@ import { setOrderCount } from "./LayoutMarketWatchSLice";
 
 function RenderTable() {
   const floor = useAppSelector((state) => state.table.floor);
-
   switch (floor) {
     case "MAIN":
       return <TableMarketWatch />;
@@ -77,6 +75,8 @@ const initialState: resizeState = {
 const LayoutMarketWatch: React.FC = () => {
   const dispatch = useAppDispatch();
   const orderCount = useAppSelector((state)=> state.layout.orderCount)
+  // gọi danh mục 
+ // row danh mục 
   // tao useState resize khi height window thay đổi
   const [heightComponent, setHeightComponent] = useState(initialState);
   const [selectedValue, setSelectedValue] = useState({
@@ -85,7 +85,7 @@ const LayoutMarketWatch: React.FC = () => {
     value: "",
     status: false,
   });
-
+  
   // tinh height khi đổi từ màn hình này sang màn hình khác
   useEffect(() => {
     function handleResize() {
@@ -199,7 +199,7 @@ const LayoutMarketWatch: React.FC = () => {
   const handleContextMenu = (e: any) => {
     e.preventDefault();
     const trValue = e.target.parentElement.getAttribute("data-tr-value");
-    console.log(trValue);
+
     if (trValue) {
       setSelectedValue({
         x: e.clientX,
@@ -266,7 +266,7 @@ const LayoutMarketWatch: React.FC = () => {
                 <div className="flex ">
                   <ListMenuBar />
                   <DanhMuc />
-                  <CompleteStock />
+                  {/* <CompleteStock /> */}
                   <DropDown/>
                   {heightComponent.heightExpand === 27 ? (
                     <div>

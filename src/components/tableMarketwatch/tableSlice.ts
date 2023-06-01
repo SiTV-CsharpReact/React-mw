@@ -70,9 +70,7 @@ export const fetchTableHSXAsync = createAsyncThunk<
   }
 );
 export const getDataTable = createAsyncThunk("table/getDataTable" , async (Param :params)=>{
-  console.log(Param)
     try {
-      console.log(Param.Query)
       if(Param.Query === "thoa-thuan-hsx"){
             const DataBi = await agent.dataGDTTtable.listBi(Param.Floor)
             const DataPt = await agent.dataGDTTtable.listPt(Param.Floor)
@@ -87,11 +85,11 @@ export const getDataTable = createAsyncThunk("table/getDataTable" , async (Param
              }
             
              return  data
-      }
-      else if( Param.Floor === "danh-muc"){
+   }
+      else if( Param.Floor ==="danh-muc"){
         const DataHNX = await agent.ListDataTable.list("hnx" , `s=quote&l=${Param.Query}`)
         const DataHSX = await agent.ListDataTable.list("hsx" , `s=quote&l=${Param.Query}`)
-              var arrS = Param.Query.split(",");
+              var arrS =Param.Query ?  Param.Query.split(",") : []
       var arr_names: DataTable[] = new Array(arrS.length);
       for (let i = 0; i < DataHSX.length; i++) {
         const cSym = DataHSX[i]?.Info[0][1]; // mã ck
@@ -118,13 +116,14 @@ export const getDataTable = createAsyncThunk("table/getDataTable" , async (Param
           }
           return 0;
         }) )
+     
         let data = {
           index : 0,
           floor :"MAIN",
           NameFloor : Param.Floor,
           product : arr_names
         }
-
+       
         return data   
    
       }
@@ -221,7 +220,14 @@ export const tableSlice = createSlice({
             }
           })
           .addCase(getDataTable.rejected , (state, action) =>{
-
+            state.DataBi = state.DataBi
+            state.DataPt = state.DataPt
+            state.NameFloor = state.NameFloor
+            state.floor = "MAIN"
+            state.productsLoaded = true;
+            state.status = "idle";
+            state.ListDataTable =    state.ListDataTable
+             console.log("vood aydcu9sachu")
           })
     },
 });
