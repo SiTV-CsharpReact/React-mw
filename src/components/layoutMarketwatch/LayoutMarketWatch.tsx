@@ -37,17 +37,22 @@ import Close from "../../images/x28.png";
 import TableMarketWatchTest from "../tableMarketwatch/TableMarketWatchTest";
 import DropDown from "../menuBarMW/DropDown";
 import { setOrderCount } from "./LayoutMarketWatchSLice";
+import TableMarketWatchCompact from "../tableMarketwatch/TableMarketWatchCompact";
 
 function RenderTable() {
   const floor = useAppSelector((state) => state.table.floor);
+  console.log(floor)
   switch (floor) {
     case "MAIN":
       return <TableMarketWatchTest />;
       break;
     case "GDTT":
       return <TableGDTTMarketWatch />;
-    default:
+      case "TableTK":
+        return <TableThongKeMarketWatch />;
+      default:
       break;
+     
   }
 }
 const heightHeader = 40; //height header

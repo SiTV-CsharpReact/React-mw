@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 // import "ag-grid-community/styles/ag-grid.css";
@@ -9,6 +9,9 @@ import { ColSpanParams } from "ag-grid-enterprise";
 import { ColDef, ColGroupDef } from "ag-grid-community";
 import { LicenseManager } from "ag-grid-enterprise";
 import PopupStock from "./PopupStock";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { getDataTable } from "./tableTestSlice";
+import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
 
 LicenseManager.setLicenseKey(
   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
@@ -90,6 +93,35 @@ const showKLPT = (value: string) => {
 };
 
 const TableMarketWatchTest = () => {
+  const dispatch = useAppDispatch();
+
+  //setRowData
+  const dataTables = useAppSelector((state) => state.tableTest.ListDataTable);
+  
+  const handelGetData = useCallback(   (Data : any)=>{
+    dispatch(getDataTable(Data))
+ }, [dispatch]);
+ useEffect(() => {
+  async function HanDelCate (){
+    let result = await  dispatch(fetchCategoryAsync());
+    if( result?.payload?.Data[0]?.List ){
+          let data = {
+        Floor : "danh-muc",
+        Query : result?.payload?.Data[0]?.List 
+      }
+      await  handelGetData(data)
+    }else{
+      let data = {
+        Floor : "HSX",
+        Query : "s=quote&l=All"
+      } 
+      await  handelGetData(data)
+    } 
+    
+  }
+  HanDelCate();
+}, [dispatch]);
+  console.log(dataTables)
   useEffect(() => {
     // const socket = io('ws://eztradereact.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=dnL897L7K8vCFfdm%2FU2B%2B8L3mgJxVC9qXt8YejdUGsaMoHgfj%2FPPyVumCVpn5PvW2sxZanXnmvvNU49qowDUIJ5hYyfNfe56xdHs6Gf3cOQ84am2ZKvvswyYk8wE4dyq&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=1');
 
@@ -256,7 +288,7 @@ const TableMarketWatchTest = () => {
       cellClass: "score-cell",
       suppressMenu: true,
       spanHeaderHeight: true,
-      width: 52,
+      width: 72,
       maxWidth: 100,
       // cellClass: "custom-cell",
       headerClass: "custom-header",
@@ -289,7 +321,7 @@ const TableMarketWatchTest = () => {
       cellClass: "score-cell tc-cell",
       suppressMenu: true,
       spanHeaderHeight: true,
-      width: 52,
+      width: 50,
       maxWidth: 100,
       headerStyle: {
         fontWeight: "bold",
@@ -303,7 +335,7 @@ const TableMarketWatchTest = () => {
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.TC; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
 
-        console.log("Column Index:", dataIndex);
+        // console.log("Column Index:", dataIndex);
 
         const value = params.value;
         const rowid = params.data.RowID; // Get the
@@ -316,10 +348,10 @@ const TableMarketWatchTest = () => {
     },
     {
       field: "Tran",
-      headerName: "Tran",
+      headerName: "Trần",
       suppressMenu: true,
       spanHeaderHeight: true,
-      width: 52,
+      width: 50,
       maxWidth: 100,
       headerClass: "custom-header tc-header ",
       cellClass: "score-cell tc-cell",
@@ -331,7 +363,7 @@ const TableMarketWatchTest = () => {
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.Tran; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
 
-        console.log("Column Index:", dataIndex);
+        // console.log("Column Index:", dataIndex);
 
         const value = params.value;
         const rowid = params.data.RowID; // Get the
@@ -344,10 +376,10 @@ const TableMarketWatchTest = () => {
     },
     {
       field: "San",
-      headerName: "San",
+      headerName: "Sàn",
       suppressMenu: true,
       spanHeaderHeight: true,
-      width: 52,
+      width: 50,
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       cellClass: "score-cell tc-cell",
@@ -359,7 +391,7 @@ const TableMarketWatchTest = () => {
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.San; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
 
-        console.log("Column Index:", dataIndex);
+        // console.log("Column Index:", dataIndex);
 
         const value = params.value;
         const rowid = params.data.RowID; // Get the
@@ -540,17 +572,17 @@ const TableMarketWatchTest = () => {
     },
     {
       headerName: "Khớp lệnh",
-      headerClass: "custom-header",
+      headerClass: "custom-header tc-header",
       children: [
         {
           field: "GiaKhop",
-          headerName: "Gia",
+          headerName: "Giá",
           suppressMenu: true,
           width: 50,
           minWidth: 50,
           maxWidth: 100,
-          cellClass: "score-cell",
-          headerClass: "custom-header",
+          cellClass: "score-cell tc-cell",
+          headerClass: "custom-header tc-header",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("", params),
@@ -575,8 +607,8 @@ const TableMarketWatchTest = () => {
           width: 52,
           minWidth: 50,
           maxWidth: 100,
-          cellClass: "score-cell",
-          headerClass: "custom-header",
+          cellClass: "score-cell tc-cell",
+          headerClass: "custom-header tc-header",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("KLKhop", params),
@@ -597,6 +629,7 @@ const TableMarketWatchTest = () => {
         {
           field: "Chenhlech",
           headerName:"+/-",
+          
           // headerName: () => {
           //   const buttonElement = document.createElement("button");
           //   buttonElement.innerHTML = "+/-";
@@ -614,8 +647,8 @@ const TableMarketWatchTest = () => {
           width: 50,
           minWidth: 50,
           maxWidth: 100,
-          cellClass: "score-cell",
-          headerClass: "custom-header",
+          cellClass: "score-cell tc-cell",
+          headerClass: "custom-header tc-header",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("Chenhlech", params),
@@ -951,6 +984,9 @@ const TableMarketWatchTest = () => {
     // { field: "RowID", headerName: "RowID", cellClass: "score-cell" },
   ];
 
+  
+
+
   const fetchData = () => {
     fetch("http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=VN30")
       .then((resp) => resp.json())
@@ -1057,7 +1093,7 @@ const TableMarketWatchTest = () => {
     <div style={containerStyle}>
       <div style={gridStyle} className="ag-theme-alpine-dark">
         <AgGridReact 
-          rowData={rowData}
+          rowData={dataTables}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowDragManaged={true}
@@ -1077,4 +1113,4 @@ const TableMarketWatchTest = () => {
   );
 };
 
-export default TableMarketWatchTest;
+export default React.memo(TableMarketWatchTest);

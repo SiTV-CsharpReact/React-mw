@@ -70,7 +70,7 @@ const showKLPT = (value: string) => {
 const TableMarketWatch = () => {
   //
 
-  const dataTables = useAppSelector((state :RootState) => state.table.ListDataTable);
+  const dataTables = useAppSelector((state) => state.table.ListDataTable);
   const { INDEX } = useAppSelector((state: RootState) => state.settingMarketwatch);
   const [sortedColumn, setSortedColumn] = useState("");
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);

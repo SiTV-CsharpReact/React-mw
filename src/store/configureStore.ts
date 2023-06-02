@@ -16,6 +16,7 @@ import { dataSlice } from '../components/tableMarketwatch/tableThunk';
 import {tableBuy} from '../components/tableMarketwatch/tableBuy';
 import changeThemeModeSlice from "../components/header/DarkModeSlice";
 import LayoutMarketWatchSLice from "../components/layoutMarketwatch/LayoutMarketWatchSLice";
+import { tableTestSlice } from "../components/tableMarketwatch/tableTestSlice";
 
 export const store = configureStore({
   reducer: {
@@ -50,7 +51,9 @@ export const store = configureStore({
     // change theme 
     settingColorMode: changeThemeModeSlice.reducer,
     // menu bar 
-    menuBar :  menuSlice.reducer
+    menuBar :  menuSlice.reducer,
+    // table test
+    tableTest: tableTestSlice.reducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

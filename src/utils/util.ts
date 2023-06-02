@@ -230,7 +230,7 @@ export const fStatusMarketHNX = (value?:string) =>{
   }
   //status sàn UPCOM
   export const fStatusMarketUPCOM = (value?:string) =>{
-    console.log(value)
+    // console.log(value)
     let valueStatus = ""
     g_arrUPMarketStatus.map((g_UPCStatus)=>{
       //console.log(g_HNXStatus[0])
@@ -240,7 +240,7 @@ export const fStatusMarketHNX = (value?:string) =>{
           }
           
     })
-    console.log(valueStatus)
+    // console.log(valueStatus)
     return valueStatus;
 
   }

@@ -282,7 +282,7 @@ const menuItems = [
   {
     name: "Thống kê",
     path: "/thong-ke-index",
-    floor: "",
+    floor: "TableTK",
     children: [
       {
         name: "Thống kê Index",

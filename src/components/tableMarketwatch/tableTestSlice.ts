@@ -23,52 +23,45 @@ type params = {
   Floor :string,
   Query:string
 }
+type RowData = {
+    MCK: string;
+    TC: string;
+    Tran: string;
+    San: string;
+    KL4: string;
+    G3: string;
+    KL3: string;
+    G2: string;
+    KL2: string;
+    G1: string;
+    KL1: string;
+    GiaKhop: string;
+    KLKhop: string;
+    Chenhlech: string;
+    G1B: string;
+    KL1B: string;
+    G2B: string;
+    KL2B: string;
+    G3B: string;
+    KL3B: string;
+    KL4B: string;
+    TKL: string;
+    MOC: string;
+    CaoNhat: string;
+    ThapNhat: string;
+    GTB: string;
+    NNMua: string;
+    NNBan: string;
+    RoomCL: string;
+    GDK: string;
+    Quyen: string;
+    CGKGN: string;
+    RowID: string;
+  };
 const dataTableAdapter = createEntityAdapter<DataTable>({
     selectId: (dataTable) => dataTable.RowID || '', // Chỉ định trường khóa
   });
-  const dataTableHSXAdapter = createEntityAdapter<DataTable>({
-    selectId: (dataTable) => dataTable.RowID || '', // Chỉ định trường khóa
-  });
-export const fetchTableHNXAsync = createAsyncThunk<
-  DataTable[],
-  string,
-  { state: RootState }
->(
-  "table/fetchTableHNXAsync",
-  async (params, thunkAPI) => {
-    const urlParams = new URLSearchParams();
-    urlParams.append("s", "quote");
-    urlParams.append("l", params);
-    try {
-      const responseHNX = await agent.TableHNX.list(urlParams);
-    
-      console.log(responseHNX)
-      return responseHNX;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue({ error: error.data });
-    }
-  }
-);
-export const fetchTableHSXAsync = createAsyncThunk<
-  DataTable[],
-  string,
-  { state: RootState }
->(
-  "table/fetchTableHSXAsync",
-  async (params, thunkAPI) => {
-    const urlParams = new URLSearchParams();
-    urlParams.append("s", "quote");
-    urlParams.append("l", params);
-    try {
-      const responseHNX = await agent.TableHSX.list(urlParams);
-    
-      console.log(responseHNX)
-      return responseHNX;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue({ error: error.data });
-    }
-  }
-);
+
 export const getDataTable = createAsyncThunk("table/getDataTable" , async (Param :params)=>{
     try {
       if(Param.Query === "thoa-thuan-hsx"){
@@ -85,7 +78,7 @@ export const getDataTable = createAsyncThunk("table/getDataTable" , async (Param
              }
             
              return  data
-      }
+   }
       else if( Param.Floor ==="danh-muc"){
         const DataHNX = await agent.ListDataTable.list("hnx" , `s=quote&l=${Param.Query}`)
         const DataHSX = await agent.ListDataTable.list("hsx" , `s=quote&l=${Param.Query}`)
@@ -127,17 +120,6 @@ export const getDataTable = createAsyncThunk("table/getDataTable" , async (Param
         return data   
    
       }
-      else if(Param.Floor ==="TableTK"){
-        const DataHNX = await agent.ListDataTable.list("hnx" , `s=quote&l=${Param.Query}`)
-        console.log("oke")
-        let data = {
-          index : 2,
-          floor :"TableTK",
-          NameFloor : Param.Floor,
-          product : DataHNX
-        }
-        return data
-      }
       else{  
             const result = await agent.ListDataTable.list(Param.Floor , Param.Query)
             let data = {
@@ -162,7 +144,7 @@ function initParams() {
     };
 }
 
-export const tableSlice = createSlice({
+export const tableTestSlice = createSlice({
     name: "table",
     initialState:dataTableAdapter.getInitialState<TableState>({
         productsLoaded: false,
@@ -191,37 +173,72 @@ export const tableSlice = createSlice({
           .addCase(getDataTable.fulfilled , (state, action) =>{
             state.productsLoaded = true;
             state.status = "idle";
-            let data = action.payload
+            let data = action.payload;
+            let dataTable = data?.product;
+            const mergedArray = dataTable.map((element: any) => {
+                const infoArray = element.Info.map(
+                  (subArray: any[]) => subArray[1]
+                );
+                const mergedObject: RowData = {
+                  MCK: infoArray[0],
+                  TC: infoArray[1],
+                  Tran: infoArray[2],
+                  San: infoArray[3],
+                  KL4: infoArray[4],
+                  G3: infoArray[5],
+                  KL3: infoArray[6],
+                  G2: infoArray[7],
+                  KL2: infoArray[8],
+                  G1: infoArray[9],
+                  KL1: infoArray[10],
+                  GiaKhop: infoArray[11],
+                  KLKhop: infoArray[12],
+                  Chenhlech: infoArray[13],
+                  G1B: infoArray[14],
+                  KL1B: infoArray[15],
+                  G2B: infoArray[16],
+                  KL2B: infoArray[17],
+                  G3B: infoArray[18],
+                  KL3B: infoArray[19],
+                  KL4B: infoArray[20],
+                  TKL: infoArray[21],
+                  MOC: infoArray[22],
+                  CaoNhat: infoArray[23],
+                  ThapNhat: infoArray[24],
+                  GTB: infoArray[25],
+                  NNMua: infoArray[26],
+                  NNBan: infoArray[27],
+                  RoomCL: infoArray[28],
+                  GDK: infoArray[29],
+                  Quyen: infoArray[30],
+                  CGKGN: infoArray[31],
+                  RowID: element.RowID,
+                };
+                return mergedObject;
+              });
+              console.log(mergedArray)
             if(data?.index === 0){
               if(data.NameFloor === "HNX"){
-                data?.product.map((obj:DataTable) =>
-                      obj.Info?.sort((a: any, b: any) => {
-                        const indexA = Number(a[0]);
-                        const indexB = Number(b[0]);
-                        if (indexA < indexB) {
-                          return -1;
-                        }
-                        if (indexA > indexB) {
-                          return 1;
-                        }
-                        return 0;
-                      }) )
+                // data?.product.map((obj:DataTable) =>
+                //       obj.Info?.sort((a: any, b: any) => {
+                //         const indexA = Number(a[0]);
+                //         const indexB = Number(b[0]);
+                //         if (indexA < indexB) {
+                //           return -1;
+                //         }
+                //         if (indexA > indexB) {
+                //           return 1;
+                //         }
+                //         return 0;
+                //       }) )
                      state.floor = "MAIN"
-                     state.ListDataTable = data?.product
+                     state.ListDataTable = mergedArray
                      state.NameFloor = data?.NameFloor
               }else{
                 state.floor = "MAIN"
-                state.ListDataTable = data?.product
+                state.ListDataTable = mergedArray
                 state.NameFloor = data?.NameFloor
               }
-            }
-            else if(data?.NameFloor === "TableTK"){
-             
-                state.DataPt = data.product?.DataPt?.PUT_EXEC
-                state.DataBi = data.product?.DataBi
-                state.floor = "TableTK" 
-                state.NameFloor = "HSX"
-              
             }
             else{
               if(data?.NameFloor === "HSX"){
@@ -251,7 +268,6 @@ export const tableSlice = createSlice({
     },
 });
 
-export default tableSlice;
+export default tableTestSlice;
 export const productSelectors = dataTableAdapter.getSelectors((state: RootState) =>state.table)
-export const productHSXSelectors = dataTableHSXAdapter.getSelectors((state: RootState) =>state.table)
-export const {setProductParams} = tableSlice.actions;
+export const {setProductParams} = tableTestSlice.actions;

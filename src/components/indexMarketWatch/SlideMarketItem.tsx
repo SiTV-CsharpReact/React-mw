@@ -34,7 +34,6 @@ const SlideMarketItem: React.FC<Props> = ({
   valueNoChange,
   status
 }: Props) => {
-  console.log(status)
   return (
     <>
       <li className="dvChart">
