@@ -1,4 +1,7 @@
 header {
+  .dark-text {
+    color: #fff !important;
+  }
   &.dark-header {
     background: #0a1929 !important;
     .header-left {
@@ -36,6 +39,7 @@ header {
 .dark-header {
   background: #0a1929 !important;
 }
+
 .dark-text{
-    color: #fff !important;
+  color: #fff !important;
 }

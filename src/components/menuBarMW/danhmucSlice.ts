@@ -7,7 +7,7 @@ export const fetchCategoryAsync = createAsyncThunk(
   async () => {
     // const res = await agent.Category.get();
   try {
-    const data = await  agent.Category.fetchData()
+    const data = await  agent.Category.get()
     return data
   } catch (error) {
     console.log("error ở đây", error);

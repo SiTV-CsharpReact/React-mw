@@ -53,7 +53,7 @@ export const g_arrHOMarketStatus = [
     ['F', 'Kết thúc nghỉ giữa đợt', ],
     ['H', 'Ngưng giao dịch tất cả CK', ],
     ['I', 'Bắt đầu nghỉ giữa đợt', ],
-    ['K', 'Kết thúc đợt Runn-off', ],
+    ['K', 'Đóng cửa', ],
     ['N', 'Giao dịch trở lại của CK cụ thể', ],
     ['R', 'Giao dịch trở lại tất cả CK', ],
     ['G', 'Đóng cửa', ],

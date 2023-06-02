@@ -4,11 +4,15 @@ import "ag-grid-enterprise";
 // import "ag-grid-community/styles/ag-grid.css";
 // import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./table.scss";
-import { setColorMarkettest } from "../../utils/util";
+import { formatNumber, formatNumberMarket, setColorMarkettest } from "../../utils/util";
 import { ColSpanParams } from "ag-grid-enterprise";
 import { ColDef, ColGroupDef } from "ag-grid-community";
-import { LicenseManager } from 'ag-grid-enterprise';
-LicenseManager.setLicenseKey('SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb');
+import { LicenseManager } from "ag-grid-enterprise";
+import PopupStock from "./PopupStock";
+
+LicenseManager.setLicenseKey(
+  "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
+);
 type RowData = {
   MCK: string;
   TC: string;
@@ -44,6 +48,7 @@ type RowData = {
   CGKGN: string;
   RowID: string;
 };
+
 const showKLPT = (value: string) => {
   // console.log(value);
   if (value === "showPT") {
@@ -81,18 +86,167 @@ const showKLPT = (value: string) => {
       }
       if (elementKhopLenhPT) elementKhopLenhPT.innerHTML = "%";
     }
-    // if(element) {
-    //   element.classList.remove("d-block-kl")
-    //   element.classList.add("d-none-kl")
-    // }
   }
 };
 
 const TableMarketWatchTest = () => {
+  useEffect(() => {
+    // const socket = io('ws://eztradereact.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=dnL897L7K8vCFfdm%2FU2B%2B8L3mgJxVC9qXt8YejdUGsaMoHgfj%2FPPyVumCVpn5PvW2sxZanXnmvvNU49qowDUIJ5hYyfNfe56xdHs6Gf3cOQ84am2ZKvvswyYk8wE4dyq&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=1');
+
+    // socket.on("newData", (data) => {
+    //   console.log(data);
+    // });
+    const socketHSX = new WebSocket(
+      "ws://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=QFYjcEdKNTcQpQ5eM8gSgArpZ8iaLyhAzsOc2yA9Uzj6jAmKV%2Bnt5UMBQQ6IxAg2ytcl36jeKKHXgSbB5HdJNA%2FVdbAn7QKNCQ76UmWHPecxhUD87ZajL354hy24brH6&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=8"
+    );
+    socketHSX.onopen = () => {
+      console.log("WebSocket connection established.");
+    };
+    socketHSX.onmessage = (event) => {
+      updateQuote(event.data);
+      // updateDataRealTime(event.data);
+      // updateQuote(event.data)
+      // setDataHNX(event.data);
+    };
+    socketHSX.onclose = () => {
+      console.log("WebSocket connection closed.");
+    };
+    return () => {
+      socketHSX.close();
+    };
+  }, []);
+  useEffect(() => {
+    const socketHNX = new WebSocket(
+      "ws://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=IWiKAtteQ0gfuDm%2Fq6LLyUusRcee06oM2k6xVYIgeWHtlePjfeRZFnHIYmMvGt2F1PSB1EsKRw5wHFLA7D0C6bNau3lUFHlFFPF59RMTl3KHk3PRDqc9rmfE904Oy5NV&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=1"
+    );
+    socketHNX.onopen = () => {
+      console.log("WebSocket connection established.");
+    };
+    socketHNX.onmessage = (event) => {
+      // updateQuote(event.data)
+      updateQuote(event.data);
+      // setDataHNX(event.data);
+    };
+    socketHNX.onclose = () => {
+      console.log("WebSocket connection closed.");
+    };
+    return () => {
+      socketHNX.close();
+    };
+  }, []);
+  const updateQuote = (objRealtime: any) => {
+    // objRealtime = {"RowID":"BCC","Info":[[5,83.5],[7,83.6],[8,100],[11,84.1],[12,101900],[15,77500],[16,84.2],[17,12900],[18,84.3],[19,2000],[20,0],[21,839400],[22,84.2]]};
+    //  updateTableHNX(objRealtime)
+   
+    var dataHNXRealTime = JSON.parse(objRealtime);
+    var arrDatas = [];
+    if (typeof dataHNXRealTime !== "undefined") {
+      const dataRT = Object.keys(dataHNXRealTime);
+
+      if (dataRT.length !== 0) {
+        const dataM = dataHNXRealTime.M;
+        if (typeof dataM !== "undefined") {
+          dataM.map(
+            (dataLT: any) => (
+              // console.log(dataM),
+              (arrDatas = JSON.parse(dataLT.A[0].Change)),
+              // console.log(arrDatas),
+              arrDatas.map((arrData: any) => updateTableHNX(arrData))
+            )
+          );
+          // console.log(dataM)
+        }
+      }
+    } else {
+      // console.log(dataHNXRealTime)
+    }
+   };
+   const updateTableHNX = (dataHNX: any) => {
+    const arrRowID = dataHNX.RowID;
+    const arrInfo = dataHNX.Info;
+    if (dataHNX) {
+      //console.log(dataHNX)
+      // data trả ra object có arrRowId
+      if (arrRowID) {
+        // data >2 map ra
+        if (dataHNX.Info.length > 1) {
+          dataHNX.Info.map((dataInfo: any) =>
+            updateDataTable(arrRowID, dataInfo[0], dataInfo[1])
+          );
+        }
+        // data = 1
+        else {
+          updateDataTable(arrRowID, arrInfo[0][0], arrInfo[0][1]);
+        }
+      }
+    }
+  };
+
+
+  const updateDataTable = (
+    arrRowID: string,
+    arrInfo: number,
+    arrValue: number
+  ) => {
+    // getID các giá trị cần lấy
+    // const arrayPrice = [5, 7, 9, 11, 14, 16, 18];d
+    // const valueTC = document.querySelector(`div[data-index="5"][data-comp="BCC"]`)?.innerHTML;
+    const valueTCS = document.querySelector(`div[data-index="${arrInfo}"][data-comp="${arrRowID}"]`) as HTMLElement;
+    if(valueTCS){
+      valueTCS.innerHTML = `${formatNumberMarket(arrValue)}`;
+      // gán màu bg
+      const test =  valueTCS.parentElement;
+      if(test){
+        test.style.backgroundColor = "#888888";
+        setTimeout(function () {
+          test.style.backgroundColor = "";
+        }, 500);
+      }
+      // sau 0.5s xóa màu bg
+      
+    }
+  }
+
+  const widthWindow = window.innerWidth;
+  console.log(widthWindow)
+  const RowDataIndex = {
+    MCK: 0,
+    TC: 1,
+    Tran: 2,
+    San: 3,
+    KL4: 4,
+    G3: 5,
+    KL3: 6,
+    G2: 7,
+    KL2: 8,
+    G1: 9,
+    KL1: 10,
+    GiaKhop: 11,
+    KLKhop: 12,
+    Chenhlech: 13,
+    G1B: 14,
+    KL1B: 15,
+    G2B: 16,
+    KL2B: 17,
+    G3B: 18,
+    KL3B: 19,
+    KL4B: 20,
+    TKL: 21,
+    MOC: 22,
+    CaoNhat: 23,
+    ThapNhat: 24,
+    GTB: 25,
+    NNMua: 26,
+    NNBan: 27,
+    RoomCL: 28,
+    GDK: 29,
+    Quyen: 30,
+    CGKGN: 31,
+    RowID: String,
+  };
   const containerStyle = { width: "100%", height: "100%" };
   const gridStyle = { height: "100%", width: "100%" };
   const gridApi = useRef<any>(null); // Declare gridApi reference
-
   const [rowData, setRowData] = useState<RowData[]>([]);
 
   const columnDefs = [
@@ -107,13 +261,25 @@ const TableMarketWatchTest = () => {
       // cellClass: "custom-cell",
       headerClass: "custom-header",
       cellStyle: (params: any) => {
-        console.log("ktra", params); // Xem giá trị của params trong console
+        // console.log("ktra", params); // Xem giá trị của params trong console
         return {
           color: setColorMarkettest("MCK", params),
           textAlign: "left",
         };
       },
-   
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.MCK; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+
+        //console.log("Column Index:", dataIndex);
+
+        const value = params.value; // Get the value of the cell
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
 
     {
@@ -134,7 +300,19 @@ const TableMarketWatchTest = () => {
         fontWeight: "",
         color: setColorMarkettest("", params),
       }),
-      
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.TC; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+
+        console.log("Column Index:", dataIndex);
+
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
     {
       field: "Tran",
@@ -150,6 +328,19 @@ const TableMarketWatchTest = () => {
         color: setColorMarkettest("", params),
         textAlign: "right",
       }),
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.Tran; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+
+        console.log("Column Index:", dataIndex);
+
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
     {
       field: "San",
@@ -165,6 +356,19 @@ const TableMarketWatchTest = () => {
         color: setColorMarkettest("", params),
         textAlign: "right",
       }),
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.San; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+
+        console.log("Column Index:", dataIndex);
+
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
 
     {
@@ -187,18 +391,13 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("", params),
             textAlign: "right",
           }),
-          cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
+          cellRenderer: (params: any) => {      
+            const dataIndex = RowDataIndex.G3; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
-    
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {value}
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+                {formatNumberMarket(value)}
               </div>
             );
           },
@@ -208,6 +407,7 @@ const TableMarketWatchTest = () => {
           headerName: "KL3",
           suppressMenu: true,
           width: 62,
+
           minWidth: 50,
           heigth: 34,
           maxWidth: 100,
@@ -218,23 +418,19 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("KL3", params),
             textAlign: "right",
           }),
-          cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
-            const value = params.value; 
+          cellRenderer: (params: any) => {      
+            const dataIndex = RowDataIndex.KL3; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
     
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {value}
-              </div>
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+              {formatNumberMarket(value)}
+            </div>
             );
           },
         },
-        
+
         {
           field: "G2",
           headerName: "G2",
@@ -250,18 +446,14 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
+            const dataIndex = RowDataIndex.G2; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
     
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {value}
-              </div>
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+              {formatNumberMarket(value)}
+            </div>
             );
           },
         },
@@ -281,18 +473,14 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
+            const dataIndex = RowDataIndex.KL2; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
     
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {value}
-              </div>
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+              {formatNumberMarket(value)}
+            </div>
             );
           },
         },
@@ -311,18 +499,14 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
+            const dataIndex = RowDataIndex.G1; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
     
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {value}
-              </div>
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+              {formatNumberMarket(value)}
+            </div>
             );
           },
         },
@@ -341,18 +525,14 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
+            const dataIndex = RowDataIndex.KL1; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
     
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {value}
-              </div>
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+              {formatNumberMarket(value)}
+            </div>
             );
           },
         },
@@ -361,7 +541,6 @@ const TableMarketWatchTest = () => {
     {
       headerName: "Khớp lệnh",
       headerClass: "custom-header",
-
       children: [
         {
           field: "GiaKhop",
@@ -378,18 +557,14 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
+            const dataIndex = RowDataIndex.GiaKhop; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
     
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {value}
-              </div>
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+              {formatNumberMarket(value)}
+            </div>
             );
           },
         },
@@ -408,36 +583,33 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
+            const dataIndex = RowDataIndex.KLKhop; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
     
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {value}
-              </div>
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+              {formatNumberMarket(value)}
+            </div>
             );
           },
         },
         {
           field: "Chenhlech",
-          headerName: () => {
-            const buttonElement = document.createElement("button");
-            buttonElement.innerHTML = "+/-";
-            buttonElement.addEventListener("click", () => {
-              // Xử lý sự kiện khi button được nhấp
-              showKLPT("showPT");
-            });
+          headerName:"+/-",
+          // headerName: () => {
+          //   const buttonElement = document.createElement("button");
+          //   buttonElement.innerHTML = "+/-";
+          //   buttonElement.addEventListener("click", () => {
+          //     // Xử lý sự kiện khi button được nhấp
+          //     showKLPT("showPT");
+          //   });
 
-            const headerElement = document.createElement("div");
-            headerElement.appendChild(buttonElement);
+          //   const headerElement = document.createElement("div");
+          //   headerElement.appendChild(buttonElement);
 
-            return headerElement;
-          },
+          //   return headerElement;
+          // },
           suppressMenu: true,
           width: 50,
           minWidth: 50,
@@ -449,18 +621,12 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("Chenhlech", params),
             textAlign: "right",
           }),
-           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
+           cellRenderer: (params: any) => {       
+            const dataIndex = RowDataIndex.Chenhlech; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
             const value = params.value; // Get the value of the cell
-    
             return (
               <div data-index={dataIndex} className="custom-cell">
-                {value}
+                {formatNumberMarket(value)}
               </div>
             );
           },
@@ -471,7 +637,6 @@ const TableMarketWatchTest = () => {
     {
       headerName: "Bán",
       headerClass: "custom-header",
-
       children: [
         {
           field: "G1B",
@@ -488,24 +653,19 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
            cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
+            const dataIndex = RowDataIndex.G1B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
-    
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {value}
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+                {formatNumberMarket(value)}
               </div>
             );
           },
         },
         {
           field: "KL1B",
-          headerName: "KL1B",
+          headerName: "KL1",
           suppressMenu: true,
           width: 50,
           minWidth: 50,
@@ -518,24 +678,19 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
+            const dataIndex = RowDataIndex.KL1B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
-    
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {value}
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+                {formatNumberMarket(value)}
               </div>
             );
           },
         },
         {
           field: "G2B",
-          headerName: "G2B",
+          headerName: "G2",
           suppressMenu: true,
           width: 50,
           minWidth: 50,
@@ -548,24 +703,19 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
+            const dataIndex = RowDataIndex.G2B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
-    
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {value}
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+                {formatNumberMarket(value)}
               </div>
             );
           },
         },
         {
           field: "KL2B",
-          headerName: "KL2B",
+          headerName: "KL2",
           suppressMenu: true,
           width: 50,
           minWidth: 50,
@@ -578,24 +728,19 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
+            const dataIndex = RowDataIndex.KL2B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
-    
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {value}
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+                {formatNumberMarket(value)}
               </div>
             );
           },
         },
         {
           field: "G3B",
-          headerName: "G3B",
+          headerName: "G3",
           cellClass: "score-cell",
           suppressMenu: true,
           width: 50,
@@ -608,24 +753,19 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
+            const dataIndex = RowDataIndex.G3B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
-    
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {value}
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+                {formatNumberMarket(value)}
               </div>
             );
           },
         },
         {
           field: "KL3B",
-          headerName: "KL3B",
+          headerName: "KL3",
           suppressMenu: true,
           width: 60,
           minWidth: 50,
@@ -638,17 +778,12 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-            const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-            const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-    
-            console.log("Column Index:", dataIndex);
-    
+            const dataIndex = RowDataIndex.KL3B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
-    
+            const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {value}
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+                {formatNumberMarket(value)}
               </div>
             );
           },
@@ -658,58 +793,78 @@ const TableMarketWatchTest = () => {
 
     {
       field: "TKL",
-      headerName: "TKL",
+      headerName: "Tổng KL",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
       width: 60,
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
-      
-    },
-    {
-      field: "MOC",
-      headerName: "MOC",
-      cellClass: "score-cell tc-cell",
-      spanHeaderHeight: true,
-      width: 52,
-      maxWidth: 100,
-      headerClass: "custom-header tc-header",
-      suppressMenu: true,
-    },
-    {
-      field: "CaoNhat",
-      headerName: "CaoNhat",
-      cellClass: "score-cell tc-cell",
-      spanHeaderHeight: true,
-      width: 52,
-      maxWidth: 100,
-      headerClass: "custom-header tc-header",
-      cellStyle: (params: any) => ({
-        fontWeight: "",
-        color: setColorMarkettest("", params),
-        textAlign: "right",
-      }),
       cellRenderer: (params: any) => {
-        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-
-        console.log("Column Index:", dataIndex);
-
+        const dataIndex = RowDataIndex.TKL; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
         const value = params.value; // Get the value of the cell
-
+        const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} className="custom-cell">
-            {value}
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {formatNumberMarket(value)}
           </div>
         );
       },
+    },
+    {
+      field: "MOC",
+      headerName: "Mở Cửa",
+      cellClass: "score-cell tc-cell",
+      spanHeaderHeight: true,
+      width: 52,
+      maxWidth: 100,
+      headerClass: "custom-header tc-header",
       suppressMenu: true,
+      cellStyle: (params: any) => ({
+        fontWeight: "",
+        color: setColorMarkettest("", params),
+        textAlign: "right",
+      }),
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.TKL; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+        const value = params.value; // Get the value of the cell
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {formatNumberMarket(value)}
+          </div>
+        );
+      }
+    },
+    {
+      field: "CaoNhat",
+      headerName: "Cao Nhất",
+      cellClass: "score-cell tc-cell",
+      spanHeaderHeight: true,
+      width: 52,
+      maxWidth: 100,
+      headerClass: "custom-header tc-header",
+      suppressMenu: true,
+      cellStyle: (params: any) => ({
+        fontWeight: "",
+        color: setColorMarkettest("", params),
+        textAlign: "right",
+      }),
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.CaoNhat; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+        const value = params.value; // Get the value of the cell
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {formatNumberMarket(value)}
+          </div>
+        );
+      },
+     
     },
     {
       field: "ThapNhat",
-      headerName: "ThapNhat",
+      headerName: "Thấp nhất",
       spanHeaderHeight: true,
       width: 52,
       maxWidth: 100,
@@ -721,17 +876,12 @@ const TableMarketWatchTest = () => {
         textAlign: "right",
       }),
       cellRenderer: (params: any) => {
-        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-
-        console.log("Column Index:", dataIndex);
-
+        const dataIndex = RowDataIndex.ThapNhat; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
         const value = params.value; // Get the value of the cell
-
+        const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} className="custom-cell">
-            {value}
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {formatNumberMarket(value)}
           </div>
         );
       },
@@ -739,7 +889,7 @@ const TableMarketWatchTest = () => {
     },
     {
       field: "NNMua",
-      headerName: "NNMua",
+      headerName: "NN mua",
       spanHeaderHeight: true,
       width: 62,
       maxWidth: 100,
@@ -747,68 +897,52 @@ const TableMarketWatchTest = () => {
       headerClass: "custom-header tc-header",
       suppressMenu: true,
       cellRenderer: (params: any) => {
-        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-
-        console.log("Column Index:", dataIndex);
-
+        const dataIndex = RowDataIndex.NNMua; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
         const value = params.value; // Get the value of the cell
-
+        const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} className="custom-cell">
-            {value}
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {formatNumberMarket(value)}
           </div>
         );
       },
     },
     {
       field: "NNBan",
-      headerName: "NNBan",
+      headerName: "NN bán",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
-      width: 73,
+      width: 62,
       maxWidth: 100,
-
       headerClass: "custom-header tc-header",
       suppressMenu: true,
       cellRenderer: (params: any) => {
-        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-
-        console.log("Column Index:", dataIndex);
-
+        const dataIndex = RowDataIndex.NNBan; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
         const value = params.value; // Get the value of the cell
-
+        const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} className="custom-cell">
-            {value}
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {formatNumberMarket(value)}
           </div>
         );
       },
     },
     {
       field: "RoomCL",
-      headerName: "RoomCL ",
+      headerName: "Room Còn lại ",
       spanHeaderHeight: true,
-      width: 62,
+      width: 73,
       maxWidth: 100,
       cellClass: "score-cell tc-cell",
       headerClass: "custom-header  tc-header",
       suppressMenu: true,
       cellRenderer: (params: any) => {
-        const allColumns = params.columnApi.getAllGridColumns(); // Retrieve all columns
-        const column = allColumns.find((col: any) => col.getInstanceId() === params.column.getInstanceId()); // Find the matching column
-        const dataIndex = column ? allColumns.indexOf(column) : -1; // Get the index of the column
-
-        console.log("Column Index:", dataIndex);
-
+        const dataIndex = RowDataIndex.RoomCL; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
         const value = params.value; // Get the value of the cell
-
+        const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} className="custom-cell">
-            {value}
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {formatNumberMarket(value)}
           </div>
         );
       },
@@ -818,10 +952,10 @@ const TableMarketWatchTest = () => {
   ];
 
   const fetchData = () => {
-    fetch("http://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=HNXIndex")
+    fetch("http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=VN30")
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data); // Xem dữ liệu trả về từ API trong console
+        // console.log(data); // Xem dữ liệu trả về từ API trong console
         if (Array.isArray(data)) {
           // Chỉnh sửa điều kiện kiểm tra dữ liệu
           for (let index = 0; index < data.length; index++) {
@@ -848,32 +982,6 @@ const TableMarketWatchTest = () => {
                 (subArray: any[]) => subArray[1]
               );
               const mergedObject: RowData = {
-                // MCK: infoArray[0],
-                // TC: infoArray[1],
-                // Tran: infoArray[2],
-                // San: infoArray[3],
-                // G3: infoArray[4],
-                // KL3: infoArray[5],
-                // G2: infoArray[6],
-                // KL2: infoArray[7],
-                // G1: infoArray[8],
-                // KL1: infoArray[9],
-                // Gia: infoArray[10],
-                // KL: infoArray[11],
-                // KLTEXT: infoArray[12],
-                // G1B: infoArray[13],
-                // KL1B: infoArray[14],
-                // G2B: infoArray[15],
-                // KL2B: infoArray[16],
-                // G3B: infoArray[17],
-                // KL3B: infoArray[18],
-                // TKL: infoArray[19],
-                // MOC: infoArray[20],
-                // CaoNhat: infoArray[21],
-                // ThapNhat: infoArray[22],
-                // NNMua: infoArray[23],
-                // NNBan: infoArray[24],
-                // RoomCL: infoArray[25],
                 MCK: infoArray[0],
                 TC: infoArray[1],
                 Tran: infoArray[2],
@@ -933,11 +1041,22 @@ const TableMarketWatchTest = () => {
     filter: true,
     autoSize: true,
   };
+  const gridOptions = {
+    // Các cấu hình khác của ag-Grid
 
+    suppressCellSelection: true,
+    suppressRowClickSelection: true,
+    suppressContextMenu: true,
+    suppressCellContextMenu: true,
+    suppressRowContextMenu: true,
+  };
+  document.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+  });
   return (
     <div style={containerStyle}>
       <div style={gridStyle} className="ag-theme-alpine-dark">
-        <AgGridReact
+        <AgGridReact 
           rowData={rowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
@@ -946,12 +1065,13 @@ const TableMarketWatchTest = () => {
           rowDragMultiRow={true}
           rowSelection={"multiple"}
           animateRows={true}
+          gridOptions={gridOptions}
           onGridReady={(params: any) => {
             params.api.sizeColumnsToFit(undefined, {
               suppressSizeToFit: false,
             });
           }}
-        ></AgGridReact>
+        />
       </div>
     </div>
   );
