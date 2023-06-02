@@ -534,7 +534,7 @@ tr.border-bottom:last-child {
     text-align: start;
     justify-content: start;
     // padding: 0px 10px !important;
-    padding-left: 20% !important;
+    // padding-left: 5% !important;
 }
 .ag-header-cell-text{
     margin: 0 auto;
@@ -548,6 +548,12 @@ tr.border-bottom:last-child {
 .ag-cell{
     padding: 0px 3px 0px !important;
     
+}
+.checkbox_price{
+    border-radius: 2px;
+    height: 13px;
+    width: 13px;
+    margin-left: 2px; 
 }
 // .ag-row-even{
 //     height: 25px !important;

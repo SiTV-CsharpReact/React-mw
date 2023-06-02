@@ -316,8 +316,11 @@ const TableMarketWatchTest = () => {
           
           <Tooltip title={getCompanyNameByCode(value)}>
           <div data-index={dataIndex} data-comp={rowid} className="custom-cell cell-stock has-symbol company-tooltip">
-            <input type="checkbox" />
-           {value}
+            <input type="checkbox" className="checkbox_price" />
+            <span className="pl-1 pt-1">
+            {value}
+            </span>
+          
          </div>
          </Tooltip>
         );
