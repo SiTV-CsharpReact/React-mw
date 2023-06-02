@@ -2,22 +2,19 @@ import React, { useEffect } from "react";
 import { Link,  } from "react-router-dom";
 import { RootState, useAppDispatch } from "../../store/configureStore";
 import  { listStock } from "./codeListSlice";
-import { fetchCategoryAsync } from "./danhmucSlice";
+import { activeMenuDanhmuc, fetchCategoryAsync } from "./danhmucSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchTableHNXAsync, fetchTableHSXAsync, getDataTable, setProductParams } from "../tableMarketwatch/tableSlice";
+import { setActiveMenu } from "./menuSlice";
 // import { fetchDataTableHNXAsync, } from "../tableMarketwatch/tableSlice";
 
 const DanhMuc = () => {
   const dispatch = useAppDispatch();
-  const { isLoading, data, status } = useSelector(
+  const { isLoading, data, status, row , name} = useSelector(
     (state: RootState) => state.categories
   );
-  
-//  console.log({ isLoading, data, status })
- useEffect(() => {
-  dispatch(fetchCategoryAsync());
-}, [dispatch]);
+
 function handleDispatch(item:string) {
   dispatch(fetchTableHNXAsync(item))
   dispatch(fetchTableHSXAsync(item))
@@ -27,10 +24,10 @@ function handleDispatch(item:string) {
   // navigate('/chung-khoan/danh-muc');
   
 }
-
 const handleItemChildClick = async (
   name: string,
   query: string,
+  row: string,
   floor: string
 ) => {
   // setActiveMenuItemChild(name);
@@ -39,17 +36,27 @@ const handleItemChildClick = async (
     Floor: floor,
     Query: query,
   };
+  let activeCate ={
+    name, row
+  }
+  let activeMenu = {
+    keyMenu : -1,
+    nameMenu : ""
+  }
+    dispatch(setActiveMenu(activeMenu)) // cập nhật active menu 
+    dispatch(activeMenuDanhmuc(activeCate )) // cập nhật active danh mục 
   await dispatch(getDataTable(data));
 };
   return (
-    <div className="group list-sub-menu">
-    <span className="text-13px">Danh mục</span>
+    <div className= {`group list-sub-menu ${ row && name ? "activeBgCate" : " " }`}> 
+      <span className="text-13px ">
+          Danh mục{name ?`: ${name}` : ""}    
+      </span>
       <ul className="absolute hidden text-black group-hover:block z-40 sub-menu">
       {data && data.Data.map((item: any, index: number) => (
           <React.Fragment key={index}>
             <li className="relative">
-              <Link to="" className=" "  onClick={() => handleItemChildClick(item.name,item.List,'danh-muc')}> 
-          
+              <Link to="" className=" "  onClick={() => handleItemChildClick(item.Name,item.List ,item.Row ,'danh-muc')}> 
                 {item.Name}
               </Link>  
               <span id={`btDel${index}`} className="imgDel keep" />

@@ -6,52 +6,52 @@ import dayjs, { Dayjs } from 'dayjs';
 const { RangePicker } = DatePicker;
 
 const TableThongKeMarketWatch = () => {
-    const [products, setProducts] = useState([]);
+    // const [products, setProducts] = useState([]);
 
-    const params = useParams<{ id: string }>()
-    const paramstock  = stocks.find(
-      paramstock => paramstock.id === params.id
-    )
-    useEffect(()=>{
-        if(paramstock){
-         if(paramstock.id){
-           fetchTable(paramstock.id)
-         }
-         else{
-           fetchTable("HNX")
-         }
-        }
-       },[paramstock?.id])
-      //console.log(products)
-     // useEffect(()=>{
-     //     dispatch(fetchTableHNXAsync())
-     //     //dispatch(fetchStatusAsync())
-     // },[dispatch])
-     const fetchTable = async(param:string) => {
-       let valueParam ="thong-ke-index";
-        switch(param) {
-         case "thong-ke-index":
-           valueParam= "s=bi";
-           break;
-           case "thong-ke-gia":
-             valueParam = "s=bi";
-             break;
-              case "thong-ke-dat-lenh":
-                valueParam = "s=bi";
-                break;
-                  case "Giao-dich-KL-NDTNN":
-                    valueParam = "s=bi";
-                    break;
-                    case "Giao-dich-TT-NDTNN":
-                      valueParam = "s=bi";
-                      break;
-           default:
-             break;
-        }
-         const res = await fetch(`http://marketstream.fpts.com.vn/hnx/data.ashx?${valueParam}`);
-         const data = await res.json();
-         setProducts(data)
-     }
+    // const params = useParams<{ id: string }>()
+    // const paramstock  = stocks.find(
+    //   paramstock => paramstock.id === params.id
+    // )
+    // useEffect(()=>{
+    //     if(paramstock){
+    //      if(paramstock.id){
+    //        fetchTable(paramstock.id)
+    //      }
+    //      else{
+    //        fetchTable("HNX")
+    //      }
+    //     }
+    //    },[paramstock?.id])
+    //   //console.log(products)
+    //  // useEffect(()=>{
+    //  //     dispatch(fetchTableHNXAsync())
+    //  //     //dispatch(fetchStatusAsync())
+    //  // },[dispatch])
+    //  const fetchTable = async(param:string) => {
+    //    let valueParam ="thong-ke-index";
+    //     switch(param) {
+    //      case "thong-ke-index":
+    //        valueParam= "s=bi";
+    //        break;
+    //        case "thong-ke-gia":
+    //          valueParam = "s=bi";
+    //          break;
+    //           case "thong-ke-dat-lenh":
+    //             valueParam = "s=bi";
+    //             break;
+    //               case "Giao-dich-KL-NDTNN":
+    //                 valueParam = "s=bi";
+    //                 break;
+    //                 case "Giao-dich-TT-NDTNN":
+    //                   valueParam = "s=bi";
+    //                   break;
+    //        default:
+    //          break;
+    //     }
+    //      const res = await fetch(`http://marketstream.fpts.com.vn/hnx/data.ashx?${valueParam}`);
+    //      const data = await res.json();
+    //      setProducts(data)
+    //  }
       
      const defaultDate: Dayjs = dayjs();
   return (

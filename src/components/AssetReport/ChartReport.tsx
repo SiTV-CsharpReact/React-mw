@@ -51,9 +51,10 @@ const ChartReport: any = (date: any) => {
         borderWidth: 1,
         fill: true,
         pointBorderColor: "#d0ffb0",
-        pointBackgroundColor: "#70ad47",
+        pointBackgroundColor: "red",
         pointRadius: 4,
         pointHoverRadius: 6,
+
         // pointHitRadius: 10,
         // pointBorderWidth: 4,
       },
@@ -64,9 +65,9 @@ const ChartReport: any = (date: any) => {
         data: assetReport.Table2?.map((item: any) => item.ANAV)
           ?.splice(0, Number(date.date))
           .reverse(),
-        borderWidth: 0,
+        borderWidth: 1,
         barThickness: 42,
-        pointStyle: "rectRounded",
+        // pointStyle: "rectRounded",
       },
     ],
     // responsive: true,
@@ -76,6 +77,8 @@ const ChartReport: any = (date: any) => {
   const options = {
     plugins: {
       tooltip: {
+        // usePointStyle: true,
+        pointStyle: "cirlce",
         backgroundColor: "#fff2cc" as const,
         titleColor: "#000",
         bodyColor: "#000",
@@ -94,34 +97,31 @@ const ChartReport: any = (date: any) => {
           beforeBody: function (context: any) {
             // console.log(context);
 
-            const label_1 = "Phát sinh tăng: 0₫";
+            const label_1 = `Phát sinh tăng: 0₫ 
+Phát sinh tăng: 0₫`;
             return label_1;
           },
-          // afterTitle: function (context: any) {
-          //   const label_2 = "Phát sinh giảm: 0₫";
-          //   return label_2;
-          // },
-          footer: function (context: any) {
-            // console.log(context);
-          },
           label: (context: any) => {
-            console.log(context);
-
             let label = "";
             if (context.parsed.y) {
               label = context.parsed.y + "%";
             }
             return label;
           },
+          labelPointStyle: function (context: any) {
+            // return "circle";
+            console.log(context.chart.legend.legendItems[0]);
+
+            context.chart.legend.legendItems[0].pointStyle = "line";
+            context.chart.legend.legendItems[0].strokeStyle = "#000";
+          },
         },
       },
-
       legend: {
         // display: false,
         position: "bottom" as const,
         labels: {
           usePointStyle: true,
-          // fontColor: `white`,
         },
       },
     },
@@ -144,6 +144,52 @@ const ChartReport: any = (date: any) => {
         },
       },
     },
+    // series: [
+    //   {
+    //     type: "column",
+    //     name: "NAV",
+    //     data: 'chartSeriesData',
+    //     color: "#70AD47",
+    //     marker: {
+    //       symbol: "auto",
+    //     },
+    //     yAxis: 0,
+    //     tooltip: {
+    //       pointFormatter: function () {
+    //         return `<span style="font-size:14px; font-weight:bold; ">'dasa'</span></br><span>'dsa'<span>$dsa`;
+    //       },
+    //     },
+    //   },
+    //   {
+    //     color: "#595959",
+    //     marker: {
+    //       symbol: "circle",
+    //       fillColorFun: (pointData: any) => {
+    //         return pointData >= 0 ? "#548235" : "#C00000";
+    //       },
+    //     },
+    //     yAxis: 1,
+    //     lineWidth: 1,
+    //     name: "REPORT_BD",
+    //     type: "line",
+    //     data: "chartSeriesDataLine",
+    //     tooltip: {
+    //       valueSuffix: "%",
+    //       pointFormatter: function () {
+    //         return (
+    //           "" +
+    //           '<span style="color:' +
+    //           "this.color" +
+    //           ';">\u25CF ' +
+    //           "</span> " +
+    //           '<span style="font-size:14px; font-weight:bold;"> ' +
+    //           "this.nav" +
+    //           ' <span style="text-decoration: underline;"></span>'
+    //         );
+    //       },
+    //     },
+    //   },
+    // ],
     responsive: true,
   };
 

@@ -27,7 +27,7 @@ const PendingOrders: React.FC<Props> = (value) => {
       console.log("response", response);
       const jsonData = response.data;
       const uniqueData = uniqBy(jsonData, "ASTOCKCODE");
-      console.log("uniqueData",uniqueData)
+      // console.log("uniqueData",uniqueData)
       setDataAfter((prevState: any) => ({
         ...prevState,
         dataValue: uniqueData,
@@ -473,4 +473,4 @@ const PendingOrders: React.FC<Props> = (value) => {
   );
 };
 
-export default PendingOrders;
+export default React.memo(PendingOrders);

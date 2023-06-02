@@ -416,7 +416,7 @@ tr.border-bottom:last-child {
 //     left: 50%;
 //     margin-left: -80px;
 // }
-.custom-header{
+.custom-header {
     user-select: none;
     cursor: pointer;
     font-weight: bold;
@@ -424,84 +424,138 @@ tr.border-bottom:last-child {
     font-size: 8pt;
     background: #1d1d1d;
     color: white !important;
-    border: 1px solid #858585 !important;
     padding: 8px;
     line-height: 1.42857143;
     vertical-align: top;
     text-align: center;
     padding: 5px 7px;
-
-
-}
-.ag-header-group-cell{
+  }
+  .ag-row-even {
+    cursor: move ;
+  }
+  .ag-header-group-cell {
     padding: 5px 7px;
     user-select: none;
     background: #1d1d1d;
     color: white !important;
-    cursor: pointer;
+    cursor: pointer ;
     font-weight: bold;
     font-family: arial;
-    font-size: .688rem;
+    font-size: 0.688rem;
     // border: 1px solid #858585 !important;
     padding: 8px;
     line-height: 1.42857143;
     vertical-align: top;
     text-align: center;
-}
-.score-cell {
+  }
+  .ag-header-group-text {
+    margin: 0 auto !important;
+  }
+  .ag-header-cell-text {
+    margin: 0 auto !important;
+  }
+  .ag-header-cell-label {
+    text-overflow: clip !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    margin: 0 auto !important;
+  }
+  
+  .score-cell {
     font-family: Arial;
-    font-size: .688rem;
+    font-size: 0.688rem;
     text-align: right;
-    border: 1px solid #858585 !important;
+    //  border-right: 1px solid #505050 !important;
+    border-left: 1px solid #505050 !important;
+    // border-bottom: 1px solid #505050 !important;
     width: 100%;
     max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
+  .custom-cell {
+    display: flex;
+    align-items: center;
+    text-align: end;
+    justify-content: end
+  }
+  .custom-cell span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .score-cell.text-white {
     color: white;
   }
-  
   .score-cell.text-blue {
     color: blue;
   }
-  
   .score-cell.text-violet {
     color: violet;
   }
-  
   .score-cell.text-yellow {
-    color: #F7FF31;
+    color: #f7ff31;
   }
-  
   .score-cell.text-green {
     color: green;
-  }
-  
-  .score-cell.text-red {
+  } 
+ .score-cell.text-red {
     color: red;
-  }
+  }  
   .ag-grid-container {
-    background: #1d1d1d; /* Màu nền tùy chỉnh */
+    background: #05040e; /* Màu nền tùy chỉnh */
   }
-  
   .tc-header {
-    background-color: #505050; /* Màu nền cho header của trường TC */
-    border: 1px solid #858585 !important;
-
+    background-color: #444; /* Màu nền cho header của trường TC */
   }
-  
+  .custom-cell {
+    margin: 0 auto;
+  }
   .tc-cell {
-    background-color: #505050; /* Màu nền cho cell của trường TC */
-
+    background-color: #444; /* Màu nền cho cell của trường TC */
+    border-left: 1px solid #858585 !important; 
+    // border-bottom: 1px solid #858585  !important;
   }
   .custom-header {
-    border: 1px solid #858585 !important;
+    border-left: 1px solid #858585 !important;
   }
-  .ag-theme-alpine-dark{
+  .ag-theme-alpine-dark {
     --ag-grid-size: 4px !important;
     --ag-list-item-height: 30px !important;
-
   }
+.custom-cell{
+    font-size: 10pt !important;
+    height: 22px !important;
+}
+.cell-stock{
+    font-size: 12px !important;
+    align-items: center;
+    text-align: start;
+    justify-content: start;
+    // padding: 0px 10px !important;
+    padding-left: 20% !important;
+}
+.ag-header-cell-text{
+    margin: 0 auto;
+}
+.ag-row{
+    background-color: #1D1D1D;
+}
+// .ag-row-odd {
+//     background-color: #3b3b3b;
+// }
+.ag-cell{
+    padding: 0px 3px 0px !important;
+    
+}
+// .ag-row-even{
+//     height: 25px !important;
+// }
+// .custom-cell:first-child{
+//     font-size: 9pt !important;
+//     height: 22px !important;
+// }
+// .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell:not(.ag-column-hover):not(.ag-header-cell-moving):hover{
+
+// }

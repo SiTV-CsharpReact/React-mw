@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ListMenuBar from "../menuBarMW/ListMenuBar";
 import TableMarketWatch from "../tableMarketwatch/TableMarketWatch";
 import DanhMuc from "../menuBarMW/DanhMuc";
-import CompleteStock from "../menuBarMW/CompleteStock";
 import DateTime from "../menuBarMW/DateTime";
 import SettingTable from "../menuBarMW/SettingTable";
 import PopupTableMarketwatch from "../popupTableMarketwatch/popupTableMarketwatch";
@@ -38,7 +37,6 @@ const TablePrice = () => {
         <div className="flex">
           <ListMenuBar />
           <DanhMuc />
-          <CompleteStock />
           </div>
           <div className="flex">
             <SettingTable />

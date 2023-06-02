@@ -1,19 +1,30 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import agent from "../../api/agent";
 import { CategoriesMarketWatch, Category } from "../../models/category";
-
-export const fetchCategoryAsync = createAsyncThunk<CategoriesMarketWatch>(
-  "table/fecthCategory",
+// <CategoriesMarketWatch>
+export const fetchCategoryAsync = createAsyncThunk(
+  "table/getCateolcadf",
   async () => {
-    const res = await agent.Category.get();
-    //console.log(res);
-    return res;
+    // const res = await agent.Category.get();
+  try {
+    const data = await  agent.Category.get()
+    return data
+  } catch (error) {
+    console.log("error ở đây", error);
+  }
+    // return res;
   }
 );
+
+// export const activeMenuDanhmuc = createAsyncThunk("table_fecthCategory/aaasd", ()=>{
+
+// })
 export const danhmucSlice = createSlice({
   name: "table_fecthCategory",
   initialState: {
-    isLoading: false,
+    isLoading: 0,
+    row :  null ,
+    name : null ,
     data: {
       Code: 0,
       Message: "SUCCESS",
@@ -26,18 +37,24 @@ export const danhmucSlice = createSlice({
       state.data = action.payload;
       state.status = "idle";
     },
+    activeMenuDanhmuc :(state , action)=>{
+      state.name = action.payload?.name;
+      state.row = action.payload?.row;
+    }
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCategoryAsync.pending, (state) => {
-        state.isLoading = false;
+        state.isLoading = 1;
         state.status = "loading";
       })
       .addCase(fetchCategoryAsync.fulfilled, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = 2;
         const result = action.payload;
         if (result?.Code === 0) {
           state.data = action.payload;
+          state.row  = result?.Data[0]?.Row // lưu row danh mục
+          state.name  = result?.Data[0]?.Name // tên danh mục 
           state.status = "succeeded";
         } else {
           state.status = "failed";
@@ -45,7 +62,7 @@ export const danhmucSlice = createSlice({
         }
       })
       .addCase(fetchCategoryAsync.rejected, (state) => {
-        state.isLoading = true;
+        state.isLoading = 3;
         state.status = "failed";
         // Xử lý tình huống khi có lỗi xảy ra trong quá trình gọi API
       })
@@ -53,5 +70,5 @@ export const danhmucSlice = createSlice({
       
   },
 });
-
+export const  {activeMenuDanhmuc}  = danhmucSlice.actions
 export default danhmucSlice;

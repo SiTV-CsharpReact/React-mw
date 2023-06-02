@@ -170,5 +170,27 @@
             "AMESSAGE_VN": "Lệnh đặt thành công!",
             "AMESSAGE_EN": "Order has been placed successfully!"
         }
-    ]
+    ],
+    "categori" : 
+        {
+        "Code": 0,
+        "Message": "SUCCESS",
+        "Data": [{
+                    "Score": "1684139100485",
+                    "Name": "Test",
+                    "List": "AMV,ABC,ACS,ADC,FID,DPS,AME",
+                    "Row": "0",
+                    "Default_MarketWatch": "0",
+                    "UserAgent": null}
+                ,{
+                    "Score": "1684139089044",
+                    "Name": "SITV",
+                    "List": "FPT,ALT,FTS,AAV,ALT",
+                    "Row": "1",
+                    "Default_MarketWatch": "0",
+                    "UserAgent": null
+                }
+            ]
+        }
+    
 }

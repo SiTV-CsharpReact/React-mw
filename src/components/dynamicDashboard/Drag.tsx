@@ -4,7 +4,6 @@ import "flexlayout-react/style/light.css";
 import "./dynamic.scss";
 import Box from "./Box";
 import OrderFormMarketWatch from "../orderFormMarketwatch/OrderFormMarketWatch";
-import TableMarketWatch from "../tableMarketwatch/TableMarketWatch";
 import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import MenuBar from "../menuBarMW/MenuBar";
 import ListMenuBar from "../menuBarMW/ListMenuBar";

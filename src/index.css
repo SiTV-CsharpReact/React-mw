@@ -305,9 +305,6 @@ th.sort-table.active::after {
 .text-down-text:before{
     font-size:20px !important;
 }
-.hover_demo:hover{
-background-color:rgba(99, 169, 224,0.4) !important
-}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

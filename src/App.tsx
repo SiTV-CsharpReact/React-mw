@@ -3,10 +3,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import LayoutMarketWatch from "./components/layoutMarketwatch/LayoutMarketWatch";
 import AppProvider from "./Context/AppContext";
 import SlidesMarketWatch from "./components/indexMarketWatch/SlidesMarketWatch";
-import DraggableDiv from "./pages/dragable";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import TableDanhMuc from "./components/tableMarketwatch/TableDanhMuc";
 import DynamicDashboard from "./components/dynamicDashboard/DynamicDashboard";
 import MyLayout from "./components/dynamicDashboard/MyLayout";
 import AssetReport from "./components/AssetReport/AssetReport";
@@ -28,7 +24,6 @@ function App() {
             path="/report/ClientActivityRange"
             element={<SlidesMarketWatch />}
           />
-          <Route path="/report/TradeLog" element={<DraggableDiv />} />
           <Route path="/report/AssetReport2" element={<AssetReport />} />
         </Routes>
       </AppProvider>
