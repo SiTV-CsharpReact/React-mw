@@ -93,6 +93,8 @@ const showKLPT = (value: string) => {
 };
 
 const TableMarketWatchTest = () => {
+  const widthWindow = window.innerWidth;
+  console.log(widthWindow)
   const dispatch = useAppDispatch();
 
   //setRowData
@@ -120,7 +122,7 @@ const TableMarketWatchTest = () => {
     
   }
   HanDelCate();
-}, [dispatch]);
+}, [dispatch,widthWindow]);
   console.log(dataTables)
   useEffect(() => {
     // const socket = io('ws://eztradereact.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=dnL897L7K8vCFfdm%2FU2B%2B8L3mgJxVC9qXt8YejdUGsaMoHgfj%2FPPyVumCVpn5PvW2sxZanXnmvvNU49qowDUIJ5hYyfNfe56xdHs6Gf3cOQ84am2ZKvvswyYk8wE4dyq&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=1');
@@ -239,8 +241,7 @@ const TableMarketWatchTest = () => {
     }
   }
 
-  const widthWindow = window.innerWidth;
-  console.log(widthWindow)
+
   const RowDataIndex = {
     MCK: 0,
     TC: 1,
@@ -288,7 +289,7 @@ const TableMarketWatchTest = () => {
       cellClass: "score-cell",
       suppressMenu: true,
       spanHeaderHeight: true,
-      width: 72,
+      width: widthWindow * 0.05,
       maxWidth: 100,
       // cellClass: "custom-cell",
       headerClass: "custom-header",
@@ -307,7 +308,7 @@ const TableMarketWatchTest = () => {
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell cell-stock">
             {value}
           </div>
         );
@@ -321,7 +322,7 @@ const TableMarketWatchTest = () => {
       cellClass: "score-cell tc-cell",
       suppressMenu: true,
       spanHeaderHeight: true,
-      width: 50,
+      width: widthWindow * 0.03,
       maxWidth: 100,
       headerStyle: {
         fontWeight: "bold",
@@ -351,7 +352,7 @@ const TableMarketWatchTest = () => {
       headerName: "Trần",
       suppressMenu: true,
       spanHeaderHeight: true,
-      width: 50,
+      width: widthWindow * 0.03,
       maxWidth: 100,
       headerClass: "custom-header tc-header ",
       cellClass: "score-cell tc-cell",
@@ -379,7 +380,7 @@ const TableMarketWatchTest = () => {
       headerName: "Sàn",
       suppressMenu: true,
       spanHeaderHeight: true,
-      width: 50,
+      width: widthWindow * 0.03,
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       cellClass: "score-cell tc-cell",
@@ -412,7 +413,7 @@ const TableMarketWatchTest = () => {
           field: "G3",
           headerName: "G3",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.03,
           minWidth: 50,
           height: 30,
           maxWidth: 100,
@@ -438,7 +439,7 @@ const TableMarketWatchTest = () => {
           field: "KL3",
           headerName: "KL3",
           suppressMenu: true,
-          width: 62,
+          width: widthWindow * 0.04,
 
           minWidth: 50,
           heigth: 34,
@@ -467,7 +468,7 @@ const TableMarketWatchTest = () => {
           field: "G2",
           headerName: "G2",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.03,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
@@ -494,7 +495,7 @@ const TableMarketWatchTest = () => {
           field: "KL2",
           headerName: "KL2",
           suppressMenu: true,
-          width: 62,
+          width: widthWindow * 0.04,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
@@ -520,7 +521,7 @@ const TableMarketWatchTest = () => {
           field: "G1",
           headerName: "G1",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.04,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
@@ -547,7 +548,7 @@ const TableMarketWatchTest = () => {
           headerName: "KL1",
           cellClass: "score-cell",
           suppressMenu: true,
-          width: 62,
+          width: widthWindow * 0.05,
           minWidth: 50,
           maxWidth: 100,
           headerClass: "custom-header",
@@ -578,7 +579,7 @@ const TableMarketWatchTest = () => {
           field: "GiaKhop",
           headerName: "Giá",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.03,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell tc-cell",
@@ -604,7 +605,7 @@ const TableMarketWatchTest = () => {
           field: "KLKhop",
           headerName: "KL",
           suppressMenu: true,
-          width: 52,
+          width: widthWindow * 0.04,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell tc-cell",
@@ -644,7 +645,7 @@ const TableMarketWatchTest = () => {
           //   return headerElement;
           // },
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.03,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell tc-cell",
@@ -673,9 +674,9 @@ const TableMarketWatchTest = () => {
       children: [
         {
           field: "G1B",
-          headerName: "G1B",
+          headerName: "G1",
           suppressMenu: true,
-          width: 52,
+          width: widthWindow * 0.03,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
@@ -700,7 +701,7 @@ const TableMarketWatchTest = () => {
           field: "KL1B",
           headerName: "KL1",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.04,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
@@ -725,7 +726,7 @@ const TableMarketWatchTest = () => {
           field: "G2B",
           headerName: "G2",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.03,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
@@ -750,7 +751,7 @@ const TableMarketWatchTest = () => {
           field: "KL2B",
           headerName: "KL2",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.03,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
@@ -776,7 +777,7 @@ const TableMarketWatchTest = () => {
           headerName: "G3",
           cellClass: "score-cell",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.04,
           minWidth: 50,
           maxWidth: 100,
           headerClass: "custom-header",
@@ -800,7 +801,7 @@ const TableMarketWatchTest = () => {
           field: "KL3B",
           headerName: "KL3",
           suppressMenu: true,
-          width: 60,
+          width: widthWindow * 0.05,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell ",
@@ -829,7 +830,7 @@ const TableMarketWatchTest = () => {
       headerName: "Tổng KL",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
-      width: 60,
+      width: widthWindow * 0.05,
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
@@ -849,7 +850,7 @@ const TableMarketWatchTest = () => {
       headerName: "Mở Cửa",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
-      width: 52,
+      width: widthWindow * 0.04,
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
@@ -874,7 +875,7 @@ const TableMarketWatchTest = () => {
       headerName: "Cao Nhất",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
-      width: 52,
+      width: widthWindow * 0.04,
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
@@ -899,7 +900,7 @@ const TableMarketWatchTest = () => {
       field: "ThapNhat",
       headerName: "Thấp nhất",
       spanHeaderHeight: true,
-      width: 52,
+      width: widthWindow * 0.04,
       maxWidth: 100,
       cellClass: "score-cell tc-cell",
       headerClass: "custom-header tc-header",
@@ -924,7 +925,7 @@ const TableMarketWatchTest = () => {
       field: "NNMua",
       headerName: "NN mua",
       spanHeaderHeight: true,
-      width: 62,
+      width: widthWindow * 0.05,
       maxWidth: 100,
       cellClass: "score-cell tc-cell",
       headerClass: "custom-header tc-header",
@@ -945,7 +946,7 @@ const TableMarketWatchTest = () => {
       headerName: "NN bán",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
-      width: 62,
+      width: widthWindow * 0.05,
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
@@ -1093,6 +1094,7 @@ const TableMarketWatchTest = () => {
     <div style={containerStyle}>
       <div style={gridStyle} className="ag-theme-alpine-dark">
         <AgGridReact 
+        rowHeight={25}
           rowData={dataTables}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
