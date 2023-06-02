@@ -12,6 +12,7 @@ import TableGDTTMarketWatch from "../tableMarketwatch/TableGDTTMarketWatch";
 import TableThongKeMarketWatch from "../tableMarketwatch/TableThongKeMarketWatch";
 import {
 
+  RootState,
   useAppDispatch,
   useAppSelector,
 } from "../../store/configureStore";
@@ -38,6 +39,8 @@ import TableMarketWatchTest from "../tableMarketwatch/TableMarketWatchTest";
 import DropDown from "../menuBarMW/DropDown";
 import { setOrderCount } from "./LayoutMarketWatchSLice";
 import TableMarketWatchCompact from "../tableMarketwatch/TableMarketWatchCompact";
+import { useSelector } from "react-redux";
+import CompleteStock from "../menuBarMW/CompleteStock";
 
 function RenderTable() {
   const floor = useAppSelector((state) => state.table.floor);
@@ -84,6 +87,7 @@ const LayoutMarketWatch: React.FC = () => {
   // gọi danh mục 
  // row danh mục 
   // tao useState resize khi height window thay đổi
+  const {row , name }  = useSelector((state:RootState) => state.categories)
   const [heightComponent, setHeightComponent] = useState(initialState);
   const [selectedValue, setSelectedValue] = useState({
     x: 0,
@@ -307,8 +311,8 @@ const LayoutMarketWatch: React.FC = () => {
                 <div className="flex ">
                   <ListMenuBar />
                   <DanhMuc />
-                  {/* <CompleteStock /> */}
-                  <DropDown/>
+                  { row &&  name ?   <CompleteStock /> : "" }
+                
                   {heightComponent.heightExpand === 27 ? (
                     <div>
                       <Tooltip title="Hiện thị index">

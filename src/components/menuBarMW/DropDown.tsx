@@ -83,7 +83,6 @@ const DropDown = () => {
 
     return <span>{suggestionElements}</span>;
   }
-
   async function handleSuggestionSelected(
     _: React.FormEvent<any>,
     { suggestionValue }: { suggestionValue: string }
@@ -114,7 +113,6 @@ const DropDown = () => {
         onSuggestionsClearRequested={() => setSuggestions([])}
         onSuggestionsFetchRequested={({ value }) => {
           setValue(value);
-
           setSuggestions(getSuggestions(value));
         }}
         onSuggestionSelected={handleSuggestionSelected}
