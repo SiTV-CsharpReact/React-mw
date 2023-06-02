@@ -4,7 +4,7 @@ import "ag-grid-enterprise";
 // import "ag-grid-community/styles/ag-grid.css";
 // import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./table.scss";
-import { formatNumber, formatNumberMarket, setColorMarkettest } from "../../utils/util";
+import { formatNumber, formatNumberMarket, getCompanyNameByCode, setColorMarkettest } from "../../utils/util";
 import { ColSpanParams } from "ag-grid-enterprise";
 import { ColDef, ColGroupDef } from "ag-grid-community";
 import { LicenseManager } from "ag-grid-enterprise";
@@ -12,6 +12,7 @@ import PopupStock from "./PopupStock";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { getDataTable } from "./tableTestSlice";
 import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
+import { Tooltip } from "@mui/material";
 
 LicenseManager.setLicenseKey(
   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
@@ -308,9 +309,17 @@ const TableMarketWatchTest = () => {
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} data-comp={rowid} className="custom-cell cell-stock">
-            {value}
-          </div>
+         
+          //  <div data-index={dataIndex} data-comp={rowid}  data-tooltip={getCompanyNameByCode(value).toString()} className="relative custom-cell cell-stock has-symbol company-tooltip">
+          //   {value}
+          // </div>
+          
+          <Tooltip title={getCompanyNameByCode(value)}>
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell cell-stock has-symbol company-tooltip">
+            <input type="checkbox" />
+           {value}
+         </div>
+         </Tooltip>
         );
       },
     },
