@@ -360,8 +360,8 @@ const TradingResult = () => {
               </tr>
             </thead>
             <tbody>
-              {dataSell.map((item: any) => (
-            <TbodySell dropSell={dropSell} data={dataArrSell} key={item.id} item={item} />
+              {dataSell.map((item: any , index:any) => (
+            <TbodySell  dropSell={dropSell} data={dataArrSell} key={item.id} item={item} />
               ))}
                <tr className="bg-[#F3F3F3]">
                 <td className="pl-1 font-bold border border-gray-300 ">Tổng</td>
