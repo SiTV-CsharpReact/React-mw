@@ -108,7 +108,7 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
       return <TablePrice />;
     }
     if (component === "pendingorder") {
-      return <PendingOrders />;
+      return <PendingOrders value={1} />;
     }
     if (component === "totalmonney") {
       return <TableTotalMonney status={true} />;
@@ -203,7 +203,7 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
     let contents: React.ReactNode = "loading ...";
     if (this.state.model !== null) {
       contents = (
-        <div className="layout-tabs flex text-13 items-center h-6">
+        <div className="flex items-center h-6 layout-tabs text-13">
           {this.state.tabs.map((tab: any) => (
             <div className="tab" key={tab.id}>
               {tab.name}
@@ -217,14 +217,14 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
     }
 
     return (
-      <main id="main-wrapper" className="main-wrappers relative w-full">
+      <main id="main-wrapper" className="relative w-full main-wrappers">
         <div className="custom-layout-page">
           <div className="relative flex justify-between items-center bg-secondary h-[28px]">
             {contents}
             <div className="flex items-center justify-end space-x-5 h-[100%] bg-explain w-56 pr-3 rounded-t ">
               <div className="list-widgets-container" data-headlessui-state>
                 <div
-                  className="dropdown-button mt-2 md:mt-0 hover:text-color-highlight flex"
+                  className="flex mt-2 dropdown-button md:mt-0 hover:text-color-highlight"
                   id="headlessui-menu-button-8"
                   aria-haspopup="true"
                   aria-expanded="false"
@@ -285,7 +285,7 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
                         fill="currentColor"
                         strokeWidth={0}
                         viewBox="0 0 512 512"
-                        className="text-color-highlight cursor-pointer text-base hover:text-color-highlight"
+                        className="text-base cursor-pointer text-color-highlight hover:text-color-highlight"
                         height="1em"
                         width="1em"
                         xmlns="http://www.w3.org/2000/svg"
@@ -301,7 +301,7 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
                         fill="currentColor"
                         strokeWidth={0}
                         viewBox="0 0 512 512"
-                        className="cursor-pointer text-base hover:text-color-highlight"
+                        className="text-base cursor-pointer hover:text-color-highlight"
                         height="1em"
                         width="1em"
                         xmlns="http://www.w3.org/2000/svg"
@@ -329,13 +329,13 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
                       </div>
                       <div className="space-y" role="none">
                         <div
-                          className="hover:bg-invert hover:text-color-highlight cursor-pointer px-3 py-1"
+                          className="px-3 py-1 cursor-pointer hover:bg-invert hover:text-color-highlight"
                           id="headlessui-menu-item-179"
                           role="menuitem"
                           tabIndex={-1}
                           data-headlessui-state
                         >
-                          <div className="flex w-full justify-between items-center">
+                          <div className="flex items-center justify-between w-full">
                             <div className="flex items-center space-x-1">
                               <button
                                 // disabled={this.state.adding}
@@ -349,18 +349,18 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
                                 Bảng giá
                               </button>
                             </div>
-                            <span className="bg-sell w-3 h-3 rounded-full" />
+                            <span className="w-3 h-3 rounded-full bg-sell" />
                           </div>
                         </div>
 
                         <div
-                          className="hover:bg-invert hover:text-color-highlight cursor-pointer px-3 py-1"
+                          className="px-3 py-1 cursor-pointer hover:bg-invert hover:text-color-highlight"
                           id="headlessui-menu-item-189"
                           role="menuitem"
                           tabIndex={-1}
                           data-headlessui-state
                         >
-                          <div className="flex w-full justify-between items-center">
+                          <div className="flex items-center justify-between w-full">
                             <div className="flex items-center space-x-1">
                               <span>Diễn biến dòng tiền</span>
                               <svg
@@ -378,7 +378,7 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
                                 </g>
                               </svg>
                             </div>
-                            <span className="bg-buy w-3 h-3 rounded-full" />
+                            <span className="w-3 h-3 rounded-full bg-buy" />
                           </div>
                         </div>
                       </div>
@@ -392,13 +392,13 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
                       </div>
                       <div className="space-y" role="none">
                         <div
-                          className="hover:bg-invert hover:text-color-highlight cursor-pointer px-3 py-1"
+                          className="px-3 py-1 cursor-pointer hover:bg-invert hover:text-color-highlight"
                           id="headlessui-menu-item-179"
                           role="menuitem"
                           tabIndex={-1}
                           data-headlessui-state
                         >
-                          <div className="flex w-full justify-between items-center">
+                          <div className="flex items-center justify-between w-full">
                             <div className="flex items-center space-x-1">
                               <span
                                 //  disabled={this.state.adding}
@@ -412,17 +412,17 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
                                 Đặt lệnh
                               </span>
                             </div>
-                            <span className="bg-sell w-3 h-3 rounded-full" />
+                            <span className="w-3 h-3 rounded-full bg-sell" />
                           </div>
                         </div>
                         <div
-                          className="hover:bg-invert hover:text-color-highlight cursor-pointer px-3 py-1"
+                          className="px-3 py-1 cursor-pointer hover:bg-invert hover:text-color-highlight"
                           id="headlessui-menu-item-180"
                           role="menuitem"
                           tabIndex={-1}
                           data-headlessui-state
                         >
-                          <div className="flex w-full justify-between items-center">
+                          <div className="flex items-center justify-between w-full">
                             <div className="flex items-center space-x-1">
                               <span
                                 onMouseDown={(event) =>
@@ -435,7 +435,7 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
                                 Lệnh chờ khớp
                               </span>
                             </div>
-                            <span className="bg-sell w-3 h-3 rounded-full" />
+                            <span className="w-3 h-3 rounded-full bg-sell" />
                           </div>
                         </div>
                       </div>
@@ -449,13 +449,13 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
                       </div>
                       <div className="space-y" role="none">
                         <div
-                          className="hover:bg-invert hover:text-color-highlight cursor-pointer px-3 py-1"
+                          className="px-3 py-1 cursor-pointer hover:bg-invert hover:text-color-highlight"
                           id="headlessui-menu-item-179"
                           role="menuitem"
                           tabIndex={-1}
                           data-headlessui-state
                         >
-                          <div className="flex w-full justify-between items-center">
+                          <div className="flex items-center justify-between w-full">
                             <div className="flex items-center space-x-1">
                               <span
                                 //  disabled={this.state.adding}
@@ -469,7 +469,7 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
                                 Số dư tiền
                               </span>
                             </div>
-                            <span className="bg-sell w-3 h-3 rounded-full" />
+                            <span className="w-3 h-3 rounded-full bg-sell" />
                           </div>
                         </div>
                       </div>

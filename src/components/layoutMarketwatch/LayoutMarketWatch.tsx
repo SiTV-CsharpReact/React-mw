@@ -555,7 +555,7 @@ const LayoutMarketWatch: React.FC = () => {
                 display: orderCount === 1 ? "block" : "none",
               }}
             >
-              <PendingOrders />
+              <PendingOrders value={ orderCount} />
             </div>
             <div
               style={{
