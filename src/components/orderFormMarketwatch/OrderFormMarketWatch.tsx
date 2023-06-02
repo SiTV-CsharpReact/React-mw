@@ -30,7 +30,7 @@ const OrderMarketW = () => {
 
   // color mua ban
   const [color, setColor] = useState(true);
-  const [valueInput, setValueInput] = useState([]);
+  const [valueInput, setValueInput] = useState<string>('');
   const [valueInputPrice, setValueInputPrice] = useState<number>(0);
   const [valueInputKl, setValueInputKl] = useState<number>(0);
   const [gdSuccess,setGdSuccess] = useState(false)
@@ -38,7 +38,6 @@ const OrderMarketW = () => {
   const [showResults, setShowResults] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [success, setSuccess] = useState('');
-
   // ghi lenh cho gui
   const [order, setOrder] = useState(true);
   //const dispatch = useAppDispatch();
@@ -132,7 +131,11 @@ const OrderMarketW = () => {
     else {
       setGdSuccess(true)
       setTimeout(() => {
-       setSubmit(false)
+      setSubmit(false)
+      setValueInput("")
+      setValueInputPrice(0)
+      setValueInputKl(0)
+      
       }, 3000);
     }
   }
