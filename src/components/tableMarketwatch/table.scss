@@ -149,10 +149,8 @@ div#dvContentLP {
     margin: 0 10px 0 3px;
     font-size: 9pt;
     line-height: 3em;
-    width: 100px;
+    width: 30px;
     padding-left: 2px;
-
-
 }
 
 .button_Statistics {
@@ -565,3 +563,6 @@ tr.border-bottom:last-child {
 // .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell:not(.ag-column-hover):not(.ag-header-cell-moving):hover{
 
 // }
+.form-group select {
+  width: 60%;
+}

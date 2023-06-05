@@ -44,7 +44,6 @@ import CompleteStock from "../menuBarMW/CompleteStock";
 
 function RenderTable() {
   const floor = useAppSelector((state) => state.table.floor);
-  console.log(floor)
   switch (floor) {
     case "MAIN":
       return <TableMarketWatchTest />;
