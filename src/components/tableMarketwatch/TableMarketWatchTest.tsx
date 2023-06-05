@@ -54,6 +54,7 @@ type RowData = {
   Quyen: string;
   CGKGN: string;
   RowID: string;
+  isPined: boolean;
 };
 
 const showKLPT = (value: string) => {
@@ -353,7 +354,13 @@ const TableMarketWatchTest = () => {
           
           <Tooltip title={getCompanyNameByCode(value)}>
           <div data-index={dataIndex} data-comp={rowid} className="custom-cell cell-stock has-symbol company-tooltip">
-            <input type="checkbox" className="checkbox_price" />
+            <input type="checkbox" className="checkbox_price" 
+            // checked={params.data.isPined}
+            onClick={()=> {
+              // params.data.isPined = !params.data.isPined;
+              handlePinRow(params);
+            }}
+            />
            <span className="pl-1 pt-1"
             onDoubleClick={(e) =>
               handleDoubleClick(e, value)
@@ -376,15 +383,15 @@ const TableMarketWatchTest = () => {
       spanHeaderHeight: true,
       width: widthWindow * 0.03,
       maxWidth: 100,
-      headerStyle: {
-        fontWeight: "bold",
-        color: "white",
-        textAlign: "center",
-      },
-      // cellStyle: (params: any) => ({
-      //   fontWeight: "",
-      //   color: setColorMarkettest("", params),
-      // }),
+      // headerStyle: {
+      //   fontWeight: "bold",
+      //   color: "white",
+      //   textAlign: "center",
+      // },
+      cellStyle: (params: any) => ({
+        fontWeight: "",
+        color: setColorMarkettest("", params),
+      }),
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.TC; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
 
@@ -1067,45 +1074,29 @@ const TableMarketWatchTest = () => {
     filter: true,
     autoSize: true,
   };
-  
-  // const gridOptions = {
-  //   // Các cấu hình khác của ag-Grid
-
-  //   suppressCellSelection: true,
-  //   suppressRowClickSelection: true,
-  //   suppressContextMenu: true,
-  //   suppressCellContextMenu: true,
-  //   suppressRowContextMenu: true,
-  // };
-  // document.addEventListener("contextmenu", (event) => {
-  //   event.preventDefault();
-  // });
-
  
    //pinned
    const gridRef = useRef<any>();
    const pinnedRowsRef = useRef<any[]>([]);
 
    const handlePinRow = (params:any) => {
-    console.log("vo day")
+   
     const grid = gridRef.current.api;
     const defaultData = gridRef.current.props.rowData;
+    // console.log(defaultData)
     const { rowPinned, rowIndex, data } = params;
-    const { id, symbol } = data;
+    console.log("pin",rowPinned,params)
+    // console.log(params)
+    const { RowID, symbol } = data;
+    // console.log(first)
     let rows = pinnedRowsRef.current;
-
+     
     if (rowPinned) {
-      // const index = defaultData.findIndex(item => item.id === id);
-      // let columnWithSort = gridRef.current.columnApi.getColumnState().find(col => col.sort !== null);
-
-      // const columns = gridRef.current.columnApi.getColumnState();
-      // console.log(columns);
-
       // Unpin
       const newRows = pinnedRowsRef.current.filter((e) => {
-        return id !== e.data.id;
+        return RowID !== e.data.RowID;
       });
-      const item = rows.find((item) => item.data.id === id);
+      const item = rows.find((item) => item.data.RowID === RowID);
 
       const other = pinnedRowsRef.current.filter(
         (val) => val.index < item.index
@@ -1123,10 +1114,12 @@ const TableMarketWatchTest = () => {
         addIndex: item.index - other.length,
       });
     } else {
+      console.log("pin thành công")
       // Pin
-      const items = grid.getRowNode(id).data;
-      const index = defaultData.findIndex((item:any) => item.id === id);
+      const items = grid.getRowNode(RowID).data;
 
+      console.log(items)
+      const index = defaultData.findIndex((item:any) => item.MCK === RowID);
       rows.push({
         index,
         data,
@@ -1141,38 +1134,9 @@ const TableMarketWatchTest = () => {
       grid.applyTransaction({ remove: [items] });
     }
   };
-
-  // const onBtForEachNode = useCallback(() => {
-  //   console.log('### api.forEachNode() ###');
-  //   gridRef.current.api.forEachNode(printNode);
-  // }, []);
-
-  // const [columnDefs] = useState([
-  //   {
-  //     headerName: '',
-  //     cellClass: 'ag-cell-pinning',
-  //     field: 'pinning',
-  //     maxWidth: 50,
-  //     cellRenderer: PinCell,
-  //     onCellDoubleClicked: (e) => {
-  //       const field = e.colDef.field;
-  //       if (field === 'pinning') {
-  //         handlePinRow(e);
-  //       }
-  //     },
-  //   },
-  //   { headerName: 'Symbol', field: 'symbol' },
-  //   { headerName: 'ID', field: 'id' },
-  //   { headerName: 'MP', field: 'mp' },
-  // ]);
-
-/* The above code is defining a configuration object `gridOptions` for a grid component in a TypeScript
-React application. It sets the `getRowId` function to return the `id` property of the data object
-passed to it. It also sets some default column options such as making the columns not resizable,
-sortable, and movable, and giving them equal flex. */
   const gridOptions = {
     getRowId: function (e:any) {
-      return e.data.id;
+      return e.data.RowID;
     },
     defaultColDef: {
       resizable: false,
@@ -1189,12 +1153,6 @@ sortable, and movable, and giving them equal flex. */
   // document.addEventListener("contextmenu", (event) => {
   //   event.preventDefault();
   // })
-  };
-
-  const test = () => {
-    // const data = gridRef.current.api.getRenderedNodes();
-    const data = gridRef.current.props.rowData;
-    console.log(data);
   };
 
 
