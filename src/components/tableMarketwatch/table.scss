@@ -600,7 +600,9 @@ tr.border-bottom:last-child {
 .ag-theme-alpine-dark {
   --ag-row-hover-color: #444;
 }
-
+.ag-row-pinned:last-child{
+  border-bottom:1px solid #00ff00 !important;
+}
 // .ag-row-hover{
 //   background: #000;
 // }

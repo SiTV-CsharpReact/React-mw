@@ -57,6 +57,7 @@ type RowData = {
     Quyen: string;
     CGKGN: string;
     RowID: string;
+    isPined: boolean;
   };
 const dataTableAdapter = createEntityAdapter<DataTable>({
     selectId: (dataTable) => dataTable.RowID || '', // Chỉ định trường khóa
@@ -162,6 +163,10 @@ export const tableTestSlice = createSlice({
             state.productsLoaded = false;
             state.productParams = { ...state.productParams, ...action.payload };
         },
+        setPinned: (state, action) => {
+          state.productsLoaded = false;
+          state.productParams = { ...state.productParams, ...action.payload };
+      },
     },
 
     extraReducers: (builder) => {
@@ -215,6 +220,7 @@ export const tableTestSlice = createSlice({
                   Quyen: infoArray[30],
                   CGKGN: infoArray[31],
                   RowID: element.RowID,
+                  isPined: false,
                 };
                 return mergedObject;
               });
@@ -266,6 +272,7 @@ export const tableTestSlice = createSlice({
             state.ListDataTable =    state.ListDataTable
              console.log("vood aydcu9sachu")
           })
+     
     },
 });
 
