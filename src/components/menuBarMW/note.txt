@@ -1,0 +1,151 @@
+ {/* <div
+                className="item-settings smart-symbole-settings"
+                id="smart-symbole-settings"
+              >
+                <div className="settings-content">
+                  <div className="settings-header">
+                    <div className="content">
+                      <span className="imgTable" />
+                      <label className="lbText text-16px">
+                        Tính năng thêm mã thông minh
+                      </label>
+                      <label
+                        className="switch"
+                        title="Tắt tính năng thêm mã thông minh"
+                      >
+                        <input type="checkbox" id="SymbolSmartOnOFF" />
+                        <span className="slider round" />
+                      </label>
+                    </div>
+                  </div>
+                  <div className="settings-body">
+                    <div className="row w5/6">
+                      <div className="col !max-w-[16%]">
+                        <b
+                          style={{
+                            marginLeft: "30px",
+                            height: "18px",
+                            display: "inline-block",
+                            verticalAlign: "bottom",
+                            marginTop: "3px",
+                          }}
+                        >
+                          Vị trí thêm mã mới:
+                        </b>
+                      </div>
+                      <div className="col !max-w-[16%]">
+                        <div style={{ marginLeft: "17px" }}>
+                          <div className="clsAllIndex">
+                            <input
+                              type="radio"
+                              className="cbRadio priceboard2"
+                              name="smart_symbol_up"
+                              id="up"
+                              style={{
+                                verticalAlign: "sub",
+                                margin: "4px 4px 0 4px",
+                                lineHeight: "normal !important",
+                              }}
+                              checked={type.smart_symbol_up}
+                              onChange={handleChange}
+                            />
+                            <label htmlFor="up">Đầu danh mục</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col max-w-[16%]">
+                        <div style={{ marginLeft: "9px" }}>
+                          <div className="clsAllIndex">
+                            <input
+                              type="radio"
+                              className="cbRadio priceboard2"
+                              name="smart_symbol_down"
+                              id="down"
+                              checked={type.smart_symbol_down}
+                              onChange={handleChange}
+                              style={{
+                                verticalAlign: "sub",
+                                margin: "4px 4px 0 4px",
+                                lineHeight: "normal !important",
+                              }}
+                            />
+                            <label htmlFor="down">Cuối danh mục</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> */}
+              {/* <div
+                className="item-settings prior-textbox-settings"
+                id="prior-textbox-settings"
+              >
+                <div className="settings-content">
+                  <div className="settings-header">
+                    <div className="content">
+                      <span className="imgTable" />
+                      <label className="lbText text-16px">
+                        Lựa chọn nhập thông tin Giá / Khối lượng trước
+                      </label>
+                    </div>
+                  </div>
+                  <div className="settings-body">
+                    <div className="row w5/6">
+                      <div className="col !max-w-[16%]">
+                        <b
+                          style={{
+                            marginLeft: "30px",
+                            height: "18px",
+                            display: "inline-block",
+                            verticalAlign: "bottom",
+                            marginTop: "3px",
+                          }}
+                        >
+                          Ưu tiên:
+                        </b>
+                      </div>
+                      <div className="col !max-w-[16%]">
+                        <div style={{ marginLeft: "17px" }}>
+                          <div className="clsAllIndex">
+                            <input
+                              type="radio"
+                              className="cbRadio priceboard2"
+                              name="prior_textbox_priceF"
+                              id="priceF"
+                              style={{
+                                verticalAlign: "sub",
+                                margin: "4px 4px 0 4px",
+                                lineHeight: "normal !important",
+                              }}
+                              checked={type.prior_textbox_priceF}
+                              onChange={handleChange}
+                            />
+                            <label htmlFor="priceF">Nhập Giá trước</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col !max-w-[25%]">
+                        <div style={{ marginLeft: "9px" }}>
+                          <div className="clsAllIndex">
+                            <input
+                              type="radio"
+                              className="cbRadio priceboard2"
+                              name="prior_textbox_qtyF"
+                              id="qtyF"
+                              style={{
+                                verticalAlign: "sub",
+                                margin: "4px 4px 0 4px",
+                                lineHeight: "normal !important",
+                              }}
+                              checked={type.prior_textbox_qtyF}
+                              onChange={handleChange}
+                            />
+                            <label htmlFor="qtyF">Nhập Khối lượng trước</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> */}

@@ -4,7 +4,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  Button,
   Tooltip,
   Typography,
   IconButton,
@@ -14,21 +13,22 @@ import React, { useState } from "react";
 import "./menuBar.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
-import { INDEX_TYPE, paramsMarketwatch } from "../indexMarketWatch/marketShowSlice";
+import {
+  IIndex,
+  INDEX_TYPE,
+  paramsMarketwatch,
+} from "../indexMarketWatch/marketShowSlice";
+import { ColCompoent, SettingBodyComponent } from "./SettingItemTable";
 
 export interface IData {
   key: string;
   value: boolean;
 }
-// const useStyles = makeStyles(() => ({
-//   paper: { minWidth: "500px" },
-// }));
-
 
 const SettingTable = () => {
   const [open, setOpen] = React.useState(false);
   const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
-  const [type, setType] = useState(INDEX);
+  const [type, setType] = useState<IIndex>(INDEX);
   const [text, setText] = useState("");
 
   const dispatch = useAppDispatch();
@@ -53,13 +53,41 @@ const SettingTable = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setType({ ...type, [e.target.name]: e.target.checked });
+    let query = { ...type };
+    if (e.target.name === "smart_symbol_up") {
+      query = {
+        ...type,
+        smart_symbol_down: false,
+        [e.target.name]: e.target.checked,
+      };
+    }
+    if (e.target.name === "smart_symbol_down") {
+      query = {
+        ...type,
+        smart_symbol_up: false,
+        [e.target.name]: e.target.checked,
+      };
+    }
+    if (e.target.name === "prior_textbox_priceF") {
+      query = {
+        ...type,
+        prior_textbox_qtyF: false,
+        [e.target.name]: e.target.checked,
+      };
+    }
+    if (e.target.name === "prior_textbox_qtyF") {
+      query = {
+        ...type,
+        prior_textbox_priceF: false,
+        [e.target.name]: e.target.checked,
+      };
+    }
+
+    setType(query);
   };
   return (
     <div className="btn-setting">
       <Tooltip title="Thiết lập Giao diện">
-        {/* <Button  className="imgCustom" variant="outlined" >
-</Button> */}
         <span
           id="btCustom"
           className="imgCustom"
@@ -129,97 +157,55 @@ const SettingTable = () => {
                       </div>
                       <div className="w-5/6 px-4">
                         <div className="row">
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="VNXALL"
-                                id="cbChartVNXALL"
-                                checked={type.VNXALL}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartVNXALL">VNXALL</label>
-                            </div>
-                          </div>
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="VNI"
-                                id="cbChartVNI"
-                                checked={type.VNI}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartVNI">VNI</label>
-                            </div>
-                          </div>
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="VN30"
-                                id="cbChartVN30"
-                                checked={type.VN30}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartVN30">VN30</label>
-                            </div>
-                          </div>
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="VN100"
-                                id="cbChartVN100"
-                                checked={type.VN100}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartVN100">VN100</label>
-                            </div>
-                          </div>
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="VNALL"
-                                id="cbChartVNALL"
-                                checked={type.VNALL}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartVNALL">VNALL</label>
-                            </div>
-                          </div>
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="VNMID"
-                                id="cbChartVNMID"
-                                checked={type.VNMID}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartVNMID">VNMID</label>
-                            </div>
-                          </div>
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="VNSML"
-                                id="cbChartVNSML"
-                                checked={type.VNSML}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartVNSML">VNSML</label>
-                            </div>
-                          </div>
+                          <ColCompoent
+                            name="VNXALL"
+                            checked={type.VNXALL}
+                            handleChange={handleChange}
+                            htmlFor="cbChartVNXALL"
+                            id="cbChartVNXALL"
+                          />
+                          <ColCompoent
+                            name="VNI"
+                            id="cbChartVNI"
+                            checked={type.VNI}
+                            handleChange={handleChange}
+                            htmlFor="cbChartVNI"
+                          />
+                          <ColCompoent
+                            name="VN30"
+                            id="cbChartVN30"
+                            checked={type.VN30}
+                            handleChange={handleChange}
+                            htmlFor="cbChartVN30"
+                          />
+                          <ColCompoent
+                            name="VN100"
+                            id="cbChartVN100"
+                            checked={type.VN100}
+                            handleChange={handleChange}
+                            htmlFor="cbChartVN100"
+                          />
+                          <ColCompoent
+                            name="VNALL"
+                            id="cbChartVNALL"
+                            checked={type.VNALL}
+                            handleChange={handleChange}
+                            htmlFor="cbChartVNALL"
+                          />
+                          <ColCompoent
+                            name="VNMID"
+                            id="cbChartVNMID"
+                            checked={type.VNMID}
+                            handleChange={handleChange}
+                            htmlFor="cbChartVNMID"
+                          />
+                          <ColCompoent
+                            name="VNSML"
+                            id="cbChartVNSML"
+                            checked={type.VNSML}
+                            handleChange={handleChange}
+                            htmlFor="cbChartVNSML"
+                          />
                         </div>
                       </div>
                     </div>
@@ -229,97 +215,62 @@ const SettingTable = () => {
                       </div>
                       <div className="w-5/6 px-4">
                         <div className="row">
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="HNX"
-                                id="cbChartHNX"
-                                checked={type.HNX}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartHNX">HNX</label>
-                            </div>
-                          </div>
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="HNX30"
-                                id="cbChartHNX30"
-                                checked={type.HNX30}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartHNX30">HNX30</label>
-                            </div>
-                          </div>
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="HNXLCAP"
-                                id="cbChartHNXLCAP"
-                                checked={type.HNXLCAP}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartHNXLCAP">HNXLCAP</label>
-                            </div>
-                          </div>
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="HNXSMCAP"
-                                id="cbChartHNXSMCAP"
-                                checked={type.HNXSMCAP}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartHNXSMCAP">HNXSMCAP</label>
-                            </div>
-                          </div>
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="HNXFIN"
-                                id="cbChartHNXFIN"
-                                checked={type.HNXFIN}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartHNXFIN">HNXFIN</label>
-                            </div>
-                          </div>
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="HNXMAN"
-                                id="cbChartHNXMAN"
-                                checked={type.HNXMAN}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartHNXMAN">HNXMAN</label>
-                            </div>
-                          </div>
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="HNXCON"
-                                id="cbChartHNXCON"
-                                checked={type.HNXCON}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartHNXCON">HNXCON</label>
-                            </div>
-                          </div>
+                          <ColCompoent
+                            name="HNX"
+                            id="cbChartHNX"
+                            checked={type.HNX}
+                            handleChange={handleChange}
+                            htmlFor="cbChartHNX"
+                          />
+                          <ColCompoent
+                            name="HNX"
+                            id="cbChartHNX"
+                            checked={type.HNX}
+                            handleChange={handleChange}
+                            htmlFor="cbChartHNX"
+                          />
+                          <ColCompoent
+                            name="HNX30"
+                            id="cbChartHNX30"
+                            checked={type.HNX30}
+                            handleChange={handleChange}
+                            htmlFor="cbChartHNX30"
+                          />
+                          <ColCompoent
+                            name="HNXLCAP"
+                            id="cbChartHNXLCAP"
+                            checked={type.HNXLCAP}
+                            handleChange={handleChange}
+                            htmlFor="cbChartHNXLCAP"
+                          />
+                          <ColCompoent
+                            name="HNXSMCAP"
+                            id="cbChartHNXSMCAP"
+                            checked={type.HNXSMCAP}
+                            handleChange={handleChange}
+                            htmlFor="cbChartHNXSMCAP"
+                          />
+                          <ColCompoent
+                            name="HNXFIN"
+                            id="cbChartHNXFIN"
+                            checked={type.HNXFIN}
+                            handleChange={handleChange}
+                            htmlFor="cbChartHNXFIN"
+                          />
+                          <ColCompoent
+                            name="HNXMAN"
+                            id="cbChartHNXMAN"
+                            checked={type.HNXMAN}
+                            handleChange={handleChange}
+                            htmlFor="cbChartHNXMAN"
+                          />
+                          <ColCompoent
+                            name="HNXCON"
+                            id="cbChartHNXCON"
+                            checked={type.HNXCON}
+                            handleChange={handleChange}
+                            htmlFor="cbChartHNXCON"
+                          />
                         </div>
                       </div>
                     </div>
@@ -329,19 +280,13 @@ const SettingTable = () => {
                       </div>
                       <div className="w-5/6 px-4">
                         <div className="row">
-                          <div className="col">
-                            <div className="clsAllIndex">
-                              <input
-                                type="checkbox"
-                                className="cbCheck priceboard2"
-                                name="UPCOM"
-                                id="cbChartUPCOM"
-                                checked={type.UPCOM}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor="cbChartUPCOM">UPCOM</label>
-                            </div>
-                          </div>
+                          <ColCompoent
+                            name="UPCOM"
+                            id="cbChartUPCOM"
+                            checked={type.UPCOM}
+                            handleChange={handleChange}
+                            htmlFor="cbChartUPCOM"
+                          />
                         </div>
                       </div>
                     </div>
@@ -363,281 +308,101 @@ const SettingTable = () => {
                   </div>
                   <div className="settings-body ">
                     <div className="row pt-1.5 w-5/6">
-                      <div className="col">
-                        <div className="clsAllIndex">
-                          <input
-                            type="checkbox"
-                            className="cbCheck priceboard2"
-                            id="cbcol4"
-                            name="cbcol4"
-                            checked={type.cbcol4}
-                            onChange={handleChange}
-                          />
-                          <label htmlFor="cbcol4">Dư mua - KL4</label>
-                        </div>
-                      </div>
-                      <div className="col">
-                        <div className="clsAllIndex">
-                          <input
-                            type="checkbox"
-                            className="cbCheck priceboard2"
-                            id="cbcol20"
-                            name="cbcol20"
-                            onChange={handleChange}
-                            checked={type.cbcol20}
-                          />
-                          <label htmlFor="cbcol20">Dư bán - KL4</label>
-                        </div>
-                      </div>
-                      <div className="col">
-                        <div className="clsAllIndex">
-                          <input
-                            type="checkbox"
-                            className="cbCheck priceboard2"
-                            id="cbcol25"
-                            name="cbcol25"
-                            onChange={handleChange}
-                            checked={type.cbcol25}
-                          />
-                          <label htmlFor="cbcol25">Trung bình</label>
-                        </div>
-                      </div>
-                      <div className="col">
-                        <div className="clsAllIndex">
-                          <input
-                            type="checkbox"
-                            className="cbCheck priceboard2"
-                            id="cbcol28"
-                            name="cbcol28"
-                            onChange={handleChange}
-                            checked={type.cbcol28}
-                          />
-                          <label htmlFor="cbcol28">Room còn lại</label>
-                        </div>
-                      </div>
+                      <ColCompoent
+                        id="cbcol4"
+                        name="cbcol4"
+                        checked={type.cbcol4}
+                        handleChange={handleChange}
+                        htmlFor="cbcol4"
+                        labelName="Dư mua - KL4"
+                      />
+                      <ColCompoent
+                        id="cbcol20"
+                        name="cbcol20"
+                        checked={type.cbcol20}
+                        handleChange={handleChange}
+                        htmlFor="cbcol20"
+                        labelName="Dư bán - KL4"
+                      />
+                      <ColCompoent
+                        id="cbcol25"
+                        name="cbcol25"
+                        checked={type.cbcol25}
+                        handleChange={handleChange}
+                        htmlFor="cbcol25"
+                        labelName="Trung bình"
+                      />
+                      <ColCompoent
+                        id="cbcol28"
+                        name="cbcol28"
+                        checked={type.cbcol28}
+                        handleChange={handleChange}
+                        htmlFor="cbcol28"
+                        labelName="Room còn lại"
+                      />
                       <div className="col"></div>
                     </div>
                     <div className="row w-5/6">
-                      <div className="col">
-                        <div className="clsAllIndex">
-                          <input
-                            type="checkbox"
-                            className="cbCheck priceboard2"
-                            id="cbcol22"
-                            name="cbcol22"
-                            onChange={handleChange}
-                            checked={type.cbcol22}
-                          />
-                          <label htmlFor="cbcol22">Mở cửa</label>
-                        </div>
-                      </div>
-                      <div className="col">
-                        <div className="clsAllIndex">
-                          <input
-                            type="checkbox"
-                            className="cbCheck priceboard2"
-                            id="cbcol23"
-                            name="cbcol23"
-                            onChange={handleChange}
-                            checked={type.cbcol23}
-                          />
-                          <label htmlFor="cbcol23">Cao nhất</label>
-                        </div>
-                      </div>
-                      <div className="col">
-                        <div className="clsAllIndex">
-                          <input
-                            type="checkbox"
-                            className="cbCheck priceboard2"
-                            id="cbcol24"
-                            name="cbcol24"
-                            onChange={handleChange}
-                            checked={type.cbcol24}
-                          />
-                          <label htmlFor="cbcol24">Thấp nhất</label>
-                        </div>
-                      </div>
-                      <div className="col">
-                        <div className="clsAllIndex">
-                          <input
-                            type="checkbox"
-                            className="cbCheck priceboard2"
-                            id="cbcol26"
-                            name="cbcol26"
-                            onChange={handleChange}
-                            checked={type.cbcol26}
-                          />
-                          <label htmlFor="cbcol26">NN mua</label>
-                        </div>
-                      </div>
-                      <div className="col">
-                        <div className="clsAllIndex">
-                          <input
-                            type="checkbox"
-                            className="cbCheck priceboard2"
-                            id="cbcol27"
-                            name="cbcol27"
-                            onChange={handleChange}
-                            checked={type.cbcol27}
-                          />
-                          <label htmlFor="cbcol27">NN bán</label>
-                        </div>
-                      </div>
+                      <ColCompoent
+                        id="cbcol22"
+                        name="cbcol22"
+                        checked={type.cbcol22}
+                        handleChange={handleChange}
+                        htmlFor="cbcol22"
+                        labelName="Mở cửa"
+                      />
+                      <ColCompoent
+                        id="cbcol23"
+                        name="cbcol23"
+                        checked={type.cbcol23}
+                        handleChange={handleChange}
+                        htmlFor="cbcol23"
+                        labelName="Cao nhất"
+                      />
+                      <ColCompoent
+                        id="cbcol24"
+                        name="cbcol24"
+                        checked={type.cbcol24}
+                        handleChange={handleChange}
+                        htmlFor="cbcol24"
+                        labelName="Thấp nhất"
+                      />
+                      <ColCompoent
+                        id="cbcol26"
+                        name="cbcol26"
+                        checked={type.cbcol26}
+                        handleChange={handleChange}
+                        htmlFor="cbcol26"
+                        labelName="NN mua"
+                      />
+                      <ColCompoent
+                        id="cbcol27"
+                        name="cbcol27"
+                        checked={type.cbcol27}
+                        handleChange={handleChange}
+                        htmlFor="cbcol27"
+                        labelName="NN bán"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
-              <div
-                className="item-settings smart-symbole-settings"
-                id="smart-symbole-settings"
-              >
-                <div className="settings-content">
-                  <div className="settings-header">
-                    <div className="content">
-                      <span className="imgTable" />
-                      <label className="lbText text-16px">
-                        Tính năng thêm mã thông minh
-                      </label>
-                      <label
-                        className="switch"
-                        title="Tắt tính năng thêm mã thông minh"
-                      >
-                        <input type="checkbox" id="SymbolSmartOnOFF" />
-                        <span className="slider round" />
-                      </label>
-                    </div>
-                  </div>
-                  <div className="settings-body">
-                    <div className="row w5/6">
-                      <div className="col max-w-[16%!important]">
-                        <b
-                          style={{
-                            marginLeft: "30px",
-                            height: "18px",
-                            display: "inline-block",
-                            verticalAlign: "bottom",
-                            marginTop: "3px",
-                          }}
-                        >
-                          Vị trí thêm mã mới:
-                        </b>
-                      </div>
-                      <div className="col max-w-[16%!important]">
-                        <div style={{ marginLeft: "17px" }}>
-                          <div className="clsAllIndex">
-                            <input
-                              type="radio"
-                              className="cbRadio priceboard2"
-                              name="smart_symbol_up"
-                              id="up"
-                              style={{
-                                verticalAlign: "sub",
-                                margin: "4px 4px 0 4px",
-                                lineHeight: "normal !important",
-                              }}
-                              checked={type.smart_symbol_up}
-                              onChange={handleChange}
-                            />
-                            <label htmlFor="up">Đầu danh mục</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col max-w-[16%]">
-                        <div style={{ marginLeft: "9px" }}>
-                          <div className="clsAllIndex">
-                            <input
-                              type="radio"
-                              className="cbRadio priceboard2"
-                              name="smart_symbol_down"
-                              id="down"
-                              checked={type.smart_symbol_down}
-                              onChange={handleChange}
-                              style={{
-                                verticalAlign: "sub",
-                                margin: "4px 4px 0 4px",
-                                lineHeight: "normal !important",
-                              }}
-                            />
-                            <label htmlFor="down">Cuối danh mục</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="item-settings prior-textbox-settings"
-                id="prior-textbox-settings"
-              >
-                <div className="settings-content">
-                  <div className="settings-header">
-                    <div className="content">
-                      <span className="imgTable" />
-                      <label className="lbText text-16px">
-                        Lựa chọn nhập thông tin Giá / Khối lượng trước
-                      </label>
-                    </div>
-                  </div>
-                  <div className="settings-body">
-                    <div className="row w5/6">
-                      <div className="col max-w-[16%!important]">
-                        <b
-                          style={{
-                            marginLeft: "30px",
-                            height: "18px",
-                            display: "inline-block",
-                            verticalAlign: "bottom",
-                            marginTop: "3px",
-                          }}
-                        >
-                          Ưu tiên:
-                        </b>
-                      </div>
-                      <div className="col max-w-[16%!important]">
-                        <div style={{ marginLeft: "17px" }}>
-                          <div className="clsAllIndex">
-                            <input
-                              type="radio"
-                              className="cbRadio priceboard2"
-                              name="prior_textbox_priceF"
-                              id="priceF"
-                              style={{
-                                verticalAlign: "sub",
-                                margin: "4px 4px 0 4px",
-                                lineHeight: "normal !important",
-                              }}
-                              checked={type.prior_textbox_priceF}
-                              onChange={handleChange}
-                            />
-                            <label htmlFor="priceF">Nhập Giá trước</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col max-w-[25%!important]">
-                        <div style={{ marginLeft: "9px" }}>
-                          <div className="clsAllIndex">
-                            <input
-                              type="radio"
-                              className="cbRadio priceboard2"
-                              name="prior_textbox_qtyF"
-                              id="qtyF"
-                              style={{
-                                verticalAlign: "sub",
-                                margin: "4px 4px 0 4px",
-                                lineHeight: "normal !important",
-                              }}
-                              checked={type.prior_textbox_qtyF}
-                              onChange={handleChange}
-                            />
-                            <label htmlFor="qtyF">Nhập Khối lượng trước</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <SettingBodyComponent
+                labelTitle="Tính năng thêm mã thông minh"
+                input={true}
+                checked_1={type.smart_symbol_up}
+                handleChange={handleChange}
+                labelCol="Vị trí thêm mã mới:"
+                checked_2={type.smart_symbol_down}
+              />
+              <SettingBodyComponent
+                labelTitle="Lựa chọn nhập thông tin Giá / Khối lượng trước"
+                input={false}
+                checked_1={type.prior_textbox_priceF}
+                handleChange={handleChange}
+                labelCol="Ưu tiên:"
+                checked_2={type.prior_textbox_qtyF}
+              />
               <div className="item-settings border-b border-[#e5e5e5]">
                 <div className="row">
                   <div className="col-md-12">
@@ -688,10 +453,6 @@ const SettingTable = () => {
           >
             Đóng
           </button>
-          {/* <Button onClick={handleClose}>Lưu</Button>
-        <Button onClick={handleClose} autoFocus>
-          Đóng
-        </Button> */}
         </DialogActions>
       </Dialog>
     </div>

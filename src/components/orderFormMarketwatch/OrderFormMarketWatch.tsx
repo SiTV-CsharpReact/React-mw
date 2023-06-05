@@ -34,7 +34,6 @@ const OrderMarketW = () => {
   const [counter, setCounter] = useState(0);
   const { dataTable } = useAppSelector(state => state.dataTable);
   const { dataBuy  } = useAppSelector(state => state.dataBuy);
-  console.log("dataBuy",dataBuy)
    
     useEffect(() => {
   if (dataTable) {
