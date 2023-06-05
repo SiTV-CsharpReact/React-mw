@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import ListMenuBar from "../menuBarMW/ListMenuBar";
-import TableMarketWatch from "../tableMarketwatch/TableMarketWatch";
 import DanhMuc from "../menuBarMW/DanhMuc";
 import DateTime from "../menuBarMW/DateTime";
 import SettingTable from "../menuBarMW/SettingTable";
 import PopupTableMarketwatch from "../popupTableMarketwatch/popupTableMarketwatch";
 import { useAppSelector } from "../../store/configureStore";
 import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatch";
-import CompleteStock from "../menuBarMW/CompleteStock";
+import TableMarketWatchTest from "../tableMarketwatch/TableMarketWatchTest";
 
-const TablePrice = () => {
+const TablePriceNew = () => {
   const status = useAppSelector((state) => state.popupTable.visible);
   const [selectedValue, setSelectedValue] = useState({
     x: 0,
@@ -38,7 +37,6 @@ const TablePrice = () => {
         <div className="flex">
           <ListMenuBar />
           <DanhMuc />
-          <CompleteStock/>
           </div>
           <div className="flex">
             <SettingTable />
@@ -49,7 +47,7 @@ const TablePrice = () => {
       <div 
        className="relative"
         onContextMenu={handleContextMenu}>
-      <TableMarketWatch />
+      <TableMarketWatchTest />
       <PopupTableMarketwatch
         selectedValue={selectedValue}
         setSelectedValueProp={setSelectedValue}
@@ -65,4 +63,4 @@ const TablePrice = () => {
   );
 };
 
-export default React.memo(TablePrice);
+export default React.memo(TablePriceNew);

@@ -38,7 +38,6 @@ import Close from "../../images/x28.png";
 import TableMarketWatchTest from "../tableMarketwatch/TableMarketWatchTest";
 import DropDown from "../menuBarMW/DropDown";
 import { setOrderCount } from "./LayoutMarketWatchSLice";
-import TableMarketWatchCompact from "../tableMarketwatch/TableMarketWatchCompact";
 import { useSelector } from "react-redux";
 import CompleteStock from "../menuBarMW/CompleteStock";
 
@@ -245,7 +244,7 @@ const LayoutMarketWatch: React.FC = () => {
       setSelectedValue({
         x: e.clientX,
         y: e.clientY - 40,
-        value: trValue,
+        value: rowID,
         status: true,
       });
     }

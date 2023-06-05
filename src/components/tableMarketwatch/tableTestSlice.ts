@@ -175,7 +175,9 @@ export const tableTestSlice = createSlice({
             state.status = "idle";
             let data = action.payload;
             let dataTable = data?.product;
-            const mergedArray = dataTable.map((element: any) => {
+          
+            if(data?.index === 0){
+              const mergedArray = dataTable.map((element: any) => {
                 const infoArray = element.Info.map(
                   (subArray: any[]) => subArray[1]
                 );
@@ -217,7 +219,6 @@ export const tableTestSlice = createSlice({
                 return mergedObject;
               });
               console.log(mergedArray)
-            if(data?.index === 0){
               if(data.NameFloor === "HNX"){
                 // data?.product.map((obj:DataTable) =>
                 //       obj.Info?.sort((a: any, b: any) => {
