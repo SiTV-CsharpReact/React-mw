@@ -32,7 +32,7 @@ const SlideMarketItem: React.FC<Props> = ({
   valueTotalValuesAOM,
   valueUp,
   valueNoChange,
-  status
+  status,
 }: Props) => {
   return (
     <>

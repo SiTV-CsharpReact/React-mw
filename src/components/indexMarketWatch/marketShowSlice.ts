@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-export interface INDEX {
+export interface IIndex {
   VNXALL: boolean;
   VNI: boolean;
   VN30: boolean;
@@ -31,7 +31,7 @@ export interface INDEX {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export const INDEX_TYPE: INDEX = {
+export const INDEX_TYPE: IIndex = {
   VNXALL: true,
   VNI: true,
   VN30: true,
@@ -65,10 +65,10 @@ export const INDEX_TYPE: INDEX = {
 const data =
   localStorage.getItem("setting_table") !== null
     ? JSON.parse(localStorage.getItem("setting_table") as string)
-    : INDEX_TYPE ;
+    : INDEX_TYPE;
 
 const initialState = {
-  INDEX: data,
+  INDEX: data as IIndex,
 };
 
 export const settingMarketWatchSlice = createSlice({
