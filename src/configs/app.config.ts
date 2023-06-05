@@ -47,7 +47,7 @@ var g_ARRAY_CLASSIFY_NAME = [
 
 export const g_arrHOMarketStatus = [
     ['P', 'Bắt đầu đợt KL định kỳ mở cửa', ], // ATO
-    ['O', 'Bắt đầu đợt KL lien tục', ],    // continous
+    ['O', 'Liên tục', ],    // continous
     ['A', 'Bắt đầu đợt KL định kỳ đóng cửa', ], // ATC
     ['C', 'Đóng cửa MainBoard', ],
     ['F', 'Kết thúc nghỉ giữa đợt', ],

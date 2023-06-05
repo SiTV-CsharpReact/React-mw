@@ -98,7 +98,7 @@ const showKLPT = (value: string) => {
 
 const PinCell = () => {
   return (
-    <div title="Double click to pin" className="pt-[7px]">
+    <div title="Double click to pin">
       <svg style={{ width: 12, height: 12 }} viewBox="0 0 24 24">
         <path
           fill="currentColor"
@@ -130,7 +130,7 @@ const TableMarketWatchTest = () => {
     }
   };
   //setRowData
-  const rowData = useAppSelector((state) => state.tableTest.ListDataTable);
+  const dataTables = useAppSelector((state) => state.tableTest.ListDataTable);
   
   const handelGetData = useCallback(   (Data : any)=>{
     dispatch(getDataTable(Data))
@@ -155,7 +155,7 @@ const TableMarketWatchTest = () => {
   }
   HanDelCate();
 }, [dispatch,widthWindow]);
-  console.log(rowData)
+  console.log(dataTables)
   useEffect(() => {
     const socketHSX = new WebSocket(
       "ws://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=QFYjcEdKNTcQpQ5eM8gSgArpZ8iaLyhAzsOc2yA9Uzj6jAmKV%2Bnt5UMBQQ6IxAg2ytcl36jeKKHXgSbB5HdJNA%2FVdbAn7QKNCQ76UmWHPecxhUD87ZajL354hy24brH6&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=8"
@@ -304,7 +304,7 @@ const TableMarketWatchTest = () => {
   const containerStyle = { width: "100%", height: "100%" };
   const gridStyle = { height: "100%", width: "100%" };
   const gridApi = useRef<any>(null); // Declare gridApi reference
-  // const [rowData, setRowData] = useState<RowData[]>([]);
+  const [rowData, setRowData] = useState<RowData[]>([]);
 
   const [columnDefs] = useState([
     {
@@ -1061,6 +1061,93 @@ const TableMarketWatchTest = () => {
     // { field: "RowID", headerName: "RowID", cellClass: "score-cell" },
   ]);
 
+  
+
+
+  const fetchData = () => {
+    fetch("http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=VN30")
+      .then((resp) => resp.json())
+      .then((data) => {
+        // console.log(data); // Xem dữ liệu trả về từ API trong console
+        if (Array.isArray(data)) {
+          // Chỉnh sửa điều kiện kiểm tra dữ liệu
+          for (let index = 0; index < data.length; index++) {
+            const element = data[index];
+            const infoArray = element.Info.map(
+              (subArray: any[]) => subArray[1]
+            );
+            const sortedData = data.map((product: any) => {
+              const sortedInfo = product.Info.sort((a: any, b: any) => {
+                const indexA = Number(a[0]);
+                const indexB = Number(b[0]);
+                if (indexA < indexB) {
+                  return -1;
+                }
+                if (indexA > indexB) {
+                  return 1;
+                }
+                return 0;
+              });
+              return { ...product, Info: sortedInfo };
+            });
+            const mergedArray = data.map((element: any) => {
+              const infoArray = element.Info.map(
+                (subArray: any[]) => subArray[1]
+              );
+              const mergedObject: RowData = {
+                MCK: infoArray[0],
+                TC: infoArray[1],
+                Tran: infoArray[2],
+                San: infoArray[3],
+                KL4: infoArray[4],
+                G3: infoArray[5],
+                KL3: infoArray[6],
+                G2: infoArray[7],
+                KL2: infoArray[8],
+                G1: infoArray[9],
+                KL1: infoArray[10],
+                GiaKhop: infoArray[11],
+                KLKhop: infoArray[12],
+                Chenhlech: infoArray[13],
+                G1B: infoArray[14],
+                KL1B: infoArray[15],
+                G2B: infoArray[16],
+                KL2B: infoArray[17],
+                G3B: infoArray[18],
+                KL3B: infoArray[19],
+                KL4B: infoArray[20],
+                TKL: infoArray[21],
+                MOC: infoArray[22],
+                CaoNhat: infoArray[23],
+                ThapNhat: infoArray[24],
+                GTB: infoArray[25],
+                NNMua: infoArray[26],
+                NNBan: infoArray[27],
+                RoomCL: infoArray[28],
+                GDK: infoArray[29],
+                Quyen: infoArray[30],
+                CGKGN: infoArray[31],
+                RowID: element.RowID,
+              };
+              return mergedObject;
+            });
+
+            setRowData(mergedArray);
+            console.log("testne", mergedArray);
+          }
+        } else {
+          console.error("Invalid data format");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const defaultColDef = {
     width: 100,
     sortable: true,
@@ -1206,7 +1293,7 @@ sortable, and movable, and giving them equal flex. */
            suppressDragLeaveHidesColumns={true}
            suppressCellFocus={true}
         rowHeight={25}
-          rowData={rowData}
+          rowData={dataTables}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowDragManaged={true}

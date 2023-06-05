@@ -5,6 +5,7 @@ import TablePrice from "./TablePrice";
 import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import "./dynamic.scss";
 import TableTotalMonney from "../orderFormMarketwatch/TableTotalMonney";
+import TablePriceNew from "./TablePriceNew";
 type Tab = {
   id: string;
   name: string;
@@ -45,26 +46,12 @@ const json: IJsonModel = {
         children: [
           {
             type: "tab",
-            name: "Bảng giá",
+            name: "Bảng giá cũ",
             component: "tableprice",
           },
         ],
       },
-      {
-        type: "tabset",
-        weight: 50,
-        children: [
-          {
-            type: "tab",
-            name: "Lệnh chờ khớp",
-            component: "pendingorder",
-            config: {
-              showCloseIcon: false, // Đặt thuộc tính disableDrag thành giá trị tương ứng
-            },
-            // disableTabStrip: true
-          },
-        ],
-      },
+   
     ],
   },
 };
@@ -106,6 +93,9 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
     }
     if (component === "tableprice") {
       return <TablePrice />;
+    }
+    if (component === "tablepricenew") {
+      return <TablePriceNew />;
     }
     if (component === "pendingorder") {
       return <PendingOrders value={1} />;
@@ -168,11 +158,13 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
   setNameComponent = (componentName: string) => {
     switch (componentName) {
       case "tableprice":
-        return "Bảng giá";
+        return "Bảng giá cũ";
       case "orderform":
         return "Bảng đặt lệnh";
       case "totalmonney":
         return "Số dư tiền";
+        case "tablepricenew":
+          return "Bảng giá mới";
       default:
         break;
     }
@@ -325,7 +317,7 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
                         className="bg-invert text-color-tertiary font-medium px-3 py-1.5 mb-1"
                         role="none"
                       >
-                        Bảng giá
+                        Bảng giá 
                       </div>
                       <div className="space-y" role="none">
                         <div
@@ -346,7 +338,7 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
                                   this.onAddDragMouseDown(event, "tableprice")
                                 }
                               >
-                                Bảng giá
+                                Bảng giá cũ
                               </button>
                             </div>
                             <span className="w-3 h-3 rounded-full bg-sell" />
@@ -362,7 +354,17 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
                         >
                           <div className="flex items-center justify-between w-full">
                             <div className="flex items-center space-x-1">
-                              <span>Diễn biến dòng tiền</span>
+                            <button
+                                // disabled={this.state.adding}
+                                onMouseDown={(event) =>
+                                  this.onAddDragMouseDown(event, "tablepricenew")
+                                }
+                                onTouchStart={(event) =>
+                                  this.onAddDragMouseDown(event, "tablepricenew")
+                                }
+                              >
+                                Bảng giá mới
+                              </button>
                               <svg
                                 stroke="currentColor"
                                 fill="currentColor"
