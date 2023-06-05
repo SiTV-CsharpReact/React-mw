@@ -1,8 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MenuMarketWatch from "../indexMarketWatch/MenuMarketWatch";
 import OrderMarketW from "../orderFormMarketwatch/OrderFormMarketWatch";
 import TableMarketWatch from "../tableMarketwatch/TableMarketWatch";
@@ -11,7 +7,7 @@ import { stocks } from "../../models/marketwacthTable";
 import TableGDTTMarketWatch from "../tableMarketwatch/TableGDTTMarketWatch";
 import TableThongKeMarketWatch from "../tableMarketwatch/TableThongKeMarketWatch";
 import {
-
+  RootState,
   useAppDispatch,
   useAppSelector,
 } from "../../store/configureStore";
@@ -37,14 +33,20 @@ import Close from "../../images/x28.png";
 import TableMarketWatchTest from "../tableMarketwatch/TableMarketWatchTest";
 import DropDown from "../menuBarMW/DropDown";
 import { setOrderCount } from "./LayoutMarketWatchSLice";
+import TableMarketWatchCompact from "../tableMarketwatch/TableMarketWatchCompact";
+import { useSelector } from "react-redux";
+import CompleteStock from "../menuBarMW/CompleteStock";
 
 function RenderTable() {
   const floor = useAppSelector((state) => state.table.floor);
+  console.log(floor);
   switch (floor) {
     case "MAIN":
-      return <TableMarketWatch />;
+      return <TableMarketWatchTest />;
     case "GDTT":
       return <TableGDTTMarketWatch />;
+    case "TableTK":
+      return <TableThongKeMarketWatch />;
     default:
       break;
   }
@@ -65,7 +67,8 @@ const initialState: resizeState = {
   heightWindow: heightWindow,
   heightMarketWatch: heightWindow - heightHeader,
   heightPriceBoard: ((heightWindow - heightHeader) / 10) * 5.7,
-  heightOrderForm:((heightWindow - heightHeader) / 10) * 4.3 - heightPannelLink,
+  heightOrderForm:
+    ((heightWindow - heightHeader) / 10) * 4.3 - heightPannelLink,
   heightPannelLink: heightPannelLink,
   heightArrow: heightArrow,
   heightExpand: expand,
@@ -74,10 +77,11 @@ const initialState: resizeState = {
 // const LayoutMarketWatch  = () => {
 const LayoutMarketWatch: React.FC = () => {
   const dispatch = useAppDispatch();
-  const orderCount = useAppSelector((state)=> state.layout.orderCount)
-  // gọi danh mục 
- // row danh mục 
+  const orderCount = useAppSelector((state) => state.layout.orderCount);
+  // gọi danh mục
+  // row danh mục
   // tao useState resize khi height window thay đổi
+  const { row, name } = useSelector((state: RootState) => state.categories);
   const [heightComponent, setHeightComponent] = useState(initialState);
   const [selectedValue, setSelectedValue] = useState({
     x: 0,
@@ -85,7 +89,7 @@ const LayoutMarketWatch: React.FC = () => {
     value: "",
     status: false,
   });
-  
+
   // tinh height khi đổi từ màn hình này sang màn hình khác
   useEffect(() => {
     function handleResize() {
@@ -109,7 +113,7 @@ const LayoutMarketWatch: React.FC = () => {
   useEffect(() => {
     function handleEscape(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        dispatch(setOrderCount(0))
+        dispatch(setOrderCount(0));
       }
     }
     document.addEventListener("keydown", handleEscape);
@@ -193,13 +197,44 @@ const LayoutMarketWatch: React.FC = () => {
   const componentVisible = useAppSelector((state) => state.chart.visible);
   const hideShowOrderForm = heightComponent.orderForm;
   // show hide menu tab
-  const showTab =(orderCount:number)=>{
-    dispatch(setOrderCount(orderCount))
-  }
+  // const showPendingOrder = () => {
+  //   setHeightComponent({ ...heightComponent, orderCount: 1 });
+  // };
+  // const showTradingResult = () => {
+  //   setHeightComponent({ ...heightComponent, orderCount: 2 });
+  // };
+  // const showIntradayOrder = () => {
+  //   setHeightComponent({ ...heightComponent, orderCount: 3 });
+  // };
+
+  // const handleContextMenu = (e: any) => {
+  //   e.preventDefault();
+  //   var vCell = e.target;
+  //   if (vCell.classList.contains(`custom-cell`)) {
+  //     vCell = vCell.parentElement;
+  //   }
+  //   const rowID = vCell.querySelector(`div.custom-cell`).dataset.comp;
+  //   const trValue = document.querySelector(`div[data-index="0"][data-comp="${rowID}"]`)?.innerHTML
+  //   console.log("click",trValue);
+  //   if (trValue) {
+  //     setSelectedValue({
+  //       x: e.clientX,
+  //       y: e.clientY - 40,
+  //       value: trValue,
+  //       status: true,
+  //     });
+  //   }
+  // };
   const handleContextMenu = (e: any) => {
     e.preventDefault();
-    const trValue = e.target.parentElement.getAttribute("data-tr-value");
-
+    const vCell = e.target.classList.contains("custom-cell")
+      ? e.target.parentElement
+      : e.target;
+    const rowID = vCell.querySelector("div.custom-cell").dataset.comp;
+    const trValue = document.querySelector(
+      `div[data-index="0"][data-comp="${rowID}"]`
+    )?.innerHTML;
+    console.log("click", trValue);
     if (trValue) {
       setSelectedValue({
         x: e.clientX,
@@ -209,6 +244,10 @@ const LayoutMarketWatch: React.FC = () => {
       });
     }
   };
+  const showTab = (orderCount: number) => {
+    dispatch(setOrderCount(orderCount));
+  };
+
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     draggingRef.current = false;
   };
@@ -223,11 +262,7 @@ const LayoutMarketWatch: React.FC = () => {
         selectedValue={selectedValue}
         setSelectedValueProp={setSelectedValue}
       />
-      {status ? (
-        <TablePopupMarketwatch/>
-      ) : (
-        ""
-      )}
+      {status ? <TablePopupMarketwatch /> : ""}
       {/* marketwatch */}
       <div
         className="relative z-50 overflow-hidden text-white resize panel-horizontally bg-BGTableMarket"
@@ -266,8 +301,8 @@ const LayoutMarketWatch: React.FC = () => {
                 <div className="flex ">
                   <ListMenuBar />
                   <DanhMuc />
-                  {/* <CompleteStock /> */}
-                  <DropDown/>
+                  {row && name ? <CompleteStock /> : ""}
+
                   {heightComponent.heightExpand === 27 ? (
                     <div>
                       <Tooltip title="Hiện thị index">
@@ -373,17 +408,17 @@ const LayoutMarketWatch: React.FC = () => {
               className="mt-1 text-black"
             >
               <div className="panel__bottom__link flex justify-end mr-[40px] mb-[14px]">
-                <div className="px-2 group" onClick={()=> showTab(1)}>
+                <div className="px-2 group" onClick={() => showTab(1)}>
                   <span className=" size-input hover-text-blue-L">
                     Lệnh chờ khớp
                   </span>
                 </div>
-                <div className="px-2 group" onClick={()=> showTab(2)}>
+                <div className="px-2 group" onClick={() => showTab(2)}>
                   <span className=" size-input hover-text-blue-L">
                     KQ khớp lệnh trong phiên
                   </span>
                 </div>
-                <div className="px-2 group" onClick={()=> showTab(3)}>
+                <div className="px-2 group" onClick={() => showTab(3)}>
                   <span className=" size-input hover-text-blue-L">
                     Lệnh trong ngày
                   </span>
@@ -402,7 +437,7 @@ const LayoutMarketWatch: React.FC = () => {
               style={{
                 display: orderCount === 0 ? "none" : "block",
               }}
-              onClick={()=> showTab(0)  }
+              onClick={() => showTab(0)}
             >
               <Tooltip title="Trở về đặt lệnh">
                 <span className="text-[15px] hover:underline ">
@@ -429,7 +464,7 @@ const LayoutMarketWatch: React.FC = () => {
               className="text-black "
             >
               <div className="flex items-center justify-end panel__bottom__link">
-                <div className="px-2 group" onClick={()=> showTab(1)}>
+                <div className="px-2 group" onClick={() => showTab(1)}>
                   <span
                     className={`size-input hover-text-blue-L ${
                       orderCount === 1 ? "active" : ""
@@ -438,7 +473,7 @@ const LayoutMarketWatch: React.FC = () => {
                     Lệnh chờ khớp
                   </span>
                 </div>
-                <div className="px-2 group" onClick={()=> showTab(2)}>
+                <div className="px-2 group" onClick={() => showTab(2)}>
                   <span
                     className={`size-input hover-text-blue-L ${
                       orderCount === 2 ? "active" : ""
@@ -447,7 +482,7 @@ const LayoutMarketWatch: React.FC = () => {
                     KQ khớp lệnh trong phiên
                   </span>
                 </div>
-                <div className="px-2 group" onClick={()=> showTab(3)}>
+                <div className="px-2 group" onClick={() => showTab(3)}>
                   <span
                     className={`size-input hover-text-blue-L ${
                       orderCount === 3 ? "active" : ""
@@ -459,10 +494,9 @@ const LayoutMarketWatch: React.FC = () => {
                 <div
                   className="cursor-pointer h-[35px] w-[45px] ml-4 hover:bg-white "
                   style={{
-                    display:
-                    orderCount === 0 ? "none" : "block",
+                    display: orderCount === 0 ? "none" : "block",
                   }}
-                  onClick={()=> showTab(0)}
+                  onClick={() => showTab(0)}
                 >
                   <Tooltip title="Đóng">
                     <button
@@ -515,7 +549,7 @@ const LayoutMarketWatch: React.FC = () => {
                 display: orderCount === 1 ? "block" : "none",
               }}
             >
-              <PendingOrders />
+              <PendingOrders value={orderCount} />
             </div>
             <div
               style={{
@@ -526,7 +560,7 @@ const LayoutMarketWatch: React.FC = () => {
             </div>
             <div
               style={{
-                display:orderCount === 3 ? "block" : "none",
+                display: orderCount === 3 ? "block" : "none",
               }}
             >
               <IntradayOrder />

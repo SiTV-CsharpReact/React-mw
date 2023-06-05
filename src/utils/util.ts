@@ -1,10 +1,4 @@
-import {
-  g_ARRAY_COLOR_CLASS,
-  g_ID_TD_STAT_CONTROLCODE,
-  g_arrHAMarketStatus,
-  g_arrHOMarketStatus,
-  g_arrUPMarketStatus,
-} from "../configs/app.config";
+import { g_ARRAY_COLOR_CLASS, g_ID_TD_STAT_CONTROLCODE, g_arrHAMarketStatus, g_arrHOMarketStatus, g_arrUPMarketStatus } from "../configs/app.config";
 
 export function formatNumber(number: any) {
   if (!number || number === 0 || number === "0") return 0; // hoac ''
@@ -196,42 +190,54 @@ export const checkSTTMarketValue = (value: string, status?: string) => {
   }
 };
 // status sàn HNX
-export const fStatusMarketHNX = (value?: string) => {
-  let valueStatus = "";
-  g_arrHAMarketStatus.map((g_HNXStatus) => {
-    //console.log(g_HNXStatus[0])
+export const fStatusMarketHNX = (value?:string) =>{
+    let valueStatus = ""
+    g_arrHAMarketStatus.map((g_HNXStatus)=>{
+      //console.log(g_HNXStatus[0])
+         
+          if(g_HNXStatus[0] === value){
+            valueStatus= g_HNXStatus[1]
+          }
+          
+    })
+    return valueStatus
+  }
+  // status HSX
+  export const fStatusMarketHSX = (value?:string) =>{
+    // console.log(value)
+    let valueStatus = ""
+    g_arrHOMarketStatus.map((g_HSXStatus)=>{
+      //console.log(g_HNXStatus[0])
+         
+          if(g_HSXStatus[0] === value){
+            valueStatus= g_HSXStatus[1]
+            // console.log(valueStatus)
+          }
+    })
+   
+    return valueStatus
+  }
+  //status sàn UPCOM
+  export const fStatusMarketUPCOM = (value?:string) =>{
+    // console.log(value)
+    let valueStatus = ""
+    g_arrUPMarketStatus.map((g_UPCStatus)=>{
+      //console.log(g_HNXStatus[0])
+         
+          if(g_UPCStatus[0] === value){
+            valueStatus= g_UPCStatus[1]
+          }
+          
+    })
+    // console.log(valueStatus)
+    return valueStatus;
 
-    if (g_HNXStatus[0] === value) {
-      valueStatus = g_HNXStatus[1];
-    }
-  });
-  return valueStatus;
-};
-// status HSX
-export const fStatusMarketHSX = (value?: string) => {
-  let valueStatus = "";
-  g_arrHOMarketStatus.map((g_HSXStatus) => {
-    if (g_HSXStatus[0] === value) {
-      valueStatus = g_HSXStatus[1];
-    }
-  });
-  return valueStatus;
-};
-//status sàn UPCOM
-export const fStatusMarketUPCOM = (value?: string) => {
-  let valueStatus = "";
-  g_arrUPMarketStatus.map((g_UPCStatus) => {
-    //console.log(g_HNXStatus[0])
-
-    if (g_UPCStatus[0] === value) {
-      valueStatus = g_UPCStatus[1];
-    }
-  });
-  return valueStatus;
-};
-export const HNXStatus = () => {};
-var g_HOSEControlCode = "";
-var g_ARRAY_SHOW_TIME = ["P", "O", "I", "F", "A", "C"];
+  }
+  export const HNXStatus =() =>{
+    
+  }
+  var g_HOSEControlCode = '';
+  var g_ARRAY_SHOW_TIME = ["P", "O", "I", "F", "A", "C"];
 // const checkTime = (controlCode:any)=>{
 //     var chartLayout = document.getElementById('chart-layout');
 // 		var dateTimeChart = chartLayout ? chartLayout.querySelector('.date-time-chart') : null;

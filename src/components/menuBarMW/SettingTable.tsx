@@ -53,36 +53,35 @@ const SettingTable = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let query = { ...type };
+    let query = { ...type, [e.target.name]: e.target.checked };
     if (e.target.name === "smart_symbol_up") {
       query = {
         ...type,
         smart_symbol_down: false,
-        [e.target.name]: e.target.checked,
+        smart_symbol_up: true,
       };
     }
     if (e.target.name === "smart_symbol_down") {
       query = {
         ...type,
         smart_symbol_up: false,
-        [e.target.name]: e.target.checked,
+        smart_symbol_down: true,
       };
     }
     if (e.target.name === "prior_textbox_priceF") {
       query = {
         ...type,
         prior_textbox_qtyF: false,
-        [e.target.name]: e.target.checked,
+        prior_textbox_priceF: true,
       };
     }
     if (e.target.name === "prior_textbox_qtyF") {
       query = {
         ...type,
         prior_textbox_priceF: false,
-        [e.target.name]: e.target.checked,
+        prior_textbox_qtyF: true,
       };
     }
-
     setType(query);
   };
   return (

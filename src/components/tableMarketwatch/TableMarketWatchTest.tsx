@@ -1,14 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 // import "ag-grid-community/styles/ag-grid.css";
 // import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./table.scss";
-import { formatNumber, formatNumberMarket, setColorMarkettest } from "../../utils/util";
+import { formatNumber, formatNumberMarket, getCompanyNameByCode, setColorMarkettest } from "../../utils/util";
 import { ColSpanParams } from "ag-grid-enterprise";
 import { ColDef, ColGroupDef } from "ag-grid-community";
-import { LicenseManager } from 'ag-grid-enterprise';
-LicenseManager.setLicenseKey('SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb');
+import { LicenseManager } from "ag-grid-enterprise";
+import PopupStock from "./PopupStock";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { getDataTable } from "./tableTestSlice";
+import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
+import { Tooltip } from "@mui/material";
+
+LicenseManager.setLicenseKey(
+  "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
+);
 type RowData = {
   MCK: string;
   TC: string;
@@ -44,8 +52,6 @@ type RowData = {
   CGKGN: string;
   RowID: string;
 };
-
-
 
 const showKLPT = (value: string) => {
   // console.log(value);
@@ -88,6 +94,37 @@ const showKLPT = (value: string) => {
 };
 
 const TableMarketWatchTest = () => {
+  const widthWindow = window.innerWidth;
+  console.log(widthWindow)
+  const dispatch = useAppDispatch();
+
+  //setRowData
+  const dataTables = useAppSelector((state) => state.tableTest.ListDataTable);
+  
+  const handelGetData = useCallback(   (Data : any)=>{
+    dispatch(getDataTable(Data))
+ }, [dispatch]);
+ useEffect(() => {
+  async function HanDelCate (){
+    let result = await  dispatch(fetchCategoryAsync());
+    if( result?.payload?.Data[0]?.List ){
+          let data = {
+        Floor : "danh-muc",
+        Query : result?.payload?.Data[0]?.List 
+      }
+      await  handelGetData(data)
+    }else{
+      let data = {
+        Floor : "HSX",
+        Query : "s=quote&l=All"
+      } 
+      await  handelGetData(data)
+    } 
+    
+  }
+  HanDelCate();
+}, [dispatch,widthWindow]);
+  console.log(dataTables)
   useEffect(() => {
     // const socket = io('ws://eztradereact.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=dnL897L7K8vCFfdm%2FU2B%2B8L3mgJxVC9qXt8YejdUGsaMoHgfj%2FPPyVumCVpn5PvW2sxZanXnmvvNU49qowDUIJ5hYyfNfe56xdHs6Gf3cOQ84am2ZKvvswyYk8wE4dyq&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=1');
 
@@ -188,8 +225,8 @@ const TableMarketWatchTest = () => {
   ) => {
     // getID các giá trị cần lấy
     // const arrayPrice = [5, 7, 9, 11, 14, 16, 18];d
-    // const valueTC = document.querySelector(`div[data-index="5"][aria-rowindex="BCC"]`)?.innerHTML;
-    const valueTCS = document.querySelector(`div[data-index="${arrInfo}"][aria-rowindex="${arrRowID}"]`) as HTMLElement;
+    // const valueTC = document.querySelector(`div[data-index="5"][data-comp="BCC"]`)?.innerHTML;
+    const valueTCS = document.querySelector(`div[data-index="${arrInfo}"][data-comp="${arrRowID}"]`) as HTMLElement;
     if(valueTCS){
       valueTCS.innerHTML = `${formatNumberMarket(arrValue)}`;
       // gán màu bg
@@ -205,8 +242,7 @@ const TableMarketWatchTest = () => {
     }
   }
 
-  const widthWindow = window.innerWidth;
-  console.log(widthWindow)
+
   const RowDataIndex = {
     MCK: 0,
     TC: 1,
@@ -245,11 +281,8 @@ const TableMarketWatchTest = () => {
   const containerStyle = { width: "100%", height: "100%" };
   const gridStyle = { height: "100%", width: "100%" };
   const gridApi = useRef<any>(null); // Declare gridApi reference
-
   const [rowData, setRowData] = useState<RowData[]>([]);
-  const gridApiRef = useRef<any>(null);
 
-  
   const columnDefs = [
     {
       field: "MCK",
@@ -257,7 +290,7 @@ const TableMarketWatchTest = () => {
       cellClass: "score-cell",
       suppressMenu: true,
       spanHeaderHeight: true,
-      width: 52,
+      width: widthWindow * 0.05,
       maxWidth: 100,
       // cellClass: "custom-cell",
       headerClass: "custom-header",
@@ -268,7 +301,30 @@ const TableMarketWatchTest = () => {
           textAlign: "left",
         };
       },
-   
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.MCK; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+
+        //console.log("Column Index:", dataIndex);
+
+        const value = params.value; // Get the value of the cell
+        const rowid = params.data.RowID; // Get the
+        return (
+         
+          //  <div data-index={dataIndex} data-comp={rowid}  data-tooltip={getCompanyNameByCode(value).toString()} className="relative custom-cell cell-stock has-symbol company-tooltip">
+          //   {value}
+          // </div>
+          
+          <Tooltip title={getCompanyNameByCode(value)}>
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell cell-stock has-symbol company-tooltip">
+            <input type="checkbox" className="checkbox_price" />
+            <span className="pl-1 pt-1">
+            {value}
+            </span>
+          
+         </div>
+         </Tooltip>
+        );
+      },
     },
 
     {
@@ -278,7 +334,7 @@ const TableMarketWatchTest = () => {
       cellClass: "score-cell tc-cell",
       suppressMenu: true,
       spanHeaderHeight: true,
-      width: 52,
+      width: widthWindow * 0.03,
       maxWidth: 100,
       headerStyle: {
         fontWeight: "bold",
@@ -289,14 +345,26 @@ const TableMarketWatchTest = () => {
         fontWeight: "",
         color: setColorMarkettest("", params),
       }),
-      
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.TC; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+
+        // console.log("Column Index:", dataIndex);
+
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
     {
       field: "Tran",
-      headerName: "Tran",
+      headerName: "Trần",
       suppressMenu: true,
       spanHeaderHeight: true,
-      width: 52,
+      width: widthWindow * 0.03,
       maxWidth: 100,
       headerClass: "custom-header tc-header ",
       cellClass: "score-cell tc-cell",
@@ -305,13 +373,26 @@ const TableMarketWatchTest = () => {
         color: setColorMarkettest("", params),
         textAlign: "right",
       }),
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.Tran; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+
+        // console.log("Column Index:", dataIndex);
+
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
     {
       field: "San",
-      headerName: "San",
+      headerName: "Sàn",
       suppressMenu: true,
       spanHeaderHeight: true,
-      width: 52,
+      width: widthWindow * 0.03,
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       cellClass: "score-cell tc-cell",
@@ -320,6 +401,19 @@ const TableMarketWatchTest = () => {
         color: setColorMarkettest("", params),
         textAlign: "right",
       }),
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.San; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+
+        // console.log("Column Index:", dataIndex);
+
+        const value = params.value;
+        const rowid = params.data.RowID; // Get the
+        return (
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+            {value}
+          </div>
+        );
+      },
     },
 
     {
@@ -331,7 +425,7 @@ const TableMarketWatchTest = () => {
           field: "G3",
           headerName: "G3",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.03,
           minWidth: 50,
           height: 30,
           maxWidth: 100,
@@ -347,7 +441,7 @@ const TableMarketWatchTest = () => {
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
                 {formatNumberMarket(value)}
               </div>
             );
@@ -357,7 +451,8 @@ const TableMarketWatchTest = () => {
           field: "KL3",
           headerName: "KL3",
           suppressMenu: true,
-          width: 62,
+          width: widthWindow * 0.04,
+
           minWidth: 50,
           heigth: 34,
           maxWidth: 100,
@@ -374,18 +469,18 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
     
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
               {formatNumberMarket(value)}
             </div>
             );
           },
         },
-        
+
         {
           field: "G2",
           headerName: "G2",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.03,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
@@ -401,7 +496,7 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
     
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
               {formatNumberMarket(value)}
             </div>
             );
@@ -412,7 +507,7 @@ const TableMarketWatchTest = () => {
           field: "KL2",
           headerName: "KL2",
           suppressMenu: true,
-          width: 62,
+          width: widthWindow * 0.04,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
@@ -428,7 +523,7 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
     
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
               {formatNumberMarket(value)}
             </div>
             );
@@ -438,7 +533,7 @@ const TableMarketWatchTest = () => {
           field: "G1",
           headerName: "G1",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.04,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
@@ -454,7 +549,7 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
     
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
               {formatNumberMarket(value)}
             </div>
             );
@@ -465,7 +560,7 @@ const TableMarketWatchTest = () => {
           headerName: "KL1",
           cellClass: "score-cell",
           suppressMenu: true,
-          width: 62,
+          width: widthWindow * 0.05,
           minWidth: 50,
           maxWidth: 100,
           headerClass: "custom-header",
@@ -480,7 +575,7 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
     
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
               {formatNumberMarket(value)}
             </div>
             );
@@ -490,17 +585,17 @@ const TableMarketWatchTest = () => {
     },
     {
       headerName: "Khớp lệnh",
-      headerClass: "custom-header",
+      headerClass: "custom-header tc-header",
       children: [
         {
           field: "GiaKhop",
-          headerName: "Gia",
+          headerName: "Giá",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.03,
           minWidth: 50,
           maxWidth: 100,
-          cellClass: "score-cell",
-          headerClass: "custom-header",
+          cellClass: "score-cell tc-cell",
+          headerClass: "custom-header tc-header",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("", params),
@@ -512,7 +607,7 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
     
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
               {formatNumberMarket(value)}
             </div>
             );
@@ -522,11 +617,11 @@ const TableMarketWatchTest = () => {
           field: "KLKhop",
           headerName: "KL",
           suppressMenu: true,
-          width: 52,
+          width: widthWindow * 0.04,
           minWidth: 50,
           maxWidth: 100,
-          cellClass: "score-cell",
-          headerClass: "custom-header",
+          cellClass: "score-cell tc-cell",
+          headerClass: "custom-header tc-header",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("KLKhop", params),
@@ -538,7 +633,7 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
     
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
               {formatNumberMarket(value)}
             </div>
             );
@@ -547,6 +642,7 @@ const TableMarketWatchTest = () => {
         {
           field: "Chenhlech",
           headerName:"+/-",
+          
           // headerName: () => {
           //   const buttonElement = document.createElement("button");
           //   buttonElement.innerHTML = "+/-";
@@ -561,11 +657,11 @@ const TableMarketWatchTest = () => {
           //   return headerElement;
           // },
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.03,
           minWidth: 50,
           maxWidth: 100,
-          cellClass: "score-cell",
-          headerClass: "custom-header",
+          cellClass: "score-cell tc-cell",
+          headerClass: "custom-header tc-header",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("Chenhlech", params),
@@ -590,9 +686,9 @@ const TableMarketWatchTest = () => {
       children: [
         {
           field: "G1B",
-          headerName: "G1B",
+          headerName: "G1",
           suppressMenu: true,
-          width: 52,
+          width: widthWindow * 0.03,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
@@ -607,7 +703,7 @@ const TableMarketWatchTest = () => {
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
                 {formatNumberMarket(value)}
               </div>
             );
@@ -617,7 +713,7 @@ const TableMarketWatchTest = () => {
           field: "KL1B",
           headerName: "KL1",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.04,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
@@ -632,7 +728,7 @@ const TableMarketWatchTest = () => {
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
                 {formatNumberMarket(value)}
               </div>
             );
@@ -642,7 +738,7 @@ const TableMarketWatchTest = () => {
           field: "G2B",
           headerName: "G2",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.03,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
@@ -657,7 +753,7 @@ const TableMarketWatchTest = () => {
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
                 {formatNumberMarket(value)}
               </div>
             );
@@ -667,7 +763,7 @@ const TableMarketWatchTest = () => {
           field: "KL2B",
           headerName: "KL2",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.03,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
@@ -682,7 +778,7 @@ const TableMarketWatchTest = () => {
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
                 {formatNumberMarket(value)}
               </div>
             );
@@ -693,7 +789,7 @@ const TableMarketWatchTest = () => {
           headerName: "G3",
           cellClass: "score-cell",
           suppressMenu: true,
-          width: 50,
+          width: widthWindow * 0.04,
           minWidth: 50,
           maxWidth: 100,
           headerClass: "custom-header",
@@ -707,7 +803,7 @@ const TableMarketWatchTest = () => {
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
                 {formatNumberMarket(value)}
               </div>
             );
@@ -717,7 +813,7 @@ const TableMarketWatchTest = () => {
           field: "KL3B",
           headerName: "KL3",
           suppressMenu: true,
-          width: 60,
+          width: widthWindow * 0.05,
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell ",
@@ -732,7 +828,7 @@ const TableMarketWatchTest = () => {
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
                 {formatNumberMarket(value)}
               </div>
             );
@@ -746,7 +842,7 @@ const TableMarketWatchTest = () => {
       headerName: "Tổng KL",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
-      width: 60,
+      width: widthWindow * 0.05,
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
@@ -755,7 +851,7 @@ const TableMarketWatchTest = () => {
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
             {formatNumberMarket(value)}
           </div>
         );
@@ -766,7 +862,7 @@ const TableMarketWatchTest = () => {
       headerName: "Mở Cửa",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
-      width: 52,
+      width: widthWindow * 0.04,
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
@@ -780,7 +876,7 @@ const TableMarketWatchTest = () => {
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
             {formatNumberMarket(value)}
           </div>
         );
@@ -791,7 +887,7 @@ const TableMarketWatchTest = () => {
       headerName: "Cao Nhất",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
-      width: 52,
+      width: widthWindow * 0.04,
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
@@ -805,7 +901,7 @@ const TableMarketWatchTest = () => {
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
             {formatNumberMarket(value)}
           </div>
         );
@@ -816,7 +912,7 @@ const TableMarketWatchTest = () => {
       field: "ThapNhat",
       headerName: "Thấp nhất",
       spanHeaderHeight: true,
-      width: 52,
+      width: widthWindow * 0.04,
       maxWidth: 100,
       cellClass: "score-cell tc-cell",
       headerClass: "custom-header tc-header",
@@ -830,7 +926,7 @@ const TableMarketWatchTest = () => {
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
             {formatNumberMarket(value)}
           </div>
         );
@@ -841,7 +937,7 @@ const TableMarketWatchTest = () => {
       field: "NNMua",
       headerName: "NN mua",
       spanHeaderHeight: true,
-      width: 62,
+      width: widthWindow * 0.05,
       maxWidth: 100,
       cellClass: "score-cell tc-cell",
       headerClass: "custom-header tc-header",
@@ -851,7 +947,7 @@ const TableMarketWatchTest = () => {
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
             {formatNumberMarket(value)}
           </div>
         );
@@ -862,7 +958,7 @@ const TableMarketWatchTest = () => {
       headerName: "NN bán",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
-      width: 62,
+      width: widthWindow * 0.05,
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
@@ -871,7 +967,7 @@ const TableMarketWatchTest = () => {
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
             {formatNumberMarket(value)}
           </div>
         );
@@ -891,7 +987,7 @@ const TableMarketWatchTest = () => {
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
         return (
-          <div data-index={dataIndex} aria-rowindex={rowid} className="custom-cell">
+          <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
             {formatNumberMarket(value)}
           </div>
         );
@@ -900,6 +996,9 @@ const TableMarketWatchTest = () => {
 
     // { field: "RowID", headerName: "RowID", cellClass: "score-cell" },
   ];
+
+  
+
 
   const fetchData = () => {
     fetch("http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=VN30")
@@ -970,7 +1069,7 @@ const TableMarketWatchTest = () => {
             });
 
             setRowData(mergedArray);
-          //  console.log("testne", mergedArray);
+            console.log("testne", mergedArray);
           }
         } else {
           console.error("Invalid data format");
@@ -991,12 +1090,24 @@ const TableMarketWatchTest = () => {
     filter: true,
     autoSize: true,
   };
+  const gridOptions = {
+    // Các cấu hình khác của ag-Grid
 
+    suppressCellSelection: true,
+    suppressRowClickSelection: true,
+    suppressContextMenu: true,
+    suppressCellContextMenu: true,
+    suppressRowContextMenu: true,
+  };
+  document.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+  });
   return (
     <div style={containerStyle}>
       <div style={gridStyle} className="ag-theme-alpine-dark">
         <AgGridReact 
-          rowData={rowData}
+        rowHeight={25}
+          rowData={dataTables}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowDragManaged={true}
@@ -1004,6 +1115,7 @@ const TableMarketWatchTest = () => {
           rowDragMultiRow={true}
           rowSelection={"multiple"}
           animateRows={true}
+          gridOptions={gridOptions}
           onGridReady={(params: any) => {
             params.api.sizeColumnsToFit(undefined, {
               suppressSizeToFit: false,
@@ -1015,4 +1127,4 @@ const TableMarketWatchTest = () => {
   );
 };
 
-export default TableMarketWatchTest;
+export default React.memo(TableMarketWatchTest);

@@ -100,12 +100,7 @@ const SlideMarketItem: React.FC<Props> = ({
                 <span className="marf txtIndex">
                   (<span id={id[10]}>{valueFloor}</span>)
                 </span>
-                <span
-                  className="HO_MarketStat txtIndex"
-                  id={`${id[11] !== undefined ? id[11] : " "}`}
-                >
-                  {status}
-                </span>
+                <span className="HO_MarketStat txtIndex" id={`${id[11] !== undefined ? id[11]:""}`} >{status}</span>
               </p>
             </>
           )}
