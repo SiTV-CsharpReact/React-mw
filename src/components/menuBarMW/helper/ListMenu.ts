@@ -283,31 +283,32 @@ const menuItems = [
     name: "Thống kê",
     path: "/thong-ke-index",
     floor: "TableTK",
+    // floor: "HNX",
     children: [
       {
         name: "Thống kê Index",
         path: "/chung-khoan/thong-ke-index",
-        query : "s=quote&l=HNXUpcomIndex"
+        query : "HIST_INDEX"
       },
       {
         name: "Thống kê Giá",
         path: "/chung-khoan/thong-ke-gia",
-        query : ""
+        query : "HIST_PRICE"
       },
       {
         name: "Thống kê Đặt lệnh",
         path: "/chung-khoan/thong-ke-dat-lenh",
-        query : ""
+        query : "HIST_ORDER"
       },
       {
         name: "Giao dịch khớp lệnh NDTNN",
         path: "/chung-khoan/giao-dich-khop-lenh-ndtnn",
-        query : ""
+        query : "HIST_FOREIGN_NM"
       },
       {
         name: "Giao dịch thỏa thuận NDTNN",
         path: "/chung-khoan/giao-dich-thoa-thuan-ndtnn",
-        query : ""
+        query : "HIST_FOREIGN_PT"
       },
     ],
   },

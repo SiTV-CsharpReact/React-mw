@@ -38,13 +38,15 @@ const MenuBar = () => {
     key : number ,
     name: string,
     query: string,
-    floor: string
+    floor: string,
+    KeyMenuChildren ? :any
   ) => {
     setActiveMenuItemChild(name);
     localStorage.setItem("activePriceboardTabMenu", name);
     let data = {
       Floor: floor,
       Query: query,
+      KeyMenuChildren : KeyMenuChildren
     };
     let activeMenu = {
       nameMenu: name,
@@ -57,13 +59,12 @@ const MenuBar = () => {
     return (
       <div
         key={key}
-
         className={`group list-sub-menu ${!row && !name && keyMenu === key? 'active' : ''} `}
         onClick={() => handleItemClick(item.path , key)}
       >
         <span className="text-13px">
           {item.name}
-          {keyMenu === key?  nameMenu ?  `: ${nameMenu}` : ""  +  nameMenu?.replace(" ", "") 
+          {keyMenu === key?  nameMenu ?  `: ${ nameMenu.length > 15 ?  nameMenu.slice(0,15) + "..." :  nameMenu}` : ""  +  nameMenu?.replace(" ", "") 
             : " "}
         </span>
         {item.children && item.children.length <= 9 ? (
@@ -76,7 +77,7 @@ const MenuBar = () => {
                 <li
                   key={index}
                   onClick={() =>
-                    handleItemChildClick( key , child.name, child.query, item.floor )
+                    handleItemChildClick( key , child.name, child.query, item.floor , index )
                   }
                 >
                   <Link
@@ -98,7 +99,7 @@ const MenuBar = () => {
               return(
                 <li  key={index}
                 className={`${ index % 2 === 0 ? "float-left" : "float-right" }`}
-                onClick={() => handleItemChildClick(key ,child.name ,child.query,item.floor )}
+                onClick={() => handleItemChildClick(key ,child.name ,child.query,item.floor , index )}
                 >
                   <Link to=""
                   className={`${ activeMenuItemName === child.name ? 'active' : ''} `}
