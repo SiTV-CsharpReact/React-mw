@@ -4,7 +4,12 @@ import "ag-grid-enterprise";
 // import "ag-grid-community/styles/ag-grid.css";
 // import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./table.scss";
-import { formatNumber, formatNumberMarket, getCompanyNameByCode, setColorMarkettest } from "../../utils/util";
+import {
+  formatNumber,
+  formatNumberMarket,
+  getCompanyNameByCode,
+  setColorMarkettest,
+} from "../../utils/util";
 import { ColSpanParams } from "ag-grid-enterprise";
 import { ColDef, ColGroupDef } from "ag-grid-community";
 import { LicenseManager } from "ag-grid-enterprise";
@@ -16,49 +21,13 @@ import { Tooltip } from "@mui/material";
 import { dispatchDataTable } from "./tableThunk";
 import { dispatchDataTableBuy } from "./tableBuy";
 import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
+import { RowDataIndex, RowData, Row } from "./models/typeModel";
 
 LicenseManager.setLicenseKey(
   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
 );
-type RowData = {
-  MCK: string;
-  TC: string;
-  Tran: string;
-  San: string;
-  KL4: string;
-  G3: string;
-  KL3: string;
-  G2: string;
-  KL2: string;
-  G1: string;
-  KL1: string;
-  GiaKhop: string;
-  KLKhop: string;
-  Chenhlech: string;
-  G1B: string;
-  KL1B: string;
-  G2B: string;
-  KL2B: string;
-  G3B: string;
-  KL3B: string;
-  KL4B: string;
-  TKL: string;
-  MOC: string;
-  CaoNhat: string;
-  ThapNhat: string;
-  GTB: string;
-  NNMua: string;
-  NNBan: string;
-  RoomCL: string;
-  GDK: string;
-  Quyen: string;
-  CGKGN: string;
-  RowID: string;
-  isPined: boolean;
-};
 
 const showKLPT = (value: string) => {
-  // console.log(value);
   if (value === "showPT") {
     const element = document.getElementsByClassName("price-ot");
     const elementFirst = document.getElementsByClassName("price-ot")[0];
@@ -110,20 +79,18 @@ const PinCell = () => {
   );
 };
 
-
-
 const TableMarketWatchTest = () => {
+  const [gridApis, setGridApi] = useState(false);
   const widthWindow = window.innerWidth;
-  console.log(widthWindow);
-
   const dispatch = useAppDispatch();
+  
   const handleClick = (dataTable: any) => {
     // console.log("dataTable ii",dataTable)
     dispatch(dispatchDataTable(dataTable));
   };
-   const handleClickBuy = (dataTable: any) => {
+  const handleClickBuy = (dataTable: any) => {
     // console.log("dataTable",dataTable)
-     dispatch(dispatchDataTableBuy(dataTable)) ;
+    dispatch(dispatchDataTableBuy(dataTable));
   };
   const handleDoubleClick = (e: any, val: any) => {
     if (e.detail === 2) {
@@ -131,32 +98,35 @@ const TableMarketWatchTest = () => {
     }
   };
   //setRowData
-  const rowData = useAppSelector((state) => state.tableTest.ListDataTable);
-  
-  const handelGetData = useCallback(   (Data : any)=>{
-    dispatch(getDataTable(Data))
- }, [dispatch]);
- useEffect(() => {
-  async function HanDelCate (){
-    let result = await  dispatch(fetchCategoryAsync());
-    if( result?.payload?.Data[0]?.List ){
-          let data = {
-        Floor : "danh-muc",
-        Query : result?.payload?.Data[0]?.List 
+  const rowData = useAppSelector((state) => state.tableTest.ListDataTable); 
+
+
+  const handelGetData = useCallback(
+    (Data: any) => {
+      dispatch(getDataTable(Data));
+    },
+    [dispatch]
+  );
+  useEffect(() => {
+    async function HanDelCate() {
+      let result = await dispatch(fetchCategoryAsync());
+      if (result?.payload?.Data[0]?.List) {
+        let data = {
+          Floor: "danh-muc",
+          Query: result?.payload?.Data[0]?.List,
+        };
+        await handelGetData(data);
+      } else {
+        let data = {
+          Floor: "HSX",
+          Query: "s=quote&l=All",
+        };
+        await handelGetData(data);
       }
-      await  handelGetData(data)
-    }else{
-      let data = {
-        Floor : "HSX",
-        Query : "s=quote&l=All"
-      } 
-      await  handelGetData(data)
-    } 
-    
-  }
-  HanDelCate();
-}, [dispatch,widthWindow]);
-  console.log(rowData)
+    }
+    HanDelCate();
+  }, [dispatch, widthWindow]);
+  console.log(rowData);
   useEffect(() => {
     const socketHSX = new WebSocket(
       "ws://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=QFYjcEdKNTcQpQ5eM8gSgArpZ8iaLyhAzsOc2yA9Uzj6jAmKV%2Bnt5UMBQQ6IxAg2ytcl36jeKKHXgSbB5HdJNA%2FVdbAn7QKNCQ76UmWHPecxhUD87ZajL354hy24brH6&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=8"
@@ -196,7 +166,7 @@ const TableMarketWatchTest = () => {
   const updateQuote = (objRealtime: any) => {
     // objRealtime = {"RowID":"BCC","Info":[[5,83.5],[7,83.6],[8,100],[11,84.1],[12,101900],[15,77500],[16,84.2],[17,12900],[18,84.3],[19,2000],[20,0],[21,839400],[22,84.2]]};
     //  updateTableHNX(objRealtime)
-   
+
     var dataHNXRealTime = JSON.parse(objRealtime);
     var arrDatas = [];
     if (typeof dataHNXRealTime !== "undefined") {
@@ -219,8 +189,8 @@ const TableMarketWatchTest = () => {
     } else {
       // console.log(dataHNXRealTime)
     }
-   };
-   const updateTableHNX = (dataHNX: any) => {
+  };
+  const updateTableHNX = (dataHNX: any) => {
     const arrRowID = dataHNX.RowID;
     const arrInfo = dataHNX.Info;
     if (dataHNX) {
@@ -241,7 +211,6 @@ const TableMarketWatchTest = () => {
     }
   };
 
-
   const updateDataTable = (
     arrRowID: string,
     arrInfo: number,
@@ -250,58 +219,23 @@ const TableMarketWatchTest = () => {
     // getID các giá trị cần lấy
     // const arrayPrice = [5, 7, 9, 11, 14, 16, 18];d
     // const valueTC = document.querySelector(`div[data-index="5"][data-comp="BCC"]`)?.innerHTML;
-    const valueTCS = document.querySelector(`div[data-index="${arrInfo}"][data-comp="${arrRowID}"]`) as HTMLElement;
-    if(valueTCS){
+    const valueTCS = document.querySelector(
+      `div[data-index="${arrInfo}"][data-comp="${arrRowID}"]`
+    ) as HTMLElement;
+    if (valueTCS) {
       valueTCS.innerHTML = `${formatNumberMarket(arrValue)}`;
       // gán màu bg
-      const test =  valueTCS.parentElement;
-      if(test){
+      const test = valueTCS.parentElement;
+      if (test) {
         test.style.backgroundColor = "#888888";
         setTimeout(function () {
           test.style.backgroundColor = "";
         }, 500);
       }
       // sau 0.5s xóa màu bg
-      
     }
-  }
-
-
-  const RowDataIndex = {
-    MCK: 0,
-    TC: 1,
-    Tran: 2,
-    San: 3,
-    KL4: 4,
-    G3: 5,
-    KL3: 6,
-    G2: 7,
-    KL2: 8,
-    G1: 9,
-    KL1: 10,
-    GiaKhop: 11,
-    KLKhop: 12,
-    Chenhlech: 13,
-    G1B: 14,
-    KL1B: 15,
-    G2B: 16,
-    KL2B: 17,
-    G3B: 18,
-    KL3B: 19,
-    KL4B: 20,
-    TKL: 21,
-    MOC: 22,
-    CaoNhat: 23,
-    ThapNhat: 24,
-    GTB: 25,
-    NNMua: 26,
-    NNBan: 27,
-    RoomCL: 28,
-    GDK: 29,
-    Quyen: 30,
-    CGKGN: 31,
-    RowID: String,
   };
+
   const containerStyle = { width: "100%", height: "100%" };
   const gridStyle = { height: "100%", width: "100%" };
   const gridApi = useRef<any>(null); // Declare gridApi reference
@@ -309,14 +243,14 @@ const TableMarketWatchTest = () => {
 
   const [columnDefs] = useState([
     {
-      headerName: '',
-      cellClass: 'ag-cell-pinning',
-      field: 'pinning',
+      headerName: "",
+      cellClass: "ag-cell-pinning",
+      field: "pinning",
       maxWidth: 19,
       cellRenderer: PinCell,
-      onCellDoubleClicked: (e:any) => {
+      onCellDoubleClicked: (e: any) => {
         const field = e.colDef.field;
-        if (field === 'pinning') {
+        if (field === "pinning") {
           handlePinRow(e);
         }
       },
@@ -329,7 +263,7 @@ const TableMarketWatchTest = () => {
       spanHeaderHeight: true,
       width: widthWindow * 0.05,
       maxWidth: 100,
-      
+
       // cellClass: "custom-cell",
       headerClass: "custom-header",
       cellStyle: (params: any) => {
@@ -341,35 +275,43 @@ const TableMarketWatchTest = () => {
       },
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.MCK; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
-
+        setGridApi(params.api)
         //console.log("Column Index:", dataIndex);
 
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
+        const status = params.data.isPined; // Get the
         return (
-         
           //  <div data-index={dataIndex} data-comp={rowid}  data-tooltip={getCompanyNameByCode(value).toString()} className="relative custom-cell cell-stock has-symbol company-tooltip">
           //   {value}
           // </div>
-          
+
           <Tooltip title={getCompanyNameByCode(value)}>
-          <div data-index={dataIndex} data-comp={rowid} className="custom-cell cell-stock has-symbol company-tooltip">
-            <input type="checkbox" className="checkbox_price" 
-            // checked={params.data.isPined}
-            onClick={()=> {
-              // params.data.isPined = !params.data.isPined;
-              handlePinRow(params);
-            }}
-            />
-           <span className="pl-1 pt-1"
-            onDoubleClick={(e) =>
-              handleDoubleClick(e, value)
-            }>
-            {value}
-            </span>
-          
-         </div>
-         </Tooltip>
+            <div
+              data-index={dataIndex}
+              data-comp={rowid}
+              className="custom-cell cell-stock has-symbol company-tooltip"
+            >
+              <input
+                type="checkbox"
+                checked={ params.data.isPined ?  true : false}
+                className="checkbox_price"
+                // checked={params.data.isPined}
+                // check pin
+                onClick={() => {
+                  // handlePinRow(params);
+                  params.data.isPined ?   handlePinRow(params) : handlePinRow(params)
+                }}
+              />
+
+              <span
+                className="pl-1 pt-1"
+                onDoubleClick={(e) => handleDoubleClick(e, value)}
+              >
+                {value}
+              </span>
+            </div>
+          </Tooltip>
         );
       },
     },
@@ -483,17 +425,22 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("", params),
             textAlign: "right",
           }),
-          cellRenderer: (params: any) => {      
+          cellRenderer: (params: any) => {
             const dataIndex = RowDataIndex.G3; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
             return (
               <Tooltip title="Click đúp để đặt lệnh">
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell cursor-pointer"
-              onDoubleClick={() => handleClick({ma:params.data.MCK , price:value})}
-              >
-                {formatNumberMarket(value)} 
-              </div>
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="custom-cell cursor-pointer"
+                  onDoubleClick={() =>
+                    handleClick({ ma: params.data.MCK, price: value })
+                  }
+                >
+                  {formatNumberMarket(value)}
+                </div>
               </Tooltip>
             );
           },
@@ -514,15 +461,19 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("KL3", params),
             textAlign: "right",
           }),
-          cellRenderer: (params: any) => {      
+          cellRenderer: (params: any) => {
             const dataIndex = RowDataIndex.KL3; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
-    
+
             return (
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell ">
-              {formatNumberMarket(value)}
-            </div>
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell "
+              >
+                {formatNumberMarket(value)}
+              </div>
             );
           },
         },
@@ -545,14 +496,19 @@ const TableMarketWatchTest = () => {
             const dataIndex = RowDataIndex.G2; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
-    
+
             return (
               <Tooltip title="Click đúp để đặt lệnh">
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell cursor-pointer"
-              onDoubleClick={() => handleClick({ma:params.data.MCK , price:value})}
-              >
-                {formatNumberMarket(value)} 
-              </div>
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="custom-cell cursor-pointer"
+                  onDoubleClick={() =>
+                    handleClick({ ma: params.data.MCK, price: value })
+                  }
+                >
+                  {formatNumberMarket(value)}
+                </div>
               </Tooltip>
             );
           },
@@ -576,11 +532,15 @@ const TableMarketWatchTest = () => {
             const dataIndex = RowDataIndex.KL2; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
-    
+
             return (
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
-              {formatNumberMarket(value)}
-            </div>
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
+                {formatNumberMarket(value)}
+              </div>
             );
           },
         },
@@ -602,14 +562,19 @@ const TableMarketWatchTest = () => {
             const dataIndex = RowDataIndex.G1; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
-    
+
             return (
               <Tooltip title="Click đúp để đặt lệnh">
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell cursor-pointer"
-              onDoubleClick={() => handleClick({ma:params.data.MCK , price:value})}
-              >
-                {formatNumberMarket(value)} 
-              </div>
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="custom-cell cursor-pointer"
+                  onDoubleClick={() =>
+                    handleClick({ ma: params.data.MCK, price: value })
+                  }
+                >
+                  {formatNumberMarket(value)}
+                </div>
               </Tooltip>
             );
           },
@@ -632,11 +597,15 @@ const TableMarketWatchTest = () => {
             const dataIndex = RowDataIndex.KL1; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
-    
+
             return (
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
-              {formatNumberMarket(value)}
-            </div>
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
+                {formatNumberMarket(value)}
+              </div>
             );
           },
         },
@@ -664,11 +633,15 @@ const TableMarketWatchTest = () => {
             const dataIndex = RowDataIndex.GiaKhop; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
-    
+
             return (
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
-              {formatNumberMarket(value)}
-            </div>
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
+                {formatNumberMarket(value)}
+              </div>
             );
           },
         },
@@ -690,18 +663,22 @@ const TableMarketWatchTest = () => {
             const dataIndex = RowDataIndex.KLKhop; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
-    
+
             return (
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
-              {formatNumberMarket(value)}
-            </div>
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
+                {formatNumberMarket(value)}
+              </div>
             );
           },
         },
         {
           field: "Chenhlech",
-          headerName:"+/-",
-          
+          headerName: "+/-",
+
           // headerName: () => {
           //   const buttonElement = document.createElement("button");
           //   buttonElement.innerHTML = "+/-";
@@ -726,7 +703,7 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("Chenhlech", params),
             textAlign: "right",
           }),
-           cellRenderer: (params: any) => {       
+          cellRenderer: (params: any) => {
             const dataIndex = RowDataIndex.Chenhlech; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
             const value = params.value; // Get the value of the cell
             return (
@@ -757,17 +734,22 @@ const TableMarketWatchTest = () => {
             color: setColorMarkettest("", params),
             textAlign: "right",
           }),
-           cellRenderer: (params: any) => {
+          cellRenderer: (params: any) => {
             const dataIndex = RowDataIndex.G1B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
             return (
               <Tooltip title="Click đúp để đặt lệnh">
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell cursor-pointer"
-              onDoubleClick={() => handleClickBuy({ma:params.data.MCK , price:value})}
-              >
-                {formatNumberMarket(value)} 
-              </div>
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="custom-cell cursor-pointer"
+                  onDoubleClick={() =>
+                    handleClickBuy({ ma: params.data.MCK, price: value })
+                  }
+                >
+                  {formatNumberMarket(value)}
+                </div>
               </Tooltip>
             );
           },
@@ -791,7 +773,11 @@ const TableMarketWatchTest = () => {
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {formatNumberMarket(value)}
               </div>
             );
@@ -817,11 +803,16 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
             return (
               <Tooltip title="Click đúp để đặt lệnh">
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell cursor-pointer"
-              onDoubleClick={() => handleClickBuy({ma:params.data.MCK , price:value})}
-              >
-                {formatNumberMarket(value)} 
-              </div>
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="custom-cell cursor-pointer"
+                  onDoubleClick={() =>
+                    handleClickBuy({ ma: params.data.MCK, price: value })
+                  }
+                >
+                  {formatNumberMarket(value)}
+                </div>
               </Tooltip>
             );
           },
@@ -845,7 +836,11 @@ const TableMarketWatchTest = () => {
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {formatNumberMarket(value)}
               </div>
             );
@@ -871,11 +866,16 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
             return (
               <Tooltip title="Click đúp để đặt lệnh">
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell cursor-pointer"
-              onDoubleClick={() => handleClickBuy({ma:params.data.MCK , price:value})}
-              >
-                {formatNumberMarket(value)} 
-              </div>
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="custom-cell cursor-pointer"
+                  onDoubleClick={() =>
+                    handleClickBuy({ ma: params.data.MCK, price: value })
+                  }
+                >
+                  {formatNumberMarket(value)}
+                </div>
               </Tooltip>
             );
           },
@@ -899,7 +899,11 @@ const TableMarketWatchTest = () => {
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
             return (
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {formatNumberMarket(value)}
               </div>
             );
@@ -951,7 +955,7 @@ const TableMarketWatchTest = () => {
             {formatNumberMarket(value)}
           </div>
         );
-      }
+      },
     },
     {
       field: "CaoNhat",
@@ -977,7 +981,6 @@ const TableMarketWatchTest = () => {
           </div>
         );
       },
-     
     },
     {
       field: "ThapNhat",
@@ -1074,68 +1077,84 @@ const TableMarketWatchTest = () => {
     filter: true,
     autoSize: true,
   };
- 
-   //pinned
-   const gridRef = useRef<any>();
-   const pinnedRowsRef = useRef<any[]>([]);
 
-   const handlePinRow = (params:any) => {
+  //pinned
+  const gridRef = useRef<any>();
+  const pinnedRowsRef = useRef<any[]>([]); 
+  const handlePinRow = (params: any) => {
    
     const grid = gridRef.current.api;
     const defaultData = gridRef.current.props.rowData;
-    // console.log(defaultData)
     const { rowPinned, rowIndex, data } = params;
-    console.log("pin",rowPinned,params)
-    // console.log(params)
-    const { RowID, symbol } = data;
-    // console.log(first)
+    const { RowID, symbol, isPined } = data;
     let rows = pinnedRowsRef.current;
-     
     if (rowPinned) {
-      // Unpin
       const newRows = pinnedRowsRef.current.filter((e) => {
         return RowID !== e.data.RowID;
       });
       const item = rows.find((item) => item.data.RowID === RowID);
-
-      const other = pinnedRowsRef.current.filter(
-        (val) => val.index < item.index
-      );
-
+      const other = pinnedRowsRef.current.filter((val) => val.index < item.index);
       pinnedRowsRef.current = newRows;
-
       const rowsToPin = newRows.map((item) => item.data);
-
-      console.log('unpin', item);
-
-      grid.setPinnedTopRowData(rowsToPin);
+      let rowsToPins = rowsToPin
+        ? rowsToPin.map((item) => {
+            if (item.isPined === false) {
+              return { ...item, isPined: true };
+            }
+            return item;
+          })
+        : [];
+      grid.setPinnedTopRowData(rowsToPins);
       grid.applyTransaction({
         add: [data],
         addIndex: item.index - other.length,
       });
     } else {
-      console.log("pin thành công")
-      // Pin
-      const items = grid.getRowNode(RowID).data;
-
-      console.log(items)
-      const index = defaultData.findIndex((item:any) => item.MCK === RowID);
-      rows.push({
-        index,
-        data,
-      });
-      const rowsToPin = rows.map((item) => item.data);
-
-      console.log('pin', index, rowsToPin);
-
-      // Set rows pin to top
-      grid.setPinnedTopRowData(rowsToPin);
-      // Remove item from list
-      grid.applyTransaction({ remove: [items] });
+      const items = grid.getRowNode(RowID)?.data;
+      if (!items) {
+        const newRows = pinnedRowsRef.current.filter((e) => {
+          return RowID !== e.data.RowID;
+        });
+        const item = rows.find((item) => item.data.RowID === RowID);
+        const other = pinnedRowsRef.current.filter((val) => val.index < item.index);
+        pinnedRowsRef.current = newRows;
+        const rowsToPin = newRows.map((item) => item.data);
+        let rowsToPins = rowsToPin
+          ? rowsToPin.map((item) => {
+              if (item.isPined === false) {
+                return { ...item, isPined: true };
+              }
+              return item;
+            })
+          : [];
+        grid.setPinnedTopRowData(rowsToPins);
+        grid.applyTransaction({
+          add: [data],
+          addIndex: item.index - other.length,
+        });
+      } else {
+const index = defaultData.findIndex((item: any) => item.MCK === RowID);
+        rows.push({
+          index,
+          data,
+        });
+        let rowsToPins = rows.map((item: any) => item.data);
+        console.log("vạasds", rowsToPins);
+        let rowsToPin = rowsToPins
+          ? rowsToPins.map((element: RowData) => {
+              if (element.isPined === false) {
+                return { ...element, isPined: true };
+              }
+              return element;
+            })
+          : [];
+        grid.setPinnedTopRowData(rowsToPin);
+        grid.applyTransaction({ remove: [items] });
+      }
     }
   };
   const gridOptions = {
-    getRowId: function (e:any) {
+    getRowId: function (e: any) {
       return e.data.RowID;
     },
     defaultColDef: {
@@ -1144,27 +1163,26 @@ const TableMarketWatchTest = () => {
       suppressMovable: true,
       flex: 1,
     },
-  //   suppressCellSelection: true,
-  //   suppressRowClickSelection: true,
-  //   suppressContextMenu: true,
-  //   suppressCellContextMenu: true,
-  //   suppressRowContextMenu: true,
-  // };
-  // document.addEventListener("contextmenu", (event) => {
-  //   event.preventDefault();
-  // })
+    //   suppressCellSelection: true,
+    //   suppressRowClickSelection: true,
+    //   suppressContextMenu: true,
+    //   suppressCellContextMenu: true,
+    //   suppressRowContextMenu: true,
+    // };
+    // document.addEventListener("contextmenu", (event) => {
+    //   event.preventDefault();
+    // })
   };
-
 
   return (
     <div style={containerStyle}>
       <div style={gridStyle} className="ag-theme-alpine-dark">
-        <AgGridReact 
-           ref={gridRef}
-           suppressDragLeaveHidesColumns={true}
-           suppressCellFocus={true}
-        rowHeight={25}
-          rowData={rowData}
+        <AgGridReact
+          ref={gridRef}
+          suppressDragLeaveHidesColumns={true}
+          suppressCellFocus={true}
+          rowHeight={25}
+          rowData={rowData} // data
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowDragManaged={true}
