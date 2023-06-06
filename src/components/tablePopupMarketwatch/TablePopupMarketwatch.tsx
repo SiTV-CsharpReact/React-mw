@@ -10,6 +10,7 @@ import TableReportingPopup from "./TableReportingPopup";
 import TableGDTTPopup from "./TableGDTTPopup";
 import TableGDLLPopup from "./TableGDLLPopup";
 import TableKLTTGPopup from "./TableKLTTGPopup";
+import ChartPopup from "./ChartPopup";
 interface DraggableProps {
   initialPosition?: { x: number; y: number };
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;
@@ -17,7 +18,7 @@ interface DraggableProps {
 }
 const TablePopupMarketwatch = () => {
   const dispatch = useAppDispatch();
-  const stockDetail = useSelector((state:RootState)=>state.popupTable.code)
+  const stockDetail = useSelector((state: RootState) => state.popupTable.code);
   const [position, setPosition] = useState({
     x: -window.innerWidth / 3,
     y: -window.innerHeight / 2 + 40,
@@ -38,7 +39,7 @@ const TablePopupMarketwatch = () => {
   // console.log(status)
   return (
     <Draggable handle=".pu-header" position={position} onDrag={handleDrag}>
-      <div className="pu-window text-[#B9B9B9]" >
+      <div className="pu-window text-[#B9B9B9]">
         <div className="pu-header">
           <div className="pu-grtitle flex">
             <div className="m-auto">
@@ -63,8 +64,8 @@ const TablePopupMarketwatch = () => {
               <div className="pu-div-title inline-block">
                 <h2 className="pu-title">
                   {/* x: {position.x.toFixed(0)}, y: {position.y.toFixed(0)} */}
-                  {stockDetail} - HOSE - Tổng Công ty Cổ phần Bảo hiểm Ngân hàng Đầu tư và
-                  Phát triển Việt Nam
+                  {stockDetail} - HOSE - Tổng Công ty Cổ phần Bảo hiểm Ngân hàng
+                  Đầu tư và Phát triển Việt Nam
                 </h2>
               </div>
             </div>
@@ -85,26 +86,38 @@ const TablePopupMarketwatch = () => {
         </div>
 
         <div>
-         <TableDetailPopup/>
+          <TableDetailPopup />
         </div>
         <div className="pu-info flex">
-           <div className="pu-basic w-[311px] mx-1">
-            <TableBasicPopup/>
-            <TableReportingPopup/>
-           </div>
-           <div className="pu-hrz-realtime w-[293px] mx-1">
-            <div className="pu-vertical pu-div-realtime">
-            <TableKLTTGPopup/>
+          <div className="pu-basic w-[409px] mx-1">
+            <TableBasicPopup />
+            <TableReportingPopup />
+          </div>
+          <div className="pu-hrz-realtime w-[391px] mx-1">
+            <div
+              className="pu-vertical pu-div-realtime"
+              // thêm border khi scroll table với sticky
+              onScroll={function (e: any) {
+                if (e.currentTarget.scrollTop > 0) {
+                  e.target.classList.add("stick");
+                } else {
+                  e.target.classList.remove("stick");
+                }
+              }}
+            >
+              <TableKLTTGPopup />
             </div>
-        
-            <div className="pu-div-PT">
-            <TableGDTTPopup/>
+
+            <div className="pu-div-PT w-full">
+              <TableGDTTPopup />
             </div>
             <div className="pu-vertical pu-div-oddlot">
-            <TableGDLLPopup/>
+              <TableGDLLPopup />
             </div>
-           
-           </div>
+          </div>
+          <div className="pu-hrz-chart">
+            <ChartPopup />
+          </div>
         </div>
       </div>
     </Draggable>
