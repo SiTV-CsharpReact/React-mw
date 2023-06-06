@@ -82,7 +82,7 @@ const TableGDTTMarketWatch = () => {
               </thead>
                {products != null ? 
               <tbody id="tbdPT_HA" >
-                {products .length >0 ? products?.map((product:any)=>(
+                {products.length > 0 ? products?.map((product:any)=>(
                   <tr key={product.RowID}>
                     <td>{product.Info[0][1]}</td>  
                     <td className="text-right">{formatNumber(product.Info[7][1])}</td>

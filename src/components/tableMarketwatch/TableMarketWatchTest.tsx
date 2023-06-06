@@ -132,13 +132,15 @@ const TableMarketWatchTest = () => {
       "ws://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=QFYjcEdKNTcQpQ5eM8gSgArpZ8iaLyhAzsOc2yA9Uzj6jAmKV%2Bnt5UMBQQ6IxAg2ytcl36jeKKHXgSbB5HdJNA%2FVdbAn7QKNCQ76UmWHPecxhUD87ZajL354hy24brH6&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=8"
     );
     socketHSX.onopen = () => {
-      console.log("WebSocket connection established.");
+      //console.log("WebSocket connection established.");
     };
     socketHSX.onmessage = (event) => {
       updateQuote(event.data);
+      // console.log(gridOptions.api)
+      // gridOptions.api.setRowData(event.data);
     };
     socketHSX.onclose = () => {
-      console.log("WebSocket connection closed.");
+      //console.log("WebSocket connection closed.");
     };
     return () => {
       socketHSX.close();
@@ -149,7 +151,7 @@ const TableMarketWatchTest = () => {
       "ws://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=IWiKAtteQ0gfuDm%2Fq6LLyUusRcee06oM2k6xVYIgeWHtlePjfeRZFnHIYmMvGt2F1PSB1EsKRw5wHFLA7D0C6bNau3lUFHlFFPF59RMTl3KHk3PRDqc9rmfE904Oy5NV&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=1"
     );
     socketHNX.onopen = () => {
-      console.log("WebSocket connection established.");
+      //console.log("WebSocket connection established.");
     };
     socketHNX.onmessage = (event) => {
       // updateQuote(event.data)
@@ -157,7 +159,7 @@ const TableMarketWatchTest = () => {
       // setDataHNX(event.data);
     };
     socketHNX.onclose = () => {
-      console.log("WebSocket connection closed.");
+      // console.log("WebSocket connection closed.");
     };
     return () => {
       socketHNX.close();
@@ -257,6 +259,7 @@ const TableMarketWatchTest = () => {
     },
     {
       field: "MCK",
+      // pinned:true,
       headerName: "Mã",
       cellClass: "score-cell",
       suppressMenu: true,
@@ -1153,6 +1156,7 @@ const index = defaultData.findIndex((item: any) => item.MCK === RowID);
       }
     }
   };
+ 
   const gridOptions = {
     getRowId: function (e: any) {
       return e.data.RowID;
