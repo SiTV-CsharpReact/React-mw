@@ -282,20 +282,20 @@ const TableMarketWatchTest = () => {
   // const [rowData, setRowData] = useState<RowData[]>([]);
 
   const columnDefs = [
-    {
-      headerName: "",
-      cellClass: "ag-cell-pinning",
-      // pinned:true,
-      field: "pinning",
-      maxWidth: 19,
-      cellRenderer: PinCell,
-      onCellDoubleClicked: (e: any) => {
-        const field = e.colDef.field;
-        if (field === "pinning") {
-          handlePinRow(e);
-        }
-      },
-    },
+    // {
+    //   headerName: "",
+    //   cellClass: "ag-cell-pinning",
+    //   // pinned:true,
+    //   field: "pinning",
+    //   maxWidth: 19,
+    //   cellRenderer: PinCell,
+    //   onCellDoubleClicked: (e: any) => {
+    //     const field = e.colDef.field;
+    //     if (field === "pinning") {
+    //       handlePinRow(e);
+    //     }
+    //   },
+    // },
     {
       field: "MCK",
       // pinned:true,
@@ -327,7 +327,7 @@ const TableMarketWatchTest = () => {
           //   {value}
           // </div>
 
-          <Tooltip title={getCompanyNameByCode(value)}>
+   
             <div
               data-index={dataIndex}
               data-comp={rowid}
@@ -349,7 +349,7 @@ const TableMarketWatchTest = () => {
                 {value}
               </span>
             </div>
-          </Tooltip>
+         
         );
       },
     },
@@ -716,20 +716,6 @@ const TableMarketWatchTest = () => {
         {
           field: "Chenhlech",
           headerName: "+/-",
-
-          // headerName: () => {
-          //   const buttonElement = document.createElement("button");
-          //   buttonElement.innerHTML = "+/-";
-          //   buttonElement.addEventListener("click", () => {
-          //     // Xử lý sự kiện khi button được nhấp
-          //     showKLPT("showPT");
-          //   });
-
-          //   const headerElement = document.createElement("div");
-          //   headerElement.appendChild(buttonElement);
-
-          //   return headerElement;
-          // },
           suppressMenu: true,
           width: widthWindow * 0.03,
           minWidth: 50,
@@ -1166,7 +1152,7 @@ const TableMarketWatchTest = () => {
     const { rowPinned, rowIndex, data } = params;
     const { RowID, symbol, isPined } = data;
     let rows = pinnedRowsRef.current;
-    console.log(rows)
+    console.log("co row ne",rows)
     if (rowPinned) {
       const newRows = pinnedRowsRef.current.filter((e) => {
         return RowID !== e.data.RowID;
@@ -1191,25 +1177,27 @@ const TableMarketWatchTest = () => {
     } else {
       const items = grid.getRowNode(RowID)?.data;
       if (!items) {
-        let rowsToPins = rows.map((item: any) => item.data);
-        rowsToPins = rowsToPins
-          ? rowsToPins.filter((e: RowData) => {
-              return RowID !== e?.RowID;
-            })
-          : [];
-        let rowsToPin = rowsToPins
-          ? rowsToPins.map((element: RowData) => {
-              if (element?.isPined === false) {
-                return { ...element, isPined: true };
+      
+        const newRows = pinnedRowsRef.current.filter((e) => {
+          return RowID !== e.data.RowID;
+        });
+        const item = rows.find((item) => item.data.RowID === RowID);
+        const other = pinnedRowsRef.current.filter((val) => val.index < item.index);
+        pinnedRowsRef.current = newRows;
+        const rowsToPin = newRows.map((item) => item.data);
+        let rowsToPins = rowsToPin
+          ? rowsToPin.map((item) => {
+              if (item.isPined === false) {
+                return { ...item, isPined: true };
               }
-              return element;
+              return item;
             })
           : [];
-        console.log("rowsToPin", rows);
-        console.log("rowsToPin", rowsToPins);
-        grid.setPinnedTopRowData(rowsToPin);
-        grid.applyTransaction({ remove: [items] });
-        console.log(grid)
+        grid.setPinnedTopRowData(rowsToPins);
+        grid.applyTransaction({
+          add: [data],
+          addIndex: item.index - other.length,
+        });
       } else {
         const index = defaultData.findIndex((item: any) => item.MCK === RowID);
         rows.push({
@@ -1231,64 +1219,7 @@ const TableMarketWatchTest = () => {
       }
     }
   };
-  
-
-  
-  // const handlePinRow = (params: any) => {
-  //   const grid = gridRef.current.api;
-  //   const defaultData = gridRef.current.props.rowData;
-  //   // console.log(defaultData)
-  //   const { rowPinned, rowIndex, data } = params;
-  //   console.log("pin", rowPinned, params);
-  //   // console.log(params)
-  //   const { RowID, symbol } = data;
-  //   // console.log(first)
-  //   let rows = pinnedRowsRef.current;
-
-  //   if (rowPinned) {
-  //     // Unpin
-  //     const newRows = pinnedRowsRef.current.filter((e) => {
-  //       return RowID !== e.data.RowID;
-  //     });
-  //     const item = rows.find((item) => item.data.RowID === RowID);
-
-  //     const other = pinnedRowsRef.current.filter(
-  //       (val) => val.index < item.index
-  //     );
-
-  //     pinnedRowsRef.current = newRows;
-
-  //     const rowsToPin = newRows.map((item) => item.data);
-
-  //     console.log("unpin", item);
-
-  //     grid.setPinnedTopRowData(rowsToPin);
-  //     grid.applyTransaction({
-  //       add: [data],
-  //       addIndex: item.index - other.length,
-  //     });
-  //   } else {
-  //     console.log("pin thành công");
-  //     // Pin
-  //     const items = grid.getRowNode(RowID).data;
-
-  //     console.log(items);
-  //     const index = defaultData.findIndex((item: any) => item.MCK === RowID);
-  //     rows.push({
-  //       index,
-  //       data,
-  //     });
-  //     const rowsToPin = rows.map((item) => item.data);
-  //     // params.data.isPined = true;
-  //     console.log("pin", index, rowsToPin);
-  //     // Set rows pin to top
-  //     grid.setPinnedTopRowData(rowsToPin);
-  //     // Remove item from list
-  //     grid.applyTransaction({ remove: [items] });
-  //     console.log(grid);
-  //   }
-  // };
-
+ 
   const gridOptions = {
     getRowId: function (e: any) {
       return e.data.RowID;
