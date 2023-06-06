@@ -34,7 +34,7 @@ const PendingOrders: React.FC<Props> = (value) => {
       }));
       console.log(dataAfter)
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   const hanDelSubmit = () => {

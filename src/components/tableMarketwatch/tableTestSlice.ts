@@ -7,6 +7,7 @@ import { DataTable, DataGDTT } from "../../models/modelTableHNX";
 import agent from "../../api/agent";
 import { TableParams } from "../../models/modelLinkTable";
 import { RootState } from "../../store/configureStore";
+import { tinhGiaTC } from "../../utils/util";
 
 interface TableState {
     productsLoaded: boolean;
@@ -56,7 +57,10 @@ type RowData = {
     GDK: string;
     Quyen: string;
     CGKGN: string;
-    RowID: string;
+  RowID: string;
+  PhanTram: string;
+  Chenhlech1: any;
+    isPined: boolean;
   };
 const dataTableAdapter = createEntityAdapter<DataTable>({
     selectId: (dataTable) => dataTable.RowID || '', // Chỉ định trường khóa
@@ -162,6 +166,10 @@ export const tableTestSlice = createSlice({
             state.productsLoaded = false;
             state.productParams = { ...state.productParams, ...action.payload };
         },
+        setPinned: (state, action) => {
+          state.productsLoaded = false;
+          state.productParams = { ...state.productParams, ...action.payload };
+      },
     },
 
     extraReducers: (builder) => {
@@ -175,10 +183,13 @@ export const tableTestSlice = createSlice({
             state.status = "idle";
             let data = action.payload;
             let dataTable = data?.product;
-            const mergedArray = dataTable.map((element: any) => {
+          
+            if(data?.index === 0){
+              const mergedArray = dataTable.map((element: any) => {
                 const infoArray = element.Info.map(
                   (subArray: any[]) => subArray[1]
                 );
+                
                 const mergedObject: RowData = {
                   MCK: infoArray[0],
                   TC: infoArray[1],
@@ -194,6 +205,7 @@ export const tableTestSlice = createSlice({
                   GiaKhop: infoArray[11],
                   KLKhop: infoArray[12],
                   Chenhlech: infoArray[13],
+                  Chenhlech1: `${infoArray[13]} | ${tinhGiaTC(infoArray[1], infoArray[11])}`,
                   G1B: infoArray[14],
                   KL1B: infoArray[15],
                   G2B: infoArray[16],
@@ -213,11 +225,15 @@ export const tableTestSlice = createSlice({
                   Quyen: infoArray[30],
                   CGKGN: infoArray[31],
                   RowID: element.RowID,
+                  PhanTram: tinhGiaTC(infoArray[1],infoArray[11]),
+                  isPined: false,
+                  
                 };
+                
+
                 return mergedObject;
               });
               console.log(mergedArray)
-            if(data?.index === 0){
               if(data.NameFloor === "HNX"){
                 // data?.product.map((obj:DataTable) =>
                 //       obj.Info?.sort((a: any, b: any) => {
@@ -265,6 +281,7 @@ export const tableTestSlice = createSlice({
             state.ListDataTable =    state.ListDataTable
              console.log("vood aydcu9sachu")
           })
+     
     },
 });
 
