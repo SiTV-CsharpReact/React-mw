@@ -7,6 +7,8 @@ import { DataTable, DataGDTT } from "../../models/modelTableHNX";
 import agent from "../../api/agent";
 import { TableParams } from "../../models/modelLinkTable";
 import { RootState } from "../../store/configureStore";
+import { RowData } from "../../models/tableMarketwatch";
+import { tinhGiaTC } from "../../utils/util";
 
 interface TableState {
     productsLoaded: boolean;
@@ -23,42 +25,6 @@ type params = {
   Floor :string,
   Query:string
 }
-type RowData = {
-    MCK: string;
-    TC: string;
-    Tran: string;
-    San: string;
-    KL4: string;
-    G3: string;
-    KL3: string;
-    G2: string;
-    KL2: string;
-    G1: string;
-    KL1: string;
-    GiaKhop: string;
-    KLKhop: string;
-    Chenhlech: string;
-    G1B: string;
-    KL1B: string;
-    G2B: string;
-    KL2B: string;
-    G3B: string;
-    KL3B: string;
-    KL4B: string;
-    TKL: string;
-    MOC: string;
-    CaoNhat: string;
-    ThapNhat: string;
-    GTB: string;
-    NNMua: string;
-    NNBan: string;
-    RoomCL: string;
-    GDK: string;
-    Quyen: string;
-    CGKGN: string;
-    RowID: string;
-    isPined: boolean;
-  };
 const dataTableAdapter = createEntityAdapter<DataTable>({
     selectId: (dataTable) => dataTable.RowID || '', // Chỉ định trường khóa
   });
@@ -219,6 +185,7 @@ export const tableTestSlice = createSlice({
                   GDK: infoArray[29],
                   Quyen: infoArray[30],
                   CGKGN: infoArray[31],
+                  PhanTram: tinhGiaTC(infoArray[1],infoArray[11]),
                   RowID: element.RowID,
                   isPined: false,
                 };

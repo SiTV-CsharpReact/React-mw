@@ -618,3 +618,13 @@ tr.border-bottom:last-child {
 // .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell:not(.ag-column-hover):not(.ag-header-cell-moving):hover{
 
 // }
+.ag-cell-pinning {
+  cursor: pointer;
+}
+.ag-floating-top .ag-cell-pinning svg {
+  filter: brightness(0) saturate(100%) invert(65%) sepia(76%) saturate(6125%)
+    hue-rotate(90deg) brightness(100%) contrast(95%);
+}
+// .ag-floating-top .ag-cell-pinning input[type=".checkbox_price"] {
+  
+// }
