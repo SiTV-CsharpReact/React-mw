@@ -50,6 +50,7 @@ const MenuBar = () => {
       nameMenu: name,
       keyMenu :  key 
     }
+    console.log(floor, query, activeMenu)
     dispatch(setActiveMenu(activeMenu)); // cập nhật lại menu 
     await dispatch(getDataTable(data));
   };
