@@ -149,10 +149,8 @@ div#dvContentLP {
     margin: 0 10px 0 3px;
     font-size: 9pt;
     line-height: 3em;
-    width: 100px;
+    width: 30px;
     padding-left: 2px;
-
-
 }
 
 .button_Statistics {
@@ -628,3 +626,6 @@ tr.border-bottom:last-child {
 // .ag-floating-top .ag-cell-pinning input[type=".checkbox_price"] {
   
 // }
+.form-group select {
+  width: 60%;
+}

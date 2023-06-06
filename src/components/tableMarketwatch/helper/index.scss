@@ -1,0 +1,59 @@
+
+.HeaderFormMain {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  padding: 5px 15px;
+}
+.HeaderContent {
+  width: 24%;
+  width: 24%;
+  background-color: rgb(111, 111, 111);
+  display: grid;
+  grid-columns: 25% 60%;
+  overflow: hidden;
+}
+.HeaderContent select {
+  float: right;
+  max-width: 100%;
+}
+.HeaderContent label {
+  text-align: right;
+  align-items: center;
+  // floa
+}
+#dvSTTIndexs {
+  padding: 5px 15px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+}
+.from-grup {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 25% 80%;
+  grid-gap: 5px;
+  font-size: 9pt;
+}
+.from-grup .titleFormThongke {
+  text-align: right;
+  line-height: 33px;
+  padding-right: 8px;
+}
+.fromThongke select {
+  width: 65%;
+  height: 23px;
+  font-size: 9pt;
+}
+.fromThongke input{
+    font-size: 5px
+}
+.fromThongke .css-dev-only-do-not-override-15rg2km{
+    height: 23px !important;
+}
+.fromThongke  .ant-picker{
+    width: 65%;
+    padding: 0px 0px 0px 3px;
+}
