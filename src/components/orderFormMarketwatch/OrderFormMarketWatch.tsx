@@ -193,7 +193,7 @@ const OrderMarketW = () => {
           <div className={`bottom-left float-left min-w-[680px] pt-1.5 pb-1 px-2 ${order ? "w-[48%]" : "ml-[25px] w-[44%]"}  MBR ${color ? 'bg-[#dfeeff]' : 'bg-[#FCE0E1]'}`}>
             <div className="flex justify-between ">
               <div className="btnSwitchBS">
-                <div className="flex w-1/5 group-buysell">
+                <div className="flex group-buysell">
                   <div
                     id="tabBuy"
                     className={`tabBuy ${color ? 'active' : ''}`}
@@ -210,6 +210,9 @@ const OrderMarketW = () => {
                   >
                     BÁN
                   </div>
+                
+                  <input style={ {border :"1px solid #dedede"}} type="button" placeholder="KÍ QUỸ" className="!bg-[#F3F9FF] text-black ml-[40px] w-[144px] h-[32px]"  />
+                  
                 </div>
               </div>
               <div className="w-4/5 text-right btn__switchGroup">
@@ -252,7 +255,7 @@ const OrderMarketW = () => {
                   "
                       id="txtSymbolBase"
                     >
-                      <div className="ms-sel-ctn">
+                      <div className="relative ms-sel-ctn">
                         {/* <input
                       type="text"
                       className="form-control ui-autocomplete-input size-input p-[2px] w-[100%] mr-[14px] rounded-md pl-[8px]  "
@@ -261,6 +264,8 @@ const OrderMarketW = () => {
                       name="txtSymbol"
                       data-old=""
                     /> */}
+                        
+                        <span className="absolute top-[-20px] right-[3px] !text-[12px] !text-[#333]" >TLV:0%</span>
                         <input
                           type="text"
                           className="form-control relative ui-autocomplete-input size-input p-[2px] w-[100%] mr-[14px] rounded-md pl-[8px]"
