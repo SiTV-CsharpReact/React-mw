@@ -21,7 +21,7 @@ import { Tooltip } from "@mui/material";
 import { dispatchDataTable } from "./tableThunk";
 import { dispatchDataTableBuy } from "./tableBuy";
 import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
-import { RowDataIndex, RowData, Row } from "./models/typeModel";
+import { RowDataIndex, RowData, Row, tesstasss } from "./models/typeModel";
 
 LicenseManager.setLicenseKey(
   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
@@ -80,10 +80,9 @@ const PinCell = () => {
 };
 
 const TableMarketWatchTest = () => {
-  const [gridApis, setGridApi] = useState(false);
   const widthWindow = window.innerWidth;
   const dispatch = useAppDispatch();
-  
+
   const handleClick = (dataTable: any) => {
     // console.log("dataTable ii",dataTable)
     dispatch(dispatchDataTable(dataTable));
@@ -96,10 +95,10 @@ const TableMarketWatchTest = () => {
     if (e.detail === 2) {
       dispatch(statusChartMarketwatch(val));
     }
+  
   };
   //setRowData
-  const rowData = useAppSelector((state) => state.tableTest.ListDataTable); 
-
+  const { ListDataTable, status } = useAppSelector((state) => state.tableTest);
 
   const handelGetData = useCallback(
     (Data: any) => {
@@ -126,7 +125,6 @@ const TableMarketWatchTest = () => {
     }
     HanDelCate();
   }, [dispatch, widthWindow]);
-  console.log(rowData);
   useEffect(() => {
     const socketHSX = new WebSocket(
       "ws://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=QFYjcEdKNTcQpQ5eM8gSgArpZ8iaLyhAzsOc2yA9Uzj6jAmKV%2Bnt5UMBQQ6IxAg2ytcl36jeKKHXgSbB5HdJNA%2FVdbAn7QKNCQ76UmWHPecxhUD87ZajL354hy24brH6&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=8"
@@ -243,7 +241,7 @@ const TableMarketWatchTest = () => {
   const gridApi = useRef<any>(null); // Declare gridApi reference
   // const [rowData, setRowData] = useState<RowData[]>([]);
 
-  const [columnDefs] = useState([
+  const columnDefs = [
     {
       headerName: "",
       cellClass: "ag-cell-pinning",
@@ -270,7 +268,7 @@ const TableMarketWatchTest = () => {
       // cellClass: "custom-cell",
       headerClass: "custom-header",
       cellStyle: (params: any) => {
-        // console.log("ktra", params); // Xem giá trị của params trong console
+ 
         return {
           color: setColorMarkettest("MCK", params),
           textAlign: "left",
@@ -278,7 +276,6 @@ const TableMarketWatchTest = () => {
       },
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.MCK; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
-        setGridApi(params.api)
         //console.log("Column Index:", dataIndex);
 
         const value = params.value; // Get the value of the cell
@@ -297,13 +294,12 @@ const TableMarketWatchTest = () => {
             >
               <input
                 type="checkbox"
-                checked={ params.data.isPined ?  true : false}
+                checked={status ? true : false} // == true
                 className="checkbox_price"
                 // checked={params.data.isPined}
                 // check pin
                 onClick={() => {
-                  // handlePinRow(params);
-                  params.data.isPined ?   handlePinRow(params) : handlePinRow(params)
+                  handlePinRow(params);
                 }}
               />
 
@@ -367,9 +363,6 @@ const TableMarketWatchTest = () => {
       }),
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.Tran; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
-
-        // console.log("Column Index:", dataIndex);
-
         const value = params.value;
         const rowid = params.data.RowID; // Get the
         return (
@@ -1072,7 +1065,7 @@ const TableMarketWatchTest = () => {
     },
 
     // { field: "RowID", headerName: "RowID", cellClass: "score-cell" },
-  ]);
+  ];
 
   const defaultColDef = {
     width: 100,
@@ -1080,12 +1073,11 @@ const TableMarketWatchTest = () => {
     filter: true,
     autoSize: true,
   };
-
-  //pinned
   const gridRef = useRef<any>();
-  const pinnedRowsRef = useRef<any[]>([]); 
+  const pinnedRowsRef = useRef<any[]>([]);
+  //pinned
+
   const handlePinRow = (params: any) => {
-   
     const grid = gridRef.current.api;
     const defaultData = gridRef.current.props.rowData;
     const { rowPinned, rowIndex, data } = params;
@@ -1096,7 +1088,9 @@ const TableMarketWatchTest = () => {
         return RowID !== e.data.RowID;
       });
       const item = rows.find((item) => item.data.RowID === RowID);
-      const other = pinnedRowsRef.current.filter((val) => val.index < item.index);
+      const other = pinnedRowsRef.current.filter(
+        (val) => val.index < item.index
+      );
       pinnedRowsRef.current = newRows;
       const rowsToPin = newRows.map((item) => item.data);
       let rowsToPins = rowsToPin
@@ -1108,20 +1102,28 @@ const TableMarketWatchTest = () => {
           })
         : [];
       grid.setPinnedTopRowData(rowsToPins);
+
       grid.applyTransaction({
         add: [data],
         addIndex: item.index - other.length,
       });
     } else {
       const items = grid.getRowNode(RowID)?.data;
+
       if (!items) {
-        const newRows = pinnedRowsRef.current.filter((e) => {
-          return RowID !== e.data.RowID;
+        const newRows = rows.filter((e) => {
+          return e.data.RowID !== RowID;
         });
-        const item = rows.find((item) => item.data.RowID === RowID);
-        const other = pinnedRowsRef.current.filter((val) => val.index < item.index);
         pinnedRowsRef.current = newRows;
+
+        const item = rows.find((item) => item.data.RowID === RowID);
+
+        const other = pinnedRowsRef.current.filter(
+          (val) => val.index < item.index
+        );
+
         const rowsToPin = newRows.map((item) => item.data);
+
         let rowsToPins = rowsToPin
           ? rowsToPin.map((item) => {
               if (item.isPined === false) {
@@ -1136,13 +1138,12 @@ const TableMarketWatchTest = () => {
           addIndex: item.index - other.length,
         });
       } else {
-const index = defaultData.findIndex((item: any) => item.MCK === RowID);
+        const index = defaultData.findIndex((item: any) => item.MCK === RowID);
         rows.push({
-          index,
+          index: -1,
           data,
         });
         let rowsToPins = rows.map((item: any) => item.data);
-        console.log("vạasds", rowsToPins);
         let rowsToPin = rowsToPins
           ? rowsToPins.map((element: RowData) => {
               if (element.isPined === false) {
@@ -1156,7 +1157,6 @@ const index = defaultData.findIndex((item: any) => item.MCK === RowID);
       }
     }
   };
- 
   const gridOptions = {
     getRowId: function (e: any) {
       return e.data.RowID;
@@ -1179,14 +1179,14 @@ const index = defaultData.findIndex((item: any) => item.MCK === RowID);
   };
 
   return (
-    <div style={containerStyle}>
+    <div style={containerStyle} >
       <div style={gridStyle} className="ag-theme-alpine-dark">
         <AgGridReact
           ref={gridRef}
           suppressDragLeaveHidesColumns={true}
           suppressCellFocus={true}
           rowHeight={25}
-          rowData={rowData} // data
+          rowData={ListDataTable} // data
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowDragManaged={true}

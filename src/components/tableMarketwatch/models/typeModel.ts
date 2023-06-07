@@ -77,4 +77,8 @@ export const RowDataIndex = {
     index: number;
     data :  RowData
   }
-  
+  export type tesstasss = [
+    name : string,
+    age : number,
+    address : string,
+  ]
