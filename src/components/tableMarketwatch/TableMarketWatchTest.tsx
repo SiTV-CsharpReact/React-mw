@@ -1688,8 +1688,6 @@ const TableMarketWatchTest = () => {
             },
             headerName : "+/-"
           },
-
-        
           suppressMenu: true,
           width: widthWindow * 0.03,
           minWidth: 50,
