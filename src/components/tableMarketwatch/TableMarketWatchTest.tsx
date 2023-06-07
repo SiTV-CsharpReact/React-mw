@@ -4,59 +4,29 @@ import "ag-grid-enterprise";
 // import "ag-grid-community/styles/ag-grid.css";
 // import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./table.scss";
-import { formatNumberMarket } from "../../utils/util";
+import { formatNumberMarket, setColorMarkettest } from "../../utils/util";
 
 import { LicenseManager } from "ag-grid-enterprise";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { getDataTable } from "./tableTestSlice";
 import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
 
-import { defaultColDef, gridOptions } from "./interface/config.tablegrid";
+import {
+  RowDataIndex,
+  defaultColDef,
+  gridOptions,
+} from "./interface/config.tablegrid";
 import ColumnDef from "./components/options";
+import { CellRender } from "./components/CellRenderComponent";
+import { RowData } from "../../models/tableMarketwatch";
+import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
+import { dispatchDataTable } from "./tableThunk";
+import { Tooltip } from "@mui/material";
+import { dispatchDataTableBuy } from "./tableBuy";
 
 LicenseManager.setLicenseKey(
   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
 );
-
-const showKLPT = (value: string) => {
-  // console.log(value);
-  if (value === "showPT") {
-    const element = document.getElementsByClassName("price-ot");
-    const elementFirst = document.getElementsByClassName("price-ot")[0];
-    const elementPriceChange = document.getElementsByClassName("price-change");
-    const elementKhopLenhPT = document.getElementById("showKhopLenhPT");
-    if (elementFirst.classList.contains("d-block-kl")) {
-      for (let j = 0; j < element.length; j++) {
-        const elementOT = element.item(j);
-        elementOT?.classList.remove("d-block-kl");
-        elementOT?.classList.add("d-none-kl");
-
-        // In ra danh sách các lớp của phần tử
-      }
-      for (let i = 0; i < elementPriceChange.length; i++) {
-        const elementChange = elementPriceChange.item(i);
-        elementChange?.classList.remove("d-none-kl");
-        elementChange?.classList.add("d-block-kl");
-        // In ra danh sách các lớp của phần tử
-      }
-      if (elementKhopLenhPT) elementKhopLenhPT.innerHTML = "+/-";
-    } else {
-      for (let j = 0; j < element.length; j++) {
-        const elementOT = element.item(j);
-        elementOT?.classList.remove("d-none-kl");
-        elementOT?.classList.add("d-block-kl");
-        // In ra danh sách các lớp của phần tử
-      }
-      for (let i = 0; i < elementPriceChange.length; i++) {
-        const elementChange = elementPriceChange.item(i);
-        elementChange?.classList.remove("d-block-kl");
-        elementChange?.classList.add("d-none-kl");
-        // In ra danh sách các lớp của phần tử
-      }
-      if (elementKhopLenhPT) elementKhopLenhPT.innerHTML = "%";
-    }
-  }
-};
 
 const PinCell = () => {
   return (
@@ -74,8 +44,93 @@ const PinCell = () => {
 const TableMarketWatchTest = () => {
   // tinh width
   const widthWindow = window.innerWidth;
-  const [columnDefs] = ColumnDef();
+  const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
 
+  const gridRef = useRef<any>();
+  const pinnedRowsRef = useRef<any[]>([]);
+
+  // const handlePinRow = (params: any) => {
+  //   const grid = gridRef.current.api;
+
+  //   const defaultData = gridRef.current.props.rowData;
+  //   const { rowPinned, rowIndex, data } = params;
+  //   const { RowID, symbol, isPined } = data;
+  //   console.log("grid", rowPinned);
+  //   let rows = pinnedRowsRef.current;
+  //   // console.log("co row ne", rows);
+  //   if (rowPinned) {
+  //     const newRows = pinnedRowsRef.current.filter((e) => {
+  //       return RowID !== e.data.RowID;
+  //     });
+  //     console.log("new row", newRows);
+
+  //     const item = rows.find((item) => item.data.RowID === RowID);
+  //     const other = pinnedRowsRef.current.filter(
+  //       (val) => val.index < item.index
+  //     );
+  //     pinnedRowsRef.current = newRows;
+  //     const rowsToPin = newRows.map((item) => item.data);
+  //     let rowsToPins = rowsToPin
+  //       ? rowsToPin.map((item) => {
+  //           if (item.isPined === false) {
+  //             return { ...item, isPined: true };
+  //           }
+  //           return item;
+  //         })
+  //       : [];
+  //     grid.setPinnedTopRowData(rowsToPins);
+  //     grid.applyTransaction({
+  //       add: [data],
+  //       addIndex: item.index - other.length,
+  //     });
+  //   } else {
+  //     const items = grid.getRowNode(RowID)?.data;
+  //     if (!items) {
+  //       const newRows = pinnedRowsRef.current.filter((e) => {
+  //         return RowID !== e.data.RowID;
+  //       });
+  //       const item = rows.find((item) => item.data.RowID === RowID);
+  //       const other = pinnedRowsRef.current.filter(
+  //         (val) => val.index < item.index
+  //       );
+  //       pinnedRowsRef.current = newRows;
+  //       const rowsToPin = newRows.map((item) => item.data);
+  //       let rowsToPins = rowsToPin
+  //         ? rowsToPin.map((item) => {
+  //             if (item.isPined === false) {
+  //               return { ...item, isPined: true };
+  //             }
+  //             return item;
+  //           })
+  //         : [];
+  //       grid.setPinnedTopRowData(rowsToPins);
+  //       grid.applyTransaction({
+  //         add: [data],
+  //         addIndex: item.index - other.length,
+  //       });
+  //     } else {
+  //       const index = defaultData.findIndex((item: any) => item.MCK === RowID);
+  //       rows.push({
+  //         index,
+  //         data,
+  //       });
+  //       let rowsToPins = rows.map((item: any) => item.data);
+  //       console.log("vạasds", rowsToPins);
+  //       let rowsToPin = rowsToPins
+  //         ? rowsToPins.map((element: RowData) => {
+  //             if (element.isPined === false) {
+  //               return { ...element, isPined: true };
+  //             }
+  //             return element;
+  //           })
+  //         : [];
+  //       grid.setPinnedTopRowData(rowsToPin);
+  //       grid.applyTransaction({ remove: [items] });
+  //     }
+  //   }
+  // };
+
+  const [columnDefs] = ColumnDef(gridRef, pinnedRowsRef);
   const dispatch = useAppDispatch();
 
   //setRowData
@@ -220,12 +275,22 @@ const TableMarketWatchTest = () => {
       // sau 0.5s xóa màu bg
     }
   };
+  // const handleClick = (dataTable: any) => {
+  //   // console.log("dataTable ii",dataTable)
+  //   dispatch(dispatchDataTable(dataTable));
+  // };
+  // const handleClickBuy = (dataTable: any) => {
+  //   // console.log("dataTable",dataTable)
+  //   dispatch(dispatchDataTableBuy(dataTable));
+  // };
 
+  // const handleDoubleClick = (e: any, val: any) => {
+  //   if (e.detail === 2) {
+  //     dispatch(statusChartMarketwatch(val));
+  //   }
+  // };
   const containerStyle = { width: "100%", height: "100%" };
   const gridStyle = { height: "100%", width: "100%" };
-  // const gridApi = useRef<any>(null); // Declare gridApi reference
-
-  const gridRef = useRef<any>();
 
   useEffect(() => {
     document.addEventListener("contextmenu", (event) => {
