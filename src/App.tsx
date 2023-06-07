@@ -7,6 +7,7 @@ import DynamicDashboard from "./components/dynamicDashboard/DynamicDashboard";
 import MyLayout from "./components/dynamicDashboard/MyLayout";
 import AssetReport from "./components/AssetReport/AssetReport";
 import TableMarketWatchTest from "./components/tableMarketwatch/TableMarketWatchTest";
+import ParentComponent from "./components/tableMarketwatch/Test";
 function App() {
   return (
     <div>
@@ -22,7 +23,7 @@ function App() {
 
           <Route
             path="/report/ClientActivityRange"
-            element={<SlidesMarketWatch />}
+            element={<ParentComponent />}
           />
           <Route path="/report/AssetReport2" element={<AssetReport />} />
         </Routes>

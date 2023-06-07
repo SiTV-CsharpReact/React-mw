@@ -31,7 +31,7 @@ export interface RowData{
     GDK: string;
     Quyen: string;
     CGKGN: string;
-    RowID: string;
+    RowID?: any;
    Chenhlech1: any;
     PhanTram: string;
     isPined: boolean;
