@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { formatNumberMarket, setColorMarkettest } from "../../../utils/util";
 import { RowDataIndex } from "../interface/config.tablegrid";
 import { Tooltip } from "@mui/material";
@@ -8,19 +8,8 @@ import { dispatchDataTable } from "../tableThunk";
 import { statusChartMarketwatch } from "../../chartMarketwatch/chartMarketwatchSlice";
 import { RowData } from "../../../models/tableMarketwatch";
 import { CellRender } from "./CellRenderComponent";
-export const PinCell = () => {
-  return (
-    <div title="Double click to pin" className="pt-[7px]">
-      <svg style={{ width: 12, height: 12 }} viewBox="0 0 24 24">
-        <path
-          fill="currentColor"
-          d="M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12M8.8,14L10,12.8V4H14V12.8L15.2,14H8.8Z"
-        />
-      </svg>
-    </div>
-  );
-};
-const ColumnDef = () => {
+
+const ColumnDef = (props: any, props2: any) => {
   const widthWindow = window.innerWidth;
   const dispatch = useAppDispatch();
   const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
@@ -41,29 +30,25 @@ const ColumnDef = () => {
     }
   };
 
-  const gridRef = useRef<any>();
-  const pinnedRowsRef = useRef<any[]>([]);
+  // const gridRef = useRef<any>();
+  // const pinnedRowsRef = useRef<any[]>([]);
   const handlePinRow = (params: any) => {
-    console.log(params)
-    console.log("pin",params.data.RowID);
-    const grid = gridRef.current.api;
-    const defaultData = gridRef.current.props.rowData;
+    const grid = props.current.api;
+    const defaultData = props.current.props.rowData;
     const { rowPinned, rowIndex, data } = params;
     const { RowID, symbol, isPined } = data;
-    let rows = pinnedRowsRef.current;
+    let rows = props2.current;
     // console.log("co row ne", rows);
     if (rowPinned) {
-      const newRows = pinnedRowsRef.current.filter((e) => {
+      const newRows = props2.current.filter((e: any) => {
         return RowID !== e.data.RowID;
       });
-      const item = rows.find((item) => item.data.RowID === RowID);
-      const other = pinnedRowsRef.current.filter(
-        (val) => val.index < item.index
-      );
-      pinnedRowsRef.current = newRows;
-      const rowsToPin = newRows.map((item) => item.data);
+      const item = rows.find((item: any) => item.data.RowID === RowID);
+      const other = props2.current.filter((val: any) => val.index < item.index);
+      props2.current = newRows;
+      const rowsToPin = newRows.map((item: any) => item.data);
       let rowsToPins = rowsToPin
-        ? rowsToPin.map((item) => {
+        ? rowsToPin.map((item: any) => {
             if (item.isPined === false) {
               return { ...item, isPined: true };
             }
@@ -78,17 +63,17 @@ const ColumnDef = () => {
     } else {
       const items = grid.getRowNode(RowID)?.data;
       if (!items) {
-        const newRows = pinnedRowsRef.current.filter((e) => {
+        const newRows = props2.current.filter((e: any) => {
           return RowID !== e.data.RowID;
         });
-        const item = rows.find((item) => item.data.RowID === RowID);
-        const other = pinnedRowsRef.current.filter(
-          (val) => val.index < item.index
+        const item = rows.find((item: any) => item.data.RowID === RowID);
+        const other = props2.current.filter(
+          (val: any) => val.index < item.index
         );
-        pinnedRowsRef.current = newRows;
-        const rowsToPin = newRows.map((item) => item.data);
+        props2.current = newRows;
+        const rowsToPin = newRows.map((item: any) => item.data);
         let rowsToPins = rowsToPin
-          ? rowsToPin.map((item) => {
+          ? rowsToPin.map((item: any) => {
               if (item.isPined === false) {
                 return { ...item, isPined: true };
               }
@@ -123,20 +108,6 @@ const ColumnDef = () => {
   };
   const columnDefs = [
     {
-      headerName: "",
-      cellClass: "ag-cell-pinning",
-      // pinned:true,
-      field: "pinning",
-      maxWidth: 19,
-      cellRenderer: PinCell,
-      onCellDoubleClicked: (e: any) => {
-        const field = e.colDef.field;
-        if (field === "pinning") {
-          handlePinRow(e);
-        }
-      },
-    },
-    {
       field: "MCK",
       // pinned:true,
       headerName: "Mã",
@@ -170,13 +141,13 @@ const ColumnDef = () => {
             <input
               type="checkbox"
               className="checkbox_price"
-              checked={params.isPined}
+              checked={params.data.isPined}
               onClick={() => {
                 // params.data.isPined = !params.data.isPined;
                 handlePinRow(params);
                 
               }}
-              onChange={() => {}}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
             />
             <span
               className="pl-1 pt-1"
@@ -597,7 +568,6 @@ const ColumnDef = () => {
         },
       ],
     },
-
     {
       headerName: "Bán",
       headerClass: "custom-header",
@@ -823,7 +793,6 @@ const ColumnDef = () => {
         },
       ],
     },
-
     {
       field: "TKL",
       headerName: "Tổng KL",
@@ -939,7 +908,6 @@ const ColumnDef = () => {
       suppressMenu: true,
       cellRenderer: CellRender,
     },
-    // { field: "RowID", headerName: "RowID", cellClass: "score-cell" },
   ];
   return [columnDefs];
 };
