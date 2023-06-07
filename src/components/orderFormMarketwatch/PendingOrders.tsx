@@ -108,7 +108,7 @@ const PendingOrders: React.FC<Props> = (value) => {
   // console.log(data)
   return (
     <div>
-      <div className="flex justify-between pl-8 mt-2">
+      <div className="flex flex-col justify-between pl-8 mt-2 lg:flex-row">
         <div style={{ color: "#555" }}>
           <p>
             <span className="text-[14px]  leading-3 font-semibold text-[#333333]">

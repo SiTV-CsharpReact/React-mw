@@ -1,0 +1,43 @@
+export type TDefColDef = {
+  width: number;
+  sortable: boolean;
+  filter: boolean;
+  autoSize: boolean;
+};
+
+export type TRowDataIndex = {
+  MCK: number;
+  TC: number;
+  Tran: number;
+  San: number;
+  KL4: number;
+  G3: number;
+  KL3: number;
+  G2: number;
+  KL2: number;
+  G1: number;
+  KL1: number;
+  GiaKhop: number;
+  KLKhop: number;
+  Chenhlech: number;
+  G1B: number;
+  KL1B: number;
+  G2B: number;
+  KL2B: number;
+  G3B: number;
+  KL3B: number;
+  KL4B: number;
+  TKL: number;
+  MOC: number;
+  CaoNhat: number;
+  ThapNhat: number;
+  GTB: number;
+  NNMua: number;
+  NNBan: number;
+  RoomCL: number;
+  GDK: number;
+  Quyen: number;
+  CGKGN: number;
+  PhanTram: number;
+  RowID?: any;
+};

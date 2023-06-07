@@ -2,10 +2,10 @@ import React from "react";
 
 const TableGDTTPopup = () => {
   return (
-    <table id="tbpuPT" className="pu-table-PT w-full">
+    <table id="tbpuPT" className="w-full pu-table-PT">
       <tfoot>
         <tr style={{ height: "20px" }}>
-          <td className="pu-w text-center">Tổng cộng</td>
+          <td className="text-center pu-w">Tổng cộng</td>
           <td className="pu-w" />
           <td className="pu-w" />
         </tr>
