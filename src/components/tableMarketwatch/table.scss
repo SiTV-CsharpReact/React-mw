@@ -420,6 +420,9 @@ tr.border-bottom:last-child {
 .ag-header-group-cell:not(.ag-column-resizing) + .ag-header-group-cell:not(.ag-column-hover):not(.ag-header-cell-moving):hover{
   background-color: #444;
 }
+.ag-header-group-cell:not(.ag-column-resizing):first-child + .ag-header-group-cell:not(.ag-column-hover):not(.ag-header-cell-moving):first-child:hover{
+  background-color: #1D1D1D;
+}
 .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell:not(.ag-column-hover):not(.ag-header-cell-moving):hover{
   background-color: #444;
 }
@@ -462,7 +465,10 @@ tr.border-bottom:last-child {
     margin: 0 auto !important;
   }
   .ag-header-cell-text {
-    margin: 0 auto !important;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
   .ag-header-cell-label {
     text-overflow: clip !important;
@@ -629,3 +635,20 @@ tr.border-bottom:last-child {
 .form-group select {
   width: 60%;
 }
+.ag-theme-alpine {
+  --ag-header-height: 30px;}
+  
+  .ag-header-cell,.ag-header-cell-text,.ag-header-cell-sortable .ag-header-cell-label{
+  //  cursor: url(../../images/menuMW/sort_full.png);
+  //  cursor: url(http://priceboard3.fpts.com.vn/images/menuMW/sort_full.png), auto;
+   cursor: url(../../images/menuMW/sort_full.png), auto;
+  }
+  .center-horizontal{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -4px;
+  }
+  .ag-header-group-cell-with-group:hover:nth-child(1){
+    background-color: #1D1D1D !important;
+  }
