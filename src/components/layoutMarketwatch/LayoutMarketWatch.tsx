@@ -38,7 +38,6 @@ import CompleteStock from "../menuBarMW/CompleteStock";
 
 function RenderTable() {
   const floor = useAppSelector((state) => state.table.floor);
-  console.log(floor);
   switch (floor) {
     case "MAIN":
       return <TableMarketWatchTest />;
@@ -195,16 +194,6 @@ const LayoutMarketWatch: React.FC = () => {
 
   const componentVisible = useAppSelector((state) => state.chart.visible);
   const hideShowOrderForm = heightComponent.orderForm;
-  // show hide menu tab
-  // const showPendingOrder = () => {
-  //   setHeightComponent({ ...heightComponent, orderCount: 1 });
-  // };
-  // const showTradingResult = () => {
-  //   setHeightComponent({ ...heightComponent, orderCount: 2 });
-  // };
-  // const showIntradayOrder = () => {
-  //   setHeightComponent({ ...heightComponent, orderCount: 3 });
-  // };
 
   // const handleContextMenu = (e: any) => {
   //   e.preventDefault();
@@ -231,14 +220,14 @@ const LayoutMarketWatch: React.FC = () => {
       : e.target;
     const rowID = vCell.querySelector("div.custom-cell").dataset.comp;
     const trValue = document.querySelector(
-      `div[data-index="0"][data-comp="${rowID}"]`
+      `div[data-index="0"][data-comp="${rowID}"] span`
     )?.innerHTML;
     console.log("click", trValue);
     if (trValue) {
       setSelectedValue({
         x: e.clientX,
         y: e.clientY - 40,
-        value: rowID,
+        value: trValue,
         status: true,
       });
     }

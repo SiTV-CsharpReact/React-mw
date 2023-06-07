@@ -17,11 +17,13 @@ interface TableState {
     floor:  string ;
     NameFloor :  string ;
     DataPt : DataTable[];
-    DataBi : DataGDTT[]
+    DataBi : DataGDTT[];
+    KeyMenuChildren: any
 }
 type params = {
   Floor :string,
-  Query:string
+  Query:string,
+  KeyMenuChildren?: any //  là cái thay đổi thống kê
 }
 const dataTableAdapter = createEntityAdapter<DataTable>({
     selectId: (dataTable) => dataTable.RowID || '', // Chỉ định trường khóa
@@ -81,7 +83,8 @@ export const getDataTable = createAsyncThunk("table/getDataTable" , async (Param
                 product : {
                   DataBi,
                   DataPt : DataPt  
-                }  
+                }  ,
+                KeyMenuChildren: null
              }
             
              return  data
@@ -121,7 +124,8 @@ export const getDataTable = createAsyncThunk("table/getDataTable" , async (Param
           index : 0,
           floor :"MAIN",
           NameFloor : Param.Floor,
-          product : arr_names
+          product : arr_names,
+          KeyMenuChildren : null
         }
        
         return data   
@@ -129,12 +133,12 @@ export const getDataTable = createAsyncThunk("table/getDataTable" , async (Param
       }
       else if(Param.Floor ==="TableTK"){
         const DataHNX = await agent.ListDataTable.list("hnx" , `s=quote&l=${Param.Query}`)
-        console.log("oke")
         let data = {
           index : 2,
           floor :"TableTK",
           NameFloor : Param.Floor,
-          product : DataHNX
+          product : DataHNX,
+          KeyMenuChildren : Param?.KeyMenuChildren
         }
         return data
       }
@@ -144,7 +148,8 @@ export const getDataTable = createAsyncThunk("table/getDataTable" , async (Param
               index : 0,
               floor :"MAIN",
               NameFloor : Param.Floor,
-              product : result
+              product : result,
+              KeyMenuChildren:null
             }
 
             return data         
@@ -173,6 +178,7 @@ export const tableSlice = createSlice({
         DataBi :  [] as DataGDTT[],
         DataPt :  [] as DataTable[],
         NameFloor : "",
+        KeyMenuChildren : null,
         productParams: initParams(),
     }),
     reducers: {
@@ -215,6 +221,10 @@ export const tableSlice = createSlice({
                 state.ListDataTable = data?.product
                 state.NameFloor = data?.NameFloor
               }
+            }
+            else if(data?.index === 2){
+                state.floor = "TableTK" 
+                state.KeyMenuChildren = data?.KeyMenuChildren
             }
             else if(data?.NameFloor === "TableTK"){
              
