@@ -1,0 +1,961 @@
+const columnDefs = [
+    // {
+    //   headerName: "",
+    //   cellClass: "ag-cell-pinning",
+    //   // pinned:true,
+    //   field: "pinning",
+    //   maxWidth: 19,
+    //   cellRenderer: PinCell,
+    //   onCellDoubleClicked: (e: any) => {
+    //     const field = e.colDef.field;
+    //     if (field === "pinning") {
+    //       handlePinRow(e);
+    //     }
+    //   },
+    // },
+    {
+      field: "MCK",
+      // pinned:true,
+      headerName: "Mã",
+      cellClass: "score-cell",
+      suppressMenu: true,
+      spanHeaderHeight: true,
+      width: widthWindow * 0.05,
+      maxWidth: 100,
+
+      // cellClass: "custom-cell",
+      headerClass: "custom-header",
+      cellStyle: (params: any) => {
+        // console.log("ktra", params); // Xem giá trị của params trong console
+        return {
+          color: setColorMarkettest("MCK", params),
+          textAlign: "left",
+        };
+      },
+      cellRenderer: (params: any) => {
+        const dataIndex = RowDataIndex.MCK; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+
+        //console.log("Column Index:", dataIndex);
+
+        const value = params.value; // Get the value of the cell
+        const rowid = params.data.RowID; // Get the
+
+        return (
+          //  <div data-index={dataIndex} data-comp={rowid}  data-tooltip={getCompanyNameByCode(value).toString()} className="relative custom-cell cell-stock has-symbol company-tooltip">
+          //   {value}
+          // </div>
+
+          <div
+            data-index={dataIndex}
+            data-comp={rowid}
+            className="custom-cell cell-stock has-symbol company-tooltip"
+          >
+            <input
+              type="checkbox"
+              className="checkbox_price"
+              checked={params.data.isPined}
+              onClick={() => {
+                // params.data.isPined = !params.data.isPined;
+                handlePinRow(params);
+              }}
+              onChange={() => {}}
+            />
+            <span
+              className="pl-1 pt-1"
+              onDoubleClick={(e) => handleDoubleClick(e, value)}
+            >
+              {value}
+            </span>
+          </div>
+        );
+      },
+    },
+    {
+      field: "TC",
+      headerName: "TC",
+      headerClass: "custom-header tc-header",
+      cellClass: "score-cell tc-cell",
+      suppressMenu: true,
+      spanHeaderHeight: true,
+      width: widthWindow * 0.03,
+      maxWidth: 100,
+      // headerStyle: {
+      //   fontWeight: "bold",
+      //   color: "white",
+      //   textAlign: "center",
+      // },
+      cellStyle: (params: any) => ({
+        fontWeight: "",
+        color: setColorMarkettest("", params),
+      }),
+      cellRenderer: CellRender,
+      // cellRenderer: (params: any) => {
+      //   const dataIndex = RowDataIndex.TC; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+
+      //   // console.log("Column Index:", dataIndex);
+
+      //   const value = params.value;
+      //   const rowid = params.data.RowID; // Get the
+      //   return (
+      //     <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+      //       {value}
+      //     </div>
+      //   );
+      // },
+    },
+    {
+      field: "Tran",
+      headerName: "Trần",
+      suppressMenu: true,
+      spanHeaderHeight: true,
+      width: widthWindow * 0.03,
+      maxWidth: 100,
+      headerClass: "custom-header tc-header ",
+      cellClass: "score-cell tc-cell",
+      cellStyle: (params: any) => ({
+        fontWeight: "",
+        color: setColorMarkettest("", params),
+        textAlign: "right",
+      }),
+      cellRenderer: CellRender,
+      // cellRenderer: (params: any) => {
+      //   const dataIndex = RowDataIndex.Tran; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+
+      //   // console.log("Column Index:", dataIndex);
+
+      //   const value = params.value;
+      //   const rowid = params.data.RowID; // Get the
+      //   return (
+      //     <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+      //       {value}
+      //     </div>
+      //   );
+      // },
+    },
+    {
+      field: "San",
+      headerName: "Sàn",
+      suppressMenu: true,
+      spanHeaderHeight: true,
+      width: widthWindow * 0.03,
+      maxWidth: 100,
+      headerClass: "custom-header tc-header",
+      cellClass: "score-cell tc-cell",
+      cellStyle: (params: any) => ({
+        fontWeight: "",
+        color: setColorMarkettest("", params),
+        textAlign: "right",
+      }),
+      cellRenderer: CellRender,
+      // cellRenderer: (params: any) => {
+      //   const dataIndex = RowDataIndex.San; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+
+      //   // console.log("Column Index:", dataIndex);
+
+      //   const value = params.value;
+      //   const rowid = params.data.RowID; // Get the
+      //   return (
+      //     <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+      //       {value}
+      //     </div>
+      //   );
+      // },
+    },
+    {
+      headerName: "Mua",
+      headerClass: "custom-header",
+
+      children: [
+        {
+          field: "G4",
+          headerName: "G4",
+          suppressMenu: true,
+          width: widthWindow * 0.03,
+          minWidth: 50,
+          height: 30,
+          maxWidth: 100,
+          hide: INDEX.cbcol4 ? false : true,
+          headerClass: "custom-header",
+          cellClass: "score-cell",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("", params),
+            textAlign: "right",
+          }),
+          cellRenderer: CellRenderToolTip,
+          // cellRenderer: (params: any) => {
+          //   const dataIndex = RowDataIndex.KL4; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+          //   const value = params.value; // Get the value of the cell
+          //   const rowid = params.data.RowID; // Get the
+
+          //   return (
+          //     <Tooltip title="Click đúp để đặt lệnh">
+          //       <div
+          //         data-index={dataIndex}
+          //         data-comp={rowid}
+          //         className="custom-cell cursor-pointer"
+          //         onDoubleClick={() =>
+          //           handleClick({ ma: params.data.MCK, price: value })
+          //         }
+          //       >
+          //         {formatNumberMarket(value)}
+          //       </div>
+          //     </Tooltip>
+          //   );
+          // },
+        },
+        {
+          field: "G3",
+          headerName: "G3",
+          suppressMenu: true,
+          width: widthWindow * 0.03,
+          minWidth: 50,
+          height: 30,
+          maxWidth: 100,
+          headerClass: "custom-header",
+          cellClass: "score-cell",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.G3; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
+            return (
+              <Tooltip title="Click đúp để đặt lệnh">
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="custom-cell cursor-pointer"
+                  onDoubleClick={() =>
+                    handleClick({ ma: params.data.MCK, price: value })
+                  }
+                >
+                  {formatNumberMarket(value)}
+                </div>
+              </Tooltip>
+            );
+          },
+        },
+        {
+          field: "KL3",
+          headerName: "KL3",
+          suppressMenu: true,
+          width: widthWindow * 0.04,
+
+          minWidth: 50,
+          heigth: 34,
+          maxWidth: 100,
+          headerClass: "custom-header",
+          cellClass: "score-cell",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("KL3", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.KL3; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
+
+            return (
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell "
+              >
+                {formatNumberMarket(value)}
+              </div>
+            );
+          },
+        },
+
+        {
+          field: "G2",
+          headerName: "G2",
+          suppressMenu: true,
+          width: widthWindow * 0.03,
+          minWidth: 50,
+          maxWidth: 100,
+          cellClass: "score-cell",
+          headerClass: "custom-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("G2", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.G2; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
+
+            return (
+              <Tooltip title="Click đúp để đặt lệnh">
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="custom-cell cursor-pointer"
+                  onDoubleClick={() =>
+                    handleClick({ ma: params.data.MCK, price: value })
+                  }
+                >
+                  {formatNumberMarket(value)}
+                </div>
+              </Tooltip>
+            );
+          },
+        },
+
+        {
+          field: "KL2",
+          headerName: "KL2",
+          suppressMenu: true,
+          width: widthWindow * 0.04,
+          minWidth: 50,
+          maxWidth: 100,
+          cellClass: "score-cell",
+          headerClass: "custom-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("KL2", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.KL2; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
+
+            return (
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
+                {formatNumberMarket(value)}
+              </div>
+            );
+          },
+        },
+        {
+          field: "G1",
+          headerName: "G1",
+          suppressMenu: true,
+          width: widthWindow * 0.04,
+          minWidth: 50,
+          maxWidth: 100,
+          cellClass: "score-cell",
+          headerClass: "custom-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("G1", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.G1; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
+
+            return (
+              <Tooltip title="Click đúp để đặt lệnh">
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="custom-cell cursor-pointer"
+                  onDoubleClick={() =>
+                    handleClick({ ma: params.data.MCK, price: value })
+                  }
+                >
+                  {formatNumberMarket(value)}
+                </div>
+              </Tooltip>
+            );
+          },
+        },
+        {
+          field: "KL1",
+          headerName: "KL1",
+          cellClass: "score-cell",
+          suppressMenu: true,
+          width: widthWindow * 0.05,
+          minWidth: 50,
+          maxWidth: 100,
+          headerClass: "custom-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("KL1", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.KL1; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
+
+            return (
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
+                {formatNumberMarket(value)}
+              </div>
+            );
+          },
+        },
+      ],
+    },
+    {
+      headerName: "Khớp lệnh",
+      headerClass: "custom-header tc-header",
+      children: [
+        {
+          field: "GiaKhop",
+          headerName: "Giá",
+          suppressMenu: true,
+          width: widthWindow * 0.03,
+          minWidth: 50,
+          maxWidth: 100,
+          cellClass: "score-cell tc-cell",
+          headerClass: "custom-header tc-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("", params),
+            textAlign: "right",
+          }),
+          cellRenderer: CellRender,
+          // cellRenderer: (params: any) => {
+          //   const dataIndex = RowDataIndex.GiaKhop; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+          //   const value = params.value; // Get the value of the cell
+          //   const rowid = params.data.RowID; // Get the
+
+          //   return (
+          //     <div
+          //       data-index={dataIndex}
+          //       data-comp={rowid}
+          //       className="custom-cell"
+          //     >
+          //       {formatNumberMarket(value)}
+          //     </div>
+          //   );
+          // },
+        },
+        {
+          field: "KLKhop",
+          headerName: "KL",
+          suppressMenu: true,
+          width: widthWindow * 0.04,
+          minWidth: 50,
+          maxWidth: 100,
+          cellClass: "score-cell tc-cell",
+          headerClass: "custom-header tc-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("KLKhop", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.KLKhop; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
+
+            return (
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
+                {formatNumberMarket(value)}
+              </div>
+            );
+          },
+        },
+        {
+          field: "Chenhlech",
+          headerName: "+/-",
+          suppressMenu: true,
+          width: widthWindow * 0.03,
+          minWidth: 50,
+          maxWidth: 100,
+          cellClass: "score-cell tc-cell",
+          headerClass: "custom-header tc-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("Chenhlech", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.Chenhlech; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {formatNumberMarket(value)}
+              </div>
+            );
+          },
+        },
+        {
+          field: "PhanTram",
+          headerName: "%",
+
+          // headerName: () => {
+          //   const buttonElement = document.createElement("button");
+          //   buttonElement.innerHTML = "+/-";
+          //   buttonElement.addEventListener("click", () => {
+          //     // Xử lý sự kiện khi button được nhấp
+          //     showKLPT("showPT");
+          //   });
+
+          //   const headerElement = document.createElement("div");
+          //   headerElement.appendChild(buttonElement);
+
+          //   return headerElement;
+          // },
+          suppressMenu: true,
+          width: widthWindow * 0.03,
+          minWidth: 50,
+          maxWidth: 100,
+          cellClass: "score-cell tc-cell",
+          headerClass: "custom-header tc-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("Chenhlech", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.Chenhlech; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            return (
+              <div data-index={dataIndex} className="custom-cell">
+                {formatNumberMarket(value)}
+              </div>
+            );
+          },
+        },
+      ],
+    },
+
+    {
+      headerName: "Bán",
+      headerClass: "custom-header",
+      children: [
+        {
+          field: "G1B",
+          headerName: "G1",
+          suppressMenu: true,
+          width: widthWindow * 0.03,
+          minWidth: 50,
+          maxWidth: 100,
+          cellClass: "score-cell",
+          headerClass: "custom-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("", params),
+            textAlign: "right",
+          }),
+          cellRenderer:CellRenderToolTip,
+          // cellRenderer: (params: any) => {
+          //   const dataIndex = RowDataIndex.G1B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+          //   const value = params.value; // Get the value of the cell
+          //   const rowid = params.data.RowID; // Get the
+          //   return (
+          //     <Tooltip title="Click đúp để đặt lệnh">
+          //       <div
+          //         data-index={dataIndex}
+          //         data-comp={rowid}
+          //         className="custom-cell cursor-pointer"
+          //         onDoubleClick={() =>
+          //           handleClickBuy({ ma: params.data.MCK, price: value })
+          //         }
+          //       >
+          //         {formatNumberMarket(value)}
+          //       </div>
+          //     </Tooltip>
+          //   );
+          // },
+        },
+        {
+          field: "KL1B",
+          headerName: "KL1",
+          suppressMenu: true,
+          width: widthWindow * 0.04,
+          minWidth: 50,
+          maxWidth: 100,
+          cellClass: "score-cell",
+          headerClass: "custom-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("KL1B", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.KL1B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
+            return (
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
+                {formatNumberMarket(value)}
+              </div>
+            );
+          },
+        },
+        {
+          field: "G2B",
+          headerName: "G2",
+          suppressMenu: true,
+          width: widthWindow * 0.03,
+          minWidth: 50,
+          maxWidth: 100,
+          cellClass: "score-cell",
+          headerClass: "custom-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.G2B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
+            return (
+              <Tooltip title="Click đúp để đặt lệnh">
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="custom-cell cursor-pointer"
+                  onDoubleClick={() =>
+                    handleClickBuy({ ma: params.data.MCK, price: value })
+                  }
+                >
+                  {formatNumberMarket(value)}
+                </div>
+              </Tooltip>
+            );
+          },
+        },
+        {
+          field: "KL2B",
+          headerName: "KL2",
+          suppressMenu: true,
+          width: widthWindow * 0.03,
+          minWidth: 50,
+          maxWidth: 100,
+          cellClass: "score-cell",
+          headerClass: "custom-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("KL2B", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.KL2B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
+            return (
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
+                {formatNumberMarket(value)}
+              </div>
+            );
+          },
+        },
+        {
+          field: "G3B",
+          headerName: "G3",
+          cellClass: "score-cell",
+          suppressMenu: true,
+          width: widthWindow * 0.04,
+          minWidth: 50,
+          maxWidth: 100,
+          headerClass: "custom-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.G3B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
+            return (
+              <Tooltip title="Click đúp để đặt lệnh">
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="custom-cell cursor-pointer"
+                  onDoubleClick={() =>
+                    handleClickBuy({ ma: params.data.MCK, price: value })
+                  }
+                >
+                  {formatNumberMarket(value)}
+                </div>
+              </Tooltip>
+            );
+          },
+        },
+        {
+          field: "KL3B",
+          headerName: "KL3",
+          suppressMenu: true,
+          width: widthWindow * 0.05,
+          minWidth: 50,
+          maxWidth: 100,
+          cellClass: "score-cell ",
+          headerClass: "custom-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("KL3B", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.KL3B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
+            return (
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
+                {formatNumberMarket(value)}
+              </div>
+            );
+          },
+        },
+        {
+          field: "KL4B",
+          headerName: "KL4",
+          suppressMenu: true,
+          width: widthWindow * 0.05,
+          minWidth: 50,
+          maxWidth: 100,
+          hide: INDEX.cbcol20 ? false : true,
+          cellClass: "score-cell ",
+          headerClass: "custom-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            color: setColorMarkettest("KL4B", params),
+            textAlign: "right",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = RowDataIndex.KL4B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+            const value = params.value; // Get the value of the cell
+            const rowid = params.data.RowID; // Get the
+            return (
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
+                {formatNumberMarket(value)}
+              </div>
+            );
+          },
+        },
+      ],
+    },
+
+    {
+      field: "TKL",
+      headerName: "Tổng KL",
+      cellClass: "score-cell tc-cell",
+      spanHeaderHeight: true,
+      width: widthWindow * 0.05,
+      maxWidth: 100,
+      headerClass: "custom-header tc-header",
+      suppressMenu: true,
+      cellRenderer: CellRender,
+      // cellRenderer: (params: any) => {
+      //   const dataIndex = RowDataIndex.TKL; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+      //   const value = params.value; // Get the value of the cell
+      //   const rowid = params.data.RowID; // Get the
+      //   return (
+      //     <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+      //       {formatNumberMarket(value)}
+      //     </div>
+      //   );
+      // },
+    },
+    {
+      field: "MOC",
+      headerName: "Mở Cửa",
+      cellClass: "score-cell tc-cell",
+      spanHeaderHeight: true,
+      width: widthWindow * 0.04,
+      maxWidth: 100,
+      hide: INDEX.cbcol22 ? false : true,
+      headerClass: "custom-header tc-header",
+      suppressMenu: true,
+      cellStyle: (params: any) => ({
+        fontWeight: "",
+        color: setColorMarkettest("", params),
+        textAlign: "right",
+      }),
+      cellRenderer: CellRender,
+      // cellRenderer: (params: any) => {
+      //   const dataIndex = RowDataIndex.TKL; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+      //   const value = params.value; // Get the value of the cell
+      //   const rowid = params.data.RowID; // Get the
+      //   return (
+      //     <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+      //       {formatNumberMarket(value)}
+      //     </div>
+      //   );
+      // },
+    },
+    {
+      field: "CaoNhat",
+      headerName: "Cao Nhất",
+      cellClass: "score-cell tc-cell",
+      spanHeaderHeight: true,
+      hide: INDEX.cbcol23 ? false : true,
+      width: widthWindow * 0.04,
+      maxWidth: 100,
+      headerClass: "custom-header tc-header",
+      suppressMenu: true,
+      cellStyle: (params: any) => ({
+        fontWeight: "",
+        color: setColorMarkettest("", params),
+        textAlign: "right",
+      }),
+      cellRenderer: CellRender,
+      // cellRenderer: (params: any) => {
+      //   const dataIndex = RowDataIndex.CaoNhat; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+      //   const value = params.value; // Get the value of the cell
+      //   const rowid = params.data.RowID; // Get the
+      //   return (
+      //     <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+      //       {formatNumberMarket(value)}
+      //     </div>
+      //   );
+      // },
+    },
+    {
+      field: "ThapNhat",
+      headerName: "Thấp nhất",
+      spanHeaderHeight: true,
+      hide: INDEX.cbcol24 ? false : true,
+      width: widthWindow * 0.04,
+      maxWidth: 100,
+      cellClass: "score-cell tc-cell",
+      headerClass: "custom-header tc-header",
+      cellStyle: (params: any) => ({
+        fontWeight: "",
+        color: setColorMarkettest("", params),
+        textAlign: "right",
+      }),
+      cellRenderer: CellRender,
+      // cellRenderer: (params: any) => {
+      //   const dataIndex = RowDataIndex.ThapNhat; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+      //   const value = params.value; // Get the value of the cell
+      //   const rowid = params.data.RowID; // Get the
+      //   return (
+      //     <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+      //       {formatNumberMarket(value)}
+      //     </div>
+      //   );
+      // },
+      suppressMenu: true,
+    },
+    {
+      field: "Trungbinh",
+      headerName: "Trung bình",
+      spanHeaderHeight: true,
+      hide: INDEX.cbcol25 ? false : true,
+      width: widthWindow * 0.04,
+      maxWidth: 100,
+      cellClass: "score-cell tc-cell",
+      headerClass: "custom-header tc-header",
+      cellStyle: (params: any) => ({
+        fontWeight: "",
+        color: setColorMarkettest("", params),
+        textAlign: "right",
+      }),
+      cellRenderer: CellRender,
+      // cellRenderer: (params: any) => {
+      //   const dataIndex = RowDataIndex.GTB; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+      //   const value = params.value; // Get the value of the cell
+      //   const rowid = params.data.RowID; // Get the
+      //   return (
+      //     <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+      //       {formatNumberMarket(value)}
+      //     </div>
+      //   );
+      // },
+      suppressMenu: true,
+    },
+    {
+      field: "NNMua",
+      headerName: "NN mua",
+      spanHeaderHeight: true,
+      hide: INDEX.cbcol26 ? false : true,
+      width: widthWindow * 0.04,
+      maxWidth: 100,
+      cellClass: "score-cell tc-cell",
+      headerClass: "custom-header tc-header",
+      suppressMenu: true,
+      cellRenderer: CellRender,
+      // cellRenderer: (params: any) => {
+      //   const dataIndex = RowDataIndex.NNMua; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+      //   const value = params.value; // Get the value of the cell
+      //   const rowid = params.data.RowID; // Get the
+      //   return (
+      //     <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+      //       {formatNumberMarket(value)}
+      //     </div>
+      //   );
+      // },
+    },
+    {
+      field: "NNBan",
+      headerName: "NN bán",
+      cellClass: "score-cell tc-cell",
+      spanHeaderHeight: true,
+      hide: INDEX.cbcol27 ? false : true,
+      width: widthWindow * 0.04,
+      maxWidth: 100,
+      headerClass: "custom-header tc-header",
+      suppressMenu: true,
+      cellRenderer: CellRender,
+      // cellRenderer: (params: any) => {
+      //   const dataIndex = RowDataIndex.NNBan; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+      //   const value = params.value; // Get the value of the cell
+      //   const rowid = params.data.RowID; // Get the
+      //   return (
+      //     <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+      //       {formatNumberMarket(value)}
+      //     </div>
+      //   );
+      // },
+    },
+    {
+      field: "RoomCL",
+      headerName: "Room Còn lại ",
+      spanHeaderHeight: true,
+      hide: INDEX.cbcol28 ? false : true,
+      width: widthWindow * 0.05,
+      maxWidth: 100,
+      cellClass: "score-cell tc-cell",
+      headerClass: "custom-header  tc-header",
+      suppressMenu: true,
+      cellRenderer: CellRender,
+      // cellRenderer: (params: any) => {
+      //   const dataIndex = RowDataIndex.RoomCL; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
+      //   const value = params.value; // Get the value of the cell
+      //   const rowid = params.data.RowID; // Get the
+      //   return (
+      //     <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+      //       {formatNumberMarket(value)}
+      //     </div>
+      //   );
+      // },
+    },
+    // { field: "RowID", headerName: "RowID", cellClass: "score-cell" },
+  ];
