@@ -59,7 +59,6 @@ type RowData = {
 };
 
 const showKLPT = (value: string) => {
-  // console.log(value);
   if (value === "showPT") {
     const element = document.getElementsByClassName("price-ot");
     const elementFirst = document.getElementsByClassName("price-ot")[0];
@@ -111,7 +110,7 @@ const PinCell = () => {
   );
 };
 
- 
+
 
 const TableMarketWatchTest = () => {
   //    const handleClick = (dataTable: any) => {
@@ -165,7 +164,6 @@ const TableMarketWatchTest = () => {
     }
     HanDelCate();
   }, [dispatch, widthWindow]);
-  console.log(rowData)
   useEffect(() => {
     const socketHSX = new WebSocket(
       "ws://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=QFYjcEdKNTcQpQ5eM8gSgArpZ8iaLyhAzsOc2yA9Uzj6jAmKV%2Bnt5UMBQQ6IxAg2ytcl36jeKKHXgSbB5HdJNA%2FVdbAn7QKNCQ76UmWHPecxhUD87ZajL354hy24brH6&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=8"
@@ -233,8 +231,6 @@ const TableMarketWatchTest = () => {
     const arrRowID = dataHNX.RowID;
     const arrInfo = dataHNX.Info;
     if (dataHNX) {
-      //console.log(dataHNX)
-      // data trả ra object có arrRowId
       if (arrRowID) {
         // data >2 map ra
         if (dataHNX.Info.length > 1) {
@@ -280,9 +276,6 @@ const TableMarketWatchTest = () => {
     setShowPrice(!showPrice);
 
   };
-  const handelSort = () => { 
-  }
-
   const RowDataIndex = {
     MCK: 0,
     TC: 1,
@@ -318,9 +311,9 @@ const TableMarketWatchTest = () => {
     CGKGN: 31,
     PhanTram: 32,
     RowID: String,
-    Chenhlech1:33
+    Chenhlech1: 33
   };
-  
+
   const containerStyle = { width: "100%", height: "100%" };
   const gridStyle = { height: "100%", width: "100%" };
   const gridApi = useRef<any>(null); // Declare gridApi reference
@@ -352,7 +345,6 @@ const TableMarketWatchTest = () => {
       // cellClass: "custom-cell",
       headerClass: "custom-header",
       cellStyle: (params: any) => {
-        // console.log("ktra", params); // Xem giá trị của params trong console
         return {
           color: setColorMarkettest("MCK", params),
           textAlign: "left",
@@ -360,9 +352,6 @@ const TableMarketWatchTest = () => {
       },
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.MCK; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
-
-        //console.log("Column Index:", dataIndex);
-
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
         return (
@@ -413,9 +402,6 @@ const TableMarketWatchTest = () => {
       }),
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.TC; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
-
-        // console.log("Column Index:", dataIndex);
-
         const value = params.value;
 
         const rowid = params.data.RowID; // Get the
@@ -442,9 +428,6 @@ const TableMarketWatchTest = () => {
       }),
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.Tran; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
-
-        // console.log("Column Index:", dataIndex);
-
         const value = params.value;
         const rowid = params.data.RowID; // Get the
         return (
@@ -470,9 +453,6 @@ const TableMarketWatchTest = () => {
       }),
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.San; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
-
-        // console.log("Column Index:", dataIndex);
-
         const value = params.value;
         const rowid = params.data.RowID; // Get the
         return (
@@ -505,7 +485,6 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            console.log("params", params);
             const dataTable = params.data
             const dataIndex = RowDataIndex.G3; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
@@ -792,16 +771,18 @@ const TableMarketWatchTest = () => {
         //     },
         {
           field: "Chenhlech1",
-          sortable: true, 
+          sortable: true,
+          setSort: true,
+          progressSort: true,
           headerName: () => {
-            return <CustomHeader  onClick={handelCheckNext}  sortable={true}/>;
+            return <CustomHeader onClick={handelCheckNext} sortable={true} />;
           },
           headerComponentFramework: CustomHeader,
           headerComponentParams: {
             onClick: () => {
               setShowPrice(!showPrice);
             },
-           sortable: true
+            sortable: true
           },
           suppressMenu: true,
           width: widthWindow * 0.03,
@@ -811,7 +792,7 @@ const TableMarketWatchTest = () => {
           headerClass: "custom-header tc-header",
           cellStyle: (params: any) => ({
             fontWeight: "",
-           //color: setColorMarkettest("Chenhlech1", params),
+            //color: setColorMarkettest("Chenhlech1", params),
             textAlign: "right",
             display: "flex",
             flexDirection: "column",
@@ -819,23 +800,22 @@ const TableMarketWatchTest = () => {
             alignItems: "flex-end",
           }),
           cellRenderer: (params: any) => {
-            console.log("first cell renderer", params);
             const dataIndex = params.colDef.field;
             const value = params.value;
             const [part1, part2] = value.split("|");
             return (
-              <div 
+              <div
                 data-index={dataIndex} className="cursor-pointer custom-cell">
-                  {showPrice && (
-                  <div style={{ color: part2 >= 0 ? "#00FF00" : "#FF0000", }}>
+                {showPrice && (
+                  <div style={{ color: parseInt(part2) >= 0.1 ? "#00FF00" : "#FF0000", }}>
                     {part2}
                   </div>
                 )}
-                <div  style={{color:  part1 >= 0 ? "#00FF00" : "#FF0000" }}>
-                 {showPrice ? null : part1}
+                <div style={{ color: part1 >= 0 ? "#00FF00" : "#FF0000" }}>
+                  {showPrice ? null : part1}
                 </div>
-                  </div>
-                
+              </div>
+
             );
           },
         }
@@ -1196,12 +1176,8 @@ const TableMarketWatchTest = () => {
 
     const grid = gridRef.current.api;
     const defaultData = gridRef.current.props.rowData;
-    // console.log(defaultData)
     const { rowPinned, rowIndex, data } = params;
-    console.log("pin", rowPinned, params)
-    // console.log(params)
     const { RowID, symbol } = data;
-    // console.log(first)
     let rows = pinnedRowsRef.current;
 
     if (rowPinned) {
@@ -1219,7 +1195,6 @@ const TableMarketWatchTest = () => {
 
       const rowsToPin = newRows.map((item) => item.data);
 
-      console.log('unpin', item);
 
       grid.setPinnedTopRowData(rowsToPin);
       grid.applyTransaction({
@@ -1231,15 +1206,12 @@ const TableMarketWatchTest = () => {
       // Pin
       const items = grid.getRowNode(RowID).data;
 
-      console.log(items)
       const index = defaultData.findIndex((item: any) => item.MCK === RowID);
       rows.push({
         index,
         data,
       });
       const rowsToPin = rows.map((item) => item.data);
-
-      console.log('pin', index, rowsToPin);
 
       // Set rows pin to top
       grid.setPinnedTopRowData(rowsToPin);
