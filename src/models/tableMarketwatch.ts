@@ -32,6 +32,7 @@ export interface RowData{
     Quyen: string;
     CGKGN: string;
     RowID: string;
+   Chenhlech1: any;
     PhanTram: string;
     isPined: boolean;
   };

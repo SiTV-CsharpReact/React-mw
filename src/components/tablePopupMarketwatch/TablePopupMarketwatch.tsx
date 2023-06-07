@@ -41,11 +41,11 @@ const TablePopupMarketwatch = () => {
     <Draggable handle=".pu-header" position={position} onDrag={handleDrag}>
       <div className="pu-window text-[#B9B9B9]">
         <div className="pu-header">
-          <div className="pu-grtitle flex">
+          <div className="flex pu-grtitle">
             <div className="m-auto">
               <div className="pu-div-search">
                 <div
-                  className="ms-ctn form-control relative"
+                  className="relative ms-ctn form-control"
                   style={{}}
                   id="ipSearchCode"
                 >
@@ -61,7 +61,7 @@ const TablePopupMarketwatch = () => {
                   </div>
                 </div>
               </div>
-              <div className="pu-div-title inline-block">
+              <div className="inline-block pu-div-title">
                 <h2 className="pu-title">
                   {/* x: {position.x.toFixed(0)}, y: {position.y.toFixed(0)} */}
                   {stockDetail} - HOSE - Tổng Công ty Cổ phần Bảo hiểm Ngân hàng
@@ -88,7 +88,7 @@ const TablePopupMarketwatch = () => {
         <div>
           <TableDetailPopup />
         </div>
-        <div className="pu-info flex">
+        <div className="flex pu-info">
           <div className="pu-basic w-[409px] mx-1">
             <TableBasicPopup />
             <TableReportingPopup />
@@ -108,7 +108,7 @@ const TablePopupMarketwatch = () => {
               <TableKLTTGPopup />
             </div>
 
-            <div className="pu-div-PT w-full">
+            <div className="w-full pu-div-PT">
               <TableGDTTPopup />
             </div>
             <div className="pu-vertical pu-div-oddlot">

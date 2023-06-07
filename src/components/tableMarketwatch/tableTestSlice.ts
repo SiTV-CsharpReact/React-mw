@@ -7,7 +7,7 @@ import { DataTable, DataGDTT } from "../../models/modelTableHNX";
 import agent from "../../api/agent";
 import { TableParams } from "../../models/modelLinkTable";
 import { RootState } from "../../store/configureStore";
-import { RowData } from "../../models/tableMarketwatch";
+// import { RowData } from "../../models/tableMarketwatch";
 import { tinhGiaTC } from "../../utils/util";
 
 interface TableState {
@@ -25,6 +25,44 @@ type params = {
   Floor :string,
   Query:string
 }
+type RowData = {
+    MCK: string;
+    TC: string;
+    Tran: string;
+    San: string;
+    KL4: string;
+    G3: string;
+    KL3: string;
+    G2: string;
+    KL2: string;
+    G1: string;
+    KL1: string;
+    GiaKhop: string;
+    KLKhop: string;
+    Chenhlech: string;
+    G1B: string;
+    KL1B: string;
+    G2B: string;
+    KL2B: string;
+    G3B: string;
+    KL3B: string;
+    KL4B: string;
+    TKL: string;
+    MOC: string;
+    CaoNhat: string;
+    ThapNhat: string;
+    GTB: string;
+    NNMua: string;
+    NNBan: string;
+    RoomCL: string;
+    GDK: string;
+    Quyen: string;
+    CGKGN: string;
+    RowID: string;
+    PhanTram: string;
+    Chenhlech1: any;
+    isPined: boolean;
+  };
 const dataTableAdapter = createEntityAdapter<DataTable>({
     selectId: (dataTable) => dataTable.RowID || '', // Chỉ định trường khóa
   });
@@ -152,6 +190,7 @@ export const tableTestSlice = createSlice({
                 const infoArray = element.Info.map(
                   (subArray: any[]) => subArray[1]
                 );
+                
                 const mergedObject: RowData = {
                   MCK: infoArray[0],
                   TC: infoArray[1],
@@ -167,6 +206,7 @@ export const tableTestSlice = createSlice({
                   GiaKhop: infoArray[11],
                   KLKhop: infoArray[12],
                   Chenhlech: infoArray[13],
+                  Chenhlech1: `${infoArray[13]} | ${tinhGiaTC(infoArray[1], infoArray[11])}`,
                   G1B: infoArray[14],
                   KL1B: infoArray[15],
                   G2B: infoArray[16],
@@ -188,7 +228,10 @@ export const tableTestSlice = createSlice({
                   PhanTram: tinhGiaTC(infoArray[1],infoArray[11]),
                   RowID: element.RowID,
                   isPined: false,
+                  
                 };
+                
+
                 return mergedObject;
               });
               console.log(mergedArray)

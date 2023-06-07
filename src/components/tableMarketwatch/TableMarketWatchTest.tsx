@@ -21,6 +21,7 @@ import { Tooltip } from "@mui/material";
 import { dispatchDataTable } from "./tableThunk";
 import { dispatchDataTableBuy } from "./tableBuy";
 import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
+import CustomHeader from './CustomHeader';
 import { RowData } from "../../models/tableMarketwatch";
 
 LicenseManager.setLicenseKey(
@@ -28,7 +29,6 @@ LicenseManager.setLicenseKey(
 );
 
 const showKLPT = (value: string) => {
-  // console.log(value);
   if (value === "showPT") {
     const element = document.getElementsByClassName("price-ot");
     const elementFirst = document.getElementsByClassName("price-ot")[0];
@@ -202,8 +202,6 @@ const TableMarketWatchTest = () => {
     const arrRowID = dataHNX.RowID;
     const arrInfo = dataHNX.Info;
     if (dataHNX) {
-      //console.log(dataHNX)
-      // data trả ra object có arrRowId
       if (arrRowID) {
         // data >2 map ra
         if (dataHNX.Info.length > 1) {
@@ -241,9 +239,15 @@ const TableMarketWatchTest = () => {
         }, 500);
       }
       // sau 0.5s xóa màu bg
-    }
-  };
 
+    }
+  }
+  const [showPrice, setShowPrice] = useState(false);
+
+  const handelCheckNext = () => {
+    setShowPrice(!showPrice);
+
+  };
   const RowDataIndex = {
     MCK: 0,
     TC: 1,
@@ -277,9 +281,11 @@ const TableMarketWatchTest = () => {
     GDK: 29,
     Quyen: 30,
     CGKGN: 31,
-    PhanTram:32,
+    PhanTram: 32,
     RowID: String,
+    Chenhlech1: 33
   };
+
   const containerStyle = { width: "100%", height: "100%" };
   const gridStyle = { height: "100%", width: "100%" };
   const gridApi = useRef<any>(null); // Declare gridApi reference
@@ -347,7 +353,7 @@ const TableMarketWatchTest = () => {
                   }}
                 />
                 <span
-                  className="pl-1 pt-1"
+                  className="pt-1 pl-1"
                   onDoubleClick={(e) => handleDoubleClick(e, value)}
                 >
                   {value}
@@ -477,7 +483,7 @@ const TableMarketWatchTest = () => {
                   <div
                     data-index={dataIndex}
                     data-comp={rowid}
-                    className="custom-cell cursor-pointer"
+                    className="cursor-pointer custom-cell"
                     onDoubleClick={() =>
                       handleClick({ ma: params.data.MCK, price: value })
                     }
@@ -545,7 +551,7 @@ const TableMarketWatchTest = () => {
                   <div
                     data-index={dataIndex}
                     data-comp={rowid}
-                    className="custom-cell cursor-pointer"
+                    className="cursor-pointer custom-cell"
                     onDoubleClick={() =>
                       handleClick({ ma: params.data.MCK, price: value })
                     }
@@ -611,7 +617,7 @@ const TableMarketWatchTest = () => {
                   <div
                     data-index={dataIndex}
                     data-comp={rowid}
-                    className="custom-cell cursor-pointer"
+                    className="cursor-pointer custom-cell"
                     onDoubleClick={() =>
                       handleClick({ ma: params.data.MCK, price: value })
                     }
@@ -797,7 +803,7 @@ const TableMarketWatchTest = () => {
                   <div
                     data-index={dataIndex}
                     data-comp={rowid}
-                    className="custom-cell cursor-pointer"
+                    className="cursor-pointer custom-cell"
                     onDoubleClick={() =>
                       handleClickBuy({ ma: params.data.MCK, price: value })
                     }
@@ -860,7 +866,7 @@ const TableMarketWatchTest = () => {
                   <div
                     data-index={dataIndex}
                     data-comp={rowid}
-                    className="custom-cell cursor-pointer"
+                    className="cursor-pointer custom-cell"
                     onDoubleClick={() =>
                       handleClickBuy({ ma: params.data.MCK, price: value })
                     }
@@ -923,7 +929,7 @@ const TableMarketWatchTest = () => {
                   <div
                     data-index={dataIndex}
                     data-comp={rowid}
-                    className="custom-cell cursor-pointer"
+                    className="cursor-pointer custom-cell"
                     onDoubleClick={() =>
                       handleClickBuy({ ma: params.data.MCK, price: value })
                     }
@@ -1207,7 +1213,6 @@ const TableMarketWatchTest = () => {
       // cellClass: "custom-cell",
       headerClass: "custom-header",
       cellStyle: (params: any) => {
-        // console.log("ktra", params); // Xem giá trị của params trong console
         return {
           color: setColorMarkettest("MCK", params),
           textAlign: "left",
@@ -1215,9 +1220,6 @@ const TableMarketWatchTest = () => {
       },
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.MCK; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
-
-        //console.log("Column Index:", dataIndex);
-
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
         return (
@@ -1241,7 +1243,7 @@ const TableMarketWatchTest = () => {
                 }}
               />
               <span
-                className="pl-1 pt-1"
+                className="pt-1 pl-1"
                 onDoubleClick={(e) => handleDoubleClick(e, value)}
               >
                 {value}
@@ -1272,10 +1274,8 @@ const TableMarketWatchTest = () => {
       }),
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.TC; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
-
-        // console.log("Column Index:", dataIndex);
-
         const value = params.value;
+
         const rowid = params.data.RowID; // Get the
         return (
           <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
@@ -1300,9 +1300,6 @@ const TableMarketWatchTest = () => {
       }),
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.Tran; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
-
-        // console.log("Column Index:", dataIndex);
-
         const value = params.value;
         const rowid = params.data.RowID; // Get the
         return (
@@ -1328,9 +1325,6 @@ const TableMarketWatchTest = () => {
       }),
       cellRenderer: (params: any) => {
         const dataIndex = RowDataIndex.San; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
-
-        // console.log("Column Index:", dataIndex);
-
         const value = params.value;
         const rowid = params.data.RowID; // Get the
         return (
@@ -1354,6 +1348,7 @@ const TableMarketWatchTest = () => {
           minWidth: 50,
           height: 30,
           maxWidth: 100,
+
           headerClass: "custom-header",
           cellClass: "score-cell",
           cellStyle: (params: any) => ({
@@ -1370,7 +1365,7 @@ const TableMarketWatchTest = () => {
                 <div
                   data-index={dataIndex}
                   data-comp={rowid}
-                  className="custom-cell cursor-pointer"
+                  className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
                     handleClick({ ma: params.data.MCK, price: value })
                   }
@@ -1438,7 +1433,7 @@ const TableMarketWatchTest = () => {
                 <div
                   data-index={dataIndex}
                   data-comp={rowid}
-                  className="custom-cell cursor-pointer"
+                  className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
                     handleClick({ ma: params.data.MCK, price: value })
                   }
@@ -1504,7 +1499,7 @@ const TableMarketWatchTest = () => {
                 <div
                   data-index={dataIndex}
                   data-comp={rowid}
-                  className="custom-cell cursor-pointer"
+                  className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
                     handleClick({ ma: params.data.MCK, price: value })
                   }
@@ -1611,34 +1606,90 @@ const TableMarketWatchTest = () => {
             );
           },
         },
-        {
-          field: "Chenhlech",
-          headerName: "+/-",
-          suppressMenu: true,
-          width: widthWindow * 0.03,
-          minWidth: 50,
-          maxWidth: 100,
-          cellClass: "score-cell tc-cell",
-          headerClass: "custom-header tc-header",
-          cellStyle: (params: any) => ({
-            fontWeight: "",
-            color: setColorMarkettest("Chenhlech", params),
-            textAlign: "right",
-          }),
-          cellRenderer: (params: any) => {
-            const dataIndex = RowDataIndex.Chenhlech; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-            const value = params.value; // Get the value of the cell
-            return (
-              <div data-index={dataIndex} className="custom-cell">
-                {formatNumberMarket(value)}
+        // { 
 
-              </div>
-            );
-          },
-        },
+        //   field: "PhanTram",
+        //   headerName:"%",
+        //   suppressMenu: true,
+        //   width: widthWindow * 0.03,
+        //   minWidth: 50,
+        //   maxWidth: 100,
+        //   cellClass: "score-cell tc-cell",
+        //   headerClass: "custom-header tc-header",
+        //   cellStyle: (params: any) => ({
+        //     fontWeight: "",
+        //     color: setColorMarkettest("PhanTram", params),
+        //     textAlign: "right",
+        //   }),
+        //    cellRenderer: (params: any) => {       
+        //     const dataIndex = RowDataIndex.PhanTram; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
+        //     const value = params.value; // Get the value of the cell
+        //     return (
+        //       <>
+        //         {showPrice && <div data-index={dataIndex} className="cursor-pointer custom-cell">
+        //         { formatNumberMarket(value)}
+        //       </div>}
+        //       </> 
+        //     );  
+        //   },  
+
+        // },
+        // {
+        //       field: "Chenhlech",
+        //        headerName: () => {
+        //       return <CustomHeader onClick={handelCheckNext} />;
+        //       },
+        //       headerComponentFramework: CustomHeader,
+        //       headerComponentParams: {
+        //         onClick: () => {
+        //          setShowPrice(!showPrice)
+        //         },
+        //       },
+        //       suppressMenu: true,
+        //       width: widthWindow * 0.03,
+        //       minWidth: 50,
+        //       maxWidth: 100,
+        //       cellClass: "score-cell tc-cell",
+        //       headerClass: "custom-header tc-header",
+        //       cellStyle: (params : any) => ({
+        //         fontWeight: "",
+        //         color: setColorMarkettest("Chenhlech", params),
+        //         textAlign: "right",
+        //       }),
+        //       cellRenderer: (params : any) => {
+        //         const dataIndex = RowDataIndex.Chenhlech;
+        //         const value = params.value;
+        //         return (
+        //           <>
+        //           <div data-index={dataIndex} className="cursor-pointer custom-cell">
+        //            {value}
+        //             </div>
+        //             {showPrice && <div data-index={dataIndex} className="cursor-pointer custom-cell">
+        //            {/* {value} */} 1
+        //           </div>}
+        //           </>
+
+        //         );
+        //       },
+        //     },
         {
-          field: "PhanTram",
-          headerName: "%",
+          field: "Chenhlech1",
+          sortable: true,
+          setSort: true,
+          progressSort: true,
+          headerName: () => {
+            return <CustomHeader onClick={handelCheckNext} />;
+          },
+
+         headerComponentFramework : CustomHeader,
+          headerComponentParams: {
+            onClick: () => {
+              setShowPrice(!showPrice);
+            },
+            headerName : "+/-"
+          },
+
+        
           suppressMenu: true,
           width: widthWindow * 0.03,
           minWidth: 50,
@@ -1647,19 +1698,33 @@ const TableMarketWatchTest = () => {
           headerClass: "custom-header tc-header",
           cellStyle: (params: any) => ({
             fontWeight: "",
-            color: setColorMarkettest("Chenhlech", params),
+            //color: setColorMarkettest("Chenhlech1", params),
             textAlign: "right",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "flex-end",
           }),
           cellRenderer: (params: any) => {
-            const dataIndex = RowDataIndex.Chenhlech; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-            const value = params.value; // Get the value of the cell
+            const dataIndex = params.colDef.field;
+            const value = params.value;
+            const [part1, part2] = value.split("|");
             return (
-              <div data-index={dataIndex} className="custom-cell">
-                {formatNumberMarket(value)}
+              <div
+                data-index={dataIndex} className="cursor-pointer custom-cell">
+                {showPrice && (
+                  <div style={{ color: parseInt(part2) >= 0.1 ? "#00FF00" : "#FF0000", }}>
+                    {part2}
+                  </div>
+                )}
+                <div style={{ color: part1 >= 0 ? "#00FF00" : "#FF0000" }}>
+                  {showPrice ? null : part1}
+                </div>
               </div>
+
             );
           },
-        },
+        }
       ],
     },
 
@@ -1690,7 +1755,7 @@ const TableMarketWatchTest = () => {
                 <div
                   data-index={dataIndex}
                   data-comp={rowid}
-                  className="custom-cell cursor-pointer"
+                  className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
                     handleClickBuy({ ma: params.data.MCK, price: value })
                   }
@@ -1753,7 +1818,7 @@ const TableMarketWatchTest = () => {
                 <div
                   data-index={dataIndex}
                   data-comp={rowid}
-                  className="custom-cell cursor-pointer"
+                  className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
                     handleClickBuy({ ma: params.data.MCK, price: value })
                   }
@@ -1816,7 +1881,7 @@ const TableMarketWatchTest = () => {
                 <div
                   data-index={dataIndex}
                   data-comp={rowid}
-                  className="custom-cell cursor-pointer"
+                  className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
                     handleClickBuy({ ma: params.data.MCK, price: value })
                   }
