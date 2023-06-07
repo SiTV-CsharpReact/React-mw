@@ -526,9 +526,9 @@ tr.border-bottom:last-child {
   .tc-header {
     background-color: #444; /* Màu nền cho header của trường TC */
   }
-  .custom-cell {
-    margin: 0 auto;
-  }
+  // .custom-cell {
+  //   margin: 0 auto;
+  // }
   .tc-cell {
     background-color: #444; /* Màu nền cho cell của trường TC */
     // border-left: 1px solid #858585 !important; 
@@ -537,7 +537,7 @@ tr.border-bottom:last-child {
   .custom-header {
     border-left: 1px solid #858585 !important;
   }
-  .custom-header:last-child {
+  .custom-header:nth-last-child(2) {
     border-right: 1px solid #858585 !important;
   }
 //   .ag-row:last-child {
@@ -652,3 +652,24 @@ tr.border-bottom:last-child {
   .ag-header-group-cell-with-group:hover:nth-child(1){
     background-color: #1D1D1D !important;
   }
+  .arrow-left {
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: none;
+    border-right: 8px solid white;
+   left: 0px;
+    position: relative;
+    top: 10px;
+    right: 4px;
+    bottom: 0;
+    left:-4px;
+ }
+ .arrow-right {
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 8px solid white;
+    position: relative;
+    top: 10px;
+    right: -4px;
+    bottom: 0;
+ }
