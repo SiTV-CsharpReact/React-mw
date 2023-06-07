@@ -6381,7 +6381,7 @@ he@^1.2.0:
 
 highcharts@^11.0.1:
   version "11.0.1"
-  resolved "https://registry.npmjs.org/highcharts/-/highcharts-11.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-11.0.1.tgz#b24dc428e761a9b58354baa6450af87db6a75e71"
   integrity sha512-KRwNwm6kJsp3JxNSpORuWLzvLnPuqCR3n0qbGjw+0m6MIxrlkUWnFaZJ2uXjMur6j3RUC66te36tldlSheYydQ==
 
 hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.1, hoist-non-react-statics@^3.3.2:

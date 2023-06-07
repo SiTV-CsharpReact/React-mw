@@ -4,7 +4,12 @@ import "ag-grid-enterprise";
 // import "ag-grid-community/styles/ag-grid.css";
 // import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./table.scss";
-import { formatNumber, formatNumberMarket, getCompanyNameByCode, setColorMarkettest } from "../../utils/util";
+import {
+  formatNumber,
+  formatNumberMarket,
+  getCompanyNameByCode,
+  setColorMarkettest,
+} from "../../utils/util";
 import { ColSpanParams } from "ag-grid-enterprise";
 import { ColDef, ColGroupDef } from "ag-grid-community";
 import { LicenseManager } from "ag-grid-enterprise";
@@ -17,46 +22,11 @@ import { dispatchDataTable } from "./tableThunk";
 import { dispatchDataTableBuy } from "./tableBuy";
 import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import CustomHeader from './CustomHeader';
+import { RowData } from "../../models/tableMarketwatch";
 
 LicenseManager.setLicenseKey(
   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
 );
-type RowData = {
-  MCK: string;
-  TC: string;
-  Tran: string;
-  San: string;
-  KL4: string;
-  G3: string;
-  KL3: string;
-  G2: string;
-  KL2: string;
-  G1: string;
-  KL1: string;
-  GiaKhop: string;
-  KLKhop: string;
-  Chenhlech: string;
-  G1B: string;
-  KL1B: string;
-  G2B: string;
-  KL2B: string;
-  G3B: string;
-  KL3B: string;
-  KL4B: string;
-  TKL: string;
-  MOC: string;
-  CaoNhat: string;
-  ThapNhat: string;
-  GTB: string;
-  NNMua: string;
-  NNBan: string;
-  RoomCL: string;
-  GDK: string;
-  Quyen: string;
-  CGKGN: string;
-  RowID: string;
-  isPined: boolean;
-};
 
 const showKLPT = (value: string) => {
   if (value === "showPT") {
@@ -110,8 +80,6 @@ const PinCell = () => {
   );
 };
 
-
-
 const TableMarketWatchTest = () => {
   //    const handleClick = (dataTable: any) => {
   //   console.log("dataTable ii",dataTable)
@@ -123,7 +91,6 @@ const TableMarketWatchTest = () => {
   //      ;
   // };
   const widthWindow = window.innerWidth;
-  console.log(widthWindow);
 
   const dispatch = useAppDispatch();
   const handleClick = (dataTable: any) => {
@@ -141,41 +108,49 @@ const TableMarketWatchTest = () => {
   };
   //setRowData
   const rowData = useAppSelector((state) => state.tableTest.ListDataTable);
-  const handelGetData = useCallback((Data: any) => {
-    dispatch(getDataTable(Data))
-  }, [dispatch]);
+  // pinned
+  const pinned = useAppSelector((state) => state.categories.row);
+
+  const handelGetData = useCallback(
+    (Data: any) => {
+      dispatch(getDataTable(Data));
+    },
+    [dispatch]
+  );
   useEffect(() => {
     async function HanDelCate() {
       let result = await dispatch(fetchCategoryAsync());
       if (result?.payload?.Data[0]?.List) {
         let data = {
           Floor: "danh-muc",
-          Query: result?.payload?.Data[0]?.List
-        }
-        await handelGetData(data)
+          Query: result?.payload?.Data[0]?.List,
+        };
+        await handelGetData(data);
       } else {
         let data = {
           Floor: "HSX",
-          Query: "s=quote&l=All"
-        }
-        await handelGetData(data)
+          Query: "s=quote&l=All",
+        };
+        await handelGetData(data);
       }
-
     }
     HanDelCate();
   }, [dispatch, widthWindow]);
+  console.log(rowData);
   useEffect(() => {
     const socketHSX = new WebSocket(
       "ws://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=QFYjcEdKNTcQpQ5eM8gSgArpZ8iaLyhAzsOc2yA9Uzj6jAmKV%2Bnt5UMBQQ6IxAg2ytcl36jeKKHXgSbB5HdJNA%2FVdbAn7QKNCQ76UmWHPecxhUD87ZajL354hy24brH6&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=8"
     );
     socketHSX.onopen = () => {
-      console.log("WebSocket connection established.");
+      //console.log("WebSocket connection established.");
     };
     socketHSX.onmessage = (event) => {
       updateQuote(event.data);
+      // console.log(gridOptions.api)
+      // gridOptions.api.setRowData(event.data);
     };
     socketHSX.onclose = () => {
-      console.log("WebSocket connection closed.");
+      //console.log("WebSocket connection closed.");
     };
     return () => {
       socketHSX.close();
@@ -186,7 +161,7 @@ const TableMarketWatchTest = () => {
       "ws://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=IWiKAtteQ0gfuDm%2Fq6LLyUusRcee06oM2k6xVYIgeWHtlePjfeRZFnHIYmMvGt2F1PSB1EsKRw5wHFLA7D0C6bNau3lUFHlFFPF59RMTl3KHk3PRDqc9rmfE904Oy5NV&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=1"
     );
     socketHNX.onopen = () => {
-      console.log("WebSocket connection established.");
+      //console.log("WebSocket connection established.");
     };
     socketHNX.onmessage = (event) => {
       // updateQuote(event.data)
@@ -194,7 +169,7 @@ const TableMarketWatchTest = () => {
       // setDataHNX(event.data);
     };
     socketHNX.onclose = () => {
-      console.log("WebSocket connection closed.");
+      // console.log("WebSocket connection closed.");
     };
     return () => {
       socketHNX.close();
@@ -246,7 +221,6 @@ const TableMarketWatchTest = () => {
     }
   };
 
-
   const updateDataTable = (
     arrRowID: string,
     arrInfo: number,
@@ -255,7 +229,9 @@ const TableMarketWatchTest = () => {
     // getID các giá trị cần lấy
     // const arrayPrice = [5, 7, 9, 11, 14, 16, 18];d
     // const valueTC = document.querySelector(`div[data-index="5"][data-comp="BCC"]`)?.innerHTML;
-    const valueTCS = document.querySelector(`div[data-index="${arrInfo}"][data-comp="${arrRowID}"]`) as HTMLElement;
+    const valueTCS = document.querySelector(
+      `div[data-index="${arrInfo}"][data-comp="${arrRowID}"]`
+    ) as HTMLElement;
     if (valueTCS) {
       valueTCS.innerHTML = `${formatNumberMarket(arrValue)}`;
       // gán màu bg
@@ -320,21 +296,23 @@ const TableMarketWatchTest = () => {
   // const [rowData, setRowData] = useState<RowData[]>([]);
 
   const columnDefs = [
-    {
-      headerName: '',
-      cellClass: 'ag-cell-pinning',
-      field: 'pinning',
-      maxWidth: 19,
-      cellRenderer: PinCell,
-      onCellDoubleClicked: (e: any) => {
-        const field = e.colDef.field;
-        if (field === 'pinning') {
-          handlePinRow(e);
-        }
-      },
-    },
+    // {
+    //   headerName: "",
+    //   cellClass: "ag-cell-pinning",
+    //   // pinned:true,
+    //   field: "pinning",
+    //   maxWidth: 19,
+    //   cellRenderer: PinCell,
+    //   onCellDoubleClicked: (e: any) => {
+    //     const field = e.colDef.field;
+    //     if (field === "pinning") {
+    //       handlePinRow(e);
+    //     }
+    //   },
+    // },
     {
       field: "MCK",
+      // pinned:true,
       headerName: "Mã",
       cellClass: "score-cell",
       suppressMenu: true,
@@ -355,29 +333,33 @@ const TableMarketWatchTest = () => {
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
         return (
-
           //  <div data-index={dataIndex} data-comp={rowid}  data-tooltip={getCompanyNameByCode(value).toString()} className="relative custom-cell cell-stock has-symbol company-tooltip">
           //   {value}
           // </div>
 
-          <Tooltip title={getCompanyNameByCode(value)}>
-            <div data-index={dataIndex} data-comp={rowid} className="custom-cell cell-stock has-symbol company-tooltip">
-              <input type="checkbox" className="checkbox_price"
-                // checked={params.data.isPined}
+   
+            <div
+              data-index={dataIndex}
+              data-comp={rowid}
+              className="custom-cell cell-stock has-symbol company-tooltip"
+            >
+              <input
+                type="checkbox"
+                className="checkbox_price"
+                checked={params.data.isPined}
                 onClick={() => {
                   // params.data.isPined = !params.data.isPined;
                   handlePinRow(params);
                 }}
               />
-              <span className="pt-1 pl-1"
-                onDoubleClick={(e) =>
-                  handleDoubleClick(e, value)
-                }>
+              <span
+                className="pt-1 pl-1"
+                onDoubleClick={(e) => handleDoubleClick(e, value)}
+              >
                 {value}
               </span>
-
             </div>
-          </Tooltip>
+         
         );
       },
     },
@@ -485,14 +467,18 @@ const TableMarketWatchTest = () => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            const dataTable = params.data
             const dataIndex = RowDataIndex.G3; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
             return (
               <Tooltip title="Click đúp để đặt lệnh">
-                <div data-index={dataIndex} data-comp={rowid} className="cursor-pointer custom-cell"
-                  onDoubleClick={() => handleClick({ ma: params.data.MCK, price: value })}
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="cursor-pointer custom-cell"
+                  onDoubleClick={() =>
+                    handleClick({ ma: params.data.MCK, price: value })
+                  }
                 >
                   {formatNumberMarket(value)}
                 </div>
@@ -522,7 +508,11 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
 
             return (
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell ">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell "
+              >
                 {formatNumberMarket(value)}
               </div>
             );
@@ -550,8 +540,13 @@ const TableMarketWatchTest = () => {
 
             return (
               <Tooltip title="Click đúp để đặt lệnh">
-                <div data-index={dataIndex} data-comp={rowid} className="cursor-pointer custom-cell"
-                  onDoubleClick={() => handleClick({ ma: params.data.MCK, price: value })}
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="cursor-pointer custom-cell"
+                  onDoubleClick={() =>
+                    handleClick({ ma: params.data.MCK, price: value })
+                  }
                 >
                   {formatNumberMarket(value)}
                 </div>
@@ -581,8 +576,10 @@ const TableMarketWatchTest = () => {
 
             return (
               <div
-                onDoubleClick={() => handleClick({ ma: params.data.MCK, price: params.data.TC })}
-                data-index={dataIndex} data-comp={rowid} className="custom-cell">
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {formatNumberMarket(value)}
               </div>
             );
@@ -609,8 +606,13 @@ const TableMarketWatchTest = () => {
 
             return (
               <Tooltip title="Click đúp để đặt lệnh">
-                <div data-index={dataIndex} data-comp={rowid} className="cursor-pointer custom-cell"
-                  onDoubleClick={() => handleClick({ ma: params.data.MCK, price: value })}
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="cursor-pointer custom-cell"
+                  onDoubleClick={() =>
+                    handleClick({ ma: params.data.MCK, price: value })
+                  }
                 >
                   {formatNumberMarket(value)}
                 </div>
@@ -639,8 +641,10 @@ const TableMarketWatchTest = () => {
 
             return (
               <div
-                onDoubleClick={() => handleClick({ ma: params.data.MCK, price: params.data.TC })}
-                data-index={dataIndex} data-comp={rowid} className="custom-cell">
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {formatNumberMarket(value)}
               </div>
             );
@@ -670,8 +674,13 @@ const TableMarketWatchTest = () => {
             const dataIndex = RowDataIndex.GiaKhop; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
+
             return (
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {formatNumberMarket(value)}
               </div>
             );
@@ -697,7 +706,11 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
 
             return (
-              <div data-index={dataIndex} data-comp={rowid} className="custom-cell">
+              <div
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {formatNumberMarket(value)}
               </div>
             );
@@ -775,15 +788,18 @@ const TableMarketWatchTest = () => {
           setSort: true,
           progressSort: true,
           headerName: () => {
-            return <CustomHeader onClick={handelCheckNext} sortable={true} />;
+            return <CustomHeader onClick={handelCheckNext} />;
           },
-          headerComponentFramework: CustomHeader,
+
+         headerComponentFramework : CustomHeader,
           headerComponentParams: {
             onClick: () => {
               setShowPrice(!showPrice);
             },
-            sortable: true
+            headerName : "+/-"
           },
+
+        
           suppressMenu: true,
           width: widthWindow * 0.03,
           minWidth: 50,
@@ -819,8 +835,6 @@ const TableMarketWatchTest = () => {
             );
           },
         }
-
-
       ],
     },
 
@@ -848,8 +862,13 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
             return (
               <Tooltip title="Click đúp để đặt lệnh">
-                <div data-index={dataIndex} data-comp={rowid} className="cursor-pointer custom-cell"
-                  onDoubleClick={() => handleClickBuy({ ma: params.data.MCK, price: value })}
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="cursor-pointer custom-cell"
+                  onDoubleClick={() =>
+                    handleClickBuy({ ma: params.data.MCK, price: value })
+                  }
                 >
                   {formatNumberMarket(value)}
                 </div>
@@ -877,8 +896,10 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
             return (
               <div
-                onDoubleClick={() => handleClickBuy({ ma: params.data.MCK, price: params.data.TC })}
-                data-index={dataIndex} data-comp={rowid} className="custom-cell">
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {formatNumberMarket(value)}
               </div>
             );
@@ -904,8 +925,13 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
             return (
               <Tooltip title="Click đúp để đặt lệnh">
-                <div data-index={dataIndex} data-comp={rowid} className="cursor-pointer custom-cell"
-                  onDoubleClick={() => handleClickBuy({ ma: params.data.MCK, price: value })}
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="cursor-pointer custom-cell"
+                  onDoubleClick={() =>
+                    handleClickBuy({ ma: params.data.MCK, price: value })
+                  }
                 >
                   {formatNumberMarket(value)}
                 </div>
@@ -933,10 +959,10 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
             return (
               <div
-                onDoubleClick={() => handleClickBuy({ ma: params.data.MCK, price: params.data.TC })}
-
-
-                data-index={dataIndex} data-comp={rowid} className="custom-cell">
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {formatNumberMarket(value)}
               </div>
             );
@@ -962,8 +988,13 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
             return (
               <Tooltip title="Click đúp để đặt lệnh">
-                <div data-index={dataIndex} data-comp={rowid} className="cursor-pointer custom-cell"
-                  onDoubleClick={() => handleClickBuy({ ma: params.data.MCK, price: value })}
+                <div
+                  data-index={dataIndex}
+                  data-comp={rowid}
+                  className="cursor-pointer custom-cell"
+                  onDoubleClick={() =>
+                    handleClickBuy({ ma: params.data.MCK, price: value })
+                  }
                 >
                   {formatNumberMarket(value)}
                 </div>
@@ -991,8 +1022,10 @@ const TableMarketWatchTest = () => {
             const rowid = params.data.RowID; // Get the
             return (
               <div
-                onDoubleClick={() => handleClickBuy({ ma: params.data.MCK, price: params.data.TC })}
-                data-index={dataIndex} data-comp={rowid} className="custom-cell">
+                data-index={dataIndex}
+                data-comp={rowid}
+                className="custom-cell"
+              >
                 {formatNumberMarket(value)}
               </div>
             );
@@ -1044,7 +1077,7 @@ const TableMarketWatchTest = () => {
             {formatNumberMarket(value)}
           </div>
         );
-      }
+      },
     },
     {
       field: "CaoNhat",
@@ -1070,7 +1103,6 @@ const TableMarketWatchTest = () => {
           </div>
         );
       },
-
     },
     {
       field: "ThapNhat",
@@ -1173,52 +1205,80 @@ const TableMarketWatchTest = () => {
   const pinnedRowsRef = useRef<any[]>([]);
 
   const handlePinRow = (params: any) => {
-
+    console.log(params.data.RowID);
     const grid = gridRef.current.api;
     const defaultData = gridRef.current.props.rowData;
     const { rowPinned, rowIndex, data } = params;
-    const { RowID, symbol } = data;
+    const { RowID, symbol, isPined } = data;
     let rows = pinnedRowsRef.current;
-
+    console.log("co row ne",rows)
     if (rowPinned) {
-      // Unpin
       const newRows = pinnedRowsRef.current.filter((e) => {
         return RowID !== e.data.RowID;
       });
       const item = rows.find((item) => item.data.RowID === RowID);
-
-      const other = pinnedRowsRef.current.filter(
-        (val) => val.index < item.index
-      );
-
+      const other = pinnedRowsRef.current.filter((val) => val.index < item.index);
       pinnedRowsRef.current = newRows;
-
       const rowsToPin = newRows.map((item) => item.data);
-
-
-      grid.setPinnedTopRowData(rowsToPin);
+      let rowsToPins = rowsToPin
+        ? rowsToPin.map((item) => {
+            if (item.isPined === false) {
+              return { ...item, isPined: true };
+            }
+            return item;
+          })
+        : [];
+      grid.setPinnedTopRowData(rowsToPins);
       grid.applyTransaction({
         add: [data],
         addIndex: item.index - other.length,
       });
     } else {
-      console.log("pin thành công")
-      // Pin
-      const items = grid.getRowNode(RowID).data;
-
-      const index = defaultData.findIndex((item: any) => item.MCK === RowID);
-      rows.push({
-        index,
-        data,
-      });
-      const rowsToPin = rows.map((item) => item.data);
-
-      // Set rows pin to top
-      grid.setPinnedTopRowData(rowsToPin);
-      // Remove item from list
-      grid.applyTransaction({ remove: [items] });
+      const items = grid.getRowNode(RowID)?.data;
+      if (!items) {
+      
+        const newRows = pinnedRowsRef.current.filter((e) => {
+          return RowID !== e.data.RowID;
+        });
+        const item = rows.find((item) => item.data.RowID === RowID);
+        const other = pinnedRowsRef.current.filter((val) => val.index < item.index);
+        pinnedRowsRef.current = newRows;
+        const rowsToPin = newRows.map((item) => item.data);
+        let rowsToPins = rowsToPin
+          ? rowsToPin.map((item) => {
+              if (item.isPined === false) {
+                return { ...item, isPined: true };
+              }
+              return item;
+            })
+          : [];
+        grid.setPinnedTopRowData(rowsToPins);
+        grid.applyTransaction({
+          add: [data],
+          addIndex: item.index - other.length,
+        });
+      } else {
+        const index = defaultData.findIndex((item: any) => item.MCK === RowID);
+        rows.push({
+          index,
+          data,
+        });
+        let rowsToPins = rows.map((item: any) => item.data);
+        console.log("vạasds", rowsToPins);
+        let rowsToPin = rowsToPins
+          ? rowsToPins.map((element: RowData) => {
+              if (element.isPined === false) {
+                return { ...element, isPined: true };
+              }
+              return element;
+            })
+          : [];
+        grid.setPinnedTopRowData(rowsToPin);
+        grid.applyTransaction({ remove: [items] });
+      }
     }
   };
+ 
   const gridOptions = {
     getRowId: function (e: any) {
       return e.data.RowID;
@@ -1229,17 +1289,32 @@ const TableMarketWatchTest = () => {
       suppressMovable: true,
       flex: 1,
     },
-    //   suppressCellSelection: true,
-    //   suppressRowClickSelection: true,
-    //   suppressContextMenu: true,
-    //   suppressCellContextMenu: true,
-    //   suppressRowContextMenu: true,
+      suppressCellSelection: true,
+      suppressRowClickSelection: true,
+      suppressContextMenu: true,
+      suppressCellContextMenu: true,
+      suppressRowContextMenu: true,
+      autoGroupColumnDef: {
+      
+        // use font awesome for first col, with numbers for sort
+        icons: {
+          sortAscending: '<i class="fa fa-caret-up !text-sm pr-0.5"/>',
+          sortDescending: '<i class="fa fa-caret-down !text-sm pr-0.5"/>',
+        },
+     
+      },
+      icons: {
+        sortAscending: '<i class="fa fa-caret-down !text-sm pr-0.5"/>',
+        sortDescending: '<i class="fa fa-caret-up !text-sm pr-0.5"/>',
+      }
     // };
     // document.addEventListener("contextmenu", (event) => {
     //   event.preventDefault();
     // })
   };
-
+  document.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+  })
 
   return (
     <div style={containerStyle}>

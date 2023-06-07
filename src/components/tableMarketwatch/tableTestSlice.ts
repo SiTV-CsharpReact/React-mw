@@ -7,6 +7,7 @@ import { DataTable, DataGDTT } from "../../models/modelTableHNX";
 import agent from "../../api/agent";
 import { TableParams } from "../../models/modelLinkTable";
 import { RootState } from "../../store/configureStore";
+// import { RowData } from "../../models/tableMarketwatch";
 import { tinhGiaTC } from "../../utils/util";
 
 interface TableState {
@@ -57,9 +58,9 @@ type RowData = {
     GDK: string;
     Quyen: string;
     CGKGN: string;
-  RowID: string;
-  PhanTram: string;
-  Chenhlech1: any;
+    RowID: string;
+    PhanTram: string;
+    Chenhlech1: any;
     isPined: boolean;
   };
 const dataTableAdapter = createEntityAdapter<DataTable>({
@@ -224,8 +225,8 @@ export const tableTestSlice = createSlice({
                   GDK: infoArray[29],
                   Quyen: infoArray[30],
                   CGKGN: infoArray[31],
-                  RowID: element.RowID,
                   PhanTram: tinhGiaTC(infoArray[1],infoArray[11]),
+                  RowID: element.RowID,
                   isPined: false,
                   
                 };
