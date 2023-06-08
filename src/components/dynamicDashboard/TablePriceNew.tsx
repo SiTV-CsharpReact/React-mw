@@ -7,6 +7,7 @@ import PopupTableMarketwatch from "../popupTableMarketwatch/popupTableMarketwatc
 import { useAppSelector } from "../../store/configureStore";
 import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatch";
 import TableMarketWatchTest from "../tableMarketwatch/TableMarketWatchTest";
+import CompleteStock from "../menuBarMW/CompleteStock";
 
 const TablePriceNew = () => {
   const status = useAppSelector((state) => state.popupTable.visible);
@@ -37,6 +38,7 @@ const TablePriceNew = () => {
         <div className="flex">
           <ListMenuBar />
           <DanhMuc />
+          <CompleteStock/>
           </div>
           <div className="flex">
             <SettingTable />
@@ -45,7 +47,7 @@ const TablePriceNew = () => {
        
       </div>
       <div 
-       className="relative"
+       className="relative h-[400px]"
         onContextMenu={handleContextMenu}>
       <TableMarketWatchTest />
       <PopupTableMarketwatch

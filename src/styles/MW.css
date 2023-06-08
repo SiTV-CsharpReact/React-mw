@@ -174,29 +174,7 @@
 .imgChart:hover{
 
 }
-.arrow-left {
-   border-top: 4px solid transparent;
-   border-bottom: 4px solid transparent;
-   border-left: 8px solid white;
-   position: relative;
-   top: 0;
-   right: 4px;
-   bottom: 0;
-}
-.arrow-right {
-   border-top: 4px solid transparent;
-   border-bottom: 4px solid transparent;
-   border-left: 8px solid white;
-   position: relative;
-   top: 0;
-   right: -3px;
-   bottom: 0;
-}
-.arrow-left {
-   border-left: none;
-   border-right: 8px solid white;
-   left: -4px;
-}
+
 .child-center {
    position: absolute;
    top: 50%;
