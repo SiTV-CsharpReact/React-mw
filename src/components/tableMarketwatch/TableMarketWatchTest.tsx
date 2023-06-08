@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { AgGridReact } from "ag-grid-react";
-import "ag-grid-enterprise";
+// import "ag-grid-enterprise";
 // import "ag-grid-community/styles/ag-grid.css";
 // import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./table.scss";
-import { formatNumberMarket, setColorMarkettest } from "../../utils/util";
+import { formatNumberMarket } from "../../utils/util";
 
-import { LicenseManager } from "ag-grid-enterprise";
+// import { LicenseManager } from "ag-grid-enterprise";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { getDataTable } from "./tableTestSlice";
 import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
@@ -18,9 +18,9 @@ import {
 } from "./interface/config.tablegrid";
 import ColumnDef from "./components/options";
 
-LicenseManager.setLicenseKey(
-  "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
-);
+// LicenseManager.setLicenseKey(
+//   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
+// );
 const TableMarketWatchTest = () => {
   // tinh width
   const gridRef = useRef<any>();

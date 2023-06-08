@@ -47,6 +47,8 @@ const handleItemChildClick = async (
     dispatch(activeMenuDanhmuc(activeCate )) // cập nhật active danh mục 
   await dispatch(getDataTable(data));
 };
+console.log('name',name);
+
   return (
     <div className= {`group list-sub-menu ${ row && name ? "activeBgCate" : " " }`}> 
       <span className="text-13px ">

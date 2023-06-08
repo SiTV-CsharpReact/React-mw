@@ -181,7 +181,7 @@ const ListMenu = () => {
         </ul>
       </li>
       <li>
-      <Link  to="/dynamic-dashboard">Giao diện của tôi</Link>
+      <Link  to="/dynamic-dashboard">{t("home:menu.GiaoDienCuaToi")}</Link>
        
       </li>
     </ul>
