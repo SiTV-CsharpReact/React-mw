@@ -13,7 +13,7 @@ import settingMarketWatchSlice from "../components/indexMarketWatch/marketShowSl
 import marketHNXSlice from "../components/indexMarketWatch/marketHNXSlice";
 import assetReportSlice from "../components/AssetReport/AssetReportSlice";
 import { dataSlice } from '../components/tableMarketwatch/tableThunk';
-import {tableBuy} from '../components/tableMarketwatch/tableBuy';
+// import {tableBuy} from '../components/tableMarketwatch/tableBuy';
 import changeThemeModeSlice from "../components/header/DarkModeSlice";
 import LayoutMarketWatchSLice from "../components/layoutMarketwatch/LayoutMarketWatchSLice";
 import { tableTestSlice } from "../components/tableMarketwatch/tableTestSlice";
@@ -48,7 +48,7 @@ export const store = configureStore({
      assetReport: assetReportSlice.reducer,
     //
      dataTable: dataSlice.reducer,
-     dataBuy:tableBuy.reducer,
+     dataBuy:dataSlice.reducer,
     // change theme 
     settingColorMode: changeThemeModeSlice.reducer,
     // menu bar 
