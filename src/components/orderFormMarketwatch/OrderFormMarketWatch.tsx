@@ -46,8 +46,9 @@ const OrderMarketW = () => {
   const [counter, setCounter] = useState(0);
   const { dataTable } = useAppSelector(state => state.dataTable);
   const { dataBuy } = useAppSelector(state => state.dataBuy);
-  console.log("first state", dataBuy);
-  console.log("first state 2", dataTable);
+  const { dataShow } = useAppSelector(state => state.dataShow);
+ 
+
   // popup
   const [popup, setPopup] = useState(false);
   useEffect(() => {
@@ -156,7 +157,7 @@ const OrderMarketW = () => {
     e.preventDefault();
 
     try {
-      await validationSchema.validate({ txtSymbol: valueInput });
+      await validationSchema.validate({ txtSymbol: valueInput ||  dataShow.San || dataTable.ma || dataBuy.ma });
     } catch (error: any) {
       alert("Chưa nhập Mã chứng khoán");
       return false;
@@ -168,7 +169,7 @@ const OrderMarketW = () => {
        return;
     }
      try {
-       await validationSchemaPrice.validate({ txtSymbol: valueInputPrice });
+       await validationSchemaPrice.validate({ txtSymbol: valueInputPrice || dataBuy.price || dataTable.price });
     } catch (error) {
       alert("Chưa nhập Giá");
       return;
@@ -246,14 +247,19 @@ const OrderMarketW = () => {
               <div className="flex w-[90%] panelDatLenhThuong">
                 <div className="inpStock pr-[15px] w-1/4">
                   <div id="divStock">
-                    <span id="spnDivStock " className="p-[20px]"></span>
-                    <span className="hidden spnClTLV">
+                    <span id="spnDivStock " className="pl-[1px]">
+                      {/* { dataShow.San ? dataShow.San : ""} */}
+                      {dataShow.San === "HNX.LISTED" ? "HNX.NY" : dataShow.San || ""}
+
+
+                    </span>
+                    {/* <span className=" spnClTLV">
                       TLV:
                       <span className="spanTLV" id="spnTLV">
-                        0
+                        { dataShow.TLV ? dataShow.TLV : 0}
                       </span>
                       %
-                    </span>
+                    </span> */}
                     <input
                       className="hidden form-control"
                       type="text"
@@ -275,7 +281,7 @@ const OrderMarketW = () => {
                       data-old=""
                     /> */}
                         
-                        <span className="absolute top-[-20px] right-[3px] !text-[12px] !text-[#333]" >TLV:0%</span>
+                        <span className="absolute top-[-20px] right-[3px] !text-[12px] !text-[#333]" >TLV:{ dataShow.TLV ? dataShow.TLV : 0}%</span>
                         <input
                           type="text"
                           className="form-control relative ui-autocomplete-input size-input p-[2px] w-[100%] mr-[14px] rounded-md pl-[8px]"
@@ -285,7 +291,7 @@ const OrderMarketW = () => {
                           // onBlur={() => setShowResults(false)}
                           onChange={handelInputChange}
                           name="txtSymbol"
-                         value={dataTable.ma ? dataTable.ma : (dataBuy.ma ? dataBuy.ma : valueInput)}
+                         value={dataTable.ma ? dataTable.ma : (dataBuy.ma ? dataBuy.ma : valueInput) || dataShow.ma}
                           
 
                         />
@@ -486,13 +492,13 @@ const OrderMarketW = () => {
                               MUA
                             </td>
                             <td className='text-center border-r border border-[#dedede]'>
-                             { valueInput || dataTable.ma || dataBuy.ma}
+                             { valueInput || dataTable.ma || dataBuy.ma || dataShow.ma}
                             </td>
                             <td className='text-center border-r border border-[#dedede]'>
                               {valueInputKl}
                             </td>
                             <td className='text-center border-r border border-[#dedede]'>
-                              {valueInputPrice}
+                              {valueInputPrice || dataTable.price || dataBuy.price  }
                             </td>
                             <td>
                               {gdSuccess && <span className="text-[13px] text-[#0FB44B] pl-2"> Lệnh đặt thành công!</span>}

@@ -17,6 +17,7 @@ import {tableBuy} from '../components/tableMarketwatch/tableBuy';
 import changeThemeModeSlice from "../components/header/DarkModeSlice";
 import LayoutMarketWatchSLice from "../components/layoutMarketwatch/LayoutMarketWatchSLice";
 import { tableTestSlice } from "../components/tableMarketwatch/tableTestSlice";
+import { dataSliceShow } from "../components/orderFormMarketwatch/data";
 
 export const store = configureStore({
   reducer: {
@@ -54,6 +55,8 @@ export const store = configureStore({
     menuBar :  menuSlice.reducer,
     // table test
     tableTest: tableTestSlice.reducer,
+
+    dataShow:dataSliceShow.reducer
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

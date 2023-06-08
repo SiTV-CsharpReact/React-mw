@@ -758,7 +758,8 @@ const ColumnDef = (props: any, props2: any) => {
             const rowid = params.data.RowID; // Get the
               const SanT : any = params.data.San
             const TCT : any= params.data.TC
-            const TranC : any= params.data.Tran
+            const TranC: any = params.data.Tran
+            console.log(" san jiji ",params)
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
