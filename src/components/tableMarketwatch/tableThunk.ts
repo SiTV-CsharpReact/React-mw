@@ -12,7 +12,10 @@ export const dataSlice = createSlice({
   initialState: {
     dataTable: {
       ma: '',
-      price :0,
+      price: 0,
+      SanT: '',
+      TCT: '',
+      TranC:''
     },
   }, 
   reducers: {
