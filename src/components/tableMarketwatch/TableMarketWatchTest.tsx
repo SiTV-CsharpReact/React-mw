@@ -1360,6 +1360,9 @@ const TableMarketWatchTest = () => {
             const dataIndex = RowDataIndex.G3; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
+             const SanT : any = params.data.San
+               const TCT : any= params.data.TC
+               const TranC : any= params.data.Tran
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
@@ -1367,7 +1370,7 @@ const TableMarketWatchTest = () => {
                   data-comp={rowid}
                   className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClick({ ma: params.data.MCK, price: value })
+                    handleClick({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT,TranC:TranC})
                   }
                 >
                   {formatNumberMarket(value)}
@@ -1427,7 +1430,9 @@ const TableMarketWatchTest = () => {
             const dataIndex = RowDataIndex.G2; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
-
+             const SanT : any= params.data.San
+               const TCT : any= params.data.TC
+               const TranC : any = params.data.Tran
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
@@ -1435,7 +1440,7 @@ const TableMarketWatchTest = () => {
                   data-comp={rowid}
                   className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClick({ ma: params.data.MCK, price: value })
+                    handleClick({ ma: params.data.MCK, price: value , SanT:SanT,TCT:TCT,TranC:TranC})
                   }
                 >
                   {formatNumberMarket(value)}
@@ -1493,7 +1498,9 @@ const TableMarketWatchTest = () => {
             const dataIndex = RowDataIndex.G1; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
-
+               const SanT : any= params.data.San
+               const TCT : any= params.data.TC
+               const TranC : any= params.data.Tran
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
@@ -1501,7 +1508,7 @@ const TableMarketWatchTest = () => {
                   data-comp={rowid}
                   className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClick({ ma: params.data.MCK, price: value })
+                    handleClick({ ma: params.data.MCK, price: value, SanT:SanT,TCT:TCT,TranC:TranC})
                   }
                 >
                   {formatNumberMarket(value)}
@@ -1748,6 +1755,9 @@ const TableMarketWatchTest = () => {
             const dataIndex = RowDataIndex.G1B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
+             const SanT : any= params.data.San
+               const TCT : any= params.data.TC
+               const TranC : any= params.data.Tran
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
@@ -1755,7 +1765,7 @@ const TableMarketWatchTest = () => {
                   data-comp={rowid}
                   className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClickBuy({ ma: params.data.MCK, price: value })
+                    handleClickBuy({ ma: params.data.MCK, price: value,SanT:SanT,TCT:TCT ,TranC:TranC})
                   }
                 >
                   {formatNumberMarket(value)}
@@ -1811,6 +1821,9 @@ const TableMarketWatchTest = () => {
             const dataIndex = RowDataIndex.G2B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
+            const SanT : any = params.data.San
+               const TCT : any= params.data.TC
+               const TranC : any= params.data.Tran
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
@@ -1818,7 +1831,7 @@ const TableMarketWatchTest = () => {
                   data-comp={rowid}
                   className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClickBuy({ ma: params.data.MCK, price: value })
+                    handleClickBuy({ ma: params.data.MCK, price: value,SanT:SanT,TCT:TCT ,TranC:TranC })
                   }
                 >
                   {formatNumberMarket(value)}
@@ -1874,6 +1887,9 @@ const TableMarketWatchTest = () => {
             const dataIndex = RowDataIndex.G3B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
+             const SanT : any = params.data.San
+               const TCT : any= params.data.TC
+               const TranC : any = params.data.Tran
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
@@ -1881,7 +1897,7 @@ const TableMarketWatchTest = () => {
                   data-comp={rowid}
                   className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClickBuy({ ma: params.data.MCK, price: value })
+                    handleClickBuy({ ma: params.data.MCK, price: value,SanT:SanT,TCT:TCT ,TranC:TranC  })
                   }
                 >
                   {formatNumberMarket(value)}

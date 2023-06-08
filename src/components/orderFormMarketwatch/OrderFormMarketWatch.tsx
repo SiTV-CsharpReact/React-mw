@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import * as yup from 'yup';
 import { formatNumber } from "../../utils/util";
+import Protal from "./Portol";
 type Props = {
   windowHeight: number,
   heightOrderForm: number
@@ -45,7 +46,10 @@ const OrderMarketW = () => {
   const [counter, setCounter] = useState(0);
   const { dataTable } = useAppSelector(state => state.dataTable);
   const { dataBuy } = useAppSelector(state => state.dataBuy);
-
+  console.log("first state", dataBuy);
+  console.log("first state 2", dataTable);
+  // popup
+  const [popup, setPopup] = useState(false);
   useEffect(() => {
     if (dataTable) {
       setColor(false);
@@ -181,9 +185,13 @@ const OrderMarketW = () => {
     setShowResults(value !== '');
 
   }
+  const handelPopup = () => {
+    setPopup(!popup)
+  }
   return (
     <div className="text-black bg-white" id="tablepricelist">
       {/* đặt lệnh */}
+      <Protal popup={popup} handelClosed={()=>setPopup(!popup)}></Protal>
       <div className="pb-5 panel-bottom">
         <div className={`inline-block BGTB w-full ${order ? "" : "relative"}`} >
           {color ? <TableTotalMonney status={order} /> : <StockBalance status={order} />}
@@ -191,7 +199,7 @@ const OrderMarketW = () => {
         <StockBalance/> */}
           {/* <div className="bottom-left pt-2 p-[20px] mr-[-30px] w-[48%] bg-[#dfeeff] mt-[20px] mb-[30px]  MBR pb-[6px]"> */}
           <div className={`bottom-left float-left min-w-[680px] pt-1.5 pb-1 px-2 ${order ? "w-[48%]" : "ml-[25px] w-[44%]"}  MBR ${color ? 'bg-[#dfeeff]' : 'bg-[#FCE0E1]'}`}>
-            <div className="flex justify-between ">
+            <div className="relative flex justify-between">
               <div className="btnSwitchBS">
                 <div className="flex group-buysell">
                   <div
@@ -211,8 +219,10 @@ const OrderMarketW = () => {
                     BÁN
                   </div>
                 
-                  <input style={ {border :"1px solid #dedede"}} type="button" placeholder="KÍ QUỸ" className="!bg-[#F3F9FF] text-black ml-[40px] w-[144px] h-[32px]"  />
-                  
+                  <input style={ {border :"1px solid #dedede"}} value="KÝ QUỸ" type="button" disabled placeholder="KÍ QUỸ" className="!bg-[#F3F9FF] uppercase ml-[40px] form-control tttt w-[144px] h-[32px] text-[#565656] hover:bg-borderBodyTableMarket"  />
+                  <img onClick={handelPopup}  className="h-[28px] pl-2 cursor-pointer" src="/menu-list-icon.png" alt="/menu-list-icon.png " />
+               
+               
                 </div>
               </div>
               <div className="w-4/5 text-right btn__switchGroup">
@@ -338,26 +348,29 @@ const OrderMarketW = () => {
                         <tr>
                           <td>
                             <span
-                              className="spnTran text-[#ef3eff] pl-[10px]  text-xs"
+                              className="spnTran cursor-pointer text-[#ef3eff] pl-[10px]  text-xs"
                               id="spnCeilPrice"
                             >
-                              0
+                              {dataTable.TranC ? dataTable.TranC : (dataBuy.TranC ? dataBuy.TranC :0) }
+
                             </span>
                           </td>
                           <td>
                             <span
-                              className="spnThamChieu text-[#f26f21] pl-[15px]  text-xs"
+                              className="spnThamChieu cursor-pointer text-[#f26f21] pl-[15px]  text-xs"
                               id="spnRefPrice"
                             >
-                              0
+                              {dataTable.TCT ? dataTable.TCT : (dataBuy.TCT ? dataBuy.TCT :0) }
+
                             </span>
                           </td>
                           <td>
                             <span
-                              className="spnSan text-[#00b8ff] pl-[15px]  text-xs"
+                              className="spnSan cursor-pointer text-[#00b8ff] pl-[15px]  text-xs"
                               id="spnFloorPrice"
                             >
-                              0
+                              {dataTable.SanT ? dataTable.SanT : (dataBuy.SanT ? dataBuy.SanT :0) }
+
                             </span>
                           </td>
                           <td>
