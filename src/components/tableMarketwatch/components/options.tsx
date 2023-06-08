@@ -9,6 +9,19 @@ import { statusChartMarketwatch } from "../../chartMarketwatch/chartMarketwatchS
 import { RowData } from "../../../models/tableMarketwatch";
 import { CellRender } from "./CellRenderComponent";
 
+const PinCell = () => {
+  return (
+    <div title="Double click to pin" className="pt-[7px]">
+      <svg style={{ width: 12, height: 12 }} viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12M8.8,14L10,12.8V4H14V12.8L15.2,14H8.8Z"
+        />
+      </svg>
+    </div>
+  );
+};
+
 const ColumnDef = (props: any, props2: any) => {
   const widthWindow = window.innerWidth;
   const dispatch = useAppDispatch();
@@ -107,6 +120,19 @@ const ColumnDef = (props: any, props2: any) => {
     }
   };
   const columnDefs = [
+    // {
+    //   headerName: "",
+    //   cellClass: "ag-cell-pinning",
+    //   field: "pinning",
+    //   maxWidth: 19,
+    //   cellRenderer: PinCell,
+    //   onCellDoubleClicked: (e: any) => {
+    //     const field = e.colDef.field;
+    //     if (field === "pinning") {
+    //       // handlePinRow(e);
+    //     }
+    //   },
+    // },
     {
       field: "MCK",
       // pinned:true,

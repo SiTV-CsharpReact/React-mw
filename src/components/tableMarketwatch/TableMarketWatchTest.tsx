@@ -17,120 +17,14 @@ import {
   gridOptions,
 } from "./interface/config.tablegrid";
 import ColumnDef from "./components/options";
-import { CellRender } from "./components/CellRenderComponent";
-import { RowData } from "../../models/tableMarketwatch";
-import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
-import { dispatchDataTable } from "./tableThunk";
-import { Tooltip } from "@mui/material";
-import { dispatchDataTableBuy } from "./tableBuy";
 
 LicenseManager.setLicenseKey(
   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
 );
-
-const PinCell = () => {
-  return (
-    <div title="Double click to pin" className="pt-[7px]">
-      <svg style={{ width: 12, height: 12 }} viewBox="0 0 24 24">
-        <path
-          fill="currentColor"
-          d="M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12M8.8,14L10,12.8V4H14V12.8L15.2,14H8.8Z"
-        />
-      </svg>
-    </div>
-  );
-};
-
 const TableMarketWatchTest = () => {
   // tinh width
-
- 
-  const widthWindow = window.innerWidth;
-  const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
-
   const gridRef = useRef<any>();
   const pinnedRowsRef = useRef<any[]>([]);
-
-  // const handlePinRow = (params: any) => {
-  //   const grid = gridRef.current.api;
-
-  //   const defaultData = gridRef.current.props.rowData;
-  //   const { rowPinned, rowIndex, data } = params;
-  //   const { RowID, symbol, isPined } = data;
-  //   console.log("grid", rowPinned);
-  //   let rows = pinnedRowsRef.current;
-  //   // console.log("co row ne", rows);
-  //   if (rowPinned) {
-  //     const newRows = pinnedRowsRef.current.filter((e) => {
-  //       return RowID !== e.data.RowID;
-  //     });
-  //     console.log("new row", newRows);
-
-  //     const item = rows.find((item) => item.data.RowID === RowID);
-  //     const other = pinnedRowsRef.current.filter(
-  //       (val) => val.index < item.index
-  //     );
-  //     pinnedRowsRef.current = newRows;
-  //     const rowsToPin = newRows.map((item) => item.data);
-  //     let rowsToPins = rowsToPin
-  //       ? rowsToPin.map((item) => {
-  //           if (item.isPined === false) {
-  //             return { ...item, isPined: true };
-  //           }
-  //           return item;
-  //         })
-  //       : [];
-  //     grid.setPinnedTopRowData(rowsToPins);
-  //     grid.applyTransaction({
-  //       add: [data],
-  //       addIndex: item.index - other.length,
-  //     });
-  //   } else {
-  //     const items = grid.getRowNode(RowID)?.data;
-  //     if (!items) {
-  //       const newRows = pinnedRowsRef.current.filter((e) => {
-  //         return RowID !== e.data.RowID;
-  //       });
-  //       const item = rows.find((item) => item.data.RowID === RowID);
-  //       const other = pinnedRowsRef.current.filter(
-  //         (val) => val.index < item.index
-  //       );
-  //       pinnedRowsRef.current = newRows;
-  //       const rowsToPin = newRows.map((item) => item.data);
-  //       let rowsToPins = rowsToPin
-  //         ? rowsToPin.map((item) => {
-  //             if (item.isPined === false) {
-  //               return { ...item, isPined: true };
-  //             }
-  //             return item;
-  //           })
-  //         : [];
-  //       grid.setPinnedTopRowData(rowsToPins);
-  //       grid.applyTransaction({
-  //         add: [data],
-  //         addIndex: item.index - other.length,
-  //       });
-  //     } else {
-  //       const index = defaultData.findIndex((item: any) => item.MCK === RowID);
-  //       rows.push({
-  //         index,
-  //         data,
-  //       });
-  //       let rowsToPins = rows.map((item: any) => item.data);
-  //       console.log("vạasds", rowsToPins);
-  //       let rowsToPin = rowsToPins
-  //         ? rowsToPins.map((element: RowData) => {
-  //             if (element.isPined === false) {
-  //               return { ...element, isPined: true };
-  //             }
-  //             return element;
-  //           })
-  //         : [];
-  //       grid.setPinnedTopRowData(rowsToPin);
-  //       grid.applyTransaction({ remove: [items] });
-  //     }
-  //   }
-  // };
 
   const [columnDefs] = ColumnDef(gridRef, pinnedRowsRef);
   const dispatch = useAppDispatch();
@@ -165,7 +59,7 @@ const TableMarketWatchTest = () => {
       }
     }
     HanDelCate();
-  }, [dispatch, widthWindow]);
+  }, [dispatch]);
   console.log(rowData);
   useEffect(() => {
     const socketHSX = new WebSocket(
@@ -275,20 +169,6 @@ const TableMarketWatchTest = () => {
       // sau 0.5s xóa màu bg
     }
   };
-  // const handleClick = (dataTable: any) => {
-  //   // console.log("dataTable ii",dataTable)
-  //   dispatch(dispatchDataTable(dataTable));
-  // };
-  // const handleClickBuy = (dataTable: any) => {
-  //   // console.log("dataTable",dataTable)
-  //   dispatch(dispatchDataTableBuy(dataTable));
-  // };
-
-  // const handleDoubleClick = (e: any, val: any) => {
-  //   if (e.detail === 2) {
-  //     dispatch(statusChartMarketwatch(val));
-  //   }
-  // };
   const containerStyle = { width: "100%", height: "100%" };
   const gridStyle = { height: "100%", width: "100%" };
 
