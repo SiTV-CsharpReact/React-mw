@@ -64,15 +64,23 @@ const TableTabWithDanhMuc = () => {
             <div
               // data-index={dataIndex}
               // data-comp={rowid}
-              className={`custom-cell !h-[45px] inline-flex flex-col !text-right !items-end ${setColorMarket(
+              className={`custom-cell !h-[45px] inline-flex flex-col !text-right  !items-end ${setColorMarket(
                 params.data.TC,
-                params.data.GiaKhop,
+                params.data.G1,
                 params.data.Tran,
                 params.data.San
               )}`}
             >
-              <span>{params.data.G1}</span>
-              <span>{formatNumberMarket(params.data.KL1)}</span>
+              {Number(params.data.G1) > 0 ? (
+                <span>{params.data.G1}</span>
+              ) : (
+                <span></span>
+              )}
+              {Number(params.data.KL1) > 0 ? (
+                <span>{formatNumberMarket(params.data.KL1)}</span>
+              ) : (
+                <span></span>
+              )}
             </div>
           );
         },
@@ -90,14 +98,22 @@ const TableTabWithDanhMuc = () => {
               // data-index={dataIndex}
               // data-comp={rowid}
               className={`custom-cell !h-[45px] inline-flex flex-col text-right !items-end ${setColorMarket(
-                params.data.TC,
+                params.data.GiaKhop,
                 params.data.GiaKhop,
                 params.data.Tran,
                 params.data.San
               )}`}
             >
-              <span>{params.data.GiaKhop}</span>
-              <span>{params.data.Chenhlech}</span>
+              {Number(params.data.GiaKhop) > 0 ? (
+                <span>{params.data.GiaKhop}</span>
+              ) : (
+                <span></span>
+              )}
+              {Number(params.data.Chenhlech) > 0 ? (
+                <span>{params.data.Chenhlech}</span>
+              ) : (
+                <span></span>
+              )}
             </div>
           );
         },
@@ -116,13 +132,21 @@ const TableTabWithDanhMuc = () => {
               // data-comp={rowid}
               className={`custom-cell inline-flex flex-col text-right !h-[45px] !items-end ${setColorMarket(
                 params.data.TC,
-                params.data.GiaKhop,
+                params.data.G1B,
                 params.data.Tran,
                 params.data.San
               )}`}
             >
-              <span>{params.data.G2}</span>
-              <span>{formatNumberMarket(params.data.KL2)}</span>
+              {Number(params.data.G2) > 0 ? (
+                <span>{params.data.G2}</span>
+              ) : (
+                <span></span>
+              )}
+              {Number(params.data.KL2) > 0 ? (
+                <span>{formatNumberMarket(params.data.KL2)}</span>
+              ) : (
+                <span></span>
+              )}
             </div>
           );
         },
