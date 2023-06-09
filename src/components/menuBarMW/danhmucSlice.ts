@@ -8,7 +8,7 @@ export const fetchCategoryAsync = createAsyncThunk(
     // const res = await agent.Category.get();
     try {
       // const data = await  agent.Category.get()
-      const data = await agent.Category.fetchData();
+      const data = await agent.Category.get();
 
       return data;
     } catch (error) {
