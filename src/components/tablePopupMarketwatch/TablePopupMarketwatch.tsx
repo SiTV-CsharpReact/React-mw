@@ -12,6 +12,7 @@ import TableGDLLPopup from "./TableGDLLPopup";
 import TableKLTTGPopup from "./TableKLTTGPopup";
 import ChartPopup from "./ChartPopup";
 import axios from "axios";
+import { getCompanyNameByCode } from "../../utils/util";
 interface DraggableProps {
   initialPosition?: { x: number; y: number };
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;
@@ -22,15 +23,38 @@ const TablePopupMarketwatch = () => {
   const { dataMouseBuy } = useAppSelector(state => state.dataMouseBuy);
   const dispatch = useAppDispatch();
   const [dataResult, setDataResult] = useState([])
+  const [dataResultSearch, setDataResultSearch] = useState([])
+  const [showPopup,setShowPopup] = useState(false)
+  const [filteredData, setFilteredData] = useState([]);
+  const [dataCheck, setDataCheck] = useState("");
+  
+ 
+
   const stockDetail = useSelector((state: RootState) => state.popupTable.code);
   const fethData = async () => {
     const { data } = await axios.get("http://localhost:9999/Data")
-    console.log("data", data)
     setDataResult(data)
   }
+  const fethDataSearch = async () => {
+    const { data } = await axios.get("http://localhost:6868/Data")
+    console.log("data", data)
+    setDataResultSearch(data)
+  }
   useEffect(() => {
-      fethData()
-  },[])
+    fethData()
+    fethDataSearch()
+  }, [])
+  const handleChange = (e: any) => {
+    setDataCheck(e.target.value.toUpperCase());
+    setShowPopup(true)
+  };
+   useEffect(() => {
+        const results  = dataResultSearch.filter((item: any) =>
+          item.Code.toUpperCase().includes(dataCheck),
+          console.log("filteredData",filteredData)
+        );
+        setFilteredData(results);
+    }, [dataCheck]);
 
   const [position, setPosition] = useState({
     x: -window.innerWidth / 3,
@@ -50,6 +74,10 @@ const TablePopupMarketwatch = () => {
   //   );
   // const status = useSelector(((state: RootState) => state.popupTable.visible))
   // console.log(status)
+  const handelClick = () => {
+    setShowPopup(!showPopup)
+    
+  }
   return (
     <Draggable handle=".pu-header" position={position} onDrag={handleDrag}>
       <div className="pu-window text-[#B9B9B9]">
@@ -67,6 +95,10 @@ const TablePopupMarketwatch = () => {
                       type="text"
                       placeholder="Nhập mã Chứng khoán"
                       autoComplete="nofill"
+                      onChange={handleChange} 
+                      onClick={handelClick}   
+                      className="cursor-pointer"
+                      value={dataCheck.toUpperCase()}
                     />
                   </div>
                   <div className="ms-trigger">
@@ -76,12 +108,24 @@ const TablePopupMarketwatch = () => {
               </div>
               <div className="inline-block pu-div-title">
                 <h2 className="pu-title">
+                  {dataMouse.maF} - {getCompanyNameByCode(dataMouse.maF)}
                   {/* x: {position.x.toFixed(0)}, y: {position.y.toFixed(0)} */}
-                  {dataMouse.maF || dataMouse.maF} - HOSE - Tổng Công ty Cổ phần Bảo hiểm Ngân hàng
-                  Đầu tư và Phát triển Việt Nam
+                  {/* {dataMouse.maF || dataMouse.maF} - HOSE - Tổng Công ty Cổ phần Bảo hiểm Ngân hàng
+                  Đầu tư và Phát triển Việt Nam */}
                 </h2>
               </div>
             </div>
+            {/*  */}
+           {showPopup &&  <div style={{ overflowY: "scroll" }} className="w-[500px] overflow-hidden shadow-2xl left-[25%] top-[36px] z-50 h-[320px] bg-white absolute">
+
+            {showPopup && filteredData.map((item: any, index: any) => {
+              return <div  onClick={()=>alert("ok")} className="py-1 pl-2 border-b hover:bg-[darkgrey]" key={index}>
+                <p>{item.Code} {item.ScripName}</p>
+                <p></p>
+              </div>
+            })}
+            </div>}
+            {/* vd */}
           </div>
           <div className="pu-div-button">
             <i

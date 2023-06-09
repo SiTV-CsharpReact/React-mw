@@ -3,8 +3,7 @@ import { useAppSelector } from '../../store/configureStore';
 
 const TableDetailPopup :React.FC<any> = ({dataResult}) => {
   const { dataMouse  }: any = useAppSelector(state => state.dataMouse);
-  console.log("first click", dataMouse.dataPopup.G3)
-  const { dataMouseBuy } = useAppSelector(state => state.dataMouseBuy);
+  const { dataMouseBuy }: any = useAppSelector(state => state.dataMouseBuy);
   
   const color = dataResult.map((item: any) => item.MP)
          const colorY =  dataMouse.priceF < color ? "red"
@@ -16,7 +15,6 @@ const TableDetailPopup :React.FC<any> = ({dataResult}) => {
               : dataMouseBuy > color
               ? "green"
               : "#F7FF31";
-
   return (
     <table id="tbLPRT" className="table table-bordered table-priceboard text-[#B9B9B9]">
     <thead style={{}}>
@@ -122,31 +120,31 @@ const TableDetailPopup :React.FC<any> = ({dataResult}) => {
         <td  className="grf  !text-[#66CCFF] text-[13.3px] !font-medium" >
            {dataMouse.SanT || dataMouseBuy.SanT}
         </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL4}</td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G3} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL3} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G2} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL2} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G1} </td>
-        <td style={{color :colorY || colorBuy}} className="br_ ">{ dataMouse.dataPopup.KL1} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.priceF} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.KLKhop} </td>
-        <td style={{color :colorY || colorBuy}} className="gr_ ">{dataMouse.dataPopup.Chenhlech} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL4 ?? dataMouseBuy.dataPopup.KL4}</td>
+        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G3 || dataMouseBuy.dataPopup.G3} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL3 || dataMouseBuy.dataPopup.KL3} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G2 || dataMouseBuy.dataPopup.G2} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL2 || dataMouseBuy.dataPopup.KL2} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G1 || dataMouseBuy.dataPopup.G1} </td>
+        <td style={{color :colorY || colorBuy}} className="br_ ">{ dataMouse.dataPopup.KL1 || dataMouseBuy.dataPopup.KL1} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.priceF || dataMouseBuy.priceF} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.KLKhop || dataMouseBuy.dataPopup.KLKhop} </td>
+        <td style={{color :colorY || colorBuy}} className="gr_ ">{dataMouse.dataPopup.Chenhlech || dataMouseBuy.dataPopup.Chenhlech} </td>
           
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G1B} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL1B} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G2B} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL2B} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G3B} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL3B} </td>
-        <td style={{color :colorY || colorBuy}} className="br_ ">{ dataMouse.dataPopup.KL4B} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.TKL} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.MOC} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.CaoNhat} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.ThapNhat} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G1B || dataMouseBuy.dataPopup.G1B} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL1B || dataMouseBuy.dataPopup.KL1B} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G2B || dataMouseBuy.dataPopup.G2B} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL2B || dataMouseBuy.dataPopup.KL2B} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G3B || dataMouseBuy.dataPopup.G3B} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL3B || dataMouseBuy.dataPopup.KL3B} </td>
+        <td style={{color :colorY || colorBuy}} className="br_ ">{ dataMouse.dataPopup.KL4B || dataMouseBuy.dataPopup.KL4B} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.TKL || dataMouseBuy.dataPopup.TKL} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.MOC || dataMouseBuy.dataPopup.MOC} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.CaoNhat || dataMouseBuy.dataPopup.CaoNhat} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.ThapNhat || dataMouseBuy.dataPopup.ThapNhat} </td>
         <td style={{color :colorY || colorBuy}} className="gr_ "> </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.NNMua} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.NNBan} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.NNMua || dataMouseBuy.dataPopup.NNMua} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.NNBan || dataMouseBuy.dataPopup.NNBan} </td>
         <td style={{color :colorY || colorBuy}} className="g__ "> 
           1,626,443
         </td>
