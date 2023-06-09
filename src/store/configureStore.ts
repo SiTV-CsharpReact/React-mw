@@ -49,6 +49,10 @@ export const store = configureStore({
     //
      dataTable: dataSlice.reducer,
      dataBuy:dataSlice.reducer,
+    dataMouse: dataSlice.reducer,
+     dataMouseBuy:dataSlice.reducer,
+     
+
     // change theme 
     settingColorMode: changeThemeModeSlice.reducer,
     // menu bar 

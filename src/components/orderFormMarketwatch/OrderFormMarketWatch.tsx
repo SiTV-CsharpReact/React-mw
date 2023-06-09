@@ -52,13 +52,13 @@ const OrderMarketW = () => {
   // popup
   const [popup, setPopup] = useState(false);
   useEffect(() => {
-    if (dataTable) {
+    if (dataTable.key  && dataTable) {
       setColor(false);
     }
-  }, [dataTable]);
+  }, [dataTable ]);
 
   useEffect(() => {
-    if (dataBuy) {
+    if (dataBuy.key  && dataBuy) {
       setColor(true);
     }
   }, [dataBuy]);

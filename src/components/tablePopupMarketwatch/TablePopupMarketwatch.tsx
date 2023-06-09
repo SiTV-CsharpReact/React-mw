@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../store/configureStore";
+import { RootState, useAppDispatch, useAppSelector } from "../../store/configureStore";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import "./TablePopup.scss";
 import { showDetailStock } from "../popupTableMarketwatch/popupTableSlice";
@@ -11,14 +11,27 @@ import TableGDTTPopup from "./TableGDTTPopup";
 import TableGDLLPopup from "./TableGDLLPopup";
 import TableKLTTGPopup from "./TableKLTTGPopup";
 import ChartPopup from "./ChartPopup";
+import axios from "axios";
 interface DraggableProps {
   initialPosition?: { x: number; y: number };
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;
   children: React.ReactNode;
 }
 const TablePopupMarketwatch = () => {
+  const { dataMouse } = useAppSelector(state => state.dataMouse);
+  const { dataMouseBuy } = useAppSelector(state => state.dataMouseBuy);
   const dispatch = useAppDispatch();
+  const [dataResult, setDataResult] = useState([])
   const stockDetail = useSelector((state: RootState) => state.popupTable.code);
+  const fethData = async () => {
+    const { data } = await axios.get("http://localhost:9999/Data")
+    console.log("data", data)
+    setDataResult(data)
+  }
+  useEffect(() => {
+      fethData()
+  },[])
+
   const [position, setPosition] = useState({
     x: -window.innerWidth / 3,
     y: -window.innerHeight / 2 + 40,
@@ -64,7 +77,7 @@ const TablePopupMarketwatch = () => {
               <div className="inline-block pu-div-title">
                 <h2 className="pu-title">
                   {/* x: {position.x.toFixed(0)}, y: {position.y.toFixed(0)} */}
-                  {stockDetail} - HOSE - Tổng Công ty Cổ phần Bảo hiểm Ngân hàng
+                  {dataMouse.maF || dataMouse.maF} - HOSE - Tổng Công ty Cổ phần Bảo hiểm Ngân hàng
                   Đầu tư và Phát triển Việt Nam
                 </h2>
               </div>
@@ -86,10 +99,10 @@ const TablePopupMarketwatch = () => {
         </div>
 
         <div>
-          <TableDetailPopup />
+          <TableDetailPopup dataResult={ dataResult} />
         </div>
         <div className="flex pu-info">
-          <div className="pu-basic w-[409px] mx-1">
+          <div className="pu-basic w-[409px] mx-1"> 
             <TableBasicPopup />
             <TableReportingPopup />
           </div>
@@ -105,7 +118,7 @@ const TablePopupMarketwatch = () => {
                 }
               }}
             >
-              <TableKLTTGPopup />
+              <TableKLTTGPopup dataResult={ dataResult}/>
             </div>
 
             <div className="w-full pu-div-PT">
