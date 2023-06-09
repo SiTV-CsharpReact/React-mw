@@ -52,13 +52,13 @@ const OrderMarketW = () => {
   // popup
   const [popup, setPopup] = useState(false);
   useEffect(() => {
-    if (dataTable) {
+    if (dataTable.key  && dataTable) {
       setColor(false);
     }
-  }, [dataTable]);
+  }, [dataTable ]);
 
   useEffect(() => {
-    if (dataBuy) {
+    if (dataBuy.key  && dataBuy) {
       setColor(true);
     }
   }, [dataBuy]);
@@ -220,7 +220,7 @@ const OrderMarketW = () => {
                     BÁN
                   </div>
                 
-                  <input style={ {border :"1px solid #dedede"}} value="KÝ QUỸ" type="button" disabled placeholder="KÍ QUỸ" className="!bg-[#F3F9FF] uppercase ml-[40px] form-control tttt w-[144px] h-[32px] text-[#565656] hover:bg-borderBodyTableMarket"  />
+                  <input style={ {border :"1px solid #dedede"}} value="KÝ QUỸ" type="button" disabled placeholder="KÍ QUỸ" className="!bg-[#F3F9FF] uppercase ml-[40px] form-control tttt w-[184px] h-[32px] text-[#565656] hover:bg-borderBodyTableMarket"  />
                   <img onClick={handelPopup}  className="h-[28px] pl-2 cursor-pointer" src="/menu-list-icon.png" alt="/menu-list-icon.png " />
                
                
