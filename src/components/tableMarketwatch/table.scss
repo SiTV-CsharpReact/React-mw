@@ -537,7 +537,10 @@ tr.border-bottom:last-child {
   .custom-header {
     border-left: 1px solid #858585 !important;
   }
-  .custom-header:nth-last-child(2) {
+  // .custom-header:nth-last-child(2) {
+  //   border-right: 1px solid #858585 !important;
+  // }
+  .custom-header:last-child {
     border-right: 1px solid #858585 !important;
   }
 //   .ag-row:last-child {

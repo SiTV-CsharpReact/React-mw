@@ -9,6 +9,19 @@ import { statusChartMarketwatch } from "../../chartMarketwatch/chartMarketwatchS
 import { RowData } from "../../../models/tableMarketwatch";
 import { CellRender } from "./CellRenderComponent";
 
+const PinCell = () => {
+  return (
+    <div title="Double click to pin" className="pt-[7px]">
+      <svg style={{ width: 12, height: 12 }} viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12M8.8,14L10,12.8V4H14V12.8L15.2,14H8.8Z"
+        />
+      </svg>
+    </div>
+  );
+};
+
 const ColumnDef = (props: any, props2: any) => {
   const widthWindow = window.innerWidth;
   const dispatch = useAppDispatch();
@@ -107,6 +120,19 @@ const ColumnDef = (props: any, props2: any) => {
     }
   };
   const columnDefs = [
+    // {
+    //   headerName: "",
+    //   cellClass: "ag-cell-pinning",
+    //   field: "pinning",
+    //   maxWidth: 19,
+    //   cellRenderer: PinCell,
+    //   onCellDoubleClicked: (e: any) => {
+    //     const field = e.colDef.field;
+    //     if (field === "pinning") {
+    //       // handlePinRow(e);
+    //     }
+    //   },
+    // },
     {
       field: "MCK",
       // pinned:true,
@@ -150,7 +176,7 @@ const ColumnDef = (props: any, props2: any) => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
             />
             <span
-              className="pl-1 pt-1"
+              className="pt-1 pl-1"
               onDoubleClick={(e) => handleDoubleClick(e, value)}
             >
               {value}
@@ -242,7 +268,7 @@ const ColumnDef = (props: any, props2: any) => {
                 <div
                   data-index={dataIndex}
                   data-comp={rowid}
-                  className="custom-cell cursor-pointer"
+                  className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
                     handleClick({ ma: params.data.MCK, price: value })
                   }
@@ -272,14 +298,17 @@ const ColumnDef = (props: any, props2: any) => {
             const dataIndex = RowDataIndex.G3; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
+            const SanT : any = params.data.San
+            const TCT : any= params.data.TC
+            const TranC : any= params.data.Tran
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
                   data-index={dataIndex}
                   data-comp={rowid}
-                  className="custom-cell cursor-pointer"
+                  className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClick({ ma: params.data.MCK, price: value })
+                    handleClick({ ma: params.data.MCK, price: value,SanT:SanT,TCT:TCT ,TranC:TranC })
                   }
                 >
                   {formatNumberMarket(value)}
@@ -339,15 +368,18 @@ const ColumnDef = (props: any, props2: any) => {
             const dataIndex = RowDataIndex.G2; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
+            const SanT : any = params.data.San
+            const TCT : any= params.data.TC
+            const TranC : any= params.data.Tran
 
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
                   data-index={dataIndex}
                   data-comp={rowid}
-                  className="custom-cell cursor-pointer"
+                  className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClick({ ma: params.data.MCK, price: value })
+                    handleClick({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC})
                   }
                 >
                   {formatNumberMarket(value)}
@@ -405,15 +437,17 @@ const ColumnDef = (props: any, props2: any) => {
             const dataIndex = RowDataIndex.G1; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
-
+            const SanT : any = params.data.San
+            const TCT : any= params.data.TC
+            const TranC : any= params.data.Tran
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
                   data-index={dataIndex}
                   data-comp={rowid}
-                  className="custom-cell cursor-pointer"
+                  className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClick({ ma: params.data.MCK, price: value })
+                    handleClick({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC })
                   }
                 >
                   {formatNumberMarket(value)}
@@ -590,14 +624,17 @@ const ColumnDef = (props: any, props2: any) => {
             const dataIndex = RowDataIndex.G1B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
+             const SanT : any = params.data.San
+            const TCT : any= params.data.TC
+            const TranC : any= params.data.Tran
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
                   data-index={dataIndex}
                   data-comp={rowid}
-                  className="custom-cell cursor-pointer"
+                  className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClickBuy({ ma: params.data.MCK, price: value })
+                    handleClickBuy({ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC })
                   }
                 >
                   {formatNumberMarket(value)}
@@ -653,14 +690,17 @@ const ColumnDef = (props: any, props2: any) => {
             const dataIndex = RowDataIndex.G2B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
+             const SanT : any = params.data.San
+            const TCT : any= params.data.TC
+            const TranC : any= params.data.Tran
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
                   data-index={dataIndex}
                   data-comp={rowid}
-                  className="custom-cell cursor-pointer"
+                  className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClickBuy({ ma: params.data.MCK, price: value })
+                    handleClickBuy({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC })
                   }
                 >
                   {formatNumberMarket(value)}
@@ -716,14 +756,18 @@ const ColumnDef = (props: any, props2: any) => {
             const dataIndex = RowDataIndex.G3B; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
+              const SanT : any = params.data.San
+            const TCT : any= params.data.TC
+            const TranC: any = params.data.Tran
+            console.log(" san jiji ",params)
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
                   data-index={dataIndex}
                   data-comp={rowid}
-                  className="custom-cell cursor-pointer"
+                  className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClickBuy({ ma: params.data.MCK, price: value })
+                    handleClickBuy({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC })
                   }
                 >
                   {formatNumberMarket(value)}

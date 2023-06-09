@@ -19,13 +19,13 @@ export const gridOptions = {
   autoGroupColumnDef: {
     // use font awesome for first col, with numbers for sort
     icons: {
-      sortAscending: '<i class="fa fa-caret-up !text-sm pr-0.5"/>',
-      sortDescending: '<i class="fa fa-caret-down !text-sm pr-0.5"/>',
+      sortAscending: '<i class="fa fa-caret-up !text-base pr-0.5 center-horizontal"/>',
+      sortDescending: '<i class="fa fa-caret-down !text-base pr-0.5 center-horizontal"/>',
     },
   },
   icons: {
-    sortAscending: '<i class="fa fa-caret-down !text-sm pr-0.5"/>',
-    sortDescending: '<i class="fa fa-caret-up !text-sm pr-0.5"/>',
+    sortAscending: '<i class="fa fa-caret-down !text-base pr-0.5 center-horizontal"/>',
+    sortDescending: '<i class="fa fa-caret-up !text-base pr-0.5 center-horizontal"/>',
   },
   // };
   // document.addEventListener("contextmenu", (event) => {

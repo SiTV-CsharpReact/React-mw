@@ -13,8 +13,11 @@ export const tableBuy = createSlice({
   name: 'dataBuy',
   initialState: {
     dataBuy: {
-      ma:"",
-      price :0,
+      ma: '',
+      price: 0,
+      SanT: '',
+      TCT: '',
+      TranC:''
     },
   }, 
   reducers: {

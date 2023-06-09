@@ -23,7 +23,8 @@
         "Quyen":"Permission",
         "BaoCao":"Report",
         "TuVanDauTu":"Advisory",
-        "HoTro":"Support"
+        "HoTro":"Support",
+        "GiaoDienCuaToi":"Dynamic DashBoard"
     },
     "base":{
         "Time":"Time",
