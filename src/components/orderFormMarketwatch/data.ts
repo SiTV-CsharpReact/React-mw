@@ -27,5 +27,5 @@ export const dataSliceShow = createSlice({
   },
 });
 
-export const { } = dataSliceShow.actions;
+export const { setProductParams} = dataSliceShow.actions;
 export default dataSliceShow.reducer;
