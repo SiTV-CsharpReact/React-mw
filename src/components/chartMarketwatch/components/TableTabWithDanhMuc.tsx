@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/configureStore";
 import { getDataTable } from "../../tableMarketwatch/TableDanhMucSlice";
 import DanhMuc from "../../menuBarMW/DanhMuc";
 import { AgGridReact } from "ag-grid-react";
-import { formatNumberMarket } from "../../../utils/util";
+import { formatNumberMarket, setColorMarket } from "../../../utils/util";
 import { RowDataIndex } from "../../tableMarketwatch/interface/config.tablegrid";
 
 const gridOptions = {
@@ -35,12 +35,17 @@ const TableTabWithDanhMuc = () => {
           // const dataIndex = RowDataIndex.;
           // const value = params.value;
           // const rowid = params.data.RowID;
-          // console.log(params);
+          console.log(params);
           return (
             <div
               // data-index={dataIndex}
               // data-comp={rowid}
-              className="custom-cell"
+              className={`custom-cell !h-[45px] !justify-start ${setColorMarket(
+                params.data.TC,
+                params.data.GiaKhop,
+                params.data.Tran,
+                params.data.San
+              )}`}
             >
               {params.data.MCK}
             </div>
@@ -59,7 +64,12 @@ const TableTabWithDanhMuc = () => {
             <div
               // data-index={dataIndex}
               // data-comp={rowid}
-              className="custom-cell inline-flex flex-col text-right"
+              className={`custom-cell !h-[45px] inline-flex flex-col !text-right !items-end ${setColorMarket(
+                params.data.TC,
+                params.data.GiaKhop,
+                params.data.Tran,
+                params.data.San
+              )}`}
             >
               <span>{params.data.G1}</span>
               <span>{formatNumberMarket(params.data.KL1)}</span>
@@ -79,7 +89,12 @@ const TableTabWithDanhMuc = () => {
             <div
               // data-index={dataIndex}
               // data-comp={rowid}
-              className="custom-cell inline-flex flex-col text-right"
+              className={`custom-cell !h-[45px] inline-flex flex-col text-right !items-end ${setColorMarket(
+                params.data.TC,
+                params.data.GiaKhop,
+                params.data.Tran,
+                params.data.San
+              )}`}
             >
               <span>{params.data.GiaKhop}</span>
               <span>{params.data.Chenhlech}</span>
@@ -99,7 +114,12 @@ const TableTabWithDanhMuc = () => {
             <div
               // data-index={dataIndex}
               // data-comp={rowid}
-              className="custom-cell inline-flex flex-col text-right"
+              className={`custom-cell inline-flex flex-col text-right !h-[45px] !items-end ${setColorMarket(
+                params.data.TC,
+                params.data.GiaKhop,
+                params.data.Tran,
+                params.data.San
+              )}`}
             >
               <span>{params.data.G2}</span>
               <span>{formatNumberMarket(params.data.KL2)}</span>
