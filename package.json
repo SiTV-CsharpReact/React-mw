@@ -82,7 +82,8 @@
     "eject": "react-scripts eject",
     "server": "json-server dataIntraday.json --watch --port 5000",
     "DataResult": "json-server dataResult.json --watch --port 3080",
-    "PendingOrder": "json-server db.json --watch --port 30"
+    "PendingOrder": "json-server db.json --watch --port 30",
+    "DataPopup":"json-server dataPopup.json --watch --port 6868"
   },
   "eslintConfig": {
     "extends": [

@@ -8,6 +8,7 @@ import { dispatchDataMouseEventHandler, dispatchDataMouseEventHandlerBuy, dispat
 import { statusChartMarketwatch } from "../../chartMarketwatch/chartMarketwatchSlice";
 import { RowData } from "../../../models/tableMarketwatch";
 import { CellRender } from "./CellRenderComponent";
+import React from "react";
 
 const PinCell = () => {
   return (
@@ -142,7 +143,8 @@ const ColumnDef = (props: any, props2: any) => {
       }
     }
   };
-  const columnDefs = [
+  const columnDefs = React.useMemo(
+    () => [
     // {
     //   headerName: "",
     //   cellClass: "ag-cell-pinning",
@@ -312,7 +314,7 @@ const ColumnDef = (props: any, props2: any) => {
           maxWidth: 100,
           headerClass: "custom-header",
           cellClass: "score-cell",
-          cellStyle: (params: any) => ({
+          cellStyle: (params: any):any => ({
             fontWeight: "",
             color: setColorMarkettest("", params),
             textAlign: "right",
@@ -996,7 +998,24 @@ const ColumnDef = (props: any, props2: any) => {
       suppressMenu: true,
       cellRenderer: CellRender,
     },
-  ];
+  ], 
+   [
+    INDEX.cbcol20,
+    INDEX.cbcol22,
+    INDEX.cbcol23,
+    INDEX.cbcol24,
+    INDEX.cbcol25,
+    INDEX.cbcol26,
+    INDEX.cbcol27,
+    INDEX.cbcol28,
+    INDEX.cbcol4,
+    handleClick,
+    handleClickBuy,
+    handleDoubleClick,
+    handlePinRow,
+    widthWindow,
+  ]
+);
   return [columnDefs];
 };
 

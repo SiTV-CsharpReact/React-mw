@@ -5,6 +5,7 @@ import DanhMuc from "../../menuBarMW/DanhMuc";
 import { AgGridReact } from "ag-grid-react";
 import { formatNumberMarket, setColorMarket } from "../../../utils/util";
 import { RowDataIndex } from "../../tableMarketwatch/interface/config.tablegrid";
+import CompleteStock from "../../menuBarMW/CompleteStock";
 
 const gridOptions = {
   getRowId: function (e: any) {
@@ -159,6 +160,7 @@ const TableTabWithDanhMuc = () => {
     <div className="h-full tbDanhMuc">
       <div>
         <DanhMuc />
+        <CompleteStock/>
       </div>
       <div className="w-full tab1_body">
         <div
@@ -167,10 +169,14 @@ const TableTabWithDanhMuc = () => {
         >
           <AgGridReact
             rowHeight={45}
+            rowDragManaged={true}
+            rowDragEntireRow={true}
+            rowDragMultiRow={true}
+            rowSelection={"multiple"}
             rowData={ListDataTable}
             columnDefs={columnDefs}
             gridOptions={gridOptions}
-            rowSelection={"multiple"}
+          
           ></AgGridReact>
         </div>
       </div>
