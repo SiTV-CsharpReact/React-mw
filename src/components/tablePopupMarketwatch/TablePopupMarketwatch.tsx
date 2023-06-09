@@ -27,7 +27,7 @@ const TablePopupMarketwatch = () => {
   const [showPopup,setShowPopup] = useState(false)
   const [filteredData, setFilteredData] = useState([]);
   const [dataCheck, setDataCheck] = useState("");
-  
+  const [selectedCode, setSelectedCode] = useState('');
  
 
   const stockDetail = useSelector((state: RootState) => state.popupTable.code);
@@ -76,8 +76,10 @@ const TablePopupMarketwatch = () => {
   // console.log(status)
   const handelClick = () => {
     setShowPopup(!showPopup)
-    
   }
+     const handleShowDetail = (code : any) => {
+        setSelectedCode(code); 
+     }
   return (
     <Draggable handle=".pu-header" position={position} onDrag={handleDrag}>
       <div className="pu-window text-[#B9B9B9]">
@@ -118,8 +120,9 @@ const TablePopupMarketwatch = () => {
             {/*  */}
            {showPopup &&  <div style={{ overflowY: "scroll" }} className="w-[500px] overflow-hidden shadow-2xl left-[25%] top-[36px] z-50 h-[320px] bg-white absolute">
 
-            {showPopup && filteredData.map((item: any, index: any) => {
-              return <div  onClick={()=>alert("ok")} className="py-1 pl-2 border-b hover:bg-[darkgrey]" key={index}>
+              {showPopup && filteredData.map((item: any, index: any) => {
+             
+              return <div  onClick={() => handleShowDetail(item.Code)} className="py-1 cursor-pointer pl-2 border-b hover:bg-[darkgrey]" key={index}>
                 <p>{item.Code} {item.ScripName}</p>
                 <p></p>
               </div>
@@ -143,7 +146,7 @@ const TablePopupMarketwatch = () => {
         </div>
 
         <div>
-          <TableDetailPopup dataResult={ dataResult} />
+          <TableDetailPopup dataResult={dataResult} selectedCode={selectedCode} />
         </div>
         <div className="flex pu-info">
           <div className="pu-basic w-[409px] mx-1"> 

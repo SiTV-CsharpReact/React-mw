@@ -1,7 +1,8 @@
 import React from 'react'
 import { useAppSelector } from '../../store/configureStore';
 
-const TableDetailPopup :React.FC<any> = ({dataResult}) => {
+const TableDetailPopup: React.FC<any> = ({ dataResult, selectedCode }) => {
+  console.log("selectedCode",selectedCode)
   const { dataMouse  }: any = useAppSelector(state => state.dataMouse);
   const { dataMouseBuy }: any = useAppSelector(state => state.dataMouseBuy);
   
@@ -107,7 +108,9 @@ const TableDetailPopup :React.FC<any> = ({dataResult}) => {
         
         >
           <span style={{color :colorY || colorBuy}} className='!font-medium' >
-           {dataMouse.maF || dataMouseBuy.maB}
+              {/* {dataMouse.maF || dataMouseBuy.maB || selectedCode} */}
+              {dataMouse.maF || dataMouseBuy.maB || (selectedCode ? selectedCode : '')}
+
           </span>
         </td>
           <td  className="g_r text-[#F7FF31] !font-medium" >
