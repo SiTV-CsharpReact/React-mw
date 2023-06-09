@@ -247,19 +247,14 @@ const OrderMarketW = () => {
               <div className="flex w-[90%] panelDatLenhThuong">
                 <div className="inpStock pr-[15px] w-1/4">
                   <div id="divStock">
-                    <span id="spnDivStock " className="pl-[1px]">
-                      {/* { dataShow.San ? dataShow.San : ""} */}
-                      {dataShow.San === "HNX.LISTED" ? "HNX.NY" : dataShow.San || ""}
-
-
-                    </span>
-                    {/* <span className=" spnClTLV">
+                    <span id="spnDivStock " className="p-[20px]"></span>
+                    {/* <span className="spnClTLV">
                       TLV:
                       <span className="spanTLV" id="spnTLV">
                         { dataShow.TLV ? dataShow.TLV : 0}
                       </span>
                       %
-                    </span> */}
+                    </span>  */}
                     <input
                       className="hidden form-control"
                       type="text"

@@ -11,11 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { getDataTable } from "./tableTestSlice";
 import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
 
-import {
-  RowDataIndex,
-  defaultColDef,
-  gridOptions,
-} from "./interface/config.tablegrid";
+import { defaultColDef, gridOptions } from "./interface/config.tablegrid";
 import ColumnDef from "./components/options";
 
 // LicenseManager.setLicenseKey(

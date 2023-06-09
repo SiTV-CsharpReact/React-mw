@@ -801,6 +801,7 @@ const ColumnDef = (props: any, props2: any) => {
             const TCT : any= params.data.TC
             const TranC: any = params.data.Tran
             const dataPopup = params.data
+
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
@@ -810,7 +811,7 @@ const ColumnDef = (props: any, props2: any) => {
                   onDoubleClick={() =>
                     handleClickBuy({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC,key:"B" })
                   }
-                  onContextMenu={handleClickRightBuy({dataPopup:dataPopup, maB: params.data.MCK, priceB: value,SanT:SanT,TCT:TCT ,TranC:TranC})}
+                  onContextMenu={handleClickRightBuy({ maB: params.data.MCK, priceB: value,SanT:SanT,TCT:TCT ,TranC:TranC})}
 
                 >
                   {formatNumberMarket(value)}
