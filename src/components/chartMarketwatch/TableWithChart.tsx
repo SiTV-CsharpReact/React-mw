@@ -6,11 +6,7 @@ import { formatNumber, setColorMarket } from "../../utils/util";
 import ImagePriceBoard from "../../images/calendar-7-32.png";
 import axios from "axios";
 import { useAppSelector } from "../../store/configureStore";
-
-interface Data {
-  RowID: string;
-  Info: string[][];
-}
+import { Data } from "./config/interface.config";
 
 const TableWithChart = () => {
   const stockCode = useAppSelector((state) => state.chart.code);
