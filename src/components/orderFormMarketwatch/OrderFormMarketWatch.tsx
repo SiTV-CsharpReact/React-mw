@@ -234,7 +234,7 @@ const OrderMarketW = () => {
                 <div className="inpStock pr-[15px] w-1/4">
                   <div id="divStock">
                     <span id="spnDivStock " className="p-[20px]"></span>
-                    <span className="hidden spnClTLV">
+                    <span className="spnClTLV">
                       TLV:
                       <span className="spanTLV" id="spnTLV">
                         0
