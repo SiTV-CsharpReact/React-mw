@@ -199,7 +199,7 @@ export const tableTestSlice = createSlice({
             };
             return mergedObject;
           });
-          console.log(mergedArray);
+          // console.log(mergedArray);
           if (data.NameFloor === "HNX") {
             // data?.product.map((obj:DataTable) =>
             //       obj.Info?.sort((a: any, b: any) => {

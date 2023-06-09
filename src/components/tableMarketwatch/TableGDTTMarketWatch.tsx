@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./table.scss";
 import { formatNumber } from "../../utils/util";
-import { useAppSelector ,RootState } from "../../store/configureStore";
+import { useAppSelector, RootState } from "../../store/configureStore";
 
 const TableGDTTMarketWatch = () => {
   const prices = useAppSelector((state: RootState) => state.table.DataBi);
@@ -12,32 +12,33 @@ const TableGDTTMarketWatch = () => {
       <div className="dvContentLP border-t border-borderHeadTableMarket">
         <div className="grid grid-cols-4 p-3">
           <div className="text-center">
-          <input placeholder="Nhập mã cần tìm" className="col-span-1 w-44 h-24 pl-1"></input>
+            <input
+              placeholder="Nhập mã cần tìm"
+              className="col-span-1 w-44 h-24 pl-1"
+            ></input>
           </div>
           {/* check floor  */}
-        {  floor === "hnx" ?         
-               <div  className="col-span-2 flex justify-around font-bold pt-1">
+          {floor === "hnx" ? (
+            <div className="col-span-2 flex justify-around font-bold pt-1">
               <span>
-              Tổng KL GDTT :  
-              <label> {formatNumber(prices[4]?.f240) }</label>    
-            </span>
-            <span>
-                Tổng KL GDTT : <label> { formatNumber(prices[4]?.f241)}</label>
+                Tổng KL GDTT :<label> {formatNumber(prices[4]?.f240)}</label>
               </span>
-            </div> : <div  className="col-span-2 flex justify-around font-bold pt-1">
               <span>
-              Tổng KL GDTT :  
-              <label> {formatNumber(prices[4]?.f240) }</label>    
-            </span>
-            <span>
-                Tổng KL GDTT : <label> { formatNumber(prices[4]?.f241)}</label>
+                Tổng KL GDTT : <label> {formatNumber(prices[4]?.f241)}</label>
               </span>
             </div>
-}
-     
-          <div className="col-span-1">
+          ) : (
+            <div className="col-span-2 flex justify-around font-bold pt-1">
+              <span>
+                Tổng KL GDTT :<label> {formatNumber(prices[4]?.f240)}</label>
+              </span>
+              <span>
+                Tổng KL GDTT : <label> {formatNumber(prices[4]?.f241)}</label>
+              </span>
+            </div>
+          )}
 
-          </div>
+          <div className="col-span-1"></div>
         </div>
         <div className="grid grid-cols-4">
           <div className="col-span-1 pr-2">
@@ -47,7 +48,10 @@ const TableGDTTMarketWatch = () => {
             >
               <thead style={{}}>
                 <tr>
-                  <th className="hbrc text-textHeaderTableGDTT text-13px" colSpan={4}>
+                  <th
+                    className="hbrc text-textHeaderTableGDTT text-13px"
+                    colSpan={4}
+                  >
                     Chào mua
                   </th>
                 </tr>
@@ -68,7 +72,10 @@ const TableGDTTMarketWatch = () => {
             >
               <thead style={{}}>
                 <tr>
-                  <th className="hbrc text-textHeaderTableGDTT text-13px" colSpan={5}>
+                  <th
+                    className="hbrc text-textHeaderTableGDTT text-13px"
+                    colSpan={5}
+                  >
                     Thực hiện
                   </th>
                 </tr>
@@ -80,19 +87,31 @@ const TableGDTTMarketWatch = () => {
                   <th className="hbrb">Tổng GT</th>
                 </tr>
               </thead>
-               {products != null ? 
-              <tbody id="tbdPT_HA" >
-                {products.length > 0 ? products?.map((product:any)=>(
-                  <tr key={product.RowID}>
-                    <td>{product.Info[0][1]}</td>  
-                    <td className="text-right">{formatNumber(product.Info[7][1])}</td>
-                    <td className="text-right">{formatNumber(product.Info[6][1])}</td>
-                    <td className="text-right">{formatNumber(product.Info[8][1])}</td>
-                    <td className="text-right">{formatNumber(product.Info[9][1])}</td>
-                  </tr>
-                )) : ""}
+              {products != null ? (
+                <tbody id="tbdPT_HA">
+                  {products.length > 0
+                    ? products?.map((product: any) => (
+                        <tr key={product.RowID}>
+                          <td>{product.Info[0][1]}</td>
+                          <td className="text-right">
+                            {formatNumber(product.Info[7][1])}
+                          </td>
+                          <td className="text-right">
+                            {formatNumber(product.Info[6][1])}
+                          </td>
+                          <td className="text-right">
+                            {formatNumber(product.Info[8][1])}
+                          </td>
+                          <td className="text-right">
+                            {formatNumber(product.Info[9][1])}
+                          </td>
+                        </tr>
+                      ))
+                    : ""}
                 </tbody>
-                : "" }
+              ) : (
+                ""
+              )}
             </table>
           </div>
           <div className="col-span-1 pl-2">
@@ -102,7 +121,10 @@ const TableGDTTMarketWatch = () => {
             >
               <thead style={{}}>
                 <tr>
-                  <th className="hbrc text-textHeaderTableGDTT text-13px" colSpan={4}>
+                  <th
+                    className="hbrc text-textHeaderTableGDTT text-13px"
+                    colSpan={4}
+                  >
                     Chào bán
                   </th>
                 </tr>

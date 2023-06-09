@@ -6,12 +6,14 @@ export const fetchCategoryAsync = createAsyncThunk(
   "table/getCateolcadf",
   async () => {
     // const res = await agent.Category.get();
-  try {
-    const data = await  agent.Category.get()
-    return data
-  } catch (error) {
-    console.log("error ở đây", error);
-  }
+    try {
+      // const data = await  agent.Category.get()
+      const data = await agent.Category.fetchData();
+
+      return data;
+    } catch (error) {
+      console.log("error ở đây", error);
+    }
     // return res;
   }
 );
@@ -23,12 +25,12 @@ export const danhmucSlice = createSlice({
   name: "table_fecthCategory",
   initialState: {
     isLoading: 0,
-    row :  null ,
-    name : null ,
+    row: null,
+    name: null,
     data: {
       Code: 0,
       Message: "SUCCESS",
-      Data: [] as Category[]
+      Data: [] as Category[],
     },
     status: "idle",
   },
@@ -37,10 +39,10 @@ export const danhmucSlice = createSlice({
       state.data = action.payload;
       state.status = "idle";
     },
-    activeMenuDanhmuc :(state , action)=>{
+    activeMenuDanhmuc: (state, action) => {
       state.name = action.payload?.name;
       state.row = action.payload?.row;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -53,8 +55,8 @@ export const danhmucSlice = createSlice({
         const result = action.payload;
         if (result?.Code === 0) {
           state.data = action.payload;
-          state.row  = result?.Data[0]?.Row // lưu row danh mục
-          state.name  = result?.Data[0]?.Name // tên danh mục 
+          state.row = result?.Data[0]?.Row; // lưu row danh mục
+          state.name = result?.Data[0]?.Name; // tên danh mục
           state.status = "succeeded";
         } else {
           state.status = "failed";
@@ -65,10 +67,8 @@ export const danhmucSlice = createSlice({
         state.isLoading = 3;
         state.status = "failed";
         // Xử lý tình huống khi có lỗi xảy ra trong quá trình gọi API
-      })
-    
-      
+      });
   },
 });
-export const  {activeMenuDanhmuc}  = danhmucSlice.actions
+export const { activeMenuDanhmuc } = danhmucSlice.actions;
 export default danhmucSlice;
