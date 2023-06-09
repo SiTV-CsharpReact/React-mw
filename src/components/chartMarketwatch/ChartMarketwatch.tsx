@@ -17,6 +17,7 @@ import { statusChartMarketwatch } from "./chartMarketwatchSlice";
 import SlidesMarketWatch from "../indexMarketWatch/SlidesMarketWatch";
 import SlidesIndexChartMarketwatch from "./SlidesIndexChartMarketwatch";
 import ReactApexChart from 'react-apexcharts';
+import TradingViewWidget from "../Chart/TradingViewWidget";
 interface Data {
   RowID: string;
   Info: string[][];
@@ -90,7 +91,9 @@ const ChartMarketwatch = () => {
 
           <DateTime />
         </div>
-        <div className="w-full tv_chart_container" id="tv_chart_container">chart</div>
+        <div className="w-full tv_chart_container" id="tv_chart_container">
+          <TradingViewWidget/>
+        </div>
       </div>
 
       <div className="chart-layout-right float-right w-[350px]  ">
