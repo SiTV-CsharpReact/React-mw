@@ -24,7 +24,7 @@ import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlic
 import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 import { dispatchDataTable } from "./tableThunk";
-import { dispatchDataTableBuy } from "./tableBuy";
+import { dispatchDataTableBuy } from "./tableThunk";
 import { getDataTable } from "./tableSlice";
 import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
 const showKLPT = (value: string) => {

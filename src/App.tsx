@@ -7,6 +7,7 @@ import DynamicDashboard from "./components/dynamicDashboard/DynamicDashboard";
 import MyLayout from "./components/dynamicDashboard/MyLayout";
 import AssetReport from "./components/AssetReport/AssetReport";
 import TableMarketWatchTest from "./components/tableMarketwatch/TableMarketWatchTest";
+import TradingViewWidget from "./components/Chart/TradingViewWidget";
 function App() {
   return (
     <div>
@@ -54,6 +55,8 @@ function App() {
           {/* Oddlot */}
           <Route path="/oddlot/History" element={<AssetReport />} />
           <Route path="/rightscustody/AdvanceHistory" element={<AssetReport />}/>
+          
+          <Route path="/tradingview" element={<TradingViewWidget />}/>
         </Routes>
       </AppProvider>
     </div>

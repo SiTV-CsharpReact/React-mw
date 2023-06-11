@@ -1,6 +1,13 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useAppSelector } from "../../store/configureStore";
 
-const TableKLTTGPopup = () => {
+const TableKLTTGPopup: React.FC<any> = ({ dataResult }) => {
+  console.log("dataResult",dataResult)
+  
+  const { dataMouse } = useAppSelector(state => state.dataMouse);
+  const { dataMouseBuy } = useAppSelector(state => state.dataMouseBuy);
+
   return (
     <table id="tbpuRT" className="pu-table-realtime">
       <thead style={{}}>
@@ -15,78 +22,27 @@ const TableKLTTGPopup = () => {
         </tr>
       </thead>
       <tbody>
-        <tr style={{ height: "22px" }}>
-          <td className="pu-w text-center">10:22:32</td>
-          <td className="pu-w">26.5</td>
-          <td className="pu-w">1,000</td>
-          <td className="pu-w">1,700</td>
+        {dataResult.map((item: any, index: any) => {
+           const color =
+            dataMouse.priceF < item.MP ? "red"
+              : dataMouse > item.MP
+              ? "green"
+              : "yellow";
+          const colorBuy =
+            dataMouseBuy.priceB < item.MP ? "red"
+              : dataMouseBuy > item.MP
+              ? "green"
+              : "yellow";
+          
+          return  <tr key={index} style={{ height: "22px" }}>
+          <td style={{color: color || colorBuy }} className="text-center pu-w">{item.MT}</td>
+          <td  style={{color: color || colorBuy }} className="pu-w">{item.MP}</td>
+          <td  style={{color: color || colorBuy }} className="pu-w">{item.MQ}</td>
+          <td  style={{color: color || colorBuy }} className="pu-w">{item.TQ}</td>
         </tr>
-        <tr style={{ height: "22px" }}>
-          <td className="pu- text-center">10:21:54</td>
-          <td className="pu-w">26.55</td>
-          <td className="pu-w">300</td>
-          <td className="pu-w">700</td>
-        </tr>
-        <tr style={{ height: "22px" }}>
-          <td className="pu-w text-center">10:21:54</td>
-          <td className="pu-w">26.55</td>
-          <td className="pu-w">200</td>
-          <td className="pu-w">400</td>
-        </tr>
-        <tr style={{ height: "22px" }}>
-          <td className="pu-w text-center">09:41:24</td>
-          <td className="pu-w">27</td>
-          <td className="pu-w">100</td>
-          <td className="pu-w">200</td>
-        </tr>
-        <tr style={{ height: "22px" }}>
-          <td className="pu-w text-center">09:32:27</td>
-          <td className="pu-w">26.6</td>
-          <td className="pu-w">100</td>
-          <td className="pu-w">100</td>
-        </tr>
-        <tr style={{ height: "22px" }}>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr style={{ height: "22px" }}>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr style={{ height: "22px" }}>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr style={{ height: "22px" }}>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr style={{ height: "22px" }}>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr style={{ height: "22px" }}>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr style={{ height: "22px" }}>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
+        })}
+       
+       
       </tbody>
     </table>
   );

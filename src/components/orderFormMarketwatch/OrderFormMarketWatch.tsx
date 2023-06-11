@@ -52,13 +52,13 @@ const OrderMarketW = () => {
   // popup
   const [popup, setPopup] = useState(false);
   useEffect(() => {
-    if (dataTable) {
+    if (dataTable.key  && dataTable) {
       setColor(false);
     }
-  }, [dataTable]);
+  }, [dataTable ]);
 
   useEffect(() => {
-    if (dataBuy) {
+    if (dataBuy.key  && dataBuy) {
       setColor(true);
     }
   }, [dataBuy]);
@@ -220,7 +220,7 @@ const OrderMarketW = () => {
                     BÁN
                   </div>
                 
-                  <input style={ {border :"1px solid #dedede"}} value="KÝ QUỸ" type="button" disabled placeholder="KÍ QUỸ" className="!bg-[#F3F9FF] uppercase ml-[40px] form-control tttt w-[144px] h-[32px] text-[#565656] hover:bg-borderBodyTableMarket"  />
+                  <input style={ {border :"1px solid #dedede"}} value="KÝ QUỸ" type="button" disabled placeholder="KÍ QUỸ" className="!bg-[#F3F9FF] uppercase ml-[40px] form-control tttt w-[184px] h-[32px] text-[#565656] hover:bg-borderBodyTableMarket"  />
                   <img onClick={handelPopup}  className="h-[28px] pl-2 cursor-pointer" src="/menu-list-icon.png" alt="/menu-list-icon.png " />
                
                
@@ -247,19 +247,14 @@ const OrderMarketW = () => {
               <div className="flex w-[90%] panelDatLenhThuong">
                 <div className="inpStock pr-[15px] w-1/4">
                   <div id="divStock">
-                    <span id="spnDivStock " className="pl-[1px]">
-                      {/* { dataShow.San ? dataShow.San : ""} */}
-                      {dataShow.San === "HNX.LISTED" ? "HNX.NY" : dataShow.San || ""}
-
-
-                    </span>
-                    {/* <span className=" spnClTLV">
+                    <span id="spnDivStock " className="p-[20px]"></span>
+                    {/* <span className="spnClTLV">
                       TLV:
                       <span className="spanTLV" id="spnTLV">
                         { dataShow.TLV ? dataShow.TLV : 0}
                       </span>
                       %
-                    </span> */}
+                    </span>  */}
                     <input
                       className="hidden form-control"
                       type="text"

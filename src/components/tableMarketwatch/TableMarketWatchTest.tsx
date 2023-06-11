@@ -11,11 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { getDataTable } from "./tableTestSlice";
 import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
 
-import {
-  RowDataIndex,
-  defaultColDef,
-  gridOptions,
-} from "./interface/config.tablegrid";
+import { defaultColDef, gridOptions } from "./interface/config.tablegrid";
 import ColumnDef from "./components/options";
 
 // LicenseManager.setLicenseKey(
@@ -189,6 +185,12 @@ const gridStyle = { height: "100%", width: "100%" };
           suppressDragLeaveHidesColumns={true}
           suppressCellFocus={true}
           rowHeight={25}
+          overlayLoadingTemplate={
+            '<span class="ag-overlay-loading-center">Please wait while your rows are loading</span>'
+          }
+          overlayNoRowsTemplate={
+            '<span >Loading bảng giá...</span>'
+          }
           rowData={rowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
