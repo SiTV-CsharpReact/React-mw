@@ -10,6 +10,7 @@ import { RootState } from "../../store/configureStore";
 // import { RowData } from "../../models/tableMarketwatch";
 import { tinhGiaTC } from "../../utils/util";
 import { RowData } from "../../models/tableMarketwatch";
+import { getCookie } from "../../models/cookie";
 
 interface TableState {
   productsLoaded: boolean;
@@ -21,10 +22,13 @@ interface TableState {
   NameFloor: string;
   DataPt: DataTable[];
   DataBi: DataGDTT[];
+  RowPined: any;
+  DataPined: any[];
 }
 type params = {
   Floor: string;
   Query: string;
+  RowPined: any;
 };
 const dataTableAdapter = createEntityAdapter<DataTable>({
   selectId: (dataTable) => dataTable.RowID || "", // Chỉ định trường khóa
@@ -41,6 +45,7 @@ export const getDataTable = createAsyncThunk(
           index: 1,
           floor: "GDTT",
           NameFloor: Param.Floor,
+          RowPined: Param.RowPined,
           product: {
             DataBi,
             DataPt: DataPt,
@@ -90,9 +95,9 @@ export const getDataTable = createAsyncThunk(
           index: 0,
           floor: "MAIN",
           NameFloor: Param.Floor,
+          RowPined: Param.RowPined,
           product: arr_names,
         };
-
         return data;
       } else {
         const result = await agent.ListDataTable.list(Param.Floor, Param.Query);
@@ -100,6 +105,7 @@ export const getDataTable = createAsyncThunk(
           index: 0,
           floor: "MAIN",
           NameFloor: Param.Floor,
+          RowPined: Param.RowPined,
           product: result,
         };
 
@@ -128,8 +134,10 @@ export const tableTestSlice = createSlice({
     floor: "MAIN",
     DataBi: [] as DataGDTT[],
     DataPt: [] as DataTable[],
+    RowPined: null,
     NameFloor: "",
     productParams: initParams(),
+    DataPined: [],
   }),
   reducers: {
     setProductParams: (state, action) => {
@@ -140,6 +148,56 @@ export const tableTestSlice = createSlice({
       state.productsLoaded = false;
       state.productParams = { ...state.productParams, ...action.payload };
     },
+    // pinde data table click pined 
+    addDatatPined: (state, action) => {   
+      let { data, RowPined } = action.payload;
+      if (RowPined) { // danh mục 
+        let { isPined } = data;
+        if (isPined === false) {
+          state.DataPined = [...state.DataPined, { ...data, isPined: true }];
+          state.ListDataTable = state.ListDataTable.filter(
+            (e) => e.RowID !== data.RowID
+          );
+        } else {
+          state.DataPined = state.DataPined.filter(
+            (e) => e.RowID !== data.RowID
+          );
+          state.ListDataTable = [
+            { ...data, isPined: false },
+            ...state.ListDataTable,
+          ];
+        }
+      } else {
+        if(data.isPined === false) {
+          state.DataPined = [...state.DataPined, { ...data, isPined: true }];
+          state.ListDataTable = state.ListDataTable.filter(
+            (e) => e.RowID !== data.RowID
+          );
+        }else {
+          state.DataPined = state.DataPined.filter(
+            (e) => e.RowID !== data.RowID
+          );
+          state.ListDataTable = [
+            { ...data, isPined: false },
+            ...state.ListDataTable,
+          ];
+        }
+      }
+    },
+    // tab menu cookie 
+    getDataCookie :(state,action) =>{
+     let tab =  localStorage.getItem("activePriceboardTabMenu")
+     let StringCookie =  {tab:tab ,codeList: ""}
+     const arraydata = getCookie(StringCookie) /// return array codelis
+     let ArrayPiend =  state.ListDataTable.filter((e)=>{return  arraydata?.includes(e.MCK)}) // data ghim 
+     state.DataPined = ArrayPiend.map((e:any) => {
+        if(e?.isPined ===  false)  return {...e,isPined: true}
+        return e
+     })
+     let tableDataCookie = state.ListDataTable.filter((e)=>{ return arraydata?.indexOf(e.MCK) === -1})
+     state.ListDataTable = tableDataCookie
+    } ,
+  
   },
 
   extraReducers: (builder) => {
@@ -147,13 +205,16 @@ export const tableTestSlice = createSlice({
       .addCase(getDataTable.pending, (state, action) => {
         state.productsLoaded = false;
         state.status = "loading";
+        state.ListDataTable = [];
+        state.DataPined = [];
       })
       .addCase(getDataTable.fulfilled, (state, action) => {
         state.productsLoaded = true;
         state.status = "idle";
+
         let data = action.payload;
         let dataTable = data?.product;
-
+        state.RowPined = data?.RowPined;
         if (data?.index === 0) {
           const mergedArray = dataTable.map((element: any) => {
             const infoArray = element.Info.map(
@@ -192,34 +253,45 @@ export const tableTestSlice = createSlice({
               GDK: infoArray[29],
               Quyen: infoArray[30],
               CGKGN: infoArray[31],
-              Chenhlech1: `${infoArray[13]} | ${tinhGiaTC(infoArray[1], infoArray[11])}`,
+              Chenhlech1: `${infoArray[13]} | ${tinhGiaTC(
+                infoArray[1],
+                infoArray[11]
+              )}`,
               PhanTram: tinhGiaTC(infoArray[1], infoArray[11]),
               RowID: element.RowID,
               isPined: false,
             };
             return mergedObject;
           });
-          console.log(mergedArray);
-          if (data.NameFloor === "HNX") {
-            // data?.product.map((obj:DataTable) =>
-            //       obj.Info?.sort((a: any, b: any) => {
-            //         const indexA = Number(a[0]);
-            //         const indexB = Number(b[0]);
-            //         if (indexA < indexB) {
-            //           return -1;
-            //         }
-            //         if (indexA > indexB) {
-            //           return 1;
-            //         }
-            //         return 0;
-            //       }) )
-            state.floor = "MAIN";
+          if (data?.RowPined) {
+            let indexCut = data?.RowPined;
+            let newdata = mergedArray ? mergedArray.splice(0, indexCut) : [];
+            state.DataPined = newdata.map((e: any) => {
+              return { ...e, isPined: true };
+            });
             state.ListDataTable = mergedArray;
-            state.NameFloor = data?.NameFloor;
           } else {
-            state.floor = "MAIN";
-            state.ListDataTable = mergedArray;
-            state.NameFloor = data?.NameFloor;
+            if (data.NameFloor === "HNX") {
+              // data?.product.map((obj:DataTable) =>
+              //       obj.Info?.sort((a: any, b: any) => {
+              //         const indexA = Number(a[0]);
+              //         const indexB = Number(b[0]);
+              //         if (indexA < indexB) {
+              //           return -1;
+              //         }
+              //         if (indexA > indexB) {
+              //           return 1;
+              //         }
+              //         return 0;
+              //       }) )
+              state.floor = "MAIN";
+              state.ListDataTable = mergedArray;
+              state.NameFloor = data?.NameFloor;
+            } else {
+              state.floor = "MAIN";
+              state.ListDataTable = mergedArray;
+              state.NameFloor = data?.NameFloor;
+            }
           }
         } else {
           if (data?.NameFloor === "HSX") {
@@ -252,4 +324,4 @@ export default tableTestSlice;
 export const productSelectors = dataTableAdapter.getSelectors(
   (state: RootState) => state.table
 );
-export const { setProductParams } = tableTestSlice.actions;
+export const { setProductParams, addDatatPined ,getDataCookie  } = tableTestSlice.actions;

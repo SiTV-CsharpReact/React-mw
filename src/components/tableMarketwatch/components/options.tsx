@@ -8,6 +8,8 @@ import { dispatchDataTable } from "../tableThunk";
 import { statusChartMarketwatch } from "../../chartMarketwatch/chartMarketwatchSlice";
 import { RowData } from "../../../models/tableMarketwatch";
 import { CellRender } from "./CellRenderComponent";
+import { addDatatPined } from "../tableTestSlice";
+import { setCookie } from "../../../models/cookie";
 
 const PinCell = () => {
   return (
@@ -26,7 +28,7 @@ const ColumnDef = (props: any, props2: any) => {
   const widthWindow = window.innerWidth;
   const dispatch = useAppDispatch();
   const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
-
+  const {RowPined} = useAppSelector((state) => state.tableTest)
   const handleClick = (dataTable: any) => {
     // console.log("dataTable ii",dataTable)
     dispatch(dispatchDataTable(dataTable));
@@ -49,75 +51,18 @@ const ColumnDef = (props: any, props2: any) => {
     const grid = props.current.api;
     const defaultData = props.current.props.rowData;
     const { rowPinned, rowIndex, data } = params;
-    const { RowID, symbol, isPined } = data;
+    // const { RowID, symbol, isPined } = data;
     let rows = props2.current;
-    // console.log("co row ne", rows);
-    if (rowPinned) {
-      const newRows = props2.current.filter((e: any) => {
-        return RowID !== e.data.RowID;
-      });
-      const item = rows.find((item: any) => item.data.RowID === RowID);
-      const other = props2.current.filter((val: any) => val.index < item.index);
-      props2.current = newRows;
-      const rowsToPin = newRows.map((item: any) => item.data);
-      let rowsToPins = rowsToPin
-        ? rowsToPin.map((item: any) => {
-            if (item.isPined === false) {
-              return { ...item, isPined: true };
-            }
-            return item;
-          })
-        : [];
-      grid.setPinnedTopRowData(rowsToPins);
-      grid.applyTransaction({
-        add: [data],
-        addIndex: item.index - other.length,
-      });
-    } else {
-      const items = grid.getRowNode(RowID)?.data;
-      if (!items) {
-        const newRows = props2.current.filter((e: any) => {
-          return RowID !== e.data.RowID;
-        });
-        const item = rows.find((item: any) => item.data.RowID === RowID);
-        const other = props2.current.filter(
-          (val: any) => val.index < item.index
-        );
-        props2.current = newRows;
-        const rowsToPin = newRows.map((item: any) => item.data);
-        let rowsToPins = rowsToPin
-          ? rowsToPin.map((item: any) => {
-              if (item.isPined === false) {
-                return { ...item, isPined: true };
-              }
-              return item;
-            })
-          : [];
-        grid.setPinnedTopRowData(rowsToPins);
-        grid.applyTransaction({
-          add: [data],
-          addIndex: item.index - other.length,
-        });
-      } else {
-        const index = defaultData.findIndex((item: any) => item.MCK === RowID);
-        rows.push({
-          index,
-          data,
-        });
-        let rowsToPins = rows.map((item: any) => item.data);
-        console.log("vạasds", rowsToPins);
-        let rowsToPin = rowsToPins
-          ? rowsToPins.map((element: RowData) => {
-              if (element.isPined === false) {
-                return { ...element, isPined: true };
-              }
-              return element;
-            })
-          : [];
-        grid.setPinnedTopRowData(rowsToPin);
-        grid.applyTransaction({ remove: [items] });
-      }
+   
+    let itemss = localStorage.getItem("activePriceboardTabMenu")
+    let newCookie = {
+      tab : itemss,
+      codeList :  data.MCK
     }
+   let result =  setCookie(newCookie)
+      if(result){
+        dispatch(addDatatPined({RowPined,data}))
+      }
   };
   const columnDefs = [
     // {
@@ -759,7 +704,7 @@ const ColumnDef = (props: any, props2: any) => {
               const SanT : any = params.data.San
             const TCT : any= params.data.TC
             const TranC: any = params.data.Tran
-            console.log(" san jiji ",params)
+            
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div
