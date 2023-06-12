@@ -41,7 +41,7 @@ const TableTabWithDanhMuc = () => {
             <div
               // data-index={dataIndex}
               // data-comp={rowid}
-              className={`custom-cell !h-[45px] !justify-start ${setColorMarket(
+              className={`h-full ${setColorMarket(
                 params.data.TC,
                 params.data.GiaKhop,
                 params.data.Tran,
@@ -65,7 +65,7 @@ const TableTabWithDanhMuc = () => {
             <div
               // data-index={dataIndex}
               // data-comp={rowid}
-              className={`custom-cell !h-[45px] inline-flex flex-col !text-right  !items-end ${setColorMarket(
+              className={`h-full ${setColorMarket(
                 params.data.TC,
                 params.data.G1,
                 params.data.Tran,
@@ -73,14 +73,14 @@ const TableTabWithDanhMuc = () => {
               )}`}
             >
               {Number(params.data.G1) > 0 ? (
-                <span>{params.data.G1}</span>
+                <div className="h-[22px] text-right">{params.data.G1}</div>
               ) : (
-                <span></span>
+                <div></div>
               )}
               {Number(params.data.KL1) > 0 ? (
-                <span>{formatNumberMarket(params.data.KL1)}</span>
+                <div className="h-[22px] text-right">{formatNumberMarket(params.data.KL1)}</div>
               ) : (
-                <span></span>
+                <div></div>
               )}
             </div>
           );
@@ -98,7 +98,7 @@ const TableTabWithDanhMuc = () => {
             <div
               // data-index={dataIndex}
               // data-comp={rowid}
-              className={`custom-cell !h-[45px] inline-flex flex-col text-right !items-end ${setColorMarket(
+              className={`h-full ${setColorMarket(
                 params.data.GiaKhop,
                 params.data.GiaKhop,
                 params.data.Tran,
@@ -106,14 +106,14 @@ const TableTabWithDanhMuc = () => {
               )}`}
             >
               {Number(params.data.GiaKhop) > 0 ? (
-                <span>{params.data.GiaKhop}</span>
+                <div className="h-[22px] text-right">{params.data.GiaKhop}</div>
               ) : (
-                <span></span>
+                <div></div>
               )}
               {Number(params.data.Chenhlech) > 0 ? (
-                <span>{params.data.Chenhlech}</span>
+                <div className="h-[22px] text-right">{params.data.Chenhlech}</div>
               ) : (
-                <span></span>
+                <div></div>
               )}
             </div>
           );
@@ -131,7 +131,7 @@ const TableTabWithDanhMuc = () => {
             <div
               // data-index={dataIndex}
               // data-comp={rowid}
-              className={`custom-cell inline-flex flex-col text-right !h-[45px] !items-end ${setColorMarket(
+              className={`h-full ${setColorMarket(
                 params.data.TC,
                 params.data.G1B,
                 params.data.Tran,
@@ -139,14 +139,14 @@ const TableTabWithDanhMuc = () => {
               )}`}
             >
               {Number(params.data.G2) > 0 ? (
-                <span>{params.data.G2}</span>
+                <div className="h-[22px] text-right">{params.data.G2}</div>
               ) : (
-                <span></span>
+                <div></div>
               )}
               {Number(params.data.KL2) > 0 ? (
-                <span>{formatNumberMarket(params.data.KL2)}</span>
+                <div className="h-[22px] text-right">{formatNumberMarket(params.data.KL2)}</div>
               ) : (
-                <span></span>
+                <div></div>
               )}
             </div>
           );
@@ -157,10 +157,10 @@ const TableTabWithDanhMuc = () => {
   );
 
   return (
-    <div className="h-full tbDanhMuc">
-      <div>
-        <DanhMuc />
-        <CompleteStock/>
+    <div className="h-full tbDanhMuc w-full relative">
+      <div className="flex items-center">
+        <DanhMuc class="flex-1 w-full" />
+        <CompleteStock width="!w-[34%]" />
       </div>
       <div className="w-full tab1_body">
         <div
@@ -176,7 +176,6 @@ const TableTabWithDanhMuc = () => {
             rowData={ListDataTable}
             columnDefs={columnDefs}
             gridOptions={gridOptions}
-          
           ></AgGridReact>
         </div>
       </div>
