@@ -34,7 +34,6 @@ const TableMarketWatchTest = () => {
   const {ListDataTable ,DataPined ,RowPined} = useAppSelector((state) => state.tableTest );
   // pinned
   const pinned = useAppSelector((state) => state.categories.row);
-
   const handelGetData = useCallback(
     (Data: any) => {
       dispatch(getDataTable(Data));

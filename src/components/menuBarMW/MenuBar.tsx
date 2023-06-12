@@ -70,7 +70,7 @@ const MenuBar = () => {
     dispatch(setActiveMenu(activeMenu)); // cập nhật lại menu
 
     let result = await dispatch(getDataTable(data));
-    if (result) {
+    if (result?.payload) {
       dispatch(getDataCookie(cookie.codeList)); // cập nhật lại menu
     }
   };
