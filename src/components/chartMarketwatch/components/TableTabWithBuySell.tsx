@@ -21,7 +21,7 @@ const TableTabWithBuySell = () => {
   return (
     <>
       <table className="no-index">
-      {dataChart.map((dataTable, index) => (
+      {dataChart && dataChart.map((dataTable, index) => (
         <tbody key={index}>
           <tr className="no-border">
             <td colSpan={4} className="h-40">
