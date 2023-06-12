@@ -194,25 +194,6 @@ const LayoutMarketWatch: React.FC = () => {
 
   const componentVisible = useAppSelector((state) => state.chart.visible);
   const hideShowOrderForm = heightComponent.orderForm;
-
-  // const handleContextMenu = (e: any) => {
-  //   e.preventDefault();
-  //   var vCell = e.target;
-  //   if (vCell.classList.contains(`custom-cell`)) {
-  //     vCell = vCell.parentElement;
-  //   }
-  //   const rowID = vCell.querySelector(`div.custom-cell`).dataset.comp;
-  //   const trValue = document.querySelector(`div[data-index="0"][data-comp="${rowID}"]`)?.innerHTML
-  //   console.log("click",trValue);
-  //   if (trValue) {
-  //     setSelectedValue({
-  //       x: e.clientX,
-  //       y: e.clientY - 40,
-  //       value: trValue,
-  //       status: true,
-  //     });
-  //   }
-  // };
   const handleContextMenu = (e: any) => {
     e.preventDefault();
     const vCell = e.target.classList.contains("custom-cell")
