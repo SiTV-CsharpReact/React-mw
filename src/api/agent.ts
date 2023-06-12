@@ -22,7 +22,7 @@ const Company ={
 const Category ={
     get: () => requests.get('http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C222210'),
     // fetch  đata
-    fetchData : () => requests.get('http://localhost:30/categori')
+    fetchData : () => requests.get('http://localhost:5000/categori')
 }
 const Ministry ={
     get: () => requests.get('http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/s5g/default/ministry'),
