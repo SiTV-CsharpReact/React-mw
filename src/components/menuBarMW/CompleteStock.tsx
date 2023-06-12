@@ -57,7 +57,7 @@ const CompleteStock = () => {
     setShow(false);
     setValue("");
     const valueMa = e.split("-"); // chuỗi đầu cần lấy
-    let a = data?.Data.find((e) => e.Row == row);
+    let a = data?.Data.find((e:any) => e.Row == row);
 
     let bqueryy: any = a?.List.concat(`,${valueMa[0]}`).trim();
     let result = a?.List.includes(valueMa[0].trim());

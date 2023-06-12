@@ -6,21 +6,16 @@ export const fetchCategoryAsync = createAsyncThunk(
   "table/getCateolcadf",
   async () => {
     // const res = await agent.Category.get();
-    try {
-      // const data = await  agent.Category.get()
-      const data = await agent.Category.get();
-
-      return data;
-    } catch (error) {
-      console.log("error ở đây", error);
-    }
+  try {
+    const data = await  agent.Category.fetchData()
+    return data
+  } catch (error) {
+    console.log("error ở đây", error);
+  }
     // return res;
   }
 );
 
-// export const activeMenuDanhmuc = createAsyncThunk("table_fecthCategory/aaasd", ()=>{
-
-// })
 export const danhmucSlice = createSlice({
   name: "table_fecthCategory",
   initialState: {

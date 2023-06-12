@@ -124,7 +124,7 @@ const menuItems = [
       {
         name: "Dịch vụ & thiết bị y tế",
         path: "/HNX3",
-        query: "AMP,AMV,BBT,DMC,DNM,DTP,JVC,MEF,MRF,SOV,SRA,TNH,TTD,YTC",
+        query: "s=quote&l=AMP,AMV,BBT,DMC,DNM,DTP,JVC,MEF,MRF,SOV,SRA,TNH,TTD,YTC",
       },
       {
         name: "Dịch vụ công cộng",

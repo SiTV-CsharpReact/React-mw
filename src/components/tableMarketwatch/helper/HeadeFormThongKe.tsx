@@ -4,6 +4,9 @@ import dayjs, { Dayjs } from "dayjs";
 import "./index.scss";
 const HeaderFromThongke = () => {
   const defaultDate: Dayjs = dayjs();
+  const HandeFilter  = ()=>{
+     
+  }
   return (
     <>
       <div id="dvSTTIndexs" className="" style={{}}>
@@ -104,7 +107,7 @@ const HeaderFromThongke = () => {
               className="form-group col-xs-2 col-sm-2 col-priceboard"
               style={{}}
             >
-              <button
+              <button onClick={HandeFilter}
                 className="btn btn-success button_Statistics"
                 id="btnViewHIST_INDEX"
               >

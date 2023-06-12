@@ -13,6 +13,7 @@ import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
 
 import { defaultColDef, gridOptions } from "./interface/config.tablegrid";
 import ColumnDef from "./components/options";
+import { setCookie } from "../../models/cookie";
 
 // LicenseManager.setLicenseKey(
 //   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
@@ -26,8 +27,7 @@ const TableMarketWatchTest = () => {
   const dispatch = useAppDispatch();
 
   //setRowData
-  const rowData = useAppSelector((state) => state.tableTest.ListDataTable);
-
+  const {ListDataTable ,DataPined ,RowPined} = useAppSelector((state) => state.tableTest );
   // pinned
   const pinned = useAppSelector((state) => state.categories.row);
 
@@ -44,19 +44,26 @@ const TableMarketWatchTest = () => {
         let data = {
           Floor: "danh-muc",
           Query: result?.payload?.Data[0]?.List,
+          RowPined : result?.payload?.Data[0]?.Row,
         };
         await handelGetData(data);
       } else {
         let data = {
           Floor: "HSX",
           Query: "s=quote&l=All",
+          RowPined : null
         };
+        let newCookie={
+          tab: "VNI",
+          codeList: ""
+        }
+        localStorage.setItem("activePriceboardTabMenu", "VNI");
+        setCookie(newCookie)
         await handelGetData(data);
       }
     }
     HanDelCate();
   }, [dispatch]);
-  console.log(rowData);
   useEffect(() => {
     const socketHSX = new WebSocket(
       "ws://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=QFYjcEdKNTcQpQ5eM8gSgArpZ8iaLyhAzsOc2yA9Uzj6jAmKV%2Bnt5UMBQQ6IxAg2ytcl36jeKKHXgSbB5HdJNA%2FVdbAn7QKNCQ76UmWHPecxhUD87ZajL354hy24brH6&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=8"
@@ -78,7 +85,7 @@ const TableMarketWatchTest = () => {
   }, []);
   useEffect(() => {
     const socketHNX = new WebSocket(
-      "ws://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=IWiKAtteQ0gfuDm%2Fq6LLyUusRcee06oM2k6xVYIgeWHtlePjfeRZFnHIYmMvGt2F1PSB1EsKRw5wHFLA7D0C6bNau3lUFHlFFPF59RMTl3KHk3PRDqc9rmfE904Oy5NV&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=1"
+"ws://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=IWiKAtteQ0gfuDm%2Fq6LLyUusRcee06oM2k6xVYIgeWHtlePjfeRZFnHIYmMvGt2F1PSB1EsKRw5wHFLA7D0C6bNau3lUFHlFFPF59RMTl3KHk3PRDqc9rmfE904Oy5NV&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=1"
     );
     socketHNX.onopen = () => {
       //console.log("WebSocket connection established.");
@@ -166,7 +173,7 @@ const TableMarketWatchTest = () => {
     }
   };
   const containerStyle = { width: "100%", height: "100%" };
-  const gridStyle = { height: "100%", width: "100%" };
+const gridStyle = { height: "100%", width: "100%" };
 
   useEffect(() => {
     document.addEventListener("contextmenu", (event) => {
@@ -176,7 +183,7 @@ const TableMarketWatchTest = () => {
       document.removeEventListener("contextmenu", () => {});
     };
   }, []);
-
+  const a = [{TC: "hello "}]
   return (
     <div style={containerStyle}>
       <div style={gridStyle} className="ag-theme-alpine-dark">
@@ -191,7 +198,8 @@ const TableMarketWatchTest = () => {
           overlayNoRowsTemplate={
             '<span >Loading bảng giá...</span>'
           }
-          rowData={rowData}
+          rowData={ListDataTable}
+          pinnedTopRowData={DataPined}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowDragManaged={true}
