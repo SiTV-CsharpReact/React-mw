@@ -189,13 +189,18 @@ export const tableTestSlice = createSlice({
      let tab =  localStorage.getItem("activePriceboardTabMenu")
      let StringCookie =  {tab:tab ,codeList: ""}
      const arraydata = getCookie(StringCookie) /// return array codelis
-     let ArrayPiend =  state.ListDataTable.filter((e)=>{return  arraydata?.includes(e.MCK)}) // data ghim 
+     if(arraydata){ //  kiểm tra có hay k
+     let ArrayPiend =  state.ListDataTable?.filter((e)=>{return  arraydata?.includes(e.MCK)}) // data ghim 
      state.DataPined = ArrayPiend.map((e:any) => {
         if(e?.isPined ===  false)  return {...e,isPined: true}
         return e
      })
-     let tableDataCookie = state.ListDataTable.filter((e)=>{ return arraydata?.indexOf(e.MCK) === -1})
+     let tableDataCookie = state.ListDataTable?.filter((e)=>{ return arraydata?.indexOf(e.MCK) === -1})
      state.ListDataTable = tableDataCookie
+    }else{
+      state.ListDataTable= [...state.ListDataTable ]
+      state.DataPined = [...state.DataPined]
+    }
     } ,
   
   },
@@ -269,6 +274,7 @@ export const tableTestSlice = createSlice({
             state.DataPined = newdata.map((e: any) => {
               return { ...e, isPined: true };
             });
+       
             state.ListDataTable = mergedArray;
           } else {
             if (data.NameFloor === "HNX") {
@@ -315,7 +321,7 @@ export const tableTestSlice = createSlice({
         state.productsLoaded = true;
         state.status = "idle";
         state.ListDataTable = state.ListDataTable;
-        console.log("vood aydcu9sachu");
+      
       });
   },
 });
