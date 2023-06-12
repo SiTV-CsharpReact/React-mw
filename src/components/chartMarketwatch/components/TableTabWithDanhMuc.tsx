@@ -20,7 +20,9 @@ const gridOptions = {
 };
 
 const TableTabWithDanhMuc = () => {
-  const { ListDataTable } = useAppSelector((state) => state.tableTest);
+  const { ListDataTable, DataPined } = useAppSelector(
+    (state) => state.tableTest
+  );
   console.log("row", ListDataTable);
 
   const columnDefs = React.useMemo(
@@ -78,7 +80,9 @@ const TableTabWithDanhMuc = () => {
                 <div></div>
               )}
               {Number(params.data.KL1) > 0 ? (
-                <div className="h-[22px] text-right">{formatNumberMarket(params.data.KL1)}</div>
+                <div className="h-[22px] text-right">
+                  {formatNumberMarket(params.data.KL1)}
+                </div>
               ) : (
                 <div></div>
               )}
@@ -111,7 +115,9 @@ const TableTabWithDanhMuc = () => {
                 <div></div>
               )}
               {Number(params.data.Chenhlech) > 0 ? (
-                <div className="h-[22px] text-right">{params.data.Chenhlech}</div>
+                <div className="h-[22px] text-right">
+                  {params.data.Chenhlech}
+                </div>
               ) : (
                 <div></div>
               )}
@@ -144,7 +150,9 @@ const TableTabWithDanhMuc = () => {
                 <div></div>
               )}
               {Number(params.data.KL2) > 0 ? (
-                <div className="h-[22px] text-right">{formatNumberMarket(params.data.KL2)}</div>
+                <div className="h-[22px] text-right">
+                  {formatNumberMarket(params.data.KL2)}
+                </div>
               ) : (
                 <div></div>
               )}
@@ -170,6 +178,7 @@ const TableTabWithDanhMuc = () => {
           <AgGridReact
             rowHeight={45}
             rowDragManaged={true}
+            pinnedTopRowData={DataPined}
             rowDragEntireRow={true}
             rowDragMultiRow={true}
             rowSelection={"multiple"}
