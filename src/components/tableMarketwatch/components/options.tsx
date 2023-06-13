@@ -128,7 +128,6 @@ const ColumnDef = (props: any, props2: any) => {
           data,
         });
         let rowsToPins = rows.map((item: any) => item.data);
-        console.log("vạasds", rowsToPins);
         let rowsToPin = rowsToPins
           ? rowsToPins.map((element: RowData) => {
               if (element.isPined === false) {
@@ -318,7 +317,6 @@ const ColumnDef = (props: any, props2: any) => {
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
-            console.log("data ne hi ", params)
             const dataIndex = RowDataIndex.G3; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the

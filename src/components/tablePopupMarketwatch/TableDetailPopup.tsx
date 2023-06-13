@@ -1,12 +1,13 @@
 import React from 'react'
 import { useAppSelector } from '../../store/configureStore';
+import { formatNumber } from '../../utils/util';
 
-const TableDetailPopup: React.FC<any> = ({ dataResult, selectedCode }) => {
-  console.log("selectedCode",selectedCode)
-  const { dataMouse  }: any = useAppSelector(state => state.dataMouse);
-  const { dataMouseBuy }: any = useAppSelector(state => state.dataMouseBuy);
+const TableDetailPopup: React.FC<any> = ({ dataItem, dataTableHSX, dataResult ,handleShowDetail}) => {
+  console.log("first row", dataItem)
+  let { dataMouse  }: any = useAppSelector(state => state.dataMouse);
+  let { dataMouseBuy }: any = useAppSelector(state => state.dataMouseBuy);
   
-  const color = dataResult.map((item: any) => item.MP)
+  const color = dataResult?.map((item: any) => item.MP)
          const colorY =  dataMouse.priceF < color ? "red"
               : dataMouse > color
               ? "#00FF00"
@@ -15,7 +16,8 @@ const TableDetailPopup: React.FC<any> = ({ dataResult, selectedCode }) => {
             dataMouseBuy.priceB < color ? "red"
               : dataMouseBuy > color
               ? "green"
-              : "#F7FF31";
+                : "#F7FF31";
+
   return (
     <table id="tbLPRT" className="table table-bordered table-priceboard text-[#B9B9B9]">
     <thead style={{}}>
@@ -104,52 +106,51 @@ const TableDetailPopup: React.FC<any> = ({ dataResult, selectedCode }) => {
       <tr  id="tr215">
         <td
           className="ccc_ fixedcol"
-          
-        
         >
           <span style={{color :colorY || colorBuy}} className='!font-medium' >
-              {/* {dataMouse.maF || dataMouseBuy.maB || selectedCode} */}
-              {dataMouse.maF || dataMouseBuy.maB || (selectedCode ? selectedCode : '')}
+              {/* {dataMouse.maF || dataMouseBuy.maB || displayCode} */}
+              { dataItem[0]?.Info[0][1] || dataItem[0]?.RowID }
 
           </span>
         </td>
           <td  className="g_r text-[#F7FF31] !font-medium" >
-           {dataMouse.TCT || dataMouseBuy.TCT}
-            
+            {/* {dataMouse.TCT || dataMouseBuy.TCT} */}
+            { formatNumber(dataItem[0]?.Info[1][1]) }
         </td>
         <td  className="g_c  text-[#FF00FF] !font-medium" >
-          {dataMouse.TranC || dataMouseBuy.TranC}
+            {/* {dataMouse.TranC || dataMouseBuy.TranC} */}
+            { formatNumber(dataItem[0]?.Info[2][1]) }
         </td>
         <td  className="grf  !text-[#66CCFF] text-[13.3px] !font-medium" >
-           {dataMouse.SanT || dataMouseBuy.SanT}
+            {/* {dataMouse.SanT || dataMouseBuy.SanT} */}
+            { formatNumber(dataItem[0]?.Info[3][1]) }
         </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL4 ?? dataMouseBuy.dataPopup.KL4}</td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G3 || dataMouseBuy.dataPopup.G3} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL3 || dataMouseBuy.dataPopup.KL3} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G2 || dataMouseBuy.dataPopup.G2} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL2 || dataMouseBuy.dataPopup.KL2} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G1 || dataMouseBuy.dataPopup.G1} </td>
-        <td style={{color :colorY || colorBuy}} className="br_ ">{ dataMouse.dataPopup.KL1 || dataMouseBuy.dataPopup.KL1} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.priceF || dataMouseBuy.priceF} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.KLKhop || dataMouseBuy.dataPopup.KLKhop} </td>
-        <td style={{color :colorY || colorBuy}} className="gr_ ">{dataMouse.dataPopup.Chenhlech || dataMouseBuy.dataPopup.Chenhlech} </td>
-          
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G1B || dataMouseBuy.dataPopup.G1B} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL1B || dataMouseBuy.dataPopup.KL1B} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G2B || dataMouseBuy.dataPopup.G2B} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL2B || dataMouseBuy.dataPopup.KL2B} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.G3B || dataMouseBuy.dataPopup.G3B} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ ">{ dataMouse.dataPopup.KL3B || dataMouseBuy.dataPopup.KL3B} </td>
-        <td style={{color :colorY || colorBuy}} className="br_ ">{ dataMouse.dataPopup.KL4B || dataMouseBuy.dataPopup.KL4B} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.TKL || dataMouseBuy.dataPopup.TKL} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.MOC || dataMouseBuy.dataPopup.MOC} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.CaoNhat || dataMouseBuy.dataPopup.CaoNhat} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.ThapNhat || dataMouseBuy.dataPopup.ThapNhat} </td>
-        <td style={{color :colorY || colorBuy}} className="gr_ "> </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.NNMua || dataMouseBuy.dataPopup.NNMua} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ ">{ dataMouse.dataPopup.NNBan || dataMouseBuy.dataPopup.NNBan} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ "> 
-          1,626,443
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{formatNumber(dataItem[0]?.Info?.[4][1])}</td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[5][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[6][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[7][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[8][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[9][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="br_ !text-sm">{ formatNumber(dataItem[0]?.Info?.[10][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[11][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[12][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="gr_ !text-sm">{formatNumber(dataItem[0]?.Info?.[13][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[14][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[15][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[16][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[17][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[18][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[19][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="br_ !text-sm">{ formatNumber(dataItem[0]?.Info?.[20][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[21][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[22][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[23][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[24][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="gr_ !text-sm"> </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[26][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[27][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm"> 
+        {formatNumber(dataItem[0]?.Info[28][1])}
         </td>
       </tr>
     </tbody>

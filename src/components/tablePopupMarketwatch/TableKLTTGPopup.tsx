@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/configureStore";
 
 const TableKLTTGPopup: React.FC<any> = ({ dataResult }) => {
-  console.log("dataResult",dataResult)
   
   const { dataMouse } = useAppSelector(state => state.dataMouse);
   const { dataMouseBuy } = useAppSelector(state => state.dataMouseBuy);
@@ -11,10 +10,10 @@ const TableKLTTGPopup: React.FC<any> = ({ dataResult }) => {
   return (
     <table id="tbpuRT" className="pu-table-realtime">
       <thead style={{}}>
-        <tr style={{ height: "22px" }}>
-          <th colSpan={4}>Khớp lệnh theo thời gian</th>
+        <tr  style={{ height: "22px" }}>
+          <th  colSpan={4}>Khớp lệnh theo thời gian</th>
         </tr>
-        <tr style={{ height: "22px" }}>
+        <tr className="border" style={{ height: "22.5px" }}>
           <th>Thời gian</th>
           <th>Giá</th>
           <th>Khối lượng</th>
