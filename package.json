@@ -37,6 +37,7 @@
     "font-awesome": "^4.7.0",
     "fs": "^0.0.1-security",
     "highcharts": "^11.0.1",
+    "highcharts-react-official": "^3.2.0",
     "i18next": "^22.4.10",
     "i18next-browser-languagedetector": "^7.0.1",
     "js-cookie": "^3.0.5",
@@ -86,8 +87,8 @@
     "server": "json-server dataIntraday.json --watch --port 5000",
     "DataResult": "json-server dataResult.json --watch --port 3080",
     "PendingOrder": "json-server db.json --watch --port 30",
-    "DataPopup":"json-server dataPopup.json --watch --port 6868",
-    "DataChartIndex":"json-server chart.json --watch --port 8000"
+    "DataPopup": "json-server dataPopup.json --watch --port 6868",
+    "DataChartIndex": "json-server chart.json --watch --port 8000"
   },
   "eslintConfig": {
     "extends": [
