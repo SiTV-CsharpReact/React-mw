@@ -29,7 +29,7 @@ const TableMarketWatchTest = () => {
   //setRowData
   const {ListDataTable ,DataPined ,RowPined} = useAppSelector((state) => state.tableTest );
   // pinned
-  console.log("ListDataTable",ListDataTable)
+
   const pinned = useAppSelector((state) => state.categories.row);
   const handelGetData = useCallback(
     (Data: any) => {
