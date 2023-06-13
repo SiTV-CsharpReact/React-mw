@@ -71,7 +71,7 @@ const ChartMarketwatch = () => {
             >
               <img
                 src={ImageBuySell}
-                height={24}
+height={24}
                 width={24}
                 alt="Tab Top Mua/Bán"
               />

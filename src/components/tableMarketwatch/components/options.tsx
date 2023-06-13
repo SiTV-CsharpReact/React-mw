@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React,{ useRef, useState } from "react";
 import { formatNumberMarket, setColorMarkettest } from "../../../utils/util";
 import { RowDataIndex } from "../interface/config.tablegrid";
 import { Tooltip } from "@mui/material";
@@ -10,7 +10,10 @@ import { RowData } from "../../../models/tableMarketwatch";
 import { CellRender } from "./CellRenderComponent";
 import { addDatatPined } from "../tableTestSlice";
 import { setCookie } from "../../../models/cookie";
-import React from "react";
+
+
+
+
 
 const PinCell = () => {
   return (
@@ -747,7 +750,10 @@ const ColumnDef = (props: any, props2: any) => {
               const SanT : any = params.data.San
             const TCT : any= params.data.TC
             const TranC: any = params.data.Tran
-            
+
+            const dataPopup = params.data
+
+
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div

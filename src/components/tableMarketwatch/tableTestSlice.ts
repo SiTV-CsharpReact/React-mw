@@ -63,21 +63,31 @@ export const getDataTable = createAsyncThunk(
           `s=quote&l=${Param.Query}`
         );
         var arrS = Param.Query ? Param.Query.split(",") : [];
-        var arr_names: DataTable[] = new Array(arrS.length);
-        for (let i = 0; i < DataHSX.length; i++) {
-          const cSym = DataHSX[i]?.Info[0][1]; // mã ck
+        let uniqueArrarrS = DataHSX.filter((value:any, index:any, self:any) => {
+          return self.findIndex((item:any )=> item === value) === index;
+        }); // lọc các phần tử giống nhau
+        //  arrS = ['FPT', 'ALT', 'FTS', 'AAV', 'ALT']
+        var arr_names: DataTable[] = new Array(uniqueArrarrS.length);
+      
+        let uniqueArrDataHSX = DataHSX.filter((value:any, index:any, self:any) => {
+          return self.findIndex((item:any )=> item.RowID === value.RowID) === index;
+        }); // lọc các phần tử giống nhau
+        for (let i = 0; i < uniqueArrDataHSX.length; i++) {
+          const cSym = uniqueArrDataHSX[i]?.Info[0][1]; // mã ck vd FPT
           if (arrS.includes(cSym)) {
-            arr_names[arrS.indexOf(cSym)] = DataHSX[i];
+            arr_names[arrS.indexOf(cSym)] = uniqueArrDataHSX[i];
+          }
+        }    
+        let uniqueArrDataHNX = DataHNX.filter((value:any, index:any, self:any) => {
+          return self.findIndex((item:any )=> item.RowID === value.RowID) === index;
+        }); // lọc các phần tử giống nhau
+        for (let i = 0; i < uniqueArrDataHNX.length; i++) {
+          const cSym = uniqueArrDataHNX[i]?.RowID; // mã ck
+          if (arrS.includes(cSym)) {
+            arr_names[arrS.indexOf(cSym)] = uniqueArrDataHNX[i];
           }
         }
-
-        for (let i = 0; i < DataHNX.length; i++) {
-          const cSym = DataHNX[i]?.RowID; // mã ck
-          if (arrS.includes(cSym)) {
-            arr_names[arrS.indexOf(cSym)] = DataHNX[i];
-          }
-        }
-        DataHNX?.map((obj: DataTable) =>
+      uniqueArrDataHNX?.map((obj: DataTable) =>
           obj.Info?.sort((a: any, b: any) => {
             const indexA = Number(a[0]);
             const indexB = Number(b[0]);
@@ -97,7 +107,7 @@ export const getDataTable = createAsyncThunk(
           NameFloor: Param.Floor,
           RowPined: Param.RowPined,
           product: arr_names,
-        };
+        }
         return data;
       } else {
         const result = await agent.ListDataTable.list(Param.Floor, Param.Query);
@@ -278,18 +288,6 @@ export const tableTestSlice = createSlice({
             state.ListDataTable = mergedArray;
           } else {
             if (data.NameFloor === "HNX") {
-              // data?.product.map((obj:DataTable) =>
-              //       obj.Info?.sort((a: any, b: any) => {
-              //         const indexA = Number(a[0]);
-              //         const indexB = Number(b[0]);
-              //         if (indexA < indexB) {
-              //           return -1;
-              //         }
-              //         if (indexA > indexB) {
-              //           return 1;
-              //         }
-              //         return 0;
-              //       }) )
               state.floor = "MAIN";
               state.ListDataTable = mergedArray;
               state.NameFloor = data?.NameFloor;
