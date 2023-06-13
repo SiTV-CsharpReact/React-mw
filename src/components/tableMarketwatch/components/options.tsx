@@ -9,11 +9,17 @@ import { statusChartMarketwatch } from "../../chartMarketwatch/chartMarketwatchS
 import { RowData } from "../../../models/tableMarketwatch";
 import { CellRender } from "./CellRenderComponent";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React from "react";
 =======
 import { addDatatPined } from "../tableTestSlice";
 import { setCookie } from "../../../models/cookie";
 >>>>>>> de224ce0a27a6fb21761b288ce5f46393f1ec258
+=======
+import { addDatatPined } from "../tableTestSlice";
+import { setCookie } from "../../../models/cookie";
+import React from "react";
+>>>>>>> eb4a183f2b0172cb6e0565663f3d5068aa252323
 
 const PinCell = () => {
   return (
@@ -751,11 +757,15 @@ const ColumnDef = (props: any, props2: any) => {
             const TCT : any= params.data.TC
             const TranC: any = params.data.Tran
 <<<<<<< HEAD
+<<<<<<< HEAD
             const dataPopup = params.data
 
 =======
             
 >>>>>>> de224ce0a27a6fb21761b288ce5f46393f1ec258
+=======
+            
+>>>>>>> eb4a183f2b0172cb6e0565663f3d5068aa252323
             return (
               <Tooltip title="Click đúp để đặt lệnh">
                 <div

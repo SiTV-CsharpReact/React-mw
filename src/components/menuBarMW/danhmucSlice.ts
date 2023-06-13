@@ -6,6 +6,7 @@ export const fetchCategoryAsync = createAsyncThunk(
   "table/getCateolcadf",
   async () => {
     // const res = await agent.Category.get();
+<<<<<<< HEAD
     try {
       // const data = await  agent.Category.get()
       const data = await agent.Category.get();
@@ -14,6 +15,14 @@ export const fetchCategoryAsync = createAsyncThunk(
     } catch (error) {
       console.log("error ở đây", error);
     }
+=======
+  try {
+    const data = await  agent.Category.get()
+    return data
+  } catch (error) {
+    console.log("error ở đây", error);
+  }
+>>>>>>> eb4a183f2b0172cb6e0565663f3d5068aa252323
     // return res;
   }
 );

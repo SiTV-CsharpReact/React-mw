@@ -18,6 +18,7 @@ import changeThemeModeSlice from "../components/header/DarkModeSlice";
 import LayoutMarketWatchSLice from "../components/layoutMarketwatch/LayoutMarketWatchSLice";
 import { tableTestSlice } from "../components/tableMarketwatch/tableTestSlice";
 import { dataSliceShow } from "../components/orderFormMarketwatch/data";
+import statusTableMWSlice from "../components/chartMarketwatch/statusTableSlice";
 
 export const store = configureStore({
   reducer: {
@@ -51,7 +52,8 @@ export const store = configureStore({
      dataBuy:dataSlice.reducer,
     dataMouse: dataSlice.reducer,
      dataMouseBuy:dataSlice.reducer,
-     
+     //set status show table chart
+     statusTable:statusTableMWSlice.reducer,
 
     // change theme 
     settingColorMode: changeThemeModeSlice.reducer,

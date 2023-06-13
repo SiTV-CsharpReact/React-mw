@@ -49,20 +49,17 @@ const ChartMarketwatch = () => {
 
       <div className="chart-layout-right float-right w-[350px]  ">
         <div className="mt-content">
-          {isDanhMuc && <TableTabWithDanhMuc />}
-          {isBuy && <TableTabWithBuySell />}
-          {isKL && <TableTabWithChart />}
-          <FooterChart />
+        {/* condition1 ? expression1 : condition2 ? expression2 : expression3; */}
+          {statusTable ===1? <TableTabWithBuySell /> :statusTable ===2?<TableTabWithChart />:<TableTabWithDanhMuc />}
+        
+       
         </div>
         <div className="mt-menu-tab" style={{ width: "40px", float: "right" }}>
           <ul className="ul-menu-tab">
             <li
               title="Danh mục"
-              onClick={() => {
-                setIsDanhMuc(!isDanhMuc);
-                setIsBuy(false);
-                setIsKL(false);
-              }}
+              onClick={() =>setStatusTable(0)}
+              className= {`${statusTable ===0 ? "active" :""}`}
             >
               <img
                 src={ImagePriceBoard}
@@ -73,12 +70,8 @@ const ChartMarketwatch = () => {
             </li>
             <li
               title="Top Mua/Bán"
-              className="active"
-              onClick={() => {
-                setIsDanhMuc(false);
-                setIsBuy(!isBuy);
-                setIsKL(false);
-              }}
+              className= {`${statusTable ===1 ? "active" :""}`}
+              onClick={() => setStatusTable(1)}
             >
               <img
                 src={ImageBuySell}
@@ -89,11 +82,8 @@ const ChartMarketwatch = () => {
             </li>
             <li
               title="Khớp lệnh"
-              onClick={() => {
-                setIsDanhMuc(false);
-                setIsBuy(false);
-                setIsKL(!isKL);
-              }}
+              className= {`${statusTable === 2 ? "active" :""}`}
+              onClick={() => setStatusTable(2)}
             >
               <img
                 src={ImageHandShake}

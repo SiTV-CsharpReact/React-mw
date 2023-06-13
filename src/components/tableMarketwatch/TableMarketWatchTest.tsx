@@ -191,6 +191,15 @@ const gridStyle = { height: "100%", width: "100%" };
           suppressDragLeaveHidesColumns={true}
           suppressCellFocus={true}
           rowHeight={25}
+<<<<<<< HEAD
+=======
+          overlayLoadingTemplate={
+            '<span class="ag-overlay-loading-center">Please wait while your rows are loading</span>'
+          }
+          overlayNoRowsTemplate={
+            '<span >Loading bảng giá...</span>'
+          }
+>>>>>>> eb4a183f2b0172cb6e0565663f3d5068aa252323
           rowData={ListDataTable}
           pinnedTopRowData={DataPined}
           columnDefs={columnDefs}

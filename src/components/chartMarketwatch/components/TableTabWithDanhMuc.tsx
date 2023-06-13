@@ -6,6 +6,7 @@ import { AgGridReact } from "ag-grid-react";
 import { formatNumberMarket, setColorMarket } from "../../../utils/util";
 import { RowDataIndex } from "../../tableMarketwatch/interface/config.tablegrid";
 import CompleteStock from "../../menuBarMW/CompleteStock";
+import FooterChart from "../../footerMarketwatch/FooterChart";
 
 const gridOptions = {
   getRowId: function (e: any) {
@@ -17,6 +18,7 @@ const gridOptions = {
     suppressMovable: true,
     flex: 1,
   },
+  headerHeight: 45,
 };
 
 const TableTabWithDanhMuc = () => {
@@ -158,7 +160,7 @@ const TableTabWithDanhMuc = () => {
 
   return (
     <div className="h-full tbDanhMuc">
-      <div>
+      <div className="flex justify-between">
         <DanhMuc />
         <CompleteStock/>
       </div>
@@ -168,6 +170,7 @@ const TableTabWithDanhMuc = () => {
           style={{ height: 400, width: "100%", background: "#000 !important" }}
         >
           <AgGridReact
+            
             rowHeight={45}
             rowDragManaged={true}
             rowDragEntireRow={true}
@@ -180,6 +183,7 @@ const TableTabWithDanhMuc = () => {
           ></AgGridReact>
         </div>
       </div>
+      <FooterChart />
     </div>
   );
 };

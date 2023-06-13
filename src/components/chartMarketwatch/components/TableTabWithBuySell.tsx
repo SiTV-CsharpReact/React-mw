@@ -3,6 +3,7 @@ import { Data } from "../config/interface.config";
 import { useAppSelector } from "../../../store/configureStore";
 import axios from "axios";
 import { formatNumber } from "../../../utils/util";
+import FooterChart from "../../footerMarketwatch/FooterChart";
 
 const TableTabWithBuySell = () => {
   const stockCode = useAppSelector((state) => state.chart.code);
@@ -18,8 +19,9 @@ const TableTabWithBuySell = () => {
     fetchData();
   }, [stockCode, symbolNew]);
   return (
-    <table className="no-index">
-      {dataChart.map((dataTable, index) => (
+    <>
+      <table className="no-index">
+      {dataChart && dataChart.map((dataTable, index) => (
         <tbody key={index}>
           <tr className="no-border">
             <td colSpan={4} className="h-40">
@@ -188,6 +190,10 @@ const TableTabWithBuySell = () => {
         </tbody>
       ))}
     </table>
+    <FooterChart />
+    </>
+  
+    
   );
 };
 
