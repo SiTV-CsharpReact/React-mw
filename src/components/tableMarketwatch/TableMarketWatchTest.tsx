@@ -29,6 +29,7 @@ const TableMarketWatchTest = () => {
   //setRowData
   const {ListDataTable ,DataPined ,RowPined} = useAppSelector((state) => state.tableTest );
   // pinned
+  console.log("ListDataTable",ListDataTable)
   const pinned = useAppSelector((state) => state.categories.row);
   const handelGetData = useCallback(
     (Data: any) => {
@@ -194,9 +195,9 @@ const gridStyle = { height: "100%", width: "100%" };
           overlayLoadingTemplate={
             '<span class="ag-overlay-loading-center">Please wait while your rows are loading</span>'
           }
-          overlayNoRowsTemplate={
-            '<span >Loading bảng giá...</span>'
-          }
+          // overlayNoRowsTemplate={
+          //     " "
+          // }
           rowData={ListDataTable}
           pinnedTopRowData={DataPined}
           columnDefs={columnDefs}
