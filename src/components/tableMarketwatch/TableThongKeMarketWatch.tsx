@@ -10,6 +10,7 @@ const { RangePicker } = DatePicker;
 
 const TableThongKeMarketWatch = () => {
   const { KeyMenuChildren } = useAppSelector((state:RootState) => state.table);
+  // console.log("KeyMenuChildren",KeyMenuChildren)
   // const [products, setProducts] = useState([]);
 
   // const params = useParams<{ id: string }>()

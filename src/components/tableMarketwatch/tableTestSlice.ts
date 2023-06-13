@@ -24,11 +24,13 @@ interface TableState {
   DataBi: DataGDTT[];
   RowPined: any;
   DataPined: any[];
+  KeyMenuChildren?: any
 }
 type params = {
   Floor: string;
   Query: string;
   RowPined: any;
+  KeyMenuChildren?: any 
 };
 const dataTableAdapter = createEntityAdapter<DataTable>({
   selectId: (dataTable) => dataTable.RowID || "", // Chỉ định trường khóa
@@ -50,10 +52,12 @@ export const getDataTable = createAsyncThunk(
             DataBi,
             DataPt: DataPt,
           },
+          KeyMenuChildren : null
         };
 
         return data;
       } else if (Param.Floor === "danh-muc") {
+
         const DataHNX = await agent.ListDataTable.list(
           "hnx",
           `s=quote&l=${Param.Query}`
@@ -107,9 +111,23 @@ export const getDataTable = createAsyncThunk(
           NameFloor: Param.Floor,
           RowPined: Param.RowPined,
           product: arr_names,
+          KeyMenuChildren: null
         }
         return data;
-      } else {
+      }  else if(Param.Floor ==="TableTK"){
+        const DataHNX = await agent.ListDataTable.list("hnx" , `s=quote&l=${Param.Query}`)
+        let data = {
+          index : 2,
+          floor :"TableTK",
+          NameFloor : Param.Floor,
+          product : DataHNX,
+          KeyMenuChildren : Param?.KeyMenuChildren,
+          RowPined:  Param.RowPined,
+        }
+        return data
+      } 
+      
+      else {
         const result = await agent.ListDataTable.list(Param.Floor, Param.Query);
         let data = {
           index: 0,
@@ -117,6 +135,7 @@ export const getDataTable = createAsyncThunk(
           NameFloor: Param.Floor,
           RowPined: Param.RowPined,
           product: result,
+          KeyMenuChildren : null
         };
 
         return data;
@@ -148,6 +167,7 @@ export const tableTestSlice = createSlice({
     NameFloor: "",
     productParams: initParams(),
     DataPined: [],
+    KeyMenuChildren : null,
   }),
   reducers: {
     setProductParams: (state, action) => {
@@ -297,7 +317,20 @@ export const tableTestSlice = createSlice({
               state.NameFloor = data?.NameFloor;
             }
           }
-        } else {
+        }  else if(data?.index === 2){
+          state.floor = "TableTK" 
+          state.KeyMenuChildren = data?.KeyMenuChildren
+      }
+      else if(data?.NameFloor === "TableTK"){
+       
+          state.DataPt = data.product?.DataPt?.PUT_EXEC
+          state.DataBi = data.product?.DataBi
+          state.floor = "TableTK" 
+          state.NameFloor = "HSX"
+        
+      }
+        
+        else {
           if (data?.NameFloor === "HSX") {
             state.DataPt = data.product?.DataPt?.PUT_EXEC;
             state.DataBi = data.product?.DataBi;

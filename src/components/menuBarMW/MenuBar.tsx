@@ -56,6 +56,7 @@ const MenuBar = () => {
       Floor: floor,
       Query: query,
       RowPined: null,
+      KeyMenuChildren : KeyMenuChildren
     };
     let activeMenu = {
       nameMenu: name,
@@ -89,7 +90,7 @@ const MenuBar = () => {
             ? nameMenu
               ? `: ${
                   nameMenu.length > 15
-                    ? nameMenu.slice(0, 15) + "..."
+                    ? nameMenu.slice(0, 15)+"..."
                     : nameMenu
                 }`
               : "" + nameMenu?.replace(" ", "")
