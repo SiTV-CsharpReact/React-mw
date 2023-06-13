@@ -88,6 +88,16 @@ table.no-index tr.no-border > td {
     //     // height: 45px;
     //   }
     // }
+    .ag-header{
+      min-height: 45px !important;
+      &-row{
+        height: 45px !important;
+      }
+      .custom-header{
+        border: 1px solid #505050 !important;
+        background: #000000 !important;
+      }
+    }
     table {
       th {
         padding: 12px;
@@ -150,9 +160,11 @@ table.no-index tr.no-border > td {
   background-color: #1d1d1d;
 }
 .ag-cell{
-  border-left: 1px solid #858585;
+  border-left: 1px solid #505050;
+  // height: 45px !important;
   // border-bottom: 1px solid #858585;
 }
+
 .custom-cell{
   // height: 45px !important;
   // flex-direction: column;

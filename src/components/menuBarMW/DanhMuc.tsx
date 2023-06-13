@@ -53,7 +53,7 @@ const handleItemChildClick = async (
 };
   return (
     <div
-      className={`group list-sub-menu ${row && name ? "activeBgCate" : " "}`}
+      className={`group list-sub-menu ${props.class} ${row && name ? "activeBgCate" : " "}`}
     >
       <span className="text-13px ">Danh mục{name ? `: ${name}` : ""}</span>
       <ul className="absolute hidden text-black group-hover:block z-40 sub-menu">
