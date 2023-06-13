@@ -34,6 +34,9 @@ const dataGDTTtable = {
     listPt : (floor : string)=>requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=pt`),
     listBi : (floor : string)=>requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=bi`)
 }
+const chartIndex = {
+    get: () => requests.get('http://localhost:8000/dataChartIndex'),
+}
 const agent = {
     TableHNX,
     TableHSX,
@@ -41,7 +44,8 @@ const agent = {
     Category,
     Ministry,
     ListDataTable,
-    dataGDTTtable
+    dataGDTTtable,
+    chartIndex
 }
 export default agent;
 // import axios, { AxiosInstance, AxiosResponse } from "axios";
