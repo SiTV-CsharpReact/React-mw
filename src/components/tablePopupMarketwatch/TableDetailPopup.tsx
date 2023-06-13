@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppSelector } from '../../store/configureStore';
-import { formatNumber } from '../../utils/util';
+import { formatNumberMarket } from '../../utils/util';
 
 const TableDetailPopup: React.FC<any> = ({ dataItem, dataTableHSX, dataResult ,handleShowDetail}) => {
   console.log("first row", dataItem)
@@ -115,42 +115,42 @@ const TableDetailPopup: React.FC<any> = ({ dataItem, dataTableHSX, dataResult ,h
         </td>
           <td  className="g_r text-[#F7FF31] !font-medium" >
             {/* {dataMouse.TCT || dataMouseBuy.TCT} */}
-            { formatNumber(dataItem[0]?.Info[1][1]) }
+            { formatNumberMarket(dataItem[0]?.Info[1][1]) }
         </td>
         <td  className="g_c  text-[#FF00FF] !font-medium" >
             {/* {dataMouse.TranC || dataMouseBuy.TranC} */}
-            { formatNumber(dataItem[0]?.Info[2][1]) }
+            { formatNumberMarket(dataItem[0]?.Info[2][1]) }
         </td>
         <td  className="grf  !text-[#66CCFF] text-[13.3px] !font-medium" >
             {/* {dataMouse.SanT || dataMouseBuy.SanT} */}
-            { formatNumber(dataItem[0]?.Info[3][1]) }
+            { formatNumberMarket(dataItem[0]?.Info[3][1]) }
         </td>
-        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{formatNumber(dataItem[0]?.Info?.[4][1])}</td>
-        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[5][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[6][1])} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[7][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[8][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[9][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className="br_ !text-sm">{ formatNumber(dataItem[0]?.Info?.[10][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[11][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[12][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className="gr_ !text-sm">{formatNumber(dataItem[0]?.Info?.[13][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[14][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[15][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[16][1])} </td>
-        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[17][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[18][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[19][1])} </td>
-        <td style={{color :colorY || colorBuy}} className="br_ !text-sm">{ formatNumber(dataItem[0]?.Info?.[20][1])} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[21][1])} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[22][1])} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[23][1])} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[24][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{formatNumberMarket(dataItem[0]?.Info?.[4][1])}</td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[5][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[6][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[7][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[8][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[9][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="br_ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[10][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[11][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[12][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="gr_ !text-sm">{formatNumberMarket(dataItem[0]?.Info?.[13][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[14][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[15][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[16][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[17][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[18][1]) } </td>
+        <td style={{color :colorY || colorBuy}} className="b__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[19][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="br_ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[20][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[21][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[22][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[23][1])} </td>
+        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumberMarket(dataItem[0]?.Info?.[24][1])} </td>
         <td style={{color :colorY || colorBuy}} className="gr_ !text-sm"> </td>
-        <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumber(dataItem[0]?.Info?.[26][1])} </td>
-        <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumber(dataItem[0]?.Info?.[27][1])} </td>
+        <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumberMarket(dataItem[0]?.Info?.[26][1])} </td>
+        <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumberMarket(dataItem[0]?.Info?.[27][1])} </td>
         <td className="g__ !text-sm !text-[#B9B9B9]"> 
-        {formatNumber(dataItem[0]?.Info[28][1])}
+        {formatNumberMarket(dataItem[0]?.Info[28][1])}
         </td>
       </tr>
     </tbody>
