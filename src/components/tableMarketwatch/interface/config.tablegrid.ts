@@ -1,10 +1,23 @@
 import { TDefColDef, TRowDataIndex } from "./interface.tablegrid";
 
 export const gridOptions = {
+  rowStyle: { background: 'black' },
+  // getRowStyle: (params:any) => {
+  //   if (params.node.pinned) {
+  //     console.log("vô đây bạn ơi" ,params)
+  //     return {
+  //          'background': 'black' ,
+  //       // Áp dụng lớp CSS để giữ các hàng ghim trong phạm vi ghim
+  //       // Ví dụ: `pinned-row`
+  //         'pointer-events': 'none',
+  //     };
+  //   }
+  //   return null;
+  // },
   getRowId: function (e: any) {
     return e.data.RowID;
   },
-  
+ 
   defaultColDef: {
     resizable: false,
     sortable: true,
@@ -27,6 +40,8 @@ export const gridOptions = {
     sortAscending: '<i class="fa fa-caret-down !text-base pr-0.5 center-horizontal"/>',
     sortDescending: '<i class="fa fa-caret-up !text-base pr-0.5 center-horizontal"/>',
   },
+
+
   // };
   // document.addEventListener("contextmenu", (event) => {
   //   event.preventDefault();
