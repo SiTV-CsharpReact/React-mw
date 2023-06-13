@@ -56,8 +56,38 @@ const TableThongKeMarketWatch = () => {
   //      const data = await res.json();
   //      setProducts(data)
   //  }
-
+  let time = new Date()
+  const formattedDate = time.toLocaleDateString("vi-VN", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
   const defaultDate: Dayjs = dayjs();
+  const [floor,setFloor ] = useState<string>("1")
+  const [Dot,setDot ] = useState<string>("1")
+  const [TimeStart,setTimeStart ] = useState<any>(formattedDate)
+  const [TimeEnd,setTimeEnd] = useState<any>(formattedDate)
+  const converTime = (e:any)=>{
+    const convertedDate = new Date(e.$d);
+    const year = convertedDate.getFullYear();
+    const month = convertedDate.getMonth(); 
+    const day = convertedDate.getDate();
+    return year +"//" +( month + 1) + "//" + day
+  }
+const tets = (e:any)=>{
+ let a =  converTime(e)
+ console.log("converted",a , defaultDate)
+}
+
+  const HandeFillter = ()=>{
+  
+    let data = {
+      floor ,
+      TimeStart
+    }
+    console.log("voo"  ,defaultDate)
+  }
+
   return (
     <div>
       {KeyMenuChildren === 0 ? (
@@ -72,7 +102,8 @@ const TableThongKeMarketWatch = () => {
               style={{}}
             >
               <label className="label_price col-priceboard">Sàn</label>
-              <select
+              <select 
+              onChange={(e)=>setFloor(e.target.value)}
                 className="col-xs-8 col-sm-8 input"
                 id="slCenterHIST_INDEX"
               >
@@ -120,6 +151,7 @@ const TableThongKeMarketWatch = () => {
                   defaultValue={defaultDate}
                   showToday={true}
                   renderExtraFooter={() => "extra footer"}
+                  onChange={(e)=>tets(e)}
                 />
               </Space>
             </div>
@@ -142,6 +174,7 @@ const TableThongKeMarketWatch = () => {
               style={{}}
             >
               <button
+              onClick={HandeFillter}
                 className="btn btn-success button_Statistics"
                 id="btnViewHIST_INDEX"
               >

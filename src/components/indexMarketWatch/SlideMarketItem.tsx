@@ -1,5 +1,6 @@
 import React from "react";
 import { iconColorMenuMarket, setColorMenuMarket } from "../../utils/util";
+import ChartIndex from "../chartIndex/ChartIndex";
 
 type Props = {
   id: string[];
@@ -100,10 +101,153 @@ const SlideMarketItem: React.FC<Props> = ({
                 <span className="marf txtIndex">
                   (<span id={id[10]}>{valueFloor}</span>)
                 </span>
-                <span className="HO_MarketStat txtIndex" id={`${id[11] !== undefined ? id[11]:""}`} >{status}</span>
+                <span
+                  className="HO_MarketStat txtIndex"
+                  id={`${id[11] !== undefined ? id[11] : ""}`}
+                >
+                  {status}
+                </span>
               </p>
             </>
           )}
+          <div
+            id="canvasChartVNXALL"
+            className="chart"
+            style={{
+              height: "100px",
+              width: "200px",
+              position: "relative",
+              padding: "0px",
+            }}
+          >
+            <canvas
+              className="flot-base"
+              width={200}
+              height={100}
+              style={{
+                direction: "ltr",
+                position: "absolute",
+                left: "0px",
+                top: "0px",
+                width: "200px",
+                height: "100px",
+              }}
+            />
+            <div
+              className="flot-text"
+              style={{
+                position: "absolute",
+                inset: "0px",
+                fontSize: "8px",
+                color: "rgb(165, 165, 165)",
+                fontFamily: "Arial",
+              }}
+            >
+              <div
+                className="flot-x-axis flot-x1-axis xAxis x1Axis"
+                style={{ position: "absolute", inset: "0px", display: "block" }}
+              >
+                <div
+                  className="flot-tick-label tickLabel"
+                  style={{
+                    position: "absolute",
+                    maxWidth: "28px",
+                    top: "88px",
+                    left: "1px",
+                    textAlign: "center",
+                  }}
+                >
+                  09 h
+                </div>
+                <div
+                  className="flot-tick-label tickLabel"
+                  style={{
+                    position: "absolute",
+                    maxWidth: "28px",
+                    top: "88px",
+                    left: "32px",
+                    textAlign: "center",
+                  }}
+                >
+                  10 h
+                </div>
+                <div
+                  className="flot-tick-label tickLabel"
+                  style={{
+                    position: "absolute",
+                    maxWidth: "28px",
+                    top: "88px",
+                    left: "62px",
+                    textAlign: "center",
+                  }}
+                >
+                  11 h
+                </div>
+                <div
+                  className="flot-tick-label tickLabel"
+                  style={{
+                    position: "absolute",
+                    maxWidth: "28px",
+                    top: "88px",
+                    left: "93px",
+                    textAlign: "center",
+                  }}
+                >
+                  12 h
+                </div>
+                <div
+                  className="flot-tick-label tickLabel"
+                  style={{
+                    position: "absolute",
+                    maxWidth: "28px",
+                    top: "88px",
+                    left: "124px",
+                    textAlign: "center",
+                  }}
+                >
+                  13 h
+                </div>
+                <div
+                  className="flot-tick-label tickLabel"
+                  style={{
+                    position: "absolute",
+                    maxWidth: "28px",
+                    top: "88px",
+                    left: "154px",
+                    textAlign: "center",
+                  }}
+                >
+                  14 h
+                </div>
+                <div
+                  className="flot-tick-label tickLabel"
+                  style={{
+                    position: "absolute",
+                    maxWidth: "28px",
+                    top: "88px",
+                    left: "185px",
+                    textAlign: "center",
+                  }}
+                >
+                  15 h
+                </div>
+              </div>
+            </div>
+            <canvas
+              className="flot-overlay"
+              width={200}
+              height={100}
+              style={{
+                direction: "ltr",
+                position: "absolute",
+                left: "0px",
+                top: "0px",
+                width: "200px",
+                height: "100px",
+              }}
+            />
+          </div>
+         <ChartIndex/>
         </div>
       </li>
     </>

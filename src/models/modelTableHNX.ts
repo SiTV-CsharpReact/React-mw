@@ -1,6 +1,7 @@
 export interface DataTable {
   RowID?: string;
   Info?: Array<Array<string>>;
+  MCK : any
 }
 export interface ProductParams {
   value: string;

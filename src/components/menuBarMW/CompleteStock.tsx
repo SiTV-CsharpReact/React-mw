@@ -6,7 +6,7 @@ import {
   RootState,
 } from "../../store/configureStore";
 
-const CompleteStock = () => {
+const CompleteStock = (props: any) => {
   const companies: string[] = [
     "AAV - HNX.NY - Công ty Cổ phần AAV Group",
     "ADC - HNX.NY - Công ty Cổ phần Mỹ thuật và Truyền Thông",
@@ -37,18 +37,17 @@ const CompleteStock = () => {
   const HandelChangeInput = (e: any) => {
     // tim kiếm
     setValue(e.value);
-   
-    setActiveShowALl(false)
+
+    setActiveShowALl(false);
     if (e.value == "") {
       setShow(false);
     } else {
-    
       if (timeoutIdRef.current) {
         clearTimeout(timeoutIdRef.current);
       }
       timeoutIdRef.current = setTimeout(() => {
         setSearchTerm(e.value);
-        setShow(true)
+        setShow(true);
       }, 1000);
     }
   };
@@ -57,28 +56,28 @@ const CompleteStock = () => {
     setShow(false);
     setValue("");
     const valueMa = e.split("-"); // chuỗi đầu cần lấy
-    let a = data?.Data.find((e) => e.Row == row);
+    let a = data?.Data.find((e: any) => e.Row == row);
 
     let bqueryy: any = a?.List.concat(`,${valueMa[0]}`).trim();
     let result = a?.List.includes(valueMa[0].trim());
-    if(result){
+    if (result) {
       console.log("result", result);
     }
     let dataSerr = {
       Floor: "danh-muc",
       Query: bqueryy,
     };
-    CallApi(dataSerr)
+    CallApi(dataSerr);
   };
   const hanDeAllData = () => {
     // get all data
     setShow(true);
-    setActiveShowALl(true)
+    setActiveShowALl(true);
   };
-  const hanDelPoUp =()=>{
-    setShow(false)
-    setActiveShowALl(false)
-  }
+  const hanDelPoUp = () => {
+    setShow(false);
+    setActiveShowALl(false);
+  };
   //  chữ tìm kiếm màu đỏ
   const getHighlightedText = (text: string, highlight: string) => {
     const parts = text.split(new RegExp(`(${highlight})`, "gi"));
@@ -98,11 +97,16 @@ const CompleteStock = () => {
   };
   // dã lọc song
   const searchResults = testdata.filter((item) =>
-      item.toLowerCase().includes(searchTerm.toLowerCase()) 
+    item.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="input_complete form-control relative" id="addSymbol">
+    <div
+      className={`input_complete form-control relative ${
+        props.width ? props.width : ""
+      }`}
+      id="addSymbol"
+    >
       <div className="ms-sel-ctn">
         <input
           type="text"
@@ -112,7 +116,7 @@ const CompleteStock = () => {
           id="txtF1"
           value={Value.toLocaleUpperCase()}
           onChange={(e) => HandelChangeInput(e.target)}
-          onClick={()=>setActiveShowALl(false)}
+          onClick={() => setActiveShowALl(false)}
         />
       </div>
       <div className="ms-trigger" onClick={hanDeAllData}>
@@ -120,30 +124,30 @@ const CompleteStock = () => {
           <i className="fa fa-caret-down fa-iconALl"> </i>
         </label>
       </div>
-      {show && searchResults.length>0 ? (
+      {show && searchResults.length > 0 ? (
         <>
-          <div className="ms-trigger-ico showALLData">
-            <ul className="menuShowAllData">
-             { isActiveShowALL ? 
-             testdata ? testdata.map((e) => {
-                  return (
-                    <li onClick={() => AddMaCate(e)}>
-                      {e}
-                    </li>
-                  );
-                })
-              : "" : 
-              searchResults.length> 0
+          <div
+            className={`ms-trigger-ico showALLData ${
+              props.width ? "w-[307px] right-0 !left-auto" : ""
+            }`}
+          >
+            <div className={`menuShowAllData ${props.width ? "" : ""}`}>
+              {isActiveShowALL
+                ? testdata
+                  ? testdata.map((e) => {
+                      return <div onClick={() => AddMaCate(e)}>{e}</div>;
+                    })
+                  : ""
+                : searchResults.length > 0
                 ? searchResults.map((e) => {
                     return (
-                      <li onClick={() => AddMaCate(e)}>
+                      <div onClick={() => AddMaCate(e)}>
                         {getHighlightedText(e, searchTerm)}
-                      </li>
+                      </div>
                     );
                   })
-                : ""
-              }
-            </ul>
+                : ""}
+            </div>
           </div>
           <label
             htmlFor=""

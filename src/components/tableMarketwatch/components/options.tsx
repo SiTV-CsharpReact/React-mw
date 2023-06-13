@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React,{ useRef, useState } from "react";
 import { formatNumberMarket, setColorMarkettest } from "../../../utils/util";
 import { RowDataIndex } from "../interface/config.tablegrid";
 import { Tooltip } from "@mui/material";
@@ -8,6 +8,12 @@ import { dispatchDataMouseEventHandler, dispatchDataMouseEventHandlerBuy, dispat
 import { statusChartMarketwatch } from "../../chartMarketwatch/chartMarketwatchSlice";
 import { RowData } from "../../../models/tableMarketwatch";
 import { CellRender } from "./CellRenderComponent";
+import { addDatatPined } from "../tableTestSlice";
+import { setCookie } from "../../../models/cookie";
+
+
+
+
 
 const PinCell = () => {
   return (
@@ -26,7 +32,7 @@ const ColumnDef = (props: any, props2: any) => {
   const widthWindow = window.innerWidth;
   const dispatch = useAppDispatch();
   const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
-
+  const {RowPined} = useAppSelector((state) => state.tableTest)
   const handleClick = (dataTable: any) => {
     // console.log("dataTable ii",dataTable)
     dispatch(dispatchDataTable(dataTable));
@@ -72,76 +78,21 @@ const ColumnDef = (props: any, props2: any) => {
     const grid = props.current.api;
     const defaultData = props.current.props.rowData;
     const { rowPinned, rowIndex, data } = params;
-    const { RowID, symbol, isPined } = data;
+    // const { RowID, symbol, isPined } = data;
     let rows = props2.current;
-    // console.log("co row ne", rows);
-    if (rowPinned) {
-      const newRows = props2.current.filter((e: any) => {
-        return RowID !== e.data.RowID;
-      });
-      const item = rows.find((item: any) => item.data.RowID === RowID);
-      const other = props2.current.filter((val: any) => val.index < item.index);
-      props2.current = newRows;
-      const rowsToPin = newRows.map((item: any) => item.data);
-      let rowsToPins = rowsToPin
-        ? rowsToPin.map((item: any) => {
-            if (item.isPined === false) {
-              return { ...item, isPined: true };
-            }
-            return item;
-          })
-        : [];
-      grid.setPinnedTopRowData(rowsToPins);
-      grid.applyTransaction({
-        add: [data],
-        addIndex: item.index - other.length,
-      });
-    } else {
-      const items = grid.getRowNode(RowID)?.data;
-      if (!items) {
-        const newRows = props2.current.filter((e: any) => {
-          return RowID !== e.data.RowID;
-        });
-        const item = rows.find((item: any) => item.data.RowID === RowID);
-        const other = props2.current.filter(
-          (val: any) => val.index < item.index
-        );
-        props2.current = newRows;
-        const rowsToPin = newRows.map((item: any) => item.data);
-        let rowsToPins = rowsToPin
-          ? rowsToPin.map((item: any) => {
-              if (item.isPined === false) {
-                return { ...item, isPined: true };
-              }
-              return item;
-            })
-          : [];
-        grid.setPinnedTopRowData(rowsToPins);
-        grid.applyTransaction({
-          add: [data],
-          addIndex: item.index - other.length,
-        });
-      } else {
-        const index = defaultData.findIndex((item: any) => item.MCK === RowID);
-        rows.push({
-          index,
-          data,
-        });
-        let rowsToPins = rows.map((item: any) => item.data);
-        let rowsToPin = rowsToPins
-          ? rowsToPins.map((element: RowData) => {
-              if (element.isPined === false) {
-                return { ...element, isPined: true };
-              }
-              return element;
-            })
-          : [];
-        grid.setPinnedTopRowData(rowsToPin);
-        grid.applyTransaction({ remove: [items] });
-      }
+   
+    let itemss = localStorage.getItem("activePriceboardTabMenu")
+    let newCookie = {
+      tab : itemss,
+      codeList :  data.MCK
     }
+   let result =  setCookie(newCookie)
+      if(result){
+        dispatch(addDatatPined({RowPined,data}))
+      }
   };
-  const columnDefs = [
+  const columnDefs = React.useMemo(
+    () => [
     // {
     //   headerName: "",
     //   cellClass: "ag-cell-pinning",
@@ -311,12 +262,13 @@ const ColumnDef = (props: any, props2: any) => {
           maxWidth: 100,
           headerClass: "custom-header",
           cellClass: "score-cell",
-          cellStyle: (params: any) => ({
+          cellStyle: (params: any):any => ({
             fontWeight: "",
             color: setColorMarkettest("", params),
             textAlign: "right",
           }),
           cellRenderer: (params: any) => {
+            // console.log("data ne hi ", params)
             const dataIndex = RowDataIndex.G3; // Get the index of the column= RowDataIndex.G3; // Get the index of the column
             const value = params.value; // Get the value of the cell
             const rowid = params.data.RowID; // Get the
@@ -798,7 +750,9 @@ const ColumnDef = (props: any, props2: any) => {
               const SanT : any = params.data.San
             const TCT : any= params.data.TC
             const TranC: any = params.data.Tran
+
             const dataPopup = params.data
+
 
             return (
               <Tooltip title="Click đúp để đặt lệnh">
@@ -994,7 +948,24 @@ const ColumnDef = (props: any, props2: any) => {
       suppressMenu: true,
       cellRenderer: CellRender,
     },
-  ];
+  ], 
+   [
+    INDEX.cbcol20,
+    INDEX.cbcol22,
+    INDEX.cbcol23,
+    INDEX.cbcol24,
+    INDEX.cbcol25,
+    INDEX.cbcol26,
+    INDEX.cbcol27,
+    INDEX.cbcol28,
+    INDEX.cbcol4,
+    handleClick,
+    handleClickBuy,
+    handleDoubleClick,
+    handlePinRow,
+    widthWindow,
+  ]
+);
   return [columnDefs];
 };
 

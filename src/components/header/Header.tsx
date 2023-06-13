@@ -13,10 +13,9 @@ import useDarkMode from "./useDarkMode";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { setStatusChart } from "../menuBarMW/menuSlice";
 import React from "react";
-const Header = () => {
-  // const { mode } = useDarkMode();
-  // console.log(mode);
-
+import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
+const Header = () => { 
+  const dispatch = useAppDispatch();
   const { mode } = useAppSelector((state) => state.settingColorMode);
 
   return (
@@ -26,7 +25,8 @@ const Header = () => {
       id="header-fpts"
     >
       <div className="header-left">
-        <Link to="/" className={`text-fontLogo font-bold italic ${mode}-text`}>
+        <Link to="/" className={`text-fontLogo font-bold italic ${mode}-text`}
+          onClick={() => dispatch(statusChartMarketwatch(""))}>
           <span>Ez</span>
           <span className="text-colorTextLogo">Trade</span>
         </Link>
