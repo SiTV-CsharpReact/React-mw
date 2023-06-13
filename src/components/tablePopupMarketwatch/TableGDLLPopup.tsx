@@ -1,6 +1,9 @@
 import React from "react";
+import { useAppSelector } from "../../store/configureStore";
 
 const TableGDLLPopup = () => {
+  let { dataMouse  }: any = useAppSelector(state => state.dataMouse);
+
   return (
     <table id="tbOddLot">
       <thead>
@@ -14,22 +17,28 @@ const TableGDLLPopup = () => {
       </thead>
       <tbody>
         <tr style={{ height: "20px" }}>
-          <td className="pu-d !text-center">28</td>
-          <td className="pu-d">16</td>
-          <td className="pu-r !text-center">28.45</td>
-          <td className="pu-r">13</td>
+         <td style={{ color: dataMouse.TCT > 28 ? '#00FF00' : (dataMouse.TCT < 28 ? 'red' : '#F7FF31') }} className="pu-d !text-center">28</td>
+
+         <td style={{ color: dataMouse.TCT > 16 ? '#00FF00' : (dataMouse.TCT < 16 ? 'red' : '#F7FF31') }} className="pu-d !text-center">16</td>
+
+          <td style={{ color: dataMouse.TCT > 28.45 ? '#00FF00' : (dataMouse.TCT < 28.45 ? 'red' : '#F7FF31') }} className="pu-d !text-center">28.45</td>
+
+           <td style={{ color: dataMouse.TCT > 13 ? '#00FF00' : (dataMouse.TCT < 13 ? 'red' : '#F7FF31') }} className="pu-d !text-center">13</td>
+
         </tr>
         <tr style={{ height: "20px" }}>
-          <td className="pu-d !text-center">27.6</td>
-          <td className="pu-d">1</td>
-          <td className="pu-u !text-center">28.5</td>
-          <td className="pu-u">20</td>
+          <td style={{ color: dataMouse.TCT > 13 ? '#00FF00' : (dataMouse.TCT < 13 ? 'red' : '#F7FF31') }} className="pu-d !text-center">28.45</td>
+           <td style={{ color: dataMouse.TCT > 13 ? '#00FF00' : (dataMouse.TCT < 13 ? 'red' : '#F7FF31') }} className="pu-d !text-center">13</td>
+           <td style={{ color: dataMouse.TCT > 13 ? '#00FF00' : (dataMouse.TCT < 13 ? 'red' : '#F7FF31') }} className="pu-d !text-center">28.45</td>
+           <td style={{ color: dataMouse.TCT > 13 ? '#00FF00' : (dataMouse.TCT < 13 ? 'red' : '#F7FF31') }} className="pu-d !text-center">13</td>
+
         </tr>
         <tr style={{ height: "20px" }}>
-          <td className="pu-d !text-center">27.5</td>
-          <td className="pu-d">1</td>
-          <td className="pu-u !text-center">29.4</td>
-          <td className="pu-u">22</td>
+          <td style={{ color: dataMouse.TCT > 13 ? '#00FF00' : (dataMouse.TCT < 13 ? 'red' : '#F7FF31') }} className="pu-d !text-center">13</td>
+           <td style={{ color: dataMouse.TCT > 13 ? '#00FF00' : (dataMouse.TCT < 13 ? 'red' : '#F7FF31') }} className="pu-d !text-center">28.45</td>
+           <td style={{ color: dataMouse.TCT > 13 ? '#00FF00' : (dataMouse.TCT < 13 ? 'red' : '#F7FF31') }} className="pu-d !text-center">13</td>
+           <td style={{ color: dataMouse.TCT > 13 ? '#00FF00' : (dataMouse.TCT < 13 ? 'red' : '#F7FF31') }} className="pu-d !text-center">28.45</td>
+
         </tr>
       </tbody>
     </table>
