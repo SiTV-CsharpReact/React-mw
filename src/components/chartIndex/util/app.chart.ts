@@ -80,3 +80,6 @@ function _getDateTs(dateTime:any) {
         return d;
     }
 };
+export function drawChart(data:any){
+//    console.log(data.HNX)
+}

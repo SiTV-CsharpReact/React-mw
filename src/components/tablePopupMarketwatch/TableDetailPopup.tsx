@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppSelector } from '../../store/configureStore';
-import { formatNumberMarket } from '../../utils/util';
+import { formatNumberMarket} from '../../utils/util';
 
 const TableDetailPopup: React.FC<any> = ({ dataItem, dataTableHSX, dataResult ,handleShowDetail}) => {
   console.log("first row", dataItem)

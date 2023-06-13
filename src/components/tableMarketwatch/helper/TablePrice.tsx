@@ -1,4 +1,15 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 const TablePrices = () => {
+  const [data, setData] = useState([])
+  const fetchDataPrice = async () => { 
+    const res = await axios.get("http://localhost:2222/Body")
+    console.log("res", res)
+  }
+  useEffect(() => {
+    fetchDataPrice()
+  },[])
   return (
     <>
       <table
@@ -60,7 +71,9 @@ const TablePrices = () => {
             <th className="hbrb">Tổng cộng </th>
           </tr>
         </thead>
-        <tbody>{/*Content*/}</tbody>
+        <tbody>
+          
+        </tbody>
       </table>
     </>
   );

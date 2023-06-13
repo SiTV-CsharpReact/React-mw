@@ -18,7 +18,7 @@ const TableGDTTMarketWatch = () => {
             ></input>
           </div>
           {/* check floor  */}
-          {floor === "hnx" ? (
+          {prices ?   floor === "hnx" ? (
             <div className="col-span-2 flex justify-around font-bold pt-1">
               <span>
                 Tổng KL GDTT :<label> {formatNumber(prices[4]?.f240)}</label>
@@ -36,7 +36,8 @@ const TableGDTTMarketWatch = () => {
                 Tổng KL GDTT : <label> {formatNumber(prices[4]?.f241)}</label>
               </span>
             </div>
-          )}
+          ) : " "}
+         
 
           <div className="col-span-1"></div>
         </div>
