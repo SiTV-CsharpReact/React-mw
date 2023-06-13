@@ -14,12 +14,8 @@ import TableTabWithChart from "./components/TableTabWithChart";
 import TableTabWithDanhMuc from "./components/TableTabWithDanhMuc";
 import TradingViewWidget from "../Chart/TradingViewWidget";
 const ChartMarketwatch = () => {
-  const [isDanhMuc, setIsDanhMuc] = useState<boolean>(false);
-  const [isBuy, setIsBuy] = useState<boolean>(false);
-  const [isKL, setIsKL] = useState<boolean>(false);
-
   const dispatch = useAppDispatch();
-
+  const [statusTable, setStatusTable] = useState<number>(1);
   return (
     <section className="chart-layout">
       <div className="float-left chart-layout-left ">
@@ -75,7 +71,7 @@ const ChartMarketwatch = () => {
             >
               <img
                 src={ImageBuySell}
-                height={24}
+height={24}
                 width={24}
                 alt="Tab Top Mua/Bán"
               />
