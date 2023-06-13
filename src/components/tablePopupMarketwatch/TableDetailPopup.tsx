@@ -20,89 +20,89 @@ const TableDetailPopup: React.FC<any> = ({ dataItem, dataTableHSX, dataResult ,h
 
   return (
     <table id="tbLPRT" className="table table-bordered table-priceboard text-[#B9B9B9]">
-    <thead style={{}}>
+    <thead className='bg-[#333333]' style={{ fontFamily:"Arial,Sans-Serif"}}>
       <tr>
-        <th rowSpan={2} className="hbrb">
+        <th rowSpan={2} className="hbrb text-[#B9B9B9]">
           Mã
         </th>
-        <th rowSpan={2} className="hg_b">
+        <th rowSpan={2} className="hg_b !text-[#B9B9B9]">
           TC
         </th>
-        <th rowSpan={2} className="hg_b">
+        <th rowSpan={2} className="hg_b !text-[#B9B9B9]">
           Trần
         </th>
-        <th rowSpan={2} className="hgrb">
+        <th rowSpan={2} className="hgrb !text-[#B9B9B9]">
           Sàn
         </th>
-        <th colSpan={7} className="hbrb">
+        <th colSpan={7} className="hbrb !text-[#B9B9B9]">
           Mua
         </th>
-        <th colSpan={3} className="hgrb">
+        <th colSpan={3} className="hgrb !text-[#B9B9B9]">
           Khớp lệnh
         </th>
-        <th colSpan={7} className="hbrb">
+        <th colSpan={7} className="hbrb !text-[#B9B9B9]">
           Bán
         </th>
-        <th rowSpan={2} className="hg_b">
+        <th rowSpan={2} className="hg_b !text-[#B9B9B9]">
           Tổng KL
         </th>
-        <th rowSpan={2} className="hg_b">
+        <th rowSpan={2} className="hg_b !text-[#B9B9B9]">
           Mở
           <br />
           cửa
         </th>
-        <th rowSpan={2} className="hg_b">
+        <th rowSpan={2} className="hg_b !text-[#B9B9B9]">
           Cao
           <br />
           nhất
         </th>
-        <th rowSpan={2} className="hg_b">
+        <th rowSpan={2} className="hg_b !text-[#B9B9B9]">
           Thấp
           <br />
           nhất
         </th>
-        <th rowSpan={2} className="hgrb">
+        <th rowSpan={2} className="hgrb !text-[#B9B9B9]">
           Trung
           <br />
           bình
         </th>
-        <th rowSpan={2} className="hg_b">
+        <th rowSpan={2} className="hg_b !text-[#B9B9B9]">
           NN
           <br />
           mua
         </th>
-        <th rowSpan={2} className="hg_b">
+        <th rowSpan={2} className="hg_b !text-[#B9B9B9]">
           NN
           <br />
           bán
         </th>
-        <th rowSpan={2} className="hg_b">
+        <th rowSpan={2} className="hg_b !text-[#B9B9B9]">
           Room
           <br />
           còn lại
         </th>
       </tr>
       <tr>
-        <th className="hb_b">KL4</th>
-        <th className="hb_b">G3</th>
-        <th className="hb_b">KL3</th>
-        <th className="hb_b">G2</th>
-        <th className="hb_b">KL2</th>
-        <th className="hb_b">G1</th>
-        <th className="hbrb">KL1</th>
-        <th className="hg_b">Giá</th>
-        <th className="hg_b">KL</th>
-        <th className="hgrb">+/-</th>
-        <th className="hb_b">G1</th>
-        <th className="hb_b">KL1</th>
-        <th className="hb_b">G2</th>
-        <th className="hb_b">KL2</th>
-        <th className="hb_b">G3</th>
-        <th className="hb_b">KL3</th>
-        <th className="hbrb">KL4</th>
+        <th className="hb_b !text-[#B9B9B9]">KL4</th>
+        <th className="hb_b !text-[#B9B9B9]">G3</th>
+        <th className="hb_b !text-[#B9B9B9]">KL3</th>
+        <th className="hb_b !text-[#B9B9B9]">G2</th>
+        <th className="hb_b !text-[#B9B9B9]">KL2</th>
+        <th className="hb_b !text-[#B9B9B9]">G1</th>
+        <th className="hbrb !text-[#B9B9B9]">KL1</th>
+        <th className="hg_b !text-[#B9B9B9]">Giá</th>
+        <th className="hg_b !text-[#B9B9B9]">KL</th>
+        <th className="hgrb !text-[#B9B9B9]">+/-</th>
+        <th className="hb_b !text-[#B9B9B9]">G1</th>
+        <th className="hb_b !text-[#B9B9B9]">KL1</th>
+        <th className="hb_b !text-[#B9B9B9]">G2</th>
+        <th className="hb_b !text-[#B9B9B9]">KL2</th>
+        <th className="hb_b !text-[#B9B9B9]">G3</th>
+        <th className="hb_b !text-[#B9B9B9]">KL3</th>
+        <th className="hbrb !text-[#B9B9B9]">KL4</th>
       </tr>
     </thead>
-    <tbody id="firstTbody">
+    <tbody className='bg-[#333333]' id="firstTbody">
       <tr  id="tr215">
         <td
           className="ccc_ fixedcol"
@@ -147,9 +147,9 @@ const TableDetailPopup: React.FC<any> = ({ dataItem, dataTableHSX, dataResult ,h
         <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[23][1])} </td>
         <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[24][1])} </td>
         <td style={{color :colorY || colorBuy}} className="gr_ !text-sm"> </td>
-        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[26][1])} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ !text-sm">{ formatNumber(dataItem[0]?.Info?.[27][1])} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ !text-sm"> 
+        <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumber(dataItem[0]?.Info?.[26][1])} </td>
+        <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumber(dataItem[0]?.Info?.[27][1])} </td>
+        <td className="g__ !text-sm !text-[#B9B9B9]"> 
         {formatNumber(dataItem[0]?.Info[28][1])}
         </td>
       </tr>

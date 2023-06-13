@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/configureStore";
+import { formatNumber } from "../../utils/util";
 
 const TableKLTTGPopup: React.FC<any> = ({ dataResult }) => {
   
@@ -35,9 +36,9 @@ const TableKLTTGPopup: React.FC<any> = ({ dataResult }) => {
           
           return  <tr key={index} style={{ height: "22px" }}>
           <td style={{color: color || colorBuy }} className="text-center pu-w">{item.MT}</td>
-          <td  style={{color: color || colorBuy }} className="pu-w">{item.MP}</td>
-          <td  style={{color: color || colorBuy }} className="pu-w">{item.MQ}</td>
-          <td  style={{color: color || colorBuy }} className="pu-w">{item.TQ}</td>
+          <td  style={{color: color || colorBuy }} className="pu-w">{formatNumber(item.MP)}</td>
+          <td  style={{color: color || colorBuy }} className="pu-w">{formatNumber(item.MQ)}</td>
+          <td  style={{color: color || colorBuy }} className="pu-w">{formatNumber(item.TQ)}</td>
         </tr>
         })}
        

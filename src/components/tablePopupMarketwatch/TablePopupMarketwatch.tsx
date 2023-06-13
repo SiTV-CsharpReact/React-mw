@@ -152,7 +152,7 @@ const TablePopupMarketwatch = () => {
          {showPopup && (
   <div
     style={{ overflowY: "scroll" }}
-    className="w-[500px] overflow-hidden shadow-2xl left-[25%] top-[36px] z-50 h-[320px] bg-white absolute"
+    className="w-[500px]  overflow-hidden shadow-2xl left-[25%] top-[36px] z-50 h-[310px] bg-[#FBFBFB] rounded-sm absolute"
   >
     {showPopup &&
       filteredData.map((item: any, index: any) => {
@@ -160,10 +160,9 @@ const TablePopupMarketwatch = () => {
         return (
           <div
             onClick={() => handleShowDetail(item.Code)}
-            className="py-1 cursor-pointer pl-2 border-b hover:bg-[darkgrey]"
+            className="py-1 cursor-pointer pl-2 border-b hover:bg-[#EEEEEE]"
             key={index}
           >
-                  
             <p className="!font-medium">
               {parts.map((part : any, partIndex : any) => (
                 <span
