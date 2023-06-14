@@ -8,7 +8,7 @@ const ListMenu = () => {
     <div className="header-center">
     <ul>
       <li className="ezfu-hover-giaodichchungkhoan">
-        <a>{t("home:menu.LichSuGD")}</a>
+        <a>{t("home:menu.LichSuGD")} </a>
         <ul>
           <li>
             <Link  to="/report/ClientActivityRange">{t("home:menu.LichSUDL")}</Link>
@@ -46,10 +46,10 @@ const ListMenu = () => {
             <Link  to="/transfer/savingshistory" className="Foreign-Hide">{t("home:menu.DanhsachHDCV")}  <input type="image" src="../../report/images/new.png" height={16} width={28} /></Link>
           </li>
           <li>
-            <Link  to="/report/AdvReport" className="MarPro-Hide" style={{display: 'none'}}>Lịch sử ứng trước tiền bán CK</Link>
+            <Link  to="/report/AdvReport" className="MarPro-Hide" style={{display: 'none'}}>{t("home:menu.LSUTTTC")}</Link>
           </li>
           <li>
-            <Link  to="/rightscustody/AdvanceOrderForm">{t("home:menu.UTTTC")}</Link>
+            <Link  to="/rightscustody/AdvanceOrderForm">{t("home:menu.UTTTC")} </Link>
           </li>
           <li>
             <Link  to="/rightscustody/AdvanceHistory">{t("home:menu.LSUTTTC")}</Link>
@@ -60,7 +60,7 @@ const ListMenu = () => {
         <a>{t("home:menu.GDDacBiet")}</a>
         <ul>
           <li>
-            <Link  to="/oddlot/History">Lịch sử bán CK lô lẻ</Link>
+            <Link  to="/oddlot/History">{t("home:menu.LishSUCKLL")}</Link>
           </li>
           <li>
             <Link  to="/rightscustody/OverView">Thực hiện quyền</Link>

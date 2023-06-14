@@ -8,7 +8,7 @@ import { formatNumberMarket } from "../../utils/util";
 
 // import { LicenseManager } from "ag-grid-enterprise";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
-import { getDataTable } from "./tableTestSlice";
+import { getDataTable, handleHistoryPrices } from "./tableTestSlice";
 import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
 
 import { defaultColDef, gridOptions } from "./interface/config.tablegrid";
@@ -176,7 +176,9 @@ const TableMarketWatchTest = () => {
   };
   const containerStyle = { width: "100%", height: "100%" };
 const gridStyle = { height: "100%", width: "100%" };
-
+  const HandleHistory= ()=>{
+      dispatch(handleHistoryPrices("tets"))
+  }
   useEffect(() => {
     document.addEventListener("contextmenu", (event) => {
       event.preventDefault();
@@ -188,6 +190,7 @@ const gridStyle = { height: "100%", width: "100%" };
   const a = [{TC: "hello "}]
   return (
     <div style={containerStyle}>
+        <button  style={{background : "red"}} className="btn btn-primary" onClick={HandleHistory}> Lịch Sử </button>
       <div style={gridStyle} className="ag-theme-alpine-dark">
         <AgGridReact
           ref={gridRef}
@@ -217,6 +220,7 @@ const gridStyle = { height: "100%", width: "100%" };
           }}
         />
       </div>
+    
     </div>
   );
 };

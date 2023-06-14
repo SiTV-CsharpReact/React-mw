@@ -37,9 +37,13 @@ const menuSlice = createSlice({
       setActiveMenu  (state, action) {
         state.nameMenu = action.payload?.nameMenu;
         state.keyMenu = action.payload?.keyMenu;
-      }
+      },
+      setHistoryMenu :  ( state)=> {
+          state.keyMenu = 4
+          state.nameMenu = "Thống kê Giá"
+      } 
     },
 });
 
-export const { setStatusChart , setActiveMenu } = menuSlice.actions;
+export const { setStatusChart , setActiveMenu ,setHistoryMenu } = menuSlice.actions;
 export default menuSlice;

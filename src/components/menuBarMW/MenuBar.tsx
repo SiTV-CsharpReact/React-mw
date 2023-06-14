@@ -31,6 +31,7 @@ const MenuBar = () => {
   const { keyMenu, nameMenu } = useSelector(
     (state: RootState) => state.menuBar
   );
+  console.log("index nameMenu ", nameMenu)
   const handleItemClick = (path: string, key: number) => {
     // setIsActiveMenu(key);
     // setactiveNameFloor(path);

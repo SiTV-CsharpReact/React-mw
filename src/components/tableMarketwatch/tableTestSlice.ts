@@ -250,6 +250,11 @@ export const tableTestSlice = createSlice({
         state.DataPined = [...state.DataPined];
       }
     },
+    //  lịch sử giá 
+    handleHistoryPrices :(state,actions)=>{
+          state.KeyMenuChildren = 1
+          state.floor = "TableTK"
+    }
   },
 
   extraReducers: (builder) => {
@@ -267,6 +272,8 @@ export const tableTestSlice = createSlice({
         let dataTable = data?.product;
         state.RowPined = data?.RowPined;
             if (data?.index === 0) {
+              state.floor = "MAIN"
+              state.index = data?.index
               const mergedArray = dataTable.map((element: any) => {
                 const infoArray = element.Info.map(
                   (subArray: any[]) => subArray[1]
@@ -333,10 +340,10 @@ export const tableTestSlice = createSlice({
                   state.NameFloor = data?.NameFloor;
                 }
               }
+             
             } else if (data?.index === 2) {
               state.floor = "TableTK";
               state.KeyMenuChildren = data?.KeyMenuChildren;
-            } else if (data?.NameFloor === "TableTK") {
               state.DataPt = data.product?.DataPt?.PUT_EXEC;
               state.DataBi = data.product?.DataBi;
               state.floor = "TableTK";
@@ -375,5 +382,5 @@ export default tableTestSlice;
 export const productSelectors = dataTableAdapter.getSelectors(
   (state: RootState) => state.table
 );
-export const { setProductParams, addDatatPined, getDataCookie } =
+export const { setProductParams, addDatatPined, getDataCookie  ,handleHistoryPrices} =
   tableTestSlice.actions;

@@ -8,6 +8,13 @@
         "LichSUDL":"Lịch sử đặt lệnh",
         "LichSUKL":"Lịch sử khớp lệnh",
         "LishSuTT":"Lịch sử chờ T.Toán",
+
+        "LishSUCKLL":"Lịch sử bán CK lô lẻ",
+        "THQ" : "Thực hiện quyền",
+        "DKDT" : "Đặt lệnh điều kiện",
+        "SLDK":"Sổ lệnh điều kiện",
+        "LYTT":"Lưu ký trực tuyến",
+      
         "Chuyentien":"Chuyển tiền",
         "Mauchuyentien":"Mẫu Chuyển Tiền",
         "ChuyentienPPX":"Chuyển tiền ký quỹ CK phái sinh",

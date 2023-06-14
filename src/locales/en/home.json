@@ -8,6 +8,13 @@
         "LichSUDL":"Order History",
         "LichSUKL":"Order Matching History",
         "LishSuTT":"Matched Orders Pending for Settlement",
+
+        "LishSUCKLL": "Oddlot Transation Log",
+        "THQ" : "Corporate Actions Calendar",
+        "DKDT" : "Conditional order",
+        "SLDK":"Stoploss Order History",
+        "LYTT":"Online Depository",
+
         "Chuyentien":"Money Transfer",
         "Mauchuyentien":"Money Transfer Form",
         "ChuyentienPPX":"Transfer money into derivative trading deposits",
