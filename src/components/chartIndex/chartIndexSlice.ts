@@ -19,7 +19,7 @@ interface ComponentState {
     async () => {
     try {
       const data = await  agent.chartIndex.get()
-      console.log(data)
+      // console.log(data)
       return data
     } catch (error) {
       console.log("error ở đây", error);

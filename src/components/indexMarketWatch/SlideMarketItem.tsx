@@ -35,7 +35,9 @@ const SlideMarketItem: React.FC<Props> = ({
   valueNoChange,
   status,
 }: Props) => {
+
   return (
+   
     <>
       <li className="dvChart">
         <div>
@@ -110,7 +112,7 @@ const SlideMarketItem: React.FC<Props> = ({
               </p>
             </>
           )}
-           <ChartIndex/>
+            <ChartIndex value={name.replace(":","")}/>
           
        
         </div>

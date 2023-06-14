@@ -704,7 +704,7 @@ const getExchangeName = (vEx: string) => {
     if (vEx === ARRAY_EXCHANGE[i][0]) return ARRAY_EXCHANGE[i][1];
 };
 export const getCompanyNameByCode = (vStockCode: string) => {
-  console.log("vo day ne",vStockCode)
+  // console.log("vo day ne",vStockCode)
   // if(g_arrCompanyInfo) {
   //     let name = g_arrCompanyInfo.find((element:any)=>element.Code === vStockCode);
   // }

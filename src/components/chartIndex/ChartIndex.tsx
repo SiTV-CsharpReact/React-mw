@@ -5,6 +5,11 @@ import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { drawChart } from './util/app.chart';
 import { chartIndex } from '../../models/chartIndex';
+import './chartIndex.scss'
+type Props ={
+  value: string;
+  // Other props...
+}
 
 const gradient: any = [0, 0, 50, 500];
 // const xAxis: any = [
@@ -43,15 +48,24 @@ const options: Highcharts.Options = {
    
   ],
   chart:{
-   height: 95,
-   backgroundColor: "#000",
-        plotBackgroundColor: {
-          linearGradient: gradient,
-          stops: [
-            [0, "#080808"],
-            [1, "#917c05"],
-          ],
-        },
+    className: 'gradient-bg',
+    marginTop:10,
+   height: 80,
+   width:170,
+   backgroundColor: {
+    linearGradient: gradient,
+    stops: [
+      [0, "#080808"],
+      [1, "#917c05"],
+    ],
+  },
+        // plotBackgroundColor: {
+        //   linearGradient: gradient,
+        //   stops: [
+        //     [0, "#080808"],
+        //     [1, "#917c05"],
+        //   ],
+        // },
    borderWidth: 1,
    borderColor:"#505050"
 
@@ -59,7 +73,7 @@ const options: Highcharts.Options = {
  
   yAxis:{
     min: 0,
-    height:80,
+    height:60,
     gridLineWidth: 0,
     labels: {
       enabled: false, // Tắt hiển thị giá trị bên trục y
@@ -82,7 +96,7 @@ const options: Highcharts.Options = {
         fontSize: "8px",
       },
     },
-     height: 60,
+     height: 70,
   },
  
 };
@@ -91,7 +105,9 @@ const options: Highcharts.Options = {
 //   height: '150px', // Chiều cao tùy chỉnh
 //   width: '100px', // Chiều rộng tùy chỉnh
 // };
-const ChartIndex = (props: HighchartsReact.Props) => {
+const ChartIndex: React.FC<Props> = (props: HighchartsReact.Props ) => {
+  // log(props)
+  console.log(props.value)
     const dispatch = useAppDispatch();
   const {isLoading,dataChartIndex,status} = useAppSelector((state)=>state.chartIndex)
   useEffect(()=>{
