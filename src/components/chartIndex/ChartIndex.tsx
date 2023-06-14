@@ -3,6 +3,8 @@ import { useAppDispatch, useAppSelector } from '../../store/configureStore'
 import { fetchChartIndexAsync } from './chartIndexSlice';
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { drawChart } from './util/app.chart';
+import { chartIndex } from '../../models/chartIndex';
 
 const gradient: any = [0, 0, 50, 500];
 // const xAxis: any = [
@@ -18,6 +20,11 @@ const xAxis: any = [
   6, // Vị trí 6 tương ứng với 15h
 ];
 const options: Highcharts.Options = {
+  // plotOptions: {
+  //   series: {
+  //     click: false, // Tắt sự kiện click trên series line
+  //   },
+  // },
   title: {
     text: '',
   },
@@ -27,7 +34,7 @@ const options: Highcharts.Options = {
   series: [
     {
       type: 'line',
-      data: [1, 2, 3,7,8,9,10,23,37],
+      data: [1, 2, 3,7,8,9,10,23,37,80,90],
       color: '#00ff00',
       marker: {
         enabled: false
@@ -55,11 +62,7 @@ const options: Highcharts.Options = {
     height:80,
     gridLineWidth: 0,
     labels: {
-      style: {
-        fontSize: "9px",
-        color: "#00ff00",
-      },
-      distance: 8,
+      enabled: false, // Tắt hiển thị giá trị bên trục y
     },
         title:{
           text:''
@@ -70,6 +73,7 @@ const options: Highcharts.Options = {
     categories: xAxis,
     gridLineWidth: 1,
     gridLineColor:'#222012',
+    
     startOnTick: true,
     labels: {
       rotation: 0,
@@ -93,8 +97,8 @@ const ChartIndex = (props: HighchartsReact.Props) => {
   useEffect(()=>{
     dispatch(fetchChartIndexAsync())
   },[])
-
-  console.log(dataChartIndex)
+  const dataChart = drawChart(dataChartIndex);
+  // console.log(dataChartIndex)
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
   return (
     <HighchartsReact
