@@ -231,7 +231,11 @@ export const tableTestSlice = createSlice({
       state.ListDataTable= [...state.ListDataTable ]
       state.DataPined = [...state.DataPined]
     }
-    } ,
+    },
+     handleHistoryPrices :(state,actions)=>{
+       state.KeyMenuChildren = 1
+       state.floor = "TableTK"
+    }
   
   },
 
@@ -361,4 +365,4 @@ export default tableTestSlice;
 export const productSelectors = dataTableAdapter.getSelectors(
   (state: RootState) => state.table
 );
-export const { setProductParams, addDatatPined ,getDataCookie  } = tableTestSlice.actions;
+export const { setProductParams, addDatatPined ,getDataCookie ,handleHistoryPrices } = tableTestSlice.actions;

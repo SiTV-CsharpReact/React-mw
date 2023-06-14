@@ -1,7 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/configureStore";
 
 const TablePrices = () => {
+  const stockDetail = useSelector((state: RootState) => state.popupTable.code);
+
   const [data, setData] = useState([])
   const fetchDataPrice = async () => { 
     const res = await axios.get("http://localhost:2222/Body")
@@ -9,7 +13,8 @@ const TablePrices = () => {
   }
   useEffect(() => {
     fetchDataPrice()
-  },[])
+  }, [])
+
   return (
     <>
       <table

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useAppDispatch } from '../../store/configureStore';
 import { showDetailStock } from './popupTableSlice';
 import TablePopupMarketwatch from '../tablePopupMarketwatch/TablePopupMarketwatch';
+import { handleHistoryPrices } from '../tableMarketwatch/tableTestSlice';
 
 interface Props {
     x: number; 
@@ -65,10 +66,10 @@ interface Props {
               Chi tiết <b>{selectedValue.value}</b>
             </span>
           </li>
-          <li>
+          <li  onClick={() => dispatch(handleHistoryPrices("test"))}>
             <i className="fa fa-history text-[#009688]"></i>
-            <span>
-              Lịch sử giá <b>{selectedValue.value}</b>
+          <span >
+              Lịch sử giá  <b>{selectedValue.value}</b>
             </span>
           </li>
           <li>
