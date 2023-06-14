@@ -4,6 +4,7 @@ import { showDetailStock } from './popupTableSlice';
 import TablePopupMarketwatch from '../tablePopupMarketwatch/TablePopupMarketwatch';
 import { handleHistoryPrices } from '../tableMarketwatch/tableTestSlice';
 import { setHistoryMenu } from '../menuBarMW/menuSlice';
+import { historyPriceActiveMenu } from '../menuBarMW/danhmucSlice';
 
 interface Props {
     x: number; 
@@ -33,6 +34,7 @@ interface Props {
       const handleTest = ()=>{
        dispatch(handleHistoryPrices("test"))
         dispatch(setHistoryMenu())
+        dispatch(historyPriceActiveMenu())
       }
   return (
     <div

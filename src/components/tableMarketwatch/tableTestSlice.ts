@@ -361,9 +361,7 @@ export const tableTestSlice = createSlice({
                 state.NameFloor = "HNX";
               }
             
-          }
-        
-       
+          }       
       })
       .addCase(getDataTable.rejected, (state, action) => {
         state.DataBi = state.DataBi;

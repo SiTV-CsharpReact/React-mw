@@ -190,7 +190,6 @@ const gridStyle = { height: "100%", width: "100%" };
   const a = [{TC: "hello "}]
   return (
     <div style={containerStyle}>
-        <button  style={{background : "red"}} className="btn btn-primary" onClick={HandleHistory}> Lịch Sử </button>
       <div style={gridStyle} className="ag-theme-alpine-dark">
         <AgGridReact
           ref={gridRef}
