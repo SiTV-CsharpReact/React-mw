@@ -37,8 +37,7 @@ import { useSelector } from "react-redux";
 import CompleteStock from "../menuBarMW/CompleteStock";
 
 function RenderTable() {
-  const floor = useAppSelector((state) => state.table.floor);
-  console.log(floor)
+  const floor = useAppSelector((state) => state.tableTest.floor);
   switch (floor) {
     case "MAIN":
       return <TableMarketWatchTest />;

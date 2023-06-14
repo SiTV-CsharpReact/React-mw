@@ -31,6 +31,7 @@ const TableMarketWatchTest = () => {
   // pinned
 
   const pinned = useAppSelector((state) => state.categories.row);
+  // call data 
   const handelGetData = useCallback(
     (Data: any) => {
       dispatch(getDataTable(Data));
@@ -51,7 +52,8 @@ const TableMarketWatchTest = () => {
         let data = {
           Floor: "HSX",
           Query: "s=quote&l=All",
-          RowPined : null
+          RowPined : null,
+          KeyMenuChildren : null
         };
         let newCookie={
           tab: "VNI",
