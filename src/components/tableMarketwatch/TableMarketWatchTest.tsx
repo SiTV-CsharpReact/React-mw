@@ -8,7 +8,7 @@ import { formatNumberMarket } from "../../utils/util";
 
 // import { LicenseManager } from "ag-grid-enterprise";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
-import { getDataTable } from "./tableTestSlice";
+import { getDataTable, handleHistoryPrices } from "./tableTestSlice";
 import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
 
 import { defaultColDef, gridOptions } from "./interface/config.tablegrid";
@@ -31,6 +31,7 @@ const TableMarketWatchTest = () => {
   // pinned
 
   const pinned = useAppSelector((state) => state.categories.row);
+  // call data 
   const handelGetData = useCallback(
     (Data: any) => {
       dispatch(getDataTable(Data));
@@ -51,7 +52,8 @@ const TableMarketWatchTest = () => {
         let data = {
           Floor: "HSX",
           Query: "s=quote&l=All",
-          RowPined : null
+          RowPined : null,
+          KeyMenuChildren : null
         };
         let newCookie={
           tab: "VNI",
@@ -174,7 +176,9 @@ const TableMarketWatchTest = () => {
   };
   const containerStyle = { width: "100%", height: "100%" };
 const gridStyle = { height: "100%", width: "100%" };
-
+  const HandleHistory= ()=>{
+      dispatch(handleHistoryPrices("tets"))
+  }
   useEffect(() => {
     document.addEventListener("contextmenu", (event) => {
       event.preventDefault();
@@ -215,6 +219,7 @@ const gridStyle = { height: "100%", width: "100%" };
           }}
         />
       </div>
+    
     </div>
   );
 };

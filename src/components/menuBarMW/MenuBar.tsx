@@ -8,7 +8,7 @@ import {
   getDataTable,
 } from "../tableMarketwatch/tableTestSlice";
 import { useSelector } from "react-redux";
-import { activeMenuDanhmuc } from "./danhmucSlice";
+import { activeMenuDanhmuc, historyPriceActiveMenu } from "./danhmucSlice";
 import { setActiveMenu } from "./menuSlice";
 import { setCookie } from "../../models/cookie";
 
@@ -69,7 +69,7 @@ const MenuBar = () => {
     // name = tab
     setCookie(cookie);
     dispatch(setActiveMenu(activeMenu)); // cập nhật lại menu
-
+    dispatch(historyPriceActiveMenu()) // cập lại menu category
     let result = await dispatch(getDataTable(data));
     if (result?.payload) {
       dispatch(getDataCookie(cookie.codeList)); // cập nhật lại menu
