@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/configureStore";
 import { formatNumber } from "../../utils/util";
+import { useTranslation } from "react-i18next";
 
 const TableAssetReport = () => {
+  const { t } = useTranslation(["home"]);
   const { assetReport } = useAppSelector((state) => state.assetReport);
   const [data, setData] = useState([]);
   const [short, setShort] = useState(false);
@@ -55,7 +57,7 @@ const TableAssetReport = () => {
                       className={`font-medium cursor-pointer text-normalText underline italic ${mode}-text ml-2`}
                       onClick={() => setShort(!short)}
                     >
-                      (Xem đầy đủ)
+                      ({t("home:Order.View_Full")})
                     </span>
                   </span>
                 </div>

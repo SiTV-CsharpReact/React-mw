@@ -68,7 +68,8 @@ const TableMarketWatchTest = () => {
   }, [dispatch]);
   useEffect(() => {
     const socketHSX = new WebSocket(
-      "ws://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=QFYjcEdKNTcQpQ5eM8gSgArpZ8iaLyhAzsOc2yA9Uzj6jAmKV%2Bnt5UMBQQ6IxAg2ytcl36jeKKHXgSbB5HdJNA%2FVdbAn7QKNCQ76UmWHPecxhUD87ZajL354hy24brH6&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=8"
+      "wss://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=l4Qv5el2qo7nNiXubQ1oHGbFB%2F4w1UNE4vpgPXPs5nz6VP7b6bGYnMwB2aivGfMOUNZ%2F0QwrXmR%2BwkqRkEukXGYDdn8iKHzVZ%2BIiwFO2A1nxyh0%2FCdX3rc3omFIBjraz&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=5"
+
     );
     socketHSX.onopen = () => {
       //console.log("WebSocket connection established.");
@@ -87,7 +88,7 @@ const TableMarketWatchTest = () => {
   }, []);
   useEffect(() => {
     const socketHNX = new WebSocket(
-"ws://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=IWiKAtteQ0gfuDm%2Fq6LLyUusRcee06oM2k6xVYIgeWHtlePjfeRZFnHIYmMvGt2F1PSB1EsKRw5wHFLA7D0C6bNau3lUFHlFFPF59RMTl3KHk3PRDqc9rmfE904Oy5NV&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=1"
+      "wss://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=JWiUHUXRVLCXtTY7Na0DSx2vODWGuDSFrc6Da7FVAcRg9EYCUqCkDYfa3bsaKn305erm6aBpsrUmoFZ70viczLA1hDqUzrrqmuaZWu0UZDyUzynPYy0gGJu4gHM7dZVg&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=1"
     );
     socketHNX.onopen = () => {
       //console.log("WebSocket connection established.");
@@ -124,7 +125,7 @@ const TableMarketWatchTest = () => {
               arrDatas.map((arrData: any) => updateTableHNX(arrData))
             )
           );
-          // console.log(dataM)
+          // console.log("dataM",dataM)
         }
       }
     } else {

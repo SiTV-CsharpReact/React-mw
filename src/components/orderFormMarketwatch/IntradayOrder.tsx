@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import PdfandExcel from './PdfandExcel'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next';
 
 const IntradayOrder = () => {
+  const { t } = useTranslation(["home"]);
   const [data, setData] = useState([])
    const dataInterday = async() => {
       const resultData = await axios.get("http://localhost:5000/Data")
@@ -22,19 +24,19 @@ const IntradayOrder = () => {
         <table>
           <thead>
             <tr style={{border:"1px solid #dedede"}} className='border bg-[#f3f3f3} py-1'>
-            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm text-md'>Thời gian	</th>
-            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm '>Mã CK	</th>
-            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>Loại g.dịch</th>
-            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>Lệnh đặt	</th>
-            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>Loại lệnh	</th>
-            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>S.lượng	</th>
-            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>Giá</th>
-            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>Sàn g.dịch</th>
-            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>Tình trạng	</th>
-            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>P.thức đặt lệnh	</th>
-            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>SHL gốc	</th>
-            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>SHL</th>
-            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>Thông báo</th>
+            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm text-md'>{t("home:base.Time")} 	</th>
+            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm '>{t("home:Order.ORDER_MCK")} 	</th>
+            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>{t("home:base.LoaiGD")}</th>
+            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>{t("home:Order.ORDER_LD")}	</th>
+            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>{t("home:base.LoaiLenh")}	</th>
+            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>{t("home:base.SoLuong")}</th>
+            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>{t("home:base.Gia")}</th>
+            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>{t("home:base.SanGD")}</th>
+            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>{t("home:base.TinhTrang")}</th>
+            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>{t("home:base.PhuongThucDatLenh")}	</th>
+            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>{t("home:base.SHL0")}	</th>
+            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>{t("home:base.SHL")}</th>
+            <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>{t("home:base.ThongBao")}</th>
             </tr>
           </thead>
           <tbody>

@@ -4,10 +4,12 @@ import pfd from "../../images/pdf.png";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import axios from "axios";
+import { useTranslation } from 'react-i18next';
 const PdfandExcel = () => {
+  const {t} = useTranslation(["home"]);
     const handleExportToExcel = (e: any) => {
     e.preventDefault();
-
+    
     const table = document.getElementById("table-id");
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.table_to_sheet(table);
@@ -25,6 +27,7 @@ const PdfandExcel = () => {
   };
 
   const handleExportToPDF = () => {
+    
     const table = document.getElementById("table-id");
     const doc: any = new jsPDF("p", "pt");
     doc.addFont("Helvetica", "Helvetica", "normal");
@@ -51,7 +54,7 @@ const PdfandExcel = () => {
       <div>
           <div className="flex items-center gap-3 mt-2">
           <button className="p-1 cursor-pointer  pl-5 pr-5 rounded-md text-white text-[13px] font-medium uppercase bg-[#0055ba]">
-            Cập nhật
+            {t("home:base.CapNhat")}
           </button>
           <form className="flex gap-2 mr-8">
             <img

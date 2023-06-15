@@ -9,10 +9,10 @@ import { useTranslation } from "react-i18next";
 import useDarkMode from "./useDarkMode";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { changeModeTheme } from "./DarkModeSlice";
-
 // import { changeTheme } from "./DarkModeSlice";
 const ProfileAccount: any = () => {
   const { i18n } = useTranslation(["home", "report"]);
+  const { t } = useTranslation(["home"]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openAccount, setOpenAccount] = useState(false);
   // const mode = "light";
@@ -28,7 +28,6 @@ const ProfileAccount: any = () => {
     setAnchorEl(null);
   };
   const changeLanguage = (lng: "EN" | "VN") => {
-    console.log("oke");
     i18n.changeLanguage(lng);
   };
 
@@ -98,7 +97,7 @@ const ProfileAccount: any = () => {
                   href="https://accounts.fpts.com.vn"
                   target="_blank"
                 >
-                  Thông tin chủ tài khoản
+                  {t("home:base.PROFILE_TTCTK")}
                 </a>
               </Box>
             </Box>
@@ -125,7 +124,7 @@ const ProfileAccount: any = () => {
               <li>
                 {/* <FontAwesomeIcon icon={faKey}  className="icon_account"/> */}
                 <i className="fa fa-key"></i>
-                Thay đổi mật khẩu
+                {t("home:base.PROFILE_TDMK")}
               </li>
             </a>
             <a
@@ -137,7 +136,7 @@ const ProfileAccount: any = () => {
               <li>
                 {/* <FontAwesomeIcon icon={faLock} className="icon_account" /> */}
                 <i className="fa fa-lock"></i>
-                Quản trị Token
+                {t("home:base.PROFILE_QTTKEN")}
               </li>
             </a>
             <a
@@ -149,7 +148,7 @@ const ProfileAccount: any = () => {
               <li>
                 {/* <FontAwesomeIcon icon={faHistory}  className="icon_account"/> */}
                 <i className="fa fa-history"></i>
-                Hoạt động gần đây
+                {t("home:base.PROFILE_HDGD")}
               </li>
             </a>
             <a
@@ -161,7 +160,7 @@ const ProfileAccount: any = () => {
               <li>
                 {/* <FontAwesomeIcon icon={faUnlockAlt}  className="icon_account"/> */}
                 <i className="fa fa-unlock-alt"></i>
-                Cài đặt mật khẩu giao dịch
+                {t("home:base.PROFILE_CDMKGG")}
               </li>
             </a>
             <a
@@ -173,7 +172,7 @@ const ProfileAccount: any = () => {
               <li>
                 {/* <FontAwesomeIcon icon={faQuestionCircle}  className="icon_account"/> */}
                 <i className="fa fa-question-circle"></i>
-                Hướng dẫn xóa cache
+                {t("home:base.PROFILE_HDXC")}
               </li>
             </a>
             <a
@@ -185,13 +184,13 @@ const ProfileAccount: any = () => {
               <li>
                 {/* <FontAwesomeIcon icon={faPenSquare}  className="icon_account"/> */}
                 <i className="fa fa-pencil-square-o"></i>
-                Góp ý
+                {t("home:base.PROFILE_GY")}
               </li>
             </a>
             <li className={`ezfu-language ${mode}-text`}>
               {/* <FontAwesomeIcon icon={faLanguage}  className="icon_account"/> */}
               <i className="fa fa-language"></i>
-              <span>Hỗ trợ ngôn ngữ:</span>
+              <span>   {t("home:base.PROFILE_HTNN")}:</span>
               <span
                 className={`px-3 text-textLanguage ${mode}-text`}
                 onClick={() => changeLanguage("VN")}
@@ -209,7 +208,7 @@ const ProfileAccount: any = () => {
             <li className={`ezfu-language ${mode}-text`}>
               {/* <FontAwesomeIcon icon={faLanguage}  className="icon_account"/> */}
               <i className="fa fa-desktop" aria-hidden="true"></i>
-              <span>Giao diện</span>
+              <span>  {t("home:base.PROFILE_GD")}</span>
               <span
                 className="px-3 text-textLanguage absolute left-[200px]"
                 // onClick={() => changeLanguage("VN")}
@@ -235,7 +234,7 @@ const ProfileAccount: any = () => {
               <li>
                 <i className="fa fa-sign-out"></i>
                 {/* <FontAwesomeIcon icon={faSignOut}  className="icon_account"/> */}
-                Thoát
+                {t("home:base.PROFILE_T")}
               </li>
             </a>
           </ul>
