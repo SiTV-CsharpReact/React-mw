@@ -4,6 +4,7 @@ import menuItems from "./helper/ListMenu";
 import { RootState, useAppDispatch } from "../../store/configureStore";
 // import { getDataTable , } from "../tableMarketwatch/tableSlice";
 import {
+  HandleKeyActiveMain,
   getDataCookie,
   getDataTable,
 } from "../tableMarketwatch/tableTestSlice";
@@ -69,7 +70,8 @@ const MenuBar = () => {
     // name = tab
     setCookie(cookie);
     dispatch(setActiveMenu(activeMenu)); // cập nhật lại menu
-    dispatch(historyPriceActiveMenu()) // cập lại menu category
+    dispatch(historyPriceActiveMenu())// cập lại menu category
+    dispatch(HandleKeyActiveMain()) // check  call menu category
     let result = await dispatch(getDataTable(data));
     if (result?.payload) {
       dispatch(getDataCookie(cookie.codeList)); // cập nhật lại menu

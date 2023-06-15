@@ -47,7 +47,7 @@ const ListMenu = () => {
             </li>
             <li>
               <Link to="/transfer/ordersavings" className="Foreign-Hide">
-                {t("home:menu.TienchoVay")} ok baksd 
+                {t("home:menu.TienchoVay")}  
                 <input
                   type="image"
                   src={New}

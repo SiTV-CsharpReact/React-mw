@@ -27,51 +27,58 @@ const TableMarketWatchTest = () => {
   const dispatch = useAppDispatch();
 
   //setRowData
-  const {ListDataTable ,DataPined ,RowPined} = useAppSelector((state) => state.tableTest );
+  const {ListDataTable ,DataPined ,RowPined ,keyActiveMan} = useAppSelector((state) => state.tableTest );
   // pinned
-
   const pinned = useAppSelector((state) => state.categories.row);
   // call data 
+  const HanDelCate  = useCallback( async ()=>{
+    let result = await dispatch(fetchCategoryAsync());
+    if (result?.payload?.Data[0]?.List) {
+      let data = {
+        Floor: "danh-muc",
+        Query: result?.payload?.Data[0]?.List,
+        RowPined : result?.payload?.Data[0]?.Row,
+      };
+      await handelGetData(data);
+    } else {
+      let data = {
+        Floor: "HSX",
+        Query: "s=quote&l=All",
+        RowPined : null,
+        KeyMenuChildren : null
+      };
+      let newCookie={
+        tab: "VNI",
+        codeList: ""
+      }
+      localStorage.setItem("activePriceboardTabMenu", "VNI");
+      setCookie(newCookie)
+      await handelGetData(data);
+    }
+   } , [dispatch])
   const handelGetData = useCallback(
     (Data: any) => {
       dispatch(getDataTable(Data));
     },
     [dispatch]
   );
+ 
   useEffect(() => {
-    async function HanDelCate() {
-      let result = await dispatch(fetchCategoryAsync());
-      if (result?.payload?.Data[0]?.List) {
-        let data = {
-          Floor: "danh-muc",
-          Query: result?.payload?.Data[0]?.List,
-          RowPined : result?.payload?.Data[0]?.Row,
-        };
-        await handelGetData(data);
-      } else {
-        let data = {
-          Floor: "HSX",
-          Query: "s=quote&l=All",
-          RowPined : null,
-          KeyMenuChildren : null
-        };
-        let newCookie={
-          tab: "VNI",
-          codeList: ""
-        }
-        localStorage.setItem("activePriceboardTabMenu", "VNI");
-        setCookie(newCookie)
-        await handelGetData(data);
-      }
+    if(keyActiveMan === 0){
+      HanDelCate();
     }
-    HanDelCate();
-  }, [dispatch]);
+  }, [dispatch,HanDelCate]);
   useEffect(() => {
     const socketHSX = new WebSocket(
       "wss://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=l4Qv5el2qo7nNiXubQ1oHGbFB%2F4w1UNE4vpgPXPs5nz6VP7b6bGYnMwB2aivGfMOUNZ%2F0QwrXmR%2BwkqRkEukXGYDdn8iKHzVZ%2BIiwFO2A1nxyh0%2FCdX3rc3omFIBjraz&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=5"
-
+    );
+    const socketHNX = new WebSocket(
+      "wss://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=JWiUHUXRVLCXtTY7Na0DSx2vODWGuDSFrc6Da7FVAcRg9EYCUqCkDYfa3bsaKn305erm6aBpsrUmoFZ70viczLA1hDqUzrrqmuaZWu0UZDyUzynPYy0gGJu4gHM7dZVg&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=1"
     );
     socketHSX.onopen = () => {
+      //console.log("WebSocket connection established.");
+    };
+    socketHNX.onopen = () => {
       //console.log("WebSocket connection established.");
     };
     socketHSX.onmessage = (event) => {
@@ -79,32 +86,43 @@ const TableMarketWatchTest = () => {
       // console.log(gridOptions.api)
       // gridOptions.api.setRowData(event.data);
     };
-    socketHSX.onclose = () => {
-      //console.log("WebSocket connection closed.");
-    };
-    return () => {
-      socketHSX.close();
-    };
-  }, []);
-  useEffect(() => {
-    const socketHNX = new WebSocket(
-      "wss://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=JWiUHUXRVLCXtTY7Na0DSx2vODWGuDSFrc6Da7FVAcRg9EYCUqCkDYfa3bsaKn305erm6aBpsrUmoFZ70viczLA1hDqUzrrqmuaZWu0UZDyUzynPYy0gGJu4gHM7dZVg&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=1"
-    );
-    socketHNX.onopen = () => {
-      //console.log("WebSocket connection established.");
-    };
+  
     socketHNX.onmessage = (event) => {
       // updateQuote(event.data)
       updateQuote(event.data);
       // setDataHNX(event.data);
     };
+    socketHSX.onclose = () => {
+      //console.log("WebSocket connection closed.");
+    };
     socketHNX.onclose = () => {
       // console.log("WebSocket connection closed.");
     };
     return () => {
+      socketHSX.close();
       socketHNX.close();
     };
+    
   }, []);
+  // useEffect(() => {
+  //   const socketHNX = new WebSocket(
+  //     "wss://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=JWiUHUXRVLCXtTY7Na0DSx2vODWGuDSFrc6Da7FVAcRg9EYCUqCkDYfa3bsaKn305erm6aBpsrUmoFZ70viczLA1hDqUzrrqmuaZWu0UZDyUzynPYy0gGJu4gHM7dZVg&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=1"
+  //   );
+  //   socketHNX.onopen = () => {
+  //     //console.log("WebSocket connection established.");
+  //   };
+  //   socketHNX.onmessage = (event) => {
+  //     // updateQuote(event.data)
+  //     updateQuote(event.data);
+  //     // setDataHNX(event.data);
+  //   };
+  //   socketHNX.onclose = () => {
+  //     // console.log("WebSocket connection closed.");
+  //   };
+  //   return () => {
+  //     socketHNX.close();
+  //   };
+  // }, []);
   const updateQuote = (objRealtime: any) => {
     // objRealtime = {"RowID":"BCC","Info":[[5,83.5],[7,83.6],[8,100],[11,84.1],[12,101900],[15,77500],[16,84.2],[17,12900],[18,84.3],[19,2000],[20,0],[21,839400],[22,84.2]]};
     //  updateTableHNX(objRealtime)
@@ -163,7 +181,7 @@ const TableMarketWatchTest = () => {
       `div[data-index="${arrInfo}"][data-comp="${arrRowID}"]`
     ) as HTMLElement;
     if (valueTCS) {
-      valueTCS.innerHTML = `${formatNumberMarket(arrValue)}`;
+      valueTCS.textContent = `${formatNumberMarket(arrValue)}`;
       // gán màu bg
       const test = valueTCS.parentElement;
       if (test) {
