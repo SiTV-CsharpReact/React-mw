@@ -8,6 +8,7 @@ import MyLayout from "./components/dynamicDashboard/MyLayout";
 import AssetReport from "./components/AssetReport/AssetReport";
 import TableMarketWatchTest from "./components/tableMarketwatch/TableMarketWatchTest";
 import TradingViewWidget from "./components/Chart/TradingViewWidget";
+import TransBalance from "./components/TransBalance/TransBalance";
 function App() {
   return (
     <div>
@@ -21,7 +22,7 @@ function App() {
           />
           <Route path="/dynamic-dashboard" element={<MyLayout />} />
           {/* Report */}
-          <Route path="/report/ReportTransBalance" element={<AssetReport />} />  
+          <Route path="/report/ReportTransBalance" element={<TransBalance />} />  
           <Route path="/report/AssetReport2" element={<AssetReport />} />  
           <Route path="/report/ReportNAV" element={<AssetReport />} />
           <Route path="/report/reportprofitloss" element={<AssetReport />} />

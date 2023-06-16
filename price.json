@@ -1,0 +1,30 @@
+{
+ "Data": 
+    {
+"Time": "2023-06-16 08:00:20.921",
+"PurchasingPowerTotal": 490196733,
+"CashAmount": 480189990,
+"AdvanceAmount": 0,
+"RemainingSecurities_leveragedbuyingpower": 0,
+"PendingBuyCash": 0,
+"MatchedBuyCash": 0,
+"TransferringAmount": 0,
+"RemainingCashAmount": 480189990,
+"RemainingDebt": 0,
+"DebtInterest": 0,
+"ReceivableCashT0": 0,
+"ReceivableCashT1": 0,
+"ReceivableCashT2": 0,
+"ReceivableMatureCW": 0,
+"ReceivableCashOther": 0,
+"ReceivableCashTotal": 119700,
+"ReceivableCashOddlot": 0,
+"ReceivableCashDevidend": 119700,
+"Fees": 545,
+"FSaving": 10007288,
+"SavingTotal": 10007288,
+"NetAssetValue": 490316433
+}
+ 
+
+}

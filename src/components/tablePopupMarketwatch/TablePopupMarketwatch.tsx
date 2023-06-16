@@ -27,7 +27,7 @@ const TablePopupMarketwatch = () => {
   const [dataCheck, setDataCheck] = useState("");
   const [dataItem, setDataItem] = useState<any[]>([])
   const stockDetail = useSelector((state: RootState) => state.popupTable.code);
-  console.log({ stockDetail });
+  console.log("s",{ stockDetail });
   const fetchDataTableHSX = async (code?: string) => {
     if (code !== '' && code !== undefined) {
       const res = await axios.get(`https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`)
@@ -36,6 +36,7 @@ const TablePopupMarketwatch = () => {
     } else {
       const res = await axios.get(`https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${stockDetail}`)
       setDataItem(res.data)
+      console.log("first data item", res.data)
       return res.data;
     }
   }

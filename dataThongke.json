@@ -1,13 +1,6 @@
 {
-    "Header": {
-        "RecordCount": "22",
-        "PageSize": "400",
-        "PageCount": "1",
-        "Range": "1 - 22"
-    },
     "Body": [
         {
-            "Status": "",
             "Data": [
                 [
                     0,

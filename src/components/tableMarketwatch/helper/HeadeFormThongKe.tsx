@@ -3,20 +3,22 @@ import { DatePicker, Space } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import "./index.scss";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { useAppDispatch } from "../../../store/configureStore";
+import { dispatchDataThongke } from "./tableFormThongke";
 const HeaderFromThongke = () => {
   const [dataHSX, setDataHSX] = useState([])
   const [dataHNX, setDataHNX] = useState([])
   const [selectedExchange, setSelectedExchange] = useState(1); // Mặc định chọn HOSE
-  const [filteredData, setFilteredData] = useState([]);
 
-  
-  const fetchDataHSX = async() => { 
-    const {data} = await axios.get("http://localhost:2345/Data")
+  const dispatch = useAppDispatch();
+
+  const fetchDataHSX = async () => {
+    const { data } = await axios.get("http://localhost:2345/Data")
     setDataHSX(data)
   }
-  const fetchDataHNX = async() => { 
-    const {data} = await axios.get("http://localhost:3456/Data")
+  const fetchDataHNX = async () => {
+    const { data } = await axios.get("http://localhost:3456/Data")
     console.log("respone", data)
     setDataHNX(data)
   }
@@ -24,90 +26,104 @@ const HeaderFromThongke = () => {
     fetchDataHSX()
     fetchDataHNX()
   }, [])
-    const handleExchangeChange = (e : any) => {
+  const handleExchangeChange = (e: any) => {
     setSelectedExchange(Number(e.target.value));
   };
   const defaultDate: Dayjs = dayjs();
-  const HandeFilter  = ()=>{
-  //    let filteredItems : any = [];
-  //   if (selectedExchange === 1) {
-  //     filteredItems = dataHSX;
-  //   } else if (selectedExchange === 2) {
-  //     filteredItems = dataHNX;
-  //   }
-  //   setFilteredData(filteredItems);
-   }
+  const HandeFilter = () => {
+    //    let filteredItems : any = [];
+    //   if (selectedExchange === 1) {
+    //     filteredItems = dataHSX;
+    //   } else if (selectedExchange === 2) {
+    //     filteredItems = dataHNX;
+    //   }
+    //   setFilteredData(filteredItems);
+  }
+    const handleClickTableThongKe = (dataThongke: any) => {
+    // console.log("dataTable",dataTable)
+    dispatch(dispatchDataThongke(dataThongke));
+  };
   return (
     <>
       <div id="dvSTTIndexs" className="" style={{}}>
-   
-        <div>
-      <div className="from-grup fromThongke">
-        <label className="titleFormThongke">Sàn</label>
-        <select
-          className="col-xs-8 col-sm-8 input"
-          id="slCenterHIST_INDEX"
-          onChange={handleExchangeChange}
-          value={selectedExchange}
-        >
-          <option label="HOSE" value={1}>
-            HOSE
-          </option>
-          <option label="HNX" value={2}>
-            HNX
-          </option>
-          <option label="UPCOM" value={4}>
-            UPCOM
-          </option>
-          <option label="HNX30" value={6}>
-            HNX30
-          </option>
-        </select>
-      </div>
-      <div className="from-grup fromThongke">
-        <label className="titleFormThongke">Chứng Khoán</label>
-        <select className="col-xs-8 col-sm-8 input" id="slCenterHIST_INDEX">
-          <option className="pl-[8px] py-[1px]">Tất Cả</option>
-              {selectedExchange === 1  && (
-          dataHSX
-            .sort((a : any, b : any) => a.Sy.localeCompare(b.Sy))
-            .map((itemHSX: any, index: any) => (
-              <option key={index} className="py-[1px]">
-                {itemHSX?.Sy}
-              </option>
-            ))
-        )}
-        {selectedExchange === 2 && (
-          dataHNX
-            .sort((a : any, b : any) => a.Sy.localeCompare(b.Sy))
-            .map((itemHNX: any, index: any) => (
-              <option key={index} className="pl-[1px]">
-                {itemHNX?.Sy}
-              </option>
-            ))
-              )}
-                {selectedExchange === 4 && (
-          dataHNX
-            .sort((a : any, b : any) => a.Sy.localeCompare(b.Sy))
-            .map((itemHNX: any, index: any) => (
-              <option key={index} className="pl-[1px]">
-                {itemHNX?.Sy}
-              </option>
-            ))
-              )}
-                {selectedExchange === 6 && (
-          dataHNX
-            .sort((a : any, b : any) => a.Sy.localeCompare(b.Sy))
-            .map((itemHNX: any, index: any) => (
-              <option key={index} className="pl-[1px]">
-                {itemHNX?.Sy}
-              </option>
-            ))
-        )}
 
-        </select>
-      </div>
-            {/* <div className="from-grup fromThongke">
+        <div>
+          <div className="from-grup fromThongke">
+            <label className="titleFormThongke">Sàn</label>
+            <select
+              className="col-xs-8 col-sm-8 input"
+              id="slCenterHIST_INDEX"
+              onChange={handleExchangeChange}
+              value={selectedExchange}
+            >
+              <option label="HOSE" value={1}>
+                HOSE
+              </option>
+              <option label="HNX" value={2}>
+                HNX
+              </option>
+              <option label="UPCOM" value={4}>
+                UPCOM
+              </option>
+              <option label="HNX30" value={6}>
+                HNX30
+              </option>
+            </select>
+          </div>
+          <div className="from-grup fromThongke">
+            <label className="titleFormThongke">Chứng Khoán</label>
+            <select onChange={(e) => {
+              handleClickTableThongKe({ma:e.target.value})
+            }} className="col-xs-8 col-sm-8 input" id="slCenterHIST_INDEX">
+              <option className="pl-[8px] py-[1px]" value="">Tất Cả</option>
+              <>
+                {selectedExchange === 1 && (
+                  dataHSX
+                    .sort((a: any, b: any) => a.Sy.localeCompare(b.Sy))
+                    .map((itemHSX: any, index: any) => (
+                      <Fragment key={index}>
+                        <option  value={itemHSX.Sy} className="py-[1px]">
+                          {itemHSX?.Sy}
+                        </option>
+                      </Fragment>
+
+                    ))
+                )}
+              </>
+              {selectedExchange === 2 && (
+                dataHNX
+                  .sort((a: any, b: any) => a.Sy.localeCompare(b.Sy))
+                  .map((itemHNX: any, index: any) => (
+                    <Fragment key={index}>
+                      <option value={itemHNX.Sy} className="pl-[1px]">
+                        {itemHNX?.Sy}
+                      </option>
+                    </Fragment>
+
+                  ))
+              )}
+              {selectedExchange === 4 && (
+                dataHNX
+                  .sort((a: any, b: any) => a.Sy.localeCompare(b.Sy))
+                  .map((itemHNX: any, index: any) => (
+                    <option value={itemHNX.Sy} key={index} className="pl-[1px]">
+                      {itemHNX?.Sy}
+                    </option>
+                  ))
+              )}
+              {selectedExchange === 6 && (
+                dataHNX
+                  .sort((a: any, b: any) => a.Sy.localeCompare(b.Sy))
+                  .map((itemHNX: any, index: any) => (
+                    <option value={itemHNX.Sy} key={index} className="pl-[1px]">
+                      {itemHNX?.Sy}
+                    </option>
+                  ))
+              )}
+
+            </select>
+          </div>
+          {/* <div className="from-grup fromThongke">
         <label className="titleFormThongke">Sàn</label>
         <select
           className="col-xs-8 col-sm-8 input"
@@ -140,7 +156,7 @@ const HeaderFromThongke = () => {
           ))}
         </select>
       </div> */}
-    </div>
+        </div>
         <div>
           <div className="from-grup fromThongke">
             <label className="titleFormThongke">Từ ngày</label>
@@ -196,7 +212,7 @@ const HeaderFromThongke = () => {
               className="form-group col-xs-2 col-sm-2 col-priceboard"
               style={{}}
             >
-              <button onClick={HandeFilter}
+              <button
                 className="btn btn-success button_Statistics"
                 id="btnViewHIST_INDEX"
               >
