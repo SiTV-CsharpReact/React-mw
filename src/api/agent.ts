@@ -2,9 +2,21 @@ import axios, { AxiosResponse } from "axios"
 const responseBody = (response: AxiosResponse) => response.data;
 const BASE_URL = "http://marketstream.fpts.com.vn/";
 const URL_EZTRADE = "http://eztrade0.fpts.com"
+// mặc định gửi authenticated token lên 
+// axios.defaults.headers.common['Authorization'] = 'Bearer ' + "auth_token";
+// axios.interceptors.request.use(
+//     config => {
+//       config.headers.Authorization = 'Bearer ' + "auth_token";
+//       return config;
+//     },
+//     error => {
+//       return Promise.reject(error);
+//     }
+//   );  
+
 const requests = {
     get: (url: string, params?: URLSearchParams) => axios.get(url, {params}).then(responseBody),
-    post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
+    post: (url: string, body: {}) =>axios.post(url, body).then(responseBody),
     put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
     delete: (url: string) => axios.delete(url).then(responseBody),
 }

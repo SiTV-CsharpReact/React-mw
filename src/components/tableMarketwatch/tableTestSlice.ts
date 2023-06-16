@@ -376,7 +376,7 @@ export const tableTestSlice = createSlice({
         state.productsLoaded = true;
         state.status = "idle";
         state.ListDataTable = state.ListDataTable;
-        console.log("vô đây này error");
+       
       });
   },
 });
