@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAppSelector } from '../store/configureStore';
+import { useAppSelector } from '../../store/configureStore';
 
 interface Props {
   content?: string;
