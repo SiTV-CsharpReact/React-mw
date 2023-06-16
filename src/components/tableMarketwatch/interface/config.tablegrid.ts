@@ -2,18 +2,7 @@ import { TDefColDef, TRowDataIndex } from "./interface.tablegrid";
 
 export const gridOptions = {
   rowStyle: { background: 'black' },
-  // getRowStyle: (params:any) => {
-  //   if (params.node.pinned) {
-  //     console.log("vô đây bạn ơi" ,params)
-  //     return {
-  //          'background': 'black' ,
-  //       // Áp dụng lớp CSS để giữ các hàng ghim trong phạm vi ghim
-  //       // Ví dụ: `pinned-row`
-  //         'pointer-events': 'none',
-  //     };
-  //   }
-  //   return null;
-  // },
+  headerHeight: 30,
   getRowId: function (e: any) {
     return e.data.RowID;
   },

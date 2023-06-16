@@ -26,7 +26,7 @@ const Header = () => {
     >
       <div className="header-left">
         <Link to="/" className={`text-fontLogo font-bold italic ${mode}-text`}
-          onClick={() => dispatch(statusChartMarketwatch(""))}>
+          onClick={() => dispatch(statusChartMarketwatch({visible:false,code:""}))}>
           <span>Ez</span>
           <span className="text-colorTextLogo">Trade</span>
         </Link>

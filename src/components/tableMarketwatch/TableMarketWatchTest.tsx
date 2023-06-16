@@ -209,7 +209,7 @@ const gridStyle = { height: "100%", width: "100%" };
   const a = [{TC: "hello "}]
   return (
     <div style={containerStyle}>
-      <div style={gridStyle} className="ag-theme-alpine-dark">
+      <div style={gridStyle} className="ag-theme-alpine-dark table__price">
         <AgGridReact
           ref={gridRef}
           suppressDragLeaveHidesColumns={true}
