@@ -311,7 +311,7 @@ const LayoutMarketWatch: React.FC = () => {
                     <Tooltip title="Đồ thị">
                       <button
                         className="btn btn-sm btn-chart"
-                        onClick={() => dispatch(statusChartMarketwatch(""))}
+                        onClick={() => dispatch(statusChartMarketwatch({visible:true,code:""}))}
                       >
                         <img src={LineChart} width={20} height={20} alt="" />
                       </button>

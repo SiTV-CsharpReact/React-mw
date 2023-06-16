@@ -68,7 +68,7 @@ const ColumnDef = (props: any, props2: any) => {
 
   const handleDoubleClick = (e: any, val: any) => {
     if (e.detail === 2) {
-      dispatch(statusChartMarketwatch(val));
+      dispatch(statusChartMarketwatch({visible:true,code:val}));
     }
   };
 
@@ -212,7 +212,7 @@ const ColumnDef = (props: any, props2: any) => {
     },
     {
       headerName: "Mua",
-      headerClass: "custom-header",
+      headerClass: "custom-header cell-default !cursor-default",
 
       children: [
         {
@@ -224,7 +224,7 @@ const ColumnDef = (props: any, props2: any) => {
           height: 30,
           maxWidth: 100,
           hide: INDEX.cbcol4 ? false : true,
-          headerClass: "custom-header",
+          headerClass: "custom-header cell-default",
           cellClass: "score-cell",
           cellStyle: (params: any) => ({
             fontWeight: "",
@@ -260,7 +260,7 @@ const ColumnDef = (props: any, props2: any) => {
           minWidth: 50,
           height: 30,
           maxWidth: 100,
-          headerClass: "custom-header",
+          headerClass: "custom-header cell-default",
           cellClass: "score-cell",
           cellStyle: (params: any):any => ({
             fontWeight: "",
@@ -302,7 +302,7 @@ const ColumnDef = (props: any, props2: any) => {
           minWidth: 50,
           heigth: 34,
           maxWidth: 100,
-          headerClass: "custom-header",
+          headerClass: "custom-header cell-default",
           cellClass: "score-cell",
           cellStyle: (params: any) => ({
             fontWeight: "",
@@ -334,7 +334,7 @@ const ColumnDef = (props: any, props2: any) => {
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
-          headerClass: "custom-header",
+          headerClass: "custom-header cell-default",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("G2", params),
@@ -376,7 +376,7 @@ const ColumnDef = (props: any, props2: any) => {
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
-          headerClass: "custom-header",
+          headerClass: "custom-header cell-default",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("KL2", params),
@@ -406,7 +406,7 @@ const ColumnDef = (props: any, props2: any) => {
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
-          headerClass: "custom-header",
+          headerClass: "custom-header cell-default",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("G1", params),
@@ -447,7 +447,7 @@ const ColumnDef = (props: any, props2: any) => {
           width: widthWindow * 0.05,
           minWidth: 50,
           maxWidth: 100,
-          headerClass: "custom-header",
+          headerClass: "custom-header cell-default",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("KL1", params),
@@ -587,7 +587,7 @@ const ColumnDef = (props: any, props2: any) => {
     },
     {
       headerName: "Bán",
-      headerClass: "custom-header",
+      headerClass: "custom-header cell-default !cursor-default",
       children: [
         {
           field: "G1B",
@@ -597,7 +597,7 @@ const ColumnDef = (props: any, props2: any) => {
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
-          headerClass: "custom-header",
+          headerClass: "custom-header cell-default",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("", params),
@@ -638,7 +638,7 @@ const ColumnDef = (props: any, props2: any) => {
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
-          headerClass: "custom-header",
+          headerClass: "custom-header cell-default",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("KL1B", params),
@@ -667,7 +667,7 @@ const ColumnDef = (props: any, props2: any) => {
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
-          headerClass: "custom-header",
+          headerClass: "custom-header cell-default",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("", params),
@@ -708,7 +708,7 @@ const ColumnDef = (props: any, props2: any) => {
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell",
-          headerClass: "custom-header",
+          headerClass: "custom-header cell-default",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("KL2B", params),
@@ -737,7 +737,7 @@ const ColumnDef = (props: any, props2: any) => {
           width: widthWindow * 0.04,
           minWidth: 50,
           maxWidth: 100,
-          headerClass: "custom-header",
+          headerClass: "custom-header cell-default",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("", params),
@@ -780,7 +780,7 @@ const ColumnDef = (props: any, props2: any) => {
           minWidth: 50,
           maxWidth: 100,
           cellClass: "score-cell ",
-          headerClass: "custom-header",
+          headerClass: "custom-header cell-default",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("KL3B", params),
@@ -810,7 +810,7 @@ const ColumnDef = (props: any, props2: any) => {
           maxWidth: 100,
           hide: INDEX.cbcol20 ? false : true,
           cellClass: "score-cell ",
-          headerClass: "custom-header",
+          headerClass: "custom-header cell-default",
           cellStyle: (params: any) => ({
             fontWeight: "",
             color: setColorMarkettest("KL4B", params),
@@ -849,7 +849,7 @@ const ColumnDef = (props: any, props2: any) => {
       headerName: "Mở Cửa",
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
-      width: widthWindow * 0.04,
+      width: widthWindow * 0.03,
       maxWidth: 100,
       hide: INDEX.cbcol22 ? false : true,
       headerClass: "custom-header tc-header",
@@ -867,7 +867,7 @@ const ColumnDef = (props: any, props2: any) => {
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
       hide: INDEX.cbcol23 ? false : true,
-      width: widthWindow * 0.04,
+      width: widthWindow * 0.03,
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
@@ -883,7 +883,7 @@ const ColumnDef = (props: any, props2: any) => {
       headerName: "Thấp nhất",
       spanHeaderHeight: true,
       hide: INDEX.cbcol24 ? false : true,
-      width: widthWindow * 0.04,
+      width: widthWindow * 0.03,
       maxWidth: 100,
       cellClass: "score-cell tc-cell",
       headerClass: "custom-header tc-header",

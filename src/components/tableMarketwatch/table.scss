@@ -151,17 +151,13 @@
     // border-right: 1px solid #858585 !important;
   }
 
-  & .ag-theme-alpine-dark {
-    --ag-grid-size: 4px !important;
-    --ag-list-item-height: 30px !important;
-  }
-
   & .cell-stock {
     cursor: pointer !important;
     font-size: 12px !important;
     align-items: center;
     text-align: start;
-    justify-content: start;;
+    justify-content: start;
+    ;
   }
 
   & .ag-header-cell-text {
@@ -205,17 +201,26 @@
     /* border-top: var(--ag-borders-critical) var(--ag-border-color); */
     border-top: 1px solid #858585 !important;
   }
+
   & .ag-cell-pinning {
     cursor: pointer;
   }
-  & .ag-header-cell,.ag-header-cell-text,.ag-header-cell-sortable .ag-header-cell-label {
-  cursor: url(../../images/menuMW/sort_full.png), auto;
-  
- }
- & .ag-header-group-cell-with-group:hover:nth-child(1) {
-  background-color: #1D1D1D !important;
+
+  & .ag-header-cell,
+  .ag-header-cell-text,
+  .ag-header-cell-sortable .ag-header-cell-label {
+    cursor: url(../../images/menuMW/sort_full.png), auto;
+
+  }
+
+  & .ag-header-group-cell-with-group:hover:nth-child(1) {
+    background-color: #1D1D1D !important;
+  }
+  & .cell-default{
+    background-color: #1D1D1D !important;
+  }
 }
-}
+
 // .ag-theme-alpine {
 //   --ag-header-height: 30px;
 // }
@@ -223,9 +228,6 @@
   width: 60%;
 }
 
-.ag-theme-alpine-dark {
-  --ag-row-hover-color: #444;
-}
 .center-horizontal {
   position: absolute;
   left: 50%;
@@ -256,6 +258,7 @@
   right: -4px;
   bottom: 0;
 }
+
 // popup detail Table
 .context-menu-list {
   position: absolute;
@@ -306,6 +309,14 @@
   }
 }
 
+.ag-theme-alpine-dark {
+  --ag-row-hover-color: #444;
+}
+
+.ag-theme-alpine-dark {
+  --ag-grid-size: 4px !important;
+  --ag-list-item-height: 30px !important;
+}
 
 .table-priceboard {
   // border: 1px solid #858585 !Important;
@@ -349,16 +360,19 @@
     }
   }
 }
+
 .dvContentLP {
 
   margin: 0 !important;
   background: #131722;
   max-width: 100%;
   overflow-x: auto;
-  & #dvSTTIndexs, #dvSTTIndex{
+
+  & #dvSTTIndexs,
+  #dvSTTIndex {
     padding-top: 10px;
     border: 1px double #505050;
-    border-bottom:none ;
+    border-bottom: none;
   }
 
   & .input {
@@ -378,6 +392,7 @@
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   }
+
   & .label_price {
     color: white;
     display: flex;
@@ -387,7 +402,7 @@
     width: 30px;
     padding-left: 2px;
   }
-  
+
   & .button_Statistics {
     line-height: 1em;
     width: 20%;
@@ -396,7 +411,7 @@
     height: 30px;
     min-width: 60px;
     background-color: #5cb85c;
-  
+
     &:hover {
       background-color: #2371af !important;
     }
