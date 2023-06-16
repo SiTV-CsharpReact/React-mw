@@ -164,7 +164,7 @@ const SlidesMarketWatch = () => {
         >
           {INDEX.VNXALL && (
             <SlideMarketItem
-              name="VNXALL:"
+              name="VNXALL"
               id={VNXALL}
               valueIndexChange={valueHSX?.VNXALL_IndexValue}
               valueChange={valueHSX?.VNXALL_Change}
@@ -178,11 +178,12 @@ const SlidesMarketWatch = () => {
               valueDown={valueHSX?.VNXALL_Down}
               valueFloor={valueHSX?.VNXALL_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
+              san="HSX"
             />
           )}
           {INDEX.VNI && (
             <SlideMarketItem
-              name="VNI:"
+              name="VNI"
               id={VNI}
               valueIndexChange={valueHSX?.VNI_IndexValue}
               valueChange={valueHSX?.VNI_Change}
@@ -196,11 +197,12 @@ const SlidesMarketWatch = () => {
               valueDown={valueHSX?.VNI_Down}
               valueFloor={valueHSX?.VNI_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
+              san="HSX"
             />
           )}
           {INDEX.VN30 && (
             <SlideMarketItem
-              name="VN30:"
+              name="VN30"
               id={VN30}
               valueIndexChange={valueHSX?.VN30_IndexValue}
               valueChange={valueHSX?.VN30_Change}
@@ -214,11 +216,12 @@ const SlidesMarketWatch = () => {
               valueDown={valueHSX?.VN30_Down}
               valueFloor={valueHSX?.VN30_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
+              san="HSX"
             />
           )}
           {INDEX.VN100 && (
             <SlideMarketItem
-              name="VN100:"
+              name="VN100"
               id={VN100}
               valueIndexChange={valueHSX?.VN100_IndexValue}
               valueChange={valueHSX?.VN100_Change}
@@ -232,11 +235,12 @@ const SlidesMarketWatch = () => {
               valueDown={valueHSX?.VN100_Down}
               valueFloor={valueHSX?.VN100_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
+              san="HSX"
             />
           )}
           {INDEX.VNALL && (
             <SlideMarketItem
-              name="VNALL:"
+              name="VNALL"
               id={VNALL}
               valueIndexChange={valueHSX?.VNALL_IndexValue}
               valueChange={valueHSX?.VNALL_Change}
@@ -250,11 +254,12 @@ const SlidesMarketWatch = () => {
               valueDown={valueHSX?.VNALL_Down}
               valueFloor={valueHSX?.VNALL_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
+              san="HSX"
             />
           )}
           {INDEX.VNMID && (
             <SlideMarketItem
-              name="VNMID:"
+              name="VNMID"
               id={VNMID}
               valueIndexChange={valueHSX?.VNMID_IndexValue}
               valueChange={valueHSX?.VNMID_Change}
@@ -268,11 +273,12 @@ const SlidesMarketWatch = () => {
               valueDown={valueHSX?.VNMID_Down}
               valueFloor={valueHSX?.VNMID_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
+              san="HSX"
             />
           )}
           {INDEX.VNSML && (
             <SlideMarketItem
-              name="VNSML:"
+              name="VNSML"
               id={VNMSL}
               valueIndexChange={valueHSX?.VNSML_IndexValue}
               valueChange={valueHSX?.VNSML_Change}
@@ -286,11 +292,12 @@ const SlidesMarketWatch = () => {
               valueDown={valueHSX?.VNSML_Down}
               valueFloor={valueHSX?.VNSML_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
+              san="HSX"
             />
           )}
           {INDEX.HNX && (
             <SlideMarketItem
-              name="HNX:"
+              name="HNX"
               id={HNX}
               valueIndexChange={valueHNX?.i02_3}
               valueChange={valueHNX?.i02_5}
@@ -304,11 +311,12 @@ const SlidesMarketWatch = () => {
               valueDown={valueHNX?.i02_x253}
               valueFloor={valueHNX?.i02_x253f}
               status={fStatusMarketHNX(valueHNX?.i02_x336x340)}
+              san="HNX"
             />
           )}
           {INDEX.HNX30 && (
             <SlideMarketItem
-              name="HNX30:"
+              name="HNX30"
               id={HNX30}
               valueIndexChange={valueHNX?.i41_3}
               valueChange={valueHNX?.i41_5}
@@ -322,11 +330,12 @@ const SlidesMarketWatch = () => {
               valueDown={valueHNX?.i41_x253}
               valueFloor={valueHNX?.i41_x253f}
               status={fStatusMarketHNX(valueHNX?.i41_x336x340)}
+              san="HNX"
             />
           )}
           {INDEX.HNXLCAP && (
             <SlideMarketItem
-              name="HNXLCAP:"
+              name="HNXLCAP"
               id={HNXLCAP}
               valueIndexChange={valueHNX?.i26_3}
               valueChange={valueHNX?.i26_5}
@@ -340,11 +349,12 @@ const SlidesMarketWatch = () => {
               valueDown={valueHNX?.i26_x253}
               valueFloor={valueHNX?.i26_x253f}
               status={fStatusMarketHNX(valueHNX?.i26_x336x340)}
+              san="HNX"
             />
           )}
           {INDEX.HNXSMCAP && (
             <SlideMarketItem
-              name="HNXSMCAP:"
+              name="HNXSMCAP"
               id={HNXSMCAP}
               valueIndexChange={valueHNX?.i28_3}
               valueChange={valueHNX?.i28_5}
@@ -358,11 +368,12 @@ const SlidesMarketWatch = () => {
               valueDown={valueHNX?.i28_x253}
               valueFloor={valueHNX?.i28_x253f}
               status={fStatusMarketHNX(valueHNX?.i28_x336x340)}
+              san="HNX"
             />
           )}
           {INDEX.HNXFIN && (
             <SlideMarketItem
-              name="HNXFIN:"
+              name="HNXFIN"
               id={HNXFIN}
               valueIndexChange={valueHNX?.i39_3}
               valueChange={valueHNX?.i39_5}
@@ -376,6 +387,7 @@ const SlidesMarketWatch = () => {
               valueDown={valueHNX?.i39_x253}
               valueFloor={valueHNX?.i39_x253f}
               status={fStatusMarketHNX(valueHNX?.i39_x336x340)}
+              san="HNX"
             />
           )}
           {INDEX.HNXMAN && (
@@ -394,6 +406,7 @@ const SlidesMarketWatch = () => {
               valueDown={valueHNX?.i310_x253}
               valueFloor={valueHNX?.i310_x253f}
               status={fStatusMarketHNX(valueHNX?.i310_x336x340)}
+              san="HNX"
             />
           )}
           {INDEX.HNXCON && (
@@ -412,11 +425,12 @@ const SlidesMarketWatch = () => {
               valueDown={valueHNX?.i311_x253}
               valueFloor={valueHNX?.i311_x253f}
               status={fStatusMarketHNX(valueHNX?.i311_x336x340)}
+              san="HNX"
             />
           )}
           {INDEX.UPCOM && (
             <SlideMarketItem
-              name="UPCOM:"
+              name="UPCOM"
               id={UPCON}
               valueIndexChange={valueHNX?.i03_3}
               valueChange={valueHNX?.i03_5}
@@ -430,6 +444,7 @@ const SlidesMarketWatch = () => {
               valueDown={valueHNX?.i03_x253}
               valueFloor={valueHNX?.i03_x253f}
               status={fStatusMarketUPCOM(valueHNX?.i03_x336x340)}
+              san="HNX"
             />
           )}
         </Slider>
