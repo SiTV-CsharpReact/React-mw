@@ -6,8 +6,33 @@
         "HOME":"Home",
         "LichSuGD":"TXN History",
         "LichSUDL":"Order History",
-        "LichSUKL":"Order matching history",
+        "LichSUKL":"Order Matching History",
         "LishSuTT":"Matched Orders Pending for Settlement",
+
+        "LishSUCKLL": "Oddlot Transation Log",
+        "THQ" : "Corporate Actions Calendar",
+        "DKDT" : "Conditional order",
+        "SLDK":"Stoploss Order History",
+        "LYTT":"Online Depository",
+
+       "QLTK_BCTHSDGD":" Trading balance ",
+        "QLTK_BCTS":"Asset Report",
+        "QLTK_BCBDTSD":"Net Asset Volatility Report",
+       "QLTK_BCLLTH":"Realized Profit/Loss Report",
+        "QLTK_BCTHGDTMCK":"Trading report by securities",
+        "QLTK_SDCK":"Stock Balance",
+        "QLTK_SDT":"Cash Balance",
+        "QLTK_SKCK":"Stock Statement",
+        "QLTK_SKT":"Cash Statement",
+        "QLTK_TCPLK":"Depository Fee",
+        "QLTK_TCTTCQ":"Covered warrant Report",
+        "QLTK_TCBP":"Fee/Tax Tariff",
+  
+        "HOTRO_SPDVTT":"Online Products and Services",
+        "HOTRO_HDNDT":"Investor’s Guide",
+        "HOTRO_SPDVTC":"Products for Companies",
+        "HOTRO_HDSDDV": "Service Guides",
+
         "Chuyentien":"Money Transfer",
         "Mauchuyentien":"Money Transfer Form",
         "ChuyentienPPX":"Transfer money into derivative trading deposits",
@@ -17,14 +42,20 @@
         "DanhsachHDCV":"Lending contracts",
         "UTTTC":"Cash Dividend Advance",
         "LSUTTTC":"Dividend Advance History",
-
         "GDTien":"Monney TXN",
         "GDDacBiet": "SPECIAL TXN",
         "QuanLyTK":"ACCOUNT MGMT",
         "Quyen":"Permission",
         "BaoCao":"Report",
         "TuVanDauTu":"Advisory",
-        "HoTro":"Support"
+        "HoTro":"Support",
+        "GiaoDienCuaToi":"Dynamic DashBoard",
+        "CHECK_VLN": "Please enter",
+        "QLTK_TCLVKQ":"Look up and repay the escrow",
+        "QLTK_TCCTQKKQ":"Look up escrow account details",
+        "QLTK_SKTVKQ":"Deposit loan statement",
+        "QLTK_TCTSKQ":"Parameter digital signature lookup",
+        "QLTK_DNTDMH":"Change of rating limit"
     },
     "base":{
         "Time":"Time",
@@ -37,7 +68,8 @@
         "SanGD":"Exchange",
         "TinhTrang":"Status",
         "PhuongThucDatLenh":"Place via",
-        "SHL":"TranID",
+        "SHL":"OrderID",
+        "SHL0": "OrderID",
         "ThongBao":"Status",
         "TatCa":"ALL",
         "TinhTrangLenh":"Order Status",
@@ -46,6 +78,73 @@
         "ThuTuSapXep":"Sort by",
         "TangDan":"Ascending",
         "GiamDan":"Descending",
-        "CapNhat":"Update"
+        "CapNhat":"Update",
+
+        "base_KLC" : "Pending Qty",
+        "base_KLD" : "Placed Qty",
+        "base_DG": "Interpretation",
+        "base_SHL": "Exchange's OrderID",
+        "base_TGDL": "Time for Placing Orders",
+
+        "PROFILE_TTCTK":"Account information",
+        "PROFILE_TDMK":"Change password",
+        "PROFILE_QTTKEN":"Token Card Management",
+        "PROFILE_HDGD":"Recent activities",
+        "PROFILE_CDMKGG":"Trading Password settings",
+        "PROFILE_HDXC":"How to clear cache",
+        "PROFILE_GY":"Feedback",
+        "PROFILE_HTNN":"Language support",
+        "PROFILE_GD":"Display",
+        "PROFILE_T": "Sign out"
+    },
+    "Order": {
+        "ORDER__EXIT":"Close",
+        "TITLE_LCK":"Pending Orders",
+        "TITLE_LCK1":"PENDING ORDERS",
+        "TITLE_KQKL":"Intraday Trading Result",
+        "TITLE_KQKL1":"INTRADAY TRADING RESULT",
+        "TITLE_LTN":" Intraday Order",
+        "TITLE_LTN1":"INTRADAY ORDER",
+        "CASH_SDT":"CASH BALANCE ",
+        "CASH_SDTM":"Cash Balance",
+        "CASH_TUT":"Cash Advance",
+        "CASH_TCFPTSV":"Lending to FPTS",
+        "CASH_SDCTGG": "Available Balance",
+        "ORDER_MUA":"BUY",
+        "ORDER_BAN": "SELL",
+        "ORDER_RPO":"Record pending order",
+        "ORDER_GUI":"SEND",
+        "ORDER_LL": "Reset",
+        "ORDER_NOT" : "Note:",
+        "ORDER_NOT0": " To modify orders applying for stocks in HOSE, FPTS system will execute in turn",
+        "ORDER_NOT1":" Cancel unmatched part of the orginal order",
+        "ORDER_NOT2":" Create a new compatible order after finishing step (1)",
+        "ORDER_MCK" : "Symbol",
+        "ORDER_SXT": "Order by",
+        "ORDER_TSX": "Sort by",
+        "OPTIONS_TC" :"ALL",
+        "OPTIONS_SL" :"Quantity",
+        "ORDER_MKL" : "Mã KL",
+        "OPTIONS_KL" :"Quantity",
+        "ORDER_TC": "Order placed successfully",
+        "ORDER_LD": "Buy/Sell ",
+        "ORDER_SUA": "Modify",
+        "ORDER_HUY": "Cancel",
+
+        "View_Full" :"View_Full",
+        "LAI" :"Lại",
+        "THANHTIEN" : "Total Value",
+        "GKHOP": "Matched Time",
+        "TONG" : "Total",
+        "KLB": " K.lượng bán",
+        "CHON": "Select",
+        "HTC" : "Show all"
     }
 }
+
+
+
+
+
+
+

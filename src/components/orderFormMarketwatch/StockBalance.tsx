@@ -1,6 +1,8 @@
 import React from "react";
 import CachedIcon from "@mui/icons-material/Cached";
+import { useTranslation } from "react-i18next";
 const StockBalance = (status: any) => {
+  const { t } = useTranslation(["home"]);
   return (
     <div
       className={`bottom__sdCKhoan bottom__sdTien mr-[3%] float-left ${
@@ -11,7 +13,8 @@ const StockBalance = (status: any) => {
       <div className="bottom__sdCKhoan__title SDTM">
         <div className="divSoDuCK">
           <span className="divSoDuCK__title px-2.5 text-[#0055ba] uppercase text-15px leading-[25px]">
-            SỐ DƯ CHỨNG KHOÁN
+            {/* SỐ DƯ CHỨNG KHOÁN */}
+            {t("home:menu.QLTK_SDCK")}
           </span>
           <CachedIcon
             style={{
@@ -51,19 +54,23 @@ const StockBalance = (status: any) => {
           <thead>
             <tr>
               <th className="bottom__sdCKhoan__content__thead__mack font-normal">
-                Mã CK
+                {/* Mã CK */}
+                {t("home:Order.ORDER_MCK")}
               </th>
               <th className="bottom__sdCKhoan__content__thead__sl hidden">
-                Số lượng
+                {/* Số lượng */}
+                {t("home:Order.OPTIONS_SL")}
               </th>
               <th className="bottom__sdCKhoan__content__thead__kl font-normal">
-                K.lượng
+                {/* K.lượng */}
+                {t("home:Order.OPTIONS_KL")}
               </th>
               <th
                 className="bottom__sdCKhoan__content__thead__klban hidden"
                 title="Khối lượng bán tương ứng với từng hợp đồng"
               >
                 K.lượng bán
+                {t("home:Order.KLB")}
               </th>
               <th
                 className="bottom__sdCKhoan__content__thead__tlv"
@@ -86,7 +93,7 @@ const StockBalance = (status: any) => {
                 Mã HĐ
               </th>
               <th className="bottom__sdCKhoan__content__thead__chonTM font-normal">
-                Chọn
+              {t("home:Order.CHON")}
               </th>
               <th
                 className="bottom__sdCKhoan__content__thead__chonKQ"
@@ -117,7 +124,7 @@ const StockBalance = (status: any) => {
         style={{ paddingBottom: "15px" }}
       >
         <span id="spanShowAll" style={{ cursor: "pointer" }}>
-          Hiện tất cả
+        {t("home:Order.HTC")}
         </span>
         <span id="spanShowLimit" style={{ cursor: "pointer", display: "none" }}>
           Thu gọn
