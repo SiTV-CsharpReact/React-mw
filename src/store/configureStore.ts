@@ -12,7 +12,7 @@ import { marketHSXSlice } from "../components/indexMarketWatch/marketHSXSlice";
 import settingMarketWatchSlice from "../components/indexMarketWatch/marketShowSlice";
 import marketHNXSlice from "../components/indexMarketWatch/marketHNXSlice";
 import assetReportSlice from "../components/AssetReport/AssetReportSlice";
-import { dataSlice } from '../components/tableMarketwatch/tableThunk';
+import { dataSlice } from "../components/tableMarketwatch/tableThunk";
 // import {tableBuy} from '../components/tableMarketwatch/tableBuy';
 import changeThemeModeSlice from "../components/header/DarkModeSlice";
 import LayoutMarketWatchSLice from "../components/layoutMarketwatch/LayoutMarketWatchSLice";
@@ -26,19 +26,19 @@ export const store = configureStore({
     //trang chủ marketwatch
     // layout
     layout: LayoutMarketWatchSLice.reducer,
-    // Get danh sách công ty để map với stockcode 
+    // Get danh sách công ty để map với stockcode
     company: companySlice.reducer,
     // Get Data Table market watch
     table: tableSlice.reducer,
-    // show hide chart 
+    // show hide chart
     chart: chartMarketwatchSlice.reducer,
     // Popup theo mã
     popupTable: popupTableSlice.reducer,
     // code list khi click danh mục
     codeList: codeListSlice.reducer,
-    // list menu danh mục 
+    // list menu danh mục
     categories: danhmucSlice.reducer,
-    // list mã nghành 
+    // list mã nghành
     ministry: ministrySlice.reducer,
     // Get data Index của sàn hsx
     marketHSX: marketHSXSlice.reducer,
@@ -47,26 +47,25 @@ export const store = configureStore({
     // cài đặt giao diện trang marketwatch
     settingMarketwatch: settingMarketWatchSlice.reducer,
     //báo cáo tài sản
-     assetReport: assetReportSlice.reducer,
+    assetReport: assetReportSlice.reducer,
     //
-     dataTable: dataSlice.reducer,
-     dataBuy:dataSlice.reducer,
+    dataTable: dataSlice.reducer,
+    dataBuy: dataSlice.reducer,
     dataMouse: dataSlice.reducer,
-     dataMouseBuy:dataSlice.reducer,
-     //set status show table chart
-     statusTable:statusTableMWSlice.reducer,
+    dataMouseBuy: dataSlice.reducer,
+    //set status show table chart
+    statusTable: statusTableMWSlice.reducer,
 
-    // change theme 
+    // change theme
     settingColorMode: changeThemeModeSlice.reducer,
-    // menu bar 
-    menuBar :  menuSlice.reducer,
+    // menu bar
+    menuBar: menuSlice.reducer,
     // table test
     tableTest: tableTestSlice.reducer,
 
-    dataShow:dataSliceShow.reducer,
+    dataShow: dataSliceShow.reducer,
     // chart index
-    chartIndex:chartIndexSlice.reducer
-
+    chartIndex: chartIndexSlice.reducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

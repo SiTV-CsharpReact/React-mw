@@ -1,6 +1,7 @@
 import React from "react";
 import { iconColorMenuMarket, setColorMenuMarket } from "../../utils/util";
 import ChartIndex from "../chartIndex/ChartIndex";
+import ChartTest from "../chartIndex/ChartTest";
 
 type Props = {
   id: string[];
@@ -17,6 +18,7 @@ type Props = {
   valueFloor: string;
   valueNoChange: string;
   status: string;
+  san: string;
 };
 
 const SlideMarketItem: React.FC<Props> = ({
@@ -34,6 +36,7 @@ const SlideMarketItem: React.FC<Props> = ({
   valueUp,
   valueNoChange,
   status,
+  san,
 }: Props) => {
 
   return (
@@ -43,7 +46,7 @@ const SlideMarketItem: React.FC<Props> = ({
         <div>
           <p className="text-sm">
             <span id="" className="mar_">
-              {name}
+              {name}:
             </span>
             <span
               id={id[1]}
@@ -112,13 +115,12 @@ const SlideMarketItem: React.FC<Props> = ({
               </p>
             </>
           )}
-            <ChartIndex value={name.replace(":","")}/>
-          
-       
+          {/* <ChartIndex /> */}
+          <ChartTest name={name} san={san} />
         </div>
       </li>
     </>
   );
 };
 
-export default SlideMarketItem;
+export default React.memo(SlideMarketItem);
