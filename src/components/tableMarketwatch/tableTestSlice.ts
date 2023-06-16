@@ -24,7 +24,8 @@ interface TableState {
   DataBi: DataGDTT[];
   RowPined: any;
   DataPined: any[];
-  KeyMenuChildren?: any
+  KeyMenuChildren?: any,
+  keyActiveMan: number
 }
 type params = {
   Floor: string;
@@ -180,6 +181,7 @@ export const tableTestSlice = createSlice({
     productParams: initParams(),
     DataPined: [],
     KeyMenuChildren: null,
+    keyActiveMan: 0
   }),
   reducers: {
     setProductParams: (state, action) => {
@@ -254,6 +256,9 @@ export const tableTestSlice = createSlice({
     handleHistoryPrices :(state,actions)=>{
           state.KeyMenuChildren = 1
           state.floor = "TableTK"
+    },
+    HandleKeyActiveMain :(state)=>{
+      state.keyActiveMan = 1
     }
   },
 
@@ -380,5 +385,5 @@ export default tableTestSlice;
 export const productSelectors = dataTableAdapter.getSelectors(
   (state: RootState) => state.table
 );
-export const { setProductParams, addDatatPined, getDataCookie  ,handleHistoryPrices} =
+export const { setProductParams, addDatatPined, getDataCookie  ,handleHistoryPrices,HandleKeyActiveMain} =
   tableTestSlice.actions;

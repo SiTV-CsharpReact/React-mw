@@ -5,11 +5,13 @@ import * as XLSX from "xlsx";
 import axios from "axios";
 import _ from "lodash";
 import { uniqBy, filter, sortBy } from "lodash";
+import { useTranslation } from "react-i18next";
 type Props ={
   value: number;
 }
 const PendingOrders: React.FC<Props> = (value) => {
   // console.log(value.value)
+  const { t } = useTranslation(["home"]);
   const [data, setData] = useState([]);
   const [dataAfter, setDataAfter] = useState({
     dataCoppy: [],
@@ -53,13 +55,11 @@ const PendingOrders: React.FC<Props> = (value) => {
       const array = filteredData.sort((a: any, b: any) =>
         a.AEXCHANGE.toUpperCase() > b.AEXCHANGE.toUpperCase() ? -1 : 1
       );
-      console.log("array", array);
       setData(array);
     } else {
       const array = filteredData.sort((a: any, b: any) =>
         a.AEXCHANGE.toUpperCase() < b.AEXCHANGE.toUpperCase() ? -1 : 1
       );
-      console.log("array", array);
       setData(array);
     }
   };
@@ -112,15 +112,13 @@ const PendingOrders: React.FC<Props> = (value) => {
         <div style={{ color: "#555" }}>
           <p>
             <span className="text-[14px]  leading-3 font-semibold text-[#333333]">
-              Lưu ý:{" "}
+            {t("home:Order.ORDER_NOT")}
             </span>
-            Khi Quý khách sửa lệnh đối với chứng khoán sàn HOSE, hệ thống sẽ
-            thực hiện lần lượt:
+            {t("home:Order.ORDER_NOT0")} 
           </p>
-          <p> (1) Hủy phần chưa khớp của lệnh gốc</p>
+          <p>  (1) {t("home:Order.ORDER_NOT1")} </p>
           <p>
-            {" "}
-            (2) Tạo lệnh mới tương ứng theo yêu cầu sau khi bước (1) hoàn tất
+            (2){t("home:Order.ORDER_NOT2")}  
           </p>
         </div>
 
@@ -130,8 +128,9 @@ const PendingOrders: React.FC<Props> = (value) => {
               className="block mb-2 text-[11px] leading-3 !font-bold text-black"
               htmlFor=""
             >
-              Sàn GD
+          {t("home:base.SanGD")}
             </label>
+          
             <select 
               onChange={(e) =>
                 setDataAfter((prevState) => ({
@@ -145,7 +144,7 @@ const PendingOrders: React.FC<Props> = (value) => {
               id="sanGD"
             >
               <option className="text-[15px] pb-2" value="">
-                Tất cả
+              {t("home:Order.OPTIONS_TC")}
               </option>
               <option value="HNX.LISTED" className="text-[11px] pb-2">
                 HNX.LISTED
@@ -161,7 +160,7 @@ const PendingOrders: React.FC<Props> = (value) => {
               className="block mb-2 text-[11px] leading-3 font-bold text-black"
               htmlFor=""
             >
-              Mã CK
+             {t("home:Order.ORDER_MCK")} 
             </label>
             <select
               onChange={(e) =>
@@ -176,7 +175,7 @@ const PendingOrders: React.FC<Props> = (value) => {
               id=""
             >
               <option className="text-[12px] pb-2" value="">
-                Tất cả
+              {t("home:Order.OPTIONS_TC")}
               </option>
               {dataAfter.dataValue.map((items: any, index: number) => (
                 <option
@@ -195,7 +194,7 @@ const PendingOrders: React.FC<Props> = (value) => {
               className="block mb-2 text-[11px] leading-3 font-semibold text-black"
               htmlFor=""
             >
-              Sắp xếp theo
+              {t("home:Order.ORDER_SXT")}
             </label>
             <select
               onChange={(e) =>
@@ -210,13 +209,13 @@ const PendingOrders: React.FC<Props> = (value) => {
               id=""
             >
               <option className="text-[12px] pb-2" value="">
-                Tất cả
+              {t("home:Order.OPTIONS_TC")}
               </option>
               <option className="text-[12px] pb-2" value="desc">
-                Mã CK
+              {t("home:Order.ORDER_MCK")} 
               </option>
               <option className="text-[12px] pb-2" value="asc">
-                Số lượng
+              {t("home:Order.OPTIONS_SL")}
               </option>
             </select>
           </div>
@@ -226,7 +225,7 @@ const PendingOrders: React.FC<Props> = (value) => {
               className="block mb-2 text-[11px] leading-3 !font-bold text-black"
               htmlFor=""
             >
-              Tự sắp xếp
+             {t("home:Order.ORDER_TSX")}
             </label>
             <select
               onChange={(e) =>
@@ -241,10 +240,10 @@ const PendingOrders: React.FC<Props> = (value) => {
               id=""
             >
               <option className="text-[12px] text-gray-500" value="asc">
-                Tăng dần
+              {t("home:base.TangDan")} 
               </option>
               <option className="text-[12px] pb-0 text-gray-500" value="desc">
-                Giảm dần
+              {t("home:base.GiamDan")}
               </option>
             </select>
           </div>
@@ -253,7 +252,7 @@ const PendingOrders: React.FC<Props> = (value) => {
             onClick={hanDelSubmit}
             className="px-2 py-1 cursor-pointer mt-5 pl-5 pr-5 rounded-md text-white text-[13px] font-medium uppercase bg-[#0055ba]"
           >
-            Cập nhật
+          {t("home:base.CapNhat")} 
           </button>
           <form className="flex gap-2 mt-5 mr-8">
             <img
@@ -279,80 +278,80 @@ const PendingOrders: React.FC<Props> = (value) => {
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px] !font-bold text-black">Sửa</span>
+                <span className="text-[12px] !font-bold text-black"> {t("home:Order.ORDER_SUA")}</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px] block !font-bold text-black">Hủy</span>
+                <span className="text-[12px] block !font-bold text-black">{t("home:Order.ORDER_HUY")}</span>
                 <input className="rounded-sm" type="checkbox" />
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px] !font-bold text-black">Mã CK </span>
+                <span className="text-[12px] !font-bold text-black">{t("home:Order.ORDER_MCK")}  </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px ] !font-bold text-black"> Lệnh đặt</span>
+                <span className="text-[12px ] !font-bold text-black">{t("home:Order.ORDER_LD")} </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px] !font-bold text-black">Loại GD </span>
+                <span className="text-[12px] !font-bold text-black">{t("home:base.LoaiGD")}  </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px] !font-bold text-black"> KL chờ </span>
+                <span className="text-[12px] !font-bold text-black"> {t("home:base.base_KLC")} </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px] !font-bold text-black">KL đặt </span>
+                <span className="text-[12px] !font-bold text-black">{t("home:base.base_KLD")}  </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px ] !font-bold text-black">Giá </span>
+                <span className="text-[12px ] !font-bold text-black">{t("home:base.Gia")}  </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px] !font-bold text-black">Tình trạng lệnh</span>
+                <span className="text-[12px] !font-bold text-black">{t("home:base.TinhTrangLenh")}</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px] !font-bold text-black">Diễn giải</span>
+                <span className="text-[12px] !font-bold text-black">{t("home:base.base_DG")}</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px] !font-bold text-black">Sàn GD</span>
+                <span className="text-[12px] !font-bold text-black"> {t("home:base.SanGD")}</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px ] !font-bold text-black">SHL Tại sàn</span>
+                <span className="text-[12px ] !font-bold text-black">{t("home:base.base_SHL")}</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px] !font-bold text-black">Thời gian đặt lệnh</span>
+                <span className="text-[12px] !font-bold text-black">{t("home:base.base_TGDL")}</span>
               </th>
             </tr>
           </thead>
@@ -367,7 +366,7 @@ const PendingOrders: React.FC<Props> = (value) => {
                     className="text-center "
                   >
                     <p className=" bg-[#F3F3F3] border mx-auto border-black w-[40px] rounded-sm ">
-                      Hủy
+                    {t("home:Order.ORDER_HUY")} Hủy
                     </p>
                   </td>
                   <td
