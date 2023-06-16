@@ -6,6 +6,7 @@ import HighchartsReact from 'highcharts-react-official';
 import { drawChart } from './util/app.chart';
 import { chartIndex } from '../../models/chartIndex';
 import './chartIndex.scss'
+import { data } from './data';
 type Props ={
   value: string;
   // Other props...
@@ -15,15 +16,7 @@ const gradient: any = [0, 0, 50, 500];
 // const xAxis: any = [
 //   '09 h', '10 h', '11 h','12 h', '13 h', '14 h', '15 h'
 // ];
-const xAxis: any = [
-  0, // Vị trí 0 tương ứng với 09h
-  1, // Vị trí 1 tương ứng với 10h
-  2, // Vị trí 2 tương ứng với 11h
-  3, // Vị trí 3 tương ứng với 12h
-  4, // Vị trí 4 tương ứng với 13h
-  5, // Vị trí 5 tương ứng với 14h
-  6, // Vị trí 6 tương ứng với 15h
-];
+
 const options: Highcharts.Options = {
   // plotOptions: {
   //   series: {
@@ -36,14 +29,18 @@ const options: Highcharts.Options = {
   credits: {
     enabled: false
 },
+
   series: [
     {
       type: 'line',
-      data: [1, 2, 3,7,8,9,10,23,37,80,90],
+      data: data,
       color: '#00ff00',
       marker: {
         enabled: false
-      }
+      },
+      tooltip: {
+                      
+                    }
     },
    
   ],
@@ -51,7 +48,7 @@ const options: Highcharts.Options = {
     className: 'gradient-bg',
     marginTop:10,
    height: 80,
-   width:170,
+   width:190,
    backgroundColor: {
     linearGradient: gradient,
     stops: [
@@ -72,7 +69,7 @@ const options: Highcharts.Options = {
   },
  
   yAxis:{
-    min: 0,
+    
     height:60,
     gridLineWidth: 0,
     labels: {
@@ -84,11 +81,12 @@ const options: Highcharts.Options = {
         lineWidth: 0,
   },
   xAxis: {
-    categories: xAxis,
+    type: 'datetime',
+    tickInterval: 3600 * 1000, 
     gridLineWidth: 1,
     gridLineColor:'#222012',
     
-    startOnTick: true,
+    // startOnTick: true,
     labels: {
       rotation: 0,
       style: {
@@ -96,7 +94,7 @@ const options: Highcharts.Options = {
         fontSize: "8px",
       },
     },
-     height: 70,
+     height: 40,
   },
  
 };
