@@ -11,20 +11,16 @@ type TProps = {
 const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
   const dispatch = useAppDispatch();
   const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
-  const [dataChart, setDataChart] = useState([]);
+  const [dataSpline, setDataSpline] = useState([]);
+  const [dataBar, setDataBar] = useState([]);
   const [indexValue, setIndexValue] = useState(0);
-  const [indexVol, setIndexVol] = useState(0);
+  const [timeFirst, setTimeFirst] = useState(0);
+  const [timeLast, setTimeLast] = useState<any>();
+
   useEffect(() => {
     dispatch(fetchChartIndexAsync());
   }, [dispatch]);
 
-  const data: any = React.useMemo(() => {
-    if (san === "HSX") {
-      return dataChartIndex.HSX;
-    } else {
-      return dataChartIndex.HNX;
-    }
-  }, [dataChartIndex.HNX, dataChartIndex.HSX, san]);
   useEffect(() => {
     if (san === "HSX") {
       const hsx = dataChartIndex.HSX;
@@ -42,88 +38,113 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
           : name === "VNMID"
           ? hsx?.DataFull.VNMID
           : [];
-      const value: any = data?.map((item: any) => [
-        item.Data.TimeJS,
-        item.Data.Index,
-        item.Data.Vol,
-      ]);
+      const dataTimeIndex: any = data?.map((item: any) => ({
+        x: item.Data.TimeJS,
+        y: item.Data.Index,
+      }));
+      setDataSpline(dataTimeIndex);
       data?.map((item: any, index: number) => {
         if (index === 0) {
           const v = item?.Data.Index;
           setIndexValue(v);
+          setTimeFirst(item?.Data.TimeJS);
+          const today = new Date(timeFirst);
+          today.setHours(today.getHours() + 6);
+          setTimeLast(today.getTime());
         }
-        return "";
-      });
 
-      setDataChart(value);
-      // const checkKey = Object.hasOwn(hsx?.DataFull, id);
-      // console.log(hsx?.DataFull.VNXALL);
-    }
-    if (san === "HNX") {
-      const hnx = dataChartIndex.HNX;
-      const data =
-        name === "HNX"
-          ? hnx?.DataFull.HNXIndex
-          : name === "HNX30"
-          ? hnx?.DataFull.HNX30
-          : name === "HNXLCAP"
-          ? hnx?.DataFull.HNXLCap
-          : name === "HNXSMCAP"
-          ? hnx?.DataFull.HNXMSCap
-          : name === "HNXFIN"
-          ? hnx?.DataFull.HNXFin
-          : name === "HNXMAN"
-          ? hnx?.DataFull.HNXMan
-          : name === "HNXCON"
-          ? hnx?.DataFull.HNXCon
-          : name === "UPCOM"
-          ? hnx?.DataFull.HNXUpcomIndex
-          : [];
-      const value: any = data?.map((item: any) => [
-        item.Data.TimeJS,
-        item.Data.Index,
-        item.Data.Vol,
-      ]);
-      data?.map((item: any, index: number) => {
-        if (index === 0) {
-          const v = item?.Data.Index;
-          setIndexValue(v);
-        }
         return "";
       });
-      setDataChart(value);
-      // data?.map((item: any, index: number) => {
-      //   if (item?.Data.Index >= indexValue) {
-      //     setColor("#00c010");
-      //   } else {
-      //     setColor("pink");
-      //   }
-      // });
-      // for (let i = 1; i < data?.length; i++) {
-      //   if (indexValue > data?.Data[i]?.Index) {
-      //     setColor("#00c010");
-      //   }
-      // }
+      const dataTimeVol: any = data?.map((item: any) => ({
+        x: item.Data.TimeJS,
+        y: item.Data.Vol,
+      }));
+      setDataBar(dataTimeVol);
+    } else {
+      if (san === "HNX") {
+        const hnx = dataChartIndex.HNX;
+        const data =
+          name === "HNX"
+            ? hnx?.DataFull.HNXIndex
+            : name === "HNX30"
+            ? hnx?.DataFull.HNX30
+            : name === "HNXLCAP"
+            ? hnx?.DataFull.HNXLCap
+            : name === "HNXSMCAP"
+            ? hnx?.DataFull.HNXMSCap
+            : name === "HNXFIN"
+            ? hnx?.DataFull.HNXFin
+            : name === "HNXMAN"
+            ? hnx?.DataFull.HNXMan
+            : name === "HNXCON"
+            ? hnx?.DataFull.HNXCon
+            : name === "UPCOM"
+            ? hnx?.DataFull.HNXUpcomIndex
+            : [];
+        const dataTimeIndex: any = data?.map((item: any) => ({
+          x: item.Data.TimeJS,
+          y: item.Data.Index,
+        }));
+        setDataSpline(dataTimeIndex);
+        data?.map((item: any, index: number) => {
+          if (index === 0) {
+            const v = item?.Data.Index;
+            setIndexValue(v);
+            setTimeFirst(item?.Data.TimeJS);
+            const today = new Date(timeFirst);
+            today.setHours(today.getHours() + 6);
+            setTimeLast(today.getTime());
+          }
+          return "";
+        });
+        const dataTimeVol: any = data?.map((item: any) => ({
+          x: item.Data.TimeJS,
+          y: item.Data.Vol,
+        }));
+        setDataBar(dataTimeVol);
+      }
     }
-  }, [data.DataFull, dataChartIndex,  name, san]);
+  }, [dataChartIndex.HNX, dataChartIndex.HSX, name, san, timeFirst]);
 
   useEffect(() => {
     const gradient: any = [0, 0, 50, 380];
     const series: any[] = [
       {
-        name: "",
+        name: "Bar",
+        type: "column",
+        yAxis: 0,
+        data: dataBar,
+        // enableMouseTracking: false,
+        state: {
+          hover: {
+            enabled: false,
+          },
+        },
+      },
+      {
+        name: "Spline",
         type: "spline",
-        data: dataChart,
-        color: '#00c010',
+        yAxis: 1,
+        data: dataSpline,
+        zones: [
+          {
+            value: indexValue,
+            color: "red",
+          },
+          {
+            color: "green",
+          },
+        ],
+        state: {
+          hover: {
+            enabled: false,
+          },
+        },
       },
     ];
 
     Highcharts.chart(`container-${name}`, {
       chart: {
-        zooming: {
-          type: "xy",
-        },
-        polar: true,
         plotBackgroundColor: {
           linearGradient: gradient,
           stops: [
@@ -139,42 +160,49 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
       credits: {
         enabled: false,
       },
-      xAxis: [
-        {
-          type: "datetime",
-          labels: {
-            rotation: 0,
-            style: {
-              color: "#969696",
-              fontSize: "9px",
-            },
-          },
-          dateTimeLabelFormats: {
-            hour: "%H h",
-          },
-          gridLineWidth: 1,
-          gridLineColor: "#35353550",
-          lineWidth: 0,
-          tickWidth: 0,
-          minPadding: 0,
-          maxPadding: 0,
-            // min: Date.UTC(2023, 0, 1, 2),
-            // max: Date.UTC(2023, 0, 1, 8),
-          tickInterval: 3600000,
-          minRange: 3600000,
-          height: 60,
-          //   offset: 15
+      xAxis: {
+        type: "datetime",
+        dateTimeLabelFormats: {
+          hour: "%H h",
         },
-      ],
-      time: {
-        useUTC: false,
+        gridLineWidth: 1,
+        gridLineColor: "#35353550",
+        lineWidth: 0,
+        tickWidth: 0,
+        minPadding: 0,
+        maxPadding: 0,
+        min: timeFirst, // Giới hạn trục x từ 2 giờ
+        max: timeLast,
+        tickInterval: 3600000,
+        height: 75,
+        labels: {
+          style: {
+            color: "#bbbbbb",
+            fontSize: "9px",
+          },
+        },
+        offset: -10,
+        zIndex: 1,
       },
       yAxis: [
         {
-          endOnTick: true,
           title: {
-            text: null,
+            text: "",
           },
+          labels: {
+            enabled: false,
+          },
+          gridLineWidth: 0,
+          opposite: true,
+          height: 75,
+          lineWidth: 0,
+        },
+        {
+          title: {
+            text: "",
+          },
+          endOnTick: true,
+          lineWidth: 0,
           labels: {
             enabled: false,
           },
@@ -187,14 +215,19 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
               value: indexValue,
             },
           ],
-          height: 60,
-          // min: Date.UTC(2023, 0, 1, 2),
+          height: 75,
         },
       ],
+      time: {
+        useUTC: false,
+      },
       tooltip: {
         positioner: function (labelWidth, labelHeight, point) {
-          const tooltipX = point.plotX;
-          const tooltipY = point.plotY;
+          let tooltipX = point.plotX - labelWidth / 2 + 50;
+          let tooltipY = point.plotY - labelHeight - 10;
+          if (tooltipY < this.chart.plotTop) {
+            tooltipY = this.chart.plotTop + 10; // Position the tooltip just above the plot area
+          }
           return {
             x: tooltipX,
             y: tooltipY,
@@ -211,19 +244,27 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
           fontSize: "11px",
           fontWeight: "500",
         },
+        shared: true,
         formatter: function () {
-          console.log(this);
-          const hour: any = new Date(Number(this.key)).getHours();
+          const index: any = this.points?.map((e, ind) => {
+            if (ind === 1) {
+              return { x: e.x, y: e.y };
+            }
+            return "";
+          });
+          console.log(index);
+
+          const hour: any = new Date(Number(index[1].x)).getHours();
           const minutes =
-            new Date(Number(this.key)).getMinutes().toString().length === 1
-              ? "0" + new Date(Number(this.key)).getMinutes()
-              : new Date(Number(this.key)).getMinutes();
+            new Date(Number(index[1].x)).getMinutes().toString().length === 1
+              ? "0" + new Date(Number(index[1].x)).getMinutes()
+              : new Date(Number(index[1].x)).getMinutes();
 
           return `<span>Thời gian: <b>${
             hour + ":" + minutes
           }</b></span><br/><span>INDEX: <b>${
-            this.y
-          }</b></span><br/><span>Khối lượng: </span>`;
+            index[1].y
+          }</b></span><br/><span>Khối lượng:${formatNumber(this.y)} </span>`;
         },
       },
       legend: {
@@ -233,14 +274,25 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
         squareSymbol: false,
       },
       plotOptions: {
-        // area: {
-        //   lineWidth: 1,
-        //   color: "red",
-        // },
         spline: {
-          color: "#00c010",
           lineWidth: 1,
+          zones: [
+            {
+              value: indexValue,
+              color: "red",
+            },
+            {
+              color: "#00c010",
+            },
+          ],
         },
+        // bar: {
+        //   states: {
+        //     hover: {
+        //       enabled: true,
+        //     },
+        //   },
+        // },
         series: {
           states: {
             hover: {
@@ -257,7 +309,9 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
     return () => {
       // chart.destroy();
     };
-  }, [dataChart, indexValue, name]);
+  }, [dataBar, dataSpline, indexValue, name, timeFirst, timeLast]);
+  console.log({ timeFirst, timeLast });
+
   return (
     <figure className="highcharts-figure">
       <div id={`container-${name}`}></div>

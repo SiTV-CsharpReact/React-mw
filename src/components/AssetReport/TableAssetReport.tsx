@@ -50,7 +50,7 @@ const TableAssetReport = () => {
               <td colSpan={6} className="!text-left">
                 <div>
                   <span className={`font-bold ${mode}-text`}>
-                    CHI TIẾT CHỨNG KHOÁN
+                      ẾT CHỨNG KHOÁN
                     <span
                       className={`font-medium cursor-pointer text-normalText underline italic ${mode}-text ml-2`}
                       onClick={() => setShort(!short)}
