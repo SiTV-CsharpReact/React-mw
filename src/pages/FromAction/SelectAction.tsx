@@ -1,11 +1,11 @@
 import React from "react"
 type Props = {
-    Title : string,
-    Options :any[],
-    ChangeFuncion : any
+    Title ?: string,
+    Options ? :any[],
+    ChangeFuncion ? : any
 }
-const SelectFrom = (props : Props)=>{
-    const {Title,Options,ChangeFuncion}  = props
+const SelectAction = ({Title,Options,ChangeFuncion} : Props)=>{
+    
     const onChangeSelect = (e:any)=>{
         ChangeFuncion(e.target.value)
     }
@@ -20,4 +20,4 @@ const SelectFrom = (props : Props)=>{
                  </select>
              </div>
 }
-export default SelectFrom
+export default SelectAction

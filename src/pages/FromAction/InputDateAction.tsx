@@ -2,11 +2,11 @@ import React,{useState} from "react";
 import { DatePicker, Space } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 type Props = {
-  Title : string,
-  date : any,
-  ChangeFuncion:any
+  Title ? : string,
+  date ? : any,
+  ChangeFuncion ? :any
 }
-const InputAction = ({Title , date, ChangeFuncion} : Props) => {
+const InputDateAction = ({Title , date, ChangeFuncion} : Props) => {
   const ChangeInput = (e:any)=>{
     if(e.target.value){
       ChangeFuncion(e.target.value)
@@ -21,4 +21,4 @@ const InputAction = ({Title , date, ChangeFuncion} : Props) => {
           
   </div>;
 };
-export default InputAction;
+export default InputDateAction;

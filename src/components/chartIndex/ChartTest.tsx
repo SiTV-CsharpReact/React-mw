@@ -14,6 +14,7 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
   const [dataChart, setDataChart] = useState([]);
   const [indexValue, setIndexValue] = useState(0);
   const [indexVol, setIndexVol] = useState(0);
+
   useEffect(() => {
     dispatch(fetchChartIndexAsync());
   }, [dispatch]);

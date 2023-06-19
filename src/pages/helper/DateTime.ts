@@ -35,5 +35,22 @@ export const TTlenh = [
 export const TTXX = [
     { value: "1", label: " Tăng dần " },
     { value: "1", label: " Giảm dần " }
-
+]
+export const TinhTranglenh = [
+    { value: "All", label: "tất cả " },
+    { value: "1", label: "Chờ kích hoạt  " },
+    { value: "2", label: "Thành công " },
+    { value: "3", label: "Bị từ chối " },
+    { value: "4", label: "Đã hủy " },
+    { value: "5", label: "Hết hạn" },
+]
+export const TTlenhHistorySell = [
+    { value: "All", label: "tất cả " },
+    { value: "INPROCESS", label: "Chờ xử lý  " },
+    { value: "SENT", label: "Đã gửi lên TTLK " },
+    { value: "FPTSACCEPTED", label: "Đã khớp " },
+    { value: "REJECTED", label: "Bị từ chối " },
+    { value: "CANCELLED", label: "Đã huỷ" },
+    { value: "TRADED", label: "Đã khớp" },
+    { value: "ACCEPTED", label: "Đã gửi" },
 ]

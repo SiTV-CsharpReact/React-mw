@@ -5,7 +5,7 @@ import TableAssetReport from "./TableAssetReport";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { fetchAssetReport } from "./AssetReportSlice";
 import ChartAssetReport from "./ChartAssetReport";
-import TitlePage from "../../Page/helper/TitlePage";
+import TitlePage from "../../pages/Layout/TitlePage";
 
 const AssetReport = () => {
   const { mode } = useAppSelector((state) => state.settingColorMode);
