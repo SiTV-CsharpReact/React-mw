@@ -64,9 +64,12 @@ const TransBalance = () => {
             <div className='flex items-center justify-between mt-3 ml-8 mr-5'>
                 <h3 className='text-[16px] text-[#000000] font-bold'>TỔNG GIÁ TRỊ THỊ TRƯỜNG <i className='fa fa-info-circle text-[#717171]'></i>  : 4,809,120</h3>
                 <div className="flex items-center gap-3 ">
-                    <button onClick={handelShort} style={{ border: "1px solid #DEDEDE" }} className='px-[15px] py-[5px] !text-[##000000] rounded-[4px] bg-[#ECECEC]'>Xem rút gọn</button>
+                    <button onClick={handelShort} style={{ border: "1px solid #DEDEDE" }}
+                        className='px-[15px] py-[5px] !text-[##000000] rounded-[4px] bg-[#ECECEC]'>
+                        { short ?  "Xem đầy đủ" : " Xem rút gọn" }
+                    </button>
 
-                    <form className="flex gap-2">
+            <form className="flex gap-2">
                         <img
                             className="cursor-pointer "
                             onClick={handleExportToExcel}

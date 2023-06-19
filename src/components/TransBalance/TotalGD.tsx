@@ -23,7 +23,7 @@ const TotalGD = () => {
               </div>
               <div className='flex items-center justify-between mt-2'>
                   <div></div>
-                  <button className='px-[35px] py-[3.9px] bg-[#0055ba] text-white !rounded-[4px]'>{t("report:Transbalance.Buy")}</button>
+                  <button onClick={()=>alert(" buy success")} className='px-[35px] py-[3.9px] bg-[#0055ba] text-white !rounded-[4px]'>{t("report:Transbalance.Buy")}</button>
               </div>
 
               <div className='pl-3 '>
