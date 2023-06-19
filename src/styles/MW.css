@@ -91,6 +91,7 @@
     max-width: 250px;
     text-align: center;
     border: 1px solid transparent;
+    height: 165px;
 }
 .col-symbol {
    width: 5.5%;

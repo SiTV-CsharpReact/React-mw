@@ -392,7 +392,7 @@ const SlidesMarketWatch = () => {
           )}
           {INDEX.HNXMAN && (
             <SlideMarketItem
-              name="HNXMAN:"
+              name="HNXMAN"
               id={HNXMAN}
               valueIndexChange={valueHNX?.i310_3}
               valueChange={valueHNX?.i310_5}
@@ -411,7 +411,7 @@ const SlidesMarketWatch = () => {
           )}
           {INDEX.HNXCON && (
             <SlideMarketItem
-              name="HNXCON:"
+              name="HNXCON"
               id={HNXCON}
               valueIndexChange={valueHNX?.i311_3}
               valueChange={valueHNX?.i311_5}
