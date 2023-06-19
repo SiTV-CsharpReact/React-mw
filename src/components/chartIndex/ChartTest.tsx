@@ -12,6 +12,7 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
   const dispatch = useAppDispatch();
   const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
   const [dataChart, setDataChart] = useState([]);
+  const [databars, setDataBars] = useState([]);
   const [indexValue, setIndexValue] = useState(0);
   const [indexVol, setIndexVol] = useState(0);
   useEffect(() => {
@@ -24,10 +25,10 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
     } else {
       return dataChartIndex.HNX;
     }
-  }, [dataChartIndex.HNX, dataChartIndex.HSX, san]);
+  }, [dataChartIndex?.HNX, dataChartIndex?.HSX, san]);
   useEffect(() => {
     if (san === "HSX") {
-      const hsx = dataChartIndex.HSX;
+      const hsx = dataChartIndex?.HSX;
       const data =
         name === "VNXALL"
           ? hsx?.DataFull.VNXALL
@@ -42,9 +43,12 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
           : name === "VNMID"
           ? hsx?.DataFull.VNMID
           : [];
-      const value: any = data?.map((item: any) => [
+      const valueLines: any = data?.map((item: any) => [
         item.Data.TimeJS,
         item.Data.Index,
+      ]);
+      const valueBars: any = data?.map((item: any) => [
+        item.Data.TimeJS,
         item.Data.Vol,
       ]);
       data?.map((item: any, index: number) => {
@@ -55,12 +59,13 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
         return "";
       });
 
-      setDataChart(value);
+      setDataChart(valueLines);
+      setDataBars(valueBars);
       // const checkKey = Object.hasOwn(hsx?.DataFull, id);
       // console.log(hsx?.DataFull.VNXALL);
     }
     if (san === "HNX") {
-      const hnx = dataChartIndex.HNX;
+      const hnx = dataChartIndex?.HNX;
       const data =
         name === "HNX"
           ? hnx?.DataFull.HNXIndex
@@ -79,19 +84,24 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
           : name === "UPCOM"
           ? hnx?.DataFull.HNXUpcomIndex
           : [];
-      const value: any = data?.map((item: any) => [
-        item.Data.TimeJS,
-        item.Data.Index,
-        item.Data.Vol,
-      ]);
-      data?.map((item: any, index: number) => {
-        if (index === 0) {
-          const v = item?.Data.Index;
-          setIndexValue(v);
-        }
-        return "";
-      });
-      setDataChart(value);
+          const valueLines: any = data?.map((item: any) => [
+            item.Data.TimeJS,
+            item.Data.Index,
+          ]);
+          const valueBars: any = data?.map((item: any) => [
+            item.Data.TimeJS,
+            item.Data.Vol,
+          ]);
+          data?.map((item: any, index: number) => {
+            if (index === 0) {
+              const v = item?.Data.Index;
+              setIndexValue(v);
+            }
+            return "";
+          });
+    
+          setDataChart(valueLines);
+          setDataBars(valueBars);
       // data?.map((item: any, index: number) => {
       //   if (item?.Data.Index >= indexValue) {
       //     setColor("#00c010");
@@ -106,16 +116,22 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
       // }
     }
   }, [data?.DataFull, dataChartIndex,  name, san]);
-
+  console.log("test1", new Date(1666099200000))
   useEffect(() => {
     const gradient: any = [0, 0, 50, 380];
     const series: any[] = [
       {
         name: "",
-        type: "spline",
+        type: "line",
         data: dataChart,
         color: '#00c010',
       },
+      // {
+      //   name: "",
+      //   type: "collum",
+      //   data: dataChart,
+      //   color: '#5F9DFE',
+      // },
     ];
 
     Highcharts.chart(`container-${name}`, {
@@ -152,14 +168,14 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
           dateTimeLabelFormats: {
             hour: "%H h",
           },
-          gridLineWidth: 2,
+          gridLineWidth: 1.5,
           gridLineColor: "#35353550",
           lineWidth: 0,
           tickWidth: 0,
           minPadding: 0,
           maxPadding: 0,
-            // min: Date.UTC(2023, 0, 1, 2),
-            // max: Date.UTC(2023, 0, 1, 8),
+          min: 1687140000000, // Giới hạn trục x từ 2 giờ
+          max: 1687161600000, 
           tickInterval: 3600000,
           minRange: 3600000,
           height: 60,
@@ -182,8 +198,8 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
           tickAmount: 10,
           plotLines: [
             {
-              color: "#939000",
-              width: 1,
+              color: "#c1c000",
+              width: 1.5,
               value: indexValue,
             },
           ],
@@ -239,7 +255,7 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
         // },
         spline: {
           color: "#00c010",
-          lineWidth: 1,
+          lineWidth: 1.5,
         },
         series: {
           states: {
@@ -250,6 +266,12 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
           marker: {
             enabled: false,
           },
+          zones: [{
+            color: 'red'
+        }, {
+            value: indexValue,
+            color: 'green'
+        }],
         },
       },
       series: series,

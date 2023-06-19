@@ -4,7 +4,7 @@ import { AgGridReact } from "ag-grid-react";
 // import "ag-grid-community/styles/ag-grid.css";
 // import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./table.scss";
-import { formatNumberMarket } from "../../utils/util";
+import { arrayColor, colorTextMenu, fStatusMarketHNX, fStatusMarketUPCOM, formatNumberMarket } from "../../utils/util";
 
 // import { LicenseManager } from "ag-grid-enterprise";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
@@ -14,6 +14,7 @@ import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
 import { defaultColDef, gridOptions } from "./interface/config.tablegrid";
 import ColumnDef from "./components/options";
 import { setCookie } from "../../models/cookie";
+import { g_CLASS_INDEX } from "../../configs/app.config";
 
 // LicenseManager.setLicenseKey(
 //   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
@@ -151,6 +152,10 @@ const TableMarketWatchTest = () => {
     }
   };
   const updateTableHNX = (dataHNX: any) => {
+    var vTextClass = "",
+    vImageClass = "",
+    vName = "",
+    vStrs = "";
     const arrRowID = dataHNX.RowID;
     const arrInfo = dataHNX.Info;
     if (dataHNX) {
@@ -165,6 +170,97 @@ const TableMarketWatchTest = () => {
         else {
           updateDataTable(arrRowID, arrInfo[0][0], arrInfo[0][1]);
         }
+      } else {
+        //tạo biến tdIndex lấy element
+        const tdIndexMenu = document.getElementById(`${dataHNX[0]}`);
+        // lay gia trị đằng sau
+        vStrs = dataHNX[0].split("_");
+
+        var vIDImage = dataHNX[0].substring(0, dataHNX[0].indexOf("_"));
+        const vCLassImage = document.getElementById(`${vIDImage}_Image`);
+        const vCLassIndex = document.getElementById(`${vIDImage}_3`);
+        const vCLassPT = document.getElementById(
+          `${vIDImage}_6`
+        )?.parentElement;
+        /// check có tdIndex để bắt đầu add giá trị vào
+        if (tdIndexMenu) {
+          // neu = 5 thì update màu cho image và PT
+          if (vStrs[1] === "5") {
+            var v = parseFloat(dataHNX[1]);
+            if (v === 0) {
+              // = tham chieu, vang
+              vTextClass = g_CLASS_INDEX[0][0];
+              vImageClass = g_CLASS_INDEX[0][1];
+            }
+            if (v > 0) {
+              // tang, xanh
+              vTextClass = g_CLASS_INDEX[1][0];
+              vImageClass = g_CLASS_INDEX[1][1];
+            }
+            if (v < 0) {
+              // giam, do
+              vTextClass = g_CLASS_INDEX[2][0];
+              vImageClass = g_CLASS_INDEX[2][1];
+            }
+            if (vCLassImage) {
+              if (vImageClass) {
+                vCLassImage.className = vImageClass;
+                // console.log(vCLassImage,vTextClass)
+              }
+            }
+            if (vCLassIndex) {
+              if (vTextClass) {
+                vCLassIndex.className = vTextClass + " px-0.5";
+
+                // console.log(vCLassIndex,vTextClass)
+                //vCLassIndex.classList.add(vTextClass);
+              }
+            }
+            if (vCLassPT) {
+              if (vTextClass) {
+                vCLassPT.className = vTextClass;
+                // console.log(vCLassPT,vTextClass)
+                //vCLassIndex.classList.add(vTextClass);
+              }
+            }
+          }
+          // check trạng thái thị trường HNX
+          if (fStatusMarketHNX(dataHNX[1]) !== "") {
+            tdIndexMenu.innerHTML = fStatusMarketHNX(dataHNX[1]);
+            tdIndexMenu.style.backgroundColor = "#888888";
+            arrayColor.map((arrayColorText: string) => {
+              tdIndexMenu.classList.remove(arrayColorText);
+            });
+            setTimeout(function () {
+              tdIndexMenu.style.backgroundColor = "";
+            }, 500);
+          }
+          // check thị trường UPCOM
+          else if (fStatusMarketUPCOM(dataHNX[1]) !== "") {
+            tdIndexMenu.innerHTML = fStatusMarketUPCOM(dataHNX[1]);
+            tdIndexMenu.style.backgroundColor = "#888888";
+            arrayColor.map((arrayColorText: string) => {
+              tdIndexMenu.classList.remove(arrayColorText);
+            });
+            setTimeout(function () {
+              tdIndexMenu.style.backgroundColor = "";
+            }, 500);
+          } else {
+            tdIndexMenu.innerHTML = `${dataHNX[1]}`;
+            tdIndexMenu.style.backgroundColor = "#888888";
+            arrayColor.map((arrayColorText: string) => {
+              tdIndexMenu.classList.remove(arrayColorText);
+            });
+            //tdIndexMenu.style.color = colorTextMenu(dataHNX[1])
+            tdIndexMenu.classList.add(colorTextMenu(dataHNX[1]));
+            //valuePT?.classList.add(textColor)
+            setTimeout(function () {
+              tdIndexMenu.style.backgroundColor = "";
+            }, 500);
+          }
+        }
+
+        //console.log(dataHNX)
       }
     }
   };
