@@ -1,8 +1,8 @@
 import  React ,{FC} from "react" 
 import "./style.Form.scss";
 type Props = {
-    children :any,
-    data :any
+    children? :any,
+    data?:any
 }
 const FromAction  = ({data,children}:Props)=>{
     const HandelSubmit = (e:any)=>{

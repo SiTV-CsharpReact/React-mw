@@ -12,7 +12,6 @@ export const fetchChartIndexAsync = createAsyncThunk<IChartIndex>(
   async () => {
     try {
       const data = await agent.chartIndex.get();
-      console.log(data);
       return data;
     } catch (error) {
       console.log("error ở đây", error);

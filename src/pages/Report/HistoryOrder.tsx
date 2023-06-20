@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import TitlePage from "../helper/TitlePage";
+
 import FromAction from "../FromAction/FromAction";
-import SelectFrom from "../FromAction/SelectAction";
-import InputAction from "../FromAction/InputAction";
+import SelectAction from "../FromAction/SelectAction";
+import InputDateAction from "../FromAction/InputDateAction";
 import { SanGD, MaCK, TTlenh, TTXX, getDateTime } from "../helper/DateTime";
-import Footer from "../helper/FooterPage";
+
+import LayoutPage from "../Layout/LayoutPage";
 let { tuNgay, denNgay } = getDateTime();
 type TypeValue = {
   SanGD: any;
@@ -43,32 +44,31 @@ const HistoryOrder = () => {
   };
   return (
     <>
-      <div>
-        <TitlePage content="Lịch sử đặt lệnh" />
-      </div>
+
+      <LayoutPage  content="Lịch sử đặt lệnh"  PageTitle = "Lịch sử đặt lệnh">  
       <div>
         <FromAction data={data}>
-          <SelectFrom
+          <SelectAction
             Title="Sàn GD"
             Options={SanGD}
             ChangeFuncion={ChangeSanGD}
           />
-          <SelectFrom Title="Mã CK" Options={MaCK} ChangeFuncion={ChangeMaCK} />
-          <SelectFrom
+          <SelectAction Title="Mã CK" Options={MaCK} ChangeFuncion={ChangeMaCK} />
+          <SelectAction
             Title="Tình trạng lệnh"
             Options={TTlenh}
             ChangeFuncion={ChangeTTlenh}
           />
-          <InputAction Title="Từ Ngày" date={tuNgay} ChangeFuncion={ChangeTuNgay}/>
-          <InputAction Title="Đến Ngày" date={denNgay} ChangeFuncion={ChangeDenNgay} />
-          <SelectFrom
+          <InputDateAction Title="Từ Ngày" date={tuNgay} ChangeFuncion={ChangeTuNgay}/>
+          <InputDateAction Title="Đến Ngày" date={denNgay} ChangeFuncion={ChangeDenNgay} />
+          <SelectAction
             Title="T.tự sắp xếp"
             Options={TTXX}
             ChangeFuncion={ChangeTTSS}
           />
         </FromAction>
       </div>
-      <div className="content">
+      <div className="contentActionGD">
         <table className="TablePage">
           <thead>
             <tr>
@@ -94,10 +94,8 @@ const HistoryOrder = () => {
           được cung cấp.
         </p>
       </div>
-
-      <div>
-        <Footer />
-      </div>
+      </LayoutPage> 
+      
     </>
   );
 };

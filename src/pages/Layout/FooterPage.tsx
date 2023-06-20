@@ -1,5 +1,5 @@
 import React from "react";
-import  "../FromAction/style.Form.scss"
+import "./StyleLayoutPage.scss"
 const Footer: React.FC = () => {
   return (
      <div  className="footer">
