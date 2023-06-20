@@ -12,7 +12,7 @@ import {
   tinhGiaCT,
   checkSTTMarket,
   checkSTTMarketValue,
-  updateQuoteData,
+  colorTextMenu,
 } from "../../utils/util";
 import {
   ARRAY_COL_ATO_ATC_QTTY,
@@ -84,7 +84,7 @@ const MenuMarketWatch = () => {
     };
     socketHSX.onmessage = (event) => {
       updateQuote(event.data);
-      updateDataRealTime(event.data);
+      // updateDataRealTime(event.data);
       // updateQuote(event.data)
       // setDataHNX(event.data);
     };
@@ -292,26 +292,7 @@ const MenuMarketWatch = () => {
 
     return Color;
   };
-  const colorTextMenu = (price: number) => {
-    const value = 0;
-    let Color = "text-white";
-    // if(price=== san){
-    //     Color="text-blue"
-    // }
-    if (price) {
-      if (Number(price) === 0) {
-        Color = "text-yellow";
-      } else if (price === Number(value)) {
-        Color = "text-yellow";
-      } else if (price > Number(value)) {
-        Color = "text-green";
-      } else if (price < Number(value)) {
-        Color = "text-red";
-      }
-    }
 
-    return Color;
-  };
   ;
   
   const updateDataTable = (
@@ -463,30 +444,30 @@ const MenuMarketWatch = () => {
     }
    };
 
-  const updateDataRealTime = (objRealtime: any) => {
-    var dataHNXRealTime = JSON.parse(objRealtime);
-    let arrDatas = [];
-    if (typeof dataHNXRealTime !== "undefined") {
-      const dataRT = Object.keys(dataHNXRealTime);
+  // const updateDataRealTime = (objRealtime: any) => {
+  //   var dataHNXRealTime = JSON.parse(objRealtime);
+  //   let arrDatas = [];
+  //   if (typeof dataHNXRealTime !== "undefined") {
+  //     const dataRT = Object.keys(dataHNXRealTime);
 
-      if (dataRT.length !== 0) {
-        const dataM = dataHNXRealTime.M;
-        if (typeof dataM !== "undefined") {
-          dataM.map(
-            (dataLT: any) => (
-              (arrDatas = dataLT.A[0]),
-              //updateIndex(arrDatas),
-              updateQuoteData(arrDatas)
-            )
-          );
+  //     if (dataRT.length !== 0) {
+  //       const dataM = dataHNXRealTime.M;
+  //       if (typeof dataM !== "undefined") {
+  //         dataM.map(
+  //           (dataLT: any) => (
+  //             (arrDatas = dataLT.A[0]),
+  //             //updateIndex(arrDatas),
+  //             updateQuoteData(arrDatas)
+  //           )
+  //         );
 
-          // console.log(dataM)
-        }
-      }
-    } else {
-      // console.log(dataHNXRealTime)
-    }
-  };
+  //         // console.log(dataM)
+  //       }
+  //     }
+  //   } else {
+  //     // console.log(dataHNXRealTime)
+  //   }
+  // };
 
   if (loading)
     return <div className="bg-headerMenuTableMarket">Loading...</div>;

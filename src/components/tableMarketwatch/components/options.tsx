@@ -10,6 +10,7 @@ import { RowData } from "../../../models/tableMarketwatch";
 import { CellRender } from "./CellRenderComponent";
 import { addDatatPined } from "../tableTestSlice";
 import { setCookie } from "../../../models/cookie";
+import CustomHeader from "../CustomHeader";
 
 
 
@@ -29,6 +30,12 @@ const PinCell = () => {
 };
 
 const ColumnDef = (props: any, props2: any) => {
+  const [showPrice, setShowPrice] = useState(false);
+
+  const handelCheckNext = () => {
+    setShowPrice(!showPrice);
+
+  };
   const widthWindow = window.innerWidth;
   const dispatch = useAppDispatch();
   const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
@@ -542,6 +549,59 @@ const ColumnDef = (props: any, props2: any) => {
               <div data-index={dataIndex} className="custom-cell">
                 {formatNumberMarket(value)}
               </div>
+            );
+          },
+        },
+        {
+          field: "Chenhlech1",
+          sortable: true,
+          setSort: true,
+          progressSort: true,
+          headerName: () => {
+            return <CustomHeader onClick={handelCheckNext} />;
+          },
+
+         headerComponentFramework : CustomHeader,
+          headerComponentParams: {
+            onClick: () => {
+              setShowPrice(!showPrice);
+            },
+            headerName : "+/-"
+          },
+
+        
+          suppressMenu: true,
+          width: widthWindow * 0.03,
+          minWidth: 50,
+          maxWidth: 100,
+          cellClass: "score-cell tc-cell",
+          headerClass: "custom-header tc-header",
+          cellStyle: (params: any) => ({
+            fontWeight: "",
+            //color: setColorMarkettest("Chenhlech1", params),
+            textAlign: "right",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "flex-end",
+          }),
+          cellRenderer: (params: any) => {
+            const dataIndex = params.colDef.field;
+            const value = params.value;
+            const [part1, part2] = value.split("|");
+            return (
+              <div
+                data-index={dataIndex} className="cursor-pointer custom-cell">
+                {showPrice && (
+                  <div style={{ color: parseInt(part2) >= 0.1 ? "#00FF00" : "#FF0000", }}>
+                    {part2}
+                  </div>
+                )}
+                <div style={{ color: part1 >= 0 ? "#00FF00" : "#FF0000" }}>
+                  {showPrice ? null : part1}
+                </div>
+              </div>
+
             );
           },
         },
