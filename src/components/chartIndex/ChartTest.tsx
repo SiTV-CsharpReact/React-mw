@@ -154,7 +154,8 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
 
     Highcharts.chart(`container-${name}`, {
       chart: {
-        
+        marginTop: 8, // Đặt khoảng cách giữa highcharts-plot-background và highcharts-container là 20px
+  marginBottom: 15,
         plotBorderWidth: 1,
         plotBorderColor: '#545454',
         plotBackgroundColor: {
@@ -165,8 +166,8 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
           ],
         },
         backgroundColor: "#000",
-        width:200,
-        height:120
+        width:205,
+        height:98
       },
       title: {
         text: "",
@@ -191,12 +192,20 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
         tickInterval: 3600000,
         // height: 75,
         labels: {
+    //       x: 0, // Đưa nhãn trục "9h" vào vị trí bắt đầu từ 0px
+    // align: 'left', // Đưa văn bản của nhãn trục vào vị trí bắt đầu từ 0px
+    // overflow: 'justify', // Hiển thị nội dung nhãn trục ra khỏi biểu đồ
+          useHTML: true,
           style: {
+            
             color: "#a5a5a5",
             fontSize: "8px",
+            // rotation: -45,
+            // step: 1,
+            
           },
         },
-        offset: -10,
+        offset: -9,
         zIndex: 1,
       },
       yAxis: [
@@ -228,6 +237,7 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
               color: "#FFFF00",
               width: .8,
               value: indexValue,
+              zIndex:10
             },
           ],
           // height: 75,
