@@ -89,7 +89,7 @@ const ProfileAccount: any = () => {
                   style={{ fontSize: 13, paddingTop: 5, paddingBottom: 5 }}
                   className={`${mode}-text`}
                 >
-                  TẠ VĂN SĨ
+                 VŨ THÀNH ĐÔ
                 </Typography>
 
                 <a

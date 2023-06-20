@@ -31,7 +31,7 @@ const TablePopupMarketwatch = () => {
   const [dataCheck, setDataCheck] = useState("");
   const [dataItem, setDataItem] = useState<any[]>([]);
   const stockDetail = useSelector((state: RootState) => state.popupTable.code);
-  console.log({ stockDetail });
+  console.log("s",{ stockDetail });
   const fetchDataTableHSX = async (code?: string) => {
     if (code !== "" && code !== undefined) {
       const res = await axios.get(
