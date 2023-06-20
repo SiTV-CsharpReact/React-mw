@@ -237,16 +237,20 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
       },
       tooltip: {
         positioner: function (labelWidth, labelHeight, point) {
-          let tooltipX = point.plotX - labelWidth / 2 + 50;
-          let tooltipY = point.plotY - labelHeight - 10;
-          if (tooltipX > this.chart.plotLeft) {
-            tooltipX = this.chart.plotLeft + 10; // Position the tooltip just above the plot area
-            // tooltipY = point.plotY - labelHeight - 10;
+          let chart = this.chart;
+          let x = point.plotX + chart.plotLeft - 50;
+          let y = point.plotY + chart.plotTop - labelHeight;
+          if (x < chart.plotLeft) {
+            x = chart.plotLeft;
+          } else if (x + labelWidth > chart.plotLeft + chart.plotWidth) {
+            x = chart.plotLeft + chart.plotWidth - labelWidth;
           }
-          return {
-            x: tooltipX,
-            y: tooltipY,
-          };
+          if (y < chart.plotTop) {
+            y = chart.plotTop;
+          } else if (y + labelHeight > chart.plotTop + chart.plotHeight) {
+            y = chart.plotTop + chart.plotHeight - labelHeight;
+          }
+          return { x: x, y: y };
         },
         shadow: false,
         backgroundColor: "#ffffffc9",
