@@ -140,11 +140,31 @@
         "CHON": "Select",
         "HTC" : "Show all"
     }
+    , 
+    "Transbalance":{
+          "MonneyBefore":"Opening Balance",
+          "TradeableMoney":"Available Cash",
+          "LendingToFPTS":"Lending to FPTS",
+          "AdvanceAmount":"Advance Amount",
+          "BuyingPowerFromStocks":"Buying Power from stocks",
+          "PendingBuyOrders":"Pending Buy orders",
+          "CashSuspendedForBuyingMtched":"Cash suspended for buying matched",
+          "CashInTransit":"Cash in transit",
+          "OtherUnpaidFees":"Other unpaid fees",
+          "Buy":"Buy",
+          "TotalCash":"Total Cash ",
+          "RemainingCash":"Remaining cash ",
+          "SavingsLendings":"Savings, lendings",
+          "CashPendingPayment":"Cash pending payment",
+          "CashDividendPendingForSettlement":"Cash Dividend pending for settlement",
+          "OtherCashPendingForSettlement":"Other Cash pending for settlement",
+          "Marginloans":"Margin loans",
+          "Note":"Note",
+          "Node1":"1. Data in this report depend on multiple data sources and may not be guaranteed to be continuously updated",
+          "Node2":"This report is for reference only and has no significance meaning in investment decision.",
+          "Node3":"2. Data are temporarily calculated during the trading session and will be updated again after FPTS has finished the accounting process and recalculates at the end of the day.",
+          "Node4":"3. Expected profit/loss is temporarily calculated based on the difference between market price and average cost price calculated by FPTS. In which, the Average Cost Price is temporarily calculated during the trading session according to FPTS's formula and opinion, and is for reference only. You can refer to FPTS's calculation of Average Cost Price",
+          "Node5":"here",
+          "Node6":" FPT Securities Joint Stock Company "
+    }
 }
-
-
-
-
-
-
-

@@ -76,7 +76,7 @@ const TableAssetReport = () => {
               >
                 <div className={`relative ${mode}-text`}>
                   Mã CK
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "ASTOCKCODE" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -108,7 +108,7 @@ const TableAssetReport = () => {
               >
                 <div className="relative">
                   CK có sẵn
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "ATRADING_READY_TOTAL" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -140,7 +140,7 @@ const TableAssetReport = () => {
               >
                 <div className="relative">
                   CK chở về
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "AWAIT_REC_RIGHT" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -172,7 +172,7 @@ const TableAssetReport = () => {
               >
                 <div className="relative">
                   Tổng KL
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "ATOTAL_AMOUNT" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -210,7 +210,7 @@ const TableAssetReport = () => {
               >
                 <div className="relative">
                   Thành tiền
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "AMARKET_VALUE" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -248,7 +248,7 @@ const TableAssetReport = () => {
               >
                 <div className="relative">
                   Tổng giá vốn
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "AROOT_VALUE" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -280,7 +280,7 @@ const TableAssetReport = () => {
               >
                 <div className="relative">
                   Lãi/Lỗ
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "APROFIT_LOSS_VAL" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -312,7 +312,7 @@ const TableAssetReport = () => {
               >
                 <div className="relative">
                   % Lãi/Lỗ
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "APROFIT_LOSS_RATE" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -491,7 +491,7 @@ const TableAssetReport = () => {
                   <strong>
                     Cơ cấu <br /> Vốn
                   </strong>
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     <span className="relative flex flex-col">
                       {label !== "ACAPITAL_STRUCTURE" ? (
                         <>
@@ -534,7 +534,7 @@ const TableAssetReport = () => {
                   <strong>
                     Tỉ trọng <br /> DM
                   </strong>
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "APORTFOLIO_RATE" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -569,7 +569,7 @@ const TableAssetReport = () => {
               >
                 <div className={`relative ${mode}-text`}>
                   Mã CK
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "ASTOCKCODE" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -602,7 +602,7 @@ const TableAssetReport = () => {
               >
                 <div className="relative">
                   CK có sẵn
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "ATRADING_READY_TOTAL" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -663,7 +663,7 @@ const TableAssetReport = () => {
               >
                 <div className="relative">
                   Tổng KL
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "ATOTAL_AMOUNT" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -703,7 +703,7 @@ const TableAssetReport = () => {
               >
                 <div className="relative">
                   Thành tiền
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "AMARKET_VALUE" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -743,7 +743,7 @@ const TableAssetReport = () => {
               >
                 <div className="relative">
                   Tổng giá vốn
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "AROOT_VALUE" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -776,7 +776,7 @@ const TableAssetReport = () => {
               >
                 <div className="relative">
                   Lãi/Lỗ
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "APROFIT_LOSS_VAL" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">
@@ -809,7 +809,7 @@ const TableAssetReport = () => {
               >
                 <div className="relative">
                   % Lãi/Lỗ
-                  <span className="absolute top-1/2 translate-y-1/2 right-2">
+                  <span className="absolute translate-y-1/2 top-1/2 right-2">
                     {label !== "APROFIT_LOSS_RATE" ? (
                       <>
                         <span className="absolute top-[65%] -translate-y-[65%]">

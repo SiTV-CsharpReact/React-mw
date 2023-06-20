@@ -20,6 +20,7 @@ import { tableTestSlice } from "../components/tableMarketwatch/tableTestSlice";
 import { dataSliceShow } from "../components/orderFormMarketwatch/data";
 import statusTableMWSlice from "../components/chartMarketwatch/statusTableSlice";
 import chartIndexSlice from "../components/chartIndex/chartIndexSlice";
+import { dataSliceThongke } from "../components/tableMarketwatch/helper/tableFormThongke";
 
 export const store = configureStore({
   reducer: {
@@ -49,8 +50,10 @@ export const store = configureStore({
     //báo cáo tài sản
     assetReport: assetReportSlice.reducer,
     //
-    dataTable: dataSlice.reducer,
-    dataBuy: dataSlice.reducer,
+     dataTable: dataSlice.reducer,
+     dataBuy: dataSlice.reducer,
+     
+    dataThongke : dataSliceThongke.reducer,
     dataMouse: dataSlice.reducer,
     dataMouseBuy: dataSlice.reducer,
     //set status show table chart

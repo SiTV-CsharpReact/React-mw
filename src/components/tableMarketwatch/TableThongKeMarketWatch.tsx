@@ -50,7 +50,7 @@ const TableThongKeMarketWatch = () => {
   //                 case "Giao-dich-TT-NDTNN":
   //                   valueParam = "s=bi";
   //                   break;
-  //        default:
+  //        default:p
   //          break;
   //     }
   //      const res = await fetch(`http://marketstream.fpts.com.vn/hnx/data.ashx?${valueParam}`);
@@ -206,7 +206,7 @@ const tets = (e:any)=>{
                 </th>
                 <th className="hbrb" colSpan={2}>
                   Thay đổi Index
-                </th>
+                </th> 
                 <th className="hbrb" rowSpan={2}>
                   Tổng GTGD
                 </th>

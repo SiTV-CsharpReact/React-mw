@@ -27,7 +27,14 @@ import OverViewCustody from "./pages/RightCustody/OverViewCustody";
 import ConditionalOrder from "./pages/Stoploss/ConditionalOrder";
 import ConditionalOrderBook from "./pages/Stoploss/ConditionalOrderBook";
 import RegistrationOnline from "./pages/RightCustody/RegistrationOnline";
-const  App: React.FC =()=> {
+import TransBalance from "./components/TransBalance/TransBalance";
+
+// const  App: React.FC =()=> {
+// import TransBalance from "./components/TransBalance/TransBalance";
+// import HistoryOrder from "./Page/HistoryTransaction/HistoryOrder";
+// import HistoryMatching from "./Page/HistoryTransaction/HistoryMatching";
+// import HistoryForpay from "./Page/HistoryTransaction/HistoryForPay";
+function App() {
   return (
     <div>
       <AppProvider>
@@ -41,6 +48,7 @@ const  App: React.FC =()=> {
           />
           <Route path="/dynamic-dashboard" element={<MyLayout />} />
           {/* Report */}
+          <Route path="/report/ReportTransBalance" element={<TransBalance />} />  
           {/* Quản lý tài khoản */}
             <Route path="/report/ReportTransBalance" element={<AssetReport />} />  
             <Route path="/report/AssetReport2" element={<AssetReport />} />  
