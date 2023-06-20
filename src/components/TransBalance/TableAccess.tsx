@@ -8,6 +8,8 @@ const TableAsset = (props: any) => {
     const [dataTable, setDataTable] = useState([])
     const [dataHSX, setDataHSX] = useState<any[]>([])
     const [dataHNX, setDataHNX] = useState<any[]>([])
+    const [dataArrHSX,setArrHSX]=useState<any>([])
+    const [dataArrHNX,setArrHNX]=useState<any>([])
     const [short, setShort] = useState(false);
     const [sort, setSort] = useState("asc");
     const [label, setLabel] = useState("");
@@ -55,21 +57,20 @@ const TableAsset = (props: any) => {
             fetchDataHNN(code)
         });
     }, [dataTable]);
-    let dataArrHSX : any[]  = [];
-    let dataArrHNX = [];
+    // let dataArrHSX : any[]  = [];
+    // let dataArrHNX = [];
     
     const fetchDataHSN = async (code: string) => {
         const { data } = await axios.get(`https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`)
         
         data.map((item: any) =>
-              dataArrHSX.push([item?.Info?.[0][1], "HSX", item?.Info?.[31][1]])
+              setArrHSX((prev:any[]) => [...prev,[item?.Info?.[0][1], "HSX", item?.Info?.[31][1]]])
         )
-        if (dataArrHSX?.length > 0) {
+        // if (dataArrHSX?.length > 0) {
 
-        }
-
+        // }
     }
-    console.log("first item", dataArrHSX)
+    // console.log("first item", dataArrHSX)
     const fetchDataTable = async () => {
         const { data } = await axios.get("http://localhost:3111/Data")
         
@@ -78,26 +79,45 @@ const TableAsset = (props: any) => {
     const fetchDataHNN = async (code: string) => {
         const { data } = await axios.get(`https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${code}`)
           data.map((item: any) =>
-            dataArrHNX.push([item?.Info?.[12][1], "HNX", item?.Info?.[31][1]])
+            setArrHNX((prev:any[])=>[...prev,[item?.Info?.[12][1], "HNX", item?.Info?.[31][1]]])
         )
-        if (dataArrHNX?.length > 0) {
-        }
+        
         setDataHNX(data)
     }
+    // console.log({dataArrHNX});
+    console.log(dataArrHSX,dataArrHNX,"data");
+    
      useEffect(() => {
         fetchDataTable()
      }, [])
     
-const mergedData = dataTable?.map((item: any) => {
-  const dataHSXItem = dataArrHSX?.find((dataItem: any) => dataItem[0] === item.Key);
-  console.log("dataHSXItem", dataArrHSX);
+    const mergedData = dataTable?.map((item: any) => {
+        const dataHSXItem = dataArrHSX?.filter((dataItem: any) => dataItem[0] === item.Key);
+        const dataHNXItem = dataArrHNX?.filter((dataItem: any) => dataItem[0] === item.Key);
+        // console.log({dataHSXItem,dataHNXItem });
+        
+        return {
+            ...item,
+            dataItem: dataHSXItem?.length !==0 ? dataHSXItem[0] : dataHNXItem?.length !==0 ? dataHNXItem[0] : []
+            // HNX: {
+            //     dataItem:  dataHSXItem
+            // },
+            // HSX: {
+            //     dataItem: dataHNXItem
+            // }
+        };
+    });
+    useEffect(() => {
+        const socket = io('https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=All');
+         socket.on('data', (data) => {
+        console.log(data);
+    });
 
-  return {
-    ...item,
-    dataHSXItem: dataHSXItem ? dataHSXItem[0] : null,
-  };
-});
-    console.log("first merged", mergedData)
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
     return (
         <div className={`table_detail_BCTS !h-[614px] mt-5 ${mode}-bg`}>
             {short ? (
@@ -424,8 +444,8 @@ const mergedData = dataTable?.map((item: any) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {dataTable?.map((item: any, index: number) => {
-                            const dataHSXItem = dataHSX[index];
+                        {mergedData?.map((item: any, index: number) => {
+                            console.log({item})
                             return <tr key={item.Key}>
                                 <td className={`!text-center !text-xs ${mode}-text`}>
                                     {item?.Value.StockCode}
@@ -453,7 +473,7 @@ const mergedData = dataTable?.map((item: any) => {
                                 </td>
                                 <td className={`${mode}-text !text-xs`}>
                                     {/* {formatNumberMarket(item?.Value.MarketPrice)}  */}
-                                    {dataHSXItem?.Info?.[31][1]}
+                                    {item?.dataItem[2]}
                                 </td>
                                 <td className={`${mode}-text !text-xs`}>
                                     {formatNumberMarket(item?.Value.RootValue)}
