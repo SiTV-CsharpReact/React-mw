@@ -3,6 +3,7 @@ import Highcharts from "highcharts";
 import { formatNumber } from "../../utils/util";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { fetchChartIndexAsync } from "./chartIndexSlice";
+import './chartIndex.scss'
 
 type TProps = {
   name: string;
@@ -164,7 +165,7 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
           ],
         },
         backgroundColor: "#000",
-        width:215,
+        width:200,
         height:120
       },
       title: {
