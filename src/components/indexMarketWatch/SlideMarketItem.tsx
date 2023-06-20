@@ -1,6 +1,7 @@
 import React from "react";
 import { iconColorMenuMarket, setColorMenuMarket } from "../../utils/util";
 import ChartIndex from "../chartIndex/ChartIndex";
+import ChartTest from "../chartIndex/ChartTest";
 
 type Props = {
   id: string[];
@@ -17,6 +18,7 @@ type Props = {
   valueFloor: string;
   valueNoChange: string;
   status: string;
+  san: string;
 };
 
 const SlideMarketItem: React.FC<Props> = ({
@@ -34,14 +36,17 @@ const SlideMarketItem: React.FC<Props> = ({
   valueUp,
   valueNoChange,
   status,
+  san,
 }: Props) => {
+
   return (
+   
     <>
       <li className="dvChart">
         <div>
           <p className="text-sm">
             <span id="" className="mar_">
-              {name}
+              {name}:
             </span>
             <span
               id={id[1]}
@@ -88,10 +93,10 @@ const SlideMarketItem: React.FC<Props> = ({
                   {valueUp}
                 </span>
                 <span className="marc txtIndex">
-                  (<span id={id[7]}>{valueCeiling}</span>)
+                  (<span className="marc" id={id[7]}>{valueCeiling}</span>)
                 </span>
                 <span className="square" />
-                <span id={id[8]} className="marn txtIndex">
+                <span  id={id[8]} className="marn txtIndex">
                   {valueNoChange}
                 </span>
                 <span className="arrowDown" />
@@ -99,7 +104,7 @@ const SlideMarketItem: React.FC<Props> = ({
                   {valueDown}
                 </span>
                 <span className="marf txtIndex">
-                  (<span id={id[10]}>{valueFloor}</span>)
+                  (<span className="marf" id={id[10]}>{valueFloor}</span>)
                 </span>
                 <span
                   className="HO_MarketStat txtIndex"
@@ -110,13 +115,12 @@ const SlideMarketItem: React.FC<Props> = ({
               </p>
             </>
           )}
-           <ChartIndex/>
-          
-       
+          {/* <ChartIndex /> */}
+          <ChartTest name={name} san={san} />
         </div>
       </li>
     </>
   );
 };
 
-export default SlideMarketItem;
+export default React.memo(SlideMarketItem);

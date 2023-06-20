@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch, useAppSelector } from "../../store/configureStore";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "../../store/configureStore";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import "./TablePopup.scss";
 import { showDetailStock } from "../popupTableMarketwatch/popupTableSlice";
@@ -20,60 +24,66 @@ interface DraggableProps {
 }
 const TablePopupMarketwatch = () => {
   const dispatch = useAppDispatch();
-  const [dataResult, setDataResult] = useState([])
-  const [dataResultSearch, setDataResultSearch] = useState([])
-  const [showPopup, setShowPopup] = useState(false)
+  const [dataResult, setDataResult] = useState([]);
+  const [dataResultSearch, setDataResultSearch] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [dataCheck, setDataCheck] = useState("");
-  const [dataItem, setDataItem] = useState<any[]>([])
+  const [dataItem, setDataItem] = useState<any[]>([]);
   const stockDetail = useSelector((state: RootState) => state.popupTable.code);
   console.log("s",{ stockDetail });
   const fetchDataTableHSX = async (code?: string) => {
-    if (code !== '' && code !== undefined) {
-      const res = await axios.get(`https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`)
-      setDataItem(res.data)
+    if (code !== "" && code !== undefined) {
+      const res = await axios.get(
+        `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`
+      );
+      setDataItem(res.data);
       return res.data;
     } else {
-      const res = await axios.get(`https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${stockDetail}`)
-      setDataItem(res.data)
-      console.log("first data item", res.data)
+      const res = await axios.get(
+        `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${stockDetail}`
+      );
+      setDataItem(res.data);
       return res.data;
     }
-  }
+  };
   const fetchDataTableHNX = async (code?: string) => {
-    if (code !== '' && code !== undefined) {
-      const res = await axios.get(`https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${code}`)
-      setDataItem(res.data)
+    if (code !== "" && code !== undefined) {
+      const res = await axios.get(
+        `https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${code}`
+      );
+      setDataItem(res.data);
       return res.data;
-
     } else {
-      const res = await axios.get(`https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${stockDetail}`)
-      setDataItem(res.data)
+      const res = await axios.get(
+        `https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${stockDetail}`
+      );
+      setDataItem(res.data);
       return res.data;
     }
-  }
+  };
   const fethData = async () => {
-    const { data } = await axios.get("http://localhost:9999/Data")
-    setDataResult(data)
-  }
+    const { data } = await axios.get("http://localhost:9999/Data");
+    setDataResult(data);
+  };
   const fethDataSearch = async () => {
-    const { data } = await axios.get("http://localhost:6868/Data")
-    console.log("data", data)
-    setDataResultSearch(data)
-  }
-  useEffect(() => {
-    fethData()
-    fethDataSearch()
-    fetchDataTableHNX()
-    fetchDataTableHSX()
-  }, [stockDetail])
-  const handleChange = (e: any) => {
-    setDataCheck(e.target.value.toUpperCase());
-    setShowPopup(true)
+    const { data } = await axios.get("http://localhost:6868/Data");
+    console.log("data", data);
+    setDataResultSearch(data);
   };
   useEffect(() => {
-    const results = dataResultSearch.filter((item: any) =>
-      item.Code.toUpperCase().includes(dataCheck),
+    fethData();
+    fethDataSearch();
+    fetchDataTableHNX();
+    fetchDataTableHSX();
+  }, [stockDetail]);
+  const handleChange = (e: any) => {
+    setDataCheck(e.target.value.toUpperCase());
+    setShowPopup(true);
+  };
+  useEffect(() => {
+    const results = dataResultSearch.filter(
+      (item: any) => item.Code.toUpperCase().includes(dataCheck),
       console.log("filteredData", dataCheck)
     );
     setFilteredData(results);
@@ -97,11 +107,10 @@ const TablePopupMarketwatch = () => {
   // const status = useSelector(((state: RootState) => state.popupTable.visible))
   // console.log(status)
   const handelClick = () => {
-    setShowPopup(!showPopup)
-
-  }
+    setShowPopup(!showPopup);
+  };
   const handleShowDetail = async (code: string) => {
-    setShowPopup(!showPopup)
+    setShowPopup(!showPopup);
     // let result = [];
     // dispatch(updateDetialStock())
     let dataHSX: [] = await fetchDataTableHSX(code);
@@ -113,7 +122,7 @@ const TablePopupMarketwatch = () => {
         setDataItem(dataHSX);
       }
     }
-  }
+  };
   // Kiểm tra và đặt lại giá trị cho dataMouse.maF và dataMouseBuy.maB nếu selectedCode tồn tại
   return (
     <Draggable handle=".pu-header" position={position} onDrag={handleDrag}>
@@ -145,46 +154,54 @@ const TablePopupMarketwatch = () => {
               </div>
               <div className="inline-block pu-div-title">
                 <h2 className="pu-title">
-                  {dataItem[0]?.Info[0][1]} - {getCompanyNameByCode(dataItem[0]?.Info[0][1])}
+                  {dataItem[0]?.Info[0][1]} -{" "}
+                  {getCompanyNameByCode(dataItem[0]?.Info[0][1])}
                 </h2>
               </div>
             </div>
             {/*  */}
-         {showPopup && (
-  <div
-    style={{ overflowY: "scroll" }}
-    className="w-[500px]  overflow-hidden shadow-2xl left-[25%] top-[36px] z-50 h-[310px] bg-[#FBFBFB] rounded-sm absolute"
-  >
-    {showPopup &&
-      filteredData.map((item: any, index: any) => {
-        let parts = item.Code.split(new RegExp(`(${dataCheck})`, "gi"));
-        return (
-          <div
-            onClick={() => handleShowDetail(item.Code)}
-            className="py-1 cursor-pointer pl-2 border-b hover:bg-[#EEEEEE]"
-            key={index}
-          >
-            <p className="!font-medium">
-              {parts.map((part : any, partIndex : any) => (
-                <span
-                  key={partIndex}
-                  style={{
-                    color: part.toUpperCase() === dataCheck ? "#FF0000" : "inherit",
-                    fontWeight: part.toUpperCase() === dataCheck ? "bold" : "medium",
-
-                  }}
-                >
-                  {part}
-                </span>
-              ))}
-               <span> - {item.ScripName}</span>
-            </p>
-            <p></p>
-          </div>
-        );
-      })}
-  </div>
-)}
+            {showPopup && (
+              <div
+                style={{ overflowY: "scroll" }}
+                className="w-[500px]  overflow-hidden shadow-2xl left-[25%] top-[36px] z-50 h-[310px] bg-[#FBFBFB] rounded-sm absolute"
+              >
+                {showPopup &&
+                  filteredData.map((item: any, index: any) => {
+                    let parts = item.Code.split(
+                      new RegExp(`(${dataCheck})`, "gi")
+                    );
+                    return (
+                      <div
+                        onClick={() => handleShowDetail(item.Code)}
+                        className="py-1 cursor-pointer pl-2 border-b hover:bg-[#EEEEEE]"
+                        key={index}
+                      >
+                        <p className="!font-medium">
+                          {parts.map((part: any, partIndex: any) => (
+                            <span
+                              key={partIndex}
+                              style={{
+                                color:
+                                  part.toUpperCase() === dataCheck
+                                    ? "#FF0000"
+                                    : "inherit",
+                                fontWeight:
+                                  part.toUpperCase() === dataCheck
+                                    ? "bold"
+                                    : "medium",
+                              }}
+                            >
+                              {part}
+                            </span>
+                          ))}
+                          <span> - {item.ScripName}</span>
+                        </p>
+                        <p></p>
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
 
             {/* vd */}
           </div>

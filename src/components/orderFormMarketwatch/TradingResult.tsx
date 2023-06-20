@@ -8,6 +8,7 @@ import _ from "lodash";
 import { uniqWith, isEqual } from "lodash";
 import { formatNumber } from "../../utils/util";
 import PdfandExcel from "./PdfandExcel";
+import { useTranslation } from "react-i18next";
 const Tbody = (props: any) => {
   const [drop, setDrop] = React.useState(false);
   console.log(
@@ -248,6 +249,7 @@ const TbodySell = (props: any) => {
   );
 };
 const TradingResult = () => {
+  const { t } = useTranslation(["home"]);
   const [dataArr, setDataArr] = useState([]);
   const [drop, setDrop] = useState(false);
   const [dropSell, setDropSell] = useState(false);
@@ -383,7 +385,7 @@ const TradingResult = () => {
             onClick={handelSetDrop}
             className="text-[15px] text-[#2371AF] cursor-pointer underline	pl-5"
           >
-            Xem đầy đủ
+            {t("home:Order.View_Full")}
           </p>
         </div>
 
@@ -397,7 +399,7 @@ const TradingResult = () => {
         <div className="w-1/2 border-gray-300 h-fit">
           <div className="flex relative   border-gray-300 gap-1 h-[30px] items-center bg-[#2371AF] ">
             <p className="mx-auto !text-sm font-bold text-center text-white">
-              MUA
+            {t("home:Order.ORDER_MUA")} 
             </p>
             <i className="fa absolute fa-info-circle left-[52.5%] top-2  text-white"></i>
           </div>
@@ -405,12 +407,12 @@ const TradingResult = () => {
           <table>
             <thead>
               <tr className="bg-[#F3F3F3]">
-                <th className="border border-gray-300">Mã CK </th>
-                <th className="border border-gray-300 w-[92px]">Khối lượng</th>
-                <th className="border border-gray-300">Giá</th>
-                <th className="w-1/6 border border-gray-300">Thành tiền</th>
-                <th className="border border-gray-300">SHL</th>
-                <th className="border border-gray-300">Giờ khớp</th>
+                <th className="border border-gray-300"> {t("home:Order.ORDER_MCK")}  </th>
+                <th className="border border-gray-300 w-[92px]">{t("home:Order.OPTIONS_KL")}</th>
+                <th className="border border-gray-300">{t("home:base.Gia")}</th>
+                <th className="w-1/6 border border-gray-300">{t("home:Order.THANHTIEN")}</th>
+                <th className="border border-gray-300">{t("home:base.SHL")}</th>
+                <th className="border border-gray-300">{t("home:Order.GKHOP")}</th>
               </tr>
             </thead>
             <tbody>
@@ -418,7 +420,7 @@ const TradingResult = () => {
                 <Tbody drop={drop} data={dataArr} key={item.id} item={item} />
               ))}
               <tr className="bg-[#F3F3F3]">
-                <td className="pl-1 font-bold border border-gray-300 ">Tổng</td>
+                <td className="pl-1 font-bold border border-gray-300 ">{t("home:Order.TONG")}</td>
                 <td className="font-bold border border-gray-300 text-end">
                   {calculateTotalQuantity()}
                 </td>
@@ -436,19 +438,19 @@ const TradingResult = () => {
         {/* sell */}
         <div className="w-1/2 border-gray-300 max-h-fit">
           <div className="flex relative gap-1 mx-auto  h-[30px] items-center bg-[#9C0A0A] ">
-            <p className="mx-auto font-bold text-white ">BÁN </p>
+            <p className="mx-auto font-bold text-white ">  {t("home:Order.ORDER_BAN")}  </p>
             <i className="fa absolute fa-info-circle left-[52.5%] top-2  text-white"></i>
           </div>
 
           <table className="">
             <thead>
               <tr className="bg-[#F3F3F3]">
-                <th className="border border-gray-300">Mã CK </th>
-                <th className="border border-gray-300 w-[92px]">Khối lượng</th>
-                <th className="border border-gray-300">Giá</th>
-                <th className="w-1/6 border border-gray-300">Thành tiền</th>
-                <th className="border border-gray-300">SHL</th>
-                <th className="border border-gray-300">Giờ khớp</th>
+                <th className="border border-gray-300"> {t("home:Order.ORDER_MCK")}  </th>
+                <th className="border border-gray-300 w-[92px]">{t("home:Order.OPTIONS_KL")}</th>
+                <th className="border border-gray-300">{t("home:base.Gia")}</th>
+                <th className="w-1/6 border border-gray-300">{t("home:Order.THANHTIEN")}</th>
+                <th className="border border-gray-300">{t("home:base.SHL")}</th>
+                <th className="border border-gray-300">{t("home:Order.GKHOP")}</th>
               </tr>
               
             </thead>
@@ -462,7 +464,7 @@ const TradingResult = () => {
                 />
               ))}
               <tr className="bg-[#F3F3F3]">
-                <td className="pl-1 font-bold border border-gray-300 ">Tổng</td>
+                <td className="pl-1 font-bold border border-gray-300 ">{t("home:Order.TONG")}  </td>
                 <td className="font-bold border border-gray-300 text-end">
                   {calculateTotalQuantitySell()}
                 </td>

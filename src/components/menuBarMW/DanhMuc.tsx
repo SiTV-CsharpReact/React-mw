@@ -18,7 +18,6 @@ const DanhMuc = (props: any) => {
   const { isLoading, data, status, row, name } = useSelector(
     (state: RootState) => state.categories
   );
-
 // function handleDispatch(item:string) {
 //   dispatch(fetchTableHNXAsync(item))
 //   dispatch(fetchTableHSXAsync(item))

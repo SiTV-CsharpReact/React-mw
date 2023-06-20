@@ -8,7 +8,7 @@ export const fetchCategoryAsync = createAsyncThunk(
     // const res = await agent.Category.get();
   try {
     // const data = await  agent.Category.get()
-    const data = await  agent.Category.fetchData()
+    const data = await  agent.Category.get()
     return data
   } catch (error) {
     console.log("error ở đây", error);
@@ -39,6 +39,10 @@ export const danhmucSlice = createSlice({
       state.name = action.payload?.name;
       state.row = action.payload?.row;
     },
+    historyPriceActiveMenu : (state) => {
+      state.name = null
+      state.row = null
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -66,5 +70,5 @@ export const danhmucSlice = createSlice({
       });
   },
 });
-export const { activeMenuDanhmuc } = danhmucSlice.actions;
+export const { activeMenuDanhmuc ,historyPriceActiveMenu} = danhmucSlice.actions;
 export default danhmucSlice;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import TitlePage from '../../layout/TitlePage'
+// import TitlePage from '../../layout/TitlePage'
 import excell from "../../images/excel.png";
 import pfd from "../../images/pdf.png";
 import * as XLSX from "xlsx";
@@ -9,6 +9,7 @@ import NoteBottom from './NoteBottom';
 import TableAssetReport from '../AssetReport/TableAssetReport';
 import TableAsset from './TableAccess';
 import { useTranslation } from 'react-i18next';
+import TitlePage from '../../Page/helper/TitlePage';
 const TransBalance = () => {
   const [short, setShort] = useState(false);
 

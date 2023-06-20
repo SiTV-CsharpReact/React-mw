@@ -25,18 +25,17 @@ const ChartMarketwatch = () => {
               <SlidesIndexChartMarketwatch />
             </div>
           </div>
+           <DateTime />
           <div className="float-right">
             <Tooltip title="Hiển thị bảng giá">
               <button
                 className="p-[5px] h-30 w-[30] hover:bg-spnTitlePanelBottom"
-                onClick={() => dispatch(statusChartMarketwatch(""))}
+                onClick={() => dispatch(statusChartMarketwatch({visible:false,code:""}))}
               >
                 <img src={ImagePriceBoard} height={20} width={20} alt="" />
               </button>
             </Tooltip>
           </div>
-
-          <DateTime />
         </div>
         <div className="w-full tv_chart_container" id="tv_chart_container">
         <TradingViewWidget/>

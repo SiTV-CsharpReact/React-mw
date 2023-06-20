@@ -9,6 +9,9 @@ import AssetReport from "./components/AssetReport/AssetReport";
 import TableMarketWatchTest from "./components/tableMarketwatch/TableMarketWatchTest";
 import TradingViewWidget from "./components/Chart/TradingViewWidget";
 import TransBalance from "./components/TransBalance/TransBalance";
+import HistoryOrder from "./Page/HistoryTransaction/HistoryOrder";
+import HistoryMatching from "./Page/HistoryTransaction/HistoryMatching";
+import HistoryForpay from "./Page/HistoryTransaction/HistoryForPay";
 function App() {
   return (
     <div>
@@ -23,6 +26,8 @@ function App() {
           <Route path="/dynamic-dashboard" element={<MyLayout />} />
           {/* Report */}
           <Route path="/report/ReportTransBalance" element={<TransBalance />} />  
+          {/* Quản lý tài khoản */}
+          <Route path="/report/ReportTransBalance" element={<AssetReport />} />  
           <Route path="/report/AssetReport2" element={<AssetReport />} />  
           <Route path="/report/ReportNAV" element={<AssetReport />} />
           <Route path="/report/reportprofitloss" element={<AssetReport />} />
@@ -34,6 +39,11 @@ function App() {
           <Route path="/report/CurrMargin" element={<AssetReport />} />
           <Route path="/report/StockSettlement" element={<AssetReport />} />
           <Route path="/report/CashSettlement" element={<AssetReport />} />
+          {/* lịch sử giao dịch */}
+          <Route path="/report/ClientActivityRange" element={<HistoryOrder />} />
+          <Route path="/report/TradeLog" element={<HistoryMatching />} />
+          <Route path="/report/PendingSettlement" element={<HistoryForpay />} />
+
           {/* Transfer */}
           <Route path="/transfer" element={<AssetReport />} />
           <Route path="/transfer/template" element={<AssetReport />} />

@@ -2,9 +2,21 @@ import axios, { AxiosResponse } from "axios"
 const responseBody = (response: AxiosResponse) => response.data;
 const BASE_URL = "http://marketstream.fpts.com.vn/";
 const URL_EZTRADE = "http://eztrade0.fpts.com"
+// mặc định gửi authenticated token lên 
+// axios.defaults.headers.common['Authorization'] = 'Bearer ' + "auth_token";
+// axios.interceptors.request.use(
+//     config => {
+//       config.headers.Authorization = 'Bearer ' + "auth_token";
+//       return config;
+//     },
+//     error => {
+//       return Promise.reject(error);
+//     }
+//   );  
+
 const requests = {
     get: (url: string, params?: URLSearchParams) => axios.get(url, {params}).then(responseBody),
-    post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
+    post: (url: string, body: {}) =>axios.post(url, body).then(responseBody),
     put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
     delete: (url: string) => axios.delete(url).then(responseBody),
 }
@@ -20,9 +32,9 @@ const Company ={
     get: () => requests.get('http://localhost:8430/api/stock/v1/cache/stock_info_cn/eztrade?code=ALL'),
 }
 const Category ={
-    get: () => requests.get('http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C222210'),
+    get: () => requests.get('http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C000700'),
     // fetch  đata
-    fetchData : () => requests.get('http://localhost:5000/categori')
+    fetchData : () => requests.get('http://localhost:30/categori')
 }
 const Ministry ={
     get: () => requests.get('http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/s5g/default/ministry'),

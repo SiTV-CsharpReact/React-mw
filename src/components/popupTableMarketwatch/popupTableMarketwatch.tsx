@@ -3,6 +3,8 @@ import { useAppDispatch } from '../../store/configureStore';
 import { showDetailStock } from './popupTableSlice';
 import TablePopupMarketwatch from '../tablePopupMarketwatch/TablePopupMarketwatch';
 import { handleHistoryPrices } from '../tableMarketwatch/tableTestSlice';
+import { setHistoryMenu } from '../menuBarMW/menuSlice';
+import { historyPriceActiveMenu } from '../menuBarMW/danhmucSlice';
 
 interface Props {
     x: number; 
@@ -14,6 +16,7 @@ interface Props {
     selectedValue: Props;
     setSelectedValueProp: React.Dispatch<React.SetStateAction<Props>>;
   }
+ 
   const PopupTableMarketwatch = ({ selectedValue, setSelectedValueProp  }: Popup) =>  {
     const dispatch = useAppDispatch();
     const popupRef = useRef<HTMLDivElement>(null);
@@ -28,7 +31,11 @@ interface Props {
           document.removeEventListener("mousedown", handleClickOutside);
         };
       }, [popupRef]);
-      // console.log(selectedValue)
+      const handleTest = ()=>{
+       dispatch(handleHistoryPrices("test"))
+        dispatch(setHistoryMenu())
+        dispatch(historyPriceActiveMenu())
+      }
   return (
     <div
         className={`popup z-[1000]`}
@@ -66,7 +73,7 @@ interface Props {
               Chi tiết <b>{selectedValue.value}</b>
             </span>
           </li>
-          <li  onClick={() => dispatch(handleHistoryPrices("test"))}>
+          <li onClick={handleTest}>
             <i className="fa fa-history text-[#009688]"></i>
           <span >
               Lịch sử giá  <b>{selectedValue.value}</b>

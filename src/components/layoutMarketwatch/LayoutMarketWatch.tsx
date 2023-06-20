@@ -35,10 +35,10 @@ import DropDown from "../menuBarMW/DropDown";
 import { setOrderCount } from "./LayoutMarketWatchSLice";
 import { useSelector } from "react-redux";
 import CompleteStock from "../menuBarMW/CompleteStock";
+import { useTranslation } from "react-i18next";
 
 function RenderTable() {
-  const floor = useAppSelector((state:RootState) => state.tableTest.floor);
-  console.log(floor)
+  const floor = useAppSelector((state) => state.tableTest.floor)
   switch (floor) {
     case "MAIN":
       return <TableMarketWatchTest />;
@@ -75,6 +75,7 @@ const initialState: resizeState = {
 };
 // const LayoutMarketWatch  = () => {
 const LayoutMarketWatch: React.FC = () => {
+  const { t } = useTranslation(["home"]);
   const dispatch = useAppDispatch();
   const orderCount = useAppSelector((state) => state.layout.orderCount);
   // gọi danh mục
@@ -310,7 +311,7 @@ const LayoutMarketWatch: React.FC = () => {
                     <Tooltip title="Đồ thị">
                       <button
                         className="btn btn-sm btn-chart"
-                        onClick={() => dispatch(statusChartMarketwatch(""))}
+                        onClick={() => dispatch(statusChartMarketwatch({visible:true,code:""}))}
                       >
                         <img src={LineChart} width={20} height={20} alt="" />
                       </button>
@@ -380,17 +381,17 @@ const LayoutMarketWatch: React.FC = () => {
               <div className="panel__bottom__link flex justify-end mr-[40px] mb-[14px]">
                 <div className="px-2 group" onClick={() => showTab(1)}>
                   <span className=" size-input hover-text-blue-L">
-                    Lệnh chờ khớp
+                  {t("home:Order.TITLE_LCK")}
                   </span>
                 </div>
                 <div className="px-2 group" onClick={() => showTab(2)}>
                   <span className=" size-input hover-text-blue-L">
-                    KQ khớp lệnh trong phiên
+                  {t("home:Order.TITLE_KQKL")} 
                   </span>
                 </div>
                 <div className="px-2 group" onClick={() => showTab(3)}>
                   <span className=" size-input hover-text-blue-L">
-                    Lệnh trong ngày
+                  {t("home:Order.TITLE_LTN")}
                   </span>
                 </div>
               </div>
@@ -411,7 +412,7 @@ const LayoutMarketWatch: React.FC = () => {
             >
               <Tooltip title="Trở về đặt lệnh">
                 <span className="text-[15px] hover:underline ">
-                  [ESC] Thoát
+                  [ESC] {t("home:Order.ORDER__EXIT")}
                 </span>
               </Tooltip>
             </div>
@@ -423,10 +424,10 @@ const LayoutMarketWatch: React.FC = () => {
               onClick={hideOrderForm}
             >
               {orderCount === 1
-                ? "Lệnh chờ khớp"
+                ?  `${t("home:Order.TITLE_LCK1")}`
                 : orderCount === 2
-                ? "Kết quả khớp lệnh trong phiên"
-                : "Lệnh trong ngày"}
+                ? `${t("home:Order.TITLE_KQKL1")}`
+                : `${t("home:Order.TITLE_LTN1")}`}
             </div>
             {/* menu link */}
             <div
@@ -440,7 +441,7 @@ const LayoutMarketWatch: React.FC = () => {
                       orderCount === 1 ? "active" : ""
                     }`}
                   >
-                    Lệnh chờ khớp
+                     {t("home:Order.TITLE_LCK")}
                   </span>
                 </div>
                 <div className="px-2 group" onClick={() => showTab(2)}>
@@ -449,7 +450,7 @@ const LayoutMarketWatch: React.FC = () => {
                       orderCount === 2 ? "active" : ""
                     }`}
                   >
-                    KQ khớp lệnh trong phiên
+                    {t("home:Order.TITLE_KQKL")} 
                   </span>
                 </div>
                 <div className="px-2 group" onClick={() => showTab(3)}>
@@ -458,7 +459,7 @@ const LayoutMarketWatch: React.FC = () => {
                       orderCount === 3 ? "active" : ""
                     }`}
                   >
-                    Lệnh trong ngày
+                   {t("home:Order.TITLE_LTN")}
                   </span>
                 </div>
                 <div

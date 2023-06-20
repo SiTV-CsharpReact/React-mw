@@ -15,9 +15,9 @@ const chartMarketwatchSlice = createSlice({
   name: "show_hide_marketwatch",
   initialState,
   reducers: {
-    statusChartMarketwatch: (state, action: PayloadAction<string>) => {
-      state.visible = !state.visible;
-      state.code = action.payload;
+    statusChartMarketwatch: (state, action: PayloadAction<ComponentState>) => {
+    state.visible = action.payload.visible;
+      state.code = action.payload.code;
     }
   }
 });
