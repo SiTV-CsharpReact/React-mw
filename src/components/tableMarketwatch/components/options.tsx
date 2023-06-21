@@ -261,9 +261,11 @@ const ColumnDef = (props: any, props2: any) => {
         },
         {
           field: "G3",
+         
           headerName: "G3",
           suppressMenu: true,
           width: widthWindow * 0.03,
+
           minWidth: 50,
           height: 30,
           maxWidth: 100,

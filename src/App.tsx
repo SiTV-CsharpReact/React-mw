@@ -30,6 +30,7 @@ import AssetReport2 from "./pages/Report/AssetReport2/AssetReport";
 import ReportNAV from "./pages/Report/ReportNAV";
 import ReportTransSummary from "./pages/Report/ReportTransSummary";
 import StockDetails from "./pages/Report/StockDetails";
+import CurrMargin from "./pages/Report/CurrMargin";
 const  App: React.FC =()=> {
   return (
     <div>
@@ -54,8 +55,9 @@ const  App: React.FC =()=> {
 
             <Route path="/report/ReportTransSummary" element={<ReportTransSummary />} /> 
             <Route path="/report/StockDetails" element={<StockDetails />} />  
+            <Route path="/report/CurrMargin" element={<CurrMargin />} />
+           
 
-            <Route path="/report/CurrMargin" element={<AssetReport />} />
             <Route path="/report/StockSettlement" element={<AssetReport />} />
             <Route path="/report/CashSettlement" element={<AssetReport />} />
             <Route path="/report/CurrMargin" element={<AssetReport />} />
