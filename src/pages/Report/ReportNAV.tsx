@@ -54,7 +54,7 @@ const ReportNAV = () => {
             </div>
             {/* A. Tài sản ròng - NAV (I + II + III)Đơn vị: VNĐ */}
             <div className="taisanRong">
-              <div className="title_taisanRong">
+              <div className="title_page">
                 <label htmlFor="" >
                   <h1> A. Tài sản ròng - NAV (I + II + III)</h1>
                 </label>

@@ -28,6 +28,8 @@ import ConditionalOrderBook from "./pages/Stoploss/ConditionalOrderBook";
 import RegistrationOnline from "./pages/RightCustody/RegistrationOnline";
 import AssetReport2 from "./pages/Report/AssetReport2/AssetReport";
 import ReportNAV from "./pages/Report/ReportNAV";
+import ReportTransSummary from "./pages/Report/ReportTransSummary";
+import StockDetails from "./pages/Report/StockDetails";
 const  App: React.FC =()=> {
   return (
     <div>
@@ -49,8 +51,10 @@ const  App: React.FC =()=> {
             <Route path="/report/ReportNAV" element={<ReportNAV />} />
 
             <Route path="/report/reportprofitloss" element={<AssetReport />} />
-            <Route path="/report/ReportTransSummary" element={<AssetReport />} />
-            <Route path="/report/StockDetails" element={<AssetReport />} />  
+
+            <Route path="/report/ReportTransSummary" element={<ReportTransSummary />} /> 
+            <Route path="/report/StockDetails" element={<StockDetails />} />  
+
             <Route path="/report/CurrMargin" element={<AssetReport />} />
             <Route path="/report/StockSettlement" element={<AssetReport />} />
             <Route path="/report/CashSettlement" element={<AssetReport />} />

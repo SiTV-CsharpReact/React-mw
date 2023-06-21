@@ -535,17 +535,18 @@ select {
 .taisanRong{
   width: 100%;
 }
-.title_taisanRong{
+.title_page{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 10px;
 }
-.title_taisanRong label {
+.title_page label {
   font-size: 13px;
 }
-.title_taisanRong label span{
+.title_page label span{
   font-style: italic;
 }
-.title_taisanRong label h1{
+.title_page label h1{
   font-weight: bold;
   color: #717171;
   font-weight: bold;
@@ -571,4 +572,15 @@ select {
 }
 .color_textBCTS{
   color: #717171;
+}
+.contentStockDetail{
+  width: 60%;
+  margin: auto;
+}
+.P15 {
+  padding: 15px;
+}
+#divGrid h3{
+  font-weight: bold;
+  margin-bottom:10px
 }
