@@ -267,7 +267,7 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
         backgroundColor: "#ffffffc9",
         borderColor: "#07d800",
         borderRadius: 5,
-        borderWidth: "2px",
+        borderWidth: "1px",
         padding: 6,
         useHTML: true,
         style: {
@@ -296,11 +296,11 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
               ? "0" + new Date(Number(index[1].x)).getMinutes()
               : new Date(Number(index[1].x)).getMinutes();
 
-          return `<span>Thời gian: <b>${
+          return `<span style="color:#000">Thời gian: <b style="font-size:12px;font-weight:600;color:#000" class="font-bold text-sm">${
             hour + ":" + minutes
-          }</b></span><br/><span>Index: <b>${
+          }</b></span><br/><span style="color:#000">Index:  <b style="font-size:12px;color:#000" class="font-bold text-sm">${
             index[1].y
-          }</b></span><br/><span>Khối lượng:${formatNumber(this.y)} </span>`;
+          }</b></span><br/><span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm">${formatNumber(this.y)} </b></span>`;
         },
       },
       legend: {
