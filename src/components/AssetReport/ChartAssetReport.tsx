@@ -24,7 +24,7 @@ const ChartAssetReport = () => {
             }
           >
             <option value="20">20 ngày</option>
-            <option value="90">90 ngày</option>
+            <option value="89">90 ngày</option>
           </select>
         </div>
       </div>
