@@ -54,3 +54,11 @@ export const TTlenhHistorySell = [
     { value: "TRADED", label: "Đã khớp" },
     { value: "ACCEPTED", label: "Đã gửi" },
 ]
+export const DauKy = [
+    { value: "", label: "Quý 2/2023" },
+    { value: "", label: "Quý 1/2023" },
+]
+export const CuoiKy = [
+    { value: "", label: "21/06/2023" },
+    { value: "", label: "Quý 2/2023" },
+]

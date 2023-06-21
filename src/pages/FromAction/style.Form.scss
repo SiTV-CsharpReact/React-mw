@@ -59,7 +59,7 @@
 #btn-cn {
   border: 1px solid #2371af;
   width: auto;
-  height: 34px;
+  height: 30px;
   color: #333;
   display: inline-block;
   padding: 6px 12px;
@@ -513,4 +513,62 @@ select {
   bottom: 0;
   left: 1px;
   font-weight: 500;
+}
+//  báo cáo tài sản dòng 
+.contentNAV{
+  width: 840px;
+  margin: auto;
+}
+.headerNAV {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px;
+  height: 50px;
+  line-height: 50px;
+  margin-bottom :  15px;
+}
+.titleNAV_text {
+  color: red;
+  font-size: 13px;
+  font-style: italic;
+}
+.taisanRong{
+  width: 100%;
+}
+.title_taisanRong{
+    display: flex;
+    justify-content: space-between;
+}
+.title_taisanRong label {
+  font-size: 13px;
+}
+.title_taisanRong label span{
+  font-style: italic;
+}
+.title_taisanRong label h1{
+  font-weight: bold;
+  color: #717171;
+  font-weight: bold;
+    font-size: 16px;
+}
+.iconExit{
+  position: absolute;
+  right: -26px;
+  top: -2px;
+  font-size: 18px;
+}
+.tableAR  thead tr td  span{
+  position: relative;
+}
+.tableAR  thead tr {
+  background-color: #ececec ;
+}
+.tableAR   tbody  tr td{
+  padding: 5px;
+}
+.tableAR  tbody tr td  span{
+  position: relative;
+}
+.color_textBCTS{
+  color: #717171;
 }
