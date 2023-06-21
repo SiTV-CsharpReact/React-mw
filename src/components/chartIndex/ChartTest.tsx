@@ -155,7 +155,7 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
     Highcharts.chart(`container-${name}`, {
       chart: {
         marginTop: 8, // Đặt khoảng cách giữa highcharts-plot-background và highcharts-container là 20px
-  marginBottom: 15,
+        marginBottom: 15,
         plotBorderWidth: 1,
         plotBorderColor: "#545454",
         plotBackgroundColor: {
@@ -166,8 +166,8 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
           ],
         },
         backgroundColor: "#000",
-        width:205,
-        height:98
+        width: 205,
+        height: 98,
       },
       title: {
         text: "",
@@ -192,17 +192,15 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
         tickInterval: 3600000,
         // height: 75,
         labels: {
-    //       x: 0, // Đưa nhãn trục "9h" vào vị trí bắt đầu từ 0px
-    // align: 'left', // Đưa văn bản của nhãn trục vào vị trí bắt đầu từ 0px
-    // overflow: 'justify', // Hiển thị nội dung nhãn trục ra khỏi biểu đồ
+          //       x: 0, // Đưa nhãn trục "9h" vào vị trí bắt đầu từ 0px
+          // align: 'left', // Đưa văn bản của nhãn trục vào vị trí bắt đầu từ 0px
+          // overflow: 'justify', // Hiển thị nội dung nhãn trục ra khỏi biểu đồ
           useHTML: true,
           style: {
-            
             color: "#a5a5a5",
             fontSize: "8px",
             // rotation: -45,
             // step: 1,
-            
           },
         },
         offset: -9,
@@ -237,7 +235,7 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
               color: "#FFFF00",
               width: 0.8,
               value: indexValue,
-              zIndex:10
+              zIndex: 10,
             },
           ],
           // height: 75,
@@ -248,33 +246,42 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
       },
       tooltip: {
         positioner: function (labelWidth, labelHeight, point) {
-          let chart = this.chart;
-          let x = point.plotX + chart.plotLeft - 50;
-          let y = point.plotY + chart.plotTop - labelHeight;
-          if (x < chart.plotLeft) {
-            x = chart.plotLeft;
-          } else if (x + labelWidth > chart.plotLeft + chart.plotWidth) {
-            x = chart.plotLeft + chart.plotWidth - labelWidth;
+          var tooltipX, tooltipY;
+          // Calculate tooltip X position
+          if (point.plotX + labelWidth > this.chart.plotWidth) {
+            tooltipX = point.plotX - labelWidth + this.chart.plotLeft - 10;
+          } else if (point.plotX - labelWidth < 0) {
+            tooltipX = point.plotX + this.chart.plotLeft + 10;
+          } else {
+            tooltipX = point.plotX + this.chart.plotLeft - labelWidth / 2;
           }
-          if (y < chart.plotTop) {
-            y = chart.plotTop;
-          } else if (y + labelHeight > chart.plotTop + chart.plotHeight) {
-            y = chart.plotTop + chart.plotHeight - labelHeight;
+          // Calculate tooltip Y position
+          if (point.plotY + labelHeight > this.chart.plotHeight) {
+            tooltipY = point.plotY - labelHeight + this.chart.plotTop - 10;
+          } else if (point.plotY - labelHeight < 0) {
+            tooltipY = point.plotY + this.chart.plotTop + 10;
+          } else {
+            tooltipY = point.plotY + this.chart.plotTop - labelHeight - 10;
           }
-          return { x: x, y: y };
+
+          return {
+            x: tooltipX,
+            y: tooltipY,
+          };
         },
         shadow: false,
         backgroundColor: "#ffffffc9",
         borderColor: "#07d800",
         borderRadius: 5,
-        borderWidth: "2px",
+        borderWidth: "1px",
         padding: 6,
         useHTML: true,
         style: {
           width: 150,
           fontSize: "11px",
           fontWeight: "500",
-          zindex: 10000,
+          position: "absolute",
+          // zIndex: 10000,
         },
         shared: true,
         formatter: function () {
@@ -296,11 +303,11 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
               ? "0" + new Date(Number(index[1].x)).getMinutes()
               : new Date(Number(index[1].x)).getMinutes();
 
-          return `<span>Thời gian: <b>${
+          return `<span style="color:#000">Thời gian: <b style="font-size:12px;font-weight:600;color:#000" class="font-bold text-sm">${
             hour + ":" + minutes
-          }</b></span><br/><span>Index: <b>${
+          }</b></span><br/><span style="color:#000">Index:  <b style="font-size:12px;color:#000" class="font-bold text-sm">${
             index[1].y
-          }</b></span><br/><span>Khối lượng:${formatNumber(this.y)} </span>`;
+          }</b></span><br/><span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm">${formatNumber(this.y)} </b></span>`;
         },
       },
       legend: {
