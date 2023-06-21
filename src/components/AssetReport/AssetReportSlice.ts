@@ -4,7 +4,7 @@ import axios from "axios";
 export const fetchAssetReport = createAsyncThunk(
   "report/fetchAssetReport",
   async () => {
-    const responseRepot = await axios.get(`http://localhost:3000/data`);
+    const responseRepot = await axios.get(`http://localhost:2908/data`);
     return responseRepot.data[0].Data;
   }
 );
@@ -17,7 +17,7 @@ export const assetReportSlice = createSlice({
     statusReport: "idle",
   },
   reducers: {
-    getAssetReport: (state, action: PayloadAction) => {
+    getAssetReport: (state, action: PayloadAction)  => {
       state.assetReport = action.payload;
     },
   },
