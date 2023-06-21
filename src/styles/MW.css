@@ -88,10 +88,10 @@
 }
 .dvChart{
    min-width: 220px;
-    max-width: 250px;
+    max-width: 220px;
     text-align: center;
     border: 1px solid transparent;
-    height: 165px;
+    height: 157px;
 }
 .col-symbol {
    width: 5.5%;

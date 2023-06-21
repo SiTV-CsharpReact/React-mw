@@ -41,6 +41,7 @@ const  App: React.FC =()=> {
           />
           <Route path="/dynamic-dashboard" element={<MyLayout />} />
           {/* Report */}
+        
           {/* Quản lý tài khoản */}
             <Route path="/report/ReportTransBalance" element={<AssetReport />} />  
             <Route path="/report/AssetReport2" element={<AssetReport2 />} />  

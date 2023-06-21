@@ -17,6 +17,7 @@ import TableKLTTGPopup from "./TableKLTTGPopup";
 import ChartPopup from "./ChartPopup";
 import axios from "axios";
 import { getCompanyNameByCode } from "../../utils/util";
+import { DataTable } from "../../models/modelTableHNX";
 interface DraggableProps {
   initialPosition?: { x: number; y: number };
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;
@@ -29,36 +30,62 @@ const TablePopupMarketwatch = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [dataCheck, setDataCheck] = useState("");
-  const [dataItem, setDataItem] = useState<any[]>([]);
+  const [dataItemHNX, setDataItemHNX] = useState<any[]>([]);
+  const [dataItemHSX, setDataItemHSX] = useState<any[]>([]);
   const stockDetail = useSelector((state: RootState) => state.popupTable.code);
-  console.log({ stockDetail });
+  console.log("s",{ stockDetail });
   const fetchDataTableHSX = async (code?: string) => {
     if (code !== "" && code !== undefined) {
       const res = await axios.get(
         `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`
       );
-      setDataItem(res.data);
+      setDataItemHSX(res.data);
       return res.data;
     } else {
       const res = await axios.get(
         `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${stockDetail}`
       );
-      setDataItem(res.data);
+      setDataItemHSX(res.data);
       return res.data;
     }
   };
   const fetchDataTableHNX = async (code?: string) => {
     if (code !== "" && code !== undefined) {
-      const res = await axios.get(
+      const res:any = await axios.get(
         `https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${code}`
       );
-      setDataItem(res.data);
+      console.log("")
+      res.data.map((obj:DataTable) =>
+      obj.Info?.sort((a: any, b: any) => {
+        const indexA = Number(a[0]);
+        const indexB = Number(b[0]);
+        if (indexA < indexB) {
+          return -1;
+        }
+        if (indexA > indexB) {
+          return 1;
+        }
+        return 0;
+      }) )
+      setDataItemHNX(res.data);
       return res.data;
     } else {
-      const res = await axios.get(
+      const res:any = await axios.get(
         `https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${stockDetail}`
       );
-      setDataItem(res.data);
+      res.data.map((obj:DataTable) =>
+      obj.Info?.sort((a: any, b: any) => {
+        const indexA = Number(a[0]);
+        const indexB = Number(b[0]);
+        if (indexA < indexB) {
+          return -1;
+        }
+        if (indexA > indexB) {
+          return 1;
+        }
+        return 0;
+      }) )
+      setDataItemHNX(res.data);
       return res.data;
     }
   };
@@ -116,13 +143,14 @@ const TablePopupMarketwatch = () => {
     let dataHSX: [] = await fetchDataTableHSX(code);
     let dataHNX: [] = await fetchDataTableHNX(code);
     if (dataHNX.length !== 0) {
-      setDataItem(dataHNX);
+      setDataItemHNX(dataHNX);
     } else {
       if (dataHSX.length !== 0) {
-        setDataItem(dataHSX);
+        setDataItemHSX(dataHSX);
       }
     }
   };
+  console.log(dataItemHNX, dataItemHSX)
   // Kiểm tra và đặt lại giá trị cho dataMouse.maF và dataMouseBuy.maB nếu selectedCode tồn tại
   return (
     <Draggable handle=".pu-header" position={position} onDrag={handleDrag}>
@@ -154,8 +182,8 @@ const TablePopupMarketwatch = () => {
               </div>
               <div className="inline-block pu-div-title">
                 <h2 className="pu-title">
-                  {dataItem[0]?.Info[0][1]} -{" "}
-                  {getCompanyNameByCode(dataItem[0]?.Info[0][1])}
+                   {dataItemHNX.length !== 0  ?dataItemHNX[0]?.Info[0][1]:dataItemHSX[0]?.Info[0][1] } -{" "}
+                  {getCompanyNameByCode(dataItemHNX[0]?.Info[0][1])}
                 </h2>
               </div>
             </div>
@@ -220,7 +248,7 @@ const TablePopupMarketwatch = () => {
           </div>
         </div>
         <div>
-          <TableDetailPopup dataItem={dataItem} />
+          <TableDetailPopup dataItem={dataItemHNX.length !==0 ? dataItemHNX :dataItemHSX} />
         </div>
         <div className="flex pu-info">
           <div className="pu-basic w-[409px] mx-1">

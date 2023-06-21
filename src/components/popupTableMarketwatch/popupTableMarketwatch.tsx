@@ -75,8 +75,8 @@ interface Props {
           </li>
           <li onClick={handleTest}>
             <i className="fa fa-history text-[#009688]"></i>
-            <span>
-              Lịch sử giá <b>{selectedValue.value}</b>
+          <span >
+              Lịch sử giá  <b>{selectedValue.value}</b>
             </span>
           </li>
           <li>
