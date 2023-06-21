@@ -88,7 +88,8 @@
     "DataResult": "json-server dataResult.json --watch --port 3080",
     "PendingOrder": "json-server db.json --watch --port 30",
     "DataPopup": "json-server dataPopup.json --watch --port 6868",
-    "DataChartIndex": "json-server chart.json --watch --port 8000"
+    "DataChartIndex": "json-server chart.json --watch --port 8000",
+    "DataTable": "json-server data.json --watch --port 113"
   },
   "eslintConfig": {
     "extends": [

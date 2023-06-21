@@ -6,6 +6,7 @@ import InputDateAction from "../FromAction/InputDateAction";
 import { SanGD, MaCK, TTlenh, TTXX, getDateTime } from "../helper/DateTime";
 
 import LayoutPage from "../Layout/LayoutPage";
+import ExcelPdfAction from "../FromAction/ExcelPdfAction";
 let { tuNgay, denNgay } = getDateTime();
 type TypeValue = {
   LoaiLenh: any;
@@ -35,6 +36,7 @@ const HistoryMatching = () => {
   return (
     <>
       <LayoutPage content="Lịch sử khớp lệnh" PageTitle="Lịch sử khớp lệnh">
+      <div className="HeaderPage">
         <div>
           <FromAction data={data}>
             <SelectAction
@@ -58,6 +60,10 @@ const HistoryMatching = () => {
               ChangeFuncion={ChangeDenNgay}
             />
           </FromAction>
+        </div>
+        <div className="fileExcelPDF">
+              <ExcelPdfAction />
+            </div>
         </div>
         <div className="contentActionGD">
           <table className="TablePage">

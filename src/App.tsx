@@ -12,7 +12,6 @@ import HistoryOrder from "./pages/Report/HistoryOrder";
 import HistoryMatching from "./pages/Report/HistoryMatching";
 import HistoryForpay from "./pages/Report/HistoryForPay";
 import MoneyTransferForm from "./pages/Transfer/MoneyTransferForm";
-import LayoutPage from "./pages/Layout/LayoutPage";
 import MoneyTransferDerivative from "./pages/Transfer/MoneyTransferDerivative ";
 import MoneyHistory from "./pages/Transfer/MoneyHistory";
 import HistoryAdvReportMoney from "./pages/Report/HistoryAdvReportMoney";
@@ -27,14 +26,8 @@ import OverViewCustody from "./pages/RightCustody/OverViewCustody";
 import ConditionalOrder from "./pages/Stoploss/ConditionalOrder";
 import ConditionalOrderBook from "./pages/Stoploss/ConditionalOrderBook";
 import RegistrationOnline from "./pages/RightCustody/RegistrationOnline";
-import TransBalance from "./components/TransBalance/TransBalance";
-
-// const  App: React.FC =()=> {
-// import TransBalance from "./components/TransBalance/TransBalance";
-// import HistoryOrder from "./Page/HistoryTransaction/HistoryOrder";
-// import HistoryMatching from "./Page/HistoryTransaction/HistoryMatching";
-// import HistoryForpay from "./Page/HistoryTransaction/HistoryForPay";
-function App() {
+import AssetReport2 from "./pages/Report/AssetReport2/AssetReport";
+const  App: React.FC =()=> {
   return (
     <div>
       <AppProvider>
@@ -48,11 +41,11 @@ function App() {
           />
           <Route path="/dynamic-dashboard" element={<MyLayout />} />
           {/* Report */}
-          <Route path="/report/ReportTransBalance" element={<TransBalance />} />  
+          
           {/* Quản lý tài khoản */}
             <Route path="/report/ReportTransBalance" element={<AssetReport />} />  
-            <Route path="/report/AssetReport2" element={<AssetReport />} />  
-         
+            <Route path="/report/AssetReport2" element={<AssetReport2 />} />  
+            
             <Route path="/report/ReportNAV" element={<AssetReport />} />
             <Route path="/report/reportprofitloss" element={<AssetReport />} />
             <Route path="/report/ReportTransSummary" element={<AssetReport />} />
