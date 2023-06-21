@@ -28,40 +28,24 @@ const ChartReport: any = (date: any) => {
 
   const arrLine: any = useMemo(() => {
     let arr: any = [];
-    assetReport.Table2?.forEach((item: any, ind: number) => {
+    for (let i = 1; i < assetReport.Table2?.length; i++) {
       let data = 0;
-      if (ind === 0) return;
-      if (assetReport.Table2[ind - 1].ANAV === 0) {
+
+      if (assetReport.Table2[i - 1].ANAV === 0) {
         data = 0;
       } else {
-        if(ind === 89){
-          
-        }
         data =
-          ((assetReport.Table2[ind].ANAV -
-            assetReport.Table2[ind].ANAV_IN +
-            assetReport.Table2[ind].ANAV_DE -
-            assetReport.Table2[ind - 1].ANAV) /
-            assetReport.Table2[ind - 1].ANAV) *
+          ((assetReport.Table2[i].ANAV -
+            assetReport.Table2[i].ANAV_IN +
+            assetReport.Table2[i].ANAV_DE -
+            assetReport.Table2[i - 1].ANAV) /
+            assetReport.Table2[i - 1].ANAV) *
           100;
       }
       arr.push(Number(data.toFixed(2)));
-    });
-    // for (let i = 1; i < assetReport.Table2?.length; i++) {
-    //   let data = 0;
-    // }
+    }
     return arr;
   }, [assetReport.Table2]);
-  // console.log(arrLine);
-  console.log(assetReport.Table2);
-  
-  // console.log(
-  //   assetReport.Table2?.map((item: any) => item.ADATE)
-  //     ?.splice(0, Number(date.date))
-  //     .reverse()
-  // );
-
-  // const arr = useMemo(() => {});
 
   useEffect(() => {
     const series: any = [
@@ -70,7 +54,7 @@ const ChartReport: any = (date: any) => {
         type: "column",
         color: "#70ad47",
         data: assetReport.Table2?.map((item: any) => item.ANAV)
-          ?.splice(0, Number(date.date))
+          ?.splice(1, Number(date.date))
           .reverse(),
         yAxis: 0,
       },
@@ -79,10 +63,10 @@ const ChartReport: any = (date: any) => {
         type: "line",
         yAxis: 1,
         color: "#595959",
-        data: arrLine
-          ?.map((item: any) => item)
-          ?.splice(0, Number(date.date))
-          .reverse(),
+        data: arrLine?.map((item: any) => item)?.splice(0, Number(date.date)),
+        maker: {
+          symbol: "circle",
+        },
       },
     ];
 
@@ -100,6 +84,13 @@ const ChartReport: any = (date: any) => {
             const newMin = Math.floor((yExtremes.dataMin * 0.95) / step) * step;
             const newMax = Math.floor(yExtremes.dataMax / step) * step;
             yAxis.setExtremes(newMin, newMax, true, false);
+            console.log(this.series[1].points);
+            this.series[1].points.forEach((point: any) => {
+              point.update({
+                color: point.y > 0 ? "#70ad47" : "#c00000",
+              });
+            });
+            this.redraw();
           },
         },
         width: 1830,
@@ -193,12 +184,22 @@ const ChartReport: any = (date: any) => {
               )}<span style="text-decoration: underline;">đ</span></span><br/>
               <span style="line-height: 17px;">Phát sinh tăng: 0<span style="text-decoration: underline;">đ</span></span><br/>
               <span style="line-height: 0px;">Phát sinh tăng: 0<span style="text-decoration: underline;">đ</span></span></br>
-              <span style="font-size: 15px;font-weight: bold;">Biến động tài sản: ${
-                bdPrice[1]
-              }%</span>
+              <span style="font-size: 15px;font-weight: bold; display: inline-flex;align-items:flex-end; gap: 3px;"> 
+                <div style="width: 7px;height:7px;background: ${
+                  bdPrice[1] > 0 ? "#70ad47" : "#c00000"
+                };border-radius: 50%; margin-bottom:3px;"></div>Biến động tài sản: ${
+            bdPrice[1]
+          }%</span>
             </span>
           `;
         },
+      },
+      legend: {
+        symbolWidth: 12, // set the width of the legend symbol
+        symbolHeight: 12, // set the height of the legend symbol
+        symbolRadius: 0,
+        // backgroundColor: 'red'
+        squareSymbol: true,
       },
       plotOptions: {
         column: {
@@ -211,7 +212,11 @@ const ChartReport: any = (date: any) => {
               color: "rgb(137,198,96)",
             },
           },
+          // symbolWidth: 20, // set the width of the legend symbol
+          // symbolHeight: 20, // set the height of the legend symbol
+          // symbolRadius: 5,
         },
+        // line: {},
       },
       series: series,
       responsive: {
