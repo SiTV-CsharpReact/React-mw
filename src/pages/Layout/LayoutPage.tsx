@@ -19,9 +19,11 @@ const LayoutPage = ({children,content  ,TitleHover , Icon,PageTitle, LinkPage }:
                 <div className="HeaderlayoutPage"> 
                     <TitlePage content={content}  Title= {TitleHover}  Icon={Icon}  LinkPage={LinkPage}/>
                 </div>
+
                 <div className="MainPage">
                      {children}   
                 </div>
+                
                 <div className="FooterPage" >
                      <Footer /> 
                 </div>

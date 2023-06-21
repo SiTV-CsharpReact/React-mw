@@ -5,6 +5,7 @@ import InputAction from "../FromAction/InputAction";
 import InputDateAction from "../FromAction/InputDateAction";
 import SelectAction from "../FromAction/SelectAction";
 import { TinhTranglenh, getDateTime } from "../helper/DateTime";
+import ExcelPdfAction from "../FromAction/ExcelPdfAction";
 type TypeValue = {
   SanGD: any;
   MaCK: any;
@@ -50,57 +51,67 @@ const ConditionalOrderBook = () => {
         TitleHover="Hướng dẫn sử dụng EzStoploss"
         LinkPage="http://www.fpts.com.vn/san-pham-dich-vu/giao-dich-chung-khoan/le-nh-die-u-kie-n/"
       >
-        <div>
-          <FromAction data={data}>
-            <InputAction Title="Mã CK" ChangeFuncion={ChangeMaCK} />
-            <InputDateAction
-              Title="Từ Ngày "
-              ChangeFuncion={ChangeTuNgay}
-              date={tuNgay}
-            />
-            <InputDateAction
-              Title="Đến Ngày"
-              ChangeFuncion={ChangeDenNgay}
-              date={denNgay}
-            />
-            <SelectAction
-              Title="Tình trạng lệnh "
-              Options={TinhTranglenh}
-              ChangeFuncion={ChangeTTlenh}
-            />
-          </FromAction>
+        <div className="HeaderPage">
+          <div>
+            <FromAction data={data}>
+              <InputAction Title="Mã CK" ChangeFuncion={ChangeMaCK} />
+              <InputDateAction
+                Title="Từ Ngày "
+                ChangeFuncion={ChangeTuNgay}
+                date={tuNgay}
+              />
+              <InputDateAction
+                Title="Đến Ngày"
+                ChangeFuncion={ChangeDenNgay}
+                date={denNgay}
+              />
+              <SelectAction
+                Title="Tình trạng lệnh "
+                Options={TinhTranglenh}
+                ChangeFuncion={ChangeTTlenh}
+              />
+            </FromAction>
+          </div>
+          <div className="fileExcelPDF">
+            <ExcelPdfAction />
+          </div>
         </div>
         <div className="contentActionGD">
-          <div className="contentActionPading"> 
-          <table className="TablePage">
-            <thead>
-              <tr>
-                <th>Mua/Bán</th>
-                <th>Loại ký quỹ</th>
-                <th>Số hợp đồng</th>
-                <th>Mã</th>
-                <th>Khối lượng</th>
-                <th>Giá đặt</th>
-                <th>
-                  ĐK kích hoạt:
-                  <br />
-                  Khi giá khớp gần nhất
-                </th>
-                <th>Ngày đặt</th>
-                <th>Ngày kích hoạt</th>
-                <th>Tình trạng</th>
-                <th>Thông báo</th>
-                <th>
-                  Chi tiết lệnh <br /> đã kích hoạt
-                </th>
-                <th>Lịch THQ</th>
-                <th>Hủy</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-          <p> Báo cáo chỉ hiển thị dữ liệu của 90 ngày gần nhất. Nếu Khách hàng có nhu cầu xem chi tiết các giao dịch trước đó, vui lòng liên hệ FPTS để được cung cấp.</p>
-        </div>
+          <div className="contentActionPading">
+            <table className="TablePage">
+              <thead>
+                <tr>
+                  <th>Mua/Bán</th>
+                  <th>Loại ký quỹ</th>
+                  <th>Số hợp đồng</th>
+                  <th>Mã</th>
+                  <th>Khối lượng</th>
+                  <th>Giá đặt</th>
+                  <th>
+                    ĐK kích hoạt:
+                    <br />
+                    Khi giá khớp gần nhất
+                  </th>
+                  <th>Ngày đặt</th>
+                  <th>Ngày kích hoạt</th>
+                  <th>Tình trạng</th>
+                  <th>Thông báo</th>
+                  <th>
+                    Chi tiết lệnh <br /> đã kích hoạt
+                  </th>
+                  <th>Lịch THQ</th>
+                  <th>Hủy</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+            <p>
+              {" "}
+              Báo cáo chỉ hiển thị dữ liệu của 90 ngày gần nhất. Nếu Khách hàng
+              có nhu cầu xem chi tiết các giao dịch trước đó, vui lòng liên hệ
+              FPTS để được cung cấp.
+            </p>
+          </div>
         </div>
       </LayoutPage>
     </>

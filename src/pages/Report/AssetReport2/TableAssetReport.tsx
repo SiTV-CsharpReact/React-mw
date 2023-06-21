@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useAppSelector } from "../../store/configureStore";
-import { formatNumber } from "../../utils/util";
+import { useAppSelector } from "../../../store/configureStore";
+import { formatNumber } from "../../../utils/util";
 import { useTranslation } from "react-i18next";
 
 const TableAssetReport = () => {
@@ -52,7 +52,7 @@ const TableAssetReport = () => {
               <td colSpan={6} className="!text-left">
                 <div>
                   <span className={`font-bold ${mode}-text`}>
-                      CHI TIẾT CHỨNG KHOÁN
+                      ẾT CHỨNG KHOÁN
                     <span
                       className={`font-medium cursor-pointer text-normalText underline italic ${mode}-text ml-2`}
                       onClick={() => setShort(!short)}
@@ -74,7 +74,7 @@ const TableAssetReport = () => {
                 style={{ width: "5%" }}
                 onClick={() => handleSort("ASTOCKCODE")}
               >
-                <div className={`relative ${mode}-text`} >
+                <div className={`relative ${mode}-text`}>
                   Mã CK
                   <span className="absolute top-1/2 translate-y-1/2 right-2">
                     {label !== "ASTOCKCODE" ? (
@@ -85,13 +85,13 @@ const TableAssetReport = () => {
                         <span className="absolute -bottom-[65%] translate-y-[65%]">
                           <i
                             className="fa fa-caret-down"
-                            aria-hidden="true" 
+                            aria-hidden="true"
                           ></i>
                         </span>
                       </>
                     ) : label === "ASTOCKCODE" && sort === "asc" ? (
                       <span className="absolute -top-2">
-                        <i className="fa fa-caret-down" aria-hidden="true"></i> 
+                        <i className="fa fa-caret-down" aria-hidden="true"></i>
                       </span>
                     ) : (
                       <span className="absolute -bottom-2">
@@ -471,14 +471,14 @@ const TableAssetReport = () => {
                       className={`font-medium cursor-pointer text-normalText underline italic ${mode}-text ml-1`}
                       onClick={() => setShort(!short)}
                     >
-                      (Xem rút gọn )
+                      (Xem rút gọn)
                     </span>
                   </span>
                 </div>
               </td>
               <td colSpan={4} className={`!text-center ${mode}-text`}>
                 <div>
-                  <strong>LÃI/LỖ DỰ KIẾN </strong>
+                  <strong>LÃI/LỖ DỰ KIẾN</strong>
                 </div>
               </td>
               <td

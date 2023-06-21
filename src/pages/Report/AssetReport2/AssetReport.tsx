@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import "./style.AssetReport.scss";
 import TableAssetValue from "./TableAssetValue";
 import TableAssetReport from "./TableAssetReport";
-import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { useAppDispatch, useAppSelector } from "../../../store/configureStore";
 import { fetchAssetReport } from "./AssetReportSlice";
 import ChartAssetReport from "./ChartAssetReport";
-import TitlePage from "../../pages/Layout/TitlePage";
-import LayoutPage from "../../pages/Layout/LayoutPage";
+import TitlePage from "../../../pages/Layout/TitlePage";
+import LayoutPage from "../../Layout/LayoutPage";
 
-const AssetReport = () => {
+const AssetReport2 = () => {
   const { mode } = useAppSelector((state) => state.settingColorMode);
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -16,12 +16,10 @@ const AssetReport = () => {
   }, [dispatch]);
   return (
     <div className={`${mode}-bg`}>
-   
-      <LayoutPage 
-       content="Báo cáo tài sản"
-       PageTitle="Báo cáo tài sản"
-       >  
-        <div className="contentActionPading">
+      <LayoutPage content="Báo cáo tài sản"
+        PageTitle="Báo cáo tài sản"
+      > 
+       <div className="contentActionPading">
             <div className="HeaderBaoCao">
               <div className="HeaderBaoCaoLeft">
                 <p>
@@ -49,4 +47,4 @@ const AssetReport = () => {
   );
 };
 
-export default AssetReport;
+export default AssetReport2;
