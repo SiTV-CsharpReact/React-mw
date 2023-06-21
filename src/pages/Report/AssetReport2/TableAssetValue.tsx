@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../store/configureStore";
+import { useAppSelector } from "../../../store/configureStore";
 import TbodyAssetValue from "./TbodyAssetValue";
 
 const TableAssetValue = () => {

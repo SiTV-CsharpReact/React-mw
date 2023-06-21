@@ -1,10 +1,27 @@
+.HeaderPage {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 15px;
+}
+.fileExcelPDF {
+  height: 60px;
+  line-height: 60px;
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+}
+.fileExcelPDF img {
+  width: 33px;
+  height: 33px;
+}
 .FromAction {
   display: flex;
   justify-content: flex-end;
-  height: 75px;
-  line-height: 75px;
+  height: 60px;
+  line-height: 60px;
   padding-right: 15px;
 }
+
 .FromAction div {
   padding: 0px 5px;
 }
@@ -42,7 +59,7 @@
 #btn-cn {
   border: 1px solid #2371af;
   width: auto;
-  height: 34px;
+  height: 30px;
   color: #333;
   display: inline-block;
   padding: 6px 12px;
@@ -102,10 +119,10 @@
   font-size: 12px;
   padding: 0px 10px;
 }
-#muatt th{
+#muatt th {
   padding: 10px !important;
 }
-.TablePage  thead{
+.TablePage thead {
   font-weight: bold;
 }
 #contentActionGD {
@@ -125,11 +142,11 @@
 #TablePage {
   width: 50%;
 }
-#TablePage th{
-  padding: 10px
+#TablePage th {
+  padding: 10px;
 }
 #idHistoryCkSell th {
-    padding: 0px;
+  padding: 0px;
 }
 .TitleTable {
   float: left;
@@ -139,16 +156,16 @@
   color: #333;
   text-align: left;
   margin-bottom: 7px;
-  font-size: 12px; 
+  font-size: 12px;
 }
-.TitleTable:nth-child(2){
+.TitleTable:nth-child(2) {
   float: right;
   color: #298bd8;
 }
 .TitleTable:nth-child(2) a {
   text-decoration: none;
 }
-.TitleTable:nth-child(2):hover .Linkassss{
+.TitleTable:nth-child(2):hover .Linkassss {
   text-decoration: none !important;
   color: red;
 }
@@ -164,4 +181,406 @@
 }
 .thTable:nth-child(4) {
   width: 95px;
+}
+//  css báo cáo quản lý tk
+.HeaderBaoCao {
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+  line-height: 30px;
+  padding-top: 10px;
+}
+#iconPageMennu {
+  color: #717171;
+}
+.HeaderBaoCaoLeft h2 {
+  padding-top: 5px;
+  font-weight: bold;
+  font-size: 16px;
+}
+.HeaderBaoCaoLeft p {
+  font-style: italic;
+  color: red;
+  padding-left: 5px;
+}
+#btn-RutGon {
+  width: auto;
+  height: 34px;
+  color: #333;
+  display: inline-block;
+  padding: 5px 15px;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  line-height: 0px;
+  border-radius: 4px;
+  border: 1px solid #dedede;
+  background-color: #ececec;
+}
+#btn-RutGon:hover {
+  background-color: white;
+  border: 1px black solid;
+}
+// menu báo cáo
+.report__tabcondition__left_menu ul li {
+  padding-left: 10px;
+}
+.item_menu_report_title {
+  font-weight: bold;
+}
+.item_menu_report {
+  display: flex;
+  justify-content: space-between;
+}
+.item_menu_report a {
+  border-radius: 4px !important;
+  border: 1px solid #0055ba;
+  color: #fff;
+  padding: 2px 35px;
+  background-color: #0055ba;
+  float: right;
+  text-decoration: none !important;
+}
+.item_menu_report a:hover {
+  color: #fff;
+  text-decoration: none !important;
+}
+.item_menu_report:hover {
+  background-color: white;
+}
+// lưu ký  trực tuyến
+
+.InformationOnlineResgistion {
+  width: 800px;
+  margin: auto;
+}
+.InformationOnlineResgistion_top {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 7px 15px;
+  overflow: hidden;
+}
+.InformationOnlineResgistion_bottom {
+  padding: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.InformationOnlineResgistion_bottom ul {
+  padding-left: 40px;
+}
+.ResgistionItem_top {
+  padding-left: 25px;
+  padding-top: 15px;
+}
+.Resgistion_MCk {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 3px;
+}
+.Resgistion_MCk label {
+  padding-top: 5px;
+  font-size: 13px;
+}
+.flex_Resgistion label {
+  padding-right: 37px;
+}
+.flex_Resgistion input,
+select {
+  width: 230px;
+  padding: 2px;
+  font-size: 12px;
+  border-radius: 4px;
+  color: #555;
+  font-family: arial;
+  margin-left: 5px;
+  border: 1px solid #ccc;
+}
+.flex_Resgistion select {
+  background-color: #eeeeee;
+}
+.flex_Resgistion select:hover {
+  pointer-events: stroke;
+  cursor: no-drop;
+}
+.Resgistion_TCK input {
+  width: 655px;
+  padding: 2px;
+  font-size: 12px;
+  border-radius: 4px;
+  color: #555;
+  font-family: arial;
+  margin-left: 5px;
+  border: 1px solid #ccc;
+  background-color: #eeeeee;
+}
+.Resgistion_TCK input:hover {
+  pointer-events: stroke;
+  cursor: no-drop;
+}
+.soluongRes {
+  padding-right: 24px !important;
+}
+.luuyResgistion {
+  color: red;
+  font-size: 9pt;
+  font-style: italic;
+  // font-family: ;
+}
+.textCMND {
+  font-size: 9pt;
+  font-style: italic;
+}
+.from_sumit {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+.from_sumit > div {
+  margin-right: 10px;
+}
+.from_sumit label {
+  line-height: 35px;
+  // padding-right: 25px;
+}
+.from_sumit input {
+  width: 280px;
+  height: 34px;
+  padding: 2px;
+  font-size: 12px;
+  color: #555;
+  font-family: arial;
+  border: 1px solid #ccc;
+}
+.iconKey {
+  background-color: #e1d9d9;
+  padding: 10px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  color: #645959;
+}
+// đặt điều kiện lệnh
+.ConditionalOrder_main {
+  width: 65%;
+  margin: auto;
+  padding-top: 20px;
+}
+.ConditionalOrder_Title {
+  text-align: center;
+  font-size: 24px;
+  text-transform: uppercase;
+  color: #134c7d;
+}
+.ConditionalOrder_Title a {
+  text-decoration: none !important;
+  color: #f47e34;
+}
+.ConditionalOrder_Title a:hover {
+  text-decoration: none !important;
+  color: #f47e34;
+}
+.boxdivCondi {
+  margin-bottom: 15px;
+}
+.borderDiv {
+  border: 1px solid #ccc;
+  padding: 3px 0px;
+  width: 100% ;
+}
+.ConditionalOrder_table table {
+  border: 1px solid #ccc;
+  text-align: center;
+}
+.RHeader {
+  font-weight: bold;
+  background-color: #d3d3d3;
+  padding: 5px 0px;
+}
+.RHeader td {
+  padding: 5px 0px;
+}
+.from_sumit_condi {
+  padding-top: 0px !important;
+}
+.solenhDieuKien {
+  text-align: center;
+  padding: 10px;
+  color: blue;
+  font-size: 15px;
+}
+.solenhDieuKien:hover {
+  color: red;
+}
+.solenhDieuKien a {
+  text-decoration: none !important;
+  color: blue;
+}
+.solenhDieuKien a:hover {
+  text-decoration: none !important;
+  color: red;
+}
+.divCongBo {
+  padding: 10px;
+}
+.divCongBo h4 {
+  font-size: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  position: relative;
+}
+.text-iconghichu {
+  font-size: 28px !important;
+  padding-left: 5px;
+  color: #cccccc;
+  position: absolute;
+  bottom: 0;
+}
+.formCondi {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.3fr 1.3fr  0.5fr ;
+  grid-gap: 10px;
+}
+.formCondi table {
+  width: 100%;
+  margin: auto;
+}
+
+.fromGrupCondi {
+  display: flex;
+  flex-direction: column;
+}
+.fromGrupCondi_action {
+  display: grid;
+  grid-template-columns: 1fr 1fr ;
+  grid-gap: 10px;
+  
+}
+#fromGrupCondi_actionDK{
+  display: grid;
+  grid-template-columns: 1fr 1fr  0.6fr;
+  grid-gap: 8px;
+}
+.fromGrupCondi label {
+  margin-bottom: 10px;
+}
+.fromGrupCondi_action input{
+  width: 100%;
+  height: 25px;
+  font-size: 12px;
+  color: #555;
+  font-family: arial;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding-left: 2px;
+}
+.fromGrupCondi_action input:focus{
+  background-color: #FAFFBD;
+}
+.fromGrupCondi_action select{
+  width: 100%;
+  height: 25px;
+  font-size: 12px;
+  color: #555;
+  font-family: arial;
+  border: 1px solid #ccc;
+  padding: 0px 0px 0px 3px;
+  border-radius: 4px;
+}
+.disableActivon:hover{
+  cursor: no-drop;
+}
+.disableActivon{
+  background:#EDEDED;
+}
+.fromGrupCondi_actionDK label{
+  font-size: 12px;
+  text-align: center;
+ 
+}
+.fromGrupCondi_actionDK{
+    padding: 5px 0px ;
+    text-align: center;
+}
+.tetsagydhsad {
+  margin-bottom: 10px;
+}
+.priceStartUnit {
+  position: relative;
+}
+.priceStartUnit span{
+  position: absolute;
+  bottom: 0;
+  left: 1px;
+  font-weight: 500;
+}
+//  báo cáo tài sản dòng 
+.contentNAV{
+  width: 840px;
+  margin: auto;
+}
+.headerNAV {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px;
+  height: 50px;
+  line-height: 50px;
+  margin-bottom :  15px;
+}
+.titleNAV_text {
+  color: red;
+  font-size: 13px;
+  font-style: italic;
+}
+.taisanRong{
+  width: 100%;
+}
+.title_page{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.title_page label {
+  font-size: 13px;
+}
+.title_page label span{
+  font-style: italic;
+}
+.title_page label h1{
+  font-weight: bold;
+  color: #717171;
+  font-weight: bold;
+    font-size: 16px;
+}
+.iconExit{
+  position: absolute;
+  right: -26px;
+  top: -2px;
+  font-size: 18px;
+}
+.tableAR  thead tr td  span{
+  position: relative;
+}
+.tableAR  thead tr {
+  background-color: #ececec ;
+}
+.tableAR   tbody  tr td{
+  padding: 5px;
+}
+.tableAR  tbody tr td  span{
+  position: relative;
+}
+.color_textBCTS{
+  color: #717171;
+}
+.contentStockDetail{
+  width: 60%;
+  margin: auto;
+}
+.P15 {
+  padding: 15px;
+}
+#divGrid h3{
+  font-weight: bold;
+  margin-bottom:10px
 }

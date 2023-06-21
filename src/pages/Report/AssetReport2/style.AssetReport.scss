@@ -103,23 +103,9 @@
 }
 
 .table_detail_BCTS {
-  table{
-    thead{
-      tr{
-        td{
-          div{
-            color: #000 !important;
-            
-          }
-        }
-      }
-    }
-  }
   .dark-text {
     color: #b2b6bf !important;
-    
   }
-  
   height: 503px;
   overflow: auto;
   position: relative;
@@ -148,15 +134,12 @@
     > table {
       td {
         border: 1px solid #515151;
-        color: green !important;
       }
       thead {
         background: #303030 !important;
         tr {
           background: #141d27;
-          
         }
-       
         // td {
         //   color: #b2b6bf !important;
         //   > div {
@@ -287,5 +270,5 @@
 }
 
 .light-text {
-  color: #000 ;
+  color: #000 !important;
 }
