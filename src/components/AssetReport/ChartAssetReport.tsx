@@ -11,7 +11,7 @@ const ChartAssetReport = () => {
       <div className="report__tabcondition__detail_CK">
         <div></div>
         <div className="text-center">
-          <span className={`font-bold text-black  ${mode}-text`}>
+          <span className={`font-bold text-black  ${mode}-text text-[13px] font-[Arial]`}>
             THỐNG KÊ GIÁ TRỊ TÀI SẢN RÒNG
           </span>
         </div>
@@ -24,7 +24,7 @@ const ChartAssetReport = () => {
             }
           >
             <option value="20">20 ngày</option>
-            <option value="90">90 ngày</option>
+            <option value="89">90 ngày</option>
           </select>
         </div>
       </div>
@@ -33,7 +33,7 @@ const ChartAssetReport = () => {
         <span className="pt-1 text-black"> Biến động (%)</span>
       </div>
       <div className="report__tabcondition__chart_CK">
-        <div className="w-full flex justify-around">
+        <div className="mt-4">
           <ChartReport date={date} />
         </div>
       </div>
