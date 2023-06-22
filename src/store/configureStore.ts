@@ -69,6 +69,8 @@ export const store = configureStore({
     dataShow: dataSliceShow.reducer,
     // chart index
     chartIndex: chartIndexSlice.reducer,
+
+    dataApi : dataSliceShow.reducer
   },
 });
 export type RootState = ReturnType<typeof store.getState>;
