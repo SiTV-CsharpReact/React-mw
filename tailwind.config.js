@@ -57,7 +57,7 @@ module.exports = {
       bgFooterTable: "#131722",
       textHeaderTableGDTT: "#F7FFAA",
       bgPannelLink: "#dedede",
-      invert:'#646464'
+      invert: '#646464'
       //'tooltipNoti':'#2371af'
     },
     fontSize: {
