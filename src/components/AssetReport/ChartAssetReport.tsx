@@ -11,7 +11,9 @@ const ChartAssetReport = () => {
       <div className="report__tabcondition__detail_CK">
         <div></div>
         <div className="text-center">
-          <span className={`font-bold text-black  ${mode}-text text-[13px] font-[Arial]`}>
+          <span
+            className={`font-bold text-black  ${mode}-text text-[13px] font-[Arial]`}
+          >
             THỐNG KÊ GIÁ TRỊ TÀI SẢN RÒNG
           </span>
         </div>
@@ -29,12 +31,31 @@ const ChartAssetReport = () => {
         </div>
       </div>
       <div className="report__tabcondition__detail_CK_header">
-        <span className="pt-1 text-black"> NAV (đồng)</span>
-        <span className="pt-1 text-black"> Biến động (%)</span>
+        <span className="pt-1 text-black text-13 font-[Arial]"> NAV (đồng)</span>
+        <span className="pt-1 text-black text-13 font-[Arial]"> Biến động (%)</span>
       </div>
       <div className="report__tabcondition__chart_CK">
         <div className="mt-4">
           <ChartReport date={date} />
+        </div>
+        <div className="italic text-xs pl-[50px] text-[#000] -mt-[15px]">
+          <span>Chú thích:</span>
+          <ul className="pl-10">
+            <li>
+              * Ngày giao dịch có phát sinh tăng/giảm làm thay đổi vốn, cụ thể:
+              <ul className="pl-10">
+                <li>
+                  - Phát sinh tăng: Nộp tiền; Lưu ký/Nhận chuyển khoản chứng
+                  khoán; Rút tiền từ tài khoản phái sinh về tài khoản cơ sở
+                </li>
+                <li>
+                  - Phát sinh giảm: Rút/chuyển tiền; Chuyển tiền từ tài khoản cơ
+                  sở vào tài khoản phái sinh; Phí rút/chuyển; Rút lưu ký/Chuyển
+                  khoản chứng khoán đi
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
