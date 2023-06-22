@@ -6,6 +6,7 @@ import moment from "moment";
 import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
+import { Tooltip } from "@mui/material";
 const FinalizesavingsTransfer = () => {
   const dataDropdown = [
     {
@@ -542,12 +543,15 @@ const FinalizesavingsTransfer = () => {
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
                       Tiền lãi <br /> cộng dồn{" "}
-                      <span title="Tiền lãi cộng dồn tính đến thời điểm hiện tại, tính theo lãi suất tất toán đúng hạn">
+                      <span>
+                        <Tooltip title="Tiền lãi cộng dồn tính đến thời điểm hiện tại, tính theo lãi suất tất toán đúng hạn">
                         <i
                           className="fa fa-info-circle"
                           aria-hidden="true"
                           id="iconPage"
                         ></i>
+                        </Tooltip>
+                       
                       </span>
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
