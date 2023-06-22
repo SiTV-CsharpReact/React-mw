@@ -683,3 +683,43 @@ padding-left: 96%;
     padding-top: 5px;
     font-weight: bold;
 }
+#id__stock__settlement__tbl thead  tr th {
+  padding: 0px;
+}
+#cash__settlement__tbl__tbody  tr:hover{
+  background-color: #efe;
+}
+#cash__settlement__tbl__tbody  td {
+  line-height: 22px ;
+  padding: 5px;
+}
+#id__cash__settlement__tbl th{
+  padding: 0px;
+}
+.table__DepositoryHistory th {
+  border: 1px solid #ddd;
+  background-color: #ececec;
+  text-align: center;
+  padding: 7px 10px 7px 10px;
+  font-size: 12px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  font-weight: bold;
+}
+.cw-group-header {
+  color: #000;
+  font-size: 10pt;
+  padding: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+#id__report__cw__tbl2 tr th {
+  font-weight: bold;
+  background-color: #f3f3f3;
+} 
+#id__list__fee__tbl  th{
+  background-color: #ececec;
+}
+#id__list__fee__tbl  th ,td {
+  border: 1px solid #dfdfdf;
+}

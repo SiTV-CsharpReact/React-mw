@@ -31,6 +31,11 @@ import ReportNAV from "./pages/Report/ReportNAV";
 import ReportTransSummary from "./pages/Report/ReportTransSummary";
 import StockDetails from "./pages/Report/StockDetails";
 import CurrMargin from "./pages/Report/CurrMargin";
+import StockSettlement from "./pages/Report/StockSettlement";
+import CashSettlement from "./pages/Report/CashSettlement";
+import DepositoryHistory from "./pages/RightCustody/DepositoryHistory";
+import ReportCW from "./pages/Report/ReportCW";
+import ListFee from "./pages/Report/ListFee";
 const  App: React.FC =()=> {
   return (
     <div>
@@ -56,13 +61,11 @@ const  App: React.FC =()=> {
             <Route path="/report/ReportTransSummary" element={<ReportTransSummary />} /> 
             <Route path="/report/StockDetails" element={<StockDetails />} />  
             <Route path="/report/CurrMargin" element={<CurrMargin />} />
-           
+            <Route path="/report/StockSettlement" element={<StockSettlement />} />
+            <Route path="/report/CashSettlement" element={<CashSettlement />} />
 
-            <Route path="/report/StockSettlement" element={<AssetReport />} />
-            <Route path="/report/CashSettlement" element={<AssetReport />} />
-            <Route path="/report/CurrMargin" element={<AssetReport />} />
-            <Route path="/report/StockSettlement" element={<AssetReport />} />
-            <Route path="/report/CashSettlement" element={<AssetReport />} />
+            <Route path="/report/ReportCW" element={<ReportCW />} />
+            <Route path="/report/ListFee" element={<ListFee/>} />
  
           {/* lịch sử giao dịch */}
         
@@ -87,7 +90,7 @@ const  App: React.FC =()=> {
           <Route path="/rightscustody/OverView" element={<OverViewCustody />} />
           <Route path="/rightscustody/CustodyOrderForm"element={<RegistrationOnline />}/>
 
-          <Route path="/rightscustody/AdvanceOrderForm" element={<AssetReport />}/>
+          <Route path="rightscustody/DepositoryHistory" element={<DepositoryHistory />}/>
 
           {/* Stoploss */}
           <Route path="/stoploss/orderform" element={<ConditionalOrder />} />
