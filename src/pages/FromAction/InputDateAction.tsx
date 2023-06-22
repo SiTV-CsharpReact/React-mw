@@ -13,7 +13,6 @@ const InputDateAction = ({Title , date, ChangeFuncion} : Props) => {
     }else{
       ChangeFuncion(date)
     }
-
   }
   return <div>
         <label className="">{Title}</label>

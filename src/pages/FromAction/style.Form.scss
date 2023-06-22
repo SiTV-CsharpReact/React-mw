@@ -584,3 +584,142 @@ select {
   font-weight: bold;
   margin-bottom:10px
 }
+#id__curr__margin__tbl td, th{
+    padding: 5px 0px;
+    font-weight: bold;
+}
+#curr__margin__tbl__tbody a{ 
+    color: blue;
+    font-weight: bold;
+}
+#curr__margin__tbl__tbody a:hover{
+  cursor: pointer;
+}
+#curr__margin__tbl__tbody  tr:hover{
+  background-color: #efe;
+}
+// pouppage
+.PopupPage{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.4);
+  display: none;
+  color: #ffff;
+  padding: 10px;
+}
+.activePopupPage{
+  display: block !important;
+}
+.acviveItmePoup{
+  display: none;
+}
+.dieukhoan-boxes-content{
+position: absolute;
+background-color: #fefefe;
+margin: auto;
+padding: 0;
+top: 20%;
+left: 35%;
+border: 1px solid #888;
+width: 350px;
+z-index: 5;
+box-shadow: 0 4px 8px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+-webkit-animation-name: animatetop;
+-webkit-animation-duration: .4s;
+animation-name: animatetop;
+animation-duration: .4s;
+max-height: 500px;
+min-height: 115px;
+}
+.intro-dieukhoan-boxes {
+  width: 100%;
+  padding: 2px 16px;
+  background-color: #034e94;
+  color: #fff;
+  text-align: center;
+  font-family: 'Helvetica';
+  font-size: 15px;
+  padding-top: 3px;
+  padding-bottom: 1px;;
+  text-transform: uppercase;
+  display: grid ;
+  grid-template-columns: 1fr 0.8fr ;
+}
+.intro-dieukhoan-boxes  span{
+  text-align: right;
+  line-height: 28px;
+}
+.intro-dieukhoan-boxes .close{
+  font-size: 30px ;
+  line-height: 22px;
+  float: right;
+padding-left: 96%;
+}
+.close {
+  float: right;
+  font-weight: bold;
+  top: 0;
+  border-radius: 20px;
+  width: 30px;
+  opacity: 1;
+}
+.dieukhoan-body-boxes {
+  width: 100%;
+  padding: 2px 16px;
+  height: 415px;
+  overflow-y: scroll;
+}
+.table_utct thead tr {
+  background-color: #f3f3f3;
+}
+.table_utct thead tr th{
+  color: #000000;
+  border: 1px solid #dfdfdf;
+    font-size: 12px;
+    text-align: center;
+    padding-top: 5px;
+    font-weight: bold;
+}
+#id__stock__settlement__tbl thead  tr th {
+  padding: 0px;
+}
+#cash__settlement__tbl__tbody  tr:hover{
+  background-color: #efe;
+}
+#cash__settlement__tbl__tbody  td {
+  line-height: 22px ;
+  padding: 5px;
+}
+#id__cash__settlement__tbl th{
+  padding: 0px;
+}
+.table__DepositoryHistory th {
+  border: 1px solid #ddd;
+  background-color: #ececec;
+  text-align: center;
+  padding: 7px 10px 7px 10px;
+  font-size: 12px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  font-weight: bold;
+}
+.cw-group-header {
+  color: #000;
+  font-size: 10pt;
+  padding: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+#id__report__cw__tbl2 tr th {
+  font-weight: bold;
+  background-color: #f3f3f3;
+} 
+#id__list__fee__tbl  th{
+  background-color: #ececec;
+}
+#id__list__fee__tbl  th ,td {
+  border: 1px solid #dfdfdf;
+}

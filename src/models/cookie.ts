@@ -9,7 +9,6 @@ export const setCookie = (newCookie: TypeCookie) => {
   let stringCookie = newCookie.tab + "_" + newCookie.codeList + "|";
   // newTabCookie === "HNX" ?  "CHSX" :  newTabCookie === "HNX30" ? "HNX30" : newTabCookie
   const newTab = changeNewtab(newCookie);
-  console.log("vô đây", newTab);
   if (!isCookie) {
     // kiểm tra
     // k có
