@@ -14,6 +14,11 @@ export const getDataApi = createAsyncThunk('dataApi/DataApi', async () => {
 
   return response.data
 })
+export const getDataApiPendingOder = createAsyncThunk('dataApiPendingOder/DataApiPendingOder', async () => {
+  const response = await axios.get('http://localhost:3006/items')
+  console.log(response.data,"hihi")
+  return response.data
+})
 export const dataSliceShow = createSlice({
   name: 'show',
   initialState: {
@@ -22,7 +27,8 @@ export const dataSliceShow = createSlice({
       San: '',
       TLV: '',
     },
-     dataApi: [] as any,
+    dataApi: [] as any,
+    dataApiPendingOder: [] as any,
   }, 
   
   reducers: {
@@ -36,6 +42,9 @@ export const dataSliceShow = createSlice({
     });
     builder.addCase(getDataApi.fulfilled, (state:any, action) => {
       state.dataApi = action.payload;
+    });
+    builder.addCase(getDataApiPendingOder.fulfilled, (state:any, action) => {
+      state.dataApiPendingOder = action.payload;
     });
      builder.addCase(getDataApi.pending, (state:any, action) => {
       if (state.dataApi === 'idle') {

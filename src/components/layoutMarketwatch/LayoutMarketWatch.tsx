@@ -36,7 +36,7 @@ import { setOrderCount } from "./LayoutMarketWatchSLice";
 import { useSelector } from "react-redux";
 import CompleteStock from "../menuBarMW/CompleteStock";
 import { useTranslation } from "react-i18next";
-import { getDataApi } from "../orderFormMarketwatch/data";
+import { getDataApi, getDataApiPendingOder } from "../orderFormMarketwatch/data";
 
 function RenderTable() {
   const floor = useAppSelector((state) => state.tableTest.floor)
@@ -151,7 +151,8 @@ const LayoutMarketWatch: React.FC = () => {
  
   // show hide order
   const hideOrderForm = () => {
-       dispatch(getDataApi())
+    dispatch(getDataApi())
+    dispatch(getDataApiPendingOder())
     setHeightComponent({
       ...heightComponent,
       orderForm: !heightComponent.orderForm,
@@ -438,7 +439,7 @@ const LayoutMarketWatch: React.FC = () => {
               className="text-black "
             >
               <div className="flex items-center justify-end panel__bottom__link">
-                <div className="px-2 group" onClick={() => showTab(1)}>
+                <div className="px-2 group" onClick={() => { dispatch(getDataApiPendingOder()); showTab(1)}}>
                   <span
                     className={`size-input hover-text-blue-L ${
                       orderCount === 1 ? "active" : ""

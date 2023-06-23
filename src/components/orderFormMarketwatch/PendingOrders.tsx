@@ -6,6 +6,7 @@ import axios from "axios";
 import _ from "lodash";
 import { uniqBy, filter, sortBy } from "lodash";
 import { useTranslation } from "react-i18next";
+import { useAppSelector } from "../../store/configureStore";
 type Props = {
   value: number;
 }
@@ -20,6 +21,8 @@ const PendingOrders: React.FC<Props> = (value) => {
     dataMap: "",
     sortData: "",
   });
+  const { dataApiPendingOder } = useAppSelector((state) => state.dataApiPendingOder)
+  console.log("data day ne", dataApiPendingOder)
 
   const fetchDataValue = async () => {
     try {
@@ -67,7 +70,7 @@ const PendingOrders: React.FC<Props> = (value) => {
   useEffect(() => {
     fetchDataValue();
     // value.value === 1
-  }, []);
+  }, [dataApiPendingOder]);
 
   const handleExportToExcel = (e: any) => {
     e.preventDefault();

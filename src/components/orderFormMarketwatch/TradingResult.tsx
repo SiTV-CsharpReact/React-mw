@@ -303,27 +303,23 @@ const TradingResult = () => {
     doc.save("filename.pdf");
   };
   const fetchBuyData = async () => {
-    const buyData =  dataApi?.Table.filter((items: any) => items.ABUYSELL === "B");
+    const buyData =  dataApi?.Table?.filter((items: any) => items.ABUYSELL === "B");
     const uniqueData = _.uniqBy(buyData, "ASTOCKCODE");
     setDataTotal(buyData);
     setData(uniqueData);
     setDataArr(buyData);
-    console.log("buyData", buyData);
   };
-  useEffect(() => {
-    fetchBuyData();
-  }, [dataApi]);
   const fetchBuyDataSell = async () => {
-    const sellData = dataApi?.Table.filter((items: any) => items.ABUYSELL === "S");
+    const sellData = dataApi?.Table?.filter((items: any) => items.ABUYSELL === "S");
     const uniqueDataSell = _.uniqBy(sellData, "ASTOCKCODE");
     setDataSell(uniqueDataSell);
     setDataTotalSell(sellData);
     setDataArrSell(sellData);
-    console.log("buyData", sellData);
   };
   useEffect(() => {
+     fetchBuyData();
     fetchBuyDataSell();
-  }, [dataApi]);
+  }, [dataApi,dataApi]);
   const calculateTotalQuantity = () => {
     if (dataTotal && dataTotal.length > 0) {
       const totalQuantity = dataTotal.reduce((accumulator: any, item: any) => {
@@ -373,8 +369,6 @@ const TradingResult = () => {
     setDrop(!drop);
     setDropSell(!dropSell);
   };
-
-
   return (
     <div className="">
       <div className="flex items-center justify-between mr-2">

@@ -63,7 +63,7 @@ const IntradayOrder = () => {
   };
   return (
     <div>
-      <div className='flex justify-end mr-4'>
+      <div className='flex justify-end mr-3'>
       <div>
           <div className="flex items-center gap-3 mt-2">
           <button className="p-1 pr-1 cursor-pointer  min-w-[40px] h-[30px] rounded-[4px] text-white text-[12px]  uppercase bg-[#0055ba]">

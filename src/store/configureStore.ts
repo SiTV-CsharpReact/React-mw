@@ -70,7 +70,9 @@ export const store = configureStore({
     // chart index
     chartIndex: chartIndexSlice.reducer,
 
-    dataApi : dataSliceShow.reducer
+    dataApi: dataSliceShow.reducer,
+    dataApiPendingOder : dataSliceShow.reducer,
+    
   },
 });
 export type RootState = ReturnType<typeof store.getState>;
