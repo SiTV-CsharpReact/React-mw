@@ -3,7 +3,7 @@ import ChartReport from "./ChartReport";
 import { useAppSelector } from "../../store/configureStore";
 
 const ChartAssetReport = () => {
-  const [date, setDate] = useState("20");
+  const [date, setDate] = useState(0);
   const { mode } = useAppSelector((state) => state.settingColorMode);
 
   return (
@@ -19,20 +19,24 @@ const ChartAssetReport = () => {
         </div>
         <div className="report__select__date">
           <select
-            name=""
-            id=""
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              setDate(e.target.value)
+            onChange={(e: any) =>
+              setDate(Number(e.target.value))
             }
           >
-            <option value="20">20 ngày</option>
-            <option value="89">90 ngày</option>
+            <option value={0}>20 ngày</option>
+            <option value={1}>90 ngày</option>
           </select>
         </div>
       </div>
       <div className="report__tabcondition__detail_CK_header">
-        <span className="pt-1 text-black text-13 font-[Arial]"> NAV (đồng)</span>
-        <span className="pt-1 text-black text-13 font-[Arial]"> Biến động (%)</span>
+        <span className="pt-1 text-black text-13 font-[Arial]">
+          {" "}
+          NAV (đồng)
+        </span>
+        <span className="pt-1 text-black text-13 font-[Arial]">
+          {" "}
+          Biến động (%)
+        </span>
       </div>
       <div className="report__tabcondition__chart_CK">
         <div className="mt-4">

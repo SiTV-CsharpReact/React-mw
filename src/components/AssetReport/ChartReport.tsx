@@ -3,9 +3,13 @@ import Highcharts from "highcharts";
 import { useAppSelector } from "../../store/configureStore";
 import { formatNumber } from "../../utils/util";
 
-const ChartReport: any = (date: any) => {
+type IDate = {
+  date: number;
+};
+const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
   const { mode } = useAppSelector((state) => state.settingColorMode);
   const { assetReport } = useAppSelector((state) => state.assetReport);
+  const changeOption: number = date === 0 ? 20 : 89;
 
   const arrLine: any = useMemo(() => {
     let arr: any = [];
@@ -29,14 +33,32 @@ const ChartReport: any = (date: any) => {
   }, [assetReport.Table2]);
 
   useEffect(() => {
+    const data_col =
+      date === 0
+        ? assetReport.Table2?.map((item: any) => item.ANAV)
+            ?.splice(0, 20)
+            .reverse()
+        : assetReport.Table2?.map((item: any) => item.ANAV)
+            ?.splice(0, 89)
+            .reverse();
+
+    const data_line =
+      date === 0
+        ? arrLine
+            ?.map((item: any) => item)
+            ?.splice(0, 20)
+            .reverse()
+        : arrLine
+            ?.map((item: any) => item)
+            ?.splice(0, 89)
+            .reverse();
+
     const series: any = [
       {
         name: "NAV",
         type: "column",
         color: "#70ad47",
-        data: assetReport.Table2?.map((item: any) => item.ANAV)
-          ?.splice(0, Number(date.date))
-          .reverse(),
+        data: data_col,
         yAxis: 0,
       },
       {
@@ -44,12 +66,13 @@ const ChartReport: any = (date: any) => {
         type: "line",
         yAxis: 1,
         color: "#595959",
-        data: arrLine?.map((item: any) => item)?.splice(0, Number(date.date)),
+        data: data_line,
         maker: {
           symbol: "circle",
         },
       },
     ];
+    console.log(date);
 
     Highcharts.chart("container-asset_report", {
       chart: {
@@ -66,6 +89,34 @@ const ChartReport: any = (date: any) => {
             const newMin = Math.floor((yExtremes.dataMin * 0.95) / step) * step;
             const newMax = Math.ceil(yExtremes.dataMax / step) * step;
             yAxis.setExtremes(newMin, newMax, true, false);
+            this.yAxis[1].update({
+              tickAmount: date === 0 ? 5 : 4,
+            });
+            yAxis.update({
+              tickAmount: date === 0 ? 5 : 4,
+            });
+            // if (date === 1) {
+            //   // const data =
+            //   const data_xAxis = assetReport.Table2?.map(
+            //     (item: any) => item.ADATE
+            //   ).reverse();
+            //   this.series[0].setData(
+            //     assetReport.Table2?.map((item: any) => item.ANAV)?.reverse()
+            //   );
+            //   this.series[1].setData(
+            //     arrLine?.map((item: any) => item).reverse()
+            //   );
+            //   // this.xAxis[0].update({
+            //   //   categories: assetReport.Table2?.map(
+            //   //     (item: any) => item.ADATE
+            //   //   )?.splice(1, 89),
+            //   // });
+            // } else {
+            //   // this.series[0].setData(
+            //   //   assetReport.Table2?.map((item: any) => item.ANAV).splice(0,20)?.reverse()
+            //   // );
+            // }
+            // console.log(this.series);
 
             //cập nhật maker in linechart
             this.series[1].points.forEach((point: any) => {
@@ -86,7 +137,7 @@ const ChartReport: any = (date: any) => {
       },
       xAxis: {
         categories: assetReport.Table2?.map((item: any) => item.ADATE)
-          ?.splice(0, Number(date.date))
+          ?.splice(0, changeOption)
           .reverse(),
         crosshair: true,
         labels: {
@@ -117,7 +168,6 @@ const ChartReport: any = (date: any) => {
               return Highcharts.numberFormat(this.value as number, 0, "", ",");
             },
           },
-          tickAmount: date.date === "20" ? 5 : 4,
           gridLineWidth: 1,
         },
         {
@@ -138,8 +188,6 @@ const ChartReport: any = (date: any) => {
               return this.value + "%";
             },
           },
-          tickAmount: date.date === "20" ? 5 : 4,
-          // offset: -10
         },
       ],
       tooltip: {
@@ -195,17 +243,11 @@ const ChartReport: any = (date: any) => {
         },
       },
       series: series,
-      // responsive: {
-      //   rules: [
-      //     {
-      //       condition: {
-      //         maxWidth: 500,
-      //       },
-      //     },
-      //   ],
-      // },
     });
-  }, [arrLine, assetReport.Table2, date.date]);
+    // return () => {
+    //   chart.destroy();
+    // };
+  }, [arrLine, assetReport.Table2, changeOption, date]);
   return (
     <figure className="highcharts-figure">
       <div id="container-asset_report"></div>
@@ -213,4 +255,4 @@ const ChartReport: any = (date: any) => {
   );
 };
 
-export default ChartReport;
+export default React.memo(ChartReport);
