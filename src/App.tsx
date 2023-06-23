@@ -47,7 +47,7 @@ const  App: React.FC =()=> {
           
           {/* Quản lý tài khoản */}
             <Route path="/report/ReportTransBalance" element={<AssetReport />} />  
-            <Route path="/report/AssetReport2" element={<AssetReport2 />} />             
+            <Route path="/report/AssetReport2" element={<AssetReport />} />             
             <Route path="/report/ReportNAV" element={<ReportNAV />} />
 
             <Route path="/report/reportprofitloss" element={<AssetReport />} />

@@ -33,26 +33,17 @@ const AssetReport = () => {
                 </p>
               </div>
               <div className="HeaderBaoCaoRigth">
-                
-              </div>
-            </div>
-          </div>
-      <TitlePage content="Báo cáo tài sản" />
-      <div className={`body__content ${mode}-bg`}>
-        <div className={`body__content__asset_report `}>
-          <div className="body__content__header flex justify-between">
-            <div className="mt-[5px]">
-              <span className="italic text-[red] font-[Arial]">
-                Dữ liệu cập nhật gần nhất:{" "}
-                <span className="text-[red]">17:56 - 21/06/2023</span>
-              </span>
-            </div>
-            <div>
+          
               <input type="image" src={execlImg} alt="" className="h-[25px] w-[25px" />
               &nbsp;
               <input type="image" src={pdfImg} alt="" className="h-[25px] w-[25px" />
+          
+              </div>
             </div>
           </div>
+
+      <div className={`body__content ${mode}-bg`}>
+        <div className={`body__content__asset_report `}>
           <div className="report__tabcondition_BCTS">
             <TableAssetValue />
             <TableAssetReport />

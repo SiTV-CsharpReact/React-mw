@@ -4,8 +4,8 @@ import axios from "axios";
 export const fetchAssetReport = createAsyncThunk(
   "report/fetchAssetReport",
   async () => {
-    const responseRepot = await axios.get(`http://localhost:2908/data`);
-    return responseRepot.data[0].Data;
+    const responseRepot = await axios.get(`http://localhost:8480/api/stock/v1/report/bcts/058C222210`);
+    return responseRepot;
   }
 );
 
