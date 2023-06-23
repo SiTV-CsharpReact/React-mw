@@ -191,15 +191,20 @@
     justify-content: space-between;
     .report__select__date {
       width: 95px;
-      height: 20px;
+      height: 21px;
       select {
+        width: 76px;
+        height: 20px !important;
+        border: 1px solid #000000;
         background-image: none;
         background-repeat: no-repeat;
         // background-size: ;
         padding: 0;
         appearance: auto;
-        font-size: 1rem;
-        border-radius: 5px;
+        font-size: 0.825rem;
+        color: #000;
+        background: #ececec;
+        border-radius: 4px;
         &:focus {
           border-color: #000;
           box-shadow: none;

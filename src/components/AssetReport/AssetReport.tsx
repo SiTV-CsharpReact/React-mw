@@ -33,11 +33,9 @@ const AssetReport = () => {
                 </p>
               </div>
               <div className="HeaderBaoCaoRigth">
-          
               <input type="image" src={execlImg} alt="" className="h-[25px] w-[25px" />
               &nbsp;
-              <input type="image" src={pdfImg} alt="" className="h-[25px] w-[25px" />
-          
+              <input type="image" src={pdfImg} alt="" className="h-[25px] w-[25px" />    
               </div>
             </div>
           </div>
