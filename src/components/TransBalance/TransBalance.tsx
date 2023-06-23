@@ -6,7 +6,6 @@ import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import TotalGD from './TotalGD';
 import NoteBottom from './NoteBottom';
-import TableAssetReport from '../AssetReport/TableAssetReport';
 import TableAsset from './TableAccess';
 import { useTranslation } from 'react-i18next';
 import TitlePage from '../../pages/Layout/TitlePage';

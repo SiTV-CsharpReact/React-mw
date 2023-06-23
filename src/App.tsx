@@ -36,6 +36,7 @@ import CashSettlement from "./pages/Report/CashSettlement";
 import DepositoryHistory from "./pages/RightCustody/DepositoryHistory";
 import ReportCW from "./pages/Report/ReportCW";
 import ListFee from "./pages/Report/ListFee";
+import TransBalance from "./components/TransBalance/TransBalance";
 const  App: React.FC =()=> {
   return (
     <div>
@@ -52,7 +53,7 @@ const  App: React.FC =()=> {
           {/* Report */}
           
           {/* Quản lý tài khoản */}
-            <Route path="/report/ReportTransBalance" element={<AssetReport />} />  
+            <Route path="/report/ReportTransBalance" element={<TransBalance />} />  
             <Route path="/report/AssetReport2" element={<AssetReport />} />             
             <Route path="/report/ReportNAV" element={<ReportNAV />} />
 
