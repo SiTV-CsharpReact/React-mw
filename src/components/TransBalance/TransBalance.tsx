@@ -9,7 +9,7 @@ import NoteBottom from './NoteBottom';
 import TableAssetReport from '../AssetReport/TableAssetReport';
 import TableAsset from './TableAccess';
 import { useTranslation } from 'react-i18next';
-import TitlePage from '../../Page/helper/TitlePage';
+import TitlePage from  '../../Page/helper/TitlePage';
 const TransBalance = () => {
   const [short, setShort] = useState(false);
 
