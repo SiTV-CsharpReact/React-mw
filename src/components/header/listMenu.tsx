@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./styleHeader.css";
-import New  from "./../../images/new.png"
+import New from "./../../images/new.png";
 import { useTranslation } from "react-i18next";
 const ListMenu = () => {
   const { t } = useTranslation(["home"]);
@@ -47,44 +47,29 @@ const ListMenu = () => {
             </li>
             <li>
               <Link to="/transfer/ordersavings" className="Foreign-Hide">
-                {t("home:menu.TienchoVay")}  
-                <input
-                  type="image"
-                  src={New}
-                  height={16}
-                  width={28}
-                />
+                {t("home:menu.TienchoVay")}
+                <input type="image" src={New} height={16} width={28} />
               </Link>
             </li>
             <li>
               <Link to="/transfer/finalizesavings" className="Foreign-Hide">
                 {t("home:menu.TatToanTV")}
-                <input
-                  type="image"
-                  src={New}
-                  height={16}
-                  width={28}
-                />
+                <input type="image" src={New} height={16} width={28} />
               </Link>
             </li>
             <li>
               <Link to="/transfer/savingshistory" className="Foreign-Hide">
                 {t("home:menu.DanhsachHDCV")}
-                <input
-                  type="image"
-                  src={New}
-                  height={16}
-                  width={28}
-                />
+                <input type="image" src={New} height={16} width={28} />
               </Link>
             </li>
             <li>
               <Link
                 to="/report/AdvReport"
                 className="MarPro-Hide"
-                style={{ display: "none" }}
+                // style={{ display: "none" }}
               >
-                {t("home:menu.LSUTTTC")}
+                {t("home:menu.LSUTTBCK")}
               </Link>
             </li>
             <li>
@@ -127,56 +112,31 @@ const ListMenu = () => {
             <li>
               <Link to="/report/ReportTransBalance">
                 {t("home:menu.QLTK_BCTHSDGD")}
-                <input
-                  type="image"
-                  src={New}
-                  height={16}
-                  width={28}
-                />
+                <input type="image" src={New} height={16} width={28} />
               </Link>
             </li>
             <li>
               <Link to="/report/AssetReport2">
                 {t("home:menu.QLTK_BCTS")}
-                <input
-                  type="image"
-                  src={New}
-                  height={16}
-                  width={28}
-                />
+                <input type="image" src={New} height={16} width={28} />
               </Link>
             </li>
             <li>
               <Link to="/report/ReportNAV">
                 {t("home:menu.QLTK_BCBDTSD")}
-                <input
-                  type="image"
-                  src={New}
-                  height={16}
-                  width={28}
-                />
+                <input type="image" src={New} height={16} width={28} />
               </Link>
             </li>
             <li>
               <Link to="/report/reportprofitloss">
                 {t("home:menu.QLTK_BCLLTH")}
-                <input
-                  type="image"
-                  src={New}
-                  height={16}
-                  width={28}
-                />
+                <input type="image" src={New} height={16} width={28} />
               </Link>
             </li>
             <li>
               <Link to="/report/ReportTransSummary">
                 {t("home:menu.QLTK_BCTHGDTMCK")}
-                <input
-                  type="image"
-                  src={New}
-                  height={16}
-                  width={28}
-                />
+                <input type="image" src={New} height={16} width={28} />
               </Link>
             </li>
             <li>

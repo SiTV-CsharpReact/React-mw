@@ -38,6 +38,7 @@
     "fs": "^0.0.1-security",
     "highcharts": "^11.0.1",
     "highcharts-react-official": "^3.2.0",
+    "html2canvas": "^1.4.1",
     "i18next": "^22.4.10",
     "i18next-browser-languagedetector": "^7.0.1",
     "js-cookie": "^3.0.5",
@@ -54,6 +55,7 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.7.2",
     "react-chartjs-2": "^5.2.0",
+    "react-date-picker": "^10.2.0",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.5",
     "react-hook-form": "^7.44.3",
@@ -87,8 +89,12 @@
     "server": "json-server dataIntraday.json --watch --port 5000",
     "DataResult": "json-server dataResult.json --watch --port 3080",
     "PendingOrder": "json-server db.json --watch --port 30",
+    "DataThongKe": "json-server dataPopup.json --watch --port 6565",
     "DataPopup": "json-server dataPopup.json --watch --port 6868",
-    "DataChartIndex": "json-server chart.json --watch --port 8000"
+    "DataKiQuy": "json-server dataPopup.json --watch --port 9999",
+    "DataChartIndex": "json-server chart.json --watch --port 8000",
+    "BCTS": "json-server data.json --watch --port 3030",
+    "Transfer":"json-server db.json --watch --port 3000"
   },
   "eslintConfig": {
     "extends": [

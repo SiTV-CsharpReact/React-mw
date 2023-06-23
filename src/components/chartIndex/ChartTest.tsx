@@ -3,7 +3,7 @@ import Highcharts from "highcharts";
 import { formatNumber } from "../../utils/util";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { fetchChartIndexAsync } from "./chartIndexSlice";
-import './chartIndex.scss'
+import "./chartIndex.scss";
 
 type TProps = {
   name: string;
@@ -154,9 +154,10 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
 
     Highcharts.chart(`container-${name}`, {
       chart: {
-        
+        marginTop: 8, // Đặt khoảng cách giữa highcharts-plot-background và highcharts-container là 20px
+        marginBottom: 15,
         plotBorderWidth: 1,
-        plotBorderColor: '#545454',
+        plotBorderColor: "#545454",
         plotBackgroundColor: {
           linearGradient: gradient,
           stops: [
@@ -165,8 +166,8 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
           ],
         },
         backgroundColor: "#000",
-        width:200,
-        height:120
+        width: 205,
+        height: 98,
       },
       title: {
         text: "",
@@ -186,17 +187,23 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
         tickWidth: 0,
         minPadding: 0,
         maxPadding: 0,
-        min: timeFirst, // Giới hạn trục x từ 2 giờ
+        min: timeFirst, // Giới hạn trục x từ 9 giờ
         max: timeLast,
         tickInterval: 3600000,
         // height: 75,
         labels: {
+          //       x: 0, // Đưa nhãn trục "9h" vào vị trí bắt đầu từ 0px
+          // align: 'left', // Đưa văn bản của nhãn trục vào vị trí bắt đầu từ 0px
+          // overflow: 'justify', // Hiển thị nội dung nhãn trục ra khỏi biểu đồ
+          useHTML: true,
           style: {
             color: "#a5a5a5",
             fontSize: "8px",
+            // rotation: -45,
+            // step: 1,
           },
         },
-        offset: -10,
+        offset: -9,
         zIndex: 1,
       },
       yAxis: [
@@ -226,8 +233,9 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
           plotLines: [
             {
               color: "#FFFF00",
-              width: .8,
+              width: 0.8,
               value: indexValue,
+              zIndex: 10,
             },
           ],
           // height: 75,
@@ -238,11 +246,24 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
       },
       tooltip: {
         positioner: function (labelWidth, labelHeight, point) {
-          let tooltipX = point.plotX - labelWidth / 2 + 50;
-          let tooltipY = point.plotY - labelHeight - 10;
-          if (tooltipY < this.chart.plotTop) {
-            tooltipY = this.chart.plotTop + 10; // Position the tooltip just above the plot area
+          var tooltipX, tooltipY;
+          // Calculate tooltip X position
+          if (point.plotX + labelWidth > this.chart.plotWidth) {
+            tooltipX = point.plotX - labelWidth + this.chart.plotLeft - 10;
+          } else if (point.plotX - labelWidth < 0) {
+            tooltipX = point.plotX + this.chart.plotLeft + 10;
+          } else {
+            tooltipX = point.plotX + this.chart.plotLeft - labelWidth / 2;
           }
+          // Calculate tooltip Y position
+          if (point.plotY + labelHeight > this.chart.plotHeight) {
+            tooltipY = point.plotY - labelHeight + this.chart.plotTop - 10;
+          } else if (point.plotY - labelHeight < 0) {
+            tooltipY = point.plotY + this.chart.plotTop + 10;
+          } else {
+            tooltipY = point.plotY + this.chart.plotTop - labelHeight - 10;
+          }
+
           return {
             x: tooltipX,
             y: tooltipY,
@@ -252,24 +273,29 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
         backgroundColor: "#ffffffc9",
         borderColor: "#07d800",
         borderRadius: 5,
-        borderWidth: "2px",
+        borderWidth: "1px",
         padding: 6,
         useHTML: true,
         style: {
           width: 150,
           fontSize: "11px",
           fontWeight: "500",
-          zindex:10000
+          position: "absolute",
+          // zIndex: 10000,
         },
         shared: true,
         formatter: function () {
-          const index: any = this.points?.map((e, ind) => {
+          const index: any = this.points?.map((e: any, ind) => {
             if (ind === 1) {
+              if (e.y >= indexValue) {
+                e.series.chart.tooltip.options.borderColor = "#07d800";
+              } else {
+                e.series.chart.tooltip.options.borderColor = "red";
+              }
               return { x: e.x, y: e.y };
             }
             return "";
           });
-          console.log(index);
 
           const hour: any = new Date(Number(index[1].x)).getHours();
           const minutes =
@@ -277,11 +303,11 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
               ? "0" + new Date(Number(index[1].x)).getMinutes()
               : new Date(Number(index[1].x)).getMinutes();
 
-          return `<span>Thời gian: <b>${
+          return `<span style="color:#000">Thời gian: <b style="font-size:12px;font-weight:600;color:#000" class="font-bold text-sm">${
             hour + ":" + minutes
-          }</b></span><br/><span>Index: <b>${
+          }</b></span><br/><span style="color:#000">Index:  <b style="font-size:12px;color:#000" class="font-bold text-sm">${
             index[1].y
-          }</b></span><br/><span>Khối lượng:${formatNumber(this.y)} </span>`;
+          }</b></span><br/><span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm">${formatNumber(this.y)} </b></span>`;
         },
       },
       legend: {
@@ -289,7 +315,7 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
         symbolWidth: 0,
         symbolHeight: 0,
         squareSymbol: false,
-        enabled:false
+        enabled: false,
       },
       plotOptions: {
         spline: {
@@ -304,32 +330,9 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
             },
           ],
         },
-        bar:{
-          color:"#5F9DFE"
-        }
-        // bar: {
-        //   states: {
-        //     hover: {
-        //       enabled: true,
-        //     },
-        //   },
-        // },
-        // series: {
-        //   states: {
-        //     hover: {
-        //       enabled: true,
-        //     },
-        //   },
-        //   marker: {
-        //     enabled: false,
-        //   },
-        //   zones: [{
-        //     color: 'red'
-        // }, {
-        //     value: indexValue,
-        //     color: 'green'
-        // }],
-        // },
+        bar: {
+          color: "#5F9DFE",
+        },
       },
       series: series,
     });
@@ -337,7 +340,6 @@ const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
       // chart.destroy();
     };
   }, [dataBar, dataSpline, indexValue, name, timeFirst, timeLast]);
-  console.log({ timeFirst, timeLast });
 
   return (
     <figure className="highcharts-figure">
