@@ -12,6 +12,7 @@ export const getDateTime =()=>{
     }
     return data;
 }
+export const DefaultSelect = [{value: "" , label : "Tất cả "}]
 export const SanGD = [
     { value: "", label: "Tất cả " },
     { value: "0", label: "HSX " },
@@ -61,4 +62,17 @@ export const DauKy = [
 export const CuoiKy = [
     { value: "", label: "21/06/2023" },
     { value: "", label: "Quý 2/2023" },
+]
+export const LoaiGD = [
+    { value: "All", label: "tất cả " },
+    { value: "1", label: "Nộp/Rút/Chuyển tiền  " },
+    { value: "2", label: "Mua/Bán chứng khoán" },
+    { value: "3", label: "Ký quỹ & Ứng trước " },
+    { value: "4", label: "Tư vấn đầu tư" ,selected: true},
+    { value: "5", label: "Các GD khác" },
+]
+export const TTrang = [
+    { value: "-1", label: "tất cả " },
+    { value: "0", label: "Chưa thanh toán" },
+    { value: "1", label: "Đã thanh toán" },
 ]

@@ -14,7 +14,7 @@ const SelectAction = ({Title,Options,ChangeFuncion} : Props)=>{
                 <select name="" id="" onChange={(e)=>onChangeSelect(e)} >
                     {Options? Options.map((e)=>{
                         return (
-                            <option value={e.value}> {e.label} </option>
+                            <option value={e.value}  selected={e.selected ? true : false}> {e.label} </option>
                         )
                     }) :""}      
                  </select>
