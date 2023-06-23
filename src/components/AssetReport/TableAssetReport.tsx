@@ -45,7 +45,6 @@ const TableAssetReport = () => {
       setSort("asc");
     }
   };
-  console.log(data);
 
   useEffect(() => {
     let arr = assetReport?.Table1?.map((item: any) => item);
