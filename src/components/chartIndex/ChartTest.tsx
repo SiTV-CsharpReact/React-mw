@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import { formatNumber } from "../../utils/util";
-import { useAppDispatch, useAppSelector } from "../../store/configureStore";
-import { fetchChartIndexAsync } from "./chartIndexSlice";
 import "./chartIndex.scss";
 
 type TProps = {
   name: string;
   san: string;
+  dataChartIndex: any;
 };
-const ChartTest: React.FC<TProps> = ({ name, san }: TProps) => {
-  const dispatch = useAppDispatch();
-  const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
+const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
   const [dataSpline, setDataSpline] = useState([]);
   const [dataBar, setDataBar] = useState([]);
   const [indexValue, setIndexValue] = useState(0);
   const [timeFirst, setTimeFirst] = useState(0);
   const [timeLast, setTimeLast] = useState<any>();
 
-  useEffect(() => {
-    dispatch(fetchChartIndexAsync());
-  }, [dispatch]);
 
   useEffect(() => {
     if (san === "HSX") {
