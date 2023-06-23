@@ -6,18 +6,18 @@
             "Data": {
                 "Table": [
                     {
-                        "SUM_STOCK": 3505750,
-                        "SUM_CASH": 1311470,
-                        "AVAL_STOCK": 3474700,
+                        "SUM_STOCK": 3521950,
+                        "SUM_CASH": 1332370,
+                        "AVAL_STOCK": 3490700,
                         "ABUY_STOCK": 0,
-                        "ARIGHT_STOCK": 31050,
+                        "ARIGHT_STOCK": 31250,
                         "ALIMIT_STOCK": 0,
                         "ACASH_AMOUNT": 1305770,
                         "AREC_CASH_SELL": 0,
                         "AREC_CASH_T0": 0,
                         "AREC_CASH_T1": 0,
                         "AREC_CASH_T2": 0,
-                        "ARE_CASH_DEVIDEND": 5700,
+                        "ARE_CASH_DEVIDEND": 26600,
                         "ARE_CASH_OTHER": 0,
                         "AREMAIN_DEBT": 0,
                         "ASAVINGTOTAL": 0
@@ -34,14 +34,14 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 10,
-                        "AMARKET_PRICE": 18950,
-                        "AMARKET_VALUE": 189500,
+                        "AMARKET_PRICE": 19130,
+                        "AMARKET_VALUE": 191300,
                         "AAVG_PRICE": 10700,
                         "AROOT_VALUE": 107000,
-                        "APROFIT_LOSS_VAL": 82500,
-                        "APROFIT_LOSS_RATE": 77.1,
+                        "APROFIT_LOSS_VAL": 84300,
+                        "APROFIT_LOSS_RATE": 78.79,
                         "ACAPITAL_STRUCTURE": 4.21,
-                        "APORTFOLIO_RATE": 5.41
+                        "APORTFOLIO_RATE": 5.43
                     },
                     {
                         "ASTOCKCODE": "AAA",
@@ -53,14 +53,14 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 11,
-                        "AMARKET_PRICE": 10950,
-                        "AMARKET_VALUE": 120450,
+                        "AMARKET_PRICE": 11250,
+                        "AMARKET_VALUE": 123750,
                         "AAVG_PRICE": 9136,
                         "AROOT_VALUE": 100500,
-                        "APROFIT_LOSS_VAL": 19950,
-                        "APROFIT_LOSS_RATE": 19.85,
+                        "APROFIT_LOSS_VAL": 23250,
+                        "APROFIT_LOSS_RATE": 23.13,
                         "ACAPITAL_STRUCTURE": 3.95,
-                        "APORTFOLIO_RATE": 3.44
+                        "APORTFOLIO_RATE": 3.51
                     },
                     {
                         "ASTOCKCODE": "HLA",
@@ -79,7 +79,7 @@
                         "APROFIT_LOSS_VAL": -383843,
                         "APROFIT_LOSS_RATE": -72.31,
                         "ACAPITAL_STRUCTURE": 20.88,
-                        "APORTFOLIO_RATE": 4.19
+                        "APORTFOLIO_RATE": 4.17
                     },
                     {
                         "ASTOCKCODE": "STB",
@@ -91,14 +91,14 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 3,
-                        "AMARKET_PRICE": 29400,
-                        "AMARKET_VALUE": 88200,
+                        "AMARKET_PRICE": 30000,
+                        "AMARKET_VALUE": 90000,
                         "AAVG_PRICE": 14692,
                         "AROOT_VALUE": 44077,
-                        "APROFIT_LOSS_VAL": 44123,
-                        "APROFIT_LOSS_RATE": 100.1,
+                        "APROFIT_LOSS_VAL": 45923,
+                        "APROFIT_LOSS_RATE": 104.19,
                         "ACAPITAL_STRUCTURE": 1.73,
-                        "APORTFOLIO_RATE": 2.52
+                        "APORTFOLIO_RATE": 2.56
                     },
                     {
                         "ASTOCKCODE": "HBC",
@@ -110,14 +110,14 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 10,
-                        "AMARKET_PRICE": 9140,
-                        "AMARKET_VALUE": 91400,
+                        "AMARKET_PRICE": 9100,
+                        "AMARKET_VALUE": 91000,
                         "AAVG_PRICE": 8500,
                         "AROOT_VALUE": 85000,
-                        "APROFIT_LOSS_VAL": 6400,
-                        "APROFIT_LOSS_RATE": 7.53,
+                        "APROFIT_LOSS_VAL": 6000,
+                        "APROFIT_LOSS_RATE": 7.06,
                         "ACAPITAL_STRUCTURE": 3.34,
-                        "APORTFOLIO_RATE": 2.61
+                        "APORTFOLIO_RATE": 2.58
                     },
                     {
                         "ASTOCKCODE": "FLC",
@@ -136,7 +136,7 @@
                         "APROFIT_LOSS_VAL": -68000,
                         "APROFIT_LOSS_RATE": -16.27,
                         "ACAPITAL_STRUCTURE": 16.44,
-                        "APORTFOLIO_RATE": 9.98
+                        "APORTFOLIO_RATE": 9.94
                     },
                     {
                         "ASTOCKCODE": "HID",
@@ -148,14 +148,14 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 10,
-                        "AMARKET_PRICE": 3770,
-                        "AMARKET_VALUE": 37700,
+                        "AMARKET_PRICE": 3780,
+                        "AMARKET_VALUE": 37800,
                         "AAVG_PRICE": 2440,
                         "AROOT_VALUE": 24400,
-                        "APROFIT_LOSS_VAL": 13300,
-                        "APROFIT_LOSS_RATE": 54.51,
+                        "APROFIT_LOSS_VAL": 13400,
+                        "APROFIT_LOSS_RATE": 54.92,
                         "ACAPITAL_STRUCTURE": 0.96,
-                        "APORTFOLIO_RATE": 1.08
+                        "APORTFOLIO_RATE": 1.07
                     },
                     {
                         "ASTOCKCODE": "AMD",
@@ -186,14 +186,14 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 23,
-                        "AMARKET_PRICE": 24900,
-                        "AMARKET_VALUE": 572700,
+                        "AMARKET_PRICE": 25000,
+                        "AMARKET_VALUE": 575000,
                         "AAVG_PRICE": 12543,
                         "AROOT_VALUE": 288500,
-                        "APROFIT_LOSS_VAL": 284200,
-                        "APROFIT_LOSS_RATE": 98.51,
+                        "APROFIT_LOSS_VAL": 286500,
+                        "APROFIT_LOSS_RATE": 99.31,
                         "ACAPITAL_STRUCTURE": 11.35,
-                        "APORTFOLIO_RATE": 16.34
+                        "APORTFOLIO_RATE": 16.33
                     },
                     {
                         "ASTOCKCODE": "SJF",
@@ -205,14 +205,14 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 10,
-                        "AMARKET_PRICE": 4150,
-                        "AMARKET_VALUE": 41500,
+                        "AMARKET_PRICE": 4200,
+                        "AMARKET_VALUE": 42000,
                         "AAVG_PRICE": 2070,
                         "AROOT_VALUE": 20700,
-                        "APROFIT_LOSS_VAL": 20800,
-                        "APROFIT_LOSS_RATE": 100.48,
+                        "APROFIT_LOSS_VAL": 21300,
+                        "APROFIT_LOSS_RATE": 102.9,
                         "ACAPITAL_STRUCTURE": 0.81,
-                        "APORTFOLIO_RATE": 1.18
+                        "APORTFOLIO_RATE": 1.19
                     },
                     {
                         "ASTOCKCODE": "TGG",
@@ -224,12 +224,12 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 10,
-                        "AMARKET_PRICE": 3660,
-                        "AMARKET_VALUE": 36600,
+                        "AMARKET_PRICE": 3650,
+                        "AMARKET_VALUE": 36500,
                         "AAVG_PRICE": 1150,
                         "AROOT_VALUE": 11500,
-                        "APROFIT_LOSS_VAL": 25100,
-                        "APROFIT_LOSS_RATE": 218.26,
+                        "APROFIT_LOSS_VAL": 25000,
+                        "APROFIT_LOSS_RATE": 217.39,
                         "ACAPITAL_STRUCTURE": 0.45,
                         "APORTFOLIO_RATE": 1.04
                     },
@@ -243,14 +243,14 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 20,
-                        "AMARKET_PRICE": 6670,
-                        "AMARKET_VALUE": 133400,
+                        "AMARKET_PRICE": 6570,
+                        "AMARKET_VALUE": 131400,
                         "AAVG_PRICE": 1825,
                         "AROOT_VALUE": 36500,
-                        "APROFIT_LOSS_VAL": 96900,
-                        "APROFIT_LOSS_RATE": 265.48,
+                        "APROFIT_LOSS_VAL": 94900,
+                        "APROFIT_LOSS_RATE": 260,
                         "ACAPITAL_STRUCTURE": 1.44,
-                        "APORTFOLIO_RATE": 3.81
+                        "APORTFOLIO_RATE": 3.73
                     },
                     {
                         "ASTOCKCODE": "CLG",
@@ -307,7 +307,7 @@
                         "APROFIT_LOSS_VAL": 22000,
                         "APROFIT_LOSS_RATE": 104.76,
                         "ACAPITAL_STRUCTURE": 0.83,
-                        "APORTFOLIO_RATE": 1.23
+                        "APORTFOLIO_RATE": 1.22
                     },
                     {
                         "ASTOCKCODE": "BMI",
@@ -319,14 +319,14 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 12,
-                        "AMARKET_PRICE": 23800,
-                        "AMARKET_VALUE": 285600,
+                        "AMARKET_PRICE": 23900,
+                        "AMARKET_VALUE": 286800,
                         "AAVG_PRICE": 15500,
                         "AROOT_VALUE": 186000,
-                        "APROFIT_LOSS_VAL": 99600,
-                        "APROFIT_LOSS_RATE": 53.55,
+                        "APROFIT_LOSS_VAL": 100800,
+                        "APROFIT_LOSS_RATE": 54.19,
                         "ACAPITAL_STRUCTURE": 7.32,
-                        "APORTFOLIO_RATE": 8.15
+                        "APORTFOLIO_RATE": 8.14
                     },
                     {
                         "ASTOCKCODE": "SSI",
@@ -338,14 +338,14 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 22,
-                        "AMARKET_PRICE": 26000,
-                        "AMARKET_VALUE": 572000,
+                        "AMARKET_PRICE": 26100,
+                        "AMARKET_VALUE": 574200,
                         "AAVG_PRICE": 11909,
                         "AROOT_VALUE": 262000,
-                        "APROFIT_LOSS_VAL": 310000,
-                        "APROFIT_LOSS_RATE": 118.32,
+                        "APROFIT_LOSS_VAL": 312200,
+                        "APROFIT_LOSS_RATE": 119.16,
                         "ACAPITAL_STRUCTURE": 10.3,
-                        "APORTFOLIO_RATE": 16.32
+                        "APORTFOLIO_RATE": 16.3
                     },
                     {
                         "ASTOCKCODE": "PTL",
@@ -357,14 +357,14 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 10,
-                        "AMARKET_PRICE": 4220,
-                        "AMARKET_VALUE": 42200,
+                        "AMARKET_PRICE": 4510,
+                        "AMARKET_VALUE": 45100,
                         "AAVG_PRICE": 3000,
                         "AROOT_VALUE": 30000,
-                        "APROFIT_LOSS_VAL": 12200,
-                        "APROFIT_LOSS_RATE": 40.67,
+                        "APROFIT_LOSS_VAL": 15100,
+                        "APROFIT_LOSS_RATE": 50.33,
                         "ACAPITAL_STRUCTURE": 1.18,
-                        "APORTFOLIO_RATE": 1.2
+                        "APORTFOLIO_RATE": 1.28
                     },
                     {
                         "ASTOCKCODE": "ROS",
@@ -383,7 +383,7 @@
                         "APROFIT_LOSS_VAL": -31300,
                         "APROFIT_LOSS_RATE": -55.5,
                         "ACAPITAL_STRUCTURE": 2.22,
-                        "APORTFOLIO_RATE": 0.72
+                        "APORTFOLIO_RATE": 0.71
                     },
                     {
                         "ASTOCKCODE": "LSS",
@@ -395,14 +395,14 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 10,
-                        "AMARKET_PRICE": 12950,
-                        "AMARKET_VALUE": 129500,
+                        "AMARKET_PRICE": 12850,
+                        "AMARKET_VALUE": 128500,
                         "AAVG_PRICE": 5790,
                         "AROOT_VALUE": 57900,
-                        "APROFIT_LOSS_VAL": 71600,
-                        "APROFIT_LOSS_RATE": 123.66,
+                        "APROFIT_LOSS_VAL": 70600,
+                        "APROFIT_LOSS_RATE": 121.93,
                         "ACAPITAL_STRUCTURE": 2.28,
-                        "APORTFOLIO_RATE": 3.69
+                        "APORTFOLIO_RATE": 3.65
                     },
                     {
                         "ASTOCKCODE": "FTS",
@@ -414,14 +414,14 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 16,
-                        "AMARKET_PRICE": 31050,
-                        "AMARKET_VALUE": 496800,
+                        "AMARKET_PRICE": 31250,
+                        "AMARKET_VALUE": 500000,
                         "AAVG_PRICE": 8750,
                         "AROOT_VALUE": 140000,
-                        "APROFIT_LOSS_VAL": 356800,
-                        "APROFIT_LOSS_RATE": 254.86,
+                        "APROFIT_LOSS_VAL": 360000,
+                        "APROFIT_LOSS_RATE": 257.14,
                         "ACAPITAL_STRUCTURE": 5.51,
-                        "APORTFOLIO_RATE": 14.17
+                        "APORTFOLIO_RATE": 14.2
                     },
                     {
                         "ASTOCKCODE": "TNT",
@@ -433,14 +433,14 @@
                         "AMORTGATE_BANK": 0,
                         "ATRANSFER_RESTRICTED": 0,
                         "ATOTAL_AMOUNT": 10,
-                        "AMARKET_PRICE": 5200,
-                        "AMARKET_VALUE": 52000,
+                        "AMARKET_PRICE": 5240,
+                        "AMARKET_VALUE": 52400,
                         "AAVG_PRICE": 3100,
                         "AROOT_VALUE": 31000,
-                        "APROFIT_LOSS_VAL": 21000,
-                        "APROFIT_LOSS_RATE": 67.74,
+                        "APROFIT_LOSS_VAL": 21400,
+                        "APROFIT_LOSS_RATE": 69.03,
                         "ACAPITAL_STRUCTURE": 1.22,
-                        "APORTFOLIO_RATE": 1.48
+                        "APORTFOLIO_RATE": 1.49
                     },
                     {
                         "ASTOCKCODE": "ART",
@@ -463,6 +463,12 @@
                     }
                 ],
                 "Table2": [
+                    {
+                        "ADATE": "22/06/2023",
+                        "ANAV": 4854320,
+                        "ANAV_IN": 0,
+                        "ANAV_DE": 0
+                    },
                     {
                         "ADATE": "21/06/2023",
                         "ANAV": 4817220,
@@ -996,18 +1002,12 @@
                         "ANAV": 4125185,
                         "ANAV_IN": 0,
                         "ANAV_DE": 0
-                    },
-                    {
-                        "ADATE": "13/02/2023",
-                        "ANAV": 4111205,
-                        "ANAV_IN": 0,
-                        "ANAV_DE": 0
                     }
                 ],
                 "Table3": [
                     {
                         "ASTATUS": 1,
-                        "TIME": "17:56 - 21/06/2023"
+                        "TIME": "17:43 - 22/06/2023"
                     }
                 ]
             }
