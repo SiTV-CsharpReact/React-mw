@@ -261,9 +261,11 @@ const ColumnDef = (props: any, props2: any) => {
         },
         {
           field: "G3",
+         
           headerName: "G3",
           suppressMenu: true,
           width: widthWindow * 0.03,
+
           minWidth: 50,
           height: 30,
           maxWidth: 100,
@@ -535,6 +537,7 @@ const ColumnDef = (props: any, props2: any) => {
           width: widthWindow * 0.03,
           minWidth: 50,
           maxWidth: 100,
+          hide:true,
           cellClass: "score-cell tc-cell",
           headerClass: "custom-header tc-header",
           cellStyle: (params: any) => ({
@@ -588,17 +591,18 @@ const ColumnDef = (props: any, props2: any) => {
           cellRenderer: (params: any) => {
             const dataIndex = params.colDef.field;
             const value = params.value;
-            const [part1, part2] = value.split("|");
+            const [valueCT, valuePT] = value.split("|");
             return (
               <div
                 data-index={dataIndex} className="cursor-pointer custom-cell">
                 {showPrice && (
-                  <div style={{ color: parseInt(part2) >= 0.1 ? "#00FF00" : "#FF0000", }}>
-                    {part2}
+                  // <div style={{ color:   parseInt(valuePT) >= 0 ? "#00FF00" : "#FF0000", }}>
+                       <div style={{ color: setColorMarkettest("Chenhlech", params) }}>
+                    {formatNumberMarket(valuePT.trim())}
                   </div>
                 )}
-                <div style={{ color: part1 >= 0 ? "#00FF00" : "#FF0000" }}>
-                  {showPrice ? null : part1}
+                <div style={{ color: setColorMarkettest("Chenhlech", params) }}>
+                  {showPrice ? null : formatNumberMarket(valueCT.trim())}
                 </div>
               </div>
 

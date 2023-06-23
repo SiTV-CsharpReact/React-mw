@@ -116,7 +116,7 @@ const PendingOrders: React.FC<Props> = (value) => {
   // console.log(data)
   return (
     <div>
-      <div className="flex flex-col justify-between pl-8 mt-2 lg:flex-row">
+      <div className="flex gap-[160px] pl-8 mt-2 ">
         <div style={{ color: "#555" }}>
           <p>
             <span className="text-[14px]  leading-3 font-semibold text-[#333333]">
@@ -130,7 +130,7 @@ const PendingOrders: React.FC<Props> = (value) => {
           </p>
         </div>
 
-        <div className="flex items-center gap-4 mr-5">
+        <div className="flex items-center gap-3.5 ">
           <div className="">
             <label
               className="block mb-2 text-[11px] leading-3 !font-bold text-black"
@@ -147,17 +147,17 @@ const PendingOrders: React.FC<Props> = (value) => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="border !p-0 leading-1 !text-sm border-inherit rounded-md !pl-2  text-start shadow-sm h-[28px]"
+              className="border !p-0 leading-1 w-[131.09px] !text-[12px] border-inherit rounded-[4px] !pl-2  text-start shadow-sm h-[28px]"
               name=""
               id="sanGD"
             >
-              <option className="text-[15px] pb-2" value="">
+              <option className="text-[12px] pb-2" value="">
                 {t("home:Order.OPTIONS_TC")}
               </option>
-              <option value="HNX.LISTED" className="text-[11px] pb-2">
+              <option style={{padding: "0px 2px 1px"}} value="HNX.LISTED" className="text-[12px] pb-2">
                 HNX.LISTED
               </option>
-              <option value="HSX" className="text-[11px] pb-2">
+              <option style={{padding: "0px 2px 1px"}} value="HSX" className="text-[12px] pb-2">
                 HSX
               </option>
             </select>
@@ -177,8 +177,8 @@ const PendingOrders: React.FC<Props> = (value) => {
                   dataMap: e.target.value,
                 }))
               }
-              style={{ border: "1px solid #ccc", color: "#555" }}
-              className=" !p-0 !pr-10 !pl-3 !text-sm border rounded-md border-inherit shadow-sm h-[28px] "
+              style={{ border: "1px solid #ccc", color: "#555",minHeight:"1.2em" }}
+              className="!p-0 !pl-2  w-[85.06px] !text-[12px] border rounded-[4px]  shadow-sm h-[28px] "
               name=""
               id=""
             >
@@ -212,7 +212,7 @@ const PendingOrders: React.FC<Props> = (value) => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="!p-0 !pr-10 !pl-3 !text-sm border rounded-md border-inherit shadow-sm h-[28px] "
+              className="!p-0 !pr-10 !pl-3 w-[106.22px] !text-[12px] border rounded-[4px] border-inherit shadow-sm h-[28px] "
               name=""
               id=""
             >
@@ -243,7 +243,7 @@ const PendingOrders: React.FC<Props> = (value) => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="!p-0 !pr-10 !pl-3 !text-sm border  rounded-md border-inherit shadow-sm h-[28px]"
+              className="!p-0  !pl-2 !text-[12px] border  w-[108.7px] rounded-[4px] border-inherit shadow-sm h-[28px]"
               name=""
               id=""
             >
@@ -258,7 +258,7 @@ const PendingOrders: React.FC<Props> = (value) => {
 
           <button
             onClick={hanDelSubmit}
-            className="px-2 py-1 cursor-pointer mt-5 pl-5 pr-5 rounded-md text-white text-[13px] font-medium uppercase bg-[#0055ba]"
+            className=" w-[90.63px] h-[30px] cursor-pointer mt-5  rounded-[4px] text-white text-[12px] font-medium uppercase bg-[#0055ba]"
           >
             {t("home:base.CapNhat")}
           </button>
@@ -280,36 +280,36 @@ const PendingOrders: React.FC<Props> = (value) => {
       </div>
       <div className="mt-2 ml-8 mr-8">
         <table id="table-id">
-          <thead>
+          <thead className="!bg-[#F3F3F3]">
             <tr>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3]  "
               >
-                <span className="text-[12px] !font-bold text-black"> {t("home:Order.ORDER_SUA")}</span>
+                <span className="text-[12px]  !font-bold text-black"> {t("home:Order.ORDER_SUA")}</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3] !w-[58px]"
               >
-                <span className="text-[12px] block !font-bold text-black">{t("home:Order.ORDER_HUY")}</span>
+                <span className="text-[12px]  block !font-bold text-black">{t("home:Order.ORDER_HUY")}</span>
                 <input className="rounded-sm" type="checkbox" />
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
+                className="bg-[#F3F3F3] w-[80px] "
+              >
+                <span className="text-[12px]  !font-bold text-black">{t("home:Order.ORDER_MCK")}  </span>
+              </th>
+              <th
+                style={{ border: "1px solid #ccc", color: "#555" , width:"88px" }}
                 className="bg-[#F3F3F3] "
               >
-                <span className="text-[12px] !font-bold text-black">{t("home:Order.ORDER_MCK")}  </span>
+                <span className="text-[12px ]  !font-bold text-black">{t("home:Order.ORDER_LD")} </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
-              >
-                <span className="text-[12px ] !font-bold text-black">{t("home:Order.ORDER_LD")} </span>
-              </th>
-              <th
-                style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3] w-[115px] "
               >
                 <span className="text-[12px] !font-bold text-black">{t("home:base.LoaiGD")}  </span>
               </th>
@@ -327,13 +327,13 @@ const PendingOrders: React.FC<Props> = (value) => {
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3] w-[65px]"
               >
                 <span className="text-[12px ] !font-bold text-black">{t("home:base.Gia")}  </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3] w-[140px]"
               >
                 <span className="text-[12px] !font-bold text-black">{t("home:base.TinhTrangLenh")}</span>
               </th>
@@ -351,13 +351,13 @@ const PendingOrders: React.FC<Props> = (value) => {
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3] w-[125px]"
               >
                 <span className="text-[12px ] !font-bold text-black">{t("home:base.base_SHL")}</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3] w-[163px]"
               >
                 <span className="text-[12px] !font-bold text-black">{t("home:base.base_TGDL")}</span>
               </th>

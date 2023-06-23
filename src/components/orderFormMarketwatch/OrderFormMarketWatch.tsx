@@ -237,7 +237,7 @@ const OrderMarketW = () => {
                     type="button"
                     disabled
                     placeholder="KÍ QUỸ"
-                    className="!bg-[#F3F9FF] uppercase ml-[40px] form-control tttt w-[184px] h-[32px] text-[#565656] hover:bg-borderBodyTableMarket"
+                    className="!bg-[#F3F9FF] uppercase ml-[70px] form-control tttt w-[184px] h-[32px] text-[#565656] hover:bg-borderBodyTableMarket"
                   />
                   <img
                     onClick={handelPopup}

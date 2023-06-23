@@ -63,7 +63,6 @@ const TableAsset = (props: any) => {
     }
     const fetchDataTable = async () => {
         const { data } = await axios.get("http://localhost:3111/Data")
-
         setDataTable(data)
     }
     const fetchDataHNN = async (code: string) => {
@@ -486,7 +485,7 @@ const TableAsset = (props: any) => {
                             };
                             console.log("first", totalSum)
                             return <tr key={item.Key}>
-                                <td className={`!text-center !text-xs ${mode}-text`}>
+                                <td style={{fontWeight:"700"}} className={`!text-center !text-[#007db7] !cursor-pointer !text-xs ${mode}-text`}>
                                     {item?.Value.StockCode}
                                 </td>
                                 <td className={`!text-center !text-xs ${mode}-text`}>

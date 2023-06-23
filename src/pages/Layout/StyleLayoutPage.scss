@@ -1,0 +1,22 @@
+.LayoutPage{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.MainPage{
+    min-height: calc( 100vh - 41px - 40px - 34px);
+}
+#iconPage{
+    color :  black;
+}
+
+.footer {
+    text-align: center;
+    background-color: #034e94;
+    color: #fff;
+    font-size: 13px;
+    padding: 7px 0 7px 0;
+    max-height: 34px;
+    height: 34px;
+  }

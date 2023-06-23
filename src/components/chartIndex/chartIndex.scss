@@ -7,3 +7,11 @@
   .highcharts-background{
   height: 100px;
   }
+  .highcharts-axis-labels span:first-child{
+   left: 2px !important;
+   text-overflow:unset !important;
+  }
+  .highcharts-axis-labels span:last-child{
+    left: 186px !important;
+    text-overflow:unset !important;
+   }
