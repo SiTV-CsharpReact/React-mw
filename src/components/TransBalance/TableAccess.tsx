@@ -133,6 +133,14 @@ const TableAsset = (props: any) => {
             socketHNX.close();
         };
     }, []);
+    let totalSum = 0;
+    let totalGoc = 0;
+    let toTalDk = 0;
+    let tongtoTalPC = 0;
+
+
+
+
     return (
         <div className={`table_detail_BCTS !h-[614px] mt-5 ${mode}-bg`}>
             {short ? (
@@ -460,11 +468,23 @@ const TableAsset = (props: any) => {
                     </thead>
                     <tbody>
                         {mergedData?.map((item: any, index: number) => {
-                            const valuePrice = item?.dataItem[2]* 1000
-                            const totalValue = ((item?.Value.TotalAmount )* valuePrice)
+                            const valuePrice = item?.dataItem[2] * 1000
+                            const totalValue = Number((item?.Value.TotalAmount) * valuePrice)
                             const totalAfter = (totalValue - item.Value.RootValue)
                             const totalPc = ((totalAfter / item.Value.RootValue) * 100);
-                            
+                            if (totalValue > 0) {
+                                totalSum += totalValue
+                            };
+                            if (item?.Value.RootValue > 0) {
+                                totalGoc += item?.Value.RootValue
+                            };
+                            if (totalAfter) {
+                                toTalDk += totalAfter
+                            };
+                            if (totalPc) {
+                                tongtoTalPC += totalPc
+                            };
+                            console.log("first", totalSum)
                             return <tr key={item.Key}>
                                 <td className={`!text-center !text-xs ${mode}-text`}>
                                     {item?.Value.StockCode}
@@ -491,7 +511,7 @@ const TableAsset = (props: any) => {
                                     {formatNumberMarket(item?.Value.TotalAmount)}
                                 </td>
                                 <td className={`${mode}-text !text-xs`}>
-                                  {formatNumberMarket((item?.dataItem[2]* 1000))}
+                                    {formatNumberMarket((item?.dataItem[2] * 1000))}
 
                                 </td>
                                 <td className={`${mode}-text !text-xs`}>
@@ -520,7 +540,7 @@ const TableAsset = (props: any) => {
                                     ? "!text-[#FF0000]"
                                     : "!text-[#00b050]"
                                     }`}>
-                                    {(totalPc).toFixed(2)}%
+                                    {!Number.isNaN(totalPc) ? (totalPc).toFixed(2) : ""}  {!Number.isNaN(totalPc) ? "%" : ""}
                                 </td>
 
                             </tr>
@@ -538,81 +558,36 @@ const TableAsset = (props: any) => {
                             <td className="!text-xs"></td>
 
                             <td className="font-bold !text-xs">
-                           
+                                {formatNumberMarket(totalSum)}
+
                             </td>
                             <td className="font-bold !text-xs">
+
+                            </td>
+                            <td
+                                className="font-bold !text-xs"
+                            >
                                 {formatNumber(
-                                    assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b,
-                                        0
-                                    )
+                                    totalGoc
                                 )}
                             </td>
                             <td
-                                className={`!text-xs ${formatNumber(
-                                    assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b.APROFIT_LOSS_VAL,
-                                        0
-                                    )
-                                ) < 0
-                                    ? "!text-[#FF0000]"
-                                    : "!text-[#00b050]"
+                                className={`!text-xs font-bold ${toTalDk < 0
+                                        ? "!text-[#FF0000]"
+                                        : "!text-[#00b050]"
                                     }`}
                             >
-                                {formatNumber(
-                                    assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b.APROFIT_LOSS_VAL,
-                                        0
-                                    )
-                                )}
+                                {formatNumber(toTalDk)}
+
                             </td>
                             <td
-                                className={`!text-xs ${formatNumber(
-                                    assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b.APROFIT_LOSS_RATE,
-                                        0
-                                    )
-                                ) < 0
+                                className={`!text-xs font-bold  ${tongtoTalPC < 0
                                     ? "!text-[#FF0000]"
                                     : "!text-[#00b050]"
                                     }`}
                             >
-                                {(
-                                    (assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b.APROFIT_LOSS_VAL,
-                                        0
-                                    ) /
-                                        assetReport?.Table1?.reduce(
-                                            (a: any, b: any) => a + b.AROOT_VALUE,
-                                            0
-                                        )) *
-                                    100
-                                ).toFixed(2)}
-                                %
-                            </td>
-                            <td
-                                className={`!text-xs ${formatNumber(
-                                    assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b.APROFIT_LOSS_RATE,
-                                        0
-                                    )
-                                ) < 0
-                                    ? "!text-[#FF0000]"
-                                    : "!text-[#00b050]"
-                                    }`}
-                            >
-                                {(
-                                    (assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b.APROFIT_LOSS_VAL,
-                                        0
-                                    ) /
-                                        assetReport?.Table1?.reduce(
-                                            (a: any, b: any) => a + b.AROOT_VALUE,
-                                            0
-                                        )) *
-                                    100
-                                ).toFixed(2)}
-                                %
+                                {/* {formatNumber(tongtoTalPC)}
+                                % */}
                             </td>
                         </tr>
                     </tfoot>
@@ -884,68 +859,93 @@ const TableAsset = (props: any) => {
                         </tr>
                     </thead>
                     <tbody>
-                            {mergedData?.map((item: any, index: number) => {
-                                 const valuePrice = item?.dataItem[2]* 1000
-                                 const totalValue = ((item?.Value.TotalAmount) * valuePrice)
-                                 const totalAfter = (totalValue - item.Value.RootValue)
-                                 const totalPc = Number(totalAfter / item.Value.RootValue) * 100;
-                                
-                            return   <tr key={item.Key}>
-                                    <td className={`!text-center cursor-pointer !font-bold !text-[#007DB7] !text-xs ${mode}-text`}>
-                                        {item.Value.StockCode}
-                                    </td>
-                                    <td className={`${mode}-text !text-xs`}>
-                                        {formatNumberMarket(item?.Value.AvailableOrderSecurities)}
-                                    </td>
+                        {mergedData?.map((item: any, index: number) => {
+                            const valuePrice = item?.dataItem[2] * 1000
+                            const totalValue = ((item?.Value.TotalAmount) * valuePrice)
+                            const totalAfter = (totalValue - item.Value.RootValue)
+                            const totalPc = Number(totalAfter / item.Value.RootValue) * 100;
+                            if (totalValue > 0) {
+                                totalSum += totalValue
+                            };
+                            if (item?.Value.RootValue > 0) {
+                                totalGoc += item?.Value.RootValue
+                            };
+                            if (totalAfter) {
+                                toTalDk += totalAfter
+                            };
+                            if (totalPc) {
+                                tongtoTalPC += totalPc
+                            };
+                            return <tr key={item.Key}>
+                                <td className={`!text-center cursor-pointer !font-bold !text-[#007DB7] !text-xs ${mode}-text`}>
+                                    {item.Value.StockCode}
+                                </td>
+                                <td className={`${mode}-text !text-xs`}>
+                                    {formatNumberMarket(item?.Value.AvailableOrderSecurities)}
+                                </td>
 
-                                    <td className={`${mode}-text !text-xs`}>
-                                        {formatNumberMarket(item?.Value.AvailableOrderSecuritiesMar)}
-                                    </td>
-                                    <td className={`${mode}-text !text-xs`}>
-                                        {formatNumberMarket(item?.Value.WaitingReceiveRightSecurities)}
-                                    </td>
-                                    <td className={`${mode}-text !text-xs`}>
-                                        {formatNumberMarket(item?.Value.TotalAmount)}
-                                    </td>
-                                    <td className={`${mode}-text !text-xs`}>
-                                        {formatNumberMarket((item?.dataItem[2]* 1000))}
-                                    </td>
-                                    <td className={`${mode}-text !text-xs`}>
-                                         {formatNumberMarket(totalValue)}
-                                    </td>
-                                    <td
-                                        className={`!text-xs `}
-                                    >
-                                        {formatNumberMarket(item?.Value.AveragePrice)}
-                                    </td>
-                                    <td
-                                        className={`!text-xs`}
-                                    >
-                                        {formatNumberMarket(item?.Value.RootValue)}
-                                    </td>
-                                    <td className={`${mode}-text !text-xs ${totalAfter < 0
-                                        ? "!text-[#FF0000]"
-                                        : "!text-[#00b050]"
-                                        }`}>
+                                <td className={`${mode}-text !text-xs`}>
+                                    {formatNumberMarket(item?.Value.AvailableOrderSecuritiesMar)}
+                                </td>
+                                <td className={`${mode}-text !text-xs`}>
+                                    {formatNumberMarket(item?.Value.WaitingReceiveRightSecurities)}
+                                </td>
+                                <td className={`${mode}-text !text-xs`}>
+                                    {formatNumberMarket(item?.Value.TotalAmount)}
+                                </td>
+                                <td className={`${mode}-text !text-xs`}>
+                                    {formatNumberMarket((item?.dataItem[2] * 1000))}
+                                </td>
+                                <td className={`${mode}-text !text-xs`}>
+                                    {formatNumberMarket(totalValue)}
+                                </td>
+                                <td
+                                    className={`!text-xs `}
+                                >
+                                    {formatNumberMarket(item?.Value.AveragePrice)}
+                                </td>
+                                <td
+                                    className={`!text-xs`}
+                                >
+                                    {formatNumberMarket(item?.Value.RootValue)}
+                                </td>
+                                <td className={`${mode}-text !text-xs ${totalAfter < 0
+                                    ? "!text-[#FF0000]"
+                                    : "!text-[#00b050]"
+                                    }`}>
                                     {formatNumberMarket(totalAfter)}
-                                    </td>
-                                    <td className={`${mode}-text ${totalPc < 0
-                                        ? "!text-[#FF0000]"
-                                        : "!text-[#00b050]"
-                                        }`}>
-                                   {(totalPc).toFixed(2)}%
-                                    </td>
-                                </tr>
-})}
+                                </td>
+                                <td className={`${mode}-text ${totalPc < 0
+                                    ? "!text-[#FF0000]"
+                                    : "!text-[#00b050]"
+                                    }`}>
+                                    {!Number.isNaN(totalPc) ? (totalPc).toFixed(2) : ""}  {!Number.isNaN(totalPc) ? "%" : ""}
+                                </td>
+                            </tr>
+                        })}
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colSpan={6} className="!text-center">TỔNG</td>
-                            <td>50,451,750</td>
+                            <td className="font-bold "> {formatNumberMarket(totalSum)}</td>
                             <td></td>
-                            <td>51,282,365</td>
-                            <td>-830,615</td>
-                            <td>-1.62%</td>
+                               <td
+                                className="font-bold !text-xs"
+                            >
+                                {formatNumber(
+                                    totalGoc
+                                )}
+                            </td>
+                            <td
+                                className={`!text-xs font-bold ${toTalDk < 0
+                                        ? "!text-[#FF0000]"
+                                        : "!text-[#00b050]"
+                                    }`}
+                            >
+                                {formatNumber(toTalDk)}
+
+                            </td>
+                            <td>{/* {formatNumber(tongtoTalPC)} % */}</td>
                         </tr>
                     </tfoot>
                 </table>

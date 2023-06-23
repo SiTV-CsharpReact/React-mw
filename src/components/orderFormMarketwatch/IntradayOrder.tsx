@@ -90,7 +90,7 @@ const IntradayOrder = () => {
         <table id='table-id'>
           <thead className='!bg-[#F3F3F3]'>
             <tr style={{border:"1px solid #dedede"}} className='border !bg-[#F3F3F3] py-1.3'>
-            <th style={{border:"1px solid #dedede",width:"12.5%"}} className='font-bold text-black border shadow-sm text-md'>{t("home:base.Time")} 	</th>
+            <th style={{border:"1px solid #dedede",maxWidth:"12.5%"}} className='font-bold text-black border shadow-sm text-md'>{t("home:base.Time")} 	</th>
             <th style={{border:"1px solid #dedede"}} className='px-1 font-bold text-black border shadow-sm'>{t("home:Order.ORDER_MCK")} 	</th>
             <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm'>{t("home:base.LoaiGD")}</th>
             <th style={{border:"1px solid #dedede"}} className='font-bold text-black border shadow-sm !px-1'>{t("home:Order.ORDER_LD")}	</th>

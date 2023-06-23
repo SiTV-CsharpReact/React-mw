@@ -6,14 +6,14 @@ import { useTranslation } from 'react-i18next';
 
 const TotalGD = () => {
         const { t } = useTranslation(["report"]);
-    const [dataTotal, setDataTotal] = useState<any>()
-    const fetchData = async() => {
+        const [dataTotal, setDataTotal] = useState<any>()
+        const fetchData = async() => {
         const {data} = await axios.get("http://localhost:3109/Data")
         setDataTotal(data)
-    }
-    useEffect(() => {
-        fetchData()
-    },[])
+        }
+        useEffect(() => {
+            fetchData()
+        },[])
   return (
       <div>
           <div className='w-[370px] h-[614px] pr-2 mt-5 ml-5 bg-[#ECECEC]'>
