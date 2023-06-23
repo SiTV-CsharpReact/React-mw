@@ -4,12 +4,12 @@ import axios from "axios";
 export const fetchAssetReport = createAsyncThunk(
   "report/fetchAssetReport",
   async () => {
-    const responseRepot = await axios.get(`http://localhost:3000/data`);
+    const responseRepot =  await axios.get(`http://localhost:3000/data`);
     return responseRepot.data[0].Data;
   }
 );
 
-export const assetReportSlice = createSlice({
+export const assetReportSlice =  createSlice({
   name: "asset_report_fetchAssetReport",
   initialState: {
     isLoadingReport: false,
