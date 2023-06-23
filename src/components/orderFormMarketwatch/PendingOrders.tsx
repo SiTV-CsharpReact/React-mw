@@ -6,7 +6,8 @@ import axios from "axios";
 import _ from "lodash";
 import { uniqBy, filter, sortBy } from "lodash";
 import { useTranslation } from "react-i18next";
-type Props ={
+import { useAppSelector } from "../../store/configureStore";
+type Props = {
   value: number;
 }
 const PendingOrders: React.FC<Props> = (value) => {
@@ -20,27 +21,30 @@ const PendingOrders: React.FC<Props> = (value) => {
     dataMap: "",
     sortData: "",
   });
-  useEffect(() => {
-    fetchDataValue();
-  }, [value.value===1]);
+  const { dataApiPendingOder } = useAppSelector((state) => state.dataApiPendingOder)
+  console.log("data day ne", dataApiPendingOder)
+
   const fetchDataValue = async () => {
     try {
       const response = await axios.get("http://localhost:3006/items");
-      console.log("response", response);
+
       const jsonData = response.data;
       const uniqueData = uniqBy(jsonData, "ASTOCKCODE");
+      console.log("response", uniqueData);
       // console.log("uniqueData",uniqueData)
       setDataAfter((prevState: any) => ({
         ...prevState,
         dataValue: uniqueData,
       }));
-      console.log(dataAfter)
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   };
+  console.log(data, "data ne")
+
   const hanDelSubmit = () => {
-    let filteredData: any = [...dataAfter.dataCoppy];
+    // let filteredData: any = [...dataAfter.dataCoppy];
+    let filteredData: any = [...dataAfter.dataValue];
     if (dataAfter.dataFiter) {
       filteredData = filteredData.filter(
         (item: any) => item.AEXCHANGE.toUpperCase() === dataAfter.dataFiter
@@ -63,6 +67,10 @@ const PendingOrders: React.FC<Props> = (value) => {
       setData(array);
     }
   };
+  useEffect(() => {
+    fetchDataValue();
+    // value.value === 1
+  }, [dataApiPendingOder]);
 
   const handleExportToExcel = (e: any) => {
     e.preventDefault();
@@ -112,13 +120,13 @@ const PendingOrders: React.FC<Props> = (value) => {
         <div style={{ color: "#555" }}>
           <p>
             <span className="text-[14px]  leading-3 font-semibold text-[#333333]">
-            {t("home:Order.ORDER_NOT")}
+              {t("home:Order.ORDER_NOT")}
             </span>
-            {t("home:Order.ORDER_NOT0")} 
+            {t("home:Order.ORDER_NOT0")}
           </p>
           <p>  (1) {t("home:Order.ORDER_NOT1")} </p>
           <p>
-            (2){t("home:Order.ORDER_NOT2")}  
+            (2){t("home:Order.ORDER_NOT2")}
           </p>
         </div>
 
@@ -128,10 +136,10 @@ const PendingOrders: React.FC<Props> = (value) => {
               className="block mb-2 text-[11px] leading-3 !font-bold text-black"
               htmlFor=""
             >
-          {t("home:base.SanGD")}
+              {t("home:base.SanGD")}
             </label>
-          
-            <select 
+
+            <select
               onChange={(e) =>
                 setDataAfter((prevState) => ({
                   ...prevState,
@@ -144,7 +152,7 @@ const PendingOrders: React.FC<Props> = (value) => {
               id="sanGD"
             >
               <option className="text-[15px] pb-2" value="">
-              {t("home:Order.OPTIONS_TC")}
+                {t("home:Order.OPTIONS_TC")}
               </option>
               <option value="HNX.LISTED" className="text-[11px] pb-2">
                 HNX.LISTED
@@ -160,7 +168,7 @@ const PendingOrders: React.FC<Props> = (value) => {
               className="block mb-2 text-[11px] leading-3 font-bold text-black"
               htmlFor=""
             >
-             {t("home:Order.ORDER_MCK")} 
+              {t("home:Order.ORDER_MCK")}
             </label>
             <select
               onChange={(e) =>
@@ -175,7 +183,7 @@ const PendingOrders: React.FC<Props> = (value) => {
               id=""
             >
               <option className="text-[12px] pb-2" value="">
-              {t("home:Order.OPTIONS_TC")}
+                {t("home:Order.OPTIONS_TC")}
               </option>
               {dataAfter.dataValue.map((items: any, index: number) => (
                 <option
@@ -209,13 +217,13 @@ const PendingOrders: React.FC<Props> = (value) => {
               id=""
             >
               <option className="text-[12px] pb-2" value="">
-              {t("home:Order.OPTIONS_TC")}
+                {t("home:Order.OPTIONS_TC")}
               </option>
               <option className="text-[12px] pb-2" value="desc">
-              {t("home:Order.ORDER_MCK")} 
+                {t("home:Order.ORDER_MCK")}
               </option>
               <option className="text-[12px] pb-2" value="asc">
-              {t("home:Order.OPTIONS_SL")}
+                {t("home:Order.OPTIONS_SL")}
               </option>
             </select>
           </div>
@@ -225,7 +233,7 @@ const PendingOrders: React.FC<Props> = (value) => {
               className="block mb-2 text-[11px] leading-3 !font-bold text-black"
               htmlFor=""
             >
-             {t("home:Order.ORDER_TSX")}
+              {t("home:Order.ORDER_TSX")}
             </label>
             <select
               onChange={(e) =>
@@ -240,10 +248,10 @@ const PendingOrders: React.FC<Props> = (value) => {
               id=""
             >
               <option className="text-[12px] text-gray-500" value="asc">
-              {t("home:base.TangDan")} 
+                {t("home:base.TangDan")}
               </option>
               <option className="text-[12px] pb-0 text-gray-500" value="desc">
-              {t("home:base.GiamDan")}
+                {t("home:base.GiamDan")}
               </option>
             </select>
           </div>
@@ -252,7 +260,7 @@ const PendingOrders: React.FC<Props> = (value) => {
             onClick={hanDelSubmit}
             className="px-2 py-1 cursor-pointer mt-5 pl-5 pr-5 rounded-md text-white text-[13px] font-medium uppercase bg-[#0055ba]"
           >
-          {t("home:base.CapNhat")} 
+            {t("home:base.CapNhat")}
           </button>
           <form className="flex gap-2 mt-5 mr-8">
             <img
@@ -366,7 +374,7 @@ const PendingOrders: React.FC<Props> = (value) => {
                     className="text-center "
                   >
                     <p className=" bg-[#F3F3F3] border mx-auto border-black w-[40px] rounded-sm ">
-                    {t("home:Order.ORDER_HUY")} Hủy
+                      {t("home:Order.ORDER_HUY")} Hủy
                     </p>
                   </td>
                   <td
@@ -451,7 +459,7 @@ const PendingOrders: React.FC<Props> = (value) => {
             <tr style={{ border: "1px solid #ccc" }} className="bg-[rgb(251,246,213)]">
               <td style={{ border: "1px solid #ccc" }}></td>
               <td className="text-center " style={{ border: "1px solid #ccc" }}>
-              <p className="p-[.5px] px-[4px] mx-auto my-[1px] text-center text-gray-600 bg-white border border-gray-700 rounded-sm cursor-pointer w-fit "> Hủy </p>
+                <p className="p-[.5px] px-[4px] mx-auto my-[1px] text-center text-gray-600 bg-white border border-gray-700 rounded-sm cursor-pointer w-fit "> Hủy </p>
               </td>
               <td style={{ border: "1px solid #ccc" }}></td>
               <td style={{ border: "1px solid #ccc" }}></td>
