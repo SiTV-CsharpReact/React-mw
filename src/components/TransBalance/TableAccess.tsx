@@ -141,7 +141,7 @@ const TableAsset = (props: any) => {
 
 
     return (
-        <div className={`table_detail_BCTS !h-[614px] mt-5 ${mode}-bg`}>
+        <div className={`table_detail   !h-[614px] mt-5 ${mode}-bg`}>
             {short ? (
                 <table>
                     <thead>
@@ -152,7 +152,7 @@ const TableAsset = (props: any) => {
                                 style={{ width: "5%" }}
                                 onClick={() => handleSort("ASTOCKCODE")}
                             >
-                                <div className={`relative ${mode}-text`}>
+                                 <div className={`relative ${mode}-text`}>
                                     Mã CK
                                     <span className="absolute translate-y-1/2 top-1/2 right-2">
                                         {label !== "ASTOCKCODE" ? (
