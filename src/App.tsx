@@ -27,6 +27,7 @@ import OverViewCustody from "./pages/RightCustody/OverViewCustody";
 import ConditionalOrder from "./pages/Stoploss/ConditionalOrder";
 import ConditionalOrderBook from "./pages/Stoploss/ConditionalOrderBook";
 import RegistrationOnline from "./pages/RightCustody/RegistrationOnline";
+import ReportNAV from "./components/ReportNAV/ReportNAV";
 const  App: React.FC =()=> {
   return (
     <div>
@@ -45,7 +46,7 @@ const  App: React.FC =()=> {
             <Route path="/report/ReportTransBalance" element={<AssetReport />} />  
             <Route path="/report/AssetReport2" element={<AssetReport />} />  
          
-            <Route path="/report/ReportNAV" element={<AssetReport />} />
+            <Route path="/report/ReportNAV" element={<ReportNAV />} />
             <Route path="/report/reportprofitloss" element={<AssetReport />} />
             <Route path="/report/ReportTransSummary" element={<AssetReport />} />
             <Route path="/report/StockDetails" element={<AssetReport />} />  

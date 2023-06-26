@@ -203,9 +203,7 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
       },
       series: series,
     });
-    return () => {
-      Highcharts.chart("container-asset_report", {}).destroy();
-    };
+   
   }, [arrLine, assetReport.Table2, changeOption, date]);
   return (
     <figure className="highcharts-figure">

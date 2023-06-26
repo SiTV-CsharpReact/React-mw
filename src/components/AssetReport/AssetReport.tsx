@@ -6,12 +6,13 @@ import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { fetchAssetReport } from "./AssetReportSlice";
 import ChartAssetReport from "./ChartAssetReport";
 import TitlePage from "../../pages/Layout/TitlePage";
-import execlImg from '../../images/excel.png'
-import pdfImg from '../../images/pdf.png'
-
+import execlImg from "../../images/excel.png";
+import pdfImg from "../../images/pdf.png";
 
 const AssetReport = () => {
   const { mode } = useAppSelector((state) => state.settingColorMode);
+  const { assetReport } = useAppSelector((state) => state.assetReport);
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchAssetReport());
@@ -24,15 +25,27 @@ const AssetReport = () => {
         <div className={`body__content__asset_report `}>
           <div className="body__content__header flex justify-between">
             <div className="mt-[5px]">
-              <span className="italic text-[red] font-[Arial]">
-                Dữ liệu cập nhật gần nhất:{" "}
-                <span className="text-[red]">17:56 - 21/06/2023</span>
-              </span>
+              {assetReport.Table3?.map((item: any) => (
+                <span key={item.ASTATUS} className="italic text-[red] font-[Arial]">
+                  Dữ liệu cập nhật gần nhất:{" "}
+                  <span className="text-[red]">{item.TIME}</span>
+                </span>
+              ))}
             </div>
             <div>
-              <input type="image" src={execlImg} alt="" className="h-[25px] w-[25px" />
+              <input
+                type="image"
+                src={execlImg}
+                alt=""
+                className="h-[25px] w-[25px]"
+              />
               &nbsp;
-              <input type="image" src={pdfImg} alt="" className="h-[25px] w-[25px" />
+              <input
+                type="image"
+                src={pdfImg}
+                alt=""
+                className="h-[25px] w-[25px]"
+              />
             </div>
           </div>
           <div className="report__tabcondition_BCTS">
