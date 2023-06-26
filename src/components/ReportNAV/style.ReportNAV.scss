@@ -11,6 +11,7 @@
       font-weight: bold;
       white-space: nowrap;
       text-align: left;
+      vertical-align: middle;
       // border: 0 !important;
       span {
         &.lblTuNgay {
@@ -38,7 +39,7 @@
       }
       .form-control {
         font-size: 12px;
-        padding: 6px 4px;
+        padding: 6px 8px;
         display: block;
         height: 34px;
         width: 100%;
@@ -50,6 +51,7 @@
         line-height: 1.42857143;
         border-radius: 4px;
         background-image: none;
+        margin: 0;
         &:focus {
           border-color: #66afe9;
           outline: 0;

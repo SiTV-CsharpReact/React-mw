@@ -6,6 +6,7 @@ import execlImg from "../../images/excel.png";
 import pdfImg from "../../images/pdf.png";
 import { formatNumber } from "../../utils/util";
 import ReportNAVItem from "./ReportNAVItem";
+import LayoutPage from "../../pages/Layout/LayoutPage";
 
 const ReportNAV = () => {
   const [data, setData] = useState<any>({});
@@ -37,13 +38,15 @@ const ReportNAV = () => {
   }, []);
 
   return (
-    <div>
-      <TitlePage content="Báo cáo biến động tài sản ròng" />
+    <LayoutPage
+      content="Báo cáo biến động tài sản ròng"
+      PageTitle="Báo cáo biến động tài sản ròng"          
+    >
       <div className="body__content">
         <div className="body__content_reportNAV">
           <div className="w-[55%] m-auto">
             <div className="body__content__trade__log">
-              <div className="report__tabcondition my-5 mx-0 flex w-full justify-between">
+              <div className="report__tabcondition my-5 mx-0 flex w-full justify-between float-right">
                 <div className="body__content__BTCS__header mt-[10px]">
                   {data?.Data?.Table1?.map((item: any) => (
                     <span
@@ -86,7 +89,7 @@ const ReportNAV = () => {
                           </select>
                           <span className="absolute top-1 text-hoverKL right-3"><i className="fa fa-chevron-down" aria-hidden="true"></i></span>
                         </td>
-                        <td className="L P5 !border-0">
+                        <td className="L P5 !border-0" style={{verticalAlign: 'top'}}>
                           <input
                             type="submit"
                             name="btnUpdate"
@@ -95,7 +98,7 @@ const ReportNAV = () => {
                             className="btn"
                           />
                         </td>
-                        <td className="L P5 !border-0">
+                        <td className="L P5 !border-0" style={{verticalAlign: 'top'}}>
                           <div className="lineBtn lineBtnTop" id="Panel1">
                             <input
                               type="image"
@@ -103,7 +106,7 @@ const ReportNAV = () => {
                               alt=""
                               className="!h-[25px] w-[25px]"
                             />
-                            &nbsp;
+                            &nbsp;{" "}
                             <input
                               type="image"
                               src={pdfImg}
@@ -117,7 +120,6 @@ const ReportNAV = () => {
                   </table>
                 </div>
               </div>
-              <div className="clear-both"></div>
               <div id="divGrid">
                 <p className="hidden text-[25px] text-normalText">
                   Báo cáo biến động tài sản ròng
@@ -292,7 +294,7 @@ const ReportNAV = () => {
           </div>
         </div>
       </div>
-    </div>
+    </LayoutPage>
   );
 };
 

@@ -170,6 +170,7 @@
         td {
           line-height: 22px !important;
           padding: 1px 5px;
+          border: 0;
         }
         tr {
           &:hover {
@@ -293,8 +294,6 @@
       }
     }
   }
-
-
 }
 
 .report__tabcondition__right {
@@ -341,13 +340,12 @@
 }
 
 .table_detail_BCTS {
-  table{
-    thead{
-      tr{
-        td{
-          div{
+  table {
+    thead {
+      tr {
+        td {
+          div {
             color: #000 !important;
-            
           }
         }
       }
@@ -355,7 +353,6 @@
   }
   .dark-text {
     color: #b2b6bf !important;
-    
   }
   &::-webkit-scrollbar {
     width: 10px;
@@ -385,9 +382,8 @@
         background: #303030 !important;
         tr {
           background: #141d27;
-          
         }
-       
+
         // td {
         //   color: #b2b6bf !important;
         //   > div {
@@ -467,7 +463,7 @@
 }
 
 .light-text {
-  color: #000 ;
+  color: #000;
 }
 #divTextNote {
   font-family: arial;

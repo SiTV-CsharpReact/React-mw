@@ -9,10 +9,13 @@ const TableAssetReportFull: React.FC<IpropsTableReport> = ({
   handleSort,
   label,
   sort,
-  data
+  data,
 }: IpropsTableReport) => {
   const { assetReport } = useAppSelector((state) => state.assetReport);
   const { mode } = useAppSelector((state) => state.settingColorMode);
+  console.log(
+    assetReport?.Table1?.reduce((a: any, b: any) => a + b.APROFIT_LOSS_VAL, 0)
+  );
 
   return (
     <table className="w-full border-collapse text-center my-0 mx-auto bg-white text-[#002060] border-spacing-0">
@@ -426,11 +429,9 @@ const TableAssetReportFull: React.FC<IpropsTableReport> = ({
           </td>
           <td
             className={`!text-xs ${
-              formatNumber(
-                assetReport?.Table1?.reduce(
-                  (a: any, b: any) => a + b.APROFIT_LOSS_VAL,
-                  0
-                )
+              assetReport?.Table1?.reduce(
+                (a: any, b: any) => a + b.APROFIT_LOSS_VAL,
+                0
               ) < 0
                 ? "!text-[#FF0000]"
                 : "!text-[#00b050]"
