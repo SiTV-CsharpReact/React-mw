@@ -6,8 +6,11 @@ import "react-calendar/dist/Calendar.css";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import * as XLSX from "xlsx";
+import { useTranslation } from "react-i18next";
 
 const MoneyHistory = () => {
+  const { t } = useTranslation(["home"]);
+
   const [valueStart, setValueStart] = useState<any>(new Date());
   const [valueEnd, setValueEnd] = useState<any>(new Date());
   const exportToExcel = () => {
@@ -68,29 +71,29 @@ const MoneyHistory = () => {
         <div className="flex justify-end mt-7 pr-[40px] gap-4 text-[12px]">
           <div className="flex gap-[2px] items-center">
             <label htmlFor="" className="text-[8pt] font-bold">
-              Từ ngày
+              {t("home:Transfer.TuNgay")}
             </label>
             <DatePicker
               onChange={setValueStart}
               format="dd/MM/yy"
               value={valueStart}
-              className="text-[13px] rounded-sm outline-none h-[28px] w-[122px]"
+              className="text-[13px] rounded-md outline-none h-[30px] w-[122px]"
             />
           </div>
           <div className="flex gap-[2px] items-center">
             <label htmlFor="" className="text-[8pt] font-bold">
-              Đến ngày
+              {t("home:Transfer.DenNgay")}
             </label>
             <DatePicker
               onChange={setValueEnd}
               format="dd/MM/yy"
               value={valueEnd}
-              className="text-[13px] rounded-sm outline-none h-[28px] w-[122px]"
+              className="text-[13px] rounded-md outline-none h-[30px] w-[122px]"
             />
           </div>
           <div>
             <button className="h-[28px] border border-[#2371AF] px-3 rounded-md hover:bg-[#2371AF] hover:text-white transition-all">
-              Cập nhật
+              {t("home:Transfer.CapNhat")}
             </button>
           </div>
           <div className="flex items-center gap-2">
@@ -120,15 +123,31 @@ const MoneyHistory = () => {
               <col className="" />
             </colgroup>
             <tr className="text-xs border border-[#ddd] bg-[#F3F3F3]">
-              <th className="border-r border-[#ddd] px-[10px] py-[7px]">STT</th>
-              <th className="border-r border-[#ddd]">Tên người nhận</th>
-              <th className="border-r border-[#ddd]">Số tiền</th>
-              <th className="border-r border-[#ddd]">Tài khoản nhận</th>
-              <th className="border-r border-[#ddd]">Ngân hàng nhận</th>
-              <th className="border-r border-[#ddd]">Tình trạng</th>
-              <th className="border-r border-[#ddd]">Ngày hiệu lực</th>
-              <th className="border-r border-[#ddd]">Hủy </th>
-              <th>Thông báo</th>
+              <th className="border-r border-[#ddd] px-[10px] py-[7px]">
+                {t("home:Transfer.STT")}
+              </th>
+              <th className="border-r border-[#ddd]">
+                {t("home:Transfer.TenNguoiNhan")}
+              </th>
+              <th className="border-r border-[#ddd]">
+                {t("home:Transfer.SoTien")}
+              </th>
+              <th className="border-r border-[#ddd]">
+                {t("home:Transfer.TaiKhoanNhan")}
+              </th>
+              <th className="border-r border-[#ddd]">
+                {t("home:Transfer.NganHangNhan")}
+              </th>
+              <th className="border-r border-[#ddd]">
+                {t("home:Transfer.TinhTrang")}
+              </th>
+              <th className="border-r border-[#ddd]">
+                {t("home:Transfer.NgayHieuLuc")}
+              </th>
+              <th className="border-r border-[#ddd]">
+                {t("home:Transfer.Huy")}
+              </th>
+              <th>{t("home:Transfer.ThongBao")}</th>
             </tr>
             {/* <tr className="text-xs">
             <td>1</td>
@@ -143,12 +162,8 @@ const MoneyHistory = () => {
           </tr> */}
           </table>
         </div>
-        <div className="text-center text-[10pt] mt-3">
-          <span>
-            Quý khách có thể tra cứu dữ liệu lịch sử chuyển tiền từ 07/01/2018.
-            Để tra cứu dữ liệu lịch sử chuyển tiền trước 07/01/2018 vui lòng
-            liên hệ FPTS
-          </span>
+        <div className="text-center text-[10pt] mt-4">
+          <span>{t("home:Transfer.ThongBao_HISTORY_F")}</span>
         </div>
       </div>
     </LayoutPage>

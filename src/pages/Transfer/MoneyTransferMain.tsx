@@ -2,52 +2,22 @@ import { useEffect, useState } from "react";
 import LayoutPage from "../Layout/LayoutPage";
 import "./helper/style.scss";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 const MoneyTransferMain = () => {
-  const [showModel, setShowModel] = useState(false);
-  const [valueMoney, setValueMoney] = useState("");
+  const { t } = useTranslation(["home"]);
   const [balanceDetail, setBalanceDetail] = useState<any>({});
   const [getTemplate, setGetTemplate] = useState<Array<string>>([]);
-  const [valueSTK, setValueSTK] = useState("");
-  const [beneficiaryName, setBeneficiaryName] = useState("");
-  const [beneficiaryBank, setBeneficiaryBank] = useState("");
-  const [city, setCity] = useState("");
-  const [branch, setBranch] = useState("");
-  const [content, setContent] = useState("");
+  const [value, setValue] = useState<any>({
+    valueMoney: "",
+    showModel: false,
+    valueSTK: "",
+    beneficiaryName: "",
+    beneficiaryBank: "",
+    city: "",
+    branch: "",
+    content: "",
+  });
 
-  const handleShowModel = () => {
-    setShowModel(!showModel);
-  };
-  const handleInputChange = (event: any) => {
-    let inputValue = event.target.value;
-    const validChars = /^[1-9][0-9]*$/; // Chỉ cho phép từ số 1 đến 9 ở đầu và tiếp theo có thể là bất kỳ số nào
-
-    if (!validChars.test(inputValue)) {
-      // Nếu giá trị nhập không hợp lệ, xóa các ký tự không phải số
-      inputValue = inputValue.replace(/[^1-9]/g, "");
-    }
-    const formattedValue = formatNumber(inputValue);
-
-    setValueMoney(formattedValue);
-  };
-  //Config number
-  const formatNumber = (numberString: any) => {
-    // Chuyển đổi chuỗi số thành mảng các ký tự
-    const chars = numberString.split("");
-
-    // Đảo ngược mảng và chèn dấu phẩy sau mỗi 3 ký tự
-    const reversedFormatted = chars
-      .reverse()
-      .reduce((result: any, char: any, index: number) => {
-        if (index > 0 && index % 3 === 0) {
-          result.push(",");
-        }
-        result.push(char);
-        return result;
-      }, []);
-
-    // Đảo ngược lại mảng và kết hợp thành chuỗi
-    return reversedFormatted.reverse().join("");
-  };
   //fetch data
   useEffect(() => {
     const fetchBalanceDetail = async () => {
@@ -70,26 +40,68 @@ const MoneyTransferMain = () => {
     };
     fetchBalanceDetail();
   }, []);
-
+  //Handle set value
   const handleSetValue = (item: any) => {
-    setShowModel(!showModel);
-    setValueSTK(item.ACCOUNTRCV);
-    setBeneficiaryName(item.ACCOUNTRCVNAME);
-    setBeneficiaryBank(item.BANKRCVNAME);
-    setCity(item.BRANCHNAME.substring(3));
-    setBranch(item.BRANCHNAME);
+    setValue({
+      ...value,
+      showModel: !value.showModel,
+      valueSTK: item.ACCOUNTRCV,
+      beneficiaryName: item.ACCOUNTRCVNAME,
+      beneficiaryBank: item.BANKRCVNAME,
+      city: item.BRANCHNAME.substring(3),
+      branch: item.BRANCHNAME,
+    });
   };
+  //Handle show model
+  const handleShowModel = () => {
+    setValue({
+      ...value,
+      showModel: !value.showModel,
+    });
+  };
+  // Kiểm tra nhập số tiền
+  const handleInputChange = (event: any) => {
+    let inputValue = event.target.value;
+    const validChars = /^[0-9][0-9]*$/; // Cho phép số từ 0 đến 9 ở đầu và tiếp theo có thể là bất kỳ số nào
+
+    if (!validChars.test(inputValue)) {
+      // Nếu giá trị nhập không hợp lệ, xóa các ký tự không phải số
+      inputValue = inputValue.replace(/[^0-9]/g, "");
+    }
+    const formattedValue = formatNumber(inputValue);
+
+    setValue({
+      ...value,
+      valueMoney: formattedValue,
+    });
+  };
+  //Chuyển đổi số thành chuỗi có dấu phẩy ngăn cách hàng nghìn
+  const formatNumber = (numberString: any) => {
+    // Chuyển đổi chuỗi số thành số
+    const number = Number(numberString);
+
+    // Kiểm tra nếu số không hợp lệ hoặc NaN, trả về chuỗi rỗng
+    if (isNaN(number) || !isFinite(number)) {
+      return "";
+    }
+
+    // Định dạng số với dấu phẩy ngăn cách hàng nghìn
+    return number.toLocaleString();
+  };
+
   //Button Reset Data
   const resetData = () => {
-    setValueSTK("");
-    setBeneficiaryName("");
-    setBeneficiaryBank("");
-    setCity("");
-    setBranch("");
-    setContent("");
-    setValueMoney("");
+    setValue({
+      valueMoney: "",
+      showModel: false,
+      valueSTK: "",
+      beneficiaryName: "",
+      beneficiaryBank: "",
+      city: "",
+      branch: "",
+      content: "",
+    });
   };
-
   return (
     <>
       <LayoutPage
@@ -113,10 +125,10 @@ const MoneyTransferMain = () => {
           </p>
         </div>
         <div className="">
-          {/* {showModel && ( */}
+          {/* -----------------------------showModel-----------------------------*/}
           <div
             className={`absolute ${
-              showModel ? "opacity-100 visible" : "opacity-0 invisible"
+              value.showModel ? "opacity-100 visible" : "opacity-0 invisible"
             } flex items-center justify-center top-0 left-0 bottom-0 right-0 w-full h-full transition-all`}
           >
             <div
@@ -125,24 +137,26 @@ const MoneyTransferMain = () => {
             ></div>
             <div
               className={`absolute ${
-                showModel ? "opacity-100 visible" : "opacity-0 invisible"
+                value.showModel ? "opacity-100 visible" : "opacity-0 invisible"
               } p-4 transition-fallAnimation w-[800px] pb-6 bg-white`}
             >
               <table className="w-full text-[12px] ">
                 <thead className="font-bold border border-[#dddddd] bg-[#f3f3f3]">
                   <tr className="h-[50px]">
-                    <th className="border-r border-[#dddddd] leading-4">NO</th>
-                    <th className="border-r border-[#dddddd] leading-4">
-                      Tên mẫu
+                    <th className="border-r border-[#dddddd] leading-4 px-2">
+                      NO
                     </th>
                     <th className="border-r border-[#dddddd] leading-4">
-                      Tài khoản <br /> thụ hưởng
+                      {t("home:Transfer.TenMau")}
+                    </th>
+                    <th className="border-r border-[#dddddd] leading-4 py-2">
+                      {t("home:Transfer.TaiKhoanThuHuong")}
                     </th>
                     <th className="border-r border-[#dddddd] leading-4">
-                      Tên người <br /> thụ hưởng
+                      {t("home:Transfer.TenNguoiThuHuong")}
                     </th>
                     <th className="border-r border-[#dddddd] leading-4">
-                      Ngân hàng <br /> thụ hưởng
+                      {t("home:Transfer.NganHangThuHuong")}
                     </th>
                   </tr>
                 </thead>
@@ -180,34 +194,33 @@ const MoneyTransferMain = () => {
                   href="/"
                   className="text-[13px] hover:underline text-[#337ab7] hover:text-[#23527c] "
                 >
-                  Cập nhật danh sách mẫu chuyển tiền
+                  {t("home:Transfer.CapNhatDSMCT")}
                 </a>
               </div>
             </div>
           </div>
-          {/* )} */}
-
-          <div className="w-[840px] mx-auto my-3">
-            <div className="flex justify-end pr-1 h-6 items-center text-[10px] text-[#212529]">
-              Đơn vị: VNĐ
+          {/* -----------------------------Screen-----------------------------*/}
+          <div className="w-[840px] mx-auto my-[5px]">
+            <div className="flex justify-end pr-1 italic leading-[25px] items-center text-[10px] text-[#212529]">
+              {t("home:Transfer.DonVi")}: VNĐ
             </div>
             {/*-----------------------------------------Table Show Money------------------------------------------*/}
-            <div className="text-xs border border-[#CCCCCC]">
+            <div className="text-xs border border-borderTransfer">
               <table className="w-full">
                 <thead className="bg-[#F3F3F3]">
-                  <tr className="h-[60px]">
-                    <th className="font-bold border-r border-[#CCCCCC]">
-                      Số dư tiền mặt
+                  <tr className="border-b border-borderTransfer">
+                    <th className="font-bold leading-4 border-r border-borderTransfer h-[58px]">
+                      {t("home:Transfer.SoDuTienMat")}
                       <br />
                       <span className="text-[11pt]">A</span>
                     </th>
-                    <th className="border-r">
-                      Tiền ứng trước
+                    <th className="leading-4 border-r border-borderTransfer">
+                      {t("home:Transfer.TienUngTruoc")}
                       <br />
                       <span className="text-[11pt]">B</span>
                     </th>
-                    <th>
-                      Số dư có thể rút, chuyển
+                    <th className="leading-4 w-[36%]">
+                      {t("home:Transfer.SoDuCoTheRut")}
                       <br />
                       <span className="text-[11pt]">C = A + B</span>
                     </th>
@@ -215,10 +228,10 @@ const MoneyTransferMain = () => {
                 </thead>
                 <tbody>
                   <tr className="text-[#ae1a1a] font-bold ">
-                    <td className="py-1 text-center border-r border-[#CCCCCC]">
+                    <td className="py-[3px] text-center border-r border-borderTransfer">
                       {balanceDetail?.ALEDGERBALANCE?.toLocaleString()}
                     </td>
-                    <td className="text-center border-r">
+                    <td className="text-center border-r border-borderTransfer">
                       {" "}
                       {balanceDetail?.AMARGINPRO?.toLocaleString()}
                     </td>
@@ -231,7 +244,7 @@ const MoneyTransferMain = () => {
             </div>
 
             {/*-----------------------------------------Choose Template Money------------------------------------------*/}
-            <div className="mt-3 shadow-[0px_0px_15px_1px_rgba(211,211,211,0.3)] border border-[#CCCCCC] p-1 pb-3">
+            <div className="mt-3 border border-[#CCCCCC] p-[6px] pb-3 shadow-[0_1px_5px_rgba(0,0,0,.2)]">
               <div className="flex gap-1">
                 <svg
                   width="15"
@@ -247,23 +260,24 @@ const MoneyTransferMain = () => {
                 </svg>
 
                 <span className="text-xs">
-                  Với trách nhiệm thuộc về Tôi/Chúng tôi, đề nghị Quý Công ty
-                  ghi nợ tài khoản của Tôi/Chúng tôi để thực hiện chuyển tiền
-                  theo nội dung sau:
+                  {t("home:Transfer.Title_CHUYENTIEN_H")}
                 </span>
               </div>
               <div className="mt-[30px]">
-                <div className="w-[560px] mx-auto flex flex-col gap-[2px]">
-                  <div className="flex items-center justify-between">
-                    <label htmlFor="money" className="text-xs font-bold">
-                      Số tiền
+                <div className="w-[700px] mx-auto flex flex-col gap-[2px] pl-[30px]">
+                  <div className="grid items-center grid-cols-10">
+                    <label
+                      htmlFor="money"
+                      className="col-span-4 text-xs font-bold"
+                    >
+                      {t("home:Transfer.SoTien")}
                     </label>
-                    <div className="flex gap-1">
+                    <div className="flex col-span-6 gap-1">
                       <input
                         type="text"
                         name="money"
                         autoComplete="off"
-                        value={valueMoney}
+                        value={value.valueMoney}
                         onChange={handleInputChange}
                         className="w-[250px] transition-all text-[12px] text-right border h-[32px] rounded-[4px] px-3 outline-none focus:border-blue-300 focus:shadow-[0px_0px_0px_4px_rgba(200,237,255,0.5)]"
                         // oninput="validateInput(this)"
@@ -273,11 +287,11 @@ const MoneyTransferMain = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <label htmlFor="" className="text-xs font-bold">
-                      Ngày hiệu lực
+                  <div className="grid items-center grid-cols-5">
+                    <label htmlFor="" className="col-span-2 text-xs font-bold">
+                      {t("home:Transfer.NgayHieuLuc")}
                     </label>
-                    <div className="flex gap-1">
+                    <div className="flex col-span-3 gap-1">
                       <input
                         type="text"
                         className="w-[250px] px-3 border h-[32px] text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
@@ -291,30 +305,35 @@ const MoneyTransferMain = () => {
                       <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap"></div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-end">
-                    <div className="flex gap-1">
+                  <div className="grid grid-cols-5">
+                    <div className="col-span-2"></div>
+                    <div className="col-span-3 gap-1">
                       <button
                         className="w-[250px] bg-[#3278B3] text-white h-[34px] text-center text-xs rounded-md"
                         onClick={handleShowModel}
                       >
-                        Chọn mẫu chuyển tiền
+                        {t("home:Transfer.ChonMauChuyenTien")}
                       </button>
                       <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap"></div>
                     </div>
                   </div>
                   {/* Phi chuyen tien*/}
-                  <div className={`${valueSTK !== "" ? "block" : "hidden"}`}>
+                  <div
+                    className={`${value.valueSTK !== "" ? "block" : "hidden"}`}
+                  >
                     <div className="mt-5 ">
-                      <h3 className="text-[9pt] font-bold">NGƯỜI THỤ HƯỞNG</h3>
-                      <div className="flex items-center justify-between pl-3 mt-2">
-                        <label htmlFor="" className="text-xs">
-                          Số tài khoản
+                      <h3 className="text-[9pt] font-bold uppercase">
+                        {t("home:Transfer.NguoiThuHuong")}
+                      </h3>
+                      <div className="grid items-center grid-cols-5 mt-2">
+                        <label htmlFor="" className="col-span-2 pl-3 text-xs">
+                          {t("home:Transfer.SoTaiKhoan")}
                         </label>
-                        <div className="flex gap-1">
+                        <div className="flex col-span-3 gap-1">
                           <input
                             type="text"
                             className="w-[250px] px-4 border h-8 text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
-                            value={valueSTK}
+                            value={value.valueSTK}
                             disabled
                           />
                           <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap">
@@ -322,15 +341,15 @@ const MoneyTransferMain = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between mt-[2px] pl-3">
-                        <label htmlFor="" className="text-xs">
-                          Tên người thụ hưởng
+                      <div className=" items-center grid grid-cols-5 mt-[2px] ">
+                        <label htmlFor="" className="col-span-2 pl-3 text-xs">
+                          {t("home:Transfer.TenNguoiThuHuong")}
                         </label>
-                        <div className="flex gap-1">
+                        <div className="flex col-span-3 gap-1">
                           <input
                             type="text"
                             className="w-[250px] px-4 border h-8 text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
-                            value={beneficiaryName}
+                            value={value.beneficiaryName}
                             disabled
                           />
                           <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap"></div>
@@ -338,19 +357,19 @@ const MoneyTransferMain = () => {
                       </div>
                     </div>
                     <div className="mt-5 ">
-                      <h3 className="text-[9pt] font-bold">
+                      <h3 className="text-[9pt] font-bold uppercase">
                         {" "}
-                        NGÂN HÀNG NGƯỜI THỤ HƯỞNG
+                        {t("home:Transfer.NganHangNguoiThuHuong")}
                       </h3>
-                      <div className="flex items-center justify-between pl-3 mt-2">
-                        <label htmlFor="" className="text-xs">
-                          Ngân hàng thụ hưởng
+                      <div className="grid items-center grid-cols-5 mt-2">
+                        <label htmlFor="" className="col-span-2 pl-3 text-xs">
+                          {t("home:Transfer.NganHangThuHuong")}
                         </label>
-                        <div className="flex gap-1">
+                        <div className="flex col-span-3 gap-1">
                           <input
                             type="text"
-                            className="w-[250px] px-4 border h-8 text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
-                            value={beneficiaryBank}
+                            className="w-[320px] px-4 border h-8 col-3 text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
+                            value={value.beneficiaryBank}
                             disabled
                           />
                           <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap">
@@ -358,70 +377,79 @@ const MoneyTransferMain = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between mt-[2px] pl-3">
-                        <label htmlFor="" className="text-xs">
-                          Tỉnh/Thành phố
+                      <div className=" items-center mt-[2px] grid grid-cols-5">
+                        <label htmlFor="" className="col-span-2 pl-3 text-xs">
+                          {t("home:Transfer.Tinh_ThanhPho")}
                         </label>
-                        <div className="flex gap-1">
+                        <div className="flex col-span-3 gap-1">
                           <input
                             type="text"
                             className="w-[250px] px-4 border h-8 text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
-                            value={city}
+                            value={value.city}
                             disabled
                           />
-                          <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap"></div>
+                          <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap">
+                            <span className="font-bold text-red-400">(*)</span>
+                          </div>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between mt-[2px] pl-3">
-                        <label htmlFor="" className="text-xs">
-                          Chi nhánh ngân hàng
+                      <div className=" items-center grid grid-cols-5 mt-[2px] ">
+                        <label htmlFor="" className="col-span-2 pl-3 text-xs">
+                          {t("home:Transfer.ChiNhanhNganHang")}
                         </label>
-                        <div className="flex gap-1">
+                        <div className="flex col-span-3 gap-1">
                           <input
                             type="text"
                             className="w-[250px] px-4 border h-8 text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
-                            value={branch}
+                            value={value.branch}
                             disabled
                           />
-                          <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap"></div>
+                          <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap">
+                            <span className="font-bold text-red-400">(*)</span>
+                          </div>
                         </div>
                       </div>
                     </div>
 
                     <div className="mt-5 ">
-                      <h3 className="text-[9pt] font-bold">
-                        NỘI DUNG CHUYỂN TIỀN{" "}
+                      <h3 className="text-[9pt] font-bold uppercase">
+                        {t("home:Transfer.NoiDungChuyenTien")}{" "}
                         <span className="font-bold text-red-400">(*)</span>
                       </h3>
-                      <div className="flex items-center justify-between pl-3 mt-2">
-                        <label htmlFor="" className="text-xs"></label>
-                        <div className="flex gap-1">
+                      <div className="grid items-center grid-cols-5 mt-2 ">
+                        <label
+                          htmlFor=""
+                          className="col-span-2 pl-3 text-xs"
+                        ></label>
+                        <div className="flex col-span-3 gap-1">
                           <textarea
                             typeof="text"
                             cols={30}
-                            rows={3}
-                            className="w-[250px] p-3 border outline-none text-gray-700 rounded-[4px] transition-all text-xs bg-white focus:border-blue-300 focus:shadow-[0px_0px_0px_4px_rgba(200,237,255,0.5)]"
+                            rows={1}
+                            className="w-[400px] px-3 py-1 border outline-none text-gray-700 rounded-[4px] transition-all text-xs bg-white focus:border-blue-300 focus:shadow-[0px_0px_0px_4px_rgba(200,237,255,0.5)]"
                             onChange={(e: any) => {
-                              setContent(e.target.value);
+                              setValue({
+                                ...value,
+                                content: e.target.value,
+                              });
                             }}
                           />
                           <div className="flex gap-1 font-bold w-10 my-auto text-[12px] whitespace-nowrap cursor-pointer">
                             <span className="font-bold text-red-400">(*)</span>
-                            Hướng dẫn
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center mt-8 mb-6">
-                      <h3 className="text-[9pt] font-bold flex-1">
-                        PHÍ CHUYỂN TIỀN
+                    <div className="grid items-center grid-cols-5 mt-8 mb-6">
+                      <h3 className="text-[9pt] col-span-2 font-bold flex-1">
+                        {t("home:Transfer.PhiChuyenTien")}
                       </h3>
-                      <div className="flex items-center flex-1 gap-3">
-                        <button className="w-[13px] h-[13px] flex items-center rounded-full border border-[#005cc8] justify-center">
-                          <span className="w-[8px] h-[8px] rounded-full bg-[#005cc8]"></span>
-                        </button>
+                      <div className="flex items-center flex-1 col-span-3 gap-3">
+                        <div className="w-[13px] h-[13px] relative flex items-center rounded-full border border-[#005cc8] justify-center">
+                          <span className=" w-[7px] h-[7px] rounded-full bg-[#005cc8]"></span>
+                        </div>
                         <span className="text-xs font-bold">
-                          Người chuyển chịu
+                          {t("home:Transfer.NguoiChuyenChiu")}
                         </span>
                       </div>
                     </div>
@@ -443,33 +471,33 @@ const MoneyTransferMain = () => {
                 </svg>
 
                 <span className="text-xs">
-                  Tôi/Chúng tôi cam kết đã đọc và hiểu rõ các điều khoản trong{" "}
+                  {t("home:Transfer.TITLE_CHUYENTIEN_F_LEFT")}{" "}
                   <span className="font-bold">
-                    Hợp đồng cung cấp và sử dụng dịch vụ giao dịch chứng khoán
+                    {t("home:Transfer.TITLE_CHUYENTIEN_F_RIGHT")}
                   </span>
                 </span>
               </div>
 
-              <div className="border w-[800px] mx-auto p-2 flex flex-col gap-1">
-                <span className="font-bold text-[10pt]">Ghi chú:</span>
+              <div className="border border-borderTransfer w-[800px] mx-auto py-[5px] px-[15px] flex flex-col gap-1">
+                <span className="font-bold text-[10pt]">
+                  {t("home:Transfer.GhiChu")}:
+                </span>
                 <p className="text-[10pt] leading-5">
-                  FPTS sẽ thực hiện các lệnh chuyển tiền vào ngày làm việc kế
-                  tiếp các trường hợp sau:
-                  <br />
-                  - Lệnh chuyển tiền đặt sau 16h hàng ngày
-                  <br />- Lệnh chuyển tiền đặt trong các ngày nghỉ, ngày lễ.
+                  {t("home:Transfer.TITLE_NOTE")}:
+                  <br />- {t("home:Transfer.ITEM_NOTE")}
+                  <br />- {t("home:Transfer.ITEM_NOTE_B")}.
                 </p>
               </div>
             </div>
-            <div className="mt-[15px] flex justify-center gap-1">
-              <button className="rounded-[5px] px-[12px] py-[6px] border text-[12px] border-[#2371AF] leading-[18px] hover:bg-[#2371AF] hover:text-white transition-all">
-                Thực hiện
+            <div className="mt-[15px] mb-2 flex justify-center gap-1">
+              <button className="rounded-[5px] w-[80px] h-[34px] border text-[12px] border-[#2371AF] leading-[18px] hover:bg-[#2371AF] hover:text-white transition-all">
+                {t("home:Transfer.ThucHien")}
               </button>
               <button
-                className="rounded-[5px] px-[12px] py-[6px] border text-[12px] border-[#2371AF] leading-[18px] hover:bg-[#2371AF] hover:text-white transition-all"
+                className="rounded-[5px] w-[80px] h-[34px] border text-[12px] border-[#2371AF] leading-[18px] hover:bg-[#2371AF] hover:text-white transition-all"
                 onClick={resetData}
               >
-                Làm lại
+                {t("home:Transfer.LamLai")}
               </button>
             </div>
           </div>
