@@ -6,8 +6,10 @@ import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { fetchAssetReport } from "./AssetReportSlice";
 import ChartAssetReport from "./ChartAssetReport";
 import TitlePage from "../../pages/Layout/TitlePage";
-import execlImg from "../../images/excel.png";
-import pdfImg from "../../images/pdf.png";
+import LayoutPage from "../../pages/Layout/LayoutPage";
+import execlImg from '../../images/excel.png'
+import pdfImg from '../../images/pdf.png'
+
 
 const AssetReport = () => {
   const { mode } = useAppSelector((state) => state.settingColorMode);
@@ -17,37 +19,31 @@ const AssetReport = () => {
   useEffect(() => {
     dispatch(fetchAssetReport());
   }, [dispatch]);
-
   return (
     <div className={`${mode}-bg`}>
-      <TitlePage content="Báo cáo tài sản" />
-      <div className={`body__content ${mode}-bg`}>
-        <div className={`body__content__asset_report `}>
-          <div className="body__content__header flex justify-between">
-            <div className="mt-[5px]">
-              {assetReport.Table3?.map((item: any) => (
-                <span key={item.ASTATUS} className="italic text-[red] font-[Arial]">
-                  Dữ liệu cập nhật gần nhất:{" "}
-                  <span className="text-[red]">{item.TIME}</span>
-                </span>
-              ))}
-            </div>
-            <div>
-              <input
-                type="image"
-                src={execlImg}
-                alt=""
-                className="h-[25px] w-[25px]"
-              />
+   
+      <LayoutPage 
+       content="Báo cáo tài sản"
+       PageTitle="Báo cáo tài sản"
+       >  
+        <div className="contentActionPading">
+            <div className="HeaderBaoCao">
+              <div className="HeaderBaoCaoLeft">
+                <p>
+                Dữ liệu cập nhật gần nhất: <span> 17:51</span> - <span> 19/06/2023</span>
+
+                </p>
+              </div>
+              <div className="HeaderBaoCaoRigth">
+              <input type="image" src={execlImg} alt="" className="h-[25px] w-[25px" />
               &nbsp;
-              <input
-                type="image"
-                src={pdfImg}
-                alt=""
-                className="h-[25px] w-[25px]"
-              />
+              <input type="image" src={pdfImg} alt="" className="h-[25px] w-[25px" />    
+              </div>
             </div>
           </div>
+
+      <div className={`body__content ${mode}-bg`}>
+        <div className={`body__content__asset_report `}>
           <div className="report__tabcondition_BCTS">
             <TableAssetValue />
             <TableAssetReport />
@@ -90,6 +86,7 @@ const AssetReport = () => {
           </div>
         </div>
       </div>
+      </LayoutPage>
     </div>
   );
 };

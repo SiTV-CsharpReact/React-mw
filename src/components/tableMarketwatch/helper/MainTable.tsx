@@ -4,7 +4,9 @@ import TableGD from "./TableGD";
 import TablePrices from "./TablePrice";
 
 const TableChange = () => {
-  const { KeyMenuChildren } = useAppSelector((state:RootState) => state.table);
+  const { KeyMenuChildren } = useAppSelector((state: RootState) => state.table);
+  console.log("TableChange" ,KeyMenuChildren)
+  
   return  <> 
     {KeyMenuChildren === 1 ?  <TablePrices /> :  KeyMenuChildren === 2  ?  <TableDL /> : <TableGD />  }  
   </>

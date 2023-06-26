@@ -60,7 +60,7 @@ const ReportNAV = () => {
                   <table className="bg-transparent">
                     <tbody>
                       <tr>
-                        <td>
+                        <td className="!border-0 relative">
                           <span className="lblTuNgay">Đầu kỳ</span>
                           <select
                             name="cboSymbol"
@@ -70,8 +70,9 @@ const ReportNAV = () => {
                             <option value="31/03/2023">Quý 2/2023</option>
                             <option value="31/12/2022">Quý 1/2023</option>
                           </select>
+                          <span className="absolute top-1 text-hoverKL right-3"><i className="fa fa-chevron-down" aria-hidden="true"></i></span>
                         </td>
-                        <td>
+                        <td className="!border-0 relative">
                           <span className="lblDenNgay">Cuối kỳ</span>
                           <select
                             name="cboSymbol"
@@ -83,8 +84,9 @@ const ReportNAV = () => {
                             </option>
                             <option value="31/03/2023">Quý 2/2023</option>
                           </select>
+                          <span className="absolute top-1 text-hoverKL right-3"><i className="fa fa-chevron-down" aria-hidden="true"></i></span>
                         </td>
-                        <td className="L P5">
+                        <td className="L P5 !border-0">
                           <input
                             type="submit"
                             name="btnUpdate"
@@ -93,7 +95,7 @@ const ReportNAV = () => {
                             className="btn"
                           />
                         </td>
-                        <td className="L P5">
+                        <td className="L P5 !border-0">
                           <div className="lineBtn lineBtnTop" id="Panel1">
                             <input
                               type="image"

@@ -12,7 +12,6 @@ import HistoryOrder from "./pages/Report/HistoryOrder";
 import HistoryMatching from "./pages/Report/HistoryMatching";
 import HistoryForpay from "./pages/Report/HistoryForPay";
 import MoneyTransferForm from "./pages/Transfer/MoneyTransferForm";
-import LayoutPage from "./pages/Layout/LayoutPage";
 import MoneyTransferDerivative from "./pages/Transfer/MoneyTransferDerivative ";
 import MoneyHistory from "./pages/Transfer/MoneyHistory";
 import HistoryAdvReportMoney from "./pages/Report/HistoryAdvReportMoney";
@@ -27,7 +26,20 @@ import OverViewCustody from "./pages/RightCustody/OverViewCustody";
 import ConditionalOrder from "./pages/Stoploss/ConditionalOrder";
 import ConditionalOrderBook from "./pages/Stoploss/ConditionalOrderBook";
 import RegistrationOnline from "./pages/RightCustody/RegistrationOnline";
+import ReportTransSummary from './pages/Report/ReportTransSummary'
+import StockDetails from './pages/Report/StockDetails'
+import CurrMargin from './pages/Report/CurrMargin'
+import StockSettlement from './pages/Report/StockSettlement'
+import CashSettlement from './pages/Report/CashSettlement'
+import ReportCW from './pages/Report/ReportCW'
+import ListFee from './pages/Report/ListFee'
+import DepositoryHistory from './pages/RightCustody/DepositoryHistory'
+// import ReportNAV from "./pages/Report/ReportNAV";
 import ReportNAV from "./components/ReportNAV/ReportNAV";
+
+
+
+
 const  App: React.FC =()=> {
   return (
     <div>
@@ -42,20 +54,22 @@ const  App: React.FC =()=> {
           />
           <Route path="/dynamic-dashboard" element={<MyLayout />} />
           {/* Report */}
+          
           {/* Quản lý tài khoản */}
             <Route path="/report/ReportTransBalance" element={<AssetReport />} />  
             <Route path="/report/AssetReport2" element={<AssetReport />} />  
          
             <Route path="/report/ReportNAV" element={<ReportNAV />} />
             <Route path="/report/reportprofitloss" element={<AssetReport />} />
-            <Route path="/report/ReportTransSummary" element={<AssetReport />} />
-            <Route path="/report/StockDetails" element={<AssetReport />} />  
-            <Route path="/report/CurrMargin" element={<AssetReport />} />
-            <Route path="/report/StockSettlement" element={<AssetReport />} />
-            <Route path="/report/CashSettlement" element={<AssetReport />} />
-            <Route path="/report/CurrMargin" element={<AssetReport />} />
-            <Route path="/report/StockSettlement" element={<AssetReport />} />
-            <Route path="/report/CashSettlement" element={<AssetReport />} />
+
+            <Route path="/report/ReportTransSummary" element={<ReportTransSummary />} /> 
+            <Route path="/report/StockDetails" element={<StockDetails />} />  
+            <Route path="/report/CurrMargin" element={<CurrMargin />} />
+            <Route path="/report/StockSettlement" element={<StockSettlement />} />
+            <Route path="/report/CashSettlement" element={<CashSettlement />} />
+
+            <Route path="/report/ReportCW" element={<ReportCW />} />
+            <Route path="/report/ListFee" element={<ListFee/>} />
  
           {/* lịch sử giao dịch */}
         
@@ -80,7 +94,7 @@ const  App: React.FC =()=> {
           <Route path="/rightscustody/OverView" element={<OverViewCustody />} />
           <Route path="/rightscustody/CustodyOrderForm"element={<RegistrationOnline />}/>
 
-          <Route path="/rightscustody/AdvanceOrderForm" element={<AssetReport />}/>
+          <Route path="rightscustody/DepositoryHistory" element={<DepositoryHistory />}/>
 
           {/* Stoploss */}
           <Route path="/stoploss/orderform" element={<ConditionalOrder />} />

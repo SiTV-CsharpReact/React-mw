@@ -5,7 +5,6 @@ const TableAssetValue = () => {
   // const { assetReport } = useAppSelector((state) => state.report);
   const { mode } = useAppSelector((state) => state.settingColorMode);
   const { assetReport } = useAppSelector((state) => state.assetReport);
-
   return (
     <div className={`report__tabcondition__left ${mode}-bg`}>
       <div>

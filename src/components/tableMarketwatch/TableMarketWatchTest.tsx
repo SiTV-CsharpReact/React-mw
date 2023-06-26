@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import { AgGridReact } from "ag-grid-react";
 // import "ag-grid-enterprise";
 // import "ag-grid-community/styles/ag-grid.css";
@@ -26,7 +26,7 @@ const TableMarketWatchTest = () => {
 
   const [columnDefs] = ColumnDef(gridRef, pinnedRowsRef);
   const dispatch = useAppDispatch();
-
+  // rest sort 
   //setRowData
   const {ListDataTable ,DataPined ,RowPined ,keyActiveMan} = useAppSelector((state) => state.tableTest );
   // pinned
@@ -179,8 +179,14 @@ const TableMarketWatchTest = () => {
         var vIDImage = dataHNX[0].substring(0, dataHNX[0].indexOf("_"));
         const vCLassImage = document.getElementById(`${vIDImage}_Image`);
         const vCLassIndex = document.getElementById(`${vIDImage}_3`);
+        //HSX
+        // const vCLassImageHSX = document.getElementById(`${vIDImage}_Image`);
+        const vCLassIndexHSX = document.getElementById(`${vIDImage}_IndexValue`);
         const vCLassPT = document.getElementById(
           `${vIDImage}_6`
+        )?.parentElement;
+        const vCLassPTHSX = document.getElementById(
+          `${vIDImage}_ChangePercent`
         )?.parentElement;
         /// check có tdIndex để bắt đầu add giá trị vào
         if (tdIndexMenu) {
@@ -191,6 +197,7 @@ const TableMarketWatchTest = () => {
               // = tham chieu, vang
               vTextClass = g_CLASS_INDEX[0][0];
               vImageClass = g_CLASS_INDEX[0][1];
+
             }
             if (v > 0) {
               // tang, xanh
@@ -211,7 +218,7 @@ const TableMarketWatchTest = () => {
             if (vCLassIndex) {
               if (vTextClass) {
                 vCLassIndex.className = vTextClass + " px-0.5";
-
+           
                 // console.log(vCLassIndex,vTextClass)
                 //vCLassIndex.classList.add(vTextClass);
               }
@@ -219,6 +226,48 @@ const TableMarketWatchTest = () => {
             if (vCLassPT) {
               if (vTextClass) {
                 vCLassPT.className = vTextClass;
+                // console.log(vCLassPT,vTextClass)
+                //vCLassIndex.classList.add(vTextClass);
+              }
+            }
+        
+          }
+          //hsx
+          if(vStrs[1]==="ChangePercent"){
+            var v = parseFloat(dataHNX[1]);
+            if (v === 0) {
+              // = tham chieu, vang
+              vTextClass = g_CLASS_INDEX[0][0];
+              vImageClass = g_CLASS_INDEX[0][1];
+
+            }
+            if (v > 0) {
+              // tang, xanh
+              vTextClass = g_CLASS_INDEX[1][0];
+              vImageClass = g_CLASS_INDEX[1][1];
+            }
+            if (v < 0) {
+              // giam, do
+              vTextClass = g_CLASS_INDEX[2][0];
+              vImageClass = g_CLASS_INDEX[2][1];
+            }
+            if(vCLassIndexHSX){
+              if (vTextClass) {
+                vCLassIndexHSX.className = vTextClass + " px-0.5";
+           
+                // console.log(vCLassIndex,vTextClass)
+                //vCLassIndex.classList.add(vTextClass);
+              }
+            }
+            if (vCLassImage) {
+              if (vImageClass) {
+                vCLassImage.className = vImageClass;
+                // console.log(vCLassImage,vTextClass)
+              }
+            }
+            if (vCLassPTHSX) {
+              if (vTextClass) {
+                vCLassPTHSX.className = vTextClass;
                 // console.log(vCLassPT,vTextClass)
                 //vCLassIndex.classList.add(vTextClass);
               }
@@ -302,9 +351,12 @@ const gridStyle = { height: "100%", width: "100%" };
       document.removeEventListener("contextmenu", () => {});
     };
   }, []);
-  const a = [{TC: "hello "}]
+  //  ******************************************************************
+const [option ,setOntion] =useState(null)
+
   return (
     <div style={containerStyle}>
+       
       <div style={gridStyle} className="ag-theme-alpine-dark table__price">
         <AgGridReact
           ref={gridRef}

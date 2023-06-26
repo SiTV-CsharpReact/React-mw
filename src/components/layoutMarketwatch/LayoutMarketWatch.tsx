@@ -36,6 +36,7 @@ import { setOrderCount } from "./LayoutMarketWatchSLice";
 import { useSelector } from "react-redux";
 import CompleteStock from "../menuBarMW/CompleteStock";
 import { useTranslation } from "react-i18next";
+import { getDataApi, getDataApiPendingOder } from "../orderFormMarketwatch/data";
 
 function RenderTable() {
   const floor = useAppSelector((state) => state.tableTest.floor)
@@ -147,8 +148,11 @@ const LayoutMarketWatch: React.FC = () => {
       orderForm: true,
     });
   };
+ 
   // show hide order
   const hideOrderForm = () => {
+    dispatch(getDataApi())
+    dispatch(getDataApiPendingOder())
     setHeightComponent({
       ...heightComponent,
       orderForm: !heightComponent.orderForm,
@@ -422,11 +426,11 @@ const LayoutMarketWatch: React.FC = () => {
               id="divArrowBottomDown"
               style={{ display: heightComponent.orderForm ? "block" : "none" }}
               onClick={hideOrderForm}
-            >
+            > 
               {orderCount === 1
                 ?  `${t("home:Order.TITLE_LCK1")}`
                 : orderCount === 2
-                ? `${t("home:Order.TITLE_KQKL1")}`
+                ? `${t("home:Order.TITLE_KQKL1")}` 
                 : `${t("home:Order.TITLE_LTN1")}`}
             </div>
             {/* menu link */}
@@ -435,7 +439,7 @@ const LayoutMarketWatch: React.FC = () => {
               className="text-black "
             >
               <div className="flex items-center justify-end panel__bottom__link">
-                <div className="px-2 group" onClick={() => showTab(1)}>
+                <div className="px-2 group" onClick={() => { dispatch(getDataApiPendingOder()); showTab(1)}}>
                   <span
                     className={`size-input hover-text-blue-L ${
                       orderCount === 1 ? "active" : ""
@@ -444,15 +448,15 @@ const LayoutMarketWatch: React.FC = () => {
                      {t("home:Order.TITLE_LCK")}
                   </span>
                 </div>
-                <div className="px-2 group" onClick={() => showTab(2)}>
-                  <span
-                    className={`size-input hover-text-blue-L ${
-                      orderCount === 2 ? "active" : ""
-                    }`}
-                  >
-                    {t("home:Order.TITLE_KQKL")} 
-                  </span>
-                </div>
+                {/* hihi */}
+                <div className="px-2 group" onClick={() => { dispatch(getDataApi()); showTab(2) }}>
+                <span
+                  className={`size-input hover-text-blue-L ${orderCount === 2 ? "active" : ""}`}
+                >
+                  {t("home:Order.TITLE_KQKL")} 
+                </span>
+              </div>
+
                 <div className="px-2 group" onClick={() => showTab(3)}>
                   <span
                     className={`size-input hover-text-blue-L ${

@@ -6,7 +6,8 @@ import axios from "axios";
 import _ from "lodash";
 import { uniqBy, filter, sortBy } from "lodash";
 import { useTranslation } from "react-i18next";
-type Props ={
+import { useAppSelector } from "../../store/configureStore";
+type Props = {
   value: number;
 }
 const PendingOrders: React.FC<Props> = (value) => {
@@ -20,27 +21,30 @@ const PendingOrders: React.FC<Props> = (value) => {
     dataMap: "",
     sortData: "",
   });
-  useEffect(() => {
-    fetchDataValue();
-  }, [value.value===1]);
+  const { dataApiPendingOder } = useAppSelector((state) => state.dataApiPendingOder)
+  console.log("data day ne", dataApiPendingOder)
+
   const fetchDataValue = async () => {
     try {
       const response = await axios.get("http://localhost:3006/items");
-      console.log("response", response);
+
       const jsonData = response.data;
       const uniqueData = uniqBy(jsonData, "ASTOCKCODE");
+      console.log("response", uniqueData);
       // console.log("uniqueData",uniqueData)
       setDataAfter((prevState: any) => ({
         ...prevState,
         dataValue: uniqueData,
       }));
-      console.log(dataAfter)
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   };
+  console.log(data, "data ne")
+
   const hanDelSubmit = () => {
-    let filteredData: any = [...dataAfter.dataCoppy];
+    // let filteredData: any = [...dataAfter.dataCoppy];
+    let filteredData: any = [...dataAfter.dataValue];
     if (dataAfter.dataFiter) {
       filteredData = filteredData.filter(
         (item: any) => item.AEXCHANGE.toUpperCase() === dataAfter.dataFiter
@@ -63,6 +67,10 @@ const PendingOrders: React.FC<Props> = (value) => {
       setData(array);
     }
   };
+  useEffect(() => {
+    fetchDataValue();
+    // value.value === 1
+  }, [dataApiPendingOder]);
 
   const handleExportToExcel = (e: any) => {
     e.preventDefault();
@@ -108,30 +116,30 @@ const PendingOrders: React.FC<Props> = (value) => {
   // console.log(data)
   return (
     <div>
-      <div className="flex flex-col justify-between pl-8 mt-2 lg:flex-row">
-        <div style={{ color: "#555" }}>
+      <div className="grid grid-cols-2  mt-2 ">
+        <div className="pl-8" style={{ color: "#555" }}>
           <p>
-            <span className="text-[14px]  leading-3 font-semibold text-[#333333]">
-            {t("home:Order.ORDER_NOT")}
+            <span className="text-[13px]  leading-3 font-semibold text-[#333333]">
+              {t("home:Order.ORDER_NOT")}
             </span>
-            {t("home:Order.ORDER_NOT0")} 
+            {t("home:Order.ORDER_NOT0")}
           </p>
           <p>  (1) {t("home:Order.ORDER_NOT1")} </p>
           <p>
-            (2){t("home:Order.ORDER_NOT2")}  
+            (2){t("home:Order.ORDER_NOT2")}
           </p>
         </div>
 
-        <div className="flex items-center gap-4 mr-5">
-          <div className="">
+        <div className="pl-5 flex items-center !gap-[7px] ">
+          <div className=" mt-[4px]">
             <label
-              className="block mb-2 text-[11px] leading-3 !font-bold text-black"
+              className="block pl-1.5 mb-[5px] text-[11px] leading-3 !font-bold text-black"
               htmlFor=""
             >
-          {t("home:base.SanGD")}
+              {t("home:base.SanGD")}
             </label>
-          
-            <select 
+
+            <select
               onChange={(e) =>
                 setDataAfter((prevState) => ({
                   ...prevState,
@@ -139,28 +147,28 @@ const PendingOrders: React.FC<Props> = (value) => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="border !p-0 leading-1 !text-sm border-inherit rounded-md !pl-2  text-start shadow-sm h-[28px]"
+              className="border !p-0 leading-1 w-[85.09px] xl:w-[90.9px] 2xl:w-[128.94px] !text-[12px] border-inherit rounded-[4px] !pl-2  text-start shadow-sm h-[28px]"
               name=""
               id="sanGD"
             >
-              <option className="text-[15px] pb-2" value="">
-              {t("home:Order.OPTIONS_TC")}
+              <option className="text-[12px] pb-2" value="">
+                {t("home:Order.OPTIONS_TC")}
               </option>
-              <option value="HNX.LISTED" className="text-[11px] pb-2">
+              <option style={{padding: "0px 2px 1px"}} value="HNX.LISTED" className="text-[12px] pb-2">
                 HNX.LISTED
               </option>
-              <option value="HSX" className="text-[11px] pb-2">
+              <option style={{padding: "0px 2px 1px"}} value="HSX" className="text-[12px] pb-2">
                 HSX
               </option>
             </select>
           </div>
 
-          <div>
+          <div className=" mt-[4px]">
             <label
-              className="block mb-2 text-[11px] leading-3 font-bold text-black"
+              className="block pl-1.5 mb-[5px] text-[11px] leading-3 font-bold text-black"
               htmlFor=""
             >
-             {t("home:Order.ORDER_MCK")} 
+              {t("home:Order.ORDER_MCK")}
             </label>
             <select
               onChange={(e) =>
@@ -169,13 +177,13 @@ const PendingOrders: React.FC<Props> = (value) => {
                   dataMap: e.target.value,
                 }))
               }
-              style={{ border: "1px solid #ccc", color: "#555" }}
-              className=" !p-0 !pr-10 !pl-3 !text-sm border rounded-md border-inherit shadow-sm h-[28px] "
+              style={{ border: "1px solid #ccc", color: "#555",minHeight:"1.2em" }}
+              className="!p-0 !pl-2  w-[85.09px] xl:w-[90.9px] 2xl:w-[128.94px] !text-[12px] border rounded-[4px]  shadow-sm h-[28px] "
               name=""
               id=""
             >
               <option className="text-[12px] pb-2" value="">
-              {t("home:Order.OPTIONS_TC")}
+                {t("home:Order.OPTIONS_TC")}
               </option>
               {dataAfter.dataValue.map((items: any, index: number) => (
                 <option
@@ -189,9 +197,9 @@ const PendingOrders: React.FC<Props> = (value) => {
             </select>
           </div>
 
-          <div className="">
+          <div className=" mt-[4px]">
             <label
-              className="block mb-2 text-[11px] leading-3 font-semibold text-black"
+              className="block pl-1.5 mb-[5px] text-[11px] leading-3 font-semibold text-black"
               htmlFor=""
             >
               {t("home:Order.ORDER_SXT")}
@@ -204,28 +212,28 @@ const PendingOrders: React.FC<Props> = (value) => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="!p-0 !pr-10 !pl-3 !text-sm border rounded-md border-inherit shadow-sm h-[28px] "
+              className="!p-0 !pr-10 !pl-3 w-[89.09px] xl:w-[114.67px] 2xl:w-[160.45px] !text-[12px] border rounded-[4px] border-inherit shadow-sm h-[28px] "
               name=""
               id=""
             >
               <option className="text-[12px] pb-2" value="">
-              {t("home:Order.OPTIONS_TC")}
+                {t("home:Order.OPTIONS_TC")}
               </option>
               <option className="text-[12px] pb-2" value="desc">
-              {t("home:Order.ORDER_MCK")} 
+                {t("home:Order.ORDER_MCK")}
               </option>
               <option className="text-[12px] pb-2" value="asc">
-              {t("home:Order.OPTIONS_SL")}
+                {t("home:Order.OPTIONS_SL")}
               </option>
             </select>
           </div>
 
-          <div>
+          <div className=" mt-[4px]">
             <label
-              className="block mb-2 text-[11px] leading-3 !font-bold text-black"
+              className="block pl-1.5 mb-[5px] text-[11px] leading-3 !font-bold text-black"
               htmlFor=""
             >
-             {t("home:Order.ORDER_TSX")}
+              {t("home:Order.ORDER_TSX")}
             </label>
             <select
               onChange={(e) =>
@@ -235,26 +243,26 @@ const PendingOrders: React.FC<Props> = (value) => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="!p-0 !pr-10 !pl-3 !text-sm border  rounded-md border-inherit shadow-sm h-[28px]"
+              className="!p-0  !pl-2 !text-[12px] border  w-[89.09px] xl:w-[116.71px] 2xl:w-[164.17px] rounded-[4px] border-inherit shadow-sm h-[28px]"
               name=""
               id=""
             >
               <option className="text-[12px] text-gray-500" value="asc">
-              {t("home:base.TangDan")} 
+                {t("home:base.TangDan")}
               </option>
               <option className="text-[12px] pb-0 text-gray-500" value="desc">
-              {t("home:base.GiamDan")}
+                {t("home:base.GiamDan")}
               </option>
             </select>
           </div>
 
           <button
             onClick={hanDelSubmit}
-            className="px-2 py-1 cursor-pointer mt-5 pl-5 pr-5 rounded-md text-white text-[13px] font-medium uppercase bg-[#0055ba]"
+            className=" w-[87.09px] ml-[6px] xl:w-[100.31px] 2xl:w-[140.92px] h-[30px] cursor-pointer mt-5  rounded-[4px] text-white text-[12px] font-medium uppercase bg-[#0055ba]"
           >
-          {t("home:base.CapNhat")} 
+            {t("home:base.CapNhat")}
           </button>
-          <form className="flex gap-2 mt-5 mr-8">
+          <div className="flex gap-2 mt-5 ">
             <img
               className="cursor-pointer "
               onClick={handleExportToExcel}
@@ -267,89 +275,90 @@ const PendingOrders: React.FC<Props> = (value) => {
               src={pfd}
               alt="pfd"
             />
-          </form>
+          </div>
         </div>
+       
       </div>
-      <div className="mt-2 ml-8 mr-8">
+      <div className="mt-[2.5px] ml-8 mr-8">
         <table id="table-id">
-          <thead>
-            <tr>
-              <th
+          <thead className="!bg-[#F3F3F3] ">
+            <tr className=""> 
+              <th 
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3]  !h-[40.28px] "
               >
-                <span className="text-[12px] !font-bold text-black"> {t("home:Order.ORDER_SUA")}</span>
+                <span className="text-[12px]  !font-bold text-black"> {t("home:Order.ORDER_SUA")}</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3] box-content	 w-[58px] 2xl:w-[91.22px] !h-[40.28px] !p-0"
               >
-                <span className="text-[12px] block !font-bold text-black">{t("home:Order.ORDER_HUY")}</span>
+                <span className="text-[12px]  block !font-bold text-black">{t("home:Order.ORDER_HUY")}</span>
                 <input className="rounded-sm" type="checkbox" />
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3] xl:w-[107px] 2xl:w-[120.03px] !h-[40.28px] !p-0"
               >
-                <span className="text-[12px] !font-bold text-black">{t("home:Order.ORDER_MCK")}  </span>
+                <span className="text-[12px]  !font-bold text-black">{t("home:Order.ORDER_MCK")}  </span>
+              </th>
+              <th
+                style={{ border: "1px solid #ccc", color: "#555" , width:"88px" }}
+                className="bg-[#F3F3F3]  !h-[40.28px] 2xl:min-w-[146.06px] !p-0"
+              >
+                <span className="text-[12px ]  !font-bold text-black">{t("home:Order.ORDER_LD")} </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
-              >
-                <span className="text-[12px ] !font-bold text-black">{t("home:Order.ORDER_LD")} </span>
-              </th>
-              <th
-                style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3] xl:w-[115px] 2xl:w-[137.8px] !h-[40.28px] !p-0"
               >
                 <span className="text-[12px] !font-bold text-black">{t("home:base.LoaiGD")}  </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3]  2xl:w-[128.91px] !h-[40.28px] !p-0"
               >
                 <span className="text-[12px] !font-bold text-black"> {t("home:base.base_KLC")} </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3]  !h-[40.28px] 2xl:w-[119.58px] !p-0"
               >
                 <span className="text-[12px] !font-bold text-black">{t("home:base.base_KLD")}  </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3] xl:w-[65px] 2xl:w-[83px] !h-[40.28px] !p-0"
               >
                 <span className="text-[12px ] !font-bold text-black">{t("home:base.Gia")}  </span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3] xl:w-[140px] 2xl:w-[221px] !h-[40.28px] !p-0"
               >
                 <span className="text-[12px] !font-bold text-black">{t("home:base.TinhTrangLenh")}</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3]  !h-[40.28px] 2xl:w-[146.09px] !p-0"
               >
                 <span className="text-[12px] !font-bold text-black">{t("home:base.base_DG")}</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3]  !h-[40.28px] 2xl:w-[132px]  xl:w-[97.49] !p-0"
               >
                 <span className="text-[12px] !font-bold text-black"> {t("home:base.SanGD")}</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3] xl:w-[125px] 2xl:w-[184px] !h-[40.28px] !p-0"
               >
                 <span className="text-[12px ] !font-bold text-black">{t("home:base.base_SHL")}</span>
               </th>
               <th
                 style={{ border: "1px solid #ccc", color: "#555" }}
-                className="bg-[#F3F3F3] "
+                className="bg-[#F3F3F3] xl:w-[163px] 2xl:w-[257px] !h-[40.28px] !p-0"
               >
                 <span className="text-[12px] !font-bold text-black">{t("home:base.base_TGDL")}</span>
               </th>
@@ -366,7 +375,7 @@ const PendingOrders: React.FC<Props> = (value) => {
                     className="text-center "
                   >
                     <p className=" bg-[#F3F3F3] border mx-auto border-black w-[40px] rounded-sm ">
-                    {t("home:Order.ORDER_HUY")} Hủy
+                      {t("home:Order.ORDER_HUY")} Hủy
                     </p>
                   </td>
                   <td
@@ -451,7 +460,7 @@ const PendingOrders: React.FC<Props> = (value) => {
             <tr style={{ border: "1px solid #ccc" }} className="bg-[rgb(251,246,213)]">
               <td style={{ border: "1px solid #ccc" }}></td>
               <td className="text-center " style={{ border: "1px solid #ccc" }}>
-              <p className="p-[.5px] px-[4px] mx-auto my-[1px] text-center text-gray-600 bg-white border border-gray-700 rounded-sm cursor-pointer w-fit "> Hủy </p>
+                <p className="p-[.5px] px-[4px] mx-auto my-[1px] text-center text-gray-600 bg-white border border-gray-700 rounded-sm cursor-pointer w-fit "> Hủy </p>
               </td>
               <td style={{ border: "1px solid #ccc" }}></td>
               <td style={{ border: "1px solid #ccc" }}></td>

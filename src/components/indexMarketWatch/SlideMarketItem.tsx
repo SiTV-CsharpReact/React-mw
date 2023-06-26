@@ -43,8 +43,8 @@ const SlideMarketItem: React.FC<Props> = ({
   return (
     <>
       <li className="dvChart">
-        <div>
-          <p className="text-sm">
+        <div >
+          <p className="text-sm whitespace-nowrap">
             <span id="" className="mar_">
               {name}:
             </span>
@@ -76,7 +76,7 @@ const SlideMarketItem: React.FC<Props> = ({
           </p>
           {!visible && (
             <>
-              <p className="text-xs text-center">
+              <p className="text-xs text-center whitespace-nowrap">
                 <span className="mar_ spQtty">KL:</span>
                 <span id={id[4]} className="mar_ txtIndex">
                   {valueTotalSharesAOM}
@@ -87,7 +87,7 @@ const SlideMarketItem: React.FC<Props> = ({
                 </span>
                 <span className="mar_ spUnit">tỷ</span>
               </p>
-              <p className="text-xs text-center">
+              <p className="text-xs text-center whitespace-nowrap">
                 <span className="arrowUp" />
                 <span id={id[6]} className="maru txtIndex">
                   {valueUp}

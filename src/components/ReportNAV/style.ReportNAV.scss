@@ -11,6 +11,7 @@
       font-weight: bold;
       white-space: nowrap;
       text-align: left;
+      // border: 0 !important;
       span {
         &.lblTuNgay {
           width: 45px;
@@ -41,8 +42,6 @@
         display: block;
         height: 34px;
         width: 100%;
-        padding: 6px 12px;
-        font-size: 14px;
         color: #555;
         background: #fff;
         border: 1px solid #ccc;
@@ -71,6 +70,7 @@
           line-height: 8px !important;
         }
       }
+      
       #noteShow2,#noteShow3 {
         font-weight: 300;
         background-color: #fffff0;
@@ -159,3 +159,4 @@ input[type="submit"] {
     color: #fff;
   }
 }
+
