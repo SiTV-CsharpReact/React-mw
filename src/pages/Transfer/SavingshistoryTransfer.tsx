@@ -40,41 +40,45 @@ const SavingshistoryTransfer = () => {
       name: "Hết hiệu lực",
     },
   ];
-  const [valueStart1, setValueStart1] = useState<any>(new Date());
-  const [valueStart2, setValueStart2] = useState<any>(new Date());
-  const [valueEnd1, setValueEnd1] = useState<any>(null);
-  const [valueEnd2, setValueEnd2] = useState<any>(null);
   const [focused, setFocused] = useState<any>(false);
   const [focused1, setFocused1] = useState<any>(false);
-  const [valueButton, setValueButton] = useState<any>("ALL");
-  const [valueButton1, setValueButton1] = useState<any>("ALL");
-  const [showModal, setShowModal] = useState<any>(false);
-  const [showModal1, setShowModal1] = useState<any>(false);
   const [dataSavingshistory, setDataSavingshistory] = useState<any>([]);
   const [dataDetailHistory, setDataDetailHistory] = useState<any>([]);
   const [dataDetailHistoryType2, setDataDetailHistoryType2] = useState<any>([]);
-  const [query, setQuery] = useState<any>("");
   var sumAinitAmount = 0;
   var sumAamount = 0;
   var sumAvailIntereset = 0;
   var sumTax = 0;
   var sumInterestAfterTax = 0;
   var sumPaymentAmount = 0;
-  const handleShowModal = (atermId: any) => {
-    setShowModal(!showModal);
-    setQuery(atermId);
+
+  const [values, setValues] = useState<any>({
+    valueBeginningDateFrom: new Date(),
+    valueMaturityDateFrom: new Date(),
+    valueBeginningDateTo: null,
+    valueMaturityDateTo: null,
+    valueProduct: "ALL",
+    valueStatus: "ALL",
+    modalPrincipalAndInterest: false,
+    modalLoanRenewal: false,
+    query: "",
+  });
+  const handleSetValue = (key: any, value: any) => {
+    setValues({
+      ...values,
+      [key]: value,
+    });
   };
+
+  // const handleShowModal = (atermId: any) => {
+  //   setShowModal(!showModal);
+  //   setQuery(atermId);
+  // };
   const handleFocused = () => {
     setFocused(!focused);
   };
-  const handleValue = (value: any) => {
-    setValueButton(value);
-  };
   const handleFocused1 = () => {
     setFocused1(!focused1);
-  };
-  const handleValue1 = (value: any) => {
-    setValueButton1(value);
   };
 
   //fetch data
@@ -84,10 +88,10 @@ const SavingshistoryTransfer = () => {
         `http://localhost:3000/DataSavingshistory`
       );
       const promiseDetailHistory = axios.get(
-        `http://localhost:3000/DataGetDetailHistory?id=${query}`
+        `http://localhost:3000/DataGetDetailHistory?id=${values.query}`
       );
       const promiseDetailHistoryType2 = axios.get(
-        `http://localhost:3000/DataSavingshistoryType2?id=${query}`
+        `http://localhost:3000/DataSavingshistoryType2?id=${values.query}`
       );
       const [savingHistoryRes, detailHistoryRes, detailHistoryType2Res] =
         await Promise.all([
@@ -100,7 +104,7 @@ const SavingshistoryTransfer = () => {
       setDataDetailHistoryType2(detailHistoryType2Res.data);
     };
     fetchData();
-  }, [query]);
+  }, [values.query]);
 
   const exportToExcel = () => {
     const table: any = document.getElementById("tableId");
@@ -121,7 +125,6 @@ const SavingshistoryTransfer = () => {
 
     XLSX.writeFile(workbook, "data.xlsx");
   };
-  console.log(showModal1);
 
   return (
     <>
@@ -136,6 +139,7 @@ const SavingshistoryTransfer = () => {
             <a
               target="_blank"
               href="http://www.fpts.com.vn/ho-tro-khach-hang/giao-dich-chung-khoan-co-so/huong-dan-su-dung-dich-vu/thay-doi-thong-tin-khach-hang/thay-doi-thong-tin-truc-tuyen/dang-ky-chuyen-tien/"
+              rel="noreferrer"
             >
               tại đây
             </a>
@@ -146,15 +150,21 @@ const SavingshistoryTransfer = () => {
           {/*------------------Modal------------------*/}
           <div
             className={`fixed py-10 flex items-center top-0 bottom-0 left-0 right-0 z-50 overflow-y-auto  overflow-x-hidden transition-all ${
-              showModal
+              values.modalPrincipalAndInterest
                 ? "opacity-100 visible bg-black bg-opacity-20"
                 : "opacity-0 invisible"
             }`}
-            onClick={handleShowModal}
+            onClick={() => {
+              setValues({
+                ...values,
+                modalPrincipalAndInterest: false,
+                modalLoanRenewal: false,
+              });
+            }}
           >
             <div
               className={`${
-                showModal1 ? "w-[40%]" : "w-[86%]"
+                values.modalLoanRenewal ? "w-[40%]" : "w-[86%]"
               } z-30 m-auto relative bg-white text-center rounded-lg`}
               onClick={(event) => {
                 event.stopPropagation();
@@ -162,7 +172,13 @@ const SavingshistoryTransfer = () => {
             >
               <button
                 className="absolute w-[28px] h-[28px] flex items-center justify-center rounded-full text-white right-0 translate-x-3 -translate-y-3 bg-[#4C4C4C] text-[20px]"
-                onClick={handleShowModal}
+                onClick={() => {
+                  setValues({
+                    ...values,
+                    modalPrincipalAndInterest: false,
+                    modalLoanRenewal: false,
+                  });
+                }}
               >
                 <svg
                   width="13"
@@ -184,26 +200,34 @@ const SavingshistoryTransfer = () => {
                 <div className="flex items-center border-b border-gray-400 text-[13px] font-bold">
                   <span
                     className={`${
-                      showModal1 ? "border-transparent" : "border-blue-400"
+                      values.modalLoanRenewal
+                        ? "border-transparent"
+                        : "border-blue-400"
                     } cursor-pointer text-[#212529] flex-1 py-[12px] text-center border-b-[1px] `}
                     onClick={() => {
-                      setShowModal1(false);
+                      setValues({ ...values, modalLoanRenewal: false });
                     }}
                   >
                     Lịch sử thanh toán tiền gốc và lãi
                   </span>
                   <span
                     className={`${
-                      showModal1 ? "border-blue-400" : "border-transparent"
+                      values.modalLoanRenewal
+                        ? "border-blue-400"
+                        : "border-transparent"
                     } cursor-pointer text-[#212529] text-center border-b-[1px] flex-1 py-[12px] `}
                     onClick={() => {
-                      setShowModal1(true);
+                      setValues({ ...values, modalLoanRenewal: true });
                     }}
                   >
                     Lịch sử gia hạn tiền cho vay
                   </span>
                 </div>
-                <div className={`${showModal1 ? "hidden" : "block"} mt-2`}>
+                <div
+                  className={`${
+                    values.modalLoanRenewal ? "hidden" : "block"
+                  } mt-2`}
+                >
                   <table className="w-full">
                     <thead className="w-full border">
                       <tr className="text-xs font-bold bg-[#EDEDED] ">
@@ -356,7 +380,11 @@ const SavingshistoryTransfer = () => {
                     </tbody>
                   </table>
                 </div>
-                <div className={`${showModal1 ? "block" : "hidden"} mt-2`}>
+                <div
+                  className={`${
+                    values.modalLoanRenewal ? "block" : "hidden"
+                  } mt-2`}
+                >
                   <table className="w-full">
                     <thead className="w-full border ">
                       <tr className="text-xs font-bold bg-[#EDEDED]">
@@ -440,7 +468,7 @@ const SavingshistoryTransfer = () => {
                         onBlur={() => {
                           setFocused(false);
                         }}
-                        value={valueButton}
+                        value={values.valueProduct}
                         readOnly
                       />
                       <span className="absolute right-2">
@@ -464,7 +492,7 @@ const SavingshistoryTransfer = () => {
                           <span
                             className="hover:bg-[#1E90FF] py-[4px] px-3 hover:text-white cursor-pointer"
                             onMouseDown={() => {
-                              handleValue(item.name);
+                              handleSetValue("valueProduct", item.name);
                             }}
                             key={index}
                           >
@@ -479,7 +507,7 @@ const SavingshistoryTransfer = () => {
                   <span className="font-bold">Tình trạng</span>
                   <div>
                     <div
-                      className={`w-[160px] flex relative items-center pr-1 border h-[28px] rounded-[4px] ${
+                      className={`w-[160px] flex relative items-center border h-[28px] rounded-[4px] ${
                         focused1
                           ? "border-blue-300 shadow-[0px_0px_0px_4px_rgba(200,237,255,0.5)]"
                           : ""
@@ -492,7 +520,7 @@ const SavingshistoryTransfer = () => {
                         onBlur={() => {
                           setFocused1(false);
                         }}
-                        value={valueButton1}
+                        value={values.valueStatus}
                         readOnly
                       />
                       <span className="absolute right-2">
@@ -516,7 +544,7 @@ const SavingshistoryTransfer = () => {
                           <span
                             className="hover:bg-[#1E90FF] py-[4px] px-3 hover:text-white cursor-pointer"
                             onMouseDown={() => {
-                              handleValue1(item.name);
+                              handleSetValue("valueStatus", item.name);
                             }}
                             key={index}
                           >
@@ -536,10 +564,12 @@ const SavingshistoryTransfer = () => {
                       className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
                     >
                       <DatePicker
-                        onChange={setValueStart1}
-                        value={valueStart1}
+                        onChange={(date: any) => {
+                          handleSetValue("valueBeginningDateFrom", date);
+                        }}
+                        value={values.valueBeginningDateFrom}
                         format="dd/MM/yy"
-                        className="w-full text-[13px] rounded-sm !border-none outline-none h-full"
+                        className="w-full text-[13px] border border-[#0064cc] rounded-sm outline-none h-full"
                       />
                     </div>
                   </div>
@@ -551,8 +581,10 @@ const SavingshistoryTransfer = () => {
                       className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
                     >
                       <DatePicker
-                        onChange={setValueStart2}
-                        value={valueStart2}
+                        onChange={(date: any) => {
+                          handleSetValue("valueMaturityDateFrom", date);
+                        }}
+                        value={values.valueMaturityDateFrom}
                         format="dd/MM/yy"
                         className="w-full text-[13px] rounded-sm !border-none outline-none h-full"
                       />
@@ -568,8 +600,10 @@ const SavingshistoryTransfer = () => {
                       className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
                     >
                       <DatePicker
-                        onChange={setValueEnd1}
-                        value={valueEnd1}
+                        onChange={(date: any) => {
+                          handleSetValue("valueBeginningDateTo", date);
+                        }}
+                        value={values.valueBeginningDateTo}
                         format="dd/MM/yy"
                         className="w-full text-[13px] rounded-sm !border-none outline-none h-full"
                       />
@@ -583,8 +617,10 @@ const SavingshistoryTransfer = () => {
                       className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
                     >
                       <DatePicker
-                        onChange={setValueEnd2}
-                        value={valueEnd2}
+                        onChange={(date: any) => {
+                          handleSetValue("valueMaturityDateTo", date);
+                        }}
+                        value={values.valueMaturityDateTo}
                         format="dd/MM/yy"
                         className="w-full text-[13px] rounded-sm !border-none outline-none h-full"
                       />
@@ -669,7 +705,12 @@ const SavingshistoryTransfer = () => {
                         <tr
                           className="border-b hover:bg-[#EEFFEE]"
                           onClick={() => {
-                            handleShowModal(item.atermId);
+                            setValues({
+                              ...values,
+                              modalPrincipalAndInterest: true,
+                              modalLoanRenewal: false,
+                              query: item.atermId,
+                            });
                           }}
                           key={item.atermId}
                         >

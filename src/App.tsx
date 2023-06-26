@@ -30,12 +30,11 @@ import AssetReport2 from "./pages/Report/AssetReport2/AssetReport";
 import ReportNAV from "./pages/Report/ReportNAV";
 import ReportTransSummary from "./pages/Report/ReportTransSummary";
 import StockDetails from "./pages/Report/StockDetails";
-const  App: React.FC =()=> {
+const App: React.FC = () => {
   return (
     <div>
       <AppProvider>
-       
-      <Routes> 
+        <Routes>
           <Route path="/" element={<LayoutMarketWatch />} />
           <Route path="/test" element={<TableMarketWatchTest />} />
           <Route
@@ -44,62 +43,89 @@ const  App: React.FC =()=> {
           />
           <Route path="/dynamic-dashboard" element={<MyLayout />} />
           {/* Report */}
-          
+
           {/* Quản lý tài khoản */}
-            <Route path="/report/ReportTransBalance" element={<AssetReport />} />  
-            <Route path="/report/AssetReport2" element={<AssetReport2 />} />             
-            <Route path="/report/ReportNAV" element={<ReportNAV />} />
+          <Route path="/report/ReportTransBalance" element={<AssetReport />} />
+          <Route path="/report/AssetReport2" element={<AssetReport2 />} />
+          <Route path="/report/ReportNAV" element={<ReportNAV />} />
 
-            <Route path="/report/reportprofitloss" element={<AssetReport />} />
+          <Route path="/report/reportprofitloss" element={<AssetReport />} />
 
-            <Route path="/report/ReportTransSummary" element={<ReportTransSummary />} /> 
-            <Route path="/report/StockDetails" element={<StockDetails />} />  
+          <Route
+            path="/report/ReportTransSummary"
+            element={<ReportTransSummary />}
+          />
+          <Route path="/report/StockDetails" element={<StockDetails />} />
 
-            <Route path="/report/CurrMargin" element={<AssetReport />} />
-            <Route path="/report/StockSettlement" element={<AssetReport />} />
-            <Route path="/report/CashSettlement" element={<AssetReport />} />
-            <Route path="/report/CurrMargin" element={<AssetReport />} />
-            <Route path="/report/StockSettlement" element={<AssetReport />} />
-            <Route path="/report/CashSettlement" element={<AssetReport />} />
- 
+          <Route path="/report/CurrMargin" element={<AssetReport />} />
+          <Route path="/report/StockSettlement" element={<AssetReport />} />
+          <Route path="/report/CashSettlement" element={<AssetReport />} />
+          <Route path="/report/CurrMargin" element={<AssetReport />} />
+          <Route path="/report/StockSettlement" element={<AssetReport />} />
+          <Route path="/report/CashSettlement" element={<AssetReport />} />
+
           {/* lịch sử giao dịch */}
-        
-              <Route path="/report/ClientActivityRange" element={<HistoryOrder />} />
-              <Route path="/report/TradeLog" element={<HistoryMatching />} />
-              <Route path="/report/PendingSettlement" element={<HistoryForpay />} />
-            {/* Lịch sử ứng trước tiền bán CK */}
-              <Route path="/report/AdvReport" element={<HistoryAdvReportMoney />} />  
+
+          <Route
+            path="/report/ClientActivityRange"
+            element={<HistoryOrder />}
+          />
+          <Route path="/report/TradeLog" element={<HistoryMatching />} />
+          <Route path="/report/PendingSettlement" element={<HistoryForpay />} />
+          {/* Lịch sử ứng trước tiền bán CK */}
+          <Route path="/report/AdvReport" element={<HistoryAdvReportMoney />} />
           {/* Transfer */}
           <Route path="/transfer" element={<MoneyTransferMain />} />
-          <Route path="/transfer/template" element={<MoneyTransferForm />} /> 
-          <Route path="/transfer/home/transferds" element={<MoneyTransferDerivative  />} /> 
+          <Route path="/transfer/template" element={<MoneyTransferForm />} />
+          <Route
+            path="/transfer/home/transferds"
+            element={<MoneyTransferDerivative />}
+          />
           <Route path="/transfer/history" element={<MoneyHistory />} />
-          <Route path="/transfer/ordersavings" element={<OrdersavingsTransfer />} />
-          <Route path="/transfer/savingshistory" element={<SavingshistoryTransfer />} />
-          <Route path="/transfer/finalizesavings" element={<FinalizesavingsTransfer />} />
-          
+          <Route
+            path="/transfer/ordersavings"
+            element={<OrdersavingsTransfer />}
+          />
+          <Route
+            path="/transfer/savingshistory"
+            element={<SavingshistoryTransfer />}
+          />
+          <Route
+            path="/transfer/finalizesavings"
+            element={<FinalizesavingsTransfer />}
+          />
+
           <Route path="/transfer/home/transferds" element={<AssetReport />} />
           {/* Rightcustory */}
-          <Route path="/rightscustody/AdvanceOrderForm" element={<AdvanceRightCustody />}/>
-          <Route path="/rightscustody/AdvanceHistory" element={<AdvanceHistoryCustody />}/>
+          <Route
+            path="/rightscustody/AdvanceOrderForm"
+            element={<AdvanceRightCustody />}
+          />
+          <Route
+            path="/rightscustody/AdvanceHistory"
+            element={<AdvanceHistoryCustody />}
+          />
           <Route path="/rightscustody/OverView" element={<OverViewCustody />} />
-          <Route path="/rightscustody/CustodyOrderForm"element={<RegistrationOnline />}/>
+          <Route
+            path="/rightscustody/CustodyOrderForm"
+            element={<RegistrationOnline />}
+          />
 
-          <Route path="/rightscustody/AdvanceOrderForm" element={<AssetReport />}/>
+          <Route
+            path="/rightscustody/AdvanceOrderForm"
+            element={<AssetReport />}
+          />
 
           {/* Stoploss */}
           <Route path="/stoploss/orderform" element={<ConditionalOrder />} />
           <Route path="/stoploss/history" element={<ConditionalOrderBook />} />
           {/* Oddlot */}
-          <Route path="/oddlot/History" element={<HistoryCkSell />} />  
-          <Route path="/tradingview" element={<TradingViewWidget />}/>
-        
-          </Routes>
-         
+          <Route path="/oddlot/History" element={<HistoryCkSell />} />
+          <Route path="/tradingview" element={<TradingViewWidget />} />
+        </Routes>
       </AppProvider>
-
     </div>
   );
-}
+};
 
 export default App;

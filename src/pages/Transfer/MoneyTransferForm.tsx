@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import LayoutPage from "../Layout/LayoutPage";
 import "./helper/style.scss";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 const MoneyTransferForm = () => {
+  const { t } = useTranslation(["home"]);
   const [getTemplate, setGetTemplate] = useState<Array<string>>([]);
   useEffect(() => {
     const fetchDataTemplate = async () => {
@@ -33,7 +35,7 @@ const MoneyTransferForm = () => {
           </p>
         </div>
         <div>
-          <div className="mt-[20px] border">
+          <div className="mt-[20px] border border-[#dddddd]">
             <table className="w-full">
               <colgroup>
                 <col className="w-[5%]" />
@@ -42,20 +44,22 @@ const MoneyTransferForm = () => {
                 <col className="w-[23%]" />
                 <col className="w-[26%]" />
               </colgroup>
-              <thead className="border-b bg-[#EDEDED]">
+              <thead className="bg-[#f3f3f3]">
                 <tr>
-                  <th className="text-xs font-bold border-r h-[50px]">STT</th>
-                  <th className="text-xs font-bold border-r h-[50px]">
-                    Tên mẫu
+                  <th className="text-xs font-bold border-r border-[#dddddd] h-[50px]">
+                    {t("home:Transfer.STT")}
                   </th>
-                  <th className="text-xs font-bold border-r h-[50px]">
-                    Tài khoản <br /> thụ hưởng
+                  <th className="text-xs font-bold border-r border-[#dddddd] h-[50px]">
+                    {t("home:Transfer.TenMau")}
                   </th>
-                  <th className="text-xs font-bold border-r h-[50px]">
-                    Tên người <br /> thụ hưởng
+                  <th className="text-xs font-bold border-r border-[#dddddd] h-[50px]">
+                    {t("home:Transfer.TaiKhoanThuHuong")}
                   </th>
-                  <th className="text-xs font-bold border-r h-[50px]">
-                    Ngân hàng <br /> thụ hưởng
+                  <th className="text-xs font-bold border-r border-[#dddddd] h-[50px]">
+                    {t("home:Transfer.TenNguoiThuHuong")}
+                  </th>
+                  <th className="text-xs font-bold border-r border-[#dddddd] h-[50px]">
+                    {t("home:Transfer.NganHangThuHuong")}
                   </th>
                 </tr>
               </thead>
@@ -63,22 +67,22 @@ const MoneyTransferForm = () => {
                 {getTemplate?.length > 0 &&
                   getTemplate.map((item: any, index: number = 0) => (
                     <tr
-                      className="border-b hover:bg-[#eeffee]"
+                      className="border-t border-[#dddddd] hover:bg-[#eeffee]"
                       key={item.TBLID}
                     >
-                      <td className="text-xs leading-[24px] px-1 border-r">
+                      <td className="text-xs leading-[22px] px-1 border-r">
                         {index + 1}
                       </td>
-                      <td className="text-xs leading-[24px] px-1 border-r">
+                      <td className="text-xs leading-[22px] px-1 border-r">
                         {item.TEMPLATENAME}
                       </td>
-                      <td className="text-xs leading-[24px] px-1 border-r">
+                      <td className="text-xs leading-[22px] px-1 border-r">
                         {item.ACCOUNTRCV}
                       </td>
-                      <td className="text-xs leading-[24px] px-1 border-r">
+                      <td className="text-xs leading-[22px] px-1 border-r">
                         {item.ACCOUNTRCVNAME}
                       </td>
-                      <td className="text-xs leading-[24px] px-1 border-r">
+                      <td className="text-xs leading-[22px] px-1 border-r">
                         {item.BANKRCVNAME}
                       </td>
                     </tr>
@@ -93,7 +97,7 @@ const MoneyTransferForm = () => {
               className="text-[13px text-[#337ab7] hover:!underline transition-all"
               rel="noreferrer"
             >
-              Cập nhật Danh sách Mẫu chuyển tiền
+              {t("home:Transfer.CapNhatDSMCT")}
             </a>
           </div>
         </div>

@@ -6,6 +6,7 @@ import moment from "moment";
 import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
+import { Tooltip } from "@mui/material";
 const FinalizesavingsTransfer = () => {
   const dataDropdown = [
     {
@@ -69,33 +70,27 @@ const FinalizesavingsTransfer = () => {
 
   const handleInputChange = (event: any) => {
     let inputValue = event.target.value;
-    const validChars = /^[1-9][0-9]*$/; // Chỉ cho phép từ số 1 đến 9 ở đầu và tiếp theo có thể là bất kỳ số nào
+    const validChars = /^[0-9][0-9]*$/; // Cho phép số từ 0 đến 9 ở đầu và tiếp theo có thể là bất kỳ số nào
 
     if (!validChars.test(inputValue)) {
       // Nếu giá trị nhập không hợp lệ, xóa các ký tự không phải số
-      inputValue = inputValue.replace(/[^1-9]/g, "");
+      inputValue = inputValue.replace(/[^0-9]/g, "");
     }
     const formattedValue = formatNumber(inputValue);
 
     setValueMoneyModal(formattedValue);
   };
   const formatNumber = (numberString: any) => {
-    // Chuyển đổi chuỗi số thành mảng các ký tự
-    const chars = numberString.split("");
+    // Chuyển đổi chuỗi số thành số
+    const number = Number(numberString);
 
-    // Đảo ngược mảng và chèn dấu phẩy sau mỗi 3 ký tự
-    const reversedFormatted = chars
-      .reverse()
-      .reduce((result: any, char: any, index: number) => {
-        if (index > 0 && index % 3 === 0) {
-          result.push(",");
-        }
-        result.push(char);
-        return result;
-      }, []);
+    // Kiểm tra nếu số không hợp lệ hoặc NaN, trả về chuỗi rỗng
+    if (isNaN(number) || !isFinite(number)) {
+      return "";
+    }
 
-    // Đảo ngược lại mảng và kết hợp thành chuỗi
-    return reversedFormatted.reverse().join("");
+    // Định dạng số với dấu phẩy ngăn cách hàng nghìn
+    return number.toLocaleString();
   };
   return (
     <>
@@ -121,11 +116,19 @@ const FinalizesavingsTransfer = () => {
         <div className="relative w-[100%] z-50 MainPage overflow-x-hidden">
           {/*------------------Modal------------------*/}
           <div
-            className={`fixed z-50 flex items-center justify-center top-0 left-0 right-0 bottom-0 overflow-y-auto transition-all${
-              showModal ? "opacity-100 visible" : "opacity-0 invisible"
+            className={`fixed py-10 flex items-center top-0 bottom-0 left-0 right-0 z-50 overflow-y-auto  overflow-x-hidden transition-all ${
+              showModal
+                ? "opacity-100 visible bg-black bg-opacity-20"
+                : "opacity-0 invisible"
             }`}
+            onClick={handleShowModal}
           >
-            <div className="w-[800px] min-h-[776px] relative z-50 bg-white opacity-100 rounded-lg mb-[50px] mt-48">
+            <div
+              className="w-[800px] m-auto min-h-[776px] relative z-50 bg-white opacity-100 rounded-lg"
+              onClick={(event) => {
+                event.stopPropagation();
+              }}
+            >
               <button
                 className="absolute w-[28px] h-[28px] flex items-center justify-center rounded-full text-white right-0 translate-x-3 -translate-y-3 bg-[#4C4C4C] text-[20px]"
                 onClick={handleShowModal}
@@ -330,10 +333,10 @@ const FinalizesavingsTransfer = () => {
                               }
                             )}
                         </div>
-                        <div className="w-full border shadow-md mt-[45px] mb-10 h-[42px] text-[13px] pl-5 items-center flex justify-between pr-1">
+                        <div className="w-full border shadow-[0_0_5.5px_1px_#dddddd] mt-[45px] mb-10 h-[42px] text-[13px] pl-5 items-center flex justify-between pr-1">
                           <span>Xác nhận đặt lệnh</span>
-                          <div className="border h-[34px] w-[220px] flex rounded-md">
-                            <div className="flex items-center justify-center border-r bg-[#e9ecef] px-3 rounded-l-md">
+                          <div className="border h-[34px] w-[220px] flex rounded-md overflow-hidden">
+                            <div className="flex items-center justify-center border-r bg-[#e9ecef] px-3">
                               <svg
                                 width="18"
                                 height="16"
@@ -350,7 +353,7 @@ const FinalizesavingsTransfer = () => {
                             <input
                               type="password"
                               placeholder="Nhập mật khẩu giao dịch"
-                              className="pl-2 text-xs outline-none"
+                              className="w-full pl-2 text-xs border-none outline-none"
                             />
                           </div>
                           <div className="flex gap-1">
@@ -368,10 +371,6 @@ const FinalizesavingsTransfer = () => {
                   }
                 })}
             </div>
-            <div
-              className="fixed top-0 left-0 z-10 w-full h-full bg-black opacity-20"
-              onClick={handleShowModal}
-            ></div>
           </div>
           {/*------------------Screen------------------*/}
           <div className="mt-[30px]">
@@ -543,11 +542,13 @@ const FinalizesavingsTransfer = () => {
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
                       Tiền lãi <br /> cộng dồn{" "}
                       <span title="Tiền lãi cộng dồn tính đến thời điểm hiện tại, tính theo lãi suất tất toán đúng hạn">
-                        <i
-                          className="fa fa-info-circle"
-                          aria-hidden="true"
-                          id="iconPage"
-                        ></i>
+                        <Tooltip title="Add">
+                          <i
+                            className="fa fa-info-circle"
+                            aria-hidden="true"
+                            id="iconPage"
+                          ></i>
+                        </Tooltip>
                       </span>
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
@@ -613,7 +614,7 @@ const FinalizesavingsTransfer = () => {
                             Lãi nhập gốc
                           </td>
                           <td className="text-xs leading-[22px] px-1 border-r flex items-center justify-center">
-                            <button className="h-[27px] w-20 bg-[#2371AF] hover:bg-white hover:text-black transition-all border border-[#2371AF] text-white rounded-md">
+                            <button className="h-[27px] w-20 bg-[#2371AF] text-white transition-all hover:bg-white hover:!text-black border border-[#2371AF] rounded-md">
                               Tất toán
                             </button>
                           </td>
