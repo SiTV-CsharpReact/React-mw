@@ -1,50 +1,36 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import Highcharts from "highcharts";
-
-// import type { InteractionItem } from "chart.js";
-// import {
-//   Chart as ChartJS,
-//   LinearScale,
-//   CategoryScale,
-//   BarElement,
-//   PointElement,
-//   LineElement,
-//   Legend,
-//   Tooltip,
-// } from "chart.js";
-// import {
-//   Chart,
-//   getDatasetAtEvent,
-//   getElementAtEvent,
-//   getElementsAtEvent,
-// } from "react-chartjs-2";
 import { useAppSelector } from "../../store/configureStore";
-import { getMax, getMin } from "./utils/service";
 import { formatNumber } from "../../utils/util";
 
-const ChartReport: any = (date: any) => {
+type IDate = {
+  date: number;
+};
+const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
   const { mode } = useAppSelector((state) => state.settingColorMode);
   const { assetReport } = useAppSelector((state) => state.assetReport);
+  const changeOption: number = date === 0 ? 20 : 89;
 
   const arrLine: any = useMemo(() => {
     let arr: any = [];
-    for (let i = 1; i < assetReport.Table2?.length; i++) {
-      let data = 0;
+    let myArr: any = assetReport.Table2?.map((item: any) => item).reverse();
+    for (let i = 1; i < myArr?.length; i++) {
+      let data;
 
-      if (assetReport.Table2[i - 1].ANAV === 0) {
+      if (myArr[i - 1].ANAV === 0) {
         data = 0;
       } else {
         data =
-          ((assetReport.Table2[i].ANAV -
-            assetReport.Table2[i].ANAV_IN +
-            assetReport.Table2[i].ANAV_DE -
-            assetReport.Table2[i - 1].ANAV) /
-            assetReport.Table2[i - 1].ANAV) *
+          ((myArr[i].ANAV -
+            myArr[i].ANAV_IN +
+            myArr[i].ANAV_DE -
+            myArr[i - 1].ANAV) /
+            myArr[i - 1].ANAV) *
           100;
       }
       arr.push(Number(data.toFixed(2)));
     }
-    return arr;
+    return arr.reverse();
   }, [assetReport.Table2]);
 
   useEffect(() => {
@@ -54,8 +40,8 @@ const ChartReport: any = (date: any) => {
         type: "column",
         color: "#70ad47",
         data: assetReport.Table2?.map((item: any) => item.ANAV)
-          ?.splice(1, Number(date.date))
-          .reverse(),
+          .reverse()
+          .splice(-changeOption),
         yAxis: 0,
       },
       {
@@ -63,7 +49,7 @@ const ChartReport: any = (date: any) => {
         type: "line",
         yAxis: 1,
         color: "#595959",
-        data: arrLine?.map((item: any) => item)?.splice(0, Number(date.date)),
+        data: arrLine?.map((item: any) => item).reverse().splice(-changeOption),
         maker: {
           symbol: "circle",
         },
@@ -76,24 +62,30 @@ const ChartReport: any = (date: any) => {
         backgroundColor: "#ececec",
         events: {
           load: function () {
+            //cách tính bước nhảy, min, max
             const yAxis = this.yAxis[0];
             const yExtremes = yAxis.getExtremes();
             const lengthStep =
               Math.round(yExtremes.dataMin * 0.9).toString().length - 2;
             const step = 10 ** lengthStep;
             const newMin = Math.floor((yExtremes.dataMin * 0.95) / step) * step;
-            const newMax = Math.floor(yExtremes.dataMax / step) * step;
+            const newMax = Math.ceil(yExtremes.dataMax / step) * step;
             yAxis.setExtremes(newMin, newMax, true, false);
-            console.log(this.series[1].points);
+            this.yAxis[1].update({
+              tickAmount: date === 0 ? 5 : 4,
+            });
+            yAxis.update({
+              tickAmount: date === 0 ? 5 : 4,
+            });
+            //cập nhật maker in linechart
             this.series[1].points.forEach((point: any) => {
               point.update({
-                color: point.y > 0 ? "#70ad47" : "#c00000",
+                color: point.y > 0 ? "#548235" : "#c00000",
               });
             });
             this.redraw();
           },
         },
-        width: 1830,
         height: 300,
       },
       title: {
@@ -104,9 +96,9 @@ const ChartReport: any = (date: any) => {
       },
       xAxis: {
         categories: assetReport.Table2?.map((item: any) => item.ADATE)
-          ?.splice(0, Number(date.date))
-          .reverse(),
-        crosshair: true,
+          .reverse()
+          .splice(-changeOption),
+        // crosshair: true,
         labels: {
           style: {
             fontSize: "11px",
@@ -135,9 +127,7 @@ const ChartReport: any = (date: any) => {
               return Highcharts.numberFormat(this.value as number, 0, "", ",");
             },
           },
-          tickAmount: date.date === "20" ? 5 : 4,
           gridLineWidth: 1,
-          tickInterval: 150000,
         },
         {
           title: {
@@ -152,13 +142,11 @@ const ChartReport: any = (date: any) => {
               color: "#000000",
               fontFamily:
                 '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif',
-              // x: -20,
             },
             formatter: function () {
               return this.value + "%";
             },
           },
-          tickAmount: date.date === "20" ? 5 : 4,
         },
       ],
       tooltip: {
@@ -198,38 +186,27 @@ const ChartReport: any = (date: any) => {
         symbolWidth: 12, // set the width of the legend symbol
         symbolHeight: 12, // set the height of the legend symbol
         symbolRadius: 0,
-        // backgroundColor: 'red'
         squareSymbol: true,
       },
       plotOptions: {
         column: {
-          pointPadding: 0,
+          pointPadding: 0.1,
+          groupPadding: 0.2,
           borderWidth: 0,
-          pointWidth: 42,
           borderRadius: 0,
           states: {
             hover: {
               color: "rgb(137,198,96)",
             },
           },
-          // symbolWidth: 20, // set the width of the legend symbol
-          // symbolHeight: 20, // set the height of the legend symbol
-          // symbolRadius: 5,
         },
-        // line: {},
       },
       series: series,
-      responsive: {
-        rules: [
-          {
-            condition: {
-              maxWidth: 500,
-            },
-          },
-        ],
-      },
     });
-  }, [arrLine, assetReport.Table2, date.date]);
+    return () => {
+      Highcharts.chart("container-asset_report", {}).destroy();
+    };
+  }, [arrLine, assetReport.Table2, changeOption, date]);
   return (
     <figure className="highcharts-figure">
       <div id="container-asset_report"></div>

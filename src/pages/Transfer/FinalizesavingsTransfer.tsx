@@ -542,13 +542,11 @@ const FinalizesavingsTransfer = () => {
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
                       Tiền lãi <br /> cộng dồn{" "}
                       <span title="Tiền lãi cộng dồn tính đến thời điểm hiện tại, tính theo lãi suất tất toán đúng hạn">
-                        <Tooltip title="Add">
-                          <i
-                            className="fa fa-info-circle"
-                            aria-hidden="true"
-                            id="iconPage"
-                          ></i>
-                        </Tooltip>
+                        <i
+                          className="fa fa-info-circle"
+                          aria-hidden="true"
+                          id="iconPage"
+                        ></i>
                       </span>
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">

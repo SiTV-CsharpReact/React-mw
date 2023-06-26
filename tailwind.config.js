@@ -18,7 +18,12 @@ module.exports = {
       500: "500px",
       "1/2": "50%",
     },
-    extend: {},
+    extend: {
+      inset: {
+        9: "9px",
+        20: "20px",
+      },
+    },
     colors: {
       borderBodyTableMarket: "#505050",
       borderHeadTableMarket: "#858585",
@@ -60,7 +65,7 @@ module.exports = {
       bgFooterTable: "#131722",
       textHeaderTableGDTT: "#F7FFAA",
       bgPannelLink: "#dedede",
-      invert: '#646464'
+      invert: "#646464",
       //'tooltipNoti':'#2371af'
     },
     fontSize: {
@@ -77,7 +82,7 @@ module.exports = {
       "5xl": "3.052rem",
       fontLogo: "26px",
       large: "large !important",
-      "13px": "13px",
+      13: "13px",
       "15px": "15px",
       "16px": "16px",
       "16pxi": "16px !important",

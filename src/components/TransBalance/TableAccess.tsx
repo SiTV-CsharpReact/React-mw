@@ -6,18 +6,15 @@ import io from 'socket.io-client';
 const TableAsset = (props: any) => {
     const { assetReport } = useAppSelector((state) => state.assetReport);
     const [dataTable, setDataTable] = useState([])
-    const [dataHSX, setDataHSX] = useState<any[]>([])
-    const [dataHNX, setDataHNX] = useState<any[]>([])
-    const [dataArrHSX,setArrHSX]=useState<any>([])
-    const [dataArrHNX,setArrHNX]=useState<any>([])
+    const [dataArrHSX, setArrHSX] = useState<any>([])
+    const [dataArrHNX, setArrHNX] = useState<any>([])
     const [short, setShort] = useState(false);
     const [sort, setSort] = useState("asc");
     const [label, setLabel] = useState("");
     const { mode } = useAppSelector((state) => state.settingColorMode);
-
     useEffect(() => {
         if (props.short)
-        setShort(!short);
+            setShort(!short);
     }, [props.short]);
     const handleSort = (key: string) => {
         setLabel(key);
@@ -57,69 +54,94 @@ const TableAsset = (props: any) => {
             fetchDataHNN(code)
         });
     }, [dataTable]);
-    // let dataArrHSX : any[]  = [];
-    // let dataArrHNX = [];
-    
     const fetchDataHSN = async (code: string) => {
         const { data } = await axios.get(`https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`)
-        
-        data.map((item: any) =>
-              setArrHSX((prev:any[]) => [...prev,[item?.Info?.[0][1], "HSX", item?.Info?.[31][1]]])
-        )
-        // if (dataArrHSX?.length > 0) {
 
-        // }
+        data.map((item: any) =>
+            setArrHSX((prev: any[]) => [...prev, [item?.Info?.[0][1], "HSX", item?.Info?.[31][1]]])
+        )
     }
-    // console.log("first item", dataArrHSX)
     const fetchDataTable = async () => {
         const { data } = await axios.get("http://localhost:3111/Data")
-        
         setDataTable(data)
     }
     const fetchDataHNN = async (code: string) => {
         const { data } = await axios.get(`https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${code}`)
-          data.map((item: any) =>
-            setArrHNX((prev:any[])=>[...prev,[item?.Info?.[12][1], "HNX", item?.Info?.[31][1]]])
+        data.map((item: any) =>
+            setArrHNX((prev: any[]) => [...prev, [item?.Info?.[12][1], "HNX", item?.Info?.[31][1]]])
         )
-        
-        setDataHNX(data)
     }
-    // console.log({dataArrHNX});
-    console.log(dataArrHSX,dataArrHNX,"data");
-    
-     useEffect(() => {
+    useEffect(() => {
         fetchDataTable()
-     }, [])
-    
+    }, [])
+
     const mergedData = dataTable?.map((item: any) => {
         const dataHSXItem = dataArrHSX?.filter((dataItem: any) => dataItem[0] === item.Key);
         const dataHNXItem = dataArrHNX?.filter((dataItem: any) => dataItem[0] === item.Key);
-        // console.log({dataHSXItem,dataHNXItem });
-        
+
         return {
             ...item,
-            dataItem: dataHSXItem?.length !==0 ? dataHSXItem[0] : dataHNXItem?.length !==0 ? dataHNXItem[0] : []
-            // HNX: {
-            //     dataItem:  dataHSXItem
-            // },
-            // HSX: {
-            //     dataItem: dataHNXItem
-            // }
+            dataItem: dataHSXItem?.length !== 0 ? dataHSXItem[0] : dataHNXItem?.length !== 0 ? dataHNXItem[0] : []
+
         };
     });
-    useEffect(() => {
-        const socket = io('https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=All');
-         socket.on('data', (data) => {
-        console.log(data);
-    });
-
-
-    return () => {
-      socket.disconnect();
+    const updateQuote = (objRealtime: string) => {
+        try {
+            const dataHNXRealTime = JSON.parse(objRealtime);
+            if (dataHNXRealTime && dataHNXRealTime.M) {
+                const dataM = dataHNXRealTime.M;
+                const arrDatas: any[] = [];
+                dataM.forEach((dataLT: any) => {
+                    const changeData = JSON.parse(dataLT.A[0].Change);
+                    arrDatas.push(...changeData);
+                });
+                setArrHSX((prevArrHSX: any[]) => prevArrHSX.concat(arrDatas));
+                console.log(arrDatas, "change")
+            }
+        } catch (error) {
+            console.error('Error parsing real-time data:', error);
+        }
     };
-  }, []);
+    useEffect(() => {
+        const socketHNX = new WebSocket(
+            "wss://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=yWr50kq6iuFWJzRwhs7GR3bBYG%2Blpj7laF9cuG7oMsc4RLrmhYu9N%2Fco3Vl68KnUNXyGX7c5uuHmqFw1J1P1ClWXvR4w%2BXZlFMtR33yYxNAdiR%2FXCJWS%2FxL%2BNGhHlIpB&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=4"
+        );
+        const socketHSX = new WebSocket(
+            "wss://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=Ie5DGpXarjClrWZQsIjTMksj0n592Jg8BUV9ChfmtVfpZPN%2BU8aMlfo5FVEDmh%2BmsAw3qgXN3peJW%2FeT6K7sNohOuAT6LC3KdklEDxpPxalgGUkNKF30LWa612toMv19&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=2"
+        );
+        socketHSX.onopen = () => {
+            console.log("WebSocket connection HSX established.");
+        };
+        socketHNX.onopen = () => {
+            console.log("WebSocket connection HNX established.");
+        };
+        socketHSX.onmessage = (event) => {
+            updateQuote(event.data);
+        };
+        socketHNX.onmessage = (event) => {
+            updateQuote(event.data)
+        };
+        socketHSX.onclose = () => {
+            console.log("WebSocket connection closed.");
+        };
+        socketHNX.onclose = () => {
+            console.log("WebSocket connection closed.");
+        };
+        return () => {
+            socketHSX.close();
+            socketHNX.close();
+        };
+    }, []);
+    let totalSum = 0;
+    let totalGoc = 0;
+    let toTalDk = 0;
+    let tongtoTalPC = 0;
+
+
+
+
     return (
-        <div className={`table_detail_BCTS !h-[614px] mt-5 ${mode}-bg`}>
+        <div className={`table_detail   !h-[614px] mt-5 ${mode}-bg`}>
             {short ? (
                 <table>
                     <thead>
@@ -130,7 +152,7 @@ const TableAsset = (props: any) => {
                                 style={{ width: "5%" }}
                                 onClick={() => handleSort("ASTOCKCODE")}
                             >
-                                <div className={`relative ${mode}-text`}>
+                                 <div className={`relative ${mode}-text`}>
                                     Mã CK
                                     <span className="absolute translate-y-1/2 top-1/2 right-2">
                                         {label !== "ASTOCKCODE" ? (
@@ -445,9 +467,25 @@ const TableAsset = (props: any) => {
                     </thead>
                     <tbody>
                         {mergedData?.map((item: any, index: number) => {
-                            console.log({item})
+                            const valuePrice = item?.dataItem[2] * 1000
+                            const totalValue = Number((item?.Value.TotalAmount) * valuePrice)
+                            const totalAfter = (totalValue - item.Value.RootValue)
+                            const totalPc = ((totalAfter / item.Value.RootValue) * 100);
+                            if (totalValue > 0) {
+                                totalSum += totalValue
+                            };
+                            if (item?.Value.RootValue > 0) {
+                                totalGoc += item?.Value.RootValue
+                            };
+                            if (totalAfter) {
+                                toTalDk += totalAfter
+                            };
+                            if (totalPc) {
+                                tongtoTalPC += totalPc
+                            };
+                            console.log("first", totalSum)
                             return <tr key={item.Key}>
-                                <td className={`!text-center !text-xs ${mode}-text`}>
+                                <td style={{fontWeight:"700"}} className={`!text-center !text-[#007db7] !cursor-pointer !text-xs ${mode}-text`}>
                                     {item?.Value.StockCode}
                                 </td>
                                 <td className={`!text-center !text-xs ${mode}-text`}>
@@ -466,17 +504,18 @@ const TableAsset = (props: any) => {
                                     {item.AMORTGATE_BANK}
                                 </td>
                                 <td className={`${mode}-text !text-xs`}>
-                                    {item.ATRANSFER_RESTRICTED}
+                                    {formatNumberMarket(item.ATRANSFER_RESTRICTED)}
                                 </td>
                                 <td className={`${mode}-text !text-xs`}>
                                     {formatNumberMarket(item?.Value.TotalAmount)}
                                 </td>
                                 <td className={`${mode}-text !text-xs`}>
-                                    {/* {formatNumberMarket(item?.Value.MarketPrice)}  */}
-                                    {item?.dataItem[2]}
+                                    {formatNumberMarket((item?.dataItem[2] * 1000))}
+
                                 </td>
                                 <td className={`${mode}-text !text-xs`}>
-                                    {formatNumberMarket(item?.Value.RootValue)}
+                                    {formatNumberMarket(totalValue)}
+
                                 </td>
 
                                 <td
@@ -489,17 +528,18 @@ const TableAsset = (props: any) => {
                                 >
                                     {formatNumberMarket(item?.Value.RootValue)}
                                 </td>
-                                <td className={`${mode}-text !text-xs ${item?.Value.AveragePrice < 0
-                                        ? "!text-[#FF0000]"
-                                        : "!text-[#00b050]"
+                                <td className={`${mode}-text !text-xs ${totalAfter < 0
+                                    ? "!text-[#FF0000]"
+                                    : "!text-[#00b050]"
                                     }`}>
-                                    {item.ACAPITAL_STRUCTURE}%
+                                    {formatNumberMarket(totalAfter)}
                                 </td>
-                                <td className={`${mode}-text !text-xs ${item?.Value.AveragePrice < 0
-                                        ? "!text-[#FF0000]"
-                                        : "!text-[#00b050]"
+
+                                <td className={`${mode}-text !text-xs ${totalPc < 0
+                                    ? "!text-[#FF0000]"
+                                    : "!text-[#00b050]"
                                     }`}>
-                                    {item.APORTFOLIO_RATE}%
+                                    {!Number.isNaN(totalPc) ? (totalPc).toFixed(2) : ""}  {!Number.isNaN(totalPc) ? "%" : ""}
                                 </td>
 
                             </tr>
@@ -514,90 +554,40 @@ const TableAsset = (props: any) => {
                             >
                                 TỔNG
                             </td>
-                            <td className="font-bold !text-xs">
-                                {formatNumber(
-                                    assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b.AMARKET_VALUE,
-                                        0
-                                    )
-                                )}
-                            </td>
                             <td className="!text-xs"></td>
-                            <td className="font-bold !text-xs">
-                                {formatNumber(
-                                    assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b.AROOT_VALUE,
-                                        0
-                                    )
-                                )}
-                            </td>
-                            <td
-                                className={`!text-xs ${formatNumber(
-                                    assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b.APROFIT_LOSS_VAL,
-                                        0
-                                    )
-                                ) < 0
-                                        ? "!text-[#FF0000]"
-                                        : "!text-[#00b050]"
-                                    }`}
-                            >
-                                {formatNumber(
-                                    assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b.APROFIT_LOSS_VAL,
-                                        0
-                                    )
-                                )}
-                            </td>
-                            <td
-                                className={`!text-xs ${formatNumber(
-                                    assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b.APROFIT_LOSS_RATE,
-                                        0
-                                    )
-                                ) < 0
-                                        ? "!text-[#FF0000]"
-                                        : "!text-[#00b050]"
-                                    }`}
-                            >
-                                {(
-                                    (assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b.APROFIT_LOSS_VAL,
-                                        0
-                                    ) /
-                                        assetReport?.Table1?.reduce(
-                                            (a: any, b: any) => a + b.AROOT_VALUE,
-                                            0
-                                        )) *
-                                    100
-                                ).toFixed(2)}
-                                %
-                            </td>
-                            <td
-                                className={`!text-xs ${formatNumber(
-                                    assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b.APROFIT_LOSS_RATE,
-                                        0
-                                    )
-                                ) < 0
-                                        ? "!text-[#FF0000]"
-                                        : "!text-[#00b050]"
-                                    }`}
-                            >
-                                {(
-                                    (assetReport?.Table1?.reduce(
-                                        (a: any, b: any) => a + b.APROFIT_LOSS_VAL,
-                                        0
-                                    ) /
-                                        assetReport?.Table1?.reduce(
-                                            (a: any, b: any) => a + b.AROOT_VALUE,
-                                            0
-                                        )) *
-                                    100
-                                ).toFixed(2)}
-                                %
-                            </td>
 
+                            <td className="font-bold !text-xs">
+                                {formatNumberMarket(totalSum)}
+
+                            </td>
+                            <td className="font-bold !text-xs">
+
+                            </td>
+                            <td
+                                className="font-bold !text-xs"
+                            >
+                                {formatNumber(
+                                    totalGoc
+                                )}
+                            </td>
+                            <td
+                                className={`!text-xs font-bold ${toTalDk < 0
+                                        ? "!text-[#FF0000]"
+                                        : "!text-[#00b050]"
+                                    }`}
+                            >
+                                {formatNumber(toTalDk)}
+
+                            </td>
+                            <td
+                                className={`!text-xs font-bold  ${tongtoTalPC < 0
+                                    ? "!text-[#FF0000]"
+                                    : "!text-[#00b050]"
+                                    }`}
+                            >
+                                {/* {formatNumber(tongtoTalPC)}
+                                % */}
+                            </td>
                         </tr>
                     </tfoot>
                 </table>
@@ -868,8 +858,24 @@ const TableAsset = (props: any) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {dataTable?.map((item: any, index: number) => (
-                            <tr key={item.Key}>
+                        {mergedData?.map((item: any, index: number) => {
+                            const valuePrice = item?.dataItem[2] * 1000
+                            const totalValue = ((item?.Value.TotalAmount) * valuePrice)
+                            const totalAfter = (totalValue - item.Value.RootValue)
+                            const totalPc = Number(totalAfter / item.Value.RootValue) * 100;
+                            if (totalValue > 0) {
+                                totalSum += totalValue
+                            };
+                            if (item?.Value.RootValue > 0) {
+                                totalGoc += item?.Value.RootValue
+                            };
+                            if (totalAfter) {
+                                toTalDk += totalAfter
+                            };
+                            if (totalPc) {
+                                tongtoTalPC += totalPc
+                            };
+                            return <tr key={item.Key}>
                                 <td className={`!text-center cursor-pointer !font-bold !text-[#007DB7] !text-xs ${mode}-text`}>
                                     {item.Value.StockCode}
                                 </td>
@@ -887,10 +893,10 @@ const TableAsset = (props: any) => {
                                     {formatNumberMarket(item?.Value.TotalAmount)}
                                 </td>
                                 <td className={`${mode}-text !text-xs`}>
-                                    {formatNumberMarket(item?.Value.MarketPrice)}
+                                    {formatNumberMarket((item?.dataItem[2] * 1000))}
                                 </td>
                                 <td className={`${mode}-text !text-xs`}>
-                                    {formatNumberMarket(item?.Value.RootValue)}
+                                    {formatNumberMarket(totalValue)}
                                 </td>
                                 <td
                                     className={`!text-xs `}
@@ -898,42 +904,53 @@ const TableAsset = (props: any) => {
                                     {formatNumberMarket(item?.Value.AveragePrice)}
                                 </td>
                                 <td
+                                
                                     className={`!text-xs`}
                                 >
                                     {formatNumberMarket(item?.Value.RootValue)}
                                 </td>
-                                <td className={`${mode}-text !text-xs ${item?.Value.AveragePrice < 0
-                                        ? "!text-[#FF0000]"
-                                        : "!text-[#00b050]"
+                                <td className={`${mode}-text !text-xs ${totalAfter < 0
+                                    ? "!text-[#FF0000]"
+                                    : "!text-[#00b050]"
                                     }`}>
-                                    {item.ACAPITAL_STRUCTURE}
+                                    {formatNumberMarket(totalAfter)}
                                 </td>
-                                <td className={`${mode}-text ${item?.Value.AveragePrice < 0
-                                        ? "!text-[#FF0000]"
-                                        : "!text-[#00b050]"
+                                <td className={`${mode}-text ${totalPc < 0
+                                    ? "!text-[#FF0000]"
+                                    : "!text-[#00b050]"
                                     }`}>
-                                    {item.APORTFOLIO_RATE}%
+                                    {!Number.isNaN(totalPc) ? (totalPc).toFixed(2) : ""}  {!Number.isNaN(totalPc) ? "%" : ""}
                                 </td>
                             </tr>
-                        ))}
+                        })}
                     </tbody>
-
                     <tfoot>
                         <tr>
                             <td colSpan={6} className="!text-center">TỔNG</td>
-                            <td>50,451,750</td>
+                            <td className="font-bold "> {formatNumberMarket(totalSum)}</td>
                             <td></td>
-                            <td>51,282,365</td>
-                            <td>-830,615</td>
-                            <td>-1.62%</td>
+                               <td
+                                className="font-bold !text-xs"
+                            >
+                                {formatNumber(
+                                    totalGoc
+                                )}
+                            </td>
+                            <td
+                                className={`!text-xs font-bold ${toTalDk < 0
+                                        ? "!text-[#FF0000]"
+                                        : "!text-[#00b050]"
+                                    }`}
+                            >
+                                {formatNumber(toTalDk)}
 
+                            </td>
+                            <td>{/* {formatNumber(tongtoTalPC)} % */}</td>
                         </tr>
                     </tfoot>
-
                 </table>
             )}
         </div>
     );
 };
-
 export default TableAsset;

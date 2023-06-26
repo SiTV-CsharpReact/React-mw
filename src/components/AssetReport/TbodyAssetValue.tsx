@@ -35,13 +35,15 @@ const TbodyAssetValue: any = (props: Props) => {
         <tbody className="h-[30px]">
           <tr>
             <td>
-              <span className={`font-bold ${mode}-text text-black text-xs`}>
+              <span
+                className={`font-bold  text-[#000] font-[Arial] text-xs`}
+              >
                 GIÁ TRỊ TÀI SẢN RÒNG (I + II + III)
               </span>
             </td>
             <td>
               <span
-                className={`font-bold ${mode}-text text-black float-right text-xs`}
+                className={`font-bold  text-[#000] float-right text-xs`}
               >
                 {formatNumber(props.item.SUM_STOCK + props.item.SUM_CASH)}
               </span>
@@ -54,13 +56,13 @@ const TbodyAssetValue: any = (props: Props) => {
             <tr>
               <td>
                 <span
-                  className={`font-bold text-black float-left text-xs ${mode}-text`}
+                  className={`font-bold text-[#000] italic font-[Arial] float-left text-xs`}
                 >
                   I. CHỨNG KHOÁN
                 </span>
                 <span
                   onClick={() => setDrop(!drop)}
-                  className={`cursor-pointer float-left relative left-2 -top-[2px] text-xs ${mode}-text`}
+                  className={`cursor-pointer float-left relative left-2 !text-hoverKL -top-[2px] text-sm`}
                 >
                   {drop ? (
                     <i className="fa fa-caret-down" aria-hidden="true"></i>
@@ -71,7 +73,7 @@ const TbodyAssetValue: any = (props: Props) => {
               </td>
               <td>
                 <span
-                  className={`font-bold text-black float-right text-xs ${mode}-text`}
+                  className={`font-bold text-[#000] italic font-[Arial] float-right text-xs `}
                 >
                   {formatNumber(props.item.SUM_STOCK)}
                 </span>
@@ -84,25 +86,31 @@ const TbodyAssetValue: any = (props: Props) => {
           >
             <tr>
               <td>
-                <span className={`report__text__profile_name ${mode}-text`}>
+                <span
+                  className={`report__text__profile_name  font-[Arial] text-xs`}
+                >
                   Chứng khoán có sẵn
                 </span>
               </td>
               <td>
-                <span className={`float-right text-xs ${mode}-text`}>
+                <span
+                  className={`float-right text-xs  font-[Arial]`}
+                >
                   {formatNumber(props.item.AVAL_STOCK)}
                 </span>
               </td>
             </tr>
             <tr>
               <td>
-                <span className={`report__text__profile_name ${mode}-text`}>
+                <span
+                  className={`report__text__profile_name  font-[Arial] text-xs`}
+                >
                   Chứng khoán mua chờ về
                 </span>
               </td>
               <td>
                 <span
-                  className={`report__text__profile_name ${mode}-text float-right`}
+                  className={`report__text__profile_name  float-right font-[Arial] text-xs`}
                 >
                   {formatNumber(props.item.ABUY_STOCK)}
                 </span>
@@ -110,13 +118,15 @@ const TbodyAssetValue: any = (props: Props) => {
             </tr>
             <tr>
               <td>
-                <span className={`report__text__profile_name ${mode}-text`}>
+                <span
+                  className={`report__text__profile_name  font-[Arial] text-xs`}
+                >
                   Chứng khoán quyền chờ về
                 </span>
               </td>
               <td>
                 <span
-                  className={`report__text__profile_name ${mode}-text float-right`}
+                  className={`report__text__profile_name  float-right font-[Arial] text-xs`}
                 >
                   {formatNumber(props.item.ARIGHT_STOCK)}
                 </span>
@@ -125,19 +135,22 @@ const TbodyAssetValue: any = (props: Props) => {
             <tr>
               <td>
                 <span
-                  className={`report__text__profile_name flex items-center gap-1 ${mode}-text`}
+                  className={`report__text__profile_name  font-[Arial] text-xs`}
                 >
-                  Chứng khoán hạn chế
+                  Chứng khoán hạn chế{" "}
                   <span
-                    className="mb-1 relative cursor-pointer"
+                    className="mb-1 relative cursor-pointer text-hoverKL"
                     onMouseOver={() => setMouse(true)}
                     onMouseLeave={() => setMouse(false)}
                   >
-                    <i className="fa fa-info-circle" aria-hidden="true"></i>
+                    <i
+                      className="fa fa-info-circle !text-sm"
+                      aria-hidden="true"
+                    ></i>
                     {mouse && (
                       <label
                         id="noteShow"
-                        className={`${mode}-text ${mode}-bg text-black`}
+                        className={` ${mode}-bg text-black`}
                       >
                         Bao gồm CK hạn chế giao <br /> dịch, Cầm cố Ngân hàng
                       </label>
@@ -147,7 +160,7 @@ const TbodyAssetValue: any = (props: Props) => {
               </td>
               <td>
                 <span
-                  className={`report__text__profile_name ${mode}-text float-right`}
+                  className={`report__text__profile_name  float-right font-[Arial] text-xs`}
                 >
                   {formatNumber(props.item.ALIMIT_STOCK)}
                 </span>
@@ -161,13 +174,13 @@ const TbodyAssetValue: any = (props: Props) => {
             <tr>
               <td>
                 <span
-                  className={`font-bold text-black float-left text-xs ${mode}-text`}
+                  className={`font-bold text-[#000] italic font-[Arial] float-left text-xs `}
                 >
                   II. TIỀN
                 </span>
                 <span
                   onClick={() => setDrop(!drop)}
-                  className={`cursor-pointer float-left relative left-2 -top-[2px] text-xs ${mode}-text`}
+                  className={`cursor-pointer float-left relative left-2 -top-[2px] text-sm !text-hoverKL`}
                 >
                   {drop ? (
                     <i className="fa fa-caret-down" aria-hidden="true"></i>
@@ -178,7 +191,7 @@ const TbodyAssetValue: any = (props: Props) => {
               </td>
               <td>
                 <span
-                  className={`font-bold text-black float-right text-xs ${mode}-text`}
+                  className={`font-bold text-[#000] italic font-[Arial] float-right text-xs `}
                 >
                   {formatNumber(props.item.SUM_CASH)}
                 </span>
@@ -191,13 +204,13 @@ const TbodyAssetValue: any = (props: Props) => {
           >
             <tr>
               <td>
-                <span className={`report__text__profile_name ${mode}-text`}>
+                <span className={`report__text__profile_name  font-[Arial]`}>
                   Tiền trong tài khoản
                 </span>
               </td>
               <td>
                 <span
-                  className={`report__text__profile_name ${mode}-text float-right`}
+                  className={`report__text__profile_name  float-right font-[Arial]`}
                 >
                   {formatNumber(props.item.ACASH_AMOUNT)}
                 </span>
@@ -206,13 +219,13 @@ const TbodyAssetValue: any = (props: Props) => {
             <tr>
               <td>
                 <span
-                  className={`report__text__profile_name float-left ${mode}-text`}
+                  className={`report__text__profile_name float-left  font-[Arial]`}
                 >
                   Tiền bán chờ thanh toán
                 </span>
                 <span
                   onClick={() => setDrop2(!drop2)}
-                  className={`cursor-pointer float-left relative -top-[2px] left-2 text-xs ${mode}-text`}
+                  className={`cursor-pointer float-left relative -top-[2px] left-2 text-sm !text-hoverKL`}
                 >
                   {drop2 ? (
                     <i className="fa fa-caret-down" aria-hidden="true"></i>
@@ -223,7 +236,7 @@ const TbodyAssetValue: any = (props: Props) => {
               </td>
               <td>
                 <span
-                  className={`report__text__profile_name ${mode}-text float-right`}
+                  className={`report__text__profile_name  float-right font-[Arial]`}
                 >
                   {formatNumber(props.item.ABUY_STOCK)}
                 </span>
@@ -231,43 +244,43 @@ const TbodyAssetValue: any = (props: Props) => {
             </tr>
             <tr style={{ display: drop2 ? "none" : "" }}>
               <td>
-                <span className={`pl-[150px] ${mode}-text`}>T0</span>
+                <span className={`pl-[150px]  font-[Arial]`}>T0</span>
               </td>
               <td>
-                <span className={`float-right ${mode}-text`}>
+                <span className={`float-right  font-[Arial]`}>
                   {formatNumber(props.item.AREC_CASH_T0)}
                 </span>
               </td>
             </tr>
             <tr style={{ display: drop2 ? "none" : "" }}>
               <td>
-                <span className={`pl-[150px] ${mode}-text`}>T1</span>
+                <span className={`pl-[150px]  font-[Arial]`}>T1</span>
               </td>
               <td>
-                <span className={`${mode}-text float-right`}>
+                <span className={` float-right font-[Arial]`}>
                   {formatNumber(props.item.AREC_CASH_T1)}
                 </span>
               </td>
             </tr>
             <tr style={{ display: drop2 ? "none" : "" }}>
               <td>
-                <span className={`pl-[150px] ${mode}-text`}>T2</span>
+                <span className={`pl-[150px]  font-[Arial]`}>T2</span>
               </td>
               <td>
-                <span className={`float-right ${mode}-text`}>
+                <span className={`float-right  font-[Arial]`}>
                   {formatNumber(props.item.AREC_CASH_T2)}
                 </span>
               </td>
             </tr>
             <tr>
               <td>
-                <span className={`report__text__profile_name ${mode}-text`}>
+                <span className={`report__text__profile_name font-[Arial] `}>
                   Tiền cổ tức chờ về
                 </span>
               </td>
               <td>
                 <span
-                  className={`report__text__profile_name ${mode}-text float-right`}
+                  className={`report__text__profile_name  float-right font-[Arial]`}
                 >
                   {formatNumber(props.item.ARE_CASH_DEVIDEND)}
                 </span>
@@ -276,19 +289,19 @@ const TbodyAssetValue: any = (props: Props) => {
             <tr>
               <td>
                 <span
-                  className={`report__text__profile_name flex items-center gap-1 ${mode}-text`}
+                  className={`report__text__profile_name font-[Arial] `}
                 >
-                  Tiền chờ về khác
+                  Tiền chờ về khác {" "}
                   <span
                     className="mb-1 relative cursor-pointer"
                     onMouseOver={() => setMouse(true)}
                     onMouseLeave={() => setMouse(false)}
                   >
-                    <i className="fa fa-info-circle" aria-hidden="true"></i>
+                    <i className="fa fa-info-circle !text-sm text-hoverKL" aria-hidden="true"></i>
                     {mouse && (
                       <label
                         id="noteShow"
-                        className={`text-black ${mode}-text ${mode}-bg`}
+                        className={`text-black  ${mode}-bg`}
                       >
                         Tiền thanh toán đáo hạn <br /> chứng quyền trở về
                       </label>
@@ -298,7 +311,7 @@ const TbodyAssetValue: any = (props: Props) => {
               </td>
               <td>
                 <span
-                  className={`report__text__profile_name ${mode}-text float-right`}
+                  className={`report__text__profile_name  float-right font-[Arial]`}
                 >
                   {formatNumber(props.item.ARE_CASH_OTHER)}
                 </span>
@@ -306,13 +319,13 @@ const TbodyAssetValue: any = (props: Props) => {
             </tr>
             <tr>
               <td>
-                <span className={`report__text__profile_name ${mode}-text`}>
+                <span className={`report__text__profile_name  font-[Arial]`}>
                   Tiền gửi, tiền cho vay
                 </span>
               </td>
               <td>
                 <span
-                  className={`report__text__profile_name ${mode}-text float-right`}
+                  className={`report__text__profile_name  float-right font-[Arial]`}
                 >
                   {formatNumber(props.item.AREC_CASH_SELL)}
                 </span>
@@ -323,12 +336,12 @@ const TbodyAssetValue: any = (props: Props) => {
       ) : (
         <tbody className="h-[35px]">
           <tr>
-            <td className={`font-bold text-black text-xs ${mode}-text`}>
+            <td className={`font-bold text-[#000] italic font-[Arial] text-xs `}>
               <span>III. DƯ NỢ VAY KÝ QUỸ </span>
             </td>
             <td>
               <span
-                className={`${mode}-text font-bold text-black float-right text-xs`}
+                className={` font-bold text-[#000] italic font-[Arial] float-right text-xs`}
               >
                 {formatNumber(props.item.ASAVINGTOTAL)}
               </span>

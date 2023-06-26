@@ -38,6 +38,7 @@
         "DanhsachHDCV":"Lending contracts",
         "UTTTC":"Cash Dividend Advance",
         "LSUTTTC":"Dividend Advance History",
+        "LSUTTBCK":"Advance History",
         "GDTien":"Monney TXN",
         "GDDacBiet": "SPECIAL TXN",
         "QuanLyTK":"ACCOUNT MGMT",
