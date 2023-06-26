@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios"
+import { RPChart } from "../models/modelChart";
 const responseBody = (response: AxiosResponse) => response.data;
-const BASE_URL = "http://marketstream.fpts.com.vn/";
+const BASE_URL = "https://marketstream.fpts.com.vn/";
 const URL_EZTRADE = "http://eztrade0.fpts.com"
 // mặc định gửi authenticated token lên 
 // axios.defaults.headers.common['Authorization'] = 'Bearer ' + "auth_token";
@@ -16,7 +17,8 @@ const URL_EZTRADE = "http://eztrade0.fpts.com"
 
 const requests = {
     get: (url: string, params?: URLSearchParams) => axios.get(url, {params}).then(responseBody),
-    post: (url: string, body: {}) =>axios.post(url, body).then(responseBody),
+    post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
+    postFormData: (url: string, body: {},  headers: {}) => axios.post(url, body, headers).then(responseBody),
     put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
     delete: (url: string) => axios.delete(url).then(responseBody),
 }
@@ -49,6 +51,16 @@ const dataGDTTtable = {
 const chartIndex = {
     get: () => requests.get('http://localhost:8000/dataChartIndex'),
 }
+var formData = new FormData();
+formData.append('key1', 'value1')
+formData.append('key2', 'value2')
+const dataTableBasic ={
+   
+    post: (dataValueBasic:RPChart) => requests.post("/Root/Data.ashx", dataValueBasic),
+    postFormData: (dataValueBasic:RPChart) =>console.log("log thử",dataValueBasic)
+    //  requests.postFormData("/Root/Data.ashx", dataValueBasic,   {'Content-Type': 'multipart/form-data'},)
+      
+}
 const agent = {
     TableHNX,
     TableHSX,
@@ -57,7 +69,8 @@ const agent = {
     Ministry,
     ListDataTable,
     dataGDTTtable,
-    chartIndex
+    chartIndex,
+    dataTableBasic
 }
 export default agent;
 // import axios, { AxiosInstance, AxiosResponse } from "axios";

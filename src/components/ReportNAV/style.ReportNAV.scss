@@ -138,27 +138,5 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-.btn {
-  min-width: 80px;
-  border: 1px solid #2371af;
-  width: auto;
-  height: 34px;
-  color: #333;
-  background-color: #fff;
-  display: inline-block;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 400;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  font-family: Arial;
-  border-radius: 4px;
-  line-height: 1.42857143;
-  margin-bottom: 0;
-  &:hover {
-    background-color: #2371af !important;
-    color: #fff;
-  }
-}
+
 

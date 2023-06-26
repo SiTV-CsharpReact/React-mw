@@ -51,7 +51,7 @@ const AssetReport = () => {
         <div className={`body__content ${mode}-bg`}>
           <div className={`body__content__asset_report`}>
             <div className="body__content__BCTS__header flex items-center justify-between">
-              <div style={{ marginTop: "0px" }}>
+              <div style={{ marginTop: "-3px" }}>
                 {assetReport.Table3?.map((item: any) => (
                   <span
                     key={item?.ASTATUS}
