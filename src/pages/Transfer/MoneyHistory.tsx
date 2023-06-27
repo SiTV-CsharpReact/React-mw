@@ -52,7 +52,10 @@ const MoneyHistory = () => {
     });
   };
   return (
-    <LayoutPage PageTitle="Lịch sử chuyển tiền" content="Lịch sử chuyển tiền">
+    <LayoutPage
+      PageTitle={t("home:Transfer.LichSuChuyenTien")}
+      content={t("home:Transfer.LichSuChuyenTien")}
+    >
       <div className="hidden message">
         <p>Xin lỗi, Quý khách chưa đăng ký dịch vụ này!</p>
         <p>

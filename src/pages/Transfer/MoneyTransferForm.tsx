@@ -19,7 +19,10 @@ const MoneyTransferForm = () => {
   }, []);
   return (
     <>
-      <LayoutPage PageTitle="Mẫu Chuyển Tiền" content="Mẫu chuyển tiền">
+      <LayoutPage
+        PageTitle={t("home:Transfer.Mauchuyentien")}
+        content={t("home:Transfer.Mauchuyentien")}
+      >
         <div className="hidden message">
           <p>Xin lỗi, Quý khách chưa đăng ký dịch vụ này!</p>
           <p>
