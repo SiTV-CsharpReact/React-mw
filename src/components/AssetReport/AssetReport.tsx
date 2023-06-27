@@ -22,32 +22,6 @@ const AssetReport = () => {
   return (
     <div className={`${mode}-bg`}>
       <LayoutPage content="Báo cáo tài sản" PageTitle="Báo cáo tài sản">
-        {/* <div className="contentActionPading !px-5">
-          <div className="HeaderBaoCao !pt-0 !h-[50px]">
-            <div className="HeaderBaoCaoLeft flex items-center">
-              {assetReport.Table3?.map((item: any) => (
-                <span key={item?.ASTATUS} className="italic font-[Arial] ml-[5px]" style={{ color: "red" }}>
-                  Dữ liệu cập nhật gần nhất: <span>{item?.TIME}</span>
-                </span>
-              ))}
-            </div>
-            <div className="HeaderBaoCaoRigth flex items-center gap-[1.5px]">
-              <input
-                type="image"
-                src={execlImg}
-                alt=""
-                className="h-[25px] w-[25px]"
-              />
-              &nbsp;
-              <input
-                type="image"
-                src={pdfImg}
-                alt=""
-                className="h-[25px] w-[25px"
-              />
-            </div>
-          </div>
-        </div> */}
         <div className={`body__content ${mode}-bg`}>
           <div className={`body__content__asset_report`}>
             <div className="body__content__BCTS__header flex items-center justify-between">
