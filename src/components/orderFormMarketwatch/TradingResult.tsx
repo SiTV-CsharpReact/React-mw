@@ -388,10 +388,10 @@ const TradingResult = () => {
         <div>
           <div>
           <div className="flex items-center gap-3 mt-2">
-          <button className="p-1 px-2  pr-2 mr-[1px] cursor-pointer  w-[80px] h-[30px] rounded-[4px] text-white text-[12px]  uppercase bg-[#0055ba]">
+          <button className=" pl-2 mb-[1px]   pr-2 mr-[1px] cursor-pointer  w-[80px] h-[30px] rounded-[4px] text-white text-[12px]  uppercase bg-[#0055ba]">
             {t("home:base.CapNhat")}
           </button>
-          <form className="flex gap-2 mr-8">
+          <form className="flex gap-[7px] mr-8">
             <img
               className="cursor-pointer "
               onClick={handleExportToExcel}
@@ -410,7 +410,7 @@ const TradingResult = () => {
         </div>
       </div>
 
-      <div className="flex gap-3 mx-auto mt-1 ml-5 mr-7 ">
+      <div className="flex gap-[10px] mx-auto mt-[2px] ml-5 mr-7 ">
         {/* buy */}
         <div className="w-1/2 border-gray-300 h-fit">
           <div style={{border:"1px solid #AAAAAA"}} className="flex relative !border-b-0   border-gray-300 gap-1 h-[30px] items-center bg-[#2371AF] ">
@@ -424,13 +424,13 @@ const TradingResult = () => {
 
           <table>
             <thead style={{border:"1px solid #AAAAAA"}}>
-              <tr className="bg-[#F3F3F3]">
-                <th style={{width:"12%"}} className="border border-gray-300 !text-[12px]"> {t("home:Order.ORDER_MCK")}  </th>
-                <th style={{width:"12%"}} className="border border-gray-300 !text-[12px]">{t("home:Order.OPTIONS_KL")}</th>
-                <th style={{width:"12%"}} className="border border-gray-300 !text-[12px]">{t("home:base.Gia")}</th>
-                <th style={{width:"15%"}} className="border border-gray-300 !text-[12px]">{t("home:Order.THANHTIEN")}</th>
-                <th style={{width:"12%"}} className="border border-gray-300 !text-[12px]">{t("home:base.SHL")}</th>
-                <th style={{width:"35%"}} className="border border-gray-300 !text-[12px]">{t("home:Order.GKHOP")}</th>
+              <tr className="bg-[#F3F3F3] ">
+                <th style={{width:"12%"}} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]"> {t("home:Order.ORDER_MCK")}  </th>
+                <th style={{width:"12%"}} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:Order.OPTIONS_KL")}</th>
+                <th style={{width:"12%"}} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:base.Gia")}</th>
+                <th style={{width:"15%"}} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:Order.THANHTIEN")}</th>
+                <th style={{width:"12%"}} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:base.SHL")}</th>
+                <th style={{width:"35%"}} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:Order.GKHOP")}</th>
               </tr>
             </thead>
             <tbody>
@@ -464,12 +464,12 @@ const TradingResult = () => {
           <table className="">
             <thead>
               <tr className="bg-[#F3F3F3]">
-                <th style={{width:"12%"}} className="border border-gray-300  !text-[12px]"> {t("home:Order.ORDER_MCK")}  </th>
-                <th style={{width:"12%"}} className="border border-gray-300   !text-[12px]">{t("home:Order.OPTIONS_KL")}</th>
-                <th style={{width:"12%"}} className="border border-gray-300  !text-[12px]">{t("home:base.Gia")}</th>
-                <th style={{width:"15%"}} className="border border-gray-300  !text-[12px] ">{t("home:Order.THANHTIEN")}</th>
-                <th style={{width:"12%"}} className="border border-gray-300  !text-[12px]">{t("home:base.SHL")}</th>
-                <th style={{width:"35%"}} className="border border-gray-300  !text-[12px]">{t("home:Order.GKHOP")}</th>
+                <th style={{width:"12%"}} className="border border-gray-300  !p-0  !h-[22px] !text-[12px]"> {t("home:Order.ORDER_MCK")}  </th>
+                <th style={{width:"12%"}} className="border border-gray-300  !p-0  !h-[22px]  !text-[12px]">{t("home:Order.OPTIONS_KL")}</th>
+                <th style={{width:"12%"}} className="border border-gray-300  !p-0 !h-[22px]  !text-[12px]">{t("home:base.Gia")}</th>
+                <th style={{width:"15%"}} className="border border-gray-300  !p-0 !h-[22px]  !text-[12px] ">{t("home:Order.THANHTIEN")}</th>
+                <th style={{width:"12%"}} className="border border-gray-300  !p-0 !h-[22px]  !text-[12px]">{t("home:base.SHL")}</th>
+                <th style={{width:"35%"}} className="border border-gray-300 !p-0  !h-[22px]  !text-[12px]">{t("home:Order.GKHOP")}</th>
               </tr>
               
             </thead>

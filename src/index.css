@@ -398,6 +398,9 @@ th.sort-table.active::after {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+.hohohoho{
+   padding: 0px 10px
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
