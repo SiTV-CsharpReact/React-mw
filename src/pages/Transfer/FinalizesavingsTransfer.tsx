@@ -7,7 +7,9 @@ import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
 import { Tooltip } from "@mui/material";
+import { useTranslation } from "react-i18next";
 const FinalizesavingsTransfer = () => {
+  const { t } = useTranslation(["home"]);
   const dataDropdown = [
     {
       id: 1,
@@ -95,8 +97,8 @@ const FinalizesavingsTransfer = () => {
   return (
     <>
       <LayoutPage
-        PageTitle="Tất toán tiền cho vay"
-        content="Tất toán tiền cho vay"
+        PageTitle={t("home:Transfer.TatToanTienChoVay")}
+        content={t("home:Transfer.TatToanTienChoVay")}
       >
         <div className="hidden message">
           <p>Xin lỗi, Quý khách chưa đăng ký dịch vụ này!</p>
@@ -146,8 +148,8 @@ const FinalizesavingsTransfer = () => {
                   />
                 </svg>
               </button>
-              <div className="flex items-center justify-center h-[50px] bg-[#034C91] rounded-t-lg text-white text-[24px] font-medium">
-                XÁC NHẬN TẤT TOÁN
+              <div className="flex items-center justify-center h-[50px] bg-[#034C91] rounded-t-lg text-white text-[24px] font-medium uppercase">
+                {t("home:Transfer.XacNhanTatToan")}
               </div>
               {dataSavingshistory.length > 0 &&
                 dataSavingshistory?.map((item: any, index: number) => {
@@ -156,11 +158,17 @@ const FinalizesavingsTransfer = () => {
                       <div className="px-[112px] mt-4" key={index}>
                         <div className="bg-[#E5E5E5] w-full py-[7px] flex flex-col gap-[20px] px-[15px] text-xs">
                           <div className="flex items-center w-full">
-                            <span className="flex-1">Sản phẩm</span>
-                            <span className="flex-1">Tiền cho FPTS vay</span>
+                            <span className="flex-1">
+                              {t("home:Transfer.SanPham")}
+                            </span>
+                            <span className="flex-1">
+                              {t("home:Transfer.TienChoFPTSVay")}
+                            </span>
                           </div>
                           <div className="flex items-center w-full">
-                            <span className="flex-1">Số tiền cho vay</span>
+                            <span className="flex-1">
+                              {t("home:Transfer.SoTienChoVay")}
+                            </span>
                             <span className="flex-1 leading-[22px]">
                               {item.aavailamount.toLocaleString()} VNĐ <br />
                               <span className="italic">
@@ -170,17 +178,23 @@ const FinalizesavingsTransfer = () => {
                             </span>
                           </div>
                           <div className="flex items-center w-full">
-                            <span className="flex-1">Tên gợi nhớ</span>
+                            <span className="flex-1">
+                              {t("home:Transfer.TenGoiNho")}
+                            </span>
                             <span className="flex-1">{item.adesc}</span>
                           </div>
                           <div className="flex items-center w-full">
-                            <span className="flex-1">Ngày bắt đầu</span>
+                            <span className="flex-1">
+                              {t("home:Transfer.NgayBatDau")}
+                            </span>
                             <span className="flex-1">
                               {moment(item.acreatedate).format("DD/MM/YYYY")}
                             </span>
                           </div>
                           <div className="flex items-center w-full">
-                            <span className="flex-1">Ngày đáo hạn</span>
+                            <span className="flex-1">
+                              {t("home:Transfer.NgayDaoHan")}
+                            </span>
                             <span className="flex-1">
                               {moment(item.aeffectiveDate).format("DD/MM/YYYY")}
                             </span>
@@ -188,7 +202,9 @@ const FinalizesavingsTransfer = () => {
                         </div>
                         <div className="w-full px-[15px] mt-2 text-[#007db7]">
                           <div className="flex items-center w-full text-xs">
-                            <span className="flex-1">Loại tất toán</span>
+                            <span className="flex-1">
+                              {t("home:Transfer.LoaiTatToan")}
+                            </span>
                             <div className="flex-1">
                               <div className="overflow-hidden transition-all relative z-50 text-sm rounded-full h-[28px] bg-[#CCCCCC] text-[#787878] w-[240px]">
                                 <button
@@ -201,7 +217,7 @@ const FinalizesavingsTransfer = () => {
                                     setAll(false);
                                   }}
                                 >
-                                  Một phần
+                                  {t("home:Transfer.MotPhan")}
                                 </button>
                                 <button
                                   className={`text-center z-40 w-[120px] transition-all rounded-full h-full ${
@@ -216,7 +232,7 @@ const FinalizesavingsTransfer = () => {
                                     );
                                   }}
                                 >
-                                  Toàn bộ
+                                  {t("home:Transfer.ToanBo")}
                                 </button>
                               </div>
                             </div>
@@ -224,7 +240,7 @@ const FinalizesavingsTransfer = () => {
                           {all === true ? (
                             <div className="flex items-center mt-4">
                               <div className="flex-1 text-[#007db7] text-xs">
-                                Số tiền tất toán
+                                {t("home:Transfer.XacNhanTatToan")}
                               </div>
                               <div className="flex items-center justify-center flex-1 gap-2 ">
                                 <div
@@ -250,7 +266,7 @@ const FinalizesavingsTransfer = () => {
                           ) : (
                             <div className="flex items-center mt-4">
                               <div className="flex-1 text-[#007db7] text-xs">
-                                Số tiền tất toán
+                                {t("home:Transfer.XacNhanTatToan")}
                               </div>
                               <div className="flex items-center justify-center flex-1 gap-2 ">
                                 <div
@@ -277,7 +293,9 @@ const FinalizesavingsTransfer = () => {
                           <div className="flex text-[12px] text-[#999999] min-h-[55px] items-start mt-1">
                             <div className="flex-1"></div>
                             <div className="flex items-end justify-end flex-1">
-                              <span className="italic">Bằng chữ</span>
+                              <span className="italic">
+                                {t("home:Transfer.BangChu")}
+                              </span>
                               <div className="flex items-center justify-center w-4 h-full"></div>
                             </div>
                           </div>
@@ -288,15 +306,20 @@ const FinalizesavingsTransfer = () => {
                                   <div key={index}>
                                     <div className="flex text-[12px] pt-[20px]">
                                       <div className="flex-1">
-                                        Số ngày cho vay thực
+                                        {t("home:Transfer.SoNgayChoVayThuc")}
                                       </div>
                                       <div className="flex-1">
-                                        <span>{item.day - 1} ngày</span>
+                                        <span>
+                                          {item.day - 1}{" "}
+                                          {t("home:Transfer.Ngay")}
+                                        </span>
                                       </div>
                                     </div>
                                     <div className="flex text-[12px] pt-[25px]">
                                       <div className="flex-1">
-                                        Lãi suất tất toán trước hạn
+                                        {t(
+                                          "home:Transfer.LaiSuatTatToanTruocHan"
+                                        )}
                                       </div>
                                       <div className="flex-1">
                                         <span>{item.rate}%</span>
@@ -304,21 +327,23 @@ const FinalizesavingsTransfer = () => {
                                     </div>
                                     <div className="flex text-[12px] pt-[25px]">
                                       <div className="flex-1">
-                                        Tiễn lãi trước thuế
+                                        {t("home:Transfer.TienLaiTruocThue")}
                                       </div>
                                       <div className="flex-1">
                                         <span>0 VNĐ</span>
                                       </div>
                                     </div>
                                     <div className="flex text-[12px] pt-[25px]">
-                                      <div className="flex-1">Thuế</div>
+                                      <div className="flex-1">
+                                        {t("home:Transfer.Thue")}
+                                      </div>
                                       <div className="flex-1">
                                         <span>0 VNĐ</span>
                                       </div>
                                     </div>
                                     <div className="flex text-[12px] pt-[25px]">
                                       <div className="flex-1">
-                                        Tổng tiền thực nhận
+                                        {t("home:Transfer.TongTienThucNhan")}
                                       </div>
                                       <div className="flex-1">
                                         <span>
@@ -334,8 +359,8 @@ const FinalizesavingsTransfer = () => {
                             )}
                         </div>
                         <div className="w-full border shadow-[0_0_5.5px_1px_#dddddd] mt-[45px] mb-10 h-[42px] text-[13px] pl-5 items-center flex justify-between pr-1">
-                          <span>Xác nhận đặt lệnh</span>
-                          <div className="border h-[34px] w-[220px] flex rounded-md overflow-hidden">
+                          <span>{t("home:Transfer.XacNhanDatLenh")}</span>
+                          <div className="border h-[34px] w-[220px] flex rounded-md">
                             <div className="flex items-center justify-center border-r bg-[#e9ecef] px-3">
                               <svg
                                 width="18"
@@ -352,16 +377,18 @@ const FinalizesavingsTransfer = () => {
                             </div>
                             <input
                               type="password"
-                              placeholder="Nhập mật khẩu giao dịch"
-                              className="w-full pl-2 text-xs border-none outline-none"
+                              placeholder={t(
+                                "home:Transfer.NhapMatKhauGiaoDich"
+                              )}
+                              className="w-full pl-2 text-xs transition-all border rounded-r-md border-[#ced4da] outline-none focus:border-[#80bdff] focus:shadow-[0_0_0_0.2rem_rgba(0,123,255,.25)]"
                             />
                           </div>
                           <div className="flex gap-1">
-                            <button className="px-[12px] py-[6px] h-[34px] rounded-md border border-[#2371af] hover:bg-[#2371af] hover:text-white transition-all">
-                              Thực hiên
+                            <button className="px-[14px] py-[6px] h-[34px] rounded-md border border-[#2371af] hover:bg-[#2371af] hover:text-white transition-all">
+                              {t("home:Transfer.ThucHien")}
                             </button>
-                            <button className="px-[12px] py-[6px] h-[34px] rounded-md border border-[#2371af] hover:bg-[#2371af] hover:text-white transition-all">
-                              Quay lại
+                            <button className="px-[14px] py-[6px] h-[34px] rounded-md border border-[#2371af] hover:bg-[#2371af] hover:text-white transition-all">
+                              {t("home:Transfer.QuayLai")}
                             </button>
                           </div>
                         </div>
@@ -377,7 +404,7 @@ const FinalizesavingsTransfer = () => {
             <div className="flex justify-end gap-4 items-start text-[8pt] mr-[2%]">
               {/*------------------DropDown Sản phẩm------------------*/}
               <div className="flex items-center gap-2">
-                <span className="font-bold">Sản phẩm</span>
+                <span className="font-bold"> {t("home:Transfer.SanPham")}</span>
                 <div>
                   <div
                     className={`w-[160px] relative flex items-center border h-[28px] rounded-[4px] ${
@@ -429,9 +456,11 @@ const FinalizesavingsTransfer = () => {
               </div>
               {/*------------------Date Start------------------*/}
               <div className="flex flex-col gap-[2px]">
-                <div className="flex items-center gap-[11px]">
-                  <span className="font-bold">Ngày bắt đầu từ ngày</span>
-                  <div>
+                <div className="grid grid-cols-10 items-center gap-[11px]">
+                  <span className="col-span-4 font-bold">
+                    {t("home:Transfer.NgayBatDauTuNgay")}
+                  </span>
+                  <div className="col-span-6">
                     <div
                       className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
                     >
@@ -444,9 +473,11 @@ const FinalizesavingsTransfer = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold">Ngày đáo hạn từ ngày</span>
-                  <div>
+                <div className="grid items-center grid-cols-10 gap-2">
+                  <span className="col-span-4 font-bold">
+                    {t("home:Transfer.NgayDaoHanTuNgay")}
+                  </span>
+                  <div className="col-span-6">
                     <div
                       className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
                     >
@@ -454,7 +485,7 @@ const FinalizesavingsTransfer = () => {
                         onChange={setValueStart2}
                         value={valueStart2}
                         format="dd/MM/yy"
-                        className="w-full text-[13px] rounded-sm outline-none h-full"
+                        className="w-full ml-[1px] text-[13px] rounded-sm outline-none h-full"
                       />
                     </div>
                   </div>
@@ -463,7 +494,9 @@ const FinalizesavingsTransfer = () => {
               {/*------------------Date End------------------*/}
               <div className="flex flex-col gap-[2px]">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold">Đến ngày</span>
+                  <span className="font-bold">
+                    {t("home:Transfer.DenNgay")}
+                  </span>
                   <div>
                     <div
                       className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
@@ -478,7 +511,9 @@ const FinalizesavingsTransfer = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold">Đến ngày</span>
+                  <span className="font-bold">
+                    {t("home:Transfer.DenNgay")}
+                  </span>
                   <div>
                     <div
                       className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
@@ -516,50 +551,50 @@ const FinalizesavingsTransfer = () => {
                 <thead className="border-b bg-[#F3F3F3]">
                   <tr>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px] px-1">
-                      STT
+                      {t("home:Transfer.STT")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Mã HĐ cho vay
+                      {t("home:Transfer.MaHDChoVay")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Sản phẩm
+                      {t("home:Transfer.SanPham")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Tên gợi nhớ
+                      {t("home:Transfer.TenGoiNho")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Số tiền cho vay <br /> hiện tại
+                      {t("home:Transfer.SoTienChoVayHienTai")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Kỳ hạn
+                      {t("home:Transfer.KyHan")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Lãi suất / năm
+                      {t("home:Transfer.LaiSuat/Nam")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Tiền lãi sau thuế dự kiến
+                      {t("home:Transfer.TienLaiSauThueDuKien")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Tiền lãi <br /> cộng dồn{" "}
-                      <span title="Tiền lãi cộng dồn tính đến thời điểm hiện tại, tính theo lãi suất tất toán đúng hạn">
+                      {t("home:Transfer.TienLaiCongDon")}{" "}
+                      <Tooltip title="Tiền lãi cộng dồn tính đến thời điểm hiện tại, tính theo lãi suất tất toán đúng hạn">
                         <i
                           className="fa fa-info-circle"
                           aria-hidden="true"
                           id="iconPage"
                         ></i>
-                      </span>
+                      </Tooltip>
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Ngày bắt đầu
+                      {t("home:Transfer.NgayBatDau")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Ngày đáo hạn
+                      {t("home:Transfer.NgayDaoHan")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Phương thức đáo hạn
+                      {t("home:Transfer.PhuongThucDaoHan")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Tất toán
+                      {t("home:Transfer.TatToan")}
                     </th>
                   </tr>
                 </thead>
@@ -582,7 +617,7 @@ const FinalizesavingsTransfer = () => {
                             {item.atermId}
                           </td>
                           <td className="text-xs leading-[22px] px-1 border-r">
-                            Tiền cho FPTS vay
+                            {t("home:Transfer.TienChoFPTSVay")}
                           </td>
                           <td className="text-xs leading-[22px] px-1 border-r">
                             {item.adesc}
@@ -591,7 +626,7 @@ const FinalizesavingsTransfer = () => {
                             {item.aavailamount.toLocaleString()}
                           </td>
                           <td className="text-xs leading-[22px] px-1 border-r text-right">
-                            {item.aterm} ngày
+                            {item.aterm} {t("home:Transfer.Ngay")}
                           </td>
                           <td className="text-xs leading-[22px] px-1 border-r text-right">
                             {item.arate}%
@@ -609,11 +644,11 @@ const FinalizesavingsTransfer = () => {
                             {moment(item.aeffectiveDate).format("DD/MM/YYYY")}
                           </td>
                           <td className="text-xs leading-[22px] px-1 border-r">
-                            Lãi nhập gốc
+                            {t("home:Transfer.LaiNhapGoc")}
                           </td>
                           <td className="text-xs leading-[22px] px-1 border-r flex items-center justify-center">
                             <button className="h-[27px] w-20 bg-[#2371AF] text-white transition-all hover:bg-white hover:!text-black border border-[#2371AF] rounded-md">
-                              Tất toán
+                              {t("home:Transfer.TatToan")}
                             </button>
                           </td>
                         </tr>
@@ -621,7 +656,7 @@ const FinalizesavingsTransfer = () => {
                     })}
                   <tr className="bg-[#F3F3F3] text-[9pt]">
                     <td className="text-xs leading-[22px] px-1 font-semibold">
-                      Tổng
+                      {t("home:Transfer.Tong")}
                     </td>
                     <td></td>
                     <td></td>
@@ -643,7 +678,7 @@ const FinalizesavingsTransfer = () => {
             </div>
 
             <span className="text-[13px] ml-3 italic">
-              Ghi chú: Thời gian thực hiện: Từ 0h đến 16h30 các ngày làm việc
+              {t("home:Transfer.NOTE_FOOT_ORDERSAVING")}
             </span>
           </div>
         </div>
