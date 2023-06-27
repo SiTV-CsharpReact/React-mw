@@ -257,7 +257,9 @@
         "DaPheDuyet":"Approved",
         "LichSuThanhToanTienGocVaLai":"Principal and interest payment history",
         "LichSuGiaHanTienChoVay":"Loan renewal history",
-        "LanGiaHan":"Renewals no."
+        "LanGiaHan":"Renewals no.",
+        "DaTatToan":"Settled",
+        "HetHieuLuc":"Expired"
     }
 }
 

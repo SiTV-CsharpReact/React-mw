@@ -261,6 +261,8 @@
         "DaPheDuyet":"Đã phê duyệt",
         "LichSuThanhToanTienGocVaLai":"Lịch sử thanh toán tiền gốc và lãi",
         "LichSuGiaHanTienChoVay":"Lịch sử gia hạn tiền cho vay",
-        "LanGiaHan":"Lần gia hạn"
+        "LanGiaHan":"Lần gia hạn",
+        "DaTatToan":"Đã tất toán",
+        "HetHieuLuc":"Hết hiệu lực"
     }
 }

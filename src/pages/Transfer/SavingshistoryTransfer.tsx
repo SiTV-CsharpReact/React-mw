@@ -17,11 +17,11 @@ const SavingshistoryTransfer = () => {
     },
     {
       id: 2,
-      name: "Tất cho FPTS vay",
+      name: t("home:Transfer.TienChoFPTSVay"),
     },
     {
       id: 3,
-      name: "Tiền gửi ngân hàng",
+      name: t("home:Transfer.TienGuiNganHang"),
     },
   ];
   const dataTinhtrang = [
@@ -31,15 +31,15 @@ const SavingshistoryTransfer = () => {
     },
     {
       id: 2,
-      name: "Có hiệu lực",
+      name: t("home:Transfer.CoHieuLuc"),
     },
     {
       id: 1,
-      name: "Đã tất toán",
+      name: t("home:Transfer.DaTatToan"),
     },
     {
       id: 1,
-      name: "Hết hiệu lực",
+      name: t("home:Transfer.HetHieuLuc"),
     },
   ];
   const [focused, setFocused] = useState<any>(false);
@@ -72,10 +72,6 @@ const SavingshistoryTransfer = () => {
     });
   };
 
-  // const handleShowModal = (atermId: any) => {
-  //   setShowModal(!showModal);
-  //   setQuery(atermId);
-  // };
   const handleFocused = () => {
     setFocused(!focused);
   };
