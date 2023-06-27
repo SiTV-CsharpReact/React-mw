@@ -668,7 +668,6 @@ const TableAsset = (props: any) => {
                             >
                                 <div> SL bán <br /> chờ khớp</div>
                             </td>
-
                             <td
                                 rowSpan={2}
                                 className={`!text-center !text-xs ${mode}-text`}
