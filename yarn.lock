@@ -9873,7 +9873,7 @@ react-chartjs-2@*, react-chartjs-2@^5.2.0:
 
 react-date-picker@^10.2.0:
   version "10.2.0"
-  resolved "https://registry.npmjs.org/react-date-picker/-/react-date-picker-10.2.0.tgz"
+  resolved "https://registry.yarnpkg.com/react-date-picker/-/react-date-picker-10.2.0.tgz#c3de3d906e7715b048e6253539a34468a005d6fe"
   integrity sha512-AapiakQ9hY2sPNyaBgLJgPDXeeZyiC3Px75jWbkB9NwJqX1gAwRQ7O8qshRqGWJX7T4/cUh6n59j+N+M4GpGow==
   dependencies:
     "@wojtekmaj/date-utils" "^1.1.3"

@@ -145,7 +145,7 @@
 }
 .report__tabcondition_BCTS {
   display: grid;
-  margin-top: 6px;
+  margin-top: 5px;
   grid-template-columns: 395px 1fr;
   // gap: 15px;
   @media screen and (min-width: 1700px) and (max-width: 1950px) {
@@ -170,6 +170,7 @@
         td {
           line-height: 22px !important;
           padding: 1px 5px;
+          border: 0;
         }
         tr {
           &:hover {
@@ -293,13 +294,11 @@
       }
     }
   }
-
-
 }
 
 .report__tabcondition__right {
   margin-top: 15px;
-  padding: 10px 5px;
+  padding: 9px 5px;
   background: #ececec;
   font-size: 12px;
   .dark-text {
@@ -314,12 +313,13 @@
       height: 21px;
       select {
         width: 76px;
-        height: 20px !important;
-        border: 1px solid #000000;
+        height: 19px !important;
+        border: 1px solid #767676;
         background-image: none;
         background-repeat: no-repeat;
         // background-size: ;
         padding: 0;
+        padding-left: 5px;
         appearance: auto;
         font-size: 0.825rem;
         color: #000;
@@ -341,13 +341,12 @@
 }
 
 .table_detail_BCTS {
-  table{
-    thead{
-      tr{
-        td{
-          div{
+  table {
+    thead {
+      tr {
+        td {
+          div {
             color: #000 !important;
-            
           }
         }
       }
@@ -355,7 +354,6 @@
   }
   .dark-text {
     color: #b2b6bf !important;
-    
   }
   &::-webkit-scrollbar {
     width: 10px;
@@ -385,9 +383,8 @@
         background: #303030 !important;
         tr {
           background: #141d27;
-          
         }
-       
+
         // td {
         //   color: #b2b6bf !important;
         //   > div {
@@ -467,7 +464,7 @@
 }
 
 .light-text {
-  color: #000 ;
+  color: #000;
 }
 #divTextNote {
   font-family: arial;

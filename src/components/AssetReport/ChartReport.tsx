@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo } from "react";
 import Highcharts from "highcharts";
-import { useAppSelector } from "../../store/configureStore";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { formatNumber } from "../../utils/util";
+import { fetchAssetReport } from "./AssetReportSlice";
 
 type IDate = {
   date: number;
@@ -9,56 +10,45 @@ type IDate = {
 const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
   const { mode } = useAppSelector((state) => state.settingColorMode);
   const { assetReport } = useAppSelector((state) => state.assetReport);
+  console.log(assetReport);
+  
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchAssetReport());
+  }, [dispatch]);
   const changeOption: number = date === 0 ? 20 : 89;
 
   const arrLine: any = useMemo(() => {
     let arr: any = [];
-    for (let i = 1; i < assetReport.Table2?.length; i++) {
-      let data = 0;
+    let myArr: any = assetReport.Table2?.map((item: any) => item).reverse();
+    for (let i = 1; i < myArr?.length; i++) {
+      let data;
 
-      if (assetReport.Table2[i - 1].ANAV === 0) {
+      if (myArr[i - 1].ANAV === 0) {
         data = 0;
       } else {
         data =
-          ((assetReport.Table2[i].ANAV -
-            assetReport.Table2[i].ANAV_IN +
-            assetReport.Table2[i].ANAV_DE -
-            assetReport.Table2[i - 1].ANAV) /
-            assetReport.Table2[i - 1].ANAV) *
+          ((myArr[i].ANAV -
+            myArr[i].ANAV_IN +
+            myArr[i].ANAV_DE -
+            myArr[i - 1].ANAV) /
+            myArr[i - 1].ANAV) *
           100;
       }
       arr.push(Number(data.toFixed(2)));
     }
-    return arr;
+    return arr.reverse();
   }, [assetReport.Table2]);
 
   useEffect(() => {
-    const data_col =
-      date === 0
-        ? assetReport.Table2?.map((item: any) => item.ANAV)
-            ?.splice(0, 20)
-            .reverse()
-        : assetReport.Table2?.map((item: any) => item.ANAV)
-            ?.splice(0, 89)
-            .reverse();
-
-    const data_line =
-      date === 0
-        ? arrLine
-            ?.map((item: any) => item)
-            ?.splice(0, 20)
-            .reverse()
-        : arrLine
-            ?.map((item: any) => item)
-            ?.splice(0, 89)
-            .reverse();
-
     const series: any = [
       {
         name: "NAV",
         type: "column",
         color: "#70ad47",
-        data: data_col,
+        data: assetReport.Table2?.map((item: any) => item.ANAV)
+          .reverse()
+          .splice(-changeOption),
         yAxis: 0,
       },
       {
@@ -66,13 +56,15 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
         type: "line",
         yAxis: 1,
         color: "#595959",
-        data: data_line,
+        data: arrLine
+          ?.map((item: any) => item)
+          .reverse()
+          .splice(-changeOption),
         maker: {
           symbol: "circle",
         },
       },
     ];
-    console.log(date);
 
     Highcharts.chart("container-asset_report", {
       chart: {
@@ -95,29 +87,6 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
             yAxis.update({
               tickAmount: date === 0 ? 5 : 4,
             });
-            // if (date === 1) {
-            //   // const data =
-            //   const data_xAxis = assetReport.Table2?.map(
-            //     (item: any) => item.ADATE
-            //   ).reverse();
-            //   this.series[0].setData(
-            //     assetReport.Table2?.map((item: any) => item.ANAV)?.reverse()
-            //   );
-            //   this.series[1].setData(
-            //     arrLine?.map((item: any) => item).reverse()
-            //   );
-            //   // this.xAxis[0].update({
-            //   //   categories: assetReport.Table2?.map(
-            //   //     (item: any) => item.ADATE
-            //   //   )?.splice(1, 89),
-            //   // });
-            // } else {
-            //   // this.series[0].setData(
-            //   //   assetReport.Table2?.map((item: any) => item.ANAV).splice(0,20)?.reverse()
-            //   // );
-            // }
-            // console.log(this.series);
-
             //cập nhật maker in linechart
             this.series[1].points.forEach((point: any) => {
               point.update({
@@ -137,9 +106,9 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
       },
       xAxis: {
         categories: assetReport.Table2?.map((item: any) => item.ADATE)
-          ?.splice(0, changeOption)
-          .reverse(),
-        crosshair: true,
+          .reverse()
+          .splice(-changeOption),
+        // crosshair: true,
         labels: {
           style: {
             fontSize: "11px",
@@ -244,15 +213,14 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
       },
       series: series,
     });
-    // return () => {
-    //   chart.destroy();
-    // };
   }, [arrLine, assetReport.Table2, changeOption, date]);
   return (
-    <figure className="highcharts-figure">
-      <div id="container-asset_report"></div>
-    </figure>
+    <>
+      <figure className="highcharts-figure">
+        <div id="container-asset_report"></div>
+      </figure>
+    </>
   );
 };
 
-export default React.memo(ChartReport);
+export default ChartReport;
