@@ -124,8 +124,8 @@ const PendingOrders: React.FC<Props> = (value) => {
             </span>
             {t("home:Order.ORDER_NOT0")}
           </p>
-          <p className="pl-[7px]">  (1) {t("home:Order.ORDER_NOT1")} </p>
-          <p className="pl-[7px]">
+          <p className="pl-[7px] pt-[1px]">  (1) {t("home:Order.ORDER_NOT1")} </p>
+          <p className="pl-[7px] mt-[-1px]">
             (2){t("home:Order.ORDER_NOT2")}
           </p>
         </div>
@@ -147,7 +147,7 @@ const PendingOrders: React.FC<Props> = (value) => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="border !p-0 leading-1 w-[85.09px] xl:w-[93px] 2xl:w-[128.94px] !text-[12px] border-inherit rounded-[4px] !pl-2  text-start shadow-sm h-[28px]"
+              className="border hohohoho !p-0 leading-1 w-[85.09px] xl:w-[93px] 2xl:w-[128.94px] !text-[12px] border-inherit rounded-[4px] !pl-2  text-start shadow-sm h-[28px]"
               name=""
               id="sanGD"
             >
@@ -179,7 +179,7 @@ const PendingOrders: React.FC<Props> = (value) => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555",minHeight:"1.2em" }}
-              className="!p-0 !pl-2  w-[85.09px] xl:w-[93px] 2xl:w-[128.94px] !text-[12px] border rounded-[4px]  shadow-sm h-[28px] "
+              className="!p-0 !pl-2  hohohoho w-[85.09px] xl:w-[93px] 2xl:w-[128.94px] !text-[12px] border rounded-[4px]  shadow-sm h-[28px] "
               name=""
               id=""
             >
@@ -214,7 +214,7 @@ const PendingOrders: React.FC<Props> = (value) => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="!p-0 !pr-10 !pl-2 w-[89.09px] xl:w-[114.67px] 2xl:w-[160.45px] !text-[12px] border rounded-[4px] border-inherit shadow-sm h-[28px] "
+              className="!p-0 !pr-10 hohohoho !pl-2 w-[89.09px] xl:w-[114.67px] 2xl:w-[160.45px] !text-[12px] border rounded-[4px] border-inherit shadow-sm h-[28px] "
               name=""
               id=""
             >
@@ -245,7 +245,7 @@ const PendingOrders: React.FC<Props> = (value) => {
                 }))
               }
               style={{ border: "1px solid #ccc", color: "#555" }}
-              className="!p-0  !pl-2 !text-[12px] border  w-[89.09px] xl:w-[116.71px] 2xl:w-[164.17px] rounded-[4px] border-inherit shadow-sm h-[28px]"
+              className="!p-0 hohohoho !pl-2 !text-[12px] border  w-[89.09px] xl:w-[117px] 2xl:w-[164.17px] rounded-[4px] border-inherit shadow-sm h-[28px]"
               name=""
               id=""
             >
@@ -260,7 +260,7 @@ const PendingOrders: React.FC<Props> = (value) => {
 
           <button
             onClick={hanDelSubmit}
-            className=" w-[87.09px] ml-[6px] xl:w-[99.08px] 2xl:w-[140.92px] h-[30px] cursor-pointer mt-5  rounded-[4px] text-white text-[12px] font-medium uppercase bg-[#0055ba]"
+            className=" w-[87.09px] ml-[5px] xl:w-[99.08px] 2xl:w-[140.92px] h-[30px] cursor-pointer mt-5  rounded-[4px] text-white text-[12px] font-medium uppercase bg-[#0055ba]"
           >
             {t("home:base.CapNhat")}
           </button>
@@ -287,80 +287,80 @@ const PendingOrders: React.FC<Props> = (value) => {
             <tr className=""> 
               <th 
                 style={{ border: "1px solid #dedede", color: "#555" }}
-                className="bg-[#F3F3F3] xl:w-[67px] 2xl:w-[90px]  !h-[40px] !text-[12px] hohohoho"
+                className="bg-[#F3F3F3] xl:w-[67px] 2xl:w-[90px]  !h-[40px] !text-[12px] "
               >
                 <span className="text-[12px]  !font-bold text-black"> {t("home:Order.ORDER_SUA")}</span>
               </th>
               <th
                 style={{ border: "1px solid #dedede", color: "#555" }}
-                className="bg-[#F3F3F3] box-content	 xl:w-[66.72px] 2xl:w-[91.22px] !h-[40px] !text-[12px] !p-0 hohohoho"
+                className="bg-[#F3F3F3] box-content	 xl:w-[66.72px] 2xl:w-[91.22px] !h-[40px] !text-[12px] !p-0 "
               >
                 <span className="text-[12px] relative top-[-2px]  block !font-bold text-black">{t("home:Order.ORDER_HUY")}</span>
-              <input className="rounded-sm relative top-[-1px] left-[1px] w-[13px] h-[13px]" type="checkbox" />
+              <input className="rounded-sm relative top-[-1px]  w-[13px] h-[13px]" type="checkbox" />
               </th>
               <th
                 style={{ border: "1px solid #dedede", color: "#555" }}
-                className="bg-[#F3F3F3] xl:w-[89px] 2xl:w-[118.03px] !h-[40px] !text-[12px] !p-0 hohohoho"
+                className="bg-[#F3F3F3] xl:w-[89px] 2xl:w-[118.03px] !h-[40px] !text-[12px] !p-0 "
               >
                 <span className="text-[12px]  !font-bold text-black">{t("home:Order.ORDER_MCK")}  </span>
               </th>
               <th
                 style={{ border: "1px solid #dedede", color: "#555" }}
-                className="bg-[#F3F3F3]  !h-[40px] !text-[12px] w-[108px] 2xl:w-[146.06px] !p-0 hohohoho"
+                className="bg-[#F3F3F3]  !h-[40px] !text-[12px] w-[108px] 2xl:w-[146.06px] !p-0 "
               >
                 <span className="text-[12px ]  !font-bold text-black">{t("home:Order.ORDER_LD")} </span>
               </th>
               <th
                 style={{ border: "1px solid #dedede", color: "#555" }}
-                className="bg-[#F3F3F3] xl:w-[102px] 2xl:w-[137.8px] !h-[40px] !text-[12px] !p-0 hohohoho"
+                className="bg-[#F3F3F3] xl:w-[102px] 2xl:w-[137.8px] !h-[40px] !text-[12px] !p-0 "
               >
                 <span className="text-[12px] !font-bold text-black">{t("home:base.LoaiGD")}  </span>
               </th>
               <th
                 style={{ border: "1px solid #dedede", color: "#555" }}
-                className="bg-[#F3F3F3] xl:w-[95.61px] 2xl:w-[128.91px] !h-[40px] !text-[12px] !p-0 hohohoho"
+                className="bg-[#F3F3F3] xl:w-[95.61px] 2xl:w-[128.91px] !h-[40px] !text-[12px] !p-0 "
               >
                 <span className="text-[12px] !font-bold text-black"> {t("home:base.base_KLC")} </span>
               </th>
               <th
                 style={{ border: "1px solid #dedede", color: "#555" }}
-                className="bg-[#F3F3F3]  xl:w-[88.7px] !h-[40px] !text-[12px] 2xl:w-[119.58px] !p-0 hohohoho"
+                className="bg-[#F3F3F3]  xl:w-[88.7px] !h-[40px] !text-[12px] 2xl:w-[119.58px] !p-0 "
               >
                 <span className="text-[12px] !font-bold text-black">{t("home:base.base_KLD")}  </span>
               </th>
               <th
                 style={{ border: "1px solid #dedede", color: "#555" }}
-                className="bg-[#F3F3F3] xl:w-[61.56px] 2xl:w-[83px] !h-[40px] !text-[12px] !p-0 hohohoho"
+                className="bg-[#F3F3F3] xl:w-[61.56px] 2xl:w-[83px] !h-[40px] !text-[12px] !p-0 "
               >
                 <span className="text-[12px ] !font-bold text-black">{t("home:base.Gia")}  </span>
               </th>
               <th
                 style={{ border: "1px solid #dedede", color: "#555" }}
-                className="bg-[#F3F3F3] xl:w-[164px] 2xl:w-[220px] !h-[40px] !text-[12px] !p-0 hohohoho"
+                className="bg-[#F3F3F3] xl:w-[164px] 2xl:w-[220px] !h-[40px] !text-[12px] !p-0 "
               >
                 <span className="text-[12px] !font-bold text-black">{t("home:base.TinhTrangLenh")}</span>
               </th>
               <th
                 style={{ border: "1px solid #dedede", color: "#555" }}
-                className="bg-[#F3F3F3] xl:w-[108px]  !h-[40px] !text-[12px] 2xl:w-[145.09px] !p-0 hohohoho"
+                className="bg-[#F3F3F3] xl:w-[107px]  !h-[40px] !text-[12px] 2xl:w-[145.09px] !p-0 "
               >
                 <span className="text-[12px] !font-bold text-black">{t("home:base.base_DG")}</span>
               </th>
               <th
                 style={{ border: "1px solid #dedede", color: "#555" }}
-                className="bg-[#F3F3F3]  !h-[40px] !text-[12px] 2xl:w-[132px]  xl:w-[97.49px] !p-0 hohohoho"
+                className="bg-[#F3F3F3]  !h-[40px] !text-[12px] 2xl:w-[132px]  xl:w-[97.49px] !p-0 "
               >
                 <span className="text-[12px] !font-bold text-black"> {t("home:base.SanGD")}</span>
               </th>
               <th
                 style={{ border: "1px solid #dedede", color: "#555" }}
-                className="bg-[#F3F3F3] xl:w-[135px] 2xl:w-[182px] !h-[40px] !text-[12px] !p-0 hohohoho"
+                className="bg-[#F3F3F3] xl:w-[135px] 2xl:w-[182px] !h-[40px] !text-[12px] !p-0 "
               >
                 <span className="text-[12px ] !font-bold text-black">{t("home:base.base_SHL")}</span>
               </th>
               <th
                 style={{ border: "1px solid #dedede", color: "#555" }}
-                className="bg-[#F3F3F3] xl:w-[190px] 2xl:w-[255px] !h-[40px] !text-[12px] !p-0 hohohoho"
+                className="bg-[#F3F3F3] xl:w-[190px] 2xl:w-[255px] !h-[40px] !text-[12px] !p-0 "
               >
                 <span className="text-[12px] !font-bold text-black">{t("home:base.base_TGDL")}</span>
               </th>
