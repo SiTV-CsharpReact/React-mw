@@ -12,7 +12,7 @@ const AssetReport2 = () => {
   const { mode } = useAppSelector((state) => state.settingColorMode);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchAssetReport());
+    // dispatch(fetchAssetReport());
   }, [dispatch]);
   return (
     <div className={`${mode}-bg`}>

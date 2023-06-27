@@ -67,7 +67,6 @@ export const setColorMarket = (
   tran: number,
   san: number
 ) => {
-  console.log(tc,price,tran,san)
   let Color = "text-black";
   // if(price=== san){
   //     Color="text-blue"

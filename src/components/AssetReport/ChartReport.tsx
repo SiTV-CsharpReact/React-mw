@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo } from "react";
 import Highcharts from "highcharts";
-import { useAppSelector } from "../../store/configureStore";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { formatNumber } from "../../utils/util";
+import { fetchAssetReport } from "./AssetReportSlice";
 
 type IDate = {
   date: number;
@@ -9,6 +10,12 @@ type IDate = {
 const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
   const { mode } = useAppSelector((state) => state.settingColorMode);
   const { assetReport } = useAppSelector((state) => state.assetReport);
+  console.log(assetReport);
+  
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchAssetReport());
+  }, [dispatch]);
   const changeOption: number = date === 0 ? 20 : 89;
 
   const arrLine: any = useMemo(() => {
@@ -49,7 +56,10 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
         type: "line",
         yAxis: 1,
         color: "#595959",
-        data: arrLine?.map((item: any) => item).reverse().splice(-changeOption),
+        data: arrLine
+          ?.map((item: any) => item)
+          .reverse()
+          .splice(-changeOption),
         maker: {
           symbol: "circle",
         },
@@ -203,14 +213,13 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
       },
       series: series,
     });
-    return () => {
-      Highcharts.chart("container-asset_report", {}).destroy();
-    };
   }, [arrLine, assetReport.Table2, changeOption, date]);
   return (
-    <figure className="highcharts-figure">
-      <div id="container-asset_report"></div>
-    </figure>
+    <>
+      <figure className="highcharts-figure">
+        <div id="container-asset_report"></div>
+      </figure>
+    </>
   );
 };
 

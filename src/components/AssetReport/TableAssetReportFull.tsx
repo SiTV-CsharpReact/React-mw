@@ -2,6 +2,7 @@ import React from "react";
 import { formatNumber } from "../../utils/util";
 import { useAppSelector } from "../../store/configureStore";
 import { IpropsTableReport } from "./TableAssetReport";
+import {useWindowSize} from 'usehooks-ts'
 
 const TableAssetReportFull: React.FC<IpropsTableReport> = ({
   short,
@@ -9,10 +10,11 @@ const TableAssetReportFull: React.FC<IpropsTableReport> = ({
   handleSort,
   label,
   sort,
-  data
+  data,
 }: IpropsTableReport) => {
   const { assetReport } = useAppSelector((state) => state.assetReport);
   const { mode } = useAppSelector((state) => state.settingColorMode);
+  const {width} = useWindowSize()
 
   return (
     <table className="w-full border-collapse text-center my-0 mx-auto bg-white text-[#002060] border-spacing-0">
@@ -40,32 +42,11 @@ const TableAssetReportFull: React.FC<IpropsTableReport> = ({
             rowSpan={3}
             style={{ width: "5%" }}
             onClick={() => handleSort("ACAPITAL_STRUCTURE")}
+            className={label !== "ACAPITAL_STRUCTURE" ? 'tablesorter' : label === "ACAPITAL_STRUCTURE" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}
           >
             <div>
               <strong className="text-black">
                 Cơ cấu <br /> vốn
-                {label !== "ACAPITAL_STRUCTURE" ? (
-                  <div className="absolute top-1/2 -translate-y-1/2 right-3">
-                    <span className="text-sm text-hoverKL">
-                      <i
-                        className="fa fa-caret-up absolute -bottom-1"
-                        aria-hidden="true"
-                      ></i>
-                      <i
-                        className="fa fa-caret-down absolute -top-1"
-                        aria-hidden="true"
-                      ></i>
-                    </span>
-                  </div>
-                ) : label === "ACAPITAL_STRUCTURE" && sort === "asc" ? (
-                  <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                    <i className="fa fa-caret-down" aria-hidden="true"></i>
-                  </span>
-                ) : (
-                  <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                    <i className="fa fa-caret-up" aria-hidden="true"></i>
-                  </span>
-                )}
               </strong>
             </div>
           </td>
@@ -73,32 +54,11 @@ const TableAssetReportFull: React.FC<IpropsTableReport> = ({
             rowSpan={3}
             style={{ width: "6.2%" }}
             onClick={() => handleSort("APORTFOLIO_RATE")}
+            className={label !== "APORTFOLIO_RATE" ? 'tablesorter' : label === "APORTFOLIO_RATE" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}
           >
             <div>
               <strong className="text-black">
                 Tỉ trọng <br /> DM
-                {label !== "APORTFOLIO_RATE" ? (
-                  <div className="absolute top-1/2 -translate-y-1/2 right-3">
-                    <span className="text-sm text-hoverKL">
-                      <i
-                        className="fa fa-caret-up absolute -bottom-1"
-                        aria-hidden="true"
-                      ></i>
-                      <i
-                        className="fa fa-caret-down absolute -top-1"
-                        aria-hidden="true"
-                      ></i>
-                    </span>
-                  </div>
-                ) : label === "APORTFOLIO_RATE" && sort === "asc" ? (
-                  <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                    <i className="fa fa-caret-down" aria-hidden="true"></i>
-                  </span>
-                ) : (
-                  <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                    <i className="fa fa-caret-up" aria-hidden="true"></i>
-                  </span>
-                )}
               </strong>
             </div>
           </td>
@@ -106,66 +66,22 @@ const TableAssetReportFull: React.FC<IpropsTableReport> = ({
         <tr>
           <td
             rowSpan={2}
-            className="text-xs font-bold"
+            className={`text-xs font-bold ${label !== "ASTOCKCODE" ? 'tablesorter' : label === "ASTOCKCODE" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
             style={{ width: "5%" }}
             onClick={() => handleSort("ASTOCKCODE")}
           >
             <div>
               Mã CK
-              {label !== "ASTOCKCODE" ? (
-                <div className="absolute top-1/2 -translate-y-1/2 right-3">
-                  <span className="text-sm text-hoverKL">
-                    <i
-                      className="fa fa-caret-up absolute -bottom-1"
-                      aria-hidden="true"
-                    ></i>
-                    <i
-                      className="fa fa-caret-down absolute -top-1"
-                      aria-hidden="true"
-                    ></i>
-                  </span>
-                </div>
-              ) : label === "ASTOCKCODE" && sort === "asc" ? (
-                <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                  <i className="fa fa-caret-down" aria-hidden="true"></i>
-                </span>
-              ) : (
-                <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                  <i className="fa fa-caret-up" aria-hidden="true"></i>
-                </span>
-              )}
             </div>
           </td>
           <td
             rowSpan={2}
-            className="text-xs font-bold"
+            className={`text-xs font-bold ${label !== "ATRADING_READY_TOTAL" ? 'tablesorter' : label === "ATRADING_READY_TOTAL" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
             style={{ width: "6.2%" }}
             onClick={() => handleSort("ATRADING_READY_TOTAL")}
           >
             <div>
-              CK có sẵn
-              {label !== "ATRADING_READY_TOTAL" ? (
-                <div className="absolute top-1/2 -translate-y-1/2 right-3">
-                  <span className="text-sm text-hoverKL">
-                    <i
-                      className="fa fa-caret-up absolute -bottom-1"
-                      aria-hidden="true"
-                    ></i>
-                    <i
-                      className="fa fa-caret-down absolute -top-1"
-                      aria-hidden="true"
-                    ></i>
-                  </span>
-                </div>
-              ) : label === "ATRADING_READY_TOTAL" && sort === "asc" ? (
-                <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                  <i className="fa fa-caret-down" aria-hidden="true"></i>
-                </span>
-              ) : (
-                <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                  <i className="fa fa-caret-up" aria-hidden="true"></i>
-                </span>
-              )}
+              {width <= 1000 ? <>CK có<br/>sẵn</> : width >= 1001 && width <=1200 ? <>CK có<br/>sẵn</> : width >= 1201 && width <=1690 ? <>CK có<br/>sẵn</>  : <>CK có sẵn</>}
             </div>
           </td>
           <td
@@ -176,169 +92,59 @@ const TableAssetReportFull: React.FC<IpropsTableReport> = ({
             <div>CK mua chở về</div>
           </td>
           <td rowSpan={2} className="text-xs font-bold" style={{ width: "7%" }}>
-            CK quyền <br /> chở về
+            {width <= 1000 ? <>CK<br/>quyền<br/>chở về</> : width >= 1001 && width <=1200 ? <>CK quyền <br /> chở về</> : width >= 1201 && width <=1370 ? <>CK<br/>quyền <br /> chở <br/>về</>  : <>CK quyền <br /> chở về</>}
           </td>
           <td rowSpan={2} className="text-xs font-bold" style={{ width: "7%" }}>
-            CK cầm cố NH
+            {width <= 1000 ? <>CK cầm<br/>cố NH</> : width >= 1001 && width <=1200 ? <>CK cầm cố<br/>NH</> : width >= 1201 && width <= 1370 ? <>CK <br/> cầm<br/> cố <br/> NH</>  : width >= 1371 && width <= 1660 ? <>CK cầm<br/>cố NH</>:<>CK cầm cố NH</>}
           </td>
           <td rowSpan={2} className="text-xs font-bold" style={{ width: "6%" }}>
-            CK hạn chế <br /> GD
+            {width <= 1000 ? <>CK cầm<br/>cố NH</> : width >= 1001 && width <=1200 ? <>CK cầm cố<br/>NH</> : width >= 1201 && width <= 1360 ? <>CK<br/> hạn <br />chế<br/> GD</>  : width >=1361 && width <= 1659 ? <>CK hạn<br/>chế GD</> : <>CK hạn chế<br/> GD</>}
           </td>
           <td
             rowSpan={2}
-            className="text-xs font-bold"
+            className={`text-xs font-bold ${label !== "ATOTAL_AMOUNT" ? 'tablesorter' : label === "ATOTAL_AMOUNT" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
             style={{ width: "5.7%" }}
             onClick={() => handleSort("ATOTAL_AMOUNT")}
           >
-            Tổng KL
-            {label !== "ATOTAL_AMOUNT" ? (
-              <div className="absolute top-1/2 -translate-y-1/2 right-3">
-                <span className="text-sm text-hoverKL">
-                  <i
-                    className="fa fa-caret-up absolute -bottom-1"
-                    aria-hidden="true"
-                  ></i>
-                  <i
-                    className="fa fa-caret-down absolute -top-1"
-                    aria-hidden="true"
-                  ></i>
-                </span>
-              </div>
-            ) : label === "ATOTAL_AMOUNT" && sort === "asc" ? (
-              <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                <i className="fa fa-caret-down" aria-hidden="true"></i>
-              </span>
-            ) : (
-              <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                <i className="fa fa-caret-up" aria-hidden="true"></i>
-              </span>
-            )}
+            {width <=1000 ? <>Tổng<br/>KL</> : width >= 1001 && width <= 1200 ? <>Tổng<br/>KL</>: width >= 1201 && width <= 1660 ? <>Tổng<br/>KL</>:<>Tổng KL</>}
           </td>
           <td rowSpan={2} className="text-xs font-bold" style={{ width: "5%" }}>
             Giá TT
           </td>
           <td
             rowSpan={2}
-            className="text-xs font-bold"
+            className={`text-xs font-bold ${label !== "AMARKET_VALUE" ? 'tablesorter' : label === "AMARKET_VALUE" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
             style={{ width: "7%" }}
             onClick={() => handleSort("AMARKET_VALUE")}
           >
-            Thành tiền
-            {label !== "AMARKET_VALUE" ? (
-              <div className="absolute top-1/2 -translate-y-1/2 right-3">
-                <span className="text-sm text-hoverKL">
-                  <i
-                    className="fa fa-caret-up absolute -bottom-1"
-                    aria-hidden="true"
-                  ></i>
-                  <i
-                    className="fa fa-caret-down absolute -top-1"
-                    aria-hidden="true"
-                  ></i>
-                </span>
-              </div>
-            ) : label === "AMARKET_VALUE" && sort === "asc" ? (
-              <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                <i className="fa fa-caret-down" aria-hidden="true"></i>
-              </span>
-            ) : (
-              <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                <i className="fa fa-caret-up" aria-hidden="true"></i>
-              </span>
-            )}
+            {width <=1000 ? <>Thành<br/>tiền</> : width >= 1001 && width <= 1200 ? <>Thành<br/>tiền</>: width >= 1201 && width <= 1660 ? <>Thành<br/>tiền</>:<>Thành tiền</>}
           </td>
           <td rowSpan={2} className="text-xs font-bold" style={{ width: "5%" }}>
-            Giá vốn TB
+            {width <= 1000 ? <>Giá vốn<br/>TB</> : width >= 1001 && width <=1200 ? <>Giá vốn<br/>TB</> : width >= 1201 && width <= 1360 ? <>Giá vốn<br/>TB</>  : width >=1361 && width <= 1659 ? <>Giá vốn<br/>TB</> : <>Giá vốn TB</>}
           </td>
           <td
             rowSpan={2}
-            className="text-xs font-bold"
+            className={`text-xs font-bold ${label !== "AROOT_VALUE" ? 'tablesorter' : label === "AROOT_VALUE" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
             style={{ width: "7.5%" }}
             onClick={() => handleSort("AROOT_VALUE")}
           >
-            Tổng giá vốn
-            {label !== "AROOT_VALUE" ? (
-              <div className="absolute top-1/2 -translate-y-1/2 right-3">
-                <span className="text-sm text-hoverKL">
-                  <i
-                    className="fa fa-caret-up absolute -bottom-1"
-                    aria-hidden="true"
-                  ></i>
-                  <i
-                    className="fa fa-caret-down absolute -top-1"
-                    aria-hidden="true"
-                  ></i>
-                </span>
-              </div>
-            ) : label === "AROOT_VALUE" && sort === "asc" ? (
-              <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                <i className="fa fa-caret-down" aria-hidden="true"></i>
-              </span>
-            ) : (
-              <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                <i className="fa fa-caret-up" aria-hidden="true"></i>
-              </span>
-            )}
+            {width <= 1000 ? <>Tổng giá<br/>vốn</> : width >= 1001 && width <=1200 ? <>Tổng giá<br/>vốn</> : width >= 1201 && width <= 1360 ? <>Tổng giá<br/>vốn</>  : width >=1361 && width <= 1739 ? <>Tổng giá<br/>vốn</> : <>Tổng giá vốn</>}
           </td>
           <td
             rowSpan={2}
-            className="text-xs font-bold"
+            className={`text-xs font-bold  ${label !== "APROFIT_LOSS_VAL" ? 'tablesorter' : label === "APROFIT_LOSS_VAL" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
             style={{ width: "5%" }}
             onClick={() => handleSort("APROFIT_LOSS_VAL")}
           >
             Lãi/Lỗ
-            {label !== "APROFIT_LOSS_VAL" ? (
-              <div className="absolute top-1/2 -translate-y-1/2 right-3">
-                <span className="text-sm text-hoverKL">
-                  <i
-                    className="fa fa-caret-up absolute -bottom-1"
-                    aria-hidden="true"
-                  ></i>
-                  <i
-                    className="fa fa-caret-down absolute -top-1"
-                    aria-hidden="true"
-                  ></i>
-                </span>
-              </div>
-            ) : label === "APROFIT_LOSS_VAL" && sort === "asc" ? (
-              <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                <i className="fa fa-caret-down" aria-hidden="true"></i>
-              </span>
-            ) : (
-              <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                <i className="fa fa-caret-up" aria-hidden="true"></i>
-              </span>
-            )}
           </td>
           <td
             rowSpan={2}
-            className="text-xs font-bold"
+            className={`text-xs font-bold ${label !== "APROFIT_LOSS_RATE" ? 'tablesorter' : label === "APROFIT_LOSS_RATE" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
             style={{ width: "5.8%" }}
             onClick={() => handleSort("APROFIT_LOSS_RATE")}
           >
-            % Lãi/Lỗ
-            {label !== "APROFIT_LOSS_RATE" ? (
-              <div className="absolute top-1/2 -translate-y-1/2 right-3">
-                <span className="text-sm text-hoverKL">
-                  <i
-                    className="fa fa-caret-up absolute -bottom-1"
-                    aria-hidden="true"
-                  ></i>
-                  <i
-                    className="fa fa-caret-down absolute -top-1"
-                    aria-hidden="true"
-                  ></i>
-                </span>
-              </div>
-            ) : label === "APROFIT_LOSS_RATE" && sort === "asc" ? (
-              <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                <i className="fa fa-caret-down" aria-hidden="true"></i>
-              </span>
-            ) : (
-              <span className="absolute top-1/2 -translate-y-1/2 right-1 text-sm text-hoverKL">
-                <i className="fa fa-caret-up" aria-hidden="true"></i>
-              </span>
-            )}
+            {width <= 1000 ? <>%<br/>Lãi/Lỗ</> : width >= 1001 && width <=1200 ? <>%<br/>Lãi/Lỗ</> : width >= 1201 && width <= 1360 ? <>%<br/>Lãi/Lỗ</>  : width >=1361 && width <= 1659 ? <>%<br/>Lãi/Lỗ</> : <>% Lãi/Lỗ</>}
           </td>
         </tr>
         <tr>
@@ -426,11 +232,9 @@ const TableAssetReportFull: React.FC<IpropsTableReport> = ({
           </td>
           <td
             className={`!text-xs ${
-              formatNumber(
-                assetReport?.Table1?.reduce(
-                  (a: any, b: any) => a + b.APROFIT_LOSS_VAL,
-                  0
-                )
+              assetReport?.Table1?.reduce(
+                (a: any, b: any) => a + b.APROFIT_LOSS_VAL,
+                0
               ) < 0
                 ? "!text-[#FF0000]"
                 : "!text-[#00b050]"

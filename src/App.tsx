@@ -26,8 +26,14 @@ import OverViewCustody from "./pages/RightCustody/OverViewCustody";
 import ConditionalOrder from "./pages/Stoploss/ConditionalOrder";
 import ConditionalOrderBook from "./pages/Stoploss/ConditionalOrderBook";
 import RegistrationOnline from "./pages/RightCustody/RegistrationOnline";
-import AssetReport2 from "./pages/Report/AssetReport2/AssetReport";
-import ReportNAV from "./pages/Report/ReportNAV";
+import CurrMargin from './pages/Report/CurrMargin'
+import StockSettlement from './pages/Report/StockSettlement'
+import CashSettlement from './pages/Report/CashSettlement'
+import ReportCW from './pages/Report/ReportCW'
+import ListFee from './pages/Report/ListFee'
+import DepositoryHistory from './pages/RightCustody/DepositoryHistory'
+ import ReportNAV from "./pages/Report/ReportNAV";
+//import ReportNAV from "./components/ReportNAV/ReportNAV";
 import ReportTransSummary from "./pages/Report/ReportTransSummary";
 import StockDetails from "./pages/Report/StockDetails";
 const App: React.FC = () => {
@@ -46,7 +52,7 @@ const App: React.FC = () => {
 
           {/* Quản lý tài khoản */}
           <Route path="/report/ReportTransBalance" element={<AssetReport />} />
-          <Route path="/report/AssetReport2" element={<AssetReport2 />} />
+          <Route path="/report/AssetReport2" element={<AssetReport />} />
           <Route path="/report/ReportNAV" element={<ReportNAV />} />
 
           <Route path="/report/reportprofitloss" element={<AssetReport />} />

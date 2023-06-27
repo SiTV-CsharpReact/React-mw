@@ -1,0 +1,48 @@
+{
+    "data": {
+        "Code": 0,
+        "Message": "SUCCESS",
+        "Data": {
+            "Table": [
+                {
+                    "STAGE": "Đầu kỳ",
+                    "ANAV": 4239163,
+                    "ATOTAL_CASH": 1298523,
+                    "ACASH_AMOUNT": 1298523,
+                    "AREC_CASH_SELL": 0,
+                    "ARE_CASH_DEVIDEND": 0,
+                    "AMARKET_VALUE": 2940640,
+                    "AREMAIN_DEBT": 0,
+                    "ACASH_IN": 0,
+                    "ACASH_DE": 0,
+                    "ASTOCK_IN": 0,
+                    "ASTOCK_DE": 0,
+                    "ARE_CASH_OTHER": 0,
+                    "ASAVINGTOTAL": 0
+                },
+                {
+                    "STAGE": "Cuối kỳ",
+                    "ANAV": 4834270,
+                    "ATOTAL_CASH": 1332370,
+                    "ACASH_AMOUNT": 1311470,
+                    "AREC_CASH_SELL": 0,
+                    "ARE_CASH_DEVIDEND": 20900,
+                    "AMARKET_VALUE": 3501900,
+                    "AREMAIN_DEBT": 0,
+                    "ACASH_IN": 0,
+                    "ACASH_DE": 0,
+                    "ASTOCK_IN": 0,
+                    "ASTOCK_DE": 0,
+                    "ARE_CASH_OTHER": 0,
+                    "ASAVINGTOTAL": 0
+                }
+            ],
+            "Table1": [
+                {
+                    "ASTATUS": 1,
+                    "TIME": "17:57 - 23/06/2023"
+                }
+            ]
+        }
+    }
+}

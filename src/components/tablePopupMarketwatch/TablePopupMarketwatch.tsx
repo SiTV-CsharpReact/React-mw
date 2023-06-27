@@ -117,10 +117,10 @@ const TablePopupMarketwatch = () => {
   }, [dataCheck, dataResultSearch]);
 
   const [position, setPosition] = useState({
-    x: -window.innerWidth / 2.3,
-    y: -window.innerHeight / 2 + 40,
+    x: (window.innerWidth - 1230) /2,    // - đi witdh tablle chia 2
+    y: (window.innerHeight - 721 -40) /2 ,
   });
-
+  console.log("vi tri pop up",position,window.innerWidth,window.innerHeight)
   const handleDrag = (e: DraggableEvent, ui: DraggableData) => {
     const { x, y } = position;
     setPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
@@ -250,9 +250,9 @@ const TablePopupMarketwatch = () => {
         <div>
           <TableDetailPopup dataItem={dataItemHNX.length !==0 ? dataItemHNX :dataItemHSX} />
         </div>
-        <div className="flex pu-info">
+        <div className="flex pu-info mt-[5px]">
           <div className="pu-basic w-[409px] mx-1">
-            <TableBasicPopup />
+            <TableBasicPopup stockCode={stockDetail}/>
             <TableReportingPopup />
           </div>
           <div className="pu-hrz-realtime w-[391px] mx-1">
