@@ -46,6 +46,7 @@ const SlidesMarketWatch = () => {
   const slideWidth = 220;
   const slidesToShow = Math.floor(screenWidth / slideWidth);
   const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
+  
 
   const dispatch = useAppDispatch();
   const {

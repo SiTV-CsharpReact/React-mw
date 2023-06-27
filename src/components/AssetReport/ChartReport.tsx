@@ -90,7 +90,7 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
             //cập nhật maker in linechart
             this.series[1].points.forEach((point: any) => {
               point.update({
-                color: point.y > 0 ? "#548235" : "#c00000",
+                color: point.y >= 0 ? "#548235" : "#c00000",
               });
             });
             this.redraw();
