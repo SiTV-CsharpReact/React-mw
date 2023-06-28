@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState} from "react";
 import excell from "../../images/excel.png";
 import pfd from "../../images/pdf.png";
 import * as XLSX from "xlsx";
@@ -7,12 +7,14 @@ import _ from "lodash";
 import { uniqBy, filter, sortBy } from "lodash";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../../store/configureStore";
+import {useReactToPrint} from "react-to-print";
 type Props = {
   value: number;
 }
 const PendingOrders: React.FC<Props> = (value) => {
   // console.log(value.value)
   const { t } = useTranslation(["home"]);
+  const componentPDF = useRef<any>()
   const [data, setData] = useState([]);
   const [dataAfter, setDataAfter] = useState({
     dataCoppy: [],
@@ -91,29 +93,11 @@ const PendingOrders: React.FC<Props> = (value) => {
     URL.revokeObjectURL(url);
   };
 
-  const handleExportToPDF = () => {
-    // const table = document.getElementById('table-id');
-    //   const doc: any = new jsPDF('p', 'pt');
-    //   doc.addFont('Helvetica', 'Helvetica', 'normal')
-    //   doc.setFont('Helvetica')
-    //   if (table) {
-    //     doc.autoTable({
-    //     html: table,
-    //     startX: 20,
-    //     styles: {
-    //       size:10,
-    //       fontSize: 4,
-    //       cellPadding: 6,
-    //       fillColor: 'gray',
-    //        font: 'Helvetica', lowercase: true,
-    //     },
-    //      tableWidth: 'auto',
-    //      margin: { top: 20 },
-    //   });
-    // }
-    // doc.save('filename.pdf');
-  };
-  // console.log(data)
+  const handleExportToPDF = useReactToPrint({
+    content: () => componentPDF.current,
+    documentTitle: "Export PDF",
+    onAfterPrint: () => alert("Export is successfully"),
+  })
   return (
     <div>
       <div className="grid grid-cols-2 mt-1 ">
@@ -281,8 +265,9 @@ const PendingOrders: React.FC<Props> = (value) => {
         </div>
        
       </div>
-      <div className="mt-[1.5px] ml-[30px] mr-[30px]">
-        <table id="table-id">
+      <div  className="mt-[1.5px] ml-[30px] mr-[30px]">
+        <div ref={componentPDF} style={{width:"100%"}}>
+            <table id="table-id">
           <thead className="!bg-[#F3F3F3] ">
             <tr className=""> 
               <th 
@@ -479,6 +464,7 @@ const PendingOrders: React.FC<Props> = (value) => {
             </tr>
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   );

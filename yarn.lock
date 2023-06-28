@@ -1405,6 +1405,18 @@
   resolved "https://registry.npmjs.org/@faker-js/faker/-/faker-8.0.1.tgz"
   integrity sha512-kbh5MenpTN9U0B4QcOI1NoTPlZHniSYQ3BHbhAnPjJGAmmFqxoxTE4sGdpy7ZOO9038DPGCuhXyMkjOr05uVwA==
 
+"@garage-panda/react-pdf-export@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/@garage-panda/react-pdf-export/-/react-pdf-export-0.2.2.tgz"
+  integrity sha512-fKVghQWLemiaDmKRxPs5l7QB2yh3GRRdjvowQ5/x0zcchSKUV3WgrBYG6Tf6lPG0KnV4ZFZS0+8VABYcgxl1iQ==
+  dependencies:
+    "@garage-panda/use-await-dom-render" "0.0.5"
+
+"@garage-panda/use-await-dom-render@0.0.5":
+  version "0.0.5"
+  resolved "https://registry.npmjs.org/@garage-panda/use-await-dom-render/-/use-await-dom-render-0.0.5.tgz"
+  integrity sha512-oA//JlK9QnS24+UT1HVLLz1XSBSjROXJYkZUWcwWJafHYVym+roLyOKEkZg+F5X3AJSKtVPN0gkEUaVtVS36zg==
+
 "@hookform/resolvers@^3.1.0":
   version "3.1.0"
   resolved "https://registry.npmjs.org/@hookform/resolvers/-/resolvers-3.1.0.tgz"
@@ -6050,7 +6062,7 @@ fs@^0.0.1-security:
 
 fsevents@^2.3.2, fsevents@~2.3.2:
   version "2.3.2"
-  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
+  resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
   integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
 
 function-bind@^1.1.1:
@@ -10133,6 +10145,11 @@ react-themeable@^1.1.0:
   integrity sha512-kl5tQ8K+r9IdQXZd8WLa+xxYN04lLnJXRVhHfdgwsUJr/SlKJxIejoc9z9obEkx1mdqbTw1ry43fxEUwyD9u7w==
   dependencies:
     object-assign "^3.0.0"
+
+react-to-print@^2.14.13:
+  version "2.14.13"
+  resolved "https://registry.yarnpkg.com/react-to-print/-/react-to-print-2.14.13.tgz#cd0349f7ef93c8af5120fac0ef6c4f3d100df490"
+  integrity sha512-PqUGgTRZvkyBzWgaZHVBECWPX2nGEc3HOUy6WNXof6HT4yTFI92wtIkqQtr4jfvHbadqjwTgzgh6vgN8KXlWWw==
 
 react-transition-group@^4.4.2, react-transition-group@^4.4.5:
   version "4.4.5"
