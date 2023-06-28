@@ -52,7 +52,7 @@ const App: React.FC = () => {
           {/* Report */}
 
           {/* Quản lý tài khoản */}
-          <Route path="/report/ReportTransBalance" element={<AssetReport />} />
+          <Route path="/report/ReportTransBalance" element={<TransBalance />} />
           <Route path="/report/AssetReport2" element={<AssetReport />} />
           <Route path="/report/ReportNAV" element={<ReportNAV />} />
 
@@ -76,10 +76,6 @@ const App: React.FC = () => {
           <Route
             path="/report/ClientActivityRange"
             element={<HistoryOrder />}
-          />
-          <Route
-            path="/report/TransBalance"
-            element={<TransBalance />}
           />
           <Route path="/report/TradeLog" element={<HistoryMatching />} />
           <Route path="/report/PendingSettlement" element={<HistoryForpay />} />

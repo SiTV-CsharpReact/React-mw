@@ -16,7 +16,7 @@ const TotalGD = () => {
         },[])
   return (
       <div>
-          <div className='w-[370px] h-[614px] pr-2 mt-5 ml-5 bg-[#ECECEC]'>
+          <div className='w-[380px] h-[614px] pr-2 mt-5 ml-5 bg-[#ECECEC]'>
               <div className='flex items-center justify-between px-2 pt-3'>
                   <p className='text-[12px] text-[#000000] !font-bold'>{t("report:Transbalance.TradeableMoney")}</p>
                   <p className='text-[12px] text-[#000000] !font-bold'>{ formatNumber(dataTotal?.PurchasingPowerTotal)}</p>

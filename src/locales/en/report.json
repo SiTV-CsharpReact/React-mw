@@ -166,5 +166,17 @@
           "Node4":"3. Expected profit/loss is temporarily calculated based on the difference between market price and average cost price calculated by FPTS. In which, the Average Cost Price is temporarily calculated during the trading session according to FPTS's formula and opinion, and is for reference only. You can refer to FPTS's calculation of Average Cost Price",
           "Node5":"here",
           "Node6":" FPT Securities Joint Stock Company "
+    },
+      "AcceptReport":{
+        "Atr1":"Latest updated data: ",
+        "Atr2":"NET ASSET VALUE (I+II+III)",
+        "Atr3":"SECURITIES",
+        "Atr4":"CASH",
+        "Atr5":"MARGIN LOANS",
+        "Atr6":" STOCK DETAILS",
+        "Atr7":"(Collapse)",
+        "Atr8":"EXPECTED PROFIT/LOSS",
+        "Atr9":" Symbol",
+        "Atr10":"Available \n Stock"
     }
 }

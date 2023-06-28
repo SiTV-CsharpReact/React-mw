@@ -4,7 +4,7 @@ import { formatNumber, formatNumberMarket } from "../../utils/util";
 import axios from "axios";
 import io from 'socket.io-client';
 const TableAsset = (props: any) => {
-    const { assetReport } = useAppSelector((state) => state.assetReport);
+    const {assetReport } = useAppSelector((state) => state.assetReport);
     const [dataTable, setDataTable] = useState([])
     const [dataArrHSX, setArrHSX] = useState<any>([])
     const [dataArrHNX, setArrHNX] = useState<any>([])
@@ -55,53 +55,49 @@ const TableAsset = (props: any) => {
         });
     }, [dataTable]);
     const fetchDataHSN = async (code: string) => {
-        const { data } = await axios.get(`https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`)
-
-        data.map((item: any) =>
-            setArrHSX((prev: any[]) => [...prev, [item?.Info?.[0][1], "HSX", item?.Info?.[31][1]]])
+        try {
+            const { data } = await axios.get(`https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`)
+             data.map((item: any) =>
+             setArrHSX((prev: any[]) => [...prev, [item?.Info?.[0][1], "HSX", item?.Info?.[31][1]]])
         )
+       } catch (error : any) {
+        if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+    }
+       }
     }
     const fetchDataTable = async () => {
-        const { data } = await axios.get("http://localhost:3111/Data")
-        setDataTable(data)
+       try {
+         const { data } = await axios.get("http://localhost:3111/Data")
+         setDataTable(data)
+       } catch (error) {
+        console.log("loi day ne ")
+       }
     }
     const fetchDataHNN = async (code: string) => {
-        const { data } = await axios.get(`https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${code}`)
-        data.map((item: any) =>
-            setArrHNX((prev: any[]) => [...prev, [item?.Info?.[12][1], "HNX", item?.Info?.[31][1]]])
+      try {
+          const { data } = await axios.get(`https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${code}`)
+          data.map((item: any) =>
+          setArrHNX((prev: any[]) => [...prev, [item?.Info?.[12][1], "HNX", item?.Info?.[31][1]]])
         )
+      } catch (error) {
+        console.log("loi day ne hiu hiu ")
+      }
     }
     useEffect(() => {
         fetchDataTable()
-    }, [])
-
-    const mergedData = dataTable?.map((item: any) => {
+    }, [dataTable])
+      const mergedData = dataTable?.map((item: any) => {
         const dataHSXItem = dataArrHSX?.filter((dataItem: any) => dataItem[0] === item.Key);
         const dataHNXItem = dataArrHNX?.filter((dataItem: any) => dataItem[0] === item.Key);
 
         return {
             ...item,
             dataItem: dataHSXItem?.length !== 0 ? dataHSXItem[0] : dataHNXItem?.length !== 0 ? dataHNXItem[0] : []
-
         };
     });
-    const updateQuote = (objRealtime: string) => {
-        try {
-            const dataHNXRealTime = JSON.parse(objRealtime);
-            if (dataHNXRealTime && dataHNXRealTime.M) {
-                const dataM = dataHNXRealTime.M;
-                const arrDatas: any[] = [];
-                dataM.forEach((dataLT: any) => {
-                    const changeData = JSON.parse(dataLT.A[0].Change);
-                    arrDatas.push(...changeData);
-                });
-                setArrHSX((prevArrHSX: any[]) => prevArrHSX.concat(arrDatas));
-                console.log(arrDatas, "change")
-            }
-        } catch (error) {
-            console.error('Error parsing real-time data:', error);
-        }
-    };
     useEffect(() => {
         const socketHNX = new WebSocket(
             "wss://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=yWr50kq6iuFWJzRwhs7GR3bBYG%2Blpj7laF9cuG7oMsc4RLrmhYu9N%2Fco3Vl68KnUNXyGX7c5uuHmqFw1J1P1ClWXvR4w%2BXZlFMtR33yYxNAdiR%2FXCJWS%2FxL%2BNGhHlIpB&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=4"
@@ -121,6 +117,12 @@ const TableAsset = (props: any) => {
         socketHNX.onmessage = (event) => {
             updateQuote(event.data)
         };
+        socketHSX.onmessage = (event) => {
+        updateQuote(event.data);
+        };
+        socketHNX.onmessage = (event) => {
+        updateQuote(event.data);
+        };
         socketHSX.onclose = () => {
             console.log("WebSocket connection closed.");
         };
@@ -132,16 +134,32 @@ const TableAsset = (props: any) => {
             socketHNX.close();
         };
     }, []);
+     const updateQuote = (objRealtime: string) => {
+        try {
+            const dataHNXRealTime = JSON.parse(objRealtime);
+            if (dataHNXRealTime && dataHNXRealTime.M) {
+                const dataM = dataHNXRealTime.M;
+                console.log("firstQuote", dataM);
+                const arrDatas: any[] = [];
+                dataM.forEach((dataLT: any) => {
+                    const changeData = JSON.parse(dataLT.A[0].Change);
+                    if (Array.isArray(changeData)) {
+                        arrDatas.push(changeData);
+                    }
+                });
+                setArrHSX((prevArrHSX: any[]) => prevArrHSX.concat(arrDatas));
+                console.log(arrDatas, "change");
+            }
+        } catch (error) {
+            console.error('Error parsing real-time data:', error);
+        }
+    };
     let totalSum = 0;
     let totalGoc = 0;
     let toTalDk = 0;
     let tongtoTalPC = 0;
-
-
-
-
     return (
-        <div className={`table_detail   !h-[614px] mt-5 ${mode}-bg`}>
+        <div className={`table_detail  mr-5 !h-[614px] mt-5 ${mode}-bg`}>
             {short ? (
                 <table>
                     <thead>
@@ -288,7 +306,7 @@ const TableAsset = (props: any) => {
 
                             <td
                                 rowSpan={2}
-                                className={`!text-center !text-xs ${mode}-text`}
+                                className={`!text-center !text-xs ${mode}-text overflow-hidden`}
                                 style={{ width: "5%" }}
                                 onClick={() => handleSort("AMARKET_VALUE")}
                             >
@@ -467,7 +485,7 @@ const TableAsset = (props: any) => {
                     </thead>
                     <tbody>
                         {mergedData?.map((item: any, index: number) => {
-                            const valuePrice = item?.dataItem[2] * 1000
+                            const valuePrice = (item.dataItem[2] * 1000)
                             const totalValue = Number((item?.Value.TotalAmount) * valuePrice)
                             const totalAfter = (totalValue - item.Value.RootValue)
                             const totalPc = ((totalAfter / item.Value.RootValue) * 100);
@@ -483,7 +501,6 @@ const TableAsset = (props: any) => {
                             if (totalPc) {
                                 tongtoTalPC += totalPc
                             };
-                            console.log("first", totalSum)
                             return <tr key={item.Key}>
                                 <td style={{fontWeight:"700"}} className={`!text-center !text-[#007db7] !cursor-pointer !text-xs ${mode}-text`}>
                                     {item?.Value.StockCode}
@@ -598,7 +615,7 @@ const TableAsset = (props: any) => {
                             <td
                                 rowSpan={2}
                                 className={`!text-center !text-xs !py-4`}
-                                style={{ width: "5%" }}
+                                style={{ width: "6%" }}
                                 onClick={() => handleSort("ASTOCKCODE")}
                             >
                                 <div className={`relative ${mode}-text`}>
@@ -631,7 +648,7 @@ const TableAsset = (props: any) => {
                             <td
                                 rowSpan={2}
                                 className={`!text-center !text-xs ${mode}-text`}
-                                style={{ width: "6.2%" }}
+                                style={{ width: "6%" }}
                                 onClick={() => handleSort("ATRADING_READY_TOTAL")}
                             >
                                 <div className="relative">

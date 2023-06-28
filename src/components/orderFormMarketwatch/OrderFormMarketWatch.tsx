@@ -42,6 +42,7 @@ const OrderMarketW = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [submit, setSubmit] = useState(false);
+  const [dataCheck, setDataCheck] = useState(false);
   const [success, setSuccess] = useState("");
   // ghi lenh cho gui
   const [order, setOrder] = useState(true);
@@ -296,7 +297,9 @@ const OrderMarketW = () => {
                       name="txtSymbol"
                       data-old=""
                     /> */}
-
+                        <span className="absolute top-[-20px] left-[3px] !text-[12px] !text-[#333]">
+                          {dataShow.San === "HNX.LISTED" ? "HNX" : dataShow.San}
+                        </span>
                         <span className="absolute top-[-20px] right-[3px] !text-[12px] !text-[#333]">
                           TLV:{dataShow.TLV ? dataShow.TLV : 0}%
                         </span>
@@ -317,14 +320,18 @@ const OrderMarketW = () => {
                           }
                         />
                         {showResults && valueInput && (
-                          <div className="absolute pl-3 bg-white rounded-md shadow-xl ">
-                            <ul>
+                          <div style={{
+                            overflow: "auto", boxShadow: "rgba(0, 0, 0, 0.176) 0px 6px 12px 0px", outlineColor: "rgb(85, 85, 85)"
+                            ,border:"1px rgba(0, 0, 0, 0.15)"
+                          }} className="w-[451px] absolute pl-3 bg-white rounded-md shadow-xl ">
+                            <ul className="h-[212px]">
                               {searchResults.map((item: any, index) => (
                                 <li
                                   onClick={() => {
                                     let result = item.split("-");
                                     setValueInput(result[0]);
                                     setSearchResults([]);
+                                    setShowResults(false)
                                   }}
                                   className="my-2 cursor-pointer hover:bg-[#63a9e066]"
                                   key={index}
@@ -379,7 +386,7 @@ const OrderMarketW = () => {
                     <table className="mb-[-2px] w-full">
                       <tbody>
                         <tr>
-                          <td>
+                          <td className="border-none">
                             <span
                               className="spnTran cursor-pointer text-[#ef3eff] pl-[10px]  text-xs"
                               id="spnCeilPrice"
@@ -391,7 +398,7 @@ const OrderMarketW = () => {
                                 : 0}
                             </span>
                           </td>
-                          <td>
+                          <td className="border-none">
                             <span
                               className="spnThamChieu cursor-pointer text-[#f26f21] pl-[15px]  text-xs"
                               id="spnRefPrice"
@@ -403,7 +410,7 @@ const OrderMarketW = () => {
                                 : 0}
                             </span>
                           </td>
-                          <td>
+                          <td className="border-none">
                             <span
                               className="spnSan cursor-pointer text-[#00b8ff] pl-[15px]  text-xs"
                               id="spnFloorPrice"
@@ -415,7 +422,7 @@ const OrderMarketW = () => {
                                 : 0}
                             </span>
                           </td>
-                          <td>
+                          <td className="border-none">
                             <span
                               className="spnNum text-black pl-[15px] text-xs"
                               id="spnNum"
