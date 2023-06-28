@@ -59,7 +59,7 @@ const AssetReport = () => {
             <ChartAssetReport />
             <div id="divTextNote">
               <b className="not-italic text-hoverKL"> Ghi chú:</b>
-              <ul className="mb-[10px]">
+              <ul className="mb-3">
                 <li>
                   1. Số liệu được cập nhật định kỳ hàng ngày sau khi FPTS hạch
                   toán xong các giao dịch, quý khách vui lòng kiểm tra thời điểm
