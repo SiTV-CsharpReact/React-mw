@@ -114,7 +114,14 @@ const OrdersavingsTransfer = () => {
     }
     setValue({
       ...value,
-      valueTerm: item.term + " " + item.timeType,
+      valueTerm:
+        item.term +
+        " " +
+        (item.timeType === "Ngày"
+          ? t("home:Transfer.Ngay")
+          : item.timeType === "Tuần"
+          ? t("home:Transfer.Tuan")
+          : t("home:Transfer.Thang")),
       valueAnnualInterestRate: item.rate + "%",
     });
     // setLaiS(item.rate + "%");
@@ -160,8 +167,8 @@ const OrdersavingsTransfer = () => {
   return (
     <>
       <LayoutPage
-        PageTitle="Tiền cho vay - EzSaving"
-        content="Tiền cho vay - EzSaving"
+        PageTitle={t("home:Transfer.TienChoVayEzSaving")}
+        content={t("home:Transfer.TienChoVayEzSaving")}
       >
         <div className="hidden message">
           <p>Xin lỗi, Quý khách chưa đăng ký dịch vụ này!</p>
@@ -213,13 +220,19 @@ const OrdersavingsTransfer = () => {
                   />
                 </svg>
               </button>
-              <div className="p-3 text-white text-center bg-[#034c91] rounded-t-sm font-medium text-[1rem]">
-                LÃI SUẤT TẤT TOÁN TRƯỚC HẠN
+              <div className="p-3 text-white text-center bg-[#034c91] rounded-t-sm font-medium text-[1rem] uppercase">
+                {t("home:Transfer.LaiSuatTatToanTruocHan")}
               </div>
-              <div className="py-5 text-xs px-7 ">
-                <div className="flex items-center justify-between px-1 py-3 font-bold">
-                  <span>Số ngày cho vay thực</span>
-                  <span>Lãi suất / năm</span>
+              <div className="pt-2 pb-5 text-xs px-7">
+                <div className="flex items-center justify-between px-1 pt-3 pb-2 font-bold">
+                  <span className="w-[46%]">
+                    {" "}
+                    {t("home:Transfer.SoNgayChoVayThuc")}
+                  </span>
+                  <span className="w-[46%] text-right">
+                    {" "}
+                    {t("home:Transfer.LaiSuat/Nam")}
+                  </span>
                 </div>
                 {fetchData.valueDataInterestRate.length > 0 &&
                   fetchData.valueDataInterestRate.map(
@@ -235,7 +248,11 @@ const OrdersavingsTransfer = () => {
                             {item.dateFrom !== item.dateTo
                               ? `${item.dateFrom} - ${item.dateTo}`
                               : item.dateFrom}{" "}
-                            {item.timeType}
+                            {item.timeType === "Ngày"
+                              ? t("home:Transfer.Ngay")
+                              : item.timeType === "Tuần"
+                              ? t("home:Transfer.Tuan")
+                              : t("home:Transfer.Thang")}
                           </span>
                           <span> {item.rate}%</span>
                         </div>
@@ -440,7 +457,12 @@ const OrdersavingsTransfer = () => {
                                         handleLaiSuat(item, index);
                                       }}
                                     >
-                                      {item.term} {item.timeType}
+                                      {item.term}{" "}
+                                      {item.timeType === "Ngày"
+                                        ? t("home:Transfer.Ngay")
+                                        : item.timeType === "Tuần"
+                                        ? t("home:Transfer.Tuan")
+                                        : t("home:Transfer.Thang")}
                                     </span>
                                   )
                                 )}
@@ -511,7 +533,7 @@ const OrdersavingsTransfer = () => {
 
                         {isTrue.focusMaturityMethod === true &&
                           isTrue.dropDownMaturityMethod === true && (
-                            <div className="absolute z-40 flex flex-col w-[255px] bg-white border shadow-xl py-[2px] rounded-lg">
+                            <div className="absolute z-40 flex flex-col w-[255px] bg-white border shadow-xl py-[2px] rounded-lg overflow-hidden">
                               <span className="py-[4px] px-3 cursor-default">
                                 {t("home:Transfer.ChonPhuongThucDaoHan")}
                               </span>
@@ -520,22 +542,26 @@ const OrdersavingsTransfer = () => {
                                 onMouseDown={() => {
                                   setValue({
                                     ...value,
-                                    valueMaturityMethod: "Tự động tất toán",
+                                    valueMaturityMethod: t(
+                                      "home:Transfer.TuDongTatToan"
+                                    ),
                                   });
                                 }}
                               >
-                                Tự động tất toán
+                                {t("home:Transfer.TuDongTatToan")}
                               </span>
                               <span
                                 className="hover:bg-[#1E90FF] py-[4px] px-3 hover:text-white cursor-pointer"
                                 onMouseDown={() => {
                                   setValue({
                                     ...value,
-                                    valueMaturityMethod: "Tự động gia hạn",
+                                    valueMaturityMethod: t(
+                                      "home:Transfer.TuDongGiaHan"
+                                    ),
                                   });
                                 }}
                               >
-                                Tự động gia hạn
+                                {t("home:Transfer.TuDongGiaHan")}
                               </span>
                             </div>
                           )}
@@ -604,7 +630,7 @@ const OrdersavingsTransfer = () => {
 
                         {isTrue.focusRenewalMethod === true &&
                           isTrue.dropDownRenewalMethod === true && (
-                            <div className="absolute z-40 flex flex-col w-[255px] bg-white border shadow-xl py-[2px] rounded-lg">
+                            <div className="absolute z-40 flex flex-col w-[255px] bg-white border shadow-xl py-[2px] rounded-lg overflow-hidden">
                               <span className="py-[4px] px-3 cursor-default">
                                 {t("home:Transfer.ChonPhuongThucGiaHan")}
                               </span>
@@ -613,22 +639,26 @@ const OrdersavingsTransfer = () => {
                                 onMouseDown={() => {
                                   setValue({
                                     ...value,
-                                    valueRenewalMethod: "Lãi nhập gốc",
+                                    valueRenewalMethod: t(
+                                      "home:Transfer.LaiNhapGoc"
+                                    ),
                                   });
                                 }}
                               >
-                                Lãi nhập gốc
+                                {t("home:Transfer.LaiNhapGoc")}
                               </span>
                               <span
                                 className="hover:bg-[#1E90FF] py-[4px] px-3 hover:text-white cursor-pointer"
                                 onMouseDown={() => {
                                   setValue({
                                     ...value,
-                                    valueRenewalMethod: "Lãi trả về tài khoản",
+                                    valueRenewalMethod: t(
+                                      "home:Transfer.LaiTraVeTK"
+                                    ),
                                   });
                                 }}
                               >
-                                Lãi trả về tài khoản
+                                {t("home:Transfer.LaiTraVeTK")}
                               </span>
                             </div>
                           )}
@@ -803,7 +833,12 @@ const OrdersavingsTransfer = () => {
                         }`}
                       >
                         <span>
-                          {item.term} {item.timeType}
+                          {item.term}{" "}
+                          {item.timeType === "Ngày"
+                            ? t("home:Transfer.Ngay")
+                            : item.timeType === "Tuần"
+                            ? t("home:Transfer.Tuan")
+                            : t("home:Transfer.Thang")}
                         </span>
                         <span>{item.rate}%</span>
                       </div>
@@ -816,16 +851,16 @@ const OrdersavingsTransfer = () => {
                 onClick={() => {
                   handleTrue("showModal");
                 }}
-                className="w-full text-[#0000ff] text-[0.88em] underline"
+                className="w-full cursor-pointer text-[#0000ff] text-[0.88em] underline"
               >
-                Xem bảng Lãi suất tất toán trước hạn
+                {t("home:Transfer.XemBangLaiSuatTatToanTruocHan")}
               </span>
             </div>
 
             {/* -------------------------------Footer------------------------------- */}
             <div className="flex text-[12px] mt-10">
               <span className="text-[13px] italic">
-                Ghi chú: Thời gian thực hiện: Từ 0h đến 16h30 các ngày làm việc
+                {t("home:Transfer.NOTE_FOOT_ORDERSAVING")}
               </span>
             </div>
           </div>

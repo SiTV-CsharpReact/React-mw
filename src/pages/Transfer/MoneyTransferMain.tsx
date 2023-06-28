@@ -107,8 +107,8 @@ const MoneyTransferMain = () => {
       <LayoutPage
         LinkPage=""
         Icon={true}
-        PageTitle="Chuyển tiền"
-        content="Chuyển tiền"
+        PageTitle={t("home:Transfer.Chuyentien")}
+        content={t("home:Transfer.Chuyentien")}
       >
         <div className="hidden message">
           <p>Xin lỗi, Quý khách chưa đăng ký dịch vụ này!</p>
@@ -227,7 +227,7 @@ const MoneyTransferMain = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="text-[#ae1a1a] font-bold ">
+                  <tr className="text-[#ae1a1a] font-bold">
                     <td className="py-[3px] text-center border-r border-borderTransfer">
                       {balanceDetail?.ALEDGERBALANCE?.toLocaleString()}
                     </td>
