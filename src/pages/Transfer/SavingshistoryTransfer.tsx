@@ -457,7 +457,7 @@ const SavingshistoryTransfer = () => {
 
           {/*------------------Screen------------------*/}
           <div className="mt-[30px]">
-            <div className="flex justify-end gap-4 items-start text-[8pt] mr-[2%]">
+            <div className="flex justify-end items-start text-[8pt] mr-[2%]">
               <div className="flex flex-col gap-1">
                 <div className="z-10 grid items-center grid-cols-4 gap-2">
                   <span className="col-span-1 font-bold">
@@ -465,7 +465,7 @@ const SavingshistoryTransfer = () => {
                   </span>
                   <div className="col-span-3">
                     <div
-                      className={`w-[160px] flex items-center relative border h-[28px] rounded-[4px] ${
+                      className={`w-[160px] flex items-center relative border border-[#ced4da] h-[28px] rounded-[4px] ${
                         focused
                           ? "border-blue-300 shadow-[0px_0px_0px_4px_rgba(200,237,255,0.5)]"
                           : ""
@@ -519,7 +519,7 @@ const SavingshistoryTransfer = () => {
                   </span>
                   <div className="col-span-3">
                     <div
-                      className={`w-[160px] flex relative items-center border h-[28px] rounded-[4px] ${
+                      className={`w-[160px] flex relative items-center border border-[#ced4da] h-[28px] rounded-[4px] ${
                         focused1
                           ? "border-blue-300 shadow-[0px_0px_0px_4px_rgba(200,237,255,0.5)]"
                           : ""
@@ -569,13 +569,13 @@ const SavingshistoryTransfer = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-[2px]">
-                <div className="grid grid-cols-10 items-center gap-[11px]">
-                  <span className="col-span-4 font-bold">
+                <div className="flex items-center justify-between gap-[10px]">
+                  <span className="font-bold ">
                     {t("home:Transfer.NgayBatDauTuNgay")}
                   </span>
-                  <div className="col-span-6">
+                  <div className="">
                     <div
-                      className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
+                      className={`w-[122px] flex items-center h-[28px] rounded-[4px] `}
                     >
                       <DatePicker
                         onChange={(date: any) => {
@@ -583,18 +583,18 @@ const SavingshistoryTransfer = () => {
                         }}
                         value={values.valueBeginningDateFrom}
                         format="dd/MM/yy"
-                        className="w-full text-[13px] rounded-sm outline-none h-full"
+                        className="w-full text-[12px] rounded-sm outline-none h-full"
                       />
                     </div>
                   </div>
                 </div>
-                <div className="grid items-center grid-cols-10 gap-2">
-                  <span className="col-span-4 font-bold">
+                <div className="flex items-center gap-[10px]">
+                  <span className="font-bold">
                     {t("home:Transfer.NgayDaoHanTuNgay")}
                   </span>
-                  <div className="col-span-6">
+                  <div className="">
                     <div
-                      className={`w-[160px] ml-[1px] flex items-center h-[28px] rounded-[4px] `}
+                      className={`w-[122px] flex items-center h-[28px] rounded-[4px] `}
                     >
                       <DatePicker
                         onChange={(date: any) => {
@@ -602,20 +602,20 @@ const SavingshistoryTransfer = () => {
                         }}
                         value={values.valueMaturityDateFrom}
                         format="dd/MM/yy"
-                        className="w-full text-[13px] rounded-sm !border-none outline-none h-full"
+                        className="w-full text-[12px] rounded-sm !border-none outline-none h-full"
                       />
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col gap-[2px]">
+              <div className="flex flex-col gap-[2px] ml-5">
                 <div className="flex items-center gap-2">
                   <span className="font-bold">
                     {t("home:Transfer.DenNgay")}
                   </span>
                   <div>
                     <div
-                      className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
+                      className={`w-[122px] flex items-center h-[28px] rounded-[4px] `}
                     >
                       <DatePicker
                         onChange={(date: any) => {
@@ -634,7 +634,7 @@ const SavingshistoryTransfer = () => {
                   </span>
                   <div>
                     <div
-                      className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
+                      className={`w-[122px] flex items-center h-[28px] rounded-[4px] `}
                     >
                       <DatePicker
                         onChange={(date: any) => {
@@ -648,7 +648,7 @@ const SavingshistoryTransfer = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col gap-[2px]">
+              <div className="flex flex-col gap-[2px] ml-[10px]">
                 <div className="flex items-center gap-2">
                   <button onClick={exportToExcel}>
                     <img
@@ -664,7 +664,7 @@ const SavingshistoryTransfer = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button className="w-20 h-[28px] border border-[#2371AF] rounded-md text-black transition-all hover:bg-[#2371AF] hover:text-white">
+                  <button className="w-20 leading-[26px] border border-[#2371AF] rounded-md text-black transition-all hover:bg-[#2371AF] hover:text-white">
                     {t("home:Transfer.CapNhat")}
                   </button>
                 </div>
