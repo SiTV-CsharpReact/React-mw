@@ -27,42 +27,42 @@ const TotalGD = () => {
               </div>
 
               <div className='pl-3 '>
-                   <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                   <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                       <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.MonneyBefore")}</p>
                   <p className='text-[12px] text-[#000000] !font-medium'>{ formatNumber(dataTotal?.CashAmount)}</p>
               </div>
 
-                <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                   <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.LendingToFPTS")}</p>
                   <p className='text-[12px] text-[#000000] !font-medium'>{ formatNumber(dataTotal?.FSaving)}</p>
               </div>
 
-                <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                   <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.AdvanceAmount")}	</p>
                   <p className='text-[12px] text-[#000000] !font-medium'>0</p>
               </div>
 
-                <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                   <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.BuyingPowerFromStocks")} <i className='fa fa-info-circle text-[#717171]'></i></p>
                   <p className='text-[12px] text-[#000000] !font-medium'>0</p>
               </div>
 
-                <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                   <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.PendingBuyOrders")}</p>
                   <p className='text-[12px] text-[#000000] !font-medium'>0</p>
               </div>
 
-                <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                   <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.CashSuspendedForBuyingMtched")}</p>
                   <p className='text-[12px] text-[#000000] !font-medium'>0</p>
               </div>
 
-                <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                   <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.CashInTransit")}</p>
                   <p className='text-[12px] text-[#000000] !font-medium'>0</p>
               </div>
 
-                <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                   <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.OtherUnpaidFees")}</p>
                   <p className='text-[12px] text-[#000000] !font-medium'>0</p>
               </div>

@@ -61,7 +61,7 @@ const TransBalance = () => {
     return (
         <div>
             <TitlePage content='Báo cáo tổng hợp số dư giao dịch' />
-            <div className='flex items-center justify-between mt-3 ml-8 mr-5'>
+            <div className='flex items-center justify-between mt-5 ml-8 mr-5'>
                 <h3 className='text-[16px] text-[#000000] font-bold'>TỔNG GIÁ TRỊ THỊ TRƯỜNG <i className='fa fa-info-circle text-[#717171]'></i>  : 4,809,120</h3>
                 <div className="flex items-center gap-3 ">
                     <button onClick={handelShort} style={{ border: "1px solid #DEDEDE" }}

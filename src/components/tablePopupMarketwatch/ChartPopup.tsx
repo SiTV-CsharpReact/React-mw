@@ -83,7 +83,7 @@ const ChartPopup = () => {
         backgroundColor: "#ffffffc9",
         borderColor: "#edc240",
         borderRadius: 5,
-        borderWidth: "2px",
+        borderWidth: 2,
         padding: 6,
         style: {
           fontSize: "12px",
