@@ -47,13 +47,13 @@ const OrdersavingsTransfer = () => {
     const fetchBalanceDetail = async () => {
       try {
         const balanceDetailPromise = axios.get(
-          "http://localhost:3000/TableGetBalanceDetail"
+          "http://localhost:8060/TableGetBalanceDetail"
         );
         const interestRatePromise = axios.get(
-          "http://localhost:3000/TableGetInterestRate"
+          "http://localhost:8060/TableGetInterestRate"
         );
         const datainterestRatePromise = axios.get(
-          "http://localhost:3000/DataGetInterestRate"
+          "http://localhost:8060/DataGetInterestRate"
         );
         const [
           balanceDetailResponse,

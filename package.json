@@ -96,7 +96,8 @@
     "DataKiQuy": "json-server dataPopup.json --watch --port 9999",
     "DataChartIndex": "json-server chart.json --watch --port 8000",
     "BCTS": "json-server data.json --watch --port 2908",
-    "Transfer": "json-server db.json --watch --port 3000"
+    "Transfer": "json-server db.json --watch --port 8060",
+    "TransBalance": "json-server priceTable.json --watch --port 3111"
   },
   "eslintConfig": {
     "extends": [

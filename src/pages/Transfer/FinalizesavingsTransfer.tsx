@@ -68,10 +68,10 @@ const FinalizesavingsTransfer = () => {
   useEffect(() => {
     const fetchData = async () => {
       const savingHistoryPromise = axios.get(
-        "http://localhost:3000/DataSavingshistory"
+        "http://localhost:8060/DataSavingshistory"
       );
       const transferGetRateByDayPromise = axios.get(
-        `http://localhost:3000/DataTransferGetRateByDay?day=${queryGetRateByDay}`
+        `http://localhost:8060/DataTransferGetRateByDay?day=${queryGetRateByDay}`
       );
       const [savingHistoryRes, transferGetRateByDayRes] = await Promise.all([
         savingHistoryPromise,
