@@ -391,7 +391,7 @@ const TradingResult = () => {
           <button className=" pl-2 mb-[1px]   pr-2 mr-[1px] cursor-pointer  w-[80px] h-[30px] rounded-[4px] text-white text-[12px]  uppercase bg-[#0055ba]">
             {t("home:base.CapNhat")}
           </button>
-          <form className="flex gap-[7px] mr-8">
+          <form className="flex gap-[7px] mr-5 2xl:mr-7 ">
             <img
               className="cursor-pointer "
               onClick={handleExportToExcel}
@@ -453,7 +453,7 @@ const TradingResult = () => {
           </table>
         </div>
         {/* sell */}
-        <div className="w-1/2 border-gray-300 ">
+        <div className="w-1/2 m-0 border-gray-300 2xl:mr-2 ">
           <div style={{border:"1px solid #AAAAAA"}} className="flex relative gap-1 !border-b-0 mx-auto  h-[30px] items-center bg-[#9C0A0A] ">
             <p className="mx-auto pr-[9px] font-semibold !text-[12px] text-white ">  {t("home:Order.ORDER_BAN")}  </p>
               <Tooltip title="Nhấn vào từng dòng để xem chi tiết khớp lệnh">

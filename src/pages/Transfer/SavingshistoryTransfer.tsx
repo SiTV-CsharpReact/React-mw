@@ -7,7 +7,9 @@ import * as XLSX from "xlsx";
 import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
+import { useTranslation } from "react-i18next";
 const SavingshistoryTransfer = () => {
+  const { t } = useTranslation(["home"]);
   const dataSanPham = [
     {
       id: 1,
@@ -15,11 +17,11 @@ const SavingshistoryTransfer = () => {
     },
     {
       id: 2,
-      name: "Tất cho FPTS vay",
+      name: t("home:Transfer.TienChoFPTSVay"),
     },
     {
       id: 3,
-      name: "Tiền gửi ngân hàng",
+      name: t("home:Transfer.TienGuiNganHang"),
     },
   ];
   const dataTinhtrang = [
@@ -29,15 +31,15 @@ const SavingshistoryTransfer = () => {
     },
     {
       id: 2,
-      name: "Có hiệu lực",
+      name: t("home:Transfer.CoHieuLuc"),
     },
     {
       id: 1,
-      name: "Đã tất toán",
+      name: t("home:Transfer.DaTatToan"),
     },
     {
       id: 1,
-      name: "Hết hiệu lực",
+      name: t("home:Transfer.HetHieuLuc"),
     },
   ];
   const [focused, setFocused] = useState<any>(false);
@@ -70,10 +72,6 @@ const SavingshistoryTransfer = () => {
     });
   };
 
-  // const handleShowModal = (atermId: any) => {
-  //   setShowModal(!showModal);
-  //   setQuery(atermId);
-  // };
   const handleFocused = () => {
     setFocused(!focused);
   };
@@ -129,8 +127,8 @@ const SavingshistoryTransfer = () => {
   return (
     <>
       <LayoutPage
-        PageTitle="Danh sách hợp đồng cho vay"
-        content="Danh sách hợp đồng cho vay"
+        PageTitle={t("home:Transfer.DanhSachHopDongChoVay")}
+        content={t("home:Transfer.DanhSachHopDongChoVay")}
       >
         <div className="hidden message">
           <p>Xin lỗi, Quý khách chưa đăng ký dịch vụ này!</p>
@@ -193,8 +191,8 @@ const SavingshistoryTransfer = () => {
                   />
                 </svg>
               </button>
-              <div className="flex items-center justify-center h-[50px] bg-[#034C91] rounded-t-lg text-white text-[24px] font-medium">
-                LỊCH SỬ CHI TIẾT: 123
+              <div className="flex items-center justify-center uppercase h-[50px] bg-[#034C91] rounded-t-lg text-white text-[24px] font-medium">
+                {t("home:Transfer.LichSuChiTiets")}: 123
               </div>
               <div className="p-4">
                 <div className="flex items-center border-b border-gray-400 text-[13px] font-bold">
@@ -208,7 +206,7 @@ const SavingshistoryTransfer = () => {
                       setValues({ ...values, modalLoanRenewal: false });
                     }}
                   >
-                    Lịch sử thanh toán tiền gốc và lãi
+                    {t("home:Transfer.LichSuThanhToanTienGocVaLai")}
                   </span>
                   <span
                     className={`${
@@ -220,7 +218,7 @@ const SavingshistoryTransfer = () => {
                       setValues({ ...values, modalLoanRenewal: true });
                     }}
                   >
-                    Lịch sử gia hạn tiền cho vay
+                    {t("home:Transfer.LichSuGiaHanTienChoVay")}
                   </span>
                 </div>
                 <div
@@ -231,63 +229,71 @@ const SavingshistoryTransfer = () => {
                   <table className="w-full">
                     <thead className="w-full border">
                       <tr className="text-xs font-bold bg-[#EDEDED] ">
-                        <th className="border-r border-[#DDDDDD]" rowSpan={2}>
-                          STT
+                        <th
+                          className="border-r px-2 border-[#DDDDDD]"
+                          rowSpan={2}
+                        >
+                          {t("home:Transfer.STT")}
                         </th>
                         <th className="border-r border-[#DDDDDD]" rowSpan={2}>
-                          Ngày <br /> bắt đầu
+                          {t("home:Transfer.NgayBatDau")}
                         </th>
                         <th className="border-r border-[#DDDDDD]" rowSpan={2}>
-                          Ngày đáo <br /> hạn
+                          {t("home:Transfer.NgayDaoHan")}
                         </th>
                         <th className="border-r border-[#DDDDDD]" rowSpan={2}>
-                          Số tiền <br /> cho vay
+                          {t("home:Transfer.SoTienChoVay")}
                         </th>
                         <th className="border-r border-[#DDDDDD]" rowSpan={2}>
-                          Ngày thanh <br /> toán
+                          {t("home:Transfer.NgayThanhToan")}
                         </th>
                         <th
                           className="border-r border-[#DDDDDD] py-2"
                           rowSpan={2}
                         >
-                          Số ngày <br /> cho vay <br /> thực
+                          {t("home:Transfer.SoNgayChoVayThuc")}
                         </th>
                         <th className="border-r border-[#DDDDDD]" rowSpan={2}>
-                          Số tiền <br /> tính lãi
+                          {t("home:Transfer.SoTienTinhLai")}
                         </th>
                         <th className="border-r border-[#DDDDDD]" rowSpan={2}>
-                          Lãi <br /> suất/năm <br /> thực tế
+                          {t("home:Transfer.LaiSuat/NamThucTe")}
                         </th>
                         <th className="border-r border-[#DDDDDD]" rowSpan={2}>
-                          Tiền lãi <br /> trước <br /> thuế
+                          {t("home:Transfer.TienLaiTruocThue")}
                         </th>
-                        <th className="border-r border-[#DDDDDD]" rowSpan={2}>
-                          Thuế
+                        <th
+                          className="border-r px-2 border-[#DDDDDD]"
+                          rowSpan={2}
+                        >
+                          {t("home:Transfer.Thue")}
                         </th>
                         <th
                           className="border-r border-[#DDDDDD]"
                           rowSpan={1}
                           colSpan={2}
                         >
-                          Số tiền thanh toán
+                          {t("home:Transfer.SoTienThanhToan")}
                         </th>
                         <th className="border-r border-[#DDDDDD]" rowSpan={2}>
-                          Loại giao <br /> dịch
+                          {t("home:Transfer.LoaiGD")}
                         </th>
                         <th className="border-r border-[#DDDDDD]" rowSpan={2}>
-                          Người <br /> yêu cầu
+                          {t("home:Transfer.NguoiYeuCau")}
                         </th>
                         <th className="border-r border-[#DDDDDD]" rowSpan={2}>
-                          Số tiền <br /> gốc còn <br /> lại
+                          {t("home:Transfer.SoTienGocConLai")}
                         </th>
                         <th className="border-r border-[#DDDDDD]" rowSpan={2}>
-                          Trạng thái
+                          {t("home:Transfer.TrangThai")}
                         </th>
                       </tr>
                       <tr className="text-xs font-bold bg-[#EDEDED] border-t border-[#DDDDDD]">
-                        <th className="border-r border-[#DDDDDD]">Tiền gốc</th>
+                        <th className="border-r border-[#DDDDDD]">
+                          {t("home:Transfer.TienGoc")}
+                        </th>
                         <th className="px-0 border-r border-[#DDDDDD]">
-                          Tiền lãi sau thuế
+                          {t("home:Transfer.TienLaiSauThue")}
                         </th>
                       </tr>
                     </thead>
@@ -304,53 +310,53 @@ const SavingshistoryTransfer = () => {
                                 className="text-xs text-center hover:bg-[#EEFFEE] border-b border-[#DDDDDD]"
                                 key={index}
                               >
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="py-[2px] border-r border-[#DDDDDD]">
                                   {index + 1}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
                                   {item.createDate}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
                                   {item.maturityDate}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
                                   {item.amount.toLocaleString()}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
                                   {item.paymentDate}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
-                                  {item.availDay} ngày
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
+                                  {item.availDay} {t("home:Transfer.Ngay")}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
                                   {item.amountCalInterst.toLocaleString()}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
                                   {item.availRate}%
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
                                   {item.availIntereset}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
                                   {item.tax}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
                                   {item.paymentAmount || "-"}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
                                   {item.interestAfterTax}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
-                                  Đáo hạn
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
+                                  {t("home:Transfer.DaoHan")}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
                                   {item.placeBy}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
                                   {item.availAmount.toLocaleString()}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
-                                  Đã phê duyệt
+                                <td className="px-2 whitespace-nowrap border-r border-[#DDDDDD]">
+                                  {t("home:Transfer.DaPheDuyet")}
                                 </td>
                               </tr>
                             );
@@ -361,18 +367,18 @@ const SavingshistoryTransfer = () => {
                           colSpan={8}
                           className="py-1 border-r border-[#DDDDDD]"
                         >
-                          Tổng
+                          {t("home:Transfer.Tong")}
                         </td>
-                        <td className="border-r border-[#DDDDDD]">
+                        <td className="border-r px-2 whitespace-nowrap border-[#DDDDDD]">
                           {sumAvailIntereset.toLocaleString()}
                         </td>
-                        <td className="border-r border-[#DDDDDD]">
+                        <td className="border-r px-2 whitespace-nowrap border-[#DDDDDD]">
                           {sumTax.toLocaleString()}
                         </td>
-                        <td className="border-r border-[#DDDDDD]">
+                        <td className="border-r px-2 whitespace-nowrap border-[#DDDDDD]">
                           {sumPaymentAmount.toLocaleString() || 0}
                         </td>
-                        <td className="border-r border-[#DDDDDD]">
+                        <td className="border-r px-2 whitespace-nowrap border-[#DDDDDD]">
                           {sumInterestAfterTax.toLocaleString()}
                         </td>
                         <td colSpan={4}></td>
@@ -389,20 +395,22 @@ const SavingshistoryTransfer = () => {
                     <thead className="w-full border ">
                       <tr className="text-xs font-bold bg-[#EDEDED]">
                         <th className="border-r border-[#DDDDDD] py-2">
-                          Lần gia hạn
+                          {t("home:Transfer.LanGiaHan")}
                         </th>
                         <th className="border-r border-[#DDDDDD]">
-                          Ngày bắt đầu
+                          {t("home:Transfer.NgayBatDau")}
                         </th>
                         <th className="border-r border-[#DDDDDD]">
-                          Ngày đáo hạn
+                          {t("home:Transfer.NgayDaoHan")}
                         </th>
                         <th className="border-r border-[#DDDDDD]">
-                          Số tiền cho vay
+                          {t("home:Transfer.SoTienChoVay")}
                         </th>
-                        <th className="border-r border-[#DDDDDD]">Kỳ hạn</th>
                         <th className="border-r border-[#DDDDDD]">
-                          Lãi xuất/ năm
+                          {t("home:Transfer.KyHan")}
+                        </th>
+                        <th className="border-r border-[#DDDDDD]">
+                          {t("home:Transfer.LaiSuat/Nam")}
                         </th>
                       </tr>
                     </thead>
@@ -415,25 +423,25 @@ const SavingshistoryTransfer = () => {
                           ) => {
                             return (
                               <tr className="text-xs border-b border-[#DDDDDD] text-center hover:bg-[#EEFFEE]">
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 border-r border-[#DDDDDD]">
                                   {dataDetailHistoryType2.length - index - 1 ===
                                   0
                                     ? "Gửi mới"
                                     : dataDetailHistoryType2.length - index - 1}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 border-r border-[#DDDDDD]">
                                   {item.effectiveDate}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 border-r border-[#DDDDDD]">
                                   {item.maturityDate}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 border-r border-[#DDDDDD]">
                                   {item.amount.toLocaleString()}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
-                                  {item.term} ngày
+                                <td className="px-2 border-r border-[#DDDDDD]">
+                                  {item.term} {t("home:Transfer.Ngay")}
                                 </td>
-                                <td className="py-[6px] border-r border-[#DDDDDD]">
+                                <td className="px-2 border-r border-[#DDDDDD]">
                                   {item.rate}%
                                 </td>
                               </tr>
@@ -451,9 +459,11 @@ const SavingshistoryTransfer = () => {
           <div className="mt-[30px]">
             <div className="flex justify-end gap-4 items-start text-[8pt] mr-[2%]">
               <div className="flex flex-col gap-1">
-                <div className="z-10 flex items-center gap-2">
-                  <span className="font-bold">Sản phẩm</span>
-                  <div>
+                <div className="z-10 grid items-center grid-cols-4 gap-2">
+                  <span className="col-span-1 font-bold">
+                    {t("home:Transfer.SanPham")}
+                  </span>
+                  <div className="col-span-3">
                     <div
                       className={`w-[160px] flex items-center relative border h-[28px] rounded-[4px] ${
                         focused
@@ -503,9 +513,11 @@ const SavingshistoryTransfer = () => {
                     )}
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold">Tình trạng</span>
-                  <div>
+                <div className="grid items-center grid-cols-4 gap-2">
+                  <span className="col-span-1 font-bold">
+                    {t("home:Transfer.TinhTrang")}
+                  </span>
+                  <div className="col-span-3">
                     <div
                       className={`w-[160px] flex relative items-center border h-[28px] rounded-[4px] ${
                         focused1
@@ -557,9 +569,11 @@ const SavingshistoryTransfer = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-[2px]">
-                <div className="flex items-center gap-[11px]">
-                  <span className="font-bold">Ngày bắt đầu từ ngày</span>
-                  <div>
+                <div className="grid grid-cols-10 items-center gap-[11px]">
+                  <span className="col-span-4 font-bold">
+                    {t("home:Transfer.NgayBatDauTuNgay")}
+                  </span>
+                  <div className="col-span-6">
                     <div
                       className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
                     >
@@ -569,16 +583,18 @@ const SavingshistoryTransfer = () => {
                         }}
                         value={values.valueBeginningDateFrom}
                         format="dd/MM/yy"
-                        className="w-full text-[13px] border border-[#0064cc] rounded-sm outline-none h-full"
+                        className="w-full text-[13px] rounded-sm outline-none h-full"
                       />
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold">Ngày đáo hạn từ ngày</span>
-                  <div>
+                <div className="grid items-center grid-cols-10 gap-2">
+                  <span className="col-span-4 font-bold">
+                    {t("home:Transfer.NgayDaoHanTuNgay")}
+                  </span>
+                  <div className="col-span-6">
                     <div
-                      className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
+                      className={`w-[160px] ml-[1px] flex items-center h-[28px] rounded-[4px] `}
                     >
                       <DatePicker
                         onChange={(date: any) => {
@@ -594,7 +610,9 @@ const SavingshistoryTransfer = () => {
               </div>
               <div className="flex flex-col gap-[2px]">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold">Đến ngày</span>
+                  <span className="font-bold">
+                    {t("home:Transfer.DenNgay")}
+                  </span>
                   <div>
                     <div
                       className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
@@ -611,7 +629,9 @@ const SavingshistoryTransfer = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold">Đến ngày</span>
+                  <span className="font-bold">
+                    {t("home:Transfer.DenNgay")}
+                  </span>
                   <div>
                     <div
                       className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
@@ -645,7 +665,7 @@ const SavingshistoryTransfer = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <button className="w-20 h-[28px] border border-[#2371AF] rounded-md text-black transition-all hover:bg-[#2371AF] hover:text-white">
-                    Cập nhật
+                    {t("home:Transfer.CapNhat")}
                   </button>
                 </div>
               </div>
@@ -656,43 +676,43 @@ const SavingshistoryTransfer = () => {
                 <thead className="border-b bg-[#F3F3F3]">
                   <tr>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px] px-1">
-                      STT
+                      {t("home:Transfer.STT")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Mã HĐ cho vay
+                      {t("home:Transfer.MaHDChoVay")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Sản phẩm
+                      {t("home:Transfer.SanPham")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Tên gợi nhớ
+                      {t("home:Transfer.TenGoiNho")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Số tiền cho vay <br /> ban đầu
+                      {t("home:Transfer.SoTienChoVayBanDau")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Số tiền cho vay <br /> hiện tại
+                      {t("home:Transfer.SoTienChoVayHienTai")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Kỳ hạn
+                      {t("home:Transfer.KyHan")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Lãi <br /> suất/năm <br /> hiện tại
+                      {t("home:Transfer.LaiSuat/NamHienTai")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Phương thức đáo hạn
+                      {t("home:Transfer.PhuongThucDaoHan")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Ngày tạo
+                      {t("home:Transfer.NgayTao")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Ngày bắt đầu
+                      {t("home:Transfer.NgayBatDau")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Ngày hết hiệu lực
+                      {t("home:Transfer.NgayHieuLuc")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
-                      Tình trạng
+                      {t("home:Transfer.TinhTrang")}
                     </th>
                   </tr>
                 </thead>
@@ -721,7 +741,7 @@ const SavingshistoryTransfer = () => {
                             {item.atermId}
                           </td>
                           <td className="text-xs leading-[22px] px-1 border-r text-center">
-                            Tiền cho FPTS vay
+                            {t("home:Transfer.TienChoFPTSVay")}
                           </td>
                           <td className="text-xs leading-[22px] px-1 border-r text-center">
                             {item.adesc}
@@ -733,13 +753,13 @@ const SavingshistoryTransfer = () => {
                             {item.aamount.toLocaleString()}
                           </td>
                           <td className="text-xs text-right leading-[22px] px-1 border-r pl-3">
-                            {item.aterm} ngày
+                            {item.aterm} {t("home:Transfer.Ngay")}
                           </td>
                           <td className="text-xs leading-[22px] text-right px-1 border-r pl-10">
                             {item.arate}%
                           </td>
                           <td className="text-xs leading-[22px] px-1 border-r text-center">
-                            Lãi nhập gốc
+                            {t("home:Transfer.LaiNhapGoc")}
                           </td>
                           <td className="text-xs leading-[22px] px-1 border-r text-center">
                             {moment(item.acreatedate).format("DD/MM/YYYY")}
@@ -749,7 +769,7 @@ const SavingshistoryTransfer = () => {
                           </td>
                           <td className="text-xs leading-[22px] px-1 border-r"></td>
                           <td className="text-xs leading-[22px] px-1 border-r text-center">
-                            Có hiệu lực
+                            {t("home:Transfer.CoHieuLuc")}
                           </td>
                         </tr>
                       );
@@ -759,7 +779,7 @@ const SavingshistoryTransfer = () => {
                       className="text-xs leading-[22px] px-1 font-semibold text-center"
                       colSpan={4}
                     >
-                      Tổng
+                      {t("home:Transfer.Tong")}
                     </td>
                     <td className="px-1 border-x border-[#ddd] font-semibold text-end">
                       {sumAinitAmount.toLocaleString()}
