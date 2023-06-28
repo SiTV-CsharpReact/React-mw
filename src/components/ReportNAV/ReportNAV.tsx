@@ -44,7 +44,7 @@ const ReportNAV = () => {
     >
       <div className="body__content">
         <div className="body__content_reportNAV">
-          <div className="w-[55%] m-auto">
+          <div className="view_BCBDTSR">
             <div className="body__content__trade__log">
               <div className="report__tabcondition my-5 mx-0 flex w-full justify-between float-right">
                 <div className="body__content__BTCS__header mt-[10px]">
@@ -73,7 +73,7 @@ const ReportNAV = () => {
                             <option value="31/03/2023">Quý 2/2023</option>
                             <option value="31/12/2022">Quý 1/2023</option>
                           </select>
-                          <span className="absolute top-1 text-hoverKL right-3"><i className="fa fa-chevron-down" aria-hidden="true"></i></span>
+                          <span className="absolute top-[5px] text-[#555555] text-[7.8pt] right-[10px]"><i className="fa fa-chevron-down" aria-hidden="true"></i></span>
                         </td>
                         <td className="!border-0 relative">
                           <span className="lblDenNgay">Cuối kỳ</span>
@@ -87,18 +87,19 @@ const ReportNAV = () => {
                             </option>
                             <option value="31/03/2023">Quý 2/2023</option>
                           </select>
-                          <span className="absolute top-1 text-hoverKL right-3"><i className="fa fa-chevron-down" aria-hidden="true"></i></span>
+                          <span className="absolute top-[5px] text-[#555555] text-[7.8pt] right-[10px]"><i className="fa fa-chevron-down" aria-hidden="true"></i></span>
                         </td>
-                        <td className="L P5 !border-0" style={{verticalAlign: 'top'}}>
+                        <td className="L P5 !border-0">
                           <input
                             type="submit"
                             name="btnUpdate"
                             value={"Cập nhật"}
                             id="btnUpdate"
-                            className="btn"
+                            className="btn mt-[1px]"
                           />
+                          &nbsp;{" "}
                         </td>
-                        <td className="L P5 !border-0" style={{verticalAlign: 'top'}}>
+                        <td className="L P5 !border-0" style={{verticalAlign: 'middle'}}>
                           <div className="lineBtn lineBtnTop" id="Panel1">
                             <input
                               type="image"
@@ -135,12 +136,24 @@ const ReportNAV = () => {
                   <table className="w-full my-0 mx-auto text-center border-collapse tableAR">
                     <thead>
                       <tr>
-                        <td style={{ width: "19.4%" }}></td>
-                        <td style={{ width: "8.1%" }}>
-                          <span>Đầu kỳ</span>
+                        <td style={{ width: "14.7%" }}></td>
+                        <td style={{ width: "5.8%" }}>
+                          Đầu kỳ{" "}
+                          <span className="inline-block ml-[1px]">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-up-right text-hoverKL" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                              <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                            </svg>
+                          </span>
                         </td>
-                        <td style={{ width: "8.1%" }}>
-                          <span>Cuối kỳ</span>
+                        <td style={{ width: "7.5%" }}>
+                          Cuối kỳ {" "}
+                          <span className="inline-block ml-[1px]">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-up-right text-hoverKL" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                              <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                            </svg>
+                          </span>
                         </td>
                       </tr>
                     </thead>
@@ -152,31 +165,31 @@ const ReportNAV = () => {
                         ))}
                       </tr>
                       <tr>
-                        <td className="!pl-4 !text-left text-xs text-black !font-normal bg-white">Tiền trong tài khoản </td>
+                        <td className="!pl-5 !text-left text-xs text-black !font-normal bg-white">Tiền trong tài khoản </td>
                         {data?.Data?.Table?.map((item: any) => (
                           <ReportNAVItem key={item?.STAGE} data={formatNumber(item.ACASH_AMOUNT)} bold={false}/>
                         ))}
                       </tr>
                       <tr>
-                        <td className="!pl-4 !text-left text-xs text-black !font-normal bg-white">Tiền bán chở về</td>
+                        <td className="!pl-5 !text-left text-xs text-black !font-normal bg-white">Tiền bán chở về</td>
                         {data?.Data?.Table?.map((item: any) => (
                           <ReportNAVItem key={item?.STAGE} data={formatNumber(item.AREC_CASH_SELL)} bold={false} />
                         ))}
                       </tr>
                       <tr>
-                        <td className="!pl-4 !text-left text-xs text-black !font-normal bg-white">Cổ tức bằng tiền chở về</td>
+                        <td className="!pl-5 !text-left text-xs text-black !font-normal bg-white">Cổ tức bằng tiền chở về</td>
                         {data?.Data?.Table?.map((item: any) => (
                           <ReportNAVItem key={item?.STAGE} data={formatNumber(item.ARE_CASH_DEVIDEND)} bold={false} />
                         ))}
                       </tr>
                       <tr>
-                        <td className="!pl-4 !text-left text-xs text-black !font-normal bg-white">Tiền chở về khác</td>
+                        <td className="!pl-5 !text-left text-xs text-black !font-normal bg-white">Tiền chở về khác</td>
                         {data?.Data?.Table?.map((item: any) => (
                           <ReportNAVItem key={item?.STAGE} data={formatNumber(item.ARE_CASH_OTHER)} bold={false} />
                         ))}
                       </tr>
                       <tr>
-                        <td className="!pl-4 !text-left text-xs text-black !font-normal bg-white">Tiền gửi, tiền cho vay</td>
+                        <td className="!pl-5 !text-left text-xs text-black !font-normal bg-white">Tiền gửi, tiền cho vay</td>
                         {data?.Data?.Table?.map((item: any) => (
                           <ReportNAVItem key={item?.STAGE} data={formatNumber(item.ASAVINGTOTAL)} bold={false} />
                         ))}
@@ -212,30 +225,44 @@ const ReportNAV = () => {
                     <tbody className="mt-[50px]">
                         <tr>
                             <td colSpan={2}></td>
-                            <td>Giá trị</td>
+                            <td className="!text-right">Giá trị</td>
                         </tr>
                         <tr>
-                            <td colSpan={2} className="cursor-pointer !bg-white !text-left text-hoverKL !text-sm italic">I. Phát sinh tiền</td>
+                            <td colSpan={2} className="cursor-pointer !bg-white !text-left text-hoverKL !text-sm italic">I. Phát sinh tiền{" "}
+                              <span className="inline-block ml-[1px]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-up-right text-hoverKL" viewBox="0 0 16 16">
+                                  <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                                  <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                                </svg>
+                              </span>
+                            </td>
                             <td className="!text-right !bg-white italic">0</td>
                         </tr>
                         <tr>
-                            <td colSpan={2} className="!pl-4 !text-left text-xs text-black !font-normal bg-white">Phát sinh tăng</td>
+                            <td colSpan={2} className="!pl-5 !text-left text-xs text-black !font-normal bg-white">Phát sinh tăng</td>
                             <td className="!text-right !bg-white">0</td>
                         </tr>
                         <tr>
-                            <td colSpan={2} className="!pl-4 !text-left text-xs text-black !font-normal bg-white">Phát sinh giảm</td>
+                            <td colSpan={2} className="!pl-5 !text-left text-xs text-black !font-normal bg-white">Phát sinh giảm</td>
                             <td className="!text-right !bg-white">0</td>
                         </tr>
                         <tr>
-                            <td colSpan={2} className="cursor-pointer !bg-white !text-left text-hoverKL !text-sm italic">II. Phát sinh chứng khoán</td>
+                            <td colSpan={2} className="cursor-pointer !bg-white !text-left text-hoverKL !text-sm italic">II. Phát sinh chứng khoán{" "}
+                              <span className="inline-block ml-[1px]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-up-right text-hoverKL" viewBox="0 0 16 16">
+                                  <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                                  <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                                </svg>
+                              </span>
+                            </td>
                             <td className="!text-right !bg-white italic">0</td>
                         </tr>
                         <tr>
-                            <td colSpan={2} className="!pl-4 !text-left text-xs text-black !font-normal bg-white">Phát sinh tăng</td>
+                            <td colSpan={2} className="!pl-5 !text-left text-xs text-black !font-normal bg-white">Phát sinh tăng</td>
                             <td className="!text-right !bg-white">0</td>
                         </tr>
                         <tr>
-                            <td colSpan={2} className="!pl-4 !text-left text-xs text-black !font-normal bg-white">Phát sinh giảm</td>
+                            <td colSpan={2} className="!pl-5 !text-left text-xs text-black !font-normal bg-white">Phát sinh giảm</td>
                             <td className="!text-right !bg-white">0</td>
                         </tr>
                         <tr>
