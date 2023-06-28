@@ -267,7 +267,7 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
         backgroundColor: "#ffffffc9",
         borderColor: "#07d800",
         borderRadius: 5,
-        borderWidth: 1,
+        borderWidth: "1px",
         padding: 6,
         useHTML: true,
         style: {

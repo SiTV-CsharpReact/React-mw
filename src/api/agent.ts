@@ -60,16 +60,16 @@ const dataGDTTtable = {
     listBi : (floor : string)=>requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=bi`)
 }
 const chartIndex = {
-   // get: () => requests.get('/chart/data.ashx?s=full'),
-    get: () => requests.get('http://localhost:8000/dataChartIndex'),
+    get: () => requests.get('http://priceboard3.fpts.com.vn/chart/data.ashx?s=full'),
+    //get: () => requests.get('http://localhost:8000/dataChartIndex'),
 }
 var formData = new FormData();
 formData.append('key1', 'value1')
 formData.append('key2', 'value2')
 const dataTableBasic ={
    
-    post: (dataValueBasic:RPChart) => requests.post("/Root/Data.ashx", dataValueBasic),
-    postFormData: (dataValueBasic:RPChart) =>requests.postFormData("/Root/Data.ashx", dataValueBasic)
+    post: (dataValueBasic:RPChart) => requests.post("http://priceboard3.fpts.com.vn/Root/Data.ashx", dataValueBasic),
+    postFormData: (dataValueBasic:RPChart) =>requests.postFormData("http://priceboard3.fpts.com.vn/Root/Data.ashx", dataValueBasic)
     //  requests.postFormData("/Root/Data.ashx", dataValueBasic,   {'Content-Type': 'multipart/form-data'},)
       
 }
