@@ -78,7 +78,7 @@
     },
     "Transbalance":{
           "MonneyBefore":"Số dư tiền ban đầu",
-          "TradeableMoney" :"tiền có thể giao dịch",
+          "TradeableMoney" :"Tiền có thể giao dịch",
           "LendingToFPTS":"Tiền cho FPTS vay",
           "AdvanceAmount":"Tiền có thể ứng trước",
           "BuyingPowerFromStocks":"Sức mua từ CK còn lại ",
