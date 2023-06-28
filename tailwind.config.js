@@ -27,7 +27,7 @@ module.exports = {
     colors: {
       borderBodyTableMarket: "#505050",
       borderHeadTableMarket: "#858585",
-      borderTransfer: "#cccccc",
+      borderTransfer: "#CCCCCC",
       BGTableMarket: "#1D1D1D",
       BGTableHoverMarket: "#444444",
       textTableMarketTC: "#F7FF31",

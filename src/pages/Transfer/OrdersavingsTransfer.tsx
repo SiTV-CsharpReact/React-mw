@@ -3,6 +3,7 @@ import LayoutPage from "../Layout/LayoutPage";
 import "./helper/style.scss";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { Tooltip } from "@mui/material";
 const OrdersavingsTransfer = () => {
   const { t } = useTranslation(["home"]);
   const [isTrue, setIsTrue] = useState<any>({
@@ -197,7 +198,7 @@ const OrdersavingsTransfer = () => {
               }}
             ></div>
             <div
-              className={`absolute rounded-sm z-50 ${
+              className={`absolute rounded-md z-50 ${
                 isTrue.showModal ? "opacity-100 visible" : "opacity-0 invisible"
               } transition-fallAnimation w-[300px] bg-white`}
             >
@@ -220,12 +221,12 @@ const OrdersavingsTransfer = () => {
                   />
                 </svg>
               </button>
-              <div className="p-3 text-white text-center bg-[#034c91] rounded-t-sm font-medium text-[1rem] uppercase">
+              <div className="p-3 text-white text-center bg-[#034c91] rounded-t-md font-medium text-[1rem] uppercase">
                 {t("home:Transfer.LaiSuatTatToanTruocHan")}
               </div>
               <div className="pt-2 pb-5 text-xs px-7">
                 <div className="flex items-center justify-between px-1 pt-3 pb-2 font-bold">
-                  <span className="w-[46%]">
+                  <span className="">
                     {" "}
                     {t("home:Transfer.SoNgayChoVayThuc")}
                   </span>
@@ -263,14 +264,14 @@ const OrdersavingsTransfer = () => {
             </div>
           </div>
           {/* -------------------------------screen------------------------------- */}
-          <div className="w-[850px] mx-auto mt-[5px] pb-5">
-            <div className="flex items-center h-[25px] justify-end w-full pr-1">
+          <div className="w-[841px] mx-auto mt-[4px] pb-[14px]">
+            <div className="flex items-center h-[25px] justify-end w-full pr-[5px]">
               <span className="text-[10px] text-center italic">
                 {t("home:Transfer.DonVi")}: VNĐ
               </span>
             </div>
             {/* -------------------------------Table Show Money------------------------------- */}
-            <div className="text-[12px] border border-borderTransfer">
+            <div className="text-[12px] border border-borderTransfer -translate-y-[1px]">
               <table className="w-full">
                 <colgroup>
                   <col className="w-[20%]" />
@@ -309,8 +310,8 @@ const OrdersavingsTransfer = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="text-[#ae1a1a] font-bold text-[12px]">
-                    <td className="py-[3px] text-center border-r border-[#CCCCCC]">
+                  <tr className="text-[#ae1a1a] h-[25px] font-bold text-[12px]">
+                    <td className="text-center border-r h-[25px] border-[#CCCCCC]">
                       {fetchData.valueBalanceDetail?.ALEDGERBALANCE?.toLocaleString()}
                     </td>
                     <td className="text-center border-r border-[#CCCCCC]">
@@ -330,7 +331,7 @@ const OrdersavingsTransfer = () => {
               </table>
             </div>
             {/* -------------------------------Nav tiền cho FPTS vay------------------------------- */}
-            <div className="w-full mt-[10px] mb-[5px] text-[13px] font-bold">
+            <div className="w-full mt-[9px] mb-[5px] text-[13px] font-bold">
               <button className="w-[50%] h-[35px] bg-[#034E94] text-white">
                 {t("home:Transfer.TienChoFPTSVay")}
               </button>
@@ -338,15 +339,17 @@ const OrdersavingsTransfer = () => {
                 {t("home:Transfer.TienGuiNganHang")}
               </button>
             </div>
-            <div className="grid grid-cols-10 text-[12px] gap-4">
+            <div className="flex gap-[15px] text-[12px]">
               {/* -------------------------------Col-Span-7------------------------------- */}
-              <div className="col-span-7 px-5 py-2 border border-borderTransfer">
+              <div className="w-[561px] pl-[20px] pt-[5px] pr-[9px] border border-borderTransfer">
                 {/* -------------------------------Số tiền cho vay------------------------------- */}
-                <div className="flex items-center justify-between">
-                  <label htmlFor="money" className="text-xs">
-                    {t("home:Transfer.SoTienChoVay")}
-                  </label>
-                  <div className="flex items-center justify-between gap-1 h-7">
+                <div className="flex items-center gap-[4px]">
+                  <p className="w-[260px] h-[30px] flex items-center py-[1px]">
+                    <label htmlFor="money" className="text-xs">
+                      {t("home:Transfer.SoTienChoVay")}
+                    </label>
+                  </p>
+                  <div className="flex items-center justify-between gap-[6px] h-7">
                     <div
                       className={`w-[255px] relative flex items-center border border-[#ced4da] rounded-[4px] transition-all ${
                         isTrue.focusLendingAmount
@@ -367,35 +370,42 @@ const OrdersavingsTransfer = () => {
                         value={value.valueLendingAmount}
                         onChange={handleInputChange}
                         autoComplete="off"
-                        className="rounded-[4px] !border-none text-[12px] w-full pr-[45px] h-[28px] outline-none"
+                        className="rounded-[4px] !border-none text-[12px] w-full pr-[45px] h-[27px] outline-none"
                       />
-                      <span className="absolute text-[1.1em] right-2">VNĐ</span>
-                    </div>
-                    <div className="items-center w-1 my-auto text-[12px] whitespace-nowrap">
-                      <span className="flex items-center text-xl font-bold text-red-400">
-                        *
+                      <span className="absolute text-[1.1em] right-2 text-[#000000]">
+                        VNĐ
                       </span>
+                    </div>
+                    <div className="flex items-center w-1 whitespace-nowrap translate-y-[5px]">
+                      <p className="flex items-center text-[21px] font-bold text-[#ff0000]">
+                        *
+                      </p>
                     </div>
                   </div>
                 </div>
                 {/* -------------------------------Số tiền cho vay tối thiểu: 1,000,000 VNĐ------------------------------- */}
-                <div className="flex items-start justify-between italic h-[55px] pt-1">
-                  <span>
-                    {t("home:Transfer.SoTienChoVayToiThieu")}: 1,000,000 VNĐ
+                <div className="flex items-start justify-between italic h-[57px] pt-[5px]">
+                  <span className="text-[0.9em]">
+                    <span className="text-[9pt]">
+                      {t("home:Transfer.SoTienChoVayToiThieu")}:{" "}
+                    </span>
+                    1,000,000 VNĐ
                   </span>
-                  <div className="flex gap-1 mt-1">
-                    <span>{t("home:Transfer.BangChu")}</span>
+                  <div className="flex gap-[6px]">
+                    <span className="text-[0.9em]">
+                      {t("home:Transfer.BangChu")}
+                    </span>
                     <div className="items-center w-1 my-auto text-[12px] whitespace-nowrap"></div>
                   </div>
                 </div>
                 {/* -------------------------------Kì hạn------------------------------- */}
-                <div className="flex flex-col w-full gap-3">
+                <div className="flex flex-col w-full">
                   {/* -------------------------------Item Kì hạn------------------------------- */}
                   <div className="flex items-center justify-between w-full h-7">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.KyHan")}
                     </label>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-[6px]">
                       <div className="">
                         <div
                           className={`w-[255px] relative flex items-center border border-[#ced4da] h-full rounded-[4px] transition-all ${
@@ -406,7 +416,7 @@ const OrdersavingsTransfer = () => {
                         >
                           <input
                             type="text"
-                            className="rounded-[4px] w-full pr-[30px] !border-none text-[12px] h-[28px] outline-none cursor-pointer"
+                            className="rounded-[4px] w-full pr-[30px] !border-none text-[12px] h-[27px] outline-none cursor-pointer"
                             readOnly
                             onClick={() => {
                               handleTrue("dropDownTerm");
@@ -469,19 +479,19 @@ const OrdersavingsTransfer = () => {
                             </div>
                           )}
                       </div>
-                      <div className="items-center w-1 my-auto text-[12px] whitespace-nowrap">
-                        <span className="flex items-center text-xl font-bold text-red-400">
+                      <div className="flex items-center w-1 whitespace-nowrap translate-y-[5px]">
+                        <p className="flex items-center text-[21px] font-bold text-[#ff0000]">
                           *
-                        </span>
+                        </p>
                       </div>
                     </div>
                   </div>
                   {/* -------------------------------Item Phương thức đáo hạn------------------------------- */}
-                  <div className="flex items-center justify-between w-full">
-                    <label htmlFor="money" className="text-xs">
+                  <div className="flex items-center justify-between w-full mt-3">
+                    <label htmlFor="money" className="text-[9pt]">
                       {t("home:Transfer.PhuongThucDaoHan")}
                     </label>
-                    <div className="flex items-center gap-1 h-7">
+                    <div className="flex items-center gap-[6px] h-7">
                       <div>
                         <div
                           className={`w-[255px] relative flex items-center border border-[#ced4da] h-full rounded-[4px] transition-all ${
@@ -492,7 +502,7 @@ const OrdersavingsTransfer = () => {
                         >
                           <input
                             type="text"
-                            className="rounded-[4px] text-[12px] h-[28px] !border-none w-full px-2 outline-none cursor-pointer"
+                            className="rounded-[4px] text-[12px] h-[27px] !border-none w-full pr-[30px] outline-none cursor-pointer"
                             onClick={() => {
                               handleTrue("dropDownMaturityMethod");
                             }}
@@ -566,19 +576,19 @@ const OrdersavingsTransfer = () => {
                             </div>
                           )}
                       </div>
-                      <div className="items-center w-1 my-auto text-[12px] whitespace-nowrap">
-                        <span className="flex items-center text-xl font-bold text-red-400">
+                      <div className="flex items-center w-1 whitespace-nowrap translate-y-[5px]">
+                        <p className="flex items-center text-[21px] font-bold text-[#ff0000]">
                           *
-                        </span>
+                        </p>
                       </div>
                     </div>
                   </div>
                   {/* -------------------------------Item Phương thức gia hạn------------------------------- */}
-                  <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center justify-between w-full mt-3">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.PhuongThucGiaHan")}
                     </label>
-                    <div className="flex items-center gap-1 h-7">
+                    <div className="flex items-center gap-[6px] h-7">
                       <div>
                         <div
                           className={`w-[255px] relative flex items-center border border-[#ced4da] h-full rounded-[4px] transition-all ${
@@ -589,7 +599,7 @@ const OrdersavingsTransfer = () => {
                         >
                           <input
                             type="text"
-                            className="rounded-[4px] text-[12px] h-[28px] !border-none pr-[30px] w-full px-2 outline-none cursor-pointer"
+                            className="rounded-[4px] text-[12px] h-[28px] !border-none pr-[30px] w-full outline-none cursor-pointer"
                             onClick={() => {
                               handleTrue("dropDownRenewalMethod");
                             }}
@@ -663,15 +673,15 @@ const OrdersavingsTransfer = () => {
                             </div>
                           )}
                       </div>
-                      <div className="items-center w-1 my-auto text-[12px] whitespace-nowrap">
-                        <span className="flex items-center text-xl font-bold text-red-400">
+                      <div className="flex items-center w-1 whitespace-nowrap translate-y-[5px]">
+                        <p className="flex items-center text-[21px] font-bold text-[#ff0000]">
                           *
-                        </span>
+                        </p>
                       </div>
                     </div>
                   </div>
                   {/* -------------------------------Item Tên gợi nhớ------------------------------- */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-3">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.TenGoiNho")}
                     </label>
@@ -701,7 +711,7 @@ const OrdersavingsTransfer = () => {
                             });
                           }}
                           autoComplete="off"
-                          className="rounded-[4px] text-[12px] h-[28px] !border-none w-full px-2 outline-none"
+                          className="rounded-[4px] text-[12px] px-[12px] h-[27px] !border-none w-full outline-none"
                         />
                         <span className="text-[1.1em]"></span>
                       </div>
@@ -711,7 +721,7 @@ const OrdersavingsTransfer = () => {
                     </div>
                   </div>
                   {/* -------------------------------Item Ngày bắt đầu------------------------------- */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-[10px]">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.NgayBatDau")}
                     </label>
@@ -729,7 +739,7 @@ const OrdersavingsTransfer = () => {
                     </div>
                   </div>
                   {/* -------------------------------Item Ngày đáo hạn------------------------------- */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-[10px]">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.NgayDaoHan")}
                     </label>
@@ -748,10 +758,21 @@ const OrdersavingsTransfer = () => {
                     </div>
                   </div>
                   {/* -------------------------------Item Lãi suất / năm------------------------------- */}
-                  <div className="flex items-center justify-between">
-                    <label htmlFor="money" className="text-xs">
-                      {t("home:Transfer.LaiSuat/Nam")}
-                    </label>
+                  <div className="flex items-center justify-between mt-[10px]">
+                    <p className="flex items-center gap-1">
+                      <label htmlFor="money" className="text-xs">
+                        {t("home:Transfer.LaiSuat/Nam")}
+                      </label>
+                      <Tooltip
+                        title={`Lãi suất / năm là lãi suất dự kiến dựa trên kỳ hạn mà khách hàng đã chọn. Trong trường hợp khoản tiền cho FPTS vay được tất toán một phần hoặc toàn bộ trước hạn, phần tiền cho vay tất toán trước hạn đó sẽ được hưởng lãi suất trước hạn tương ứng với thời gian cho vay tiền thực tế.`}
+                      >
+                        <i
+                          className="fa fa-info-circle"
+                          aria-hidden="true"
+                          id="iconPage"
+                        ></i>
+                      </Tooltip>
+                    </p>
                     <div className="flex items-center gap-1 h-[24px]">
                       <span className="text-[12px]">
                         {value.valueAnnualInterestRate || "0%"}
@@ -762,7 +783,7 @@ const OrdersavingsTransfer = () => {
                     </div>
                   </div>
                   {/* -------------------------------Item Tiền lãi trước thuế dự kiến------------------------------- */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-[10px]">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.TienLaiTruocThueDuKien")}
                     </label>
@@ -774,7 +795,7 @@ const OrdersavingsTransfer = () => {
                     </div>
                   </div>
                   {/* -------------------------------Item Thuế dự kiến------------------------------- */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-[10px]">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.ThueDuKien")}
                     </label>
@@ -786,7 +807,7 @@ const OrdersavingsTransfer = () => {
                     </div>
                   </div>
                   {/* -------------------------------Item Tiền lãi sau thuế dự kiến------------------------------- */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-[10px]">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.TienLaiSauThueDuKien")}
                     </label>
@@ -798,12 +819,12 @@ const OrdersavingsTransfer = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-10 mx-auto mt-6 w-max">
-                  <button className="px-[14px] h-[34px] border border-[#2371AF] rounded-md hover:bg-[#2371AF] hover:text-white transition-all">
+                <div className="flex gap-[43px] mx-auto mt-[16px] w-max">
+                  <button className="w-[80px] h-[34px] border border-[#2371AF] rounded-md hover:bg-[#2371AF] hover:text-white transition-all">
                     {t("home:Transfer.ThucHien")}
                   </button>
                   <button
-                    className="px-[14px] h-[34px] border border-[#2371AF] rounded-md hover:bg-[#2371AF] hover:text-white transition-all"
+                    className="w-[80px] h-[34px] border border-[#2371AF] rounded-md hover:bg-[#2371AF] hover:text-white transition-all"
                     onClick={handleReset}
                   >
                     {t("home:Transfer.LamLai")}
@@ -811,7 +832,7 @@ const OrdersavingsTransfer = () => {
                 </div>
               </div>
               {/* -------------------------------Col-Span-3------------------------------- */}
-              <div className="col-span-3 border border-borderTransfer pt-[10px] px-[10px] pb-9 text-[12px] w-full flex flex-col items-center">
+              <div className="w-[266px] border border-borderTransfer pt-[10px] px-[10px] pb-9 text-[12px] flex flex-col items-center">
                 <span className="text-[13px] font-bold ">
                   {t("home:Transfer.LaiSuatTheoKyHan")}
                 </span>
@@ -858,7 +879,7 @@ const OrdersavingsTransfer = () => {
             </div>
 
             {/* -------------------------------Footer------------------------------- */}
-            <div className="flex text-[12px] mt-10">
+            <div className="flex text-[12px] mt-[18px]">
               <span className="text-[13px] italic">
                 {t("home:Transfer.NOTE_FOOT_ORDERSAVING")}
               </span>

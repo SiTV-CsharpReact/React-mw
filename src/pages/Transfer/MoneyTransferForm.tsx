@@ -73,19 +73,19 @@ const MoneyTransferForm = () => {
                       className="border-t border-[#dddddd] hover:bg-[#eeffee]"
                       key={item.TBLID}
                     >
-                      <td className="text-xs leading-[22px] px-1 border-r">
+                      <td className="text-xs leading-[22px] px-[5px] py-[1px] border-r">
                         {index + 1}
                       </td>
-                      <td className="text-xs leading-[22px] px-1 border-r">
+                      <td className="text-xs leading-[22px] px-[5px] py-[1px] border-r">
                         {item.TEMPLATENAME}
                       </td>
-                      <td className="text-xs leading-[22px] px-1 border-r">
+                      <td className="text-xs leading-[22px] px-[5px] py-[1px] border-r">
                         {item.ACCOUNTRCV}
                       </td>
-                      <td className="text-xs leading-[22px] px-1 border-r">
+                      <td className="text-xs leading-[22px] px-[5px] py-[1px] border-r">
                         {item.ACCOUNTRCVNAME}
                       </td>
-                      <td className="text-xs leading-[22px] px-1 border-r">
+                      <td className="text-xs leading-[22px] px-[5px] py-[1px] border-r">
                         {item.BANKRCVNAME}
                       </td>
                     </tr>

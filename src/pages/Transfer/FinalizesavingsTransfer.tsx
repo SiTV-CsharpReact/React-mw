@@ -432,8 +432,8 @@ const FinalizesavingsTransfer = () => {
             </div>
           </div>
           {/*------------------Screen------------------*/}
-          <div className="mt-[30px]">
-            <div className="flex justify-end gap-4 items-start text-[8pt] mr-[2%]">
+          <div className="mt-[29px]">
+            <div className="flex justify-end gap-[20px] items-start text-[8pt] mr-[2%]">
               {/*------------------DropDown Sản phẩm------------------*/}
               <div className="flex items-center gap-2">
                 <span className="font-bold"> {t("home:Transfer.SanPham")}</span>
@@ -489,13 +489,13 @@ const FinalizesavingsTransfer = () => {
               </div>
               {/*------------------Date Start------------------*/}
               <div className="flex flex-col gap-[2px]">
-                <div className="grid grid-cols-10 items-center gap-[11px]">
-                  <span className="col-span-4 font-bold">
+                <div className="flex items-center gap-[10px] justify-between">
+                  <span className="font-bold ">
                     {t("home:Transfer.NgayBatDauTuNgay")}
                   </span>
-                  <div className="col-span-6">
+                  <div className="">
                     <div
-                      className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
+                      className={`w-[124px] flex items-center h-[28px] rounded-[4px] `}
                     >
                       <DatePicker
                         onChange={(date: any) => {
@@ -508,13 +508,13 @@ const FinalizesavingsTransfer = () => {
                     </div>
                   </div>
                 </div>
-                <div className="grid items-center grid-cols-10 gap-2">
-                  <span className="col-span-4 font-bold">
+                <div className=" items-center flex gap-[10px] justify-between">
+                  <span className="font-bold">
                     {t("home:Transfer.NgayDaoHanTuNgay")}
                   </span>
-                  <div className="col-span-6">
+                  <div className="">
                     <div
-                      className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
+                      className={`w-[124px] flex items-center h-[28px] rounded-[4px] `}
                     >
                       <DatePicker
                         onChange={(date: any) => {
@@ -522,7 +522,7 @@ const FinalizesavingsTransfer = () => {
                         }}
                         value={values.valueMaturityDateFrom}
                         format="dd/MM/yy"
-                        className="w-full ml-[1px] text-[13px] rounded-sm outline-none h-full"
+                        className="w-full text-[13px] rounded-sm outline-none h-full"
                       />
                     </div>
                   </div>
@@ -530,13 +530,13 @@ const FinalizesavingsTransfer = () => {
               </div>
               {/*------------------Date End------------------*/}
               <div className="flex flex-col gap-[2px]">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between gap-2">
                   <span className="font-bold">
                     {t("home:Transfer.DenNgay")}
                   </span>
                   <div>
                     <div
-                      className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
+                      className={`w-[124px] flex items-center h-[28px] rounded-[4px] `}
                     >
                       <DatePicker
                         onChange={(date: any) => {
@@ -549,13 +549,13 @@ const FinalizesavingsTransfer = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between gap-2">
                   <span className="font-bold">
                     {t("home:Transfer.DenNgay")}
                   </span>
                   <div>
                     <div
-                      className={`w-[160px] flex items-center h-[28px] rounded-[4px] `}
+                      className={`w-[124px] flex items-center h-[28px] rounded-[4px] `}
                     >
                       <DatePicker
                         onChange={(date: any) => {
@@ -580,7 +580,7 @@ const FinalizesavingsTransfer = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button className="w-20 h-[28px] border border-[#2371AF] rounded-md text-black transition-all hover:bg-[#2371AF] hover:text-white">
+                  <button className="w-20 border border-[#2371AF] rounded-md text-black leading-[26px] transition-all hover:bg-[#2371AF] hover:text-white">
                     Cập nhật
                   </button>
                 </div>
@@ -603,7 +603,7 @@ const FinalizesavingsTransfer = () => {
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
                       {t("home:Transfer.TenGoiNho")}
                     </th>
-                    <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
+                    <th className="text-xs font-bold whitespace-pre-line border-r border-[#ddd] h-[50px]">
                       {t("home:Transfer.SoTienChoVayHienTai")}
                     </th>
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
@@ -615,7 +615,7 @@ const FinalizesavingsTransfer = () => {
                     <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
                       {t("home:Transfer.TienLaiSauThueDuKien")}
                     </th>
-                    <th className="text-xs font-bold border-r border-[#ddd] h-[50px]">
+                    <th className="text-xs font-bold whitespace-pre-line border-r border-[#ddd] h-[50px]">
                       {t("home:Transfer.TienLaiCongDon")}{" "}
                       <Tooltip title="Tiền lãi cộng dồn tính đến thời điểm hiện tại, tính theo lãi suất tất toán đúng hạn">
                         <i
