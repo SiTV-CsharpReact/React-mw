@@ -36,6 +36,7 @@ import DepositoryHistory from './pages/RightCustody/DepositoryHistory'
 //import ReportNAV from "./components/ReportNAV/ReportNAV";
 import ReportTransSummary from "./pages/Report/ReportTransSummary";
 import StockDetails from "./pages/Report/StockDetails";
+import TransBalance from "./components/TransBalance/TransBalance";
 const App: React.FC = () => {
   return (
     <div>
@@ -75,6 +76,10 @@ const App: React.FC = () => {
           <Route
             path="/report/ClientActivityRange"
             element={<HistoryOrder />}
+          />
+          <Route
+            path="/report/TransBalance"
+            element={<TransBalance />}
           />
           <Route path="/report/TradeLog" element={<HistoryMatching />} />
           <Route path="/report/PendingSettlement" element={<HistoryForpay />} />

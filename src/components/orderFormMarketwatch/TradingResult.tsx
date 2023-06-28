@@ -86,50 +86,50 @@ const Tbody = (props: any) => {
       {props.data.filter((e: any) => e.ASTOCKCODE === props.item.ASTOCKCODE)
         .length >= 2
         ? props.data
-            .filter((e: any) => e.ASTOCKCODE === props.item.ASTOCKCODE)
-            .map((x: any, index: any) => (
-              <tr className="hover:bg-[#EEFFEE]" key={index} style={{ display: `${drop ? "" : "none"}` }}>
-                <td className="  font-bold text-[#2371AF] border-gray-300 text-start pl-1  pr-2"></td>
-                <td className="border  font-medium text-[#2371AF] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.AQUANTITY)}
-                </td>
-                <td className="border  font-medium text-[#2371AF] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.APRICE)}
-                </td>
-                <td className="border  font-medium text-[#2371AF] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.ATOTALVALUE)}
-                </td>
-                <td className="border  font-medium text-[#2371AF] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.AORDERID)}
-                </td>
-                <td className="border  font-medium text-[#2371AF] border-gray-300 text-end  pr-2">
-                  {x.AMATCH_TIME}
-                </td>
-              </tr>
-            ))
+          .filter((e: any) => e.ASTOCKCODE === props.item.ASTOCKCODE)
+          .map((x: any, index: any) => (
+            <tr className="hover:bg-[#EEFFEE]" key={index} style={{ display: `${drop ? "" : "none"}` }}>
+              <td className="  font-bold text-[#2371AF] border-gray-300 text-start pl-1  pr-2"></td>
+              <td className="border  font-medium text-[#2371AF] border-gray-300 text-end  pr-2">
+                {formatNumber(x.AQUANTITY)}
+              </td>
+              <td className="border  font-medium text-[#2371AF] border-gray-300 text-end  pr-2">
+                {formatNumber(x.APRICE)}
+              </td>
+              <td className="border  font-medium text-[#2371AF] border-gray-300 text-end  pr-2">
+                {formatNumber(x.ATOTALVALUE)}
+              </td>
+              <td className="border  font-medium text-[#2371AF] border-gray-300 text-end  pr-2">
+                {formatNumber(x.AORDERID)}
+              </td>
+              <td className="border  font-medium text-[#2371AF] border-gray-300 text-end  pr-2">
+                {x.AMATCH_TIME}
+              </td>
+            </tr>
+          ))
         : props.data
-            .filter((e: any) => e.ASTOCKCODE === props.item.ASTOCKCODE)
-            .slice(1)
-            .map((x: any, index: any) => (
-              <tr className="hover:bg-[#EEFFEE]" key={index} style={{ display: `${drop ? "" : "none"}` }}>
-                <td className="  font-bold text-[#2371AF] border-gray-300 text-start pl-1  pr-2"></td>
-                <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.AQUANTITY)}
-                </td>
-                <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.APRICE)}
-                </td>
-                <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.ATOTALVALUE)}
-                </td>
-                <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.AORDERID)}
-                </td>
-                <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">
-                  {x.AMATCH_TIME}
-                </td>
-              </tr>
-            ))}
+          .filter((e: any) => e.ASTOCKCODE === props.item.ASTOCKCODE)
+          .slice(1)
+          .map((x: any, index: any) => (
+            <tr className="hover:bg-[#EEFFEE]" key={index} style={{ display: `${drop ? "" : "none"}` }}>
+              <td className="  font-bold text-[#2371AF] border-gray-300 text-start pl-1  pr-2"></td>
+              <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">
+                {formatNumber(x.AQUANTITY)}
+              </td>
+              <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">
+                {formatNumber(x.APRICE)}
+              </td>
+              <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">
+                {formatNumber(x.ATOTALVALUE)}
+              </td>
+              <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">
+                {formatNumber(x.AORDERID)}
+              </td>
+              <td className="border  font-bold text-[#2371AF] border-gray-300 text-end  pr-2">
+                {x.AMATCH_TIME}
+              </td>
+            </tr>
+          ))}
     </>
   );
 };
@@ -204,50 +204,50 @@ const TbodySell = (props: any) => {
       {props.data.filter((e: any) => e.ASTOCKCODE === props.item.ASTOCKCODE)
         .length >= 2
         ? props.data
-            .filter((e: any) => e.ASTOCKCODE === props.item.ASTOCKCODE)
-            .map((x: any, index: any) => (
-              <tr className="hover:bg-[#EEFFEE]" key={index} style={{ display: `${dropSell ? "" : "none"}` }}>
-                <td className="  font-bold text-[#9C0A0A] border-gray-300 text-start pl-1  pr-2"></td>
-                <td className="border  font-medium text-[#9C0A0A] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.AQUANTITY)}
-                </td>
-                <td className="border  font-medium text-[#9C0A0A] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.APRICE)}
-                </td>
-                <td className="border  font-medium text-[#9C0A0A] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.ATOTALVALUE)}
-                </td>
-                <td className="border  font-medium text-[#9C0A0A] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.AORDERID)}
-                </td>
-                <td className="border  font-medium text-[#9C0A0A] border-gray-300 text-end  pr-2">
-                  {x.AMATCH_TIME}
-                </td>
-              </tr>
-            ))
+          .filter((e: any) => e.ASTOCKCODE === props.item.ASTOCKCODE)
+          .map((x: any, index: any) => (
+            <tr className="hover:bg-[#EEFFEE]" key={index} style={{ display: `${dropSell ? "" : "none"}` }}>
+              <td className="  font-bold text-[#9C0A0A] border-gray-300 text-start pl-1  pr-2"></td>
+              <td className="border  font-medium text-[#9C0A0A] border-gray-300 text-end  pr-2">
+                {formatNumber(x.AQUANTITY)}
+              </td>
+              <td className="border  font-medium text-[#9C0A0A] border-gray-300 text-end  pr-2">
+                {formatNumber(x.APRICE)}
+              </td>
+              <td className="border  font-medium text-[#9C0A0A] border-gray-300 text-end  pr-2">
+                {formatNumber(x.ATOTALVALUE)}
+              </td>
+              <td className="border  font-medium text-[#9C0A0A] border-gray-300 text-end  pr-2">
+                {formatNumber(x.AORDERID)}
+              </td>
+              <td className="border  font-medium text-[#9C0A0A] border-gray-300 text-end  pr-2">
+                {x.AMATCH_TIME}
+              </td>
+            </tr>
+          ))
         : props.data
-            .filter((e: any) => e.ASTOCKCODE === props.item.ASTOCKCODE)
-            .slice(1)
-            .map((x: any, index: any) => (
-              <tr key={index} style={{ display: `${dropSell ? "" : "none"}` }}>
-                <td className="  font-bold text-[#9C0A0A] border-gray-300 text-start pl-1  pr-2"></td>
-                <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.AQUANTITY)}
-                </td>
-                <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.APRICE)}
-                </td>
-                <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.ATOTALVALUE)}
-                </td>
-                <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">
-                  {formatNumber(x.AORDERID)}
-                </td>
-                <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">
-                  {x.AMATCH_TIME}
-                </td>
-              </tr>
-            ))}
+          .filter((e: any) => e.ASTOCKCODE === props.item.ASTOCKCODE)
+          .slice(1)
+          .map((x: any, index: any) => (
+            <tr key={index} style={{ display: `${dropSell ? "" : "none"}` }}>
+              <td className="  font-bold text-[#9C0A0A] border-gray-300 text-start pl-1  pr-2"></td>
+              <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">
+                {formatNumber(x.AQUANTITY)}
+              </td>
+              <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">
+                {formatNumber(x.APRICE)}
+              </td>
+              <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">
+                {formatNumber(x.ATOTALVALUE)}
+              </td>
+              <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">
+                {formatNumber(x.AORDERID)}
+              </td>
+              <td className="border  font-bold text-[#9C0A0A] border-gray-300 text-end  pr-2">
+                {x.AMATCH_TIME}
+              </td>
+            </tr>
+          ))}
     </>
   );
 };
@@ -303,7 +303,7 @@ const TradingResult = () => {
     doc.save("filename.pdf");
   };
   const fetchBuyData = async () => {
-    const buyData =  dataApi?.Table?.filter((items: any) => items.ABUYSELL === "B");
+    const buyData = dataApi?.Table?.filter((items: any) => items.ABUYSELL === "B");
     const uniqueData = _.uniqBy(buyData, "ASTOCKCODE");
     setDataTotal(buyData);
     setData(uniqueData);
@@ -317,9 +317,9 @@ const TradingResult = () => {
     setDataArrSell(sellData);
   };
   useEffect(() => {
-     fetchBuyData();
+    fetchBuyData();
     fetchBuyDataSell();
-  }, [dataApi,dataApi]);
+  }, [dataApi, dataApi]);
   const calculateTotalQuantity = () => {
     if (dataTotal && dataTotal.length > 0) {
       const totalQuantity = dataTotal.reduce((accumulator: any, item: any) => {
@@ -372,66 +372,66 @@ const TradingResult = () => {
   return (
     <div className="">
       <div className="flex items-center justify-between mr-2">
-            <div>
-            {data.length >0  || dataSell.length > 0 ? (
-              <p
-                onClick={handelSetDrop}
-                className="text-[15px] text-[#2371AF] cursor-pointer underline	pl-5"
-              >
-                {drop? "Xem rút gọn" :  t("home:Order.View_Full")}
-              </p>
-            ) : (
-              <p></p>
-            )}
-    </div>
+        <div>
+          {data.length > 0 || dataSell.length > 0 ? (
+            <p
+              onClick={handelSetDrop}
+              className="text-[15px] text-[#2371AF] cursor-pointer underline	pl-5"
+            >
+              {drop ? "Xem rút gọn" : t("home:Order.View_Full")}
+            </p>
+          ) : (
+            <p></p>
+          )}
+        </div>
 
         <div>
           <div>
-          <div className="flex items-center gap-3 mt-1.5">
-          <button className=" pl-2 mb-[1px]   pr-2 mr-[1px] cursor-pointer  w-[81px] h-[30px] rounded-[4px] text-white text-[12px]  uppercase bg-[#0055ba]">
-            {t("home:base.CapNhat")}
+            <div className="flex items-center gap-3 mt-1.5">
+              <button className=" pl-2 mb-[1px]   pr-2 mr-[1px] cursor-pointer  w-[81px] h-[30px] rounded-[4px] text-white text-[12px]  uppercase bg-[#0055ba]">
+                {t("home:base.CapNhat")}
               </button>
               {/* 2xl:mr-7 */}
-          <form className="flex gap-[7px] mr-5  ">
-            <img
-              className="cursor-pointer "
-              onClick={handleExportToExcel}
-              src={excell}
-              alt="excel"
-            />
-            <img
-              className="cursor-pointer "
-              onClick={handleExportToPDF}
-              src={pfd}
-              alt="pfd"
-            />
-          </form>
-        </div>
-    </div>
+              <form className="flex gap-[7px] mr-5  ">
+                <img
+                  className="cursor-pointer "
+                  onClick={handleExportToExcel}
+                  src={excell}
+                  alt="excel"
+                />
+                <img
+                  className="cursor-pointer "
+                  onClick={handleExportToPDF}
+                  src={pfd}
+                  alt="pfd"
+                />
+              </form>
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="flex gap-[10px] mx-auto mt-[2px] ml-5 mr-7 ">
         {/* buy */}
         <div className="w-1/2 border-gray-300 h-fit">
-          <div style={{border:"1px solid #AAAAAA"}} className="flex relative !border-b-0   border-gray-300 gap-1 h-[30px] items-center bg-[#2371AF] ">
+          <div style={{ border: "1px solid #AAAAAA" }} className="flex relative !border-b-0   border-gray-300 gap-1 h-[30px] items-center bg-[#2371AF] ">
             <p className="mx-auto pr-[12px] !text-[12px] font-semibold text-center text-white">
-            {t("home:Order.ORDER_MUA")} 
+              {t("home:Order.ORDER_MUA")}
             </p>
             <Tooltip title="Nhấn vào từng dòng để xem chi tiết khớp lệnh">
-            <i style={{fontSize:"12px"}} className="fa absolute  fa-info-circle left-[51.2%]   text-white" ></i>
-          </Tooltip>
+              <i style={{ fontSize: "12px" }} className="fa absolute  fa-info-circle left-[51.6%]   text-white" ></i>
+            </Tooltip>
           </div>
 
           <table>
-            <thead style={{border:"1px solid #AAAAAA"}}>
+            <thead style={{ border: "1px solid #AAAAAA" }}>
               <tr className="bg-[#F3F3F3] ">
-                <th style={{width:"12%"}} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]"> {t("home:Order.ORDER_MCK")}  </th>
-                <th style={{width:"12%"}} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:Order.OPTIONS_KL")}</th>
-                <th style={{width:"12%"}} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:base.Gia")}</th>
-                <th style={{width:"15%"}} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:Order.THANHTIEN")}</th>
-                <th style={{width:"12%"}} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:base.SHL")}</th>
-                <th style={{width:"35%"}} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:Order.GKHOP")}</th>
+                <th style={{ width: "12%" }} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]"> {t("home:Order.ORDER_MCK")}  </th>
+                <th style={{ width: "12%" }} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:Order.OPTIONS_KL")}</th>
+                <th style={{ width: "12%" }} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:base.Gia")}</th>
+                <th style={{ width: "15%" }} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:Order.THANHTIEN")}</th>
+                <th style={{ width: "12%" }} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:base.SHL")}</th>
+                <th style={{ width: "35%" }} className="border border-gray-300 !p-0 !h-[22px] !text-[12px]">{t("home:Order.GKHOP")}</th>
               </tr>
             </thead>
             <tbody>
@@ -441,12 +441,12 @@ const TradingResult = () => {
               <tr className="bg-[#F3F3F3]">
                 <td className="pl-1 font-bold border border-gray-300 ">{t("home:Order.TONG")}</td>
                 <td className="font-bold border border-gray-300 text-end">
-                  {calculateTotalQuantity()  ===0 ? "" :  calculateTotalQuantity()}
+                  {calculateTotalQuantity() === 0 ? "" : calculateTotalQuantity()}
                 </td>
                 <td className="border border-gray-300"></td>
                 <td className="font-bold border border-gray-300 text-end">
                   {" "}
-                  {calculateaTOTALVALUE()  ===0 ? "" :  calculateaTOTALVALUE()}
+                  {calculateaTOTALVALUE() === 0 ? "" : calculateaTOTALVALUE()}
                 </td>
                 <td colSpan={2} className="border border-gray-300"></td>
               </tr>
@@ -454,25 +454,25 @@ const TradingResult = () => {
           </table>
         </div>
         {/* sell 2xl:mr-2 */}
-        <div className="w-1/2 m-0 border-gray-300  ">
-          <div style={{border:"1px solid #AAAAAA"}} className="flex relative gap-1 !border-b-0 mx-auto  h-[30px] items-center bg-[#9C0A0A] ">
+        <div className="w-1/2 m-0 border-gray-300 ">
+          <div style={{ border: "1px solid #AAAAAA" }} className="flex relative gap-1 !border-b-0 mx-auto  h-[30px] items-center bg-[#9C0A0A] ">
             <p className="mx-auto pr-[12px] font-semibold !text-[12px] text-white ">  {t("home:Order.ORDER_BAN")}  </p>
-              <Tooltip title="Nhấn vào từng dòng để xem chi tiết khớp lệnh">
-              <i style={{fontSize:"12px"}} className="fa absolute fa-info-circle left-[51.2%]    text-white"></i>
-              </Tooltip>
+            <Tooltip title="Nhấn vào từng dòng để xem chi tiết khớp lệnh">
+              <i style={{ fontSize: "12px" }} className="fa absolute fa-info-circle left-[51.6%]    text-white"></i>
+            </Tooltip>
           </div>
 
           <table className="">
             <thead>
               <tr className="bg-[#F3F3F3]">
-                <th style={{width:"12%"}} className="border border-gray-300  !p-0  !h-[22px] !text-[12px]"> {t("home:Order.ORDER_MCK")}  </th>
-                <th style={{width:"12%"}} className="border border-gray-300  !p-0  !h-[22px]  !text-[12px]">{t("home:Order.OPTIONS_KL")}</th>
-                <th style={{width:"12%"}} className="border border-gray-300  !p-0 !h-[22px]  !text-[12px]">{t("home:base.Gia")}</th>
-                <th style={{width:"15%"}} className="border border-gray-300  !p-0 !h-[22px]  !text-[12px] ">{t("home:Order.THANHTIEN")}</th>
-                <th style={{width:"12%"}} className="border border-gray-300  !p-0 !h-[22px]  !text-[12px]">{t("home:base.SHL")}</th>
-                <th style={{width:"35%"}} className="border border-gray-300 !p-0  !h-[22px]  !text-[12px]">{t("home:Order.GKHOP")}</th>
+                <th style={{ width: "12%" }} className="border border-gray-300  !p-0  !h-[22px] !text-[12px]"> {t("home:Order.ORDER_MCK")}  </th>
+                <th style={{ width: "12%" }} className="border border-gray-300  !p-0  !h-[22px]  !text-[12px]">{t("home:Order.OPTIONS_KL")}</th>
+                <th style={{ width: "12%" }} className="border border-gray-300  !p-0 !h-[22px]  !text-[12px]">{t("home:base.Gia")}</th>
+                <th style={{ width: "15%" }} className="border border-gray-300  !p-0 !h-[22px]  !text-[12px] ">{t("home:Order.THANHTIEN")}</th>
+                <th style={{ width: "12%" }} className="border border-gray-300  !p-0 !h-[22px]  !text-[12px]">{t("home:base.SHL")}</th>
+                <th style={{ width: "35%" }} className="border border-gray-300 !p-0  !h-[22px]  !text-[12px]">{t("home:Order.GKHOP")}</th>
               </tr>
-              
+
             </thead>
             <tbody>
               {dataSell.map((item: any) => (
@@ -486,14 +486,14 @@ const TradingResult = () => {
               <tr className="bg-[#F3F3F3]">
                 <td className="pl-1 font-bold border border-gray-300 ">{t("home:Order.TONG")}  </td>
                 <td className="font-bold border border-gray-300 text-end">
-                  {calculateTotalQuantitySell() ===0 ? "" : calculateTotalQuantitySell()}
+                  {calculateTotalQuantitySell() === 0 ? "" : calculateTotalQuantitySell()}
                 </td>
                 <td className="border border-gray-300"></td>
                 <td className="font-bold border border-gray-300 text-end">
                   {" "}
-                  {calculateaTOTALVALUESell() ===0 ? "" : calculateaTOTALVALUESell()}
+                  {calculateaTOTALVALUESell() === 0 ? "" : calculateaTOTALVALUESell()}
                 </td>
-                  <td colSpan={2} className="border border-gray-300"></td>
+                <td colSpan={2} className="border border-gray-300"></td>
               </tr>
             </tbody>
           </table>
