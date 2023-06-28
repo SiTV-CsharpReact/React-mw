@@ -3,9 +3,9 @@ import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { fetchChartOptionAsync } from "./chartOptionSlice";
-import { HighchartsProvider } from 'react-jsx-highcharts';
+// import { HighchartsProvider } from "react-jsx-highcharts";
 import { DataStockCode } from "../../models/stockCode";
-const ChartOption:React.FC<DataStockCode> = (data) => {
+const ChartOption: React.FC<DataStockCode> = (data) => {
   const dispatch = useAppDispatch();
   const { isLoading, dataChartOption, status } = useAppSelector(
     (state) => state.chartOption
@@ -14,17 +14,16 @@ const ChartOption:React.FC<DataStockCode> = (data) => {
   useEffect(() => {
     dispatch(fetchChartOptionAsync({ stockCode: data.stockCode }));
   }, []);
-  const linear =[
+  const linear = [
     { x: 0, y: 0 },
     { x: 0, y: 50 },
     { x: 50, y: 200 },
     { x: 500, y: 200 },
-  ]
+  ];
   const options: Highcharts.Options = {
     chart: {
       height: 160,
       backgroundColor: "#333333",
-     
     },
     credits: {
       enabled: false,
@@ -70,7 +69,6 @@ const ChartOption:React.FC<DataStockCode> = (data) => {
       squareSymbol: false,
     },
     plotOptions: {
-     
       line: {
         states: {
           hover: { enabled: false },
@@ -96,13 +94,11 @@ const ChartOption:React.FC<DataStockCode> = (data) => {
   const chartComponentRef = useRef<any>(null);
 
   return (
-    <HighchartsProvider Highcharts={Highcharts}>
-    <HighchartsReact
-   
-      options={options}
-      ref={chartComponentRef}
-    />
-     </HighchartsProvider>
+    <>
+      {/* <HighchartsProvider Highcharts={Highcharts}>
+        <HighchartsReact options={options} ref={chartComponentRef} />
+      </HighchartsProvider> */}
+    </>
   );
 };
 
