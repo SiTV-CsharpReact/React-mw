@@ -21,6 +21,8 @@ import { dataSliceShow } from "../components/orderFormMarketwatch/data";
 import statusTableMWSlice from "../components/chartMarketwatch/statusTableSlice";
 import chartIndexSlice from "../components/chartIndex/chartIndexSlice";
 import { dataSliceThongke } from "../components/tableMarketwatch/helper/tableFormThongke";
+import RespportSlice from "../pages/Report/ResportSlice";
+import TransferSlice from "../pages/Transfer/TransferSlice";
 
 export const store = configureStore({
   reducer: {
@@ -69,6 +71,8 @@ export const store = configureStore({
     dataShow: dataSliceShow.reducer,
     // chart index
     chartIndex: chartIndexSlice.reducer,
+    report :RespportSlice.reducer,
+    transfer : TransferSlice.reducer
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

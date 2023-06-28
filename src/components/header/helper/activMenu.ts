@@ -13,7 +13,6 @@ export const getActiveMenu = () => {
       } else {
         parents[i].classList.remove("activeMenuHeader");
       }
-    
-}
+    }
   }
 };

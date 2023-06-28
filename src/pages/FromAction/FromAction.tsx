@@ -2,12 +2,14 @@ import  React ,{FC} from "react"
 import "./style.Form.scss";
 type Props = {
     children? :any,
-    data?:any
+    data?:any,
+    ChangeFuncion?  :any
+    
 }
-const FromAction  = ({data,children}:Props)=>{
+const FromAction  = ({data,ChangeFuncion,children}:Props)=>{
     const HandelSubmit = (e:any)=>{
         e.preventDefault();
-        console.log("Lưu ", data)
+        ChangeFuncion(data)
     }
     return <div> 
             <form className="FromAction" onSubmit={(e)=>HandelSubmit(e)}>

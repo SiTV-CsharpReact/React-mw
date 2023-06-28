@@ -85,13 +85,14 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "json-server dataIntraday.json --watch --port 5000",
-    "DataResult": "json-server dataResult.json --watch --port 3080",
+    "DataResult": "json-server dataResult.json --watch --port 3005",
     "PendingOrder": "json-server db.json --watch --port 30",
     "DataThongKe": "json-server dataPopup.json --watch --port 6565",
     "DataPopup": "json-server dataPopup.json --watch --port 6868",
     "DataKiQuy": "json-server dataPopup.json --watch --port 9999",
     "DataChartIndex": "json-server chart.json --watch --port 8000",
-    "BCTS": "json-server data.json --watch --port 3005"
+    "BCTS": "json-server data.json --watch --port 3005",
+    "testResport": "json-server testResport.json --watch --port 2000"
   },
   "eslintConfig": {
     "extends": [

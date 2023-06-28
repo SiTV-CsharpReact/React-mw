@@ -49,6 +49,15 @@ const dataGDTTtable = {
 const chartIndex = {
     get: () => requests.get('http://localhost:8000/dataChartIndex'),
 }
+// table Lịch sử khớp lệnh
+const report = {
+    get : () => requests.get("http://localhost:2000/data"),
+    getHisOrder : () =>  requests.get("http://localhost:2000/orderHis")
+}
+const transfer = {
+    getdataTempalte : ()=> requests.get("  http://localhost:2000/dataTranfer"),
+    hometransferds : ()=> requests.get("http://localhost:2000/dataTransferds")
+}
 const agent = {
     TableHNX,
     TableHSX,
@@ -57,7 +66,9 @@ const agent = {
     Ministry,
     ListDataTable,
     dataGDTTtable,
-    chartIndex
+    chartIndex,
+    report,
+    transfer
 }
 export default agent;
 // import axios, { AxiosInstance, AxiosResponse } from "axios";
