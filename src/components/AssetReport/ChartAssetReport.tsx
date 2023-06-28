@@ -19,7 +19,7 @@ const ChartAssetReport = () => {
         </div>
         <div className="report__select__date">
           <select
-            onChange={(e: any) =>
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
               setDate(Number(e.target.value))
             }
           >

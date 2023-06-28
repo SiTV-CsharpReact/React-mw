@@ -18,6 +18,7 @@ import ChartPopup from "./ChartPopup";
 import axios from "axios";
 import { getCompanyNameByCode } from "../../utils/util";
 import { DataTable } from "../../models/modelTableHNX";
+import ChartWithOption from "./ChartWithOption";
 interface DraggableProps {
   initialPosition?: { x: number; y: number };
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;
@@ -33,7 +34,7 @@ const TablePopupMarketwatch = () => {
   const [dataItemHNX, setDataItemHNX] = useState<any[]>([]);
   const [dataItemHSX, setDataItemHSX] = useState<any[]>([]);
   const stockDetail = useSelector((state: RootState) => state.popupTable.code);
-  console.log("s",{ stockDetail });
+  // console.log("s",{ stockDetail });
   const fetchDataTableHSX = async (code?: string) => {
     if (code !== "" && code !== undefined) {
       const res = await axios.get(
@@ -111,7 +112,7 @@ const TablePopupMarketwatch = () => {
   useEffect(() => {
     const results = dataResultSearch.filter(
       (item: any) => item.Code.toUpperCase().includes(dataCheck),
-      console.log("filteredData", dataCheck)
+      // console.log("filteredData", dataCheck)
     );
     setFilteredData(results);
   }, [dataCheck, dataResultSearch]);
@@ -120,7 +121,6 @@ const TablePopupMarketwatch = () => {
     x: (window.innerWidth - 1230) /2,    // - đi witdh tablle chia 2
     y: (window.innerHeight - 721 -40) /2 ,
   });
-  console.log("vi tri pop up",position,window.innerWidth,window.innerHeight)
   const handleDrag = (e: DraggableEvent, ui: DraggableData) => {
     const { x, y } = position;
     setPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
@@ -150,7 +150,7 @@ const TablePopupMarketwatch = () => {
       }
     }
   };
-  console.log(dataItemHNX, dataItemHSX)
+  // console.log(dataItemHNX, dataItemHSX)
   // Kiểm tra và đặt lại giá trị cho dataMouse.maF và dataMouseBuy.maB nếu selectedCode tồn tại
   return (
     <Draggable handle=".pu-header" position={position} onDrag={handleDrag}>
@@ -253,7 +253,7 @@ const TablePopupMarketwatch = () => {
         <div className="flex pu-info mt-[5px]">
           <div className="pu-basic w-[409px] mx-1">
             <TableBasicPopup stockCode={stockDetail}/>
-            <TableReportingPopup />
+            <TableReportingPopup stockCode={stockDetail}/>
           </div>
           <div className="pu-hrz-realtime w-[391px] mx-1">
             <div
@@ -276,7 +276,8 @@ const TablePopupMarketwatch = () => {
             </div>
           </div>
           <div className="pu-hrz-chart">
-            <ChartPopup />
+            <ChartPopup />     
+            <ChartWithOption stockCode={stockDetail}/>
           </div>
         </div>
       </div>

@@ -101,7 +101,7 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
         setDataBar(dataTimeVol);
       }
     }
-  }, [dataChartIndex.HNX, dataChartIndex.HSX, name, san, timeFirst]);
+  }, [dataChartIndex?.HNX, dataChartIndex?.HSX, name, san, timeFirst]);
 
   useEffect(() => {
     const gradient: any = [0, 0, 50, 380];
@@ -267,7 +267,7 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
         backgroundColor: "#ffffffc9",
         borderColor: "#07d800",
         borderRadius: 5,
-        borderWidth: "1px",
+        borderWidth: 1,
         padding: 6,
         useHTML: true,
         style: {

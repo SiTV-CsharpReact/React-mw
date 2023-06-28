@@ -17,7 +17,7 @@ const ChartPopup = () => {
       49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6,
     ];
     const gradient: any = [0, 0, 50, 500];
-    const chart = Highcharts.chart("container", {
+    const chart = Highcharts.chart("Chartcontainer", {
       chart: {
         type: "column",
         // zoomType: "xy",
@@ -83,7 +83,7 @@ const ChartPopup = () => {
         backgroundColor: "#ffffffc9",
         borderColor: "#edc240",
         borderRadius: 5,
-        borderWidth: "2px",
+        borderWidth: 2,
         padding: 6,
         style: {
           fontSize: "12px",
@@ -128,7 +128,7 @@ const ChartPopup = () => {
   return (
     <div className="w-full bg-[#333333]">
       <figure className="highcharts-figure">
-        <div id="container"></div>
+        <div id="Chartcontainer"></div>
       </figure>
     </div>
   );

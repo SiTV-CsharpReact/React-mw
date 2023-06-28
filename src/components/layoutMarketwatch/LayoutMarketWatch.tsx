@@ -209,7 +209,7 @@ const LayoutMarketWatch: React.FC = () => {
     const trValue = document.querySelector(
       `div[data-index="0"][data-comp="${rowID}"] span`
     )?.innerHTML;
-    console.log("click", trValue);
+    // console.log("click", trValue);
     if (trValue) {
       setSelectedValue({
         x: e.clientX,
