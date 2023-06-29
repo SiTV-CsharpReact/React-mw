@@ -23,10 +23,10 @@ const MoneyTransferMain = () => {
     const fetchBalanceDetail = async () => {
       try {
         const balanceDetailPromise = axios.get(
-          "http://localhost:3000/TableGetBalanceDetail"
+          "http://localhost:8060/TableGetBalanceDetail"
         );
         const templatePromise = axios.get(
-          "http://localhost:3000/TableTemplate"
+          "http://localhost:8060/TableTemplate"
         );
         const [balanceDetailResponse, templateResponse] = await Promise.all([
           balanceDetailPromise,

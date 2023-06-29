@@ -6,7 +6,7 @@ const port = 3001;
 
 // Middleware để cho phép gửi yêu cầu từ domain của bạn
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8060');
   next();
 });
 

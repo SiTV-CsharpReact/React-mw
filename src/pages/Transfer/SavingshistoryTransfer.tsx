@@ -64,13 +64,13 @@ const SavingshistoryTransfer = () => {
   useEffect(() => {
     const fetchData = async () => {
       const promiseSavingHistory = axios.get(
-        `http://localhost:3000/DataSavingshistory`
+        `http://localhost:8060/DataSavingshistory`
       );
       const promiseDetailHistory = axios.get(
-        `http://localhost:3000/DataGetDetailHistory?id=${values.query}`
+        `http://localhost:8060/DataGetDetailHistory?id=${values.query}`
       );
       const promiseDetailHistoryType2 = axios.get(
-        `http://localhost:3000/DataSavingshistoryType2?id=${values.query}`
+        `http://localhost:8060/DataSavingshistoryType2?id=${values.query}`
       );
       const [savingHistoryRes, detailHistoryRes, detailHistoryType2Res] =
         await Promise.all([

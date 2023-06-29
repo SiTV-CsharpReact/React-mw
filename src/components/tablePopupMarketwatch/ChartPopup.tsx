@@ -17,8 +17,8 @@ const ChartPopup = () => {
       49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6,
     ];
     const gradient: any = [0, 0, 50, 500];
-    const chart = Highcharts.chart("Chartcontainer", {
-      chart: {
+    const chart = Highcharts.chart("container", {
+      chart: {    
         type: "column",
         // zoomType: "xy",
         height: 160,
@@ -70,13 +70,8 @@ const ChartPopup = () => {
         height: 120,
         endOnTick: true,
         maxPadding: 0.01,
-        // minorGridLineWidth: 0,
         minorTickInterval: 5,
         tickAmount: 5,
-        // lineWidth: 0,
-        // lineColor: "#333333",
-        //vien ke ngang truc oy
-        // gridLineColor: "#777777",
         gridLineWidth: 0,
       },
       tooltip: {
@@ -128,7 +123,7 @@ const ChartPopup = () => {
   return (
     <div className="w-full bg-[#333333]">
       <figure className="highcharts-figure">
-        <div id="Chartcontainer"></div>
+        <div id="container"></div>
       </figure>
     </div>
   );

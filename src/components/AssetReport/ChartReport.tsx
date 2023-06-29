@@ -105,13 +105,14 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
                 {
                   color: point.y >= 0 ? "#548235" : "#c00000",
                 },
-                false
+                false // chặn ko cho chart vẽ lại khi giá trị mới đc cập nhật
               );
             });
             this.redraw();
           },
         },
         height: 300,
+        // width: 1850
       },
       title: {
         text: "",
@@ -131,9 +132,11 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
             fontFamily:
               '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif',
           },
+          y: 19
         },
         lineWidth: 1,
         lineColor: "#ccd6eb",
+        height: 220,
       },
       yAxis: [
         {
@@ -153,6 +156,7 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
             },
           },
           gridLineWidth: 1,
+          height: 220,
         },
         {
           title: {
@@ -169,9 +173,10 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
                 '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif',
             },
             formatter: function () {
-              return this.value + "%";
+              return this.value + " %";
             },
           },
+          height: 220,
         },
       ],
       tooltip: {
@@ -212,12 +217,21 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
         symbolHeight: 12, // set the height of the legend symbol
         symbolRadius: 0,
         squareSymbol: true,
+        y: 10,
+        itemStyle: {
+          fontWeight: "bold",
+          fontSize: "12px",
+          color: "#333333",
+          fontFamily:
+            '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif',
+        },
       },
       plotOptions: {
         column: {
           pointPadding: 0.1,
           groupPadding: 0.2,
-          borderWidth: 0,
+          borderWidth: 1,
+          borderColor: "#fff",
           borderRadius: 0,
           states: {
             hover: {
