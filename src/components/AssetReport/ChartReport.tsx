@@ -75,6 +75,10 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
       chart: {
         type: "line",
         backgroundColor: "#ececec",
+        spacingRight: 20,
+        spacingLeft: 10,
+        // spacingTop: -20,
+        // spacingBottom: 10,
         events: {
           load: function () {
             //cách tính bước nhảy, min, max
@@ -132,7 +136,7 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
             fontFamily:
               '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif',
           },
-          y: 19
+          y: 19,
         },
         lineWidth: 1,
         lineColor: "#ccd6eb",
@@ -213,11 +217,15 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
         },
       },
       legend: {
-        symbolWidth: 12, // set the width of the legend symbol
-        symbolHeight: 12, // set the height of the legend symbol
+        // symbolWidth: 12, // set the width of the legend symbol
+        // symbolHeight: 12, // set the height of the legend symbol
         symbolRadius: 0,
         squareSymbol: true,
-        y: 10,
+        // x: -10,
+        y: 7,
+        // itemMarginTop: 10,
+        // itemMarginBottom: -10,
+        // itemDistance: 20,
         itemStyle: {
           fontWeight: "bold",
           fontSize: "12px",
@@ -238,6 +246,18 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
               color: "rgb(137,198,96)",
             },
           },
+          // legendSymbol: 'rectangle'
+        },
+        // line: {
+        //   legendSymbol: 'lineMarker'
+
+        // },
+        series: {
+          // showInLegend: true,
+          // lineWidth: 15,
+          marker: {
+            enabled: true,
+          },
         },
       },
       series: series,
@@ -248,16 +268,9 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
   }, [arrLine, assetReport.Table2, changeOption, date]);
 
   return (
-    <>
-      <figure className="highcharts-figure">
-        <div id="container-asset_report"></div>
-      </figure>
-      {/* <HighchartsReact
-        ref={chartRef}
-        highcharts={Highcharts}
-        options={chartOption}
-      /> */}
-    </>
+    <figure className="highcharts-figure my-3">
+      <div id="container-asset_report"></div>
+    </figure>
   );
 };
 
