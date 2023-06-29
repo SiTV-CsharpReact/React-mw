@@ -1,4 +1,17 @@
 .body__content_reportNAV {
+  .view_BCBDTSR{
+    width: 55%;
+    margin: 0 auto;
+    @media (max-width:1000px){
+      width: 80%;
+    }
+    @media (min-width: 1201px) and (max-width: 1400px){
+      width: 80%;
+    }
+    @media (min-width: 1001px) and (max-width: 1200px){
+      width: 80%;
+    }
+  }
   table {
     tr {
       height: 22px !important;
@@ -11,7 +24,7 @@
       font-weight: bold;
       white-space: nowrap;
       text-align: left;
-      vertical-align: middle;
+      vertical-align: top;
       // border: 0 !important;
       span {
         &.lblTuNgay {

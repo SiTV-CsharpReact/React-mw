@@ -23,10 +23,10 @@ const MoneyTransferMain = () => {
     const fetchBalanceDetail = async () => {
       try {
         const balanceDetailPromise = axios.get(
-          "http://localhost:3000/TableGetBalanceDetail"
+          "http://localhost:8060/TableGetBalanceDetail"
         );
         const templatePromise = axios.get(
-          "http://localhost:3000/TableTemplate"
+          "http://localhost:8060/TableTemplate"
         );
         const [balanceDetailResponse, templateResponse] = await Promise.all([
           balanceDetailPromise,
@@ -102,6 +102,7 @@ const MoneyTransferMain = () => {
       content: "",
     });
   };
+  console.log(balanceDetail);
   return (
     <>
       <LayoutPage
@@ -129,16 +130,16 @@ const MoneyTransferMain = () => {
           <div
             className={`absolute ${
               value.showModel ? "opacity-100 visible" : "opacity-0 invisible"
-            } flex items-center justify-center top-0 left-0 bottom-0 right-0 w-full h-full transition-all`}
+            } flex items-center justify-center top-0 left-0 bottom-0 right-0 w-full z-50 h-full transition-all`}
           >
             <div
-              className="fixed top-0 bottom-0 left-0 right-0 bg-black opacity-20"
+              className="fixed top-0 bottom-0 left-0 right-0 bg-black opacity-50"
               onClick={handleShowModel}
             ></div>
             <div
               className={`absolute ${
                 value.showModel ? "opacity-100 visible" : "opacity-0 invisible"
-              } p-4 transition-fallAnimation w-[800px] pb-6 bg-white`}
+              } p-4 transition-fallAnimation w-[800px] pb-6 bg-white rounded-[4px]`}
             >
               <table className="w-full text-[12px] ">
                 <thead className="font-bold border border-[#dddddd] bg-[#f3f3f3]">
@@ -200,35 +201,41 @@ const MoneyTransferMain = () => {
             </div>
           </div>
           {/* -----------------------------Screen-----------------------------*/}
-          <div className="w-[840px] mx-auto my-[5px]">
-            <div className="flex justify-end pr-1 italic leading-[25px] items-center text-[10px] text-[#212529]">
+          <div className="w-[841px] mx-auto my-[4px]">
+            <div className="translate-y-[1px] flex justify-end pr-[5px] italic leading-[25px] items-center text-[10px] text-[#212529]">
               {t("home:Transfer.DonVi")}: VNĐ
             </div>
             {/*-----------------------------------------Table Show Money------------------------------------------*/}
-            <div className="text-xs border border-borderTransfer">
-              <table className="w-full">
+            <div className="text-xs -translate-y-[1px]  ">
+              <table className="w-full border border-borderTransfer">
                 <thead className="bg-[#F3F3F3]">
                   <tr className="border-b border-borderTransfer">
                     <th className="font-bold leading-4 border-r border-borderTransfer h-[58px]">
-                      {t("home:Transfer.SoDuTienMat")}
-                      <br />
-                      <span className="text-[11pt]">A</span>
+                      <span>
+                        {t("home:Transfer.SoDuTienMat")}
+                        <br />
+                        <span className="text-[11pt]">A</span>
+                      </span>
                     </th>
                     <th className="leading-4 border-r border-borderTransfer">
-                      {t("home:Transfer.TienUngTruoc")}
-                      <br />
-                      <span className="text-[11pt]">B</span>
+                      <span>
+                        {t("home:Transfer.TienUngTruoc")}
+                        <br />
+                        <span className="text-[11pt]">B</span>
+                      </span>
                     </th>
                     <th className="leading-4 w-[36%]">
-                      {t("home:Transfer.SoDuCoTheRut")}
-                      <br />
-                      <span className="text-[11pt]">C = A + B</span>
+                      <span>
+                        {t("home:Transfer.SoDuCoTheRut")}
+                        <br />
+                        <span className="text-[11pt]">C = A + B</span>
+                      </span>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="text-[#ae1a1a] font-bold">
-                    <td className="py-[3px] text-center border-r border-borderTransfer">
+                    <td className="text-center border-r h-[25px] border-borderTransfer">
                       {balanceDetail?.ALEDGERBALANCE?.toLocaleString()}
                     </td>
                     <td className="text-center border-r border-borderTransfer">
@@ -244,54 +251,58 @@ const MoneyTransferMain = () => {
             </div>
 
             {/*-----------------------------------------Choose Template Money------------------------------------------*/}
-            <div className="mt-3 border border-[#CCCCCC] p-[6px] pb-3 shadow-[0_1px_5px_rgba(0,0,0,.2)]">
-              <div className="flex gap-1">
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 201 202"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M198.83 98.17L102.83 2.16998C102.271 1.60993 101.558 1.22846 100.781 1.07386C100.005 0.919258 99.2001 0.998476 98.4688 1.30149C97.7375 1.6045 97.1126 2.11767 96.6731 2.77605C96.2336 3.43442 95.9994 4.20839 96 4.99998V49H12C8.8174 49 5.76515 50.2643 3.51472 52.5147C1.26428 54.7651 0 57.8174 0 61V141C0 144.183 1.26428 147.235 3.51472 149.485C5.76515 151.736 8.8174 153 12 153H96V197C95.9992 197.792 96.2335 198.566 96.6732 199.225C97.1129 199.884 97.7383 200.397 98.47 200.7C99.2013 201.003 100.006 201.081 100.782 200.927C101.558 200.772 102.271 200.39 102.83 199.83L198.83 103.83C199.202 103.458 199.497 103.017 199.698 102.532C199.9 102.046 200.003 101.526 200.003 101C200.003 100.474 199.9 99.9538 199.698 99.4682C199.497 98.9826 199.202 98.5415 198.83 98.17ZM104 187.34V149C104 147.939 103.579 146.922 102.828 146.172C102.078 145.421 101.061 145 100 145H12C10.9391 145 9.92172 144.579 9.17157 143.828C8.42143 143.078 8 142.061 8 141V61C8 59.9391 8.42143 58.9217 9.17157 58.1715C9.92172 57.4214 10.9391 57 12 57H100C101.061 57 102.078 56.5786 102.828 55.8284C103.579 55.0783 104 54.0608 104 53V14.66L190.34 101L104 187.34Z"
-                    fill="black"
-                  />
-                </svg>
-
+            <div className="mt-[8px] border border-[#CCCCCC] pb-[10px] shadow-[0_1px_5px_rgba(0,0,0,.2)]">
+              <div className="flex gap-1 p-[6px]">
+                <img src="/arrow2.jpg" alt="arrow" />
                 <span className="text-xs">
                   {t("home:Transfer.Title_CHUYENTIEN_H")}
                 </span>
               </div>
-              <div className="mt-[30px]">
-                <div className="w-[700px] mx-auto flex flex-col gap-[2px] pl-[30px]">
-                  <div className="grid items-center grid-cols-10">
-                    <label
-                      htmlFor="money"
-                      className="col-span-4 text-xs font-bold"
+              <div
+                className={`mt-[30px] ${
+                  value.valueSTK !== "" ? "pl-[98px] " : "pl-[100px]"
+                }`}
+              >
+                <div className="w-[700px] flex flex-col gap-[2px]">
+                  {/*-------------SoTien-------------------*/}
+                  <div className="flex items-center gap-[5px]">
+                    <p
+                      className={`${
+                        value.valueSTK !== "" ? "w-[193px]" : "w-[234px]"
+                      } px-[5px]`}
                     >
-                      {t("home:Transfer.SoTien")}
-                    </label>
-                    <div className="flex col-span-6 gap-1">
+                      <label htmlFor="money" className="text-xs font-bold ">
+                        {t("home:Transfer.SoTien")}
+                      </label>
+                    </p>
+                    <div className="flex gap-2">
                       <input
                         type="text"
                         name="money"
                         autoComplete="off"
                         value={value.valueMoney}
                         onChange={handleInputChange}
-                        className="w-[250px] transition-all text-[12px] text-right border h-[32px] rounded-[4px] px-3 outline-none focus:border-blue-300 focus:shadow-[0px_0px_0px_4px_rgba(200,237,255,0.5)]"
+                        className="w-[250px] transition-all text-[12px] text-right border border-[#ced4da] h-[32px] rounded-[4px] px-3 outline-none focus:border-[#80bdff] focus:shadow-[0_0_0_0.2rem_rgba(0,123,255,.25)]"
                         // oninput="validateInput(this)"
                       />
-                      <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap">
-                        VND <span className="font-bold text-red-400">(*)</span>
+                      <div className="items-center w-10 my-auto whitespace-nowrap text-[9pt] font-bold">
+                        VND{" "}
+                        <span className="font-bold text-[#FF0000]">(*)</span>
                       </div>
                     </div>
                   </div>
-                  <div className="grid items-center grid-cols-5">
-                    <label htmlFor="" className="col-span-2 text-xs font-bold">
-                      {t("home:Transfer.NgayHieuLuc")}
-                    </label>
-                    <div className="flex col-span-3 gap-1">
+                  {/*-------------NgayHieuLuc-------------------*/}
+                  <div className="flex items-center gap-[5px]">
+                    <p
+                      className={`${
+                        value.valueSTK !== "" ? "w-[193px]" : "w-[234px]"
+                      } px-[5px]`}
+                    >
+                      <label htmlFor="" className="text-xs font-bold ">
+                        {t("home:Transfer.NgayHieuLuc")}
+                      </label>
+                    </p>
+                    <div className="flex gap-1">
                       <input
                         type="text"
                         className="w-[250px] px-3 border h-[32px] text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
@@ -305,8 +316,13 @@ const MoneyTransferMain = () => {
                       <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap"></div>
                     </div>
                   </div>
-                  <div className="grid grid-cols-5">
-                    <div className="col-span-2"></div>
+                  {/*-------------ButtonChonMauCHuyenTien-------------------*/}
+                  <div className="flex gap-[5px]">
+                    <div
+                      className={`${
+                        value.valueSTK !== "" ? "w-[193px]" : "w-[234px]"
+                      } px-[5px]`}
+                    ></div>
                     <div className="col-span-3 gap-1">
                       <button
                         className="w-[250px] bg-[#3278B3] text-white h-[34px] text-center text-xs rounded-md"
@@ -321,15 +337,22 @@ const MoneyTransferMain = () => {
                   <div
                     className={`${value.valueSTK !== "" ? "block" : "hidden"}`}
                   >
-                    <div className="mt-5 ">
-                      <h3 className="text-[9pt] font-bold uppercase">
+                    {/*------------Nguoi THu Huong---------------*/}
+                    <div className="mt-5">
+                      <h3 className="text-[9pt] font-bold uppercase px-[5px] py-[3px]">
                         {t("home:Transfer.NguoiThuHuong")}
                       </h3>
-                      <div className="grid items-center grid-cols-5 mt-2">
-                        <label htmlFor="" className="col-span-2 pl-3 text-xs">
-                          {t("home:Transfer.SoTaiKhoan")}
-                        </label>
-                        <div className="flex col-span-3 gap-1">
+                      <div className=" items-center flex gap-[5px]">
+                        <div
+                          className={`${
+                            value.valueSTK !== "" ? "w-[193px]" : "w-[234px]"
+                          } px-[5px] pl-[13px]`}
+                        >
+                          <label htmlFor="" className="text-xs ">
+                            {t("home:Transfer.SoTaiKhoan")}
+                          </label>
+                        </div>
+                        <div className="flex gap-1">
                           <input
                             type="text"
                             className="w-[250px] px-4 border h-8 text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
@@ -337,15 +360,23 @@ const MoneyTransferMain = () => {
                             disabled
                           />
                           <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap">
-                            <span className="font-bold text-red-400">(*)</span>
+                            <span className="font-bold text-[#FF0000]">
+                              (*)
+                            </span>
                           </div>
                         </div>
                       </div>
-                      <div className=" items-center grid grid-cols-5 mt-[2px] ">
-                        <label htmlFor="" className="col-span-2 pl-3 text-xs">
-                          {t("home:Transfer.TenNguoiThuHuong")}
-                        </label>
-                        <div className="flex col-span-3 gap-1">
+                      <div className=" items-center flex gap-[5px] mt-[2px] ">
+                        <p
+                          className={`${
+                            value.valueSTK !== "" ? "w-[193px]" : "w-[234px]"
+                          } px-[5px] pl-[13px]`}
+                        >
+                          <label htmlFor="" className="text-xs ">
+                            {t("home:Transfer.TenNguoiThuHuong")}
+                          </label>
+                        </p>
+                        <div className="flex gap-1">
                           <input
                             type="text"
                             className="w-[250px] px-4 border h-8 text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
@@ -356,77 +387,105 @@ const MoneyTransferMain = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="mt-5 ">
-                      <h3 className="text-[9pt] font-bold uppercase">
+                    {/*------------Ngan Hang Nguoi THu Huong---------------*/}
+                    <div className="mt-[23px]">
+                      <h3 className="text-[9pt] font-bold uppercase px-[5px] py-[3px]">
                         {" "}
                         {t("home:Transfer.NganHangNguoiThuHuong")}
                       </h3>
-                      <div className="grid items-center grid-cols-5 mt-2">
-                        <label htmlFor="" className="col-span-2 pl-3 text-xs">
-                          {t("home:Transfer.NganHangThuHuong")}
-                        </label>
-                        <div className="flex col-span-3 gap-1">
+                      <div className="flex gap-[5px] items-center">
+                        <p
+                          className={`${
+                            value.valueSTK !== "" ? "w-[193px]" : "w-[234px]"
+                          } px-[5px] pl-[13px]`}
+                        >
+                          <label htmlFor="" className="text-xs ">
+                            {t("home:Transfer.NganHangThuHuong")}
+                          </label>
+                        </p>
+                        <div className="flex gap-1">
                           <input
                             type="text"
-                            className="w-[320px] px-4 border h-8 col-3 text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
+                            className="w-[320px] px-4 border h-[30px] col-3 text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
                             value={value.beneficiaryBank}
                             disabled
                           />
                           <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap">
-                            <span className="font-bold text-red-400">(*)</span>
+                            <span className="font-bold text-[#FF0000]">
+                              (*)
+                            </span>
                           </div>
                         </div>
                       </div>
-                      <div className=" items-center mt-[2px] grid grid-cols-5">
-                        <label htmlFor="" className="col-span-2 pl-3 text-xs">
-                          {t("home:Transfer.Tinh_ThanhPho")}
-                        </label>
-                        <div className="flex col-span-3 gap-1">
+                      <div className=" items-center mt-[2px] flex gap-[5px]">
+                        <p
+                          className={`${
+                            value.valueSTK !== "" ? "w-[193px]" : "w-[234px]"
+                          } px-[5px] pl-[13px]`}
+                        >
+                          <label htmlFor="" className="text-xs">
+                            {t("home:Transfer.Tinh_ThanhPho")}
+                          </label>
+                        </p>
+                        <div className="flex gap-1">
                           <input
                             type="text"
-                            className="w-[250px] px-4 border h-8 text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
+                            className="w-[250px] px-4 border h-[30px] text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
                             value={value.city}
                             disabled
                           />
                           <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap">
-                            <span className="font-bold text-red-400">(*)</span>
+                            <span className="font-bold text-[#FF0000]">
+                              (*)
+                            </span>
                           </div>
                         </div>
                       </div>
-                      <div className=" items-center grid grid-cols-5 mt-[2px] ">
-                        <label htmlFor="" className="col-span-2 pl-3 text-xs">
-                          {t("home:Transfer.ChiNhanhNganHang")}
-                        </label>
-                        <div className="flex col-span-3 gap-1">
+                      <div className=" items-center flex gap-[5px] mt-[2px] ">
+                        <p
+                          className={`${
+                            value.valueSTK !== "" ? "w-[193px]" : "w-[234px]"
+                          } px-[5px] pl-[13px]`}
+                        >
+                          <label htmlFor="" className="text-xs ">
+                            {t("home:Transfer.ChiNhanhNganHang")}
+                          </label>
+                        </p>
+                        <div className="flex gap-1">
                           <input
                             type="text"
-                            className="w-[250px] px-4 border h-8 text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
+                            className="w-[250px] px-4 border h-[30px] text-gray-700 rounded-[4px] text-xs bg-[#E9ECEF]"
                             value={value.branch}
                             disabled
                           />
                           <div className="items-center w-10 my-auto text-[12px] whitespace-nowrap">
-                            <span className="font-bold text-red-400">(*)</span>
+                            <span className="font-bold text-[#FF0000]">
+                              (*)
+                            </span>
                           </div>
                         </div>
                       </div>
                     </div>
-
-                    <div className="mt-5 ">
-                      <h3 className="text-[9pt] font-bold uppercase">
+                    {/*------------Noi Dung---------------*/}
+                    <div className="mt-[23px]">
+                      <h3 className="text-[9pt] font-bold uppercase px-[5px] py-[3px]">
                         {t("home:Transfer.NoiDungChuyenTien")}{" "}
-                        <span className="font-bold text-red-400">(*)</span>
+                        <span className="font-bold text-[#FF0000]">(*)</span>
                       </h3>
-                      <div className="grid items-center grid-cols-5 mt-2 ">
-                        <label
-                          htmlFor=""
-                          className="col-span-2 pl-3 text-xs"
-                        ></label>
-                        <div className="flex col-span-3 gap-1">
+                      <div className=" items-center flex gap-[5px] ">
+                        <p
+                          className={`${
+                            value.valueSTK !== "" ? "w-[193px]" : "w-[234px]"
+                          } px-[5px] pl-[13px]`}
+                        >
+                          <label htmlFor="" className="text-xs"></label>
+                        </p>
+                        <div className="flex items-start gap-1">
                           <textarea
                             typeof="text"
                             cols={30}
                             rows={1}
-                            className="w-[400px] px-3 py-1 border outline-none text-gray-700 rounded-[4px] transition-all text-xs bg-white focus:border-blue-300 focus:shadow-[0px_0px_0px_4px_rgba(200,237,255,0.5)]"
+                            className="w-[400px] resize-y min-h-[37px] px-3 py-1 border border-[#ced4da] outline-none overflow-auto text-gray-700 rounded-[4px] transition-all text-xs bg-white focus:border-blue-300 focus:shadow-[0px_0px_0px_4px_rgba(200,237,255,0.5)]"
                             onChange={(e: any) => {
                               setValue({
                                 ...value,
@@ -434,17 +493,20 @@ const MoneyTransferMain = () => {
                               });
                             }}
                           />
-                          <div className="flex gap-1 font-bold w-10 my-auto text-[12px] whitespace-nowrap cursor-pointer">
-                            <span className="font-bold text-red-400">(*)</span>
+                          <div className="font-bold w-10 text-[12px] whitespace-nowrap">
+                            <span className="font-bold text-[#FF0000]">
+                              (*)
+                            </span>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="grid items-center grid-cols-5 mt-8 mb-6">
-                      <h3 className="text-[9pt] col-span-2 font-bold flex-1">
+                    {/*------------Phi Chuyen Tien---------------*/}
+                    <div className="flex gap-[5px] items-center mt-[30px] mb-6">
+                      <p className="text-[9pt] font-bold uppercase w-[193px] px-[5px] py-[3px]">
                         {t("home:Transfer.PhiChuyenTien")}
-                      </h3>
-                      <div className="flex items-center flex-1 col-span-3 gap-3">
+                      </p>
+                      <div className="flex items-center flex-1 gap-3">
                         <div className="w-[13px] h-[13px] relative flex items-center rounded-full border border-[#005cc8] justify-center">
                           <span className=" w-[7px] h-[7px] rounded-full bg-[#005cc8]"></span>
                         </div>
@@ -456,29 +518,17 @@ const MoneyTransferMain = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex gap-1 mt-3 mb-[14px]">
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 201 202"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M198.83 98.17L102.83 2.16998C102.271 1.60993 101.558 1.22846 100.781 1.07386C100.005 0.919258 99.2001 0.998476 98.4688 1.30149C97.7375 1.6045 97.1126 2.11767 96.6731 2.77605C96.2336 3.43442 95.9994 4.20839 96 4.99998V49H12C8.8174 49 5.76515 50.2643 3.51472 52.5147C1.26428 54.7651 0 57.8174 0 61V141C0 144.183 1.26428 147.235 3.51472 149.485C5.76515 151.736 8.8174 153 12 153H96V197C95.9992 197.792 96.2335 198.566 96.6732 199.225C97.1129 199.884 97.7383 200.397 98.47 200.7C99.2013 201.003 100.006 201.081 100.782 200.927C101.558 200.772 102.271 200.39 102.83 199.83L198.83 103.83C199.202 103.458 199.497 103.017 199.698 102.532C199.9 102.046 200.003 101.526 200.003 101C200.003 100.474 199.9 99.9538 199.698 99.4682C199.497 98.9826 199.202 98.5415 198.83 98.17ZM104 187.34V149C104 147.939 103.579 146.922 102.828 146.172C102.078 145.421 101.061 145 100 145H12C10.9391 145 9.92172 144.579 9.17157 143.828C8.42143 143.078 8 142.061 8 141V61C8 59.9391 8.42143 58.9217 9.17157 58.1715C9.92172 57.4214 10.9391 57 12 57H100C101.061 57 102.078 56.5786 102.828 55.8284C103.579 55.0783 104 54.0608 104 53V14.66L190.34 101L104 187.34Z"
-                    fill="black"
-                  />
-                </svg>
-
-                <span className="text-xs">
+              <div className="flex items-center gap-1 mt-[7px] mb-[10px] pl-[6px]">
+                <img src="/arrow2.jpg" alt="" />
+                <span className="text-xs leading-[22px]">
                   {t("home:Transfer.TITLE_CHUYENTIEN_F_LEFT")}{" "}
-                  <span className="font-bold">
+                  <span className="font-bold leading-[22px]">
                     {t("home:Transfer.TITLE_CHUYENTIEN_F_RIGHT")}
                   </span>
                 </span>
               </div>
 
-              <div className="border border-borderTransfer w-[800px] mx-auto py-[5px] px-[15px] flex flex-col gap-1">
+              <div className="border border-borderTransfer w-[800px] mx-auto pt-[5px] pb-[5px] px-[14px] flex flex-col">
                 <span className="font-bold text-[10pt]">
                   {t("home:Transfer.GhiChu")}:
                 </span>
@@ -489,7 +539,7 @@ const MoneyTransferMain = () => {
                 </p>
               </div>
             </div>
-            <div className="mt-[15px] mb-2 flex justify-center gap-1">
+            <div className="mt-[15px] mb-2 flex justify-center gap-[3px]">
               <button className="rounded-[5px] w-[80px] h-[34px] border text-[12px] border-[#2371AF] leading-[18px] hover:bg-[#2371AF] hover:text-white transition-all">
                 {t("home:Transfer.ThucHien")}
               </button>

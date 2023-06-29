@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/configureStore";
-import { formatNumber } from "../../utils/util";
 import { useTranslation } from "react-i18next";
 import TableAssetReportFull from "./TableAssetReportFull";
 import TableAssetReportShort from "./TableAssetReportShort";
@@ -49,8 +48,8 @@ const TableAssetReport = () => {
   useEffect(() => {
     let arr = assetReport?.Table1?.map((item: any) => item);
     const sorted = arr?.sort((a: any, b: any) =>
-      a.ASTOCKCODE > b.ASTOCKCODE ? 1 : -1
-    );
+        a.ASTOCKCODE > b.ASTOCKCODE ? 1 : -1
+      );
     setLabel("ASTOCKCODE");
     setData(sorted);
     setSort("desc");

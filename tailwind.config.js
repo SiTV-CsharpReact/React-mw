@@ -13,6 +13,7 @@ module.exports = {
       24: "24px",
       7: "28px",
       8: "32px",
+      3: '12px'
     },
     minHeight: {
       500: "500px",
@@ -27,7 +28,7 @@ module.exports = {
     colors: {
       borderBodyTableMarket: "#505050",
       borderHeadTableMarket: "#858585",
-      borderTransfer: "#cccccc",
+      borderTransfer: "#CCCCCC",
       BGTableMarket: "#1D1D1D",
       BGTableHoverMarket: "#444444",
       textTableMarketTC: "#F7FF31",

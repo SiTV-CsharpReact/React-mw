@@ -3,6 +3,8 @@ import LayoutPage from "../Layout/LayoutPage";
 import "./helper/style.scss";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { Tooltip } from "@mui/material";
+import ItemDropDown from "../../layout/ItemDropDown";
 const OrdersavingsTransfer = () => {
   const { t } = useTranslation(["home"]);
   const [isTrue, setIsTrue] = useState<any>({
@@ -17,7 +19,16 @@ const OrdersavingsTransfer = () => {
     focusNickname: false,
   });
 
-  const [value, setValue] = useState({
+  const dataPTDH = [
+    t("home:Transfer.TuDongTatToan"),
+    t("home:Transfer.TuDongGiaHan"),
+  ];
+  const dataPTGH = [
+    t("home:Transfer.LaiNhapGoc"),
+    t("home:Transfer.LaiTraVeTK"),
+  ];
+
+  const [values, setValue] = useState({
     valueLendingAmount: "",
     valueTerm: "",
     valueMaturityMethod: "",
@@ -26,6 +37,12 @@ const OrdersavingsTransfer = () => {
     valueNickname: "",
   });
 
+  const handleSetValue = (name: any, value: any) => {
+    setValue({
+      ...values,
+      [name]: value,
+    });
+  };
   const [fetchData, setFetchData] = useState<any>({
     valueBalanceDetail: [],
     valueInterestRate: [],
@@ -46,13 +63,13 @@ const OrdersavingsTransfer = () => {
     const fetchBalanceDetail = async () => {
       try {
         const balanceDetailPromise = axios.get(
-          "http://localhost:3000/TableGetBalanceDetail"
+          "http://localhost:8060/TableGetBalanceDetail"
         );
         const interestRatePromise = axios.get(
-          "http://localhost:3000/TableGetInterestRate"
+          "http://localhost:8060/TableGetInterestRate"
         );
         const datainterestRatePromise = axios.get(
-          "http://localhost:3000/DataGetInterestRate"
+          "http://localhost:8060/DataGetInterestRate"
         );
         const [
           balanceDetailResponse,
@@ -64,7 +81,7 @@ const OrdersavingsTransfer = () => {
           datainterestRatePromise,
         ]);
         setFetchData({
-          ...value,
+          ...values,
           valueBalanceDetail: balanceDetailResponse.data[0],
           valueInterestRate: interestRateResponse.data,
           valueDataInterestRate: datainterestRateResponse.data,
@@ -113,7 +130,7 @@ const OrdersavingsTransfer = () => {
       );
     }
     setValue({
-      ...value,
+      ...values,
       valueTerm:
         item.term +
         " " +
@@ -137,7 +154,7 @@ const OrdersavingsTransfer = () => {
     }
     const formattedValue = formatNumber(inputValue);
 
-    setValue({ ...value, valueLendingAmount: formattedValue });
+    setValue({ ...values, valueLendingAmount: formattedValue });
   };
 
   const formatNumber = (numberString: any) => {
@@ -197,7 +214,7 @@ const OrdersavingsTransfer = () => {
               }}
             ></div>
             <div
-              className={`absolute rounded-sm z-50 ${
+              className={`absolute rounded-md z-50 ${
                 isTrue.showModal ? "opacity-100 visible" : "opacity-0 invisible"
               } transition-fallAnimation w-[300px] bg-white`}
             >
@@ -220,12 +237,12 @@ const OrdersavingsTransfer = () => {
                   />
                 </svg>
               </button>
-              <div className="p-3 text-white text-center bg-[#034c91] rounded-t-sm font-medium text-[1rem] uppercase">
+              <div className="p-3 text-white text-center bg-[#034c91] rounded-t-md font-medium text-[1rem] uppercase">
                 {t("home:Transfer.LaiSuatTatToanTruocHan")}
               </div>
               <div className="pt-2 pb-5 text-xs px-7">
                 <div className="flex items-center justify-between px-1 pt-3 pb-2 font-bold">
-                  <span className="w-[46%]">
+                  <span className="">
                     {" "}
                     {t("home:Transfer.SoNgayChoVayThuc")}
                   </span>
@@ -263,14 +280,14 @@ const OrdersavingsTransfer = () => {
             </div>
           </div>
           {/* -------------------------------screen------------------------------- */}
-          <div className="w-[850px] mx-auto mt-[5px] pb-5">
-            <div className="flex items-center h-[25px] justify-end w-full pr-1">
+          <div className="w-[841px] mx-auto mt-[4px] pb-[14px]">
+            <div className="flex items-center h-[25px] justify-end w-full pr-[5px]">
               <span className="text-[10px] text-center italic">
                 {t("home:Transfer.DonVi")}: VNĐ
               </span>
             </div>
             {/* -------------------------------Table Show Money------------------------------- */}
-            <div className="text-[12px] border border-borderTransfer">
+            <div className="text-[12px] border border-borderTransfer -translate-y-[1px]">
               <table className="w-full">
                 <colgroup>
                   <col className="w-[20%]" />
@@ -309,8 +326,8 @@ const OrdersavingsTransfer = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="text-[#ae1a1a] font-bold text-[12px]">
-                    <td className="py-[3px] text-center border-r border-[#CCCCCC]">
+                  <tr className="text-[#ae1a1a] h-[25px] font-bold text-[12px]">
+                    <td className="text-center border-r h-[25px] border-[#CCCCCC]">
                       {fetchData.valueBalanceDetail?.ALEDGERBALANCE?.toLocaleString()}
                     </td>
                     <td className="text-center border-r border-[#CCCCCC]">
@@ -330,7 +347,7 @@ const OrdersavingsTransfer = () => {
               </table>
             </div>
             {/* -------------------------------Nav tiền cho FPTS vay------------------------------- */}
-            <div className="w-full mt-[10px] mb-[5px] text-[13px] font-bold">
+            <div className="w-full mt-[9px] mb-[5px] text-[13px] font-bold">
               <button className="w-[50%] h-[35px] bg-[#034E94] text-white">
                 {t("home:Transfer.TienChoFPTSVay")}
               </button>
@@ -338,15 +355,17 @@ const OrdersavingsTransfer = () => {
                 {t("home:Transfer.TienGuiNganHang")}
               </button>
             </div>
-            <div className="grid grid-cols-10 text-[12px] gap-4">
+            <div className="flex gap-[15px] text-[12px]">
               {/* -------------------------------Col-Span-7------------------------------- */}
-              <div className="col-span-7 px-5 py-2 border border-borderTransfer">
+              <div className="w-[561px] pl-[20px] pt-[5px] pr-[9px] border border-borderTransfer">
                 {/* -------------------------------Số tiền cho vay------------------------------- */}
-                <div className="flex items-center justify-between">
-                  <label htmlFor="money" className="text-xs">
-                    {t("home:Transfer.SoTienChoVay")}
-                  </label>
-                  <div className="flex items-center justify-between gap-1 h-7">
+                <div className="flex items-center gap-[4px]">
+                  <p className="w-[260px] h-[30px] flex items-center py-[1px]">
+                    <label htmlFor="money" className="text-xs">
+                      {t("home:Transfer.SoTienChoVay")}
+                    </label>
+                  </p>
+                  <div className="flex items-center justify-between gap-[6px] h-7">
                     <div
                       className={`w-[255px] relative flex items-center border border-[#ced4da] rounded-[4px] transition-all ${
                         isTrue.focusLendingAmount
@@ -364,38 +383,45 @@ const OrdersavingsTransfer = () => {
                         onBlur={() => {
                           handleTrue("focusLendingAmount");
                         }}
-                        value={value.valueLendingAmount}
+                        value={values.valueLendingAmount}
                         onChange={handleInputChange}
                         autoComplete="off"
-                        className="rounded-[4px] !border-none text-[12px] w-full pr-[45px] h-[28px] outline-none"
+                        className="rounded-[4px] !border-none text-[12px] w-full pr-[45px] h-[27px] outline-none"
                       />
-                      <span className="absolute text-[1.1em] right-2">VNĐ</span>
-                    </div>
-                    <div className="items-center w-1 my-auto text-[12px] whitespace-nowrap">
-                      <span className="flex items-center text-xl font-bold text-red-400">
-                        *
+                      <span className="absolute text-[1.1em] right-2 text-[#000000]">
+                        VNĐ
                       </span>
+                    </div>
+                    <div className="flex items-center w-1 whitespace-nowrap translate-y-[5px]">
+                      <p className="flex items-center text-[21px] font-bold text-[#ff0000]">
+                        *
+                      </p>
                     </div>
                   </div>
                 </div>
                 {/* -------------------------------Số tiền cho vay tối thiểu: 1,000,000 VNĐ------------------------------- */}
-                <div className="flex items-start justify-between italic h-[55px] pt-1">
-                  <span>
-                    {t("home:Transfer.SoTienChoVayToiThieu")}: 1,000,000 VNĐ
+                <div className="flex items-start justify-between italic h-[57px] pt-[5px]">
+                  <span className="text-[0.9em]">
+                    <span className="text-[9pt]">
+                      {t("home:Transfer.SoTienChoVayToiThieu")}:{" "}
+                    </span>
+                    1,000,000 VNĐ
                   </span>
-                  <div className="flex gap-1 mt-1">
-                    <span>{t("home:Transfer.BangChu")}</span>
+                  <div className="flex gap-[6px]">
+                    <span className="text-[0.9em]">
+                      {t("home:Transfer.BangChu")}
+                    </span>
                     <div className="items-center w-1 my-auto text-[12px] whitespace-nowrap"></div>
                   </div>
                 </div>
                 {/* -------------------------------Kì hạn------------------------------- */}
-                <div className="flex flex-col w-full gap-3">
+                <div className="flex flex-col w-full">
                   {/* -------------------------------Item Kì hạn------------------------------- */}
                   <div className="flex items-center justify-between w-full h-7">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.KyHan")}
                     </label>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-[6px]">
                       <div className="">
                         <div
                           className={`w-[255px] relative flex items-center border border-[#ced4da] h-full rounded-[4px] transition-all ${
@@ -406,7 +432,7 @@ const OrdersavingsTransfer = () => {
                         >
                           <input
                             type="text"
-                            className="rounded-[4px] w-full pr-[30px] !border-none text-[12px] h-[28px] outline-none cursor-pointer"
+                            className="rounded-[4px] w-full pr-[30px] !border-none text-[12px] h-[27px] outline-none cursor-pointer"
                             readOnly
                             onClick={() => {
                               handleTrue("dropDownTerm");
@@ -422,7 +448,7 @@ const OrdersavingsTransfer = () => {
                               });
                             }}
                             value={
-                              value.valueTerm || t("home:Transfer.ChonKyHan")
+                              values.valueTerm || t("home:Transfer.ChonKyHan")
                             }
                           />
                           <span className="absolute right-2">
@@ -469,213 +495,55 @@ const OrdersavingsTransfer = () => {
                             </div>
                           )}
                       </div>
-                      <div className="items-center w-1 my-auto text-[12px] whitespace-nowrap">
-                        <span className="flex items-center text-xl font-bold text-red-400">
+                      <div className="flex items-center w-1 whitespace-nowrap translate-y-[5px]">
+                        <p className="flex items-center text-[21px] font-bold text-[#ff0000]">
                           *
-                        </span>
+                        </p>
                       </div>
                     </div>
                   </div>
                   {/* -------------------------------Item Phương thức đáo hạn------------------------------- */}
-                  <div className="flex items-center justify-between w-full">
-                    <label htmlFor="money" className="text-xs">
-                      {t("home:Transfer.PhuongThucDaoHan")}
-                    </label>
-                    <div className="flex items-center gap-1 h-7">
-                      <div>
-                        <div
-                          className={`w-[255px] relative flex items-center border border-[#ced4da] h-full rounded-[4px] transition-all ${
-                            isTrue.focusMaturityMethod
-                              ? "border-blue-300 shadow-[0px_0px_0px_4px_rgba(200,237,255,0.5)]"
-                              : ""
-                          }`}
-                        >
-                          <input
-                            type="text"
-                            className="rounded-[4px] text-[12px] h-[28px] !border-none w-full px-2 outline-none cursor-pointer"
-                            onClick={() => {
-                              handleTrue("dropDownMaturityMethod");
-                            }}
-                            readOnly
-                            onFocus={() => {
-                              setIsTrue({
-                                ...isTrue,
-                                focusMaturityMethod: true,
-                              });
-                            }}
-                            onBlur={() => {
-                              setIsTrue({
-                                ...isTrue,
-                                focusMaturityMethod: false,
-                                dropDownMaturityMethod: false,
-                              });
-                            }}
-                            value={
-                              value.valueMaturityMethod ||
-                              t("home:Transfer.ChonPhuongThucDaoHan")
-                            }
-                          />
-                          <span className="absolute right-2">
-                            <svg
-                              width="9"
-                              height="5"
-                              viewBox="0 0 12 8"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M6 7.44697L0 1.6132L1.4 0.251984L6 4.72455L10.6 0.251984L12 1.6132L6 7.44697Z"
-                                fill="#192132"
-                              />
-                            </svg>
-                          </span>
-                        </div>
+                  <ItemDropDown
+                    label={t("home:Transfer.PhuongThucDaoHan")}
+                    value={
+                      values.valueMaturityMethod ||
+                      t("home:Transfer.ChonPhuongThucDaoHan")
+                    }
+                    classParent={
+                      "mt-3 w-full flex items-center justify-between"
+                    }
+                    dataDropDown={dataPTDH}
+                    dataTitle={t("home:Transfer.ChonPhuongThucDaoHan")}
+                    handleSetValue={handleSetValue}
+                    nameValue={"valueMaturityMethod"}
+                    required={true}
+                    classParentDropDown={"w-[255px]"}
+                  ></ItemDropDown>
 
-                        {isTrue.focusMaturityMethod === true &&
-                          isTrue.dropDownMaturityMethod === true && (
-                            <div className="absolute z-40 flex flex-col w-[255px] bg-white border shadow-xl py-[2px] rounded-lg overflow-hidden">
-                              <span className="py-[4px] px-3 cursor-default">
-                                {t("home:Transfer.ChonPhuongThucDaoHan")}
-                              </span>
-                              <span
-                                className="hover:bg-[#1E90FF] py-[4px] px-3 hover:text-white cursor-pointer"
-                                onMouseDown={() => {
-                                  setValue({
-                                    ...value,
-                                    valueMaturityMethod: t(
-                                      "home:Transfer.TuDongTatToan"
-                                    ),
-                                  });
-                                }}
-                              >
-                                {t("home:Transfer.TuDongTatToan")}
-                              </span>
-                              <span
-                                className="hover:bg-[#1E90FF] py-[4px] px-3 hover:text-white cursor-pointer"
-                                onMouseDown={() => {
-                                  setValue({
-                                    ...value,
-                                    valueMaturityMethod: t(
-                                      "home:Transfer.TuDongGiaHan"
-                                    ),
-                                  });
-                                }}
-                              >
-                                {t("home:Transfer.TuDongGiaHan")}
-                              </span>
-                            </div>
-                          )}
-                      </div>
-                      <div className="items-center w-1 my-auto text-[12px] whitespace-nowrap">
-                        <span className="flex items-center text-xl font-bold text-red-400">
-                          *
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                   {/* -------------------------------Item Phương thức gia hạn------------------------------- */}
-                  <div className="flex items-center justify-between w-full">
-                    <label htmlFor="money" className="text-xs">
-                      {t("home:Transfer.PhuongThucGiaHan")}
-                    </label>
-                    <div className="flex items-center gap-1 h-7">
-                      <div>
-                        <div
-                          className={`w-[255px] relative flex items-center border border-[#ced4da] h-full rounded-[4px] transition-all ${
-                            isTrue.focusRenewalMethod
-                              ? "border-blue-300 shadow-[0px_0px_0px_4px_rgba(200,237,255,0.5)]"
-                              : ""
-                          }`}
-                        >
-                          <input
-                            type="text"
-                            className="rounded-[4px] text-[12px] h-[28px] !border-none pr-[30px] w-full px-2 outline-none cursor-pointer"
-                            onClick={() => {
-                              handleTrue("dropDownRenewalMethod");
-                            }}
-                            readOnly
-                            onFocus={() => {
-                              setIsTrue({
-                                ...isTrue,
-                                focusRenewalMethod: true,
-                              });
-                            }}
-                            onBlur={() => {
-                              setIsTrue({
-                                ...isTrue,
-                                focusRenewalMethod: false,
-                                dropDownRenewalMethod: false,
-                              });
-                            }}
-                            value={
-                              value.valueRenewalMethod ||
-                              t("home:Transfer.ChonPhuongThucGiaHan")
-                            }
-                          />
-                          <span className="absolute right-2">
-                            <svg
-                              width="9"
-                              height="5"
-                              viewBox="0 0 12 8"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M6 7.44697L0 1.6132L1.4 0.251984L6 4.72455L10.6 0.251984L12 1.6132L6 7.44697Z"
-                                fill="#192132"
-                              />
-                            </svg>
-                          </span>
-                        </div>
+                  <ItemDropDown
+                    label={t("home:Transfer.PhuongThucGiaHan")}
+                    value={
+                      values.valueRenewalMethod ||
+                      t("home:Transfer.ChonPhuongThucGiaHan")
+                    }
+                    classParent={
+                      "mt-3 w-full flex items-center justify-between"
+                    }
+                    classParentDropDown={"w-[255px]"}
+                    dataDropDown={dataPTGH}
+                    dataTitle={t("home:Transfer.ChonPhuongThucGiaHan")}
+                    handleSetValue={handleSetValue}
+                    nameValue={"valueRenewalMethod"}
+                    required={true}
+                  ></ItemDropDown>
 
-                        {isTrue.focusRenewalMethod === true &&
-                          isTrue.dropDownRenewalMethod === true && (
-                            <div className="absolute z-40 flex flex-col w-[255px] bg-white border shadow-xl py-[2px] rounded-lg overflow-hidden">
-                              <span className="py-[4px] px-3 cursor-default">
-                                {t("home:Transfer.ChonPhuongThucGiaHan")}
-                              </span>
-                              <span
-                                className="hover:bg-[#1E90FF] py-[4px] px-3 hover:text-white cursor-pointer"
-                                onMouseDown={() => {
-                                  setValue({
-                                    ...value,
-                                    valueRenewalMethod: t(
-                                      "home:Transfer.LaiNhapGoc"
-                                    ),
-                                  });
-                                }}
-                              >
-                                {t("home:Transfer.LaiNhapGoc")}
-                              </span>
-                              <span
-                                className="hover:bg-[#1E90FF] py-[4px] px-3 hover:text-white cursor-pointer"
-                                onMouseDown={() => {
-                                  setValue({
-                                    ...value,
-                                    valueRenewalMethod: t(
-                                      "home:Transfer.LaiTraVeTK"
-                                    ),
-                                  });
-                                }}
-                              >
-                                {t("home:Transfer.LaiTraVeTK")}
-                              </span>
-                            </div>
-                          )}
-                      </div>
-                      <div className="items-center w-1 my-auto text-[12px] whitespace-nowrap">
-                        <span className="flex items-center text-xl font-bold text-red-400">
-                          *
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                   {/* -------------------------------Item Tên gợi nhớ------------------------------- */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-3">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.TenGoiNho")}
                     </label>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-[6px]">
                       <div
                         className={`w-[255px] flex items-center border border-[#ced4da] h-full rounded-[4px] transition-all ${
                           isTrue.focusNickname
@@ -696,12 +564,12 @@ const OrdersavingsTransfer = () => {
                           value={isTrue.valueNickname}
                           onChange={(e) => {
                             setValue({
-                              ...value,
+                              ...values,
                               valueNickname: e.target.value,
                             });
                           }}
                           autoComplete="off"
-                          className="rounded-[4px] text-[12px] h-[28px] !border-none w-full px-2 outline-none"
+                          className="rounded-[4px] text-[12px] px-[12px] h-[27px] !border-none w-full outline-none"
                         />
                         <span className="text-[1.1em]"></span>
                       </div>
@@ -711,7 +579,7 @@ const OrdersavingsTransfer = () => {
                     </div>
                   </div>
                   {/* -------------------------------Item Ngày bắt đầu------------------------------- */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-[10px]">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.NgayBatDau")}
                     </label>
@@ -729,7 +597,7 @@ const OrdersavingsTransfer = () => {
                     </div>
                   </div>
                   {/* -------------------------------Item Ngày đáo hạn------------------------------- */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-[10px]">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.NgayDaoHan")}
                     </label>
@@ -748,13 +616,24 @@ const OrdersavingsTransfer = () => {
                     </div>
                   </div>
                   {/* -------------------------------Item Lãi suất / năm------------------------------- */}
-                  <div className="flex items-center justify-between">
-                    <label htmlFor="money" className="text-xs">
-                      {t("home:Transfer.LaiSuat/Nam")}
-                    </label>
+                  <div className="flex items-center justify-between mt-[10px]">
+                    <p className="flex items-center gap-1">
+                      <label htmlFor="money" className="text-xs">
+                        {t("home:Transfer.LaiSuat/Nam")}
+                      </label>
+                      <Tooltip
+                        title={`Lãi suất / năm là lãi suất dự kiến dựa trên kỳ hạn mà khách hàng đã chọn. Trong trường hợp khoản tiền cho FPTS vay được tất toán một phần hoặc toàn bộ trước hạn, phần tiền cho vay tất toán trước hạn đó sẽ được hưởng lãi suất trước hạn tương ứng với thời gian cho vay tiền thực tế.`}
+                      >
+                        <i
+                          className="fa fa-info-circle"
+                          aria-hidden="true"
+                          id="iconPage"
+                        ></i>
+                      </Tooltip>
+                    </p>
                     <div className="flex items-center gap-1 h-[24px]">
                       <span className="text-[12px]">
-                        {value.valueAnnualInterestRate || "0%"}
+                        {values.valueAnnualInterestRate || "0%"}
                       </span>
                       <div className="items-center w-1 my-auto text-[12px] whitespace-nowrap">
                         <span className="flex items-center text-3xl font-bold text-red-400"></span>
@@ -762,7 +641,7 @@ const OrdersavingsTransfer = () => {
                     </div>
                   </div>
                   {/* -------------------------------Item Tiền lãi trước thuế dự kiến------------------------------- */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-[10px]">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.TienLaiTruocThueDuKien")}
                     </label>
@@ -774,7 +653,7 @@ const OrdersavingsTransfer = () => {
                     </div>
                   </div>
                   {/* -------------------------------Item Thuế dự kiến------------------------------- */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-[10px]">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.ThueDuKien")}
                     </label>
@@ -786,7 +665,7 @@ const OrdersavingsTransfer = () => {
                     </div>
                   </div>
                   {/* -------------------------------Item Tiền lãi sau thuế dự kiến------------------------------- */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-[10px]">
                     <label htmlFor="money" className="text-xs">
                       {t("home:Transfer.TienLaiSauThueDuKien")}
                     </label>
@@ -798,12 +677,12 @@ const OrdersavingsTransfer = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-10 mx-auto mt-6 w-max">
-                  <button className="px-[14px] h-[34px] border border-[#2371AF] rounded-md hover:bg-[#2371AF] hover:text-white transition-all">
+                <div className="flex gap-[43px] mx-auto mt-[16px] w-max">
+                  <button className="w-[80px] h-[34px] border border-[#2371AF] rounded-md hover:bg-[#2371AF] hover:text-white transition-all">
                     {t("home:Transfer.ThucHien")}
                   </button>
                   <button
-                    className="px-[14px] h-[34px] border border-[#2371AF] rounded-md hover:bg-[#2371AF] hover:text-white transition-all"
+                    className="w-[80px] h-[34px] border border-[#2371AF] rounded-md hover:bg-[#2371AF] hover:text-white transition-all"
                     onClick={handleReset}
                   >
                     {t("home:Transfer.LamLai")}
@@ -811,7 +690,7 @@ const OrdersavingsTransfer = () => {
                 </div>
               </div>
               {/* -------------------------------Col-Span-3------------------------------- */}
-              <div className="col-span-3 border border-borderTransfer pt-[10px] px-[10px] pb-9 text-[12px] w-full flex flex-col items-center">
+              <div className="w-[266px] border border-borderTransfer pt-[10px] px-[10px] pb-9 text-[12px] flex flex-col items-center">
                 <span className="text-[13px] font-bold ">
                   {t("home:Transfer.LaiSuatTheoKyHan")}
                 </span>
@@ -858,7 +737,7 @@ const OrdersavingsTransfer = () => {
             </div>
 
             {/* -------------------------------Footer------------------------------- */}
-            <div className="flex text-[12px] mt-10">
+            <div className="flex text-[12px] mt-[18px]">
               <span className="text-[13px] italic">
                 {t("home:Transfer.NOTE_FOOT_ORDERSAVING")}
               </span>

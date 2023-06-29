@@ -19,7 +19,7 @@ const ChartAssetReport = () => {
         </div>
         <div className="report__select__date">
           <select
-            onChange={(e: any) =>
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
               setDate(Number(e.target.value))
             }
           >
@@ -29,22 +29,16 @@ const ChartAssetReport = () => {
         </div>
       </div>
       <div className="report__tabcondition__detail_CK_header">
-        <span className="pt-1 text-black text-13 font-[Arial]">
-          {" "}
-          NAV (đồng)
-        </span>
-        <span className="pt-1 text-black text-13 font-[Arial]">
-          {" "}
-          Biến động (%)
-        </span>
+        <span className="text-black text-13 font-[Arial]">NAV (đồng)</span>
+        <span className="text-black text-13 font-[Arial]">Biến động (%)</span>
       </div>
       <div className="report__tabcondition__chart_CK">
-        <div className="mt-4">
+        <div>
           <ChartReport date={date} />
         </div>
-        <div className="italic text-xs pl-[50px] text-[#000] -mt-[15px]">
+        <div className="italic text-xs pl-[50px] text-[#000] -mt-[14px]">
           <span>Chú thích:</span>
-          <ul className="pl-10">
+          <ul className="pl-10 mb-[10px]">
             <li>
               * Ngày giao dịch có phát sinh tăng/giảm làm thay đổi vốn, cụ thể:
               <ul className="pl-10">
@@ -52,7 +46,7 @@ const ChartAssetReport = () => {
                   - Phát sinh tăng: Nộp tiền; Lưu ký/Nhận chuyển khoản chứng
                   khoán; Rút tiền từ tài khoản phái sinh về tài khoản cơ sở
                 </li>
-                <li>
+                <li style={{ lineHeight: "17px" }}>
                   - Phát sinh giảm: Rút/chuyển tiền; Chuyển tiền từ tài khoản cơ
                   sở vào tài khoản phái sinh; Phí rút/chuyển; Rút lưu ký/Chuyển
                   khoản chứng khoán đi

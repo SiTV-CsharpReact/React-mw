@@ -357,4 +357,134 @@ export const colorTextMenu = (price: number) => {
 
   return Color;
 };
+var STR_BASIC = 'basic';
+var STR_REPORT = 'report';
+var ARRAY_BASIC = [
+  "Giá trị vốn hóa thị trường",
+  "KLNY hiện tại",
+  "KLĐLH hiện tại",
+  "KLGD bq 30 ngày",
+  "Giá cao nhất 52 tuần",
+  "Giá thấp nhất 52 tuần",
+  "Tỷ lệ sở hữu nước ngoài",
+  "EPS*",
+  "P/E*",
+  "EPS điều chỉnh*",
+  "EPS(FPTS)**",
+  "P/E(FPTS)**"
+];
+var ARRAY_REPORT_0 = [
+  "Doanh thu bán hàng và cung cấp dịch vụ",
+  "Lợi nhuận gộp về bán hàng và cung cấp dịch vụ",
+  "Lợi nhuận (lỗ) thuần từ hoạt động kinh doanh",
+  "Tổng lợi nhuận (lỗ) kế toán trước thuế",
+  "Lợi nhuận (lỗ) sau thuế TNDN",
+  "TÀI SẢN NGẮN HẠN",
+  "TỔNG CỘNG TÀI SẢN",
+  "Nợ ngắn hạn",
+  "Nợ dài hạn",
+  "VỐN CHỦ SỞ HỮU",
+  "Vốn đầu tư của chủ sở hữu",
+  "Cập nhật đến quý"
+]
+var ARRAY_REPORT_1 = [
+  "Thu nhập lãi và các khoản thu nhập tương tự",
+  "Lãi/lỗ thuần từ hoạt động dịch vụ",
+  "Lợi nhuận thuần từ hoạt động kinh doanh trước chi phí dự phòng rủi ro tín dụng",
+  "Lợi nhuận sau thuế",
+  "TỔNG TÀI SẢN CÓ",
+  "Cho vay khách hàng",
+  "Tiền gửi khách hàng",
+  "TỔNG VỐN CHỦ SỞ HỮU",
+  "Cập nhật đến quý"
+]
+var ARRAY_REPORT_2 = [
+  "Doanh thu thuần",
+  "Chi phí hoạt động",
+  "Lợi nhuận/(lỗ) từ hoạt động kinh doanh",
+  "Lợi nhuận trước thuế",
+  "Lợi nhuận sau thuế",
+  "TỔNG CỘNG TÀI SẢN",
+  "TÀI SẢN NGẮN HẠN",
+  "Nợ phải trả",
+  "Nợ ngắn hạn",
+  "Nợ dài hạn",
+  "VỐN CHỦ SỞ HỮU",
+  "Vốn đầu tư của chủ sở hữu",
+  "Cập nhật đến quý"
+]
+var ARRAY_REPORT_3 = [
+  "Doanh thu thuần hoạt động kinh doanh bảo hiểm",
+  "Lợi nhuận sau thuế thu nhập doanh nghiệp",
+  "TỔNG CỘNG TÀI SẢN",
+  "VỐN CHỦ SỞ HỮU",
+  "Cập nhật đến quý"
+]
+export const subStringData = (str:string, table?:string) => {
+  var arr:any = [], subStr1, type = '', arrName:any = [];
+  if (str.length === 0) {
+      return arr;
+  }
+  if (str.indexOf('@|@') > -1) {
+      str = str.replace('@|@', '@');
+  }
+  subStr1 = str.split('@');
+  if (table === STR_BASIC) {
+      arrName.push.apply(arrName, ARRAY_BASIC);
+  }
+  
+  else if (table === STR_REPORT) {
+     const type:number = parseInt(subStr1[subStr1.length - 1]);
+      switch (type) {
+          case 0:
+              arrName.push.apply(arrName, ARRAY_REPORT_0);
+              break;
+          case 1:
+              arrName.push.apply(arrName, ARRAY_REPORT_1);
+              break;
+          case 2:
+              arrName.push.apply(arrName, ARRAY_REPORT_2);
+              break;
+          case 3:
+              arrName.push.apply(arrName, ARRAY_REPORT_3);
+              break;
+          default:
+              break;
+      }
+  }
+
+
+  for (var i = 0; i < subStr1.length; i++) {
+      var subStr2:any = [];
+      if (subStr1[i].indexOf('|') > -1) {
+          subStr2.push.apply(subStr2, subStr1[i].split('|'));
+
+          //2021-03-29 15:57:49 tiepbx
+          // fix bo 2 row EPS* || no dai han || P/E* || EPS điều chỉnh*
+          if (subStr2[0].toLocaleLowerCase() === "EPS*".toLocaleLowerCase() || subStr2[0].toLocaleLowerCase() === "Nợ dài hạn".toLocaleLowerCase() || subStr2[0].toLocaleLowerCase() === "P/E*".toLocaleLowerCase() || subStr2[0].toLocaleLowerCase() === "EPS điều chỉnh*".toLocaleLowerCase()) {
+              continue;
+          }
+
+          // lam tron den hang don vi
+          if (subStr2[0].toLocaleLowerCase() === "EPS(FPTS)**".toLocaleLowerCase()) {
+              subStr2[1] = parseFloat(subStr2[1]).toFixed();
+          }
+
+          subStr2[0] = arrName[i];
+      }
+      else {
+          // co 2 TH: 
+          // +1) cap nhat den quy
+          // +2) loai hinh doanh nghiep: 0, 1, 2,...
+          if (isNaN(Number(subStr1[i]))) {
+              var result = subStr1[i].split(' ');
+              subStr2.push.apply(subStr2, [arrName[i] + ' ' + result[result.length - 1]]);
+          } else {
+              subStr2.push.apply(subStr2, [subStr1[i]]);
+          }
+      }
+      arr.push(subStr2);
+  }
+  return arr;
+}
 // export { g_arrStockInfo };
