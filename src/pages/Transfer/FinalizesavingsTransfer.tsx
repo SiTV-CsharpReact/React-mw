@@ -8,21 +8,14 @@ import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
 import { Tooltip } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import InputDateTimePicker from "../../layout/InputDateTimePicker";
+import ItemDropDown from "../../layout/ItemDropDown";
 const FinalizesavingsTransfer = () => {
   const { t } = useTranslation(["home"]);
   const dataDropdown = [
-    {
-      id: 1,
-      name: "ALL",
-    },
-    {
-      id: 2,
-      name: t("home:Transfer.TienChoFPTSVay"),
-    },
-    {
-      id: 3,
-      name: t("home:Transfer.TienGuiNganHang"),
-    },
+    "ALL",
+    t("home:Transfer.TienChoFPTSVay"),
+    t("home:Transfer.TienGuiNganHang"),
   ];
 
   const [focused, setFocused] = useState<any>(false);
@@ -433,145 +426,64 @@ const FinalizesavingsTransfer = () => {
           </div>
           {/*------------------Screen------------------*/}
           <div className="mt-[29px]">
-            <div className="flex justify-end gap-[20px] items-start text-[8pt] mr-[2%]">
+            <div className="flex justify-end gap-[20px] items-start text-[8pt] mr-[35px]">
               {/*------------------DropDown Sản phẩm------------------*/}
-              <div className="flex items-center gap-2">
-                <span className="font-bold"> {t("home:Transfer.SanPham")}</span>
-                <div>
-                  <div
-                    className={`w-[160px] relative flex items-center border h-[28px] rounded-[4px] ${
-                      focused
-                        ? "border-blue-300 shadow-[0px_0px_0px_4px_rgba(200,237,255,0.5)]"
-                        : ""
-                    }`}
-                    onClick={handleFocused}
-                  >
-                    <input
-                      type="text"
-                      className="rounded-[4px] text-xs h-full w-full px-2 !border-none outline-none cursor-pointer"
-                      onBlur={() => {
-                        setFocused(false);
-                      }}
-                      value={values.valueProduct}
-                      readOnly
-                    />
-                    <span className="absolute right-1">
-                      <svg
-                        width="9"
-                        height="5"
-                        viewBox="0 0 12 8"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M6 7.44697L0 1.6132L1.4 0.251984L6 4.72455L10.6 0.251984L12 1.6132L6 7.44697Z"
-                          fill="#192132"
-                        />
-                      </svg>
-                    </span>
-                  </div>
-                  {focused === true && (
-                    <div className="absolute flex overflow-hidden flex-col w-[160px] bg-white border shadow-xl py-[2px] rounded-lg">
-                      {dataDropdown?.map((item, index) => (
-                        <span
-                          className="hover:bg-[#1E90FF] py-[4px] px-3 hover:text-white cursor-pointer"
-                          onMouseDown={() => {
-                            handleSetValue("valueProduct", item.name);
-                          }}
-                          key={item.id}
-                        >
-                          {item.name}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
+              <ItemDropDown
+                label={t("home:Transfer.SanPham")}
+                value={values.valueProduct || "ALL"}
+                classParent={"flex items-center gap-2"}
+                dataDropDown={dataDropdown}
+                handleSetValue={handleSetValue}
+                nameValue={"valueProduct"}
+                classLabel={"font-bold !text-[8pt]"}
+                classParentDropDown={"w-[160px]"}
+              ></ItemDropDown>
+
               {/*------------------Date Start------------------*/}
               <div className="flex flex-col gap-[2px]">
-                <div className="flex items-center gap-[10px] justify-between">
-                  <span className="font-bold ">
-                    {t("home:Transfer.NgayBatDauTuNgay")}
-                  </span>
-                  <div className="">
-                    <div
-                      className={`w-[124px] flex items-center h-[28px] rounded-[4px] `}
-                    >
-                      <DatePicker
-                        onChange={(date: any) => {
-                          handleSetValue("valueBeginningDateFrom", date);
-                        }}
-                        value={values.valueBeginningDateFrom}
-                        format="dd/MM/yy"
-                        className="w-full text-[13px] rounded-sm outline-none h-full"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className=" items-center flex gap-[10px] justify-between">
-                  <span className="font-bold">
-                    {t("home:Transfer.NgayDaoHanTuNgay")}
-                  </span>
-                  <div className="">
-                    <div
-                      className={`w-[124px] flex items-center h-[28px] rounded-[4px] `}
-                    >
-                      <DatePicker
-                        onChange={(date: any) => {
-                          handleSetValue("valueMaturityDateFrom", date);
-                        }}
-                        value={values.valueMaturityDateFrom}
-                        format="dd/MM/yy"
-                        className="w-full text-[13px] rounded-sm outline-none h-full"
-                      />
-                    </div>
-                  </div>
-                </div>
+                <InputDateTimePicker
+                  onChange={handleSetValue}
+                  value={values.valueBeginningDateFrom}
+                  nameDate={"valueBeginningDateFrom"}
+                  label={t("home:Transfer.NgayBatDauTuNgay")}
+                  classDiv={"gap-[10px] justify-between"}
+                  classDatePicker={"h-[28px] w-[124px]"}
+                  classLabel={""}
+                ></InputDateTimePicker>
+                <InputDateTimePicker
+                  onChange={handleSetValue}
+                  value={values.valueMaturityDateFrom}
+                  nameDate={"valueMaturityDateFrom"}
+                  label={t("home:Transfer.NgayDaoHanTuNgay")}
+                  classDiv={"gap-[10px] justify-between"}
+                  classDatePicker={"h-[28px] w-[124px]"}
+                  classLabel={""}
+                ></InputDateTimePicker>
               </div>
               {/*------------------Date End------------------*/}
               <div className="flex flex-col gap-[2px]">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="font-bold">
-                    {t("home:Transfer.DenNgay")}
-                  </span>
-                  <div>
-                    <div
-                      className={`w-[124px] flex items-center h-[28px] rounded-[4px] `}
-                    >
-                      <DatePicker
-                        onChange={(date: any) => {
-                          handleSetValue("valueBeginningDateTo", date);
-                        }}
-                        value={values.valueBeginningDateTo}
-                        format="dd/MM/yy"
-                        className="w-full text-xs rounded-sm outline-none h-[28px]"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between gap-2">
-                  <span className="font-bold">
-                    {t("home:Transfer.DenNgay")}
-                  </span>
-                  <div>
-                    <div
-                      className={`w-[124px] flex items-center h-[28px] rounded-[4px] `}
-                    >
-                      <DatePicker
-                        onChange={(date: any) => {
-                          handleSetValue("valueMaturityDateTo", date);
-                        }}
-                        value={values.valueMaturityDateTo}
-                        format="dd/MM/yy"
-                        className="w-full text-xs rounded-sm outline-none h-[28px]"
-                      />
-                    </div>
-                  </div>
-                </div>
+                <InputDateTimePicker
+                  onChange={handleSetValue}
+                  value={values.valueBeginningDateTo}
+                  nameDate={"valueBeginningDateTo"}
+                  label={t("home:Transfer.DenNgay")}
+                  classDiv={"gap-[10px] justify-between"}
+                  classDatePicker={"h-[28px] w-[124px]"}
+                  classLabel={""}
+                ></InputDateTimePicker>
+                <InputDateTimePicker
+                  onChange={handleSetValue}
+                  value={values.valueMaturityDateTo}
+                  nameDate={"valueMaturityDateTo"}
+                  label={t("home:Transfer.DenNgay")}
+                  classDiv={"gap-[10px] justify-between"}
+                  classDatePicker={"h-[28px] w-[124px]"}
+                  classLabel={""}
+                ></InputDateTimePicker>
               </div>
               {/*------------------Button------------------*/}
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2 h-[28px]">
+              <div className="flex flex-col gap-[2px]">
+                <div className="flex items-center gap-[2px] h-[28px]">
                   <span className="font-bold"></span>
                   <div>
                     <div
