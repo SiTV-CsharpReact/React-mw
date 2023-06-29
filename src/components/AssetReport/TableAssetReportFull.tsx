@@ -199,12 +199,12 @@ const TableAssetReportFull: React.FC<IpropsTableReport> = ({
                   : "!text-[#00b050]"
               }`}
             >
-              {item.APROFIT_LOSS_RATE}%
+              {Number(item.APROFIT_LOSS_RATE).toFixed(2)}%
             </td>
             <td className={`${mode}-text !text-xs`}>
-              {item.ACAPITAL_STRUCTURE}%
+              {Number(item.ACAPITAL_STRUCTURE).toFixed(2)}%
             </td>
-            <td className={`${mode}-text !text-xs`}>{item.APORTFOLIO_RATE}%</td>
+            <td className={`${mode}-text !text-xs`}>{Number(item.APORTFOLIO_RATE).toFixed(2)}%</td>
           </tr>
         ))}
       </tbody>
