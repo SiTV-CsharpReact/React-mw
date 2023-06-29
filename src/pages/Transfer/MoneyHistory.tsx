@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import LayoutPage from "../Layout/LayoutPage";
-import DatePicker from "react-date-picker";
-import "react-date-picker/dist/DatePicker.css";
-import "react-calendar/dist/Calendar.css";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import * as XLSX from "xlsx";
 import { useTranslation } from "react-i18next";
+import InputDateTimePicker from "./../../layout/InputDateTimePicker";
 
 const MoneyHistory = () => {
   const { t } = useTranslation(["home"]);
 
-  const [valueStart, setValueStart] = useState<any>(new Date());
-  const [valueEnd, setValueEnd] = useState<any>(new Date());
+  const [valueDate, setValueDate] = useState<any>({
+    startDate: new Date(),
+    endDate: new Date(),
+  });
+  const handleInputDateChange = (nameDate: any, date: any) => {
+    setValueDate({
+      ...valueDate,
+      [nameDate]: date,
+    });
+  };
   const exportToExcel = () => {
     const table: any = document.getElementById("tableId");
     const rows: any = Array.from(table.getElementsByTagName("tr"));
@@ -72,28 +78,24 @@ const MoneyHistory = () => {
       </div>
       <div>
         <div className="flex justify-end items-center mt-7 pr-[40px] gap-4 text-[12px]">
-          <div className="flex gap-[3px] items-center">
-            <label htmlFor="" className="text-[8pt] font-bold">
-              {t("home:Transfer.TuNgay")}
-            </label>
-            <DatePicker
-              onChange={setValueStart}
-              format="dd/MM/yy"
-              value={valueStart}
-              className="text-[12px] rounded-xl outline-none h-[28px] w-[120px]"
-            />
-          </div>
-          <div className="flex gap-[3px] items-center">
-            <label htmlFor="" className="text-[8pt] font-bold">
-              {t("home:Transfer.DenNgay")}
-            </label>
-            <DatePicker
-              onChange={setValueEnd}
-              format="dd/MM/yy"
-              value={valueEnd}
-              className="text-[12px] rounded-lg outline-none h-[28px] w-[120px]"
-            />
-          </div>
+          <InputDateTimePicker
+            onChange={handleInputDateChange}
+            value={valueDate.startDate}
+            nameDate={"startDate"}
+            label={t("home:Transfer.TuNgay")}
+            classDiv={"gap-[3px]"}
+            classDatePicker={"h-[28px] w-[120px]"}
+            classLabel={""}
+          ></InputDateTimePicker>
+          <InputDateTimePicker
+            onChange={handleInputDateChange}
+            value={valueDate.endDate}
+            nameDate={"endDate"}
+            label={t("home:Transfer.DenNgay")}
+            classDiv={"gap-[3px]"}
+            classDatePicker={"h-[28px] w-[120px]"}
+            classLabel={""}
+          ></InputDateTimePicker>
           <div>
             <button className="h-[28px] !border-[1px] border-[#2371AF] px-3 w-[80px] rounded-md hover:bg-[#2371AF] hover:text-white transition-all">
               {t("home:Transfer.CapNhat")}

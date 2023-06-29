@@ -15,7 +15,6 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
   const [timeFirst, setTimeFirst] = useState(0);
   const [timeLast, setTimeLast] = useState<any>();
 
-
   useEffect(() => {
     if (san === "HSX") {
       const hsx = dataChartIndex?.HSX;
