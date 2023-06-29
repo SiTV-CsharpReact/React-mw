@@ -8,42 +8,23 @@ import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
 import { useTranslation } from "react-i18next";
+import ItemDropDown from "../../layout/ItemDropDown";
+import InputDateTimePicker from "../../layout/InputDateTimePicker";
 const SavingshistoryTransfer = () => {
   const { t } = useTranslation(["home"]);
   const dataSanPham = [
-    {
-      id: 1,
-      name: "ALL",
-    },
-    {
-      id: 2,
-      name: t("home:Transfer.TienChoFPTSVay"),
-    },
-    {
-      id: 3,
-      name: t("home:Transfer.TienGuiNganHang"),
-    },
+    "ALL",
+    t("home:Transfer.TienChoFPTSVay"),
+    t("home:Transfer.TienGuiNganHang"),
   ];
   const dataTinhtrang = [
-    {
-      id: 1,
-      name: "ALL",
-    },
-    {
-      id: 2,
-      name: t("home:Transfer.CoHieuLuc"),
-    },
-    {
-      id: 1,
-      name: t("home:Transfer.DaTatToan"),
-    },
-    {
-      id: 1,
-      name: t("home:Transfer.HetHieuLuc"),
-    },
+    "ALL",
+    t("home:Transfer.CoHieuLuc"),
+    t("home:Transfer.DaTatToan"),
+    t("home:Transfer.HetHieuLuc"),
   ];
-  const [focused, setFocused] = useState<any>(false);
-  const [focused1, setFocused1] = useState<any>(false);
+  // const [focused, setFocused] = useState<any>(false);
+  // const [focused1, setFocused1] = useState<any>(false);
   const [dataSavingshistory, setDataSavingshistory] = useState<any>([]);
   const [dataDetailHistory, setDataDetailHistory] = useState<any>([]);
   const [dataDetailHistoryType2, setDataDetailHistoryType2] = useState<any>([]);
@@ -72,12 +53,12 @@ const SavingshistoryTransfer = () => {
     });
   };
 
-  const handleFocused = () => {
-    setFocused(!focused);
-  };
-  const handleFocused1 = () => {
-    setFocused1(!focused1);
-  };
+  // const handleFocused = () => {
+  //   setFocused(!focused);
+  // };
+  // const handleFocused1 = () => {
+  //   setFocused1(!focused1);
+  // };
 
   //fetch data
   useEffect(() => {
@@ -457,9 +438,9 @@ const SavingshistoryTransfer = () => {
 
           {/*------------------Screen------------------*/}
           <div className="mt-[30px]">
-            <div className="flex justify-end items-start text-[8pt] mr-[2%]">
+            <div className="flex justify-end items-start text-[8pt] mr-[20px]">
               <div className="flex flex-col gap-1">
-                <div className="z-10 grid items-center grid-cols-4 gap-2">
+                {/* <div className="z-10 grid items-center grid-cols-4 gap-2">
                   <span className="col-span-1 font-bold">
                     {t("home:Transfer.SanPham")}
                   </span>
@@ -512,8 +493,18 @@ const SavingshistoryTransfer = () => {
                       </div>
                     )}
                   </div>
-                </div>
-                <div className="grid items-center grid-cols-4 gap-2">
+                </div> */}
+                <ItemDropDown
+                  label={t("home:Transfer.SanPham")}
+                  value={values.valueProduct || "ALL"}
+                  classParent={"flex items-center gap-2"}
+                  dataDropDown={dataSanPham}
+                  handleSetValue={handleSetValue}
+                  nameValue={"valueProduct"}
+                  classLabel={"font-bold !text-[8pt]"}
+                  classParentDropDown={"w-[160px]"}
+                ></ItemDropDown>
+                {/* <div className="grid items-center grid-cols-4 gap-2">
                   <span className="col-span-1 font-bold">
                     {t("home:Transfer.TinhTrang")}
                   </span>
@@ -566,95 +557,67 @@ const SavingshistoryTransfer = () => {
                       </div>
                     )}
                   </div>
-                </div>
-              </div>
-              <div className="flex flex-col gap-[2px]">
-                <div className="flex items-center justify-between gap-[10px]">
-                  <span className="font-bold ">
-                    {t("home:Transfer.NgayBatDauTuNgay")}
-                  </span>
-                  <div className="">
-                    <div
-                      className={`w-[122px] flex items-center h-[28px] rounded-[4px] `}
-                    >
-                      <DatePicker
-                        onChange={(date: any) => {
-                          handleSetValue("valueBeginningDateFrom", date);
-                        }}
-                        value={values.valueBeginningDateFrom}
-                        format="dd/MM/yy"
-                        className="w-full text-[12px] rounded-sm outline-none h-full"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-[10px]">
-                  <span className="font-bold">
-                    {t("home:Transfer.NgayDaoHanTuNgay")}
-                  </span>
-                  <div className="">
-                    <div
-                      className={`w-[122px] flex items-center h-[28px] rounded-[4px] `}
-                    >
-                      <DatePicker
-                        onChange={(date: any) => {
-                          handleSetValue("valueMaturityDateFrom", date);
-                        }}
-                        value={values.valueMaturityDateFrom}
-                        format="dd/MM/yy"
-                        className="w-full text-[12px] rounded-sm !border-none outline-none h-full"
-                      />
-                    </div>
-                  </div>
-                </div>
+                </div> */}
+                <ItemDropDown
+                  label={t("home:Transfer.TinhTrang")}
+                  value={values.valueStatus || "ALL"}
+                  classParent={"flex items-center gap-2"}
+                  dataDropDown={dataTinhtrang}
+                  handleSetValue={handleSetValue}
+                  nameValue={"valueStatus"}
+                  classLabel={"font-bold !text-[8pt]"}
+                  classParentDropDown={"w-[160px]"}
+                ></ItemDropDown>
               </div>
               <div className="flex flex-col gap-[2px] ml-5">
-                <div className="flex items-center gap-2">
-                  <span className="font-bold">
-                    {t("home:Transfer.DenNgay")}
-                  </span>
-                  <div>
-                    <div
-                      className={`w-[122px] flex items-center h-[28px] rounded-[4px] `}
-                    >
-                      <DatePicker
-                        onChange={(date: any) => {
-                          handleSetValue("valueBeginningDateTo", date);
-                        }}
-                        value={values.valueBeginningDateTo}
-                        format="dd/MM/yy"
-                        className="w-full text-[13px] rounded-sm !border-none outline-none h-full"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold">
-                    {t("home:Transfer.DenNgay")}
-                  </span>
-                  <div>
-                    <div
-                      className={`w-[122px] flex items-center h-[28px] rounded-[4px] `}
-                    >
-                      <DatePicker
-                        onChange={(date: any) => {
-                          handleSetValue("valueMaturityDateTo", date);
-                        }}
-                        value={values.valueMaturityDateTo}
-                        format="dd/MM/yy"
-                        className="w-full text-[13px] rounded-sm !border-none outline-none h-full"
-                      />
-                    </div>
-                  </div>
+                <InputDateTimePicker
+                  onChange={handleSetValue}
+                  value={values.valueBeginningDateFrom}
+                  nameDate={"valueBeginningDateFrom"}
+                  label={t("home:Transfer.NgayBatDauTuNgay")}
+                  classDiv={"gap-[10px] justify-between"}
+                  classDatePicker={"h-[28px] w-[124px]"}
+                  classLabel={""}
+                ></InputDateTimePicker>
+                <InputDateTimePicker
+                  onChange={handleSetValue}
+                  value={values.valueMaturityDateFrom}
+                  nameDate={"valueMaturityDateFrom"}
+                  label={t("home:Transfer.NgayDaoHanTuNgay")}
+                  classDiv={"gap-[10px] justify-between"}
+                  classDatePicker={"h-[28px] w-[124px]"}
+                  classLabel={""}
+                ></InputDateTimePicker>
+              </div>
+              <div className="flex flex-col gap-[2px] ml-5">
+                <div className="flex flex-col gap-[2px]">
+                  <InputDateTimePicker
+                    onChange={handleSetValue}
+                    value={values.valueBeginningDateTo}
+                    nameDate={"valueBeginningDateTo"}
+                    label={t("home:Transfer.DenNgay")}
+                    classDiv={"gap-[10px] justify-between"}
+                    classDatePicker={"h-[28px] w-[124px]"}
+                    classLabel={""}
+                  ></InputDateTimePicker>
+                  <InputDateTimePicker
+                    onChange={handleSetValue}
+                    value={values.valueMaturityDateTo}
+                    nameDate={"valueMaturityDateTo"}
+                    label={t("home:Transfer.DenNgay")}
+                    classDiv={"gap-[10px] justify-between"}
+                    classDatePicker={"h-[28px] w-[124px]"}
+                    classLabel={""}
+                  ></InputDateTimePicker>
                 </div>
               </div>
               <div className="flex flex-col gap-[2px] ml-[10px]">
                 <div className="flex items-center gap-2">
                   <button onClick={exportToExcel}>
                     <img
-                      src="/xls.webp"
-                      alt=""
-                      className="w-[25px] h-[30px] object-cover"
+                      src="data:image/png;base64,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"
+                      alt="Excel"
+                      className="object-cover"
                     />
                   </button>
                   <div>
