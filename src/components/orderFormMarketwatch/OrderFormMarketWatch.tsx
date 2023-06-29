@@ -46,26 +46,29 @@ const OrderMarketW = () => {
   const [success, setSuccess] = useState("");
   // ghi lenh cho gui
   const [order, setOrder] = useState(true);
+  const [inputValue, setInputValue] = useState('');
   //const dispatch = useAppDispatch();
   //const {data} = useAppSelector(state => state.counter);
   const [counter, setCounter] = useState(0);
   const { dataTable } = useAppSelector((state) => state.dataTable);
   const { dataBuy } = useAppSelector((state) => state.dataBuy);
   const { dataShow } = useAppSelector((state) => state.dataShow);
-
   // popup
   const [popup, setPopup] = useState(false);
   useEffect(() => {
     if (dataTable.key && dataTable) {
+      console.log("key day any",dataTable.key)
       setColor(false);
     }
-  }, [dataTable,dataBuy]);
+  }, [dataTable]);
 
   useEffect(() => {
     if (dataBuy.key && dataBuy) {
+      console.log("dataBuy day any",dataBuy.key)
+
       setColor(true);
     }
-  }, [dataBuy,dataTable]);
+  }, [dataBuy]);
 
   const incrementCounter = () => {
     setValueInputKl(valueInputKl + 100);
@@ -88,18 +91,6 @@ const OrderMarketW = () => {
   const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
 
   const openPopupLanguage2 = Boolean(anchorEl2);
-
-  // const handleClick2 = (event: React.MouseEvent<HTMLDivElement>) => {
-  //   height.setHeightPriceBoard(height.windowHeight-40)
-  //   console.log(height)
-  //   setAnchorEl2(event.currentTarget);
-  // };
-  // const handleCloseLanguage2 = () => {
-  //   height.setHeightPriceBoard(height.windowHeight-height.heightOrderFormFix -40)
-  //   console.log(height)
-  //   setAnchorEl2(null);
-
-  // };
   const toggleOrder = () => {
     setOrder(!order);
   };
@@ -193,6 +184,19 @@ const OrderMarketW = () => {
   const handelPopup = () => {
     setPopup(!popup);
   };
+  useEffect(() => {
+      if (dataBuy.ma) {
+      setInputValue(dataBuy.ma)
+    }
+      // setInputValue(dataTable.ma ? dataTable.ma : (dataBuy.ma ? dataBuy.ma : inputValue) || dataShow.ma);
+      // console.log("sell",dataTable.ma, dataShow.ma,);
+      // console.log("buy",dataBuy.ma)
+    }, [dataBuy.ma]);
+  useEffect(() => {
+    if (dataTable.ma) {
+      setInputValue(dataTable.ma)
+    }
+  },[dataTable.ma])
   return (
     <div className="text-black bg-white" id="tablepricelist">
       {/* đặt lệnh */}
@@ -312,12 +316,7 @@ const OrderMarketW = () => {
                           // onBlur={() => setShowResults(false)}
                           onChange={handelInputChange}
                           name="txtSymbol"
-                          value={
-                            dataTable.ma
-                              ? dataTable.ma
-                              : (dataBuy.ma ? dataBuy.ma : valueInput) ||
-                                dataShow.ma
-                          }
+                          value={inputValue} 
                         />
                         {showResults && valueInput && (
                           <div style={{

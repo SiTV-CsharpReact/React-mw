@@ -97,6 +97,7 @@ const PendingOrders: React.FC<Props> = (value) => {
     content: () => componentPDF.current,
     documentTitle: "Export PDF",
     onAfterPrint: () => alert("Export is successfully"),
+           
   })
   return (
     <div>
