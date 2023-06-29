@@ -59,13 +59,13 @@ const OrderMarketW = () => {
     if (dataTable.key && dataTable) {
       setColor(false);
     }
-  }, [dataTable]);
+  }, [dataTable,dataBuy]);
 
   useEffect(() => {
     if (dataBuy.key && dataBuy) {
       setColor(true);
     }
-  }, [dataBuy]);
+  }, [dataBuy,dataTable]);
 
   const incrementCounter = () => {
     setValueInputKl(valueInputKl + 100);
