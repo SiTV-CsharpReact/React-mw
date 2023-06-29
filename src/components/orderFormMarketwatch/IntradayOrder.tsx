@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PdfandExcel from './PdfandExcel'
 import axios from 'axios'
 import { useTranslation } from 'react-i18next';
@@ -6,7 +6,10 @@ import excell from "../../images/excel.png";
 import pfd from "../../images/pdf.png";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
+import { useReactToPrint } from 'react-to-print';
+
 const IntradayOrder = () => {
+  const componentPDF = useRef<any>()
   const { t } = useTranslation(["home"]);
   const [data, setData] = useState([])
    const dataInterday = async() => {
@@ -37,30 +40,11 @@ const IntradayOrder = () => {
     URL.revokeObjectURL(url);
   };
 
-  const handleExportToPDF = () => {
-    
-    const table = document.getElementById("table-id");
-    const doc: any = new jsPDF("p", "pt");
-    doc.addFont("Helvetica", "Helvetica", "normal");
-    doc.setFont("Helvetica");
-    if (table) {
-      doc.autoTable({
-        html: table,
-        startX: 20,
-        styles: {
-          size: 10,
-          fontSize: 4,
-          cellPadding: 6,
-          fillColor: "gray",
-          font: "Helvetica",
-          lowercase: true,
-        },
-        tableWidth: "auto",
-        margin: { top: 20 },
-      });
-    }
-    doc.save("filename.pdf");
-  };
+  const handleExportToPDF = useReactToPrint({
+    content: () => componentPDF.current,
+    documentTitle: "Export PDF",
+    onAfterPrint: () => alert("Export is successfully"),
+  })
   return (
     <div>
       <div className='flex justify-end mr-[9px]'>
@@ -86,7 +70,7 @@ const IntradayOrder = () => {
         </div>
     </div>
       </div>
-      <div  className='mx-4 mt-1.5'>
+      <div  ref={componentPDF}  className='mx-4 mt-1.5'>
         <table id='table-id'>
           <thead className='!bg-[#F3F3F3]'>
             <tr style={{border:"1px solid #dedede"}} className='border !bg-[#F3F3F3] '>
