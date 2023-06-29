@@ -920,7 +920,6 @@ const TableAsset = (props: any) => {
                                     {formatNumberMarket(item?.Value.AveragePrice)}
                                 </td>
                                 <td
-                                
                                     className={`!text-xs`}
                                 >
                                     {formatNumberMarket(item?.Value.RootValue)}
@@ -959,7 +958,6 @@ const TableAsset = (props: any) => {
                                     }`}
                             >
                                 {formatNumber(toTalDk)}
-
                             </td>
                             <td>{/* {formatNumber(tongtoTalPC)} % */}</td>
                         </tr>
