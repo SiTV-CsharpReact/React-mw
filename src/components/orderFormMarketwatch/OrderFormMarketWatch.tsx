@@ -35,9 +35,12 @@ const OrderMarketW = () => {
   const { t } = useTranslation(["home"]);
   // color mua ban
   const [color, setColor] = useState(true);
-  const [valueInput, setValueInput] = useState<string>("");
   const [valueInputPrice, setValueInputPrice] = useState<number>(0);
+  const [TranC, setTranC] = useState<number>(0);
+  const [TCT, setTCT] = useState<number>(0);
+  const [SanT, setSanT] = useState<number>(0);
   const [valueInputKl, setValueInputKl] = useState<number>(0);
+
   const [gdSuccess, setGdSuccess] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
@@ -46,23 +49,27 @@ const OrderMarketW = () => {
   const [success, setSuccess] = useState("");
   // ghi lenh cho gui
   const [order, setOrder] = useState(true);
+  const [inputValue, setInputValue] = useState('');
   //const dispatch = useAppDispatch();
   //const {data} = useAppSelector(state => state.counter);
   const [counter, setCounter] = useState(0);
   const { dataTable } = useAppSelector((state) => state.dataTable);
+  console.log("TCT ne", dataTable.TCT)
   const { dataBuy } = useAppSelector((state) => state.dataBuy);
   const { dataShow } = useAppSelector((state) => state.dataShow);
-
   // popup
   const [popup, setPopup] = useState(false);
   useEffect(() => {
     if (dataTable.key && dataTable) {
+      console.log("key day any",dataTable.key)
       setColor(false);
     }
   }, [dataTable]);
 
   useEffect(() => {
     if (dataBuy.key && dataBuy) {
+      console.log("dataBuy day any",dataBuy.key)
+
       setColor(true);
     }
   }, [dataBuy]);
@@ -88,18 +95,6 @@ const OrderMarketW = () => {
   const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
 
   const openPopupLanguage2 = Boolean(anchorEl2);
-
-  // const handleClick2 = (event: React.MouseEvent<HTMLDivElement>) => {
-  //   height.setHeightPriceBoard(height.windowHeight-40)
-  //   console.log(height)
-  //   setAnchorEl2(event.currentTarget);
-  // };
-  // const handleCloseLanguage2 = () => {
-  //   height.setHeightPriceBoard(height.windowHeight-height.heightOrderFormFix -40)
-  //   console.log(height)
-  //   setAnchorEl2(null);
-
-  // };
   const toggleOrder = () => {
     setOrder(!order);
   };
@@ -138,7 +133,7 @@ const OrderMarketW = () => {
       setGdSuccess(true);
       setTimeout(() => {
         setSubmit(false);
-        setValueInput("");
+        setInputValue("");
         setValueInputPrice(0);
         setValueInputKl(0);
       }, 3000);
@@ -158,7 +153,7 @@ const OrderMarketW = () => {
 
     try {
       await validationSchema.validate({
-        txtSymbol: valueInput || dataShow.San || dataTable.ma || dataBuy.ma,
+        txtSymbol: inputValue || dataShow.San || dataTable.ma || dataBuy.ma,
       });
     } catch (error: any) {
       alert("Chưa nhập Mã chứng khoán");
@@ -183,7 +178,7 @@ const OrderMarketW = () => {
 
   const handelInputChange = (e: any) => {
     const value = e.target.value;
-    setValueInput(value.toUpperCase());
+    setInputValue(value.toUpperCase());
     const results: any = dataOrder.filter((item) =>
       item.toUpperCase().includes(value)
     );
@@ -193,6 +188,45 @@ const OrderMarketW = () => {
   const handelPopup = () => {
     setPopup(!popup);
   };
+  useEffect(() => {
+      if (dataBuy.ma) {
+      setInputValue(dataBuy.ma)
+    }
+    if (dataBuy.price) {
+      setValueInputPrice(dataBuy.price)
+    }
+    if (dataBuy.TranC) {
+      setTranC(Number(dataBuy.TranC))
+    }
+     if (dataBuy.TCT) {
+      setTCT(Number(dataBuy.TCT))
+    }
+     if (dataBuy.SanT) {
+      setSanT(Number(dataBuy.SanT))
+    }
+    }, [dataBuy.ma,dataBuy.price,dataBuy.SanT,dataBuy.TCT,dataBuy.TranC]);
+  useEffect(() => {
+    if (dataTable.ma) {
+      setInputValue(dataTable.ma)
+    }
+     if (dataTable.price) {
+      setValueInputPrice(dataTable.price)
+    }
+     if (dataTable.TranC) {
+      setTranC(Number(dataTable.TranC))
+    }
+     if (dataTable.TCT) {
+      setTCT(Number(dataTable.TCT))
+    }
+     if (dataTable.SanT) {
+      setSanT(Number(dataTable.SanT))
+    }
+  }, [dataTable.ma , dataTable.price,dataTable.SanT,dataTable.TCT,dataTable.TranC])
+   useEffect(() => {
+    if (dataShow.ma) {
+      setInputValue(dataShow.ma)
+    }
+  },[dataShow.ma])
   return (
     <div className="text-black bg-white" id="tablepricelist">
       {/* đặt lệnh */}
@@ -312,14 +346,9 @@ const OrderMarketW = () => {
                           // onBlur={() => setShowResults(false)}
                           onChange={handelInputChange}
                           name="txtSymbol"
-                          value={
-                            dataTable.ma
-                              ? dataTable.ma
-                              : (dataBuy.ma ? dataBuy.ma : valueInput) ||
-                                dataShow.ma
-                          }
+                          value={inputValue} 
                         />
-                        {showResults && valueInput && (
+                        {showResults && inputValue && (
                           <div style={{
                             overflow: "auto", boxShadow: "rgba(0, 0, 0, 0.176) 0px 6px 12px 0px", outlineColor: "rgb(85, 85, 85)"
                             ,border:"1px rgba(0, 0, 0, 0.15)"
@@ -329,7 +358,7 @@ const OrderMarketW = () => {
                                 <li
                                   onClick={() => {
                                     let result = item.split("-");
-                                    setValueInput(result[0]);
+                                    setInputValue(result[0]);
                                     setSearchResults([]);
                                     setShowResults(false)
                                   }}
@@ -391,11 +420,7 @@ const OrderMarketW = () => {
                               className="spnTran cursor-pointer text-[#ef3eff] pl-[10px]  text-xs"
                               id="spnCeilPrice"
                             >
-                              {dataTable.TranC
-                                ? dataTable.TranC
-                                : dataBuy.TranC
-                                ? dataBuy.TranC
-                                : 0}
+                              {TranC}
                             </span>
                           </td>
                           <td className="border-none">
@@ -403,11 +428,7 @@ const OrderMarketW = () => {
                               className="spnThamChieu cursor-pointer text-[#f26f21] pl-[15px]  text-xs"
                               id="spnRefPrice"
                             >
-                              {dataTable.TCT
-                                ? dataTable.TCT
-                                : dataBuy.TCT
-                                ? dataBuy.TCT
-                                : 0}
+                              {TCT} 
                             </span>
                           </td>
                           <td className="border-none">
@@ -415,11 +436,7 @@ const OrderMarketW = () => {
                               className="spnSan cursor-pointer text-[#00b8ff] pl-[15px]  text-xs"
                               id="spnFloorPrice"
                             >
-                              {dataTable.SanT
-                                ? dataTable.SanT
-                                : dataBuy.SanT
-                                ? dataBuy.SanT
-                                : 0}
+                              {SanT} 
                             </span>
                           </td>
                           <td className="border-none">
@@ -446,11 +463,7 @@ const OrderMarketW = () => {
                           onChange={handelInputChangePrice}
                           step={100}
                           value={
-                            dataTable.price
-                              ? dataTable.price
-                              : dataBuy.price
-                              ? dataBuy.price
-                              : valueInputPrice || ""
+                               valueInputPrice
                           }
 
                           // value={dataTable.price ? dataTable.price : (dataBuy.price ? dataBuy.price : valueInputPrice)}
@@ -549,7 +562,7 @@ const OrderMarketW = () => {
                             {t("home:Order.ORDER_MUA")}
                             </td>
                             <td className="text-center border-r border border-[#dedede]">
-                              {valueInput ||
+                              {inputValue ||
                                 dataTable.ma ||
                                 dataBuy.ma ||
                                 dataShow.ma}
