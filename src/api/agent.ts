@@ -58,6 +58,10 @@ const transfer = {
     getdataTempalte : ()=> requests.get("  http://localhost:2000/dataTranfer"),
     hometransferds : ()=> requests.get("http://localhost:2000/dataTransferds")
 }
+const tableThongke = {
+    getdataThongke :(params :any) => requests.get(`http://eztrade4.fpts.com.vn//hnx/data.ashx?${params}`),
+    sortThongkeIndex : (query : any) =>requests.post("http://priceboard3.fpts.com.vn/Root/Data.ashx", query)
+}
 const agent = {
     TableHNX,
     TableHSX,
@@ -68,7 +72,8 @@ const agent = {
     dataGDTTtable,
     chartIndex,
     report,
-    transfer
+    transfer,
+    tableThongke
 }
 export default agent;
 // import axios, { AxiosInstance, AxiosResponse } from "axios";
