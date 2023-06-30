@@ -8,6 +8,10 @@ export function formatNumberMarket(number: any) {
   if (!number || number === 0 || number === "0") return ""; // hoac ''
   else return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 }
+export const formatNumberPhanTram = (number: any)=>{
+  var roundedNumber = Math.round(number * 100) / 100;
+  return roundedNumber
+}
 export function tinhGiaTC(tc: number, price: number) {
   const diff = price - tc;
   //if(isFinite(diff)) return "";
