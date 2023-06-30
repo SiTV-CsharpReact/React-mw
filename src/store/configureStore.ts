@@ -21,12 +21,9 @@ import { dataSliceShow } from "../components/orderFormMarketwatch/data";
 import statusTableMWSlice from "../components/chartMarketwatch/statusTableSlice";
 import chartIndexSlice from "../components/chartIndex/chartIndexSlice";
 import { dataSliceThongke } from "../components/tableMarketwatch/helper/tableFormThongke";
-<<<<<<< HEAD
 import chartOptionSlice from "../components/tablePopupMarketwatch/chartOptionSlice";
-=======
 import RespportSlice from "../pages/Report/ResportSlice";
 import TransferSlice from "../pages/Transfer/TransferSlice";
->>>>>>> 58cd4219d53704f9a65938989fdd75d390788664
 
 export const store = configureStore({
   reducer: {
@@ -75,17 +72,14 @@ export const store = configureStore({
     dataShow: dataSliceShow.reducer,
     // chart index
     chartIndex: chartIndexSlice.reducer,
-<<<<<<< HEAD
    // chart option
    chartOption: chartOptionSlice.reducer,
    
     dataApi: dataSliceShow.reducer,
     dataApiPendingOder : dataSliceShow.reducer,
     
-=======
     report :RespportSlice.reducer,
     transfer : TransferSlice.reducer
->>>>>>> 58cd4219d53704f9a65938989fdd75d390788664
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

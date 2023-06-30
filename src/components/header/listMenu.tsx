@@ -85,17 +85,8 @@ const ListMenu = () => {
               </Link>
             </li>
             <li>
-<<<<<<< HEAD
-              <Link to="/transfer/history">{t("home:menu.LichsuCT")}</Link>
-            </li>
-            <li>
-              <Link to="/transfer/ordersavings" className="Foreign-Hide">
-                {t("home:menu.TienchoVay")}
-                <input type="image" src={New} height={16} width={28} />
-=======
               <Link to="/transfer/history" className="ezfu-hover-itemMenu"  onClick={()=>ChangeGetActiveMenu("/transfer/history")}>
                 {t("home:menu.LichsuCT")}
->>>>>>> 58cd4219d53704f9a65938989fdd75d390788664
               </Link>
             </li>
             <li>
@@ -131,14 +122,8 @@ const ListMenu = () => {
             <li>
               <Link
                 to="/report/AdvReport"
-<<<<<<< HEAD
                 className="MarPro-Hide"
                 // style={{ display: "none" }}
-=======
-                className="MarPro-Hide ezfu-hover-itemMenu"
-                onClick={() => ChangeGetActiveMenu("/report/AdvReport")}
-                style={{ display: "none" }}
->>>>>>> 58cd4219d53704f9a65938989fdd75d390788664
               >
                 {t("home:menu.LSUTTBCK")}
               </Link>
