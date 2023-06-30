@@ -73,6 +73,19 @@ const dataTableBasic ={
     //  requests.postFormData("/Root/Data.ashx", dataValueBasic,   {'Content-Type': 'multipart/form-data'},)
       
 }
+// table Lịch sử khớp lệnh
+const report = {
+    get : () => requests.get("http://localhost:2000/data"),
+    getHisOrder : () =>  requests.get("http://localhost:2000/orderHis")
+}
+const transfer = {
+    getdataTempalte : ()=> requests.get("  http://localhost:2000/dataTranfer"),
+    hometransferds : ()=> requests.get("http://localhost:2000/dataTransferds")
+}
+const tableThongke = {
+    getdataThongke :(params :any) => requests.get(`http://eztrade4.fpts.com.vn//hnx/data.ashx?${params}`),
+    sortThongkeIndex : (query : any) =>requests.post("http://priceboard3.fpts.com.vn/Root/Data.ashx", query)
+}
 const agent = {
     TableHNX,
     TableHSX,
@@ -82,7 +95,10 @@ const agent = {
     ListDataTable,
     dataGDTTtable,
     chartIndex,
-    dataTableBasic
+    dataTableBasic,
+    report,
+    transfer,
+    tableThongke
 }
 export default agent;
 // import axios, { AxiosInstance, AxiosResponse } from "axios";

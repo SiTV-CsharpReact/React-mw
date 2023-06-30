@@ -1,4 +1,3 @@
-
 .HeaderFormMain {
   display: flex;
   flex-wrap: wrap;
@@ -47,13 +46,88 @@
   height: 23px;
   font-size: 9pt;
 }
-.fromThongke input{
-    font-size: 5px
+.fromThongke input {
+  font-size: 5px;
 }
-.fromThongke .css-dev-only-do-not-override-15rg2km{
-    height: 23px !important;
+.fromThongke .css-dev-only-do-not-override-15rg2km {
+  height: 23px !important;
 }
-.fromThongke  .ant-picker{
-    width: 65%;
-    padding: 0px 0px 0px 3px;
+.fromThongke .ant-picker {
+  width: 65%;
+  padding: 0px 0px 0px 3px;
+}
+.panigation {
+  float: right;
+  padding-left: 0;
+  margin: 15px 15px;
+  & ul {
+    background: white;
+    padding: 0px !important;
+  }
+  & button {
+    z-index: 2;
+    cursor: default;
+    color: #5cb85c;
+    border: none;
+    font-size: 15px;
+    &:hover {
+      background-color: #5cb85c;
+      color: #ffff;
+    }
+  }
+  & .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+    background-color: #5cb85c;
+    color: #ffff;
+    &:hover {
+      background-color: #5cb85c;
+      color: #ffff;
+    }
+  }
+  & .customPagination {
+    display: flex;
+    background: white;
+    border-radius: 4px;
+    & .iconArrow {
+      background: white;
+      padding: 4px 5px;
+      color: #5cb85c;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      &:hover {
+        background-color: #5cb85c;
+        border-radius: 4px;
+        color: white;
+      }
+      & .css-i4bv87-MuiSvgIcon-root {
+        font-size: 1.3rem;
+      }
+    }
+    & .IconArrowRigth {
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+  }
+  #hiddenIConAll {
+    & .iconArrow,
+    .css-g2z002-MuiSvgIcon-root-MuiPaginationItem-icon {
+      opacity: 0.5;
+      background-color: white !important;
+      color: black;
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
+    // .Mui-disabled
+  }
+  & #hildrenIonItem {
+    opacity: 0.6 !important;
+    background-color: white;
+    color: #5cb85c !important;
+    &:hover {
+      pointer-events: stroke;
+      cursor: not-allowed;
+    }
+  }
 }

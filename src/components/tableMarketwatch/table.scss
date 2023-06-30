@@ -330,6 +330,9 @@
       padding: 7px;
       border: 1px solid #858585;
     }
+    & .trPanigation td{
+        border: none;
+    }
   }
 
   & tbody {
@@ -401,6 +404,9 @@
     line-height: 3em;
     width: 30px;
     padding-left: 2px;
+  }
+  & #label_price{
+    width: 25%;
   }
 
   & .button_Statistics {

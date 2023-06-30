@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 
 import FromAction from "../FromAction/FromAction";
 import SelectAction from "../FromAction/SelectAction";
@@ -7,6 +7,8 @@ import { SanGD, MaCK, TTlenh, TTXX, getDateTime } from "../helper/DateTime";
 
 import LayoutPage from "../Layout/LayoutPage";
 import ExcelPdfAction from "../FromAction/ExcelPdfAction";
+import { useAppDispatch } from "../../store/configureStore";
+import { getdata } from "./ResportSlice";
 let { tuNgay, denNgay } = getDateTime();
 type TypeValue = {
   LoaiLenh: any;
@@ -33,37 +35,84 @@ const HistoryMatching = () => {
   const ChangeDenNgay = (e: any) => {
     setData({ ...data, denNgay: e });
   };
+  const [result, setResult] = useState<any>([]);
+  const [show, setShow] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [showIconB, setShowIcontB] = useState<any>(false);
+  const [showIconM, setShowIcontM] = useState<any>(false);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    // const handleData = async () => {
+    //   const response = await fetch("http://localhost:2000/data");
+    //   const jsonData = await response.json();
+    //   setResult(jsonData);
+    // };
+    // handleData();
+    dispatch(getdata()).finally(() => setIsLoading(false));
+  }, []);
+  const handleSHowAll = () => {
+    setShow(!show);
+  };
+  const handleshowIconB = (e: any) => {
+    setShowIcontB(e);
+  };
+  const handleshowIconM = (e: any) => {
+    setShowIcontM(e);
+  };
+
+  // const dataConvert = useMemo(() => {
+  //   console.log(result)
+  //   if(!result.length) return [];
+
+  //   return result.reduce((prev: any,current:any) => {
+  //     console.log(current)
+  //     return {
+  //       ...prev,
+  //     }
+  //   })
+  // },[]);
+  // console.log("result", dataConvert);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <LayoutPage content="Lịch sử khớp lệnh" PageTitle="Lịch sử khớp lệnh">
-      <div className="HeaderPage">
-        <div>
-          <FromAction data={data}>
-            <SelectAction
-              Title="Loại Lệnh"
-              Options={SanGD}
-              ChangeFuncion={ChangeLoaiLenh}
-            />
-            <SelectAction
-              Title="Mã CK"
-              Options={MaCK}
-              ChangeFuncion={ChangeMaCK}
-            />
-            <InputDateAction
-              Title="Từ Ngày"
-              date={tuNgay}
-              ChangeFuncion={ChangeTuNgay}
-            />
-            <InputDateAction
-              Title="Đến Ngày"
-              date={denNgay}
-              ChangeFuncion={ChangeDenNgay}
-            />
-          </FromAction>
-        </div>
-        <div className="fileExcelPDF">
+        <div className="ParentHeaderPage">
+          <div className="HeaderTextShow" onClick={handleSHowAll}>
+            {show ? "Xem rút gọn" : "Xem đầy đủ "}
+          </div>
+          <div className="HeaderPage">
+            <div>
+              <FromAction data={data}>
+                <SelectAction
+                  Title="Loại Lệnh"
+                  Options={SanGD}
+                  ChangeFuncion={ChangeLoaiLenh}
+                />
+                <SelectAction
+                  Title="Mã CK"
+                  Options={MaCK}
+                  ChangeFuncion={ChangeMaCK}
+                />
+                <InputDateAction
+                  Title="Từ Ngày"
+                  date={tuNgay}
+                  ChangeFuncion={ChangeTuNgay}
+                />
+                <InputDateAction
+                  Title="Đến Ngày"
+                  date={denNgay}
+                  ChangeFuncion={ChangeDenNgay}
+                />
+              </FromAction>
+            </div>
+            <div className="fileExcelPDF">
               <ExcelPdfAction />
             </div>
+          </div>
         </div>
         <div className="contentActionGD">
           <table className="TablePage">
@@ -91,13 +140,83 @@ const HistoryMatching = () => {
                 <th>Phí </th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+            
+              <tr>
+                <td rowSpan={10}>Ngày tháng 29/05/2023 </td> 
+              </tr>
+              <tr>
+                <td rowSpan={3}>Mua</td>
+              </tr>
+              <tr>
+                <td> AAV</td> {/* mã chứng khoán  */}
+                <td>CK</td>
+                <td>KL Khớp</td>
+                <td>Giá khớp</td>
+                <td>Giá trị</td>
+                <td> Thuế TN từ Chuyển</td>
+                <td>Thuế TN từ Đầu tư vốn</td>
+                <td> phí</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td>CK</td>
+                <td>KL Khớp</td>
+                <td>Giá khớp</td>
+                <td>Giá trị</td>
+                <td> Thuế TN từ Chuyển</td>
+                <td>Thuế TN từ Đầu tư vốn</td>
+                <td> phí</td>
+              </tr>
+              <tr>
+                <td colSpan={5} align="center"> tổng mua</td>
+                <td align="right">4,190,000	</td>
+                <td align="right">0</td>
+                <td align="right">0</td>
+                <td align="right">0</td>
+               
+              </tr>
+              <tr>
+                <td rowSpan={3}> Bán </td>
+                <td>ABC</td>  {/*  mã chứng khoán  */}
+                <td>CK</td>
+                <td>KL Khớp</td>
+                <td>Giá khớp</td>
+                <td>Giá trị</td>
+                <td> Thuế TN từ Chuyển</td>
+                <td>Thuế TN từ Đầu tư vốn</td>
+                <td> phí</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td>CK</td>
+                <td>KL Khớp</td>
+                <td>Giá khớp</td>
+                <td>Giá trị</td>
+                <td> Thuế TN từ Chuyển</td>
+                <td>Thuế TN từ Đầu tư vốn</td>
+                <td> phí</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td>CK</td>
+                <td>KL Khớp</td>
+                <td>Giá khớp</td>
+                <td>Giá trị</td>
+                <td> Thuế TN từ Chuyển</td>
+                <td>Thuế TN từ Đầu tư vốn</td>
+                <td> phí</td>
+              </tr>
+              <tr>
+                <td colSpan={5} align="center"> tổng Bán </td>
+                <td align="right" >4,190,000	</td>
+                <td align="right">0</td>
+                <td align="right">0</td>
+                <td align="right">0</td>
+               
+              </tr>
+            </tbody>
           </table>
-          <p>
-            Báo cáo chỉ hiển thị dữ liệu của 180 ngày gần nhất. Nếu Khách hàng
-            có nhu cầu xem chi tiết các giao dịch trước đó, vui lòng liên hệ
-            FPTS để được cung cấp.
-          </p>
         </div>
       </LayoutPage>
     </>
