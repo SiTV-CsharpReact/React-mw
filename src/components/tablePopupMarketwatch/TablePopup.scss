@@ -441,7 +441,7 @@
         }
         a {
           color: rgba(243, 243, 243, 0.4);
-          font-size: 10pt;
+          font-size: 8pt;
           text-decoration: none;
           text-transform: uppercase;
         }
@@ -454,4 +454,21 @@
     // left: 370px !important;
     // text-overflow: unset !important;
   }
+  
+    .highcharts-container {
+      margin: 0 auto;
+      margin-left:-10px ;
+    }
+    .highcharts-tooltip {
+      z-index: 9999 !important;
+    }
+    // .highcharts-background {
+    //   height: 100px;
+    // }
+    .highcharts-axis-labels span:last-child {
+      left: 370px !important;
+      text-overflow: unset !important;
+    }
+  
+  
 }

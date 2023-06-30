@@ -79,6 +79,8 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
     ];
     Highcharts.chart(`container__chart__time`, {
       chart: {
+        //  marginLeft: , // Đặt khoảng cách giữa highcharts-plot-background và highcharts-container là 20px
+        // width:400,
         height: 160,
         polar: true,
         backgroundColor: "#303030",
@@ -109,7 +111,8 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
             const xmax = _getDateTs(xmaxTmp);
             xAxis.setExtremes(xmin, xmax, true, false);
             console.log(xAxis);
-
+            setTimeFirst(xmin);
+            setTimeLast(xmax);
             // const yAxis = this.yAxis[1];
             // const yExtremes = yAxis.getExtremes();
 
@@ -141,21 +144,25 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
           useHTML: true,
           style: {
             color: "#a5a5a5",
-            fontSize: "9px",
+            fontSize: "8px",
             // width: 396,
           },
           align: "center",
           y: 15,
         },
+        
         lineWidth: 1,
         lineColor: "#5f5f5f",
         tickWidth: 0,
         tickInterval: 3600000,
+        minPadding: 0,
+        maxPadding: 0,
         gridLineWidth: 1,
         gridLineColor: "#6d6d6d1f",
-        width: "300px",
+        // width: "390px",
       },
       yAxis: [
+        
         {
           title: {
             text: "",
@@ -176,11 +183,13 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
           lineWidth: 0,
           lineColor: "#5f5f5f",
           labels: {
+            padding: 0,
             style: {
-              fontSize: "9px",
+              // width: 50,
+              fontSize: "8px",
               color: "#a5a5a5",
             },
-            distance: 8,
+            distance: 4,
             // enabled: false,
           },
           gridLineWidth: 0,
