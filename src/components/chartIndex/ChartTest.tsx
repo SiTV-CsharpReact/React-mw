@@ -15,7 +15,6 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
   const [timeFirst, setTimeFirst] = useState(0);
   const [timeLast, setTimeLast] = useState<any>();
 
-
   useEffect(() => {
     if (san === "HSX") {
       const hsx = dataChartIndex?.HSX;
@@ -301,7 +300,9 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
             hour + ":" + minutes
           }</b></span><br/><span style="color:#000">Index:  <b style="font-size:12px;color:#000" class="font-bold text-sm">${
             index[1].y
-          }</b></span><br/><span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm">${formatNumber(this.y)} </b></span>`;
+          }</b></span><br/><span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm">${formatNumber(
+            this.y
+          )} </b></span>`;
         },
       },
       legend: {
@@ -336,9 +337,11 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
   }, [dataBar, dataSpline, indexValue, name, timeFirst, timeLast]);
 
   return (
-    <figure className="highcharts-figure">
-      <div id={`container-${name}`}></div>
-    </figure>
+    <div className="chart__slide__market">
+      <figure className="highcharts-figure">
+        <div id={`container-${name}`}></div>
+      </figure>
+    </div>
   );
 };
 

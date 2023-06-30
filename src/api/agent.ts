@@ -1,9 +1,9 @@
-import axios, { AxiosResponse } from "axios"
+import axios, { AxiosResponse } from "axios";
 import { RPChart } from "../models/modelChart";
 const responseBody = (response: AxiosResponse) => response.data;
 const BASE_URL = "https://marketstream.fpts.com.vn/";
-const URL_EZTRADE = "http://eztrade0.fpts.com"
-// mặc định gửi authenticated token lên 
+const URL_EZTRADE = "http://eztrade0.fpts.com";
+// mặc định gửi authenticated token lên
 // axios.defaults.headers.common['Authorization'] = 'Bearer ' + "auth_token";
 // axios.interceptors.request.use(
 //     config => {
@@ -13,77 +13,105 @@ const URL_EZTRADE = "http://eztrade0.fpts.com"
 //     error => {
 //       return Promise.reject(error);
 //     }
-//   );  
+//   );
 
 const requests = {
-    get: (url: string, params?: URLSearchParams) => axios.get(url, {params}).then(responseBody),
-    post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
-    postFormData: (url: string, body: {}) => axios.post(url, body, {
+  get: (url: string, params?: URLSearchParams) =>
+    axios.get(url, { params }).then(responseBody),
+  post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
+  postFormData: (url: string, body: {}) =>
+    axios
+      .post(url, body, {
         headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    }).then((response) => {
-        console.log(response)
-        const responseBody = response.data;
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        // console.log(response)
+        const responseBody = response;
         return responseBody;
-    }).catch((error) => {
+      })
+      .catch((error) => {
         console.log("Lỗi trong quá trình gửi yêu cầu: " + error);
         throw error;
-    }),
-    put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
-    delete: (url: string) => axios.delete(url).then(responseBody),
-}
+      }),
+  put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
+  delete: (url: string) => axios.delete(url).then(responseBody),
+};
 const TableHNX = {
-    list: (params: URLSearchParams) => requests.get(BASE_URL+'hnx/data.ashx', params),
-    get: () => requests.get(BASE_URL+'/hnx/data.ashx?s=quote&l=HNXIndex'),
-}
+  list: (params: URLSearchParams) =>
+    requests.get(BASE_URL + "hnx/data.ashx", params),
+  get: () => requests.get(BASE_URL + "/hnx/data.ashx?s=quote&l=HNXIndex"),
+};
 const TableHSX = {
-    list: (params: URLSearchParams) => requests.get(BASE_URL+'hsx/data.ashx', params),
-    get: () => requests.get(BASE_URL+'/hsx/data.ashx?s=quote&l=All'),
-}
-const Company ={
-    get: () => requests.get('http://localhost:8430/api/stock/v1/cache/stock_info_cn/eztrade?code=ALL'),
-}
-const Category ={
-    get: () => requests.get('http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C000700'),
-    // fetch  đata
-    fetchData : () => requests.get('http://localhost:30/categori')
-}
-const Ministry ={
-    get: () => requests.get('http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/s5g/default/ministry'),
-}
+  list: (params: URLSearchParams) =>
+    requests.get(BASE_URL + "hsx/data.ashx", params),
+  get: () => requests.get(BASE_URL + "/hsx/data.ashx?s=quote&l=All"),
+};
+const Company = {
+  get: () =>
+    requests.get(
+      "http://localhost:8430/api/stock/v1/cache/stock_info_cn/eztrade?code=ALL"
+    ),
+};
+const Category = {
+  get: () =>
+    requests.get(
+      "http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C000700"
+    ),
+  // fetch  đata
+  fetchData: () => requests.get("http://localhost:30/categori"),
+};
+const Ministry = {
+  get: () =>
+    requests.get(
+      "http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/s5g/default/ministry"
+    ),
+};
 const ListDataTable = {
-    list: (floor :  string ,valueParam :  string  ) => requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?${valueParam}`)
-}
+  list: (floor: string, valueParam: string) =>
+    requests.get(
+      `http://marketstream.fpts.com.vn/${floor}/data.ashx?${valueParam}`
+    ),
+};
 const dataGDTTtable = {
-    listPt : (floor : string)=>requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=pt`),
-    listBi : (floor : string)=>requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=bi`)
-}
+  listPt: (floor: string) =>
+    requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=pt`),
+  listBi: (floor: string) =>
+    requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=bi`),
+};
 const chartIndex = {
-    get: () => requests.get('http://priceboard3.fpts.com.vn/chart/data.ashx?s=full'),
-    //get: () => requests.get('http://localhost:8000/dataChartIndex'),
-}
+  get: () =>
+    requests.get("http://priceboard3.fpts.com.vn/chart/data.ashx?s=full"),
+  //get: () => requests.get('http://localhost:8000/dataChartIndex'),
+};
 var formData = new FormData();
-formData.append('key1', 'value1')
-formData.append('key2', 'value2')
-const dataTableBasic ={
-   
-    post: (dataValueBasic:RPChart) => requests.post("http://priceboard3.fpts.com.vn/Root/Data.ashx", dataValueBasic),
-    postFormData: (dataValueBasic:RPChart) =>requests.postFormData("http://priceboard3.fpts.com.vn/Root/Data.ashx", dataValueBasic)
-    //  requests.postFormData("/Root/Data.ashx", dataValueBasic,   {'Content-Type': 'multipart/form-data'},)
-      
-}
+formData.append("key1", "value1");
+formData.append("key2", "value2");
+const dataTableBasic = {
+  post: (dataValueBasic: RPChart) =>
+    requests.post(
+      "http://priceboard3.fpts.com.vn/Root/Data.ashx",
+      dataValueBasic
+    ),
+  postFormData: (dataValueBasic: RPChart) =>
+    requests.postFormData(
+      "http://priceboard3.fpts.com.vn/Root/Data.ashx",
+      dataValueBasic
+    ),
+  //  requests.postFormData("/Root/Data.ashx", dataValueBasic,   {'Content-Type': 'multipart/form-data'},)
+};
 const agent = {
-    TableHNX,
-    TableHSX,
-    Company,
-    Category,
-    Ministry,
-    ListDataTable,
-    dataGDTTtable,
-    chartIndex,
-    dataTableBasic
-}
+  TableHNX,
+  TableHSX,
+  Company,
+  Category,
+  Ministry,
+  ListDataTable,
+  dataGDTTtable,
+  chartIndex,
+  dataTableBasic,
+};
 export default agent;
 // import axios, { AxiosInstance, AxiosResponse } from "axios";
 
