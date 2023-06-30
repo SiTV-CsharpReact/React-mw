@@ -5,13 +5,11 @@
   min-height: 650px;
   min-width: 400px;
   background-color: #060606;
-  z-index: 10002;
-  top: 50%;
-  left: 50%;
+  z-index: 200;
   color: #000;
   width: 1230px;
   height: 681px;
-  -webkit-transition: -webki 0.3s ease-out;
+  -webkit-transition: 0.3s ease-out;
   transition: box-shadow 0.2s;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.8);
@@ -152,7 +150,7 @@
 //     border: 1px solid #ccc;
 // }
 .pu-table {
-  background-color: #424242;
+  background-color: #333333;
   color: #929292;
   font-size: 8pt;
   border-radius: 2px;
@@ -381,4 +379,38 @@
   rect.highcharts-plot-background {
     height: 120px !important;
   }
+}
+.content-bt-time {
+  width: 360px;
+  position: relative;
+  margin-left: 5%;
+  height: 38px;
+  padding: 6px 0px;
+}
+.content-bt-time div {
+  border: none;
+  display: inline-block;
+  /* padding: 20px 15px 15px 15px; */
+  /* margin: 15px auto 30px auto; */
+  height: 29px;
+  float: left;
+  text-align: center;
+  padding: 10px 0;
+  background: rgb(93, 94, 95);
+  width: 16.6%;
+  color: #fff;
+  border-right: 1px solid gray;
+  border-width: 0.1em;
+  border-bottom: 2px solid rgb(93, 94, 95);
+}
+.content-bt-time div:hover, .content-bt-time div:focus, .content-bt-time div:active, .content-bt-time div.focus, .content-bt-time div.active {
+  background: #787879;
+  cursor: pointer;
+  border-bottom: 2px solid #fff;
+  padding: 10px 0;
+}
+.content-bt-time div a {
+  color: rgba(243, 243, 243, 0.4);
+  font-size: 10pt;
+  text-decoration: none;
 }

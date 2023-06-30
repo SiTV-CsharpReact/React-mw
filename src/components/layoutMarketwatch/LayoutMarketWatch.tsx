@@ -36,6 +36,7 @@ import { setOrderCount } from "./LayoutMarketWatchSLice";
 import { useSelector } from "react-redux";
 import CompleteStock from "../menuBarMW/CompleteStock";
 import { useTranslation } from "react-i18next";
+import { getDataApi, getDataApiPendingOder } from "../orderFormMarketwatch/data";
 
 function RenderTable() {
   const floor = useAppSelector((state) => state.tableTest.floor)
@@ -147,8 +148,11 @@ const LayoutMarketWatch: React.FC = () => {
       orderForm: true,
     });
   };
+ 
   // show hide order
   const hideOrderForm = () => {
+    dispatch(getDataApi())
+    dispatch(getDataApiPendingOder())
     setHeightComponent({
       ...heightComponent,
       orderForm: !heightComponent.orderForm,
@@ -205,7 +209,7 @@ const LayoutMarketWatch: React.FC = () => {
     const trValue = document.querySelector(
       `div[data-index="0"][data-comp="${rowID}"] span`
     )?.innerHTML;
-    console.log("click", trValue);
+    // console.log("click", trValue);
     if (trValue) {
       setSelectedValue({
         x: e.clientX,
@@ -357,9 +361,22 @@ const LayoutMarketWatch: React.FC = () => {
             <ChartMarketwatch />
           </div>
         </div>
+        <div
+            id="draggableH"
+            className="ui-draggable ui-draggable-handle"
+            style={{
+              top: heightComponent.heightPriceBoard,
+              background: "transparent",
+            }}
+            onClick={(e) => e.stopPropagation()}
+            draggable
+            onDragStart={handleDragStart}
+            onDrag={handleDrag}
+            onDragEnd={handleDragEnd}
+          />
         {/* orderform */}
 
-        <div>
+        <div className="absolute w-full z-[100] bg-white">
           <div
             className={`flex justify-between ${
               orderCount === 0 ? "" : "hidden"
@@ -404,7 +421,7 @@ const LayoutMarketWatch: React.FC = () => {
             }`}
           >
             <div
-              className="cursor-pointer pl-2.5 text-[#d71920] "
+              className="cursor-pointer pl-2.5 mt-0.5 text-[#d71920] "
               style={{
                 display: orderCount === 0 ? "none" : "block",
               }}
@@ -422,11 +439,11 @@ const LayoutMarketWatch: React.FC = () => {
               id="divArrowBottomDown"
               style={{ display: heightComponent.orderForm ? "block" : "none" }}
               onClick={hideOrderForm}
-            >
+            > 
               {orderCount === 1
                 ?  `${t("home:Order.TITLE_LCK1")}`
                 : orderCount === 2
-                ? `${t("home:Order.TITLE_KQKL1")}`
+                ? `${t("home:Order.TITLE_KQKL1")}` 
                 : `${t("home:Order.TITLE_LTN1")}`}
             </div>
             {/* menu link */}
@@ -435,7 +452,7 @@ const LayoutMarketWatch: React.FC = () => {
               className="text-black "
             >
               <div className="flex items-center justify-end panel__bottom__link">
-                <div className="px-2 group" onClick={() => showTab(1)}>
+                <div className="px-3 group" onClick={() => { dispatch(getDataApiPendingOder()); showTab(1)}}>
                   <span
                     className={`size-input hover-text-blue-L ${
                       orderCount === 1 ? "active" : ""
@@ -444,16 +461,16 @@ const LayoutMarketWatch: React.FC = () => {
                      {t("home:Order.TITLE_LCK")}
                   </span>
                 </div>
-                <div className="px-2 group" onClick={() => showTab(2)}>
-                  <span
-                    className={`size-input hover-text-blue-L ${
-                      orderCount === 2 ? "active" : ""
-                    }`}
-                  >
-                    {t("home:Order.TITLE_KQKL")} 
-                  </span>
-                </div>
-                <div className="px-2 group" onClick={() => showTab(3)}>
+                {/* hihi */}
+                <div className="px-3 group" onClick={() => { dispatch(getDataApi()); showTab(2) }}>
+                <span
+                  className={`size-input hover-text-blue-L ${orderCount === 2 ? "active" : ""}`}
+                >
+                  {t("home:Order.TITLE_KQKL")} 
+                </span>
+              </div>
+
+                <div className="px-3 group" onClick={() => showTab(3)}>
                   <span
                     className={`size-input hover-text-blue-L ${
                       orderCount === 3 ? "active" : ""
@@ -463,7 +480,7 @@ const LayoutMarketWatch: React.FC = () => {
                   </span>
                 </div>
                 <div
-                  className="cursor-pointer h-[35px] w-[45px] ml-4 hover:bg-white "
+                  className="cursor-pointer h-[35px] w-[45px] ml-3 mr-[1px] hover:bg-white "
                   style={{
                     display: orderCount === 0 ? "none" : "block",
                   }}
@@ -537,19 +554,7 @@ const LayoutMarketWatch: React.FC = () => {
               <IntradayOrder />
             </div>
           </div>
-          <div
-            id="draggableH"
-            className="ui-draggable ui-draggable-handle"
-            style={{
-              top: heightComponent.heightPriceBoard,
-              background: "transparent",
-            }}
-            onClick={(e) => e.stopPropagation()}
-            draggable
-            onDragStart={handleDragStart}
-            onDrag={handleDrag}
-            onDragEnd={handleDragEnd}
-          />
+      
         </div>
       </div>
     </div>

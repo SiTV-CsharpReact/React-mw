@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios"
+import { RPChart } from "../models/modelChart";
 const responseBody = (response: AxiosResponse) => response.data;
-const BASE_URL = "http://marketstream.fpts.com.vn/";
+const BASE_URL = "https://marketstream.fpts.com.vn/";
 const URL_EZTRADE = "http://eztrade0.fpts.com"
 // mặc định gửi authenticated token lên 
 // axios.defaults.headers.common['Authorization'] = 'Bearer ' + "auth_token";
@@ -16,7 +17,19 @@ const URL_EZTRADE = "http://eztrade0.fpts.com"
 
 const requests = {
     get: (url: string, params?: URLSearchParams) => axios.get(url, {params}).then(responseBody),
-    post: (url: string, body: {}) =>axios.post(url, body).then(responseBody),
+    post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
+    postFormData: (url: string, body: {}) => axios.post(url, body, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then((response) => {
+        console.log(response)
+        const responseBody = response.data;
+        return responseBody;
+    }).catch((error) => {
+        console.log("Lỗi trong quá trình gửi yêu cầu: " + error);
+        throw error;
+    }),
     put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
     delete: (url: string) => axios.delete(url).then(responseBody),
 }
@@ -47,7 +60,18 @@ const dataGDTTtable = {
     listBi : (floor : string)=>requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=bi`)
 }
 const chartIndex = {
-    get: () => requests.get('http://localhost:8000/dataChartIndex'),
+    get: () => requests.get('http://priceboard3.fpts.com.vn/chart/data.ashx?s=full'),
+    //get: () => requests.get('http://localhost:8000/dataChartIndex'),
+}
+var formData = new FormData();
+formData.append('key1', 'value1')
+formData.append('key2', 'value2')
+const dataTableBasic ={
+   
+    post: (dataValueBasic:RPChart) => requests.post("http://priceboard3.fpts.com.vn/Root/Data.ashx", dataValueBasic),
+    postFormData: (dataValueBasic:RPChart) =>requests.postFormData("http://priceboard3.fpts.com.vn/Root/Data.ashx", dataValueBasic)
+    //  requests.postFormData("/Root/Data.ashx", dataValueBasic,   {'Content-Type': 'multipart/form-data'},)
+      
 }
 // table Lịch sử khớp lệnh
 const report = {
@@ -67,6 +91,7 @@ const agent = {
     ListDataTable,
     dataGDTTtable,
     chartIndex,
+    dataTableBasic,
     report,
     transfer
 }

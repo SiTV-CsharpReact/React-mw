@@ -6,17 +6,17 @@ import { useTranslation } from 'react-i18next';
 
 const TotalGD = () => {
         const { t } = useTranslation(["report"]);
-    const [dataTotal, setDataTotal] = useState<any>()
-    const fetchData = async() => {
+        const [dataTotal, setDataTotal] = useState<any>()
+        const fetchData = async() => {
         const {data} = await axios.get("http://localhost:3109/Data")
         setDataTotal(data)
-    }
-    useEffect(() => {
-        fetchData()
-    },[])
+        }
+        useEffect(() => {
+            fetchData()
+        },[])
   return (
       <div>
-          <div className='w-[370px] h-[614px] pr-2 mt-5 ml-5 bg-[#ECECEC]'>
+          <div className='w-[380px] h-[614px] pr-2 mt-5 ml-5 bg-[#ECECEC]'>
               <div className='flex items-center justify-between px-2 pt-3'>
                   <p className='text-[12px] text-[#000000] !font-bold'>{t("report:Transbalance.TradeableMoney")}</p>
                   <p className='text-[12px] text-[#000000] !font-bold'>{ formatNumber(dataTotal?.PurchasingPowerTotal)}</p>
@@ -27,42 +27,42 @@ const TotalGD = () => {
               </div>
 
               <div className='pl-3 '>
-                   <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                   <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                       <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.MonneyBefore")}</p>
                   <p className='text-[12px] text-[#000000] !font-medium'>{ formatNumber(dataTotal?.CashAmount)}</p>
               </div>
 
-                <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                   <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.LendingToFPTS")}</p>
                   <p className='text-[12px] text-[#000000] !font-medium'>{ formatNumber(dataTotal?.FSaving)}</p>
               </div>
 
-                <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                   <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.AdvanceAmount")}	</p>
                   <p className='text-[12px] text-[#000000] !font-medium'>0</p>
               </div>
 
-                <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                   <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.BuyingPowerFromStocks")} <i className='fa fa-info-circle text-[#717171]'></i></p>
                   <p className='text-[12px] text-[#000000] !font-medium'>0</p>
               </div>
 
-                <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                   <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.PendingBuyOrders")}</p>
                   <p className='text-[12px] text-[#000000] !font-medium'>0</p>
               </div>
 
-                <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                   <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.CashSuspendedForBuyingMtched")}</p>
                   <p className='text-[12px] text-[#000000] !font-medium'>0</p>
               </div>
 
-                <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                   <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.CashInTransit")}</p>
                   <p className='text-[12px] text-[#000000] !font-medium'>0</p>
               </div>
 
-                <div className='flex items-center justify-between px-2 pt-3 hover:bg-[#EEFFEE]'>
+                <div className='flex items-center justify-between px-2 pt-[5px] hover:bg-[#EEFFEE]'>
                   <p className='text-[12px] text-[#000000] !font-medium'>{t("report:Transbalance.OtherUnpaidFees")}</p>
                   <p className='text-[12px] text-[#000000] !font-medium'>0</p>
               </div>

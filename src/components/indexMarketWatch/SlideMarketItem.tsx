@@ -19,6 +19,7 @@ type Props = {
   valueNoChange: string;
   status: string;
   san: string;
+  dataChartIndex: any;
 };
 
 const SlideMarketItem: React.FC<Props> = ({
@@ -37,10 +38,9 @@ const SlideMarketItem: React.FC<Props> = ({
   valueNoChange,
   status,
   san,
+  dataChartIndex,
 }: Props) => {
-
   return (
-   
     <>
       <li className="dvChart">
         <div >
@@ -93,10 +93,14 @@ const SlideMarketItem: React.FC<Props> = ({
                   {valueUp}
                 </span>
                 <span className="marc txtIndex">
-                  (<span className="marc" id={id[7]}>{valueCeiling}</span>)
+                  (
+                  <span className="marc" id={id[7]}>
+                    {valueCeiling}
+                  </span>
+                  )
                 </span>
                 <span className="square" />
-                <span  id={id[8]} className="marn txtIndex">
+                <span id={id[8]} className="marn txtIndex">
                   {valueNoChange}
                 </span>
                 <span className="arrowDown" />
@@ -104,7 +108,11 @@ const SlideMarketItem: React.FC<Props> = ({
                   {valueDown}
                 </span>
                 <span className="marf txtIndex">
-                  (<span className="marf" id={id[10]}>{valueFloor}</span>)
+                  (
+                  <span className="marf" id={id[10]}>
+                    {valueFloor}
+                  </span>
+                  )
                 </span>
                 <span
                   className="HO_MarketStat txtIndex"
@@ -116,7 +124,7 @@ const SlideMarketItem: React.FC<Props> = ({
             </>
           )}
           {/* <ChartIndex /> */}
-          <ChartTest name={name} san={san} />
+          <ChartTest name={name} san={san} dataChartIndex={dataChartIndex} />
         </div>
       </li>
     </>

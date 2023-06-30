@@ -1,50 +1,44 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Highcharts from "highcharts";
-
-// import type { InteractionItem } from "chart.js";
-// import {
-//   Chart as ChartJS,
-//   LinearScale,
-//   CategoryScale,
-//   BarElement,
-//   PointElement,
-//   LineElement,
-//   Legend,
-//   Tooltip,
-// } from "chart.js";
-// import {
-//   Chart,
-//   getDatasetAtEvent,
-//   getElementAtEvent,
-//   getElementsAtEvent,
-// } from "react-chartjs-2";
-import { useAppSelector } from "../../store/configureStore";
-import { getMax, getMin } from "./utils/service";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { formatNumber } from "../../utils/util";
+import { fetchAssetReport } from "./AssetReportSlice";
+import HighchartsReact from "highcharts-react-official";
 
-const ChartReport: any = (date: any) => {
-  const { mode } = useAppSelector((state) => state.settingColorMode);
+type IDate = {
+  date: number;
+};
+const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
+  // const { mode } = useAppSelector((state) => state.settingColorMode);
   const { assetReport } = useAppSelector((state) => state.assetReport);
+  const [data, setData] = useState<any>([]);
+  const [xAxis, setXAxis] = useState<any>([]);
+  const chartRef = useRef<any>(null);
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchAssetReport());
+  }, [dispatch]);
+  const changeOption: number = date === 0 ? 20 : 89;
 
   const arrLine: any = useMemo(() => {
     let arr: any = [];
-    for (let i = 1; i < assetReport.Table2?.length; i++) {
-      let data = 0;
+    let myArr: any = assetReport.Table2?.map((item: any) => item).reverse();
 
-      if (assetReport.Table2[i - 1].ANAV === 0) {
-        data = 0;
-      } else {
-        data =
-          ((assetReport.Table2[i].ANAV -
-            assetReport.Table2[i].ANAV_IN +
-            assetReport.Table2[i].ANAV_DE -
-            assetReport.Table2[i - 1].ANAV) /
-            assetReport.Table2[i - 1].ANAV) *
-          100;
-      }
+    for (let i = 1; i < myArr?.length; i++) {
+      let data =
+        myArr[i - 1].ANAV === 0
+          ? 0
+          : ((myArr[i].ANAV -
+              myArr[i].ANAV_IN +
+              myArr[i].ANAV_DE -
+              myArr[i - 1].ANAV) /
+              myArr[i - 1].ANAV) *
+            100;
+
       arr.push(Number(data.toFixed(2)));
     }
-    return arr;
+    return arr.reverse();
   }, [assetReport.Table2]);
 
   useEffect(() => {
@@ -54,7 +48,7 @@ const ChartReport: any = (date: any) => {
         type: "column",
         color: "#70ad47",
         data: assetReport.Table2?.map((item: any) => item.ANAV)
-          ?.splice(1, Number(date.date))
+          .slice(0, changeOption)
           .reverse(),
         yAxis: 0,
       },
@@ -63,38 +57,66 @@ const ChartReport: any = (date: any) => {
         type: "line",
         yAxis: 1,
         color: "#595959",
-        data: arrLine?.map((item: any) => item)?.splice(0, Number(date.date)),
+        data: arrLine
+          ?.map((item: any) => item)
+          .slice(0, changeOption)
+          .reverse(),
         maker: {
           symbol: "circle",
         },
       },
     ];
 
-    Highcharts.chart("container-asset_report", {
+    const chart = Highcharts.chart("container-asset_report", {
+      boost: {
+        enabled: true,
+        allowForce: true,
+      },
       chart: {
-        type: "column",
+        type: "line",
         backgroundColor: "#ececec",
+        spacingRight: 20,
+        spacingLeft: 10,
+        // spacingTop: -20,
+        // spacingBottom: 10,
         events: {
           load: function () {
+            //cách tính bước nhảy, min, max
             const yAxis = this.yAxis[0];
             const yExtremes = yAxis.getExtremes();
             const lengthStep =
               Math.round(yExtremes.dataMin * 0.9).toString().length - 2;
             const step = 10 ** lengthStep;
             const newMin = Math.floor((yExtremes.dataMin * 0.95) / step) * step;
-            const newMax = Math.floor(yExtremes.dataMax / step) * step;
+            const newMax = Math.ceil(yExtremes.dataMax / step) * step;
             yAxis.setExtremes(newMin, newMax, true, false);
-            console.log(this.series[1].points);
+            this.yAxis[1].update(
+              {
+                tickAmount: date === 0 ? 5 : 4,
+              },
+              false
+            );
+            yAxis.update(
+              {
+                tickAmount: date === 0 ? 5 : 4,
+              },
+              false
+            );
+
+            // //cập nhật maker in linechart
             this.series[1].points.forEach((point: any) => {
-              point.update({
-                color: point.y > 0 ? "#70ad47" : "#c00000",
-              });
+              point.update(
+                {
+                  color: point.y >= 0 ? "#548235" : "#c00000",
+                },
+                false // chặn ko cho chart vẽ lại khi giá trị mới đc cập nhật
+              );
             });
             this.redraw();
           },
         },
-        width: 1830,
         height: 300,
+        // width: 1850
       },
       title: {
         text: "",
@@ -104,9 +126,9 @@ const ChartReport: any = (date: any) => {
       },
       xAxis: {
         categories: assetReport.Table2?.map((item: any) => item.ADATE)
-          ?.splice(0, Number(date.date))
+          .slice(0, changeOption)
           .reverse(),
-        crosshair: true,
+        // crosshair: true,
         labels: {
           style: {
             fontSize: "11px",
@@ -114,9 +136,11 @@ const ChartReport: any = (date: any) => {
             fontFamily:
               '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif',
           },
+          y: 19,
         },
         lineWidth: 1,
         lineColor: "#ccd6eb",
+        height: 220,
       },
       yAxis: [
         {
@@ -135,9 +159,8 @@ const ChartReport: any = (date: any) => {
               return Highcharts.numberFormat(this.value as number, 0, "", ",");
             },
           },
-          tickAmount: date.date === "20" ? 5 : 4,
           gridLineWidth: 1,
-          tickInterval: 150000,
+          height: 220,
         },
         {
           title: {
@@ -152,13 +175,12 @@ const ChartReport: any = (date: any) => {
               color: "#000000",
               fontFamily:
                 '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif',
-              // x: -20,
             },
             formatter: function () {
-              return this.value + "%";
+              return this.value + " %";
             },
           },
-          tickAmount: date.date === "20" ? 5 : 4,
+          height: 220,
         },
       ],
       tooltip: {
@@ -184,7 +206,7 @@ const ChartReport: any = (date: any) => {
               )}<span style="text-decoration: underline;">đ</span></span><br/>
               <span style="line-height: 17px;">Phát sinh tăng: 0<span style="text-decoration: underline;">đ</span></span><br/>
               <span style="line-height: 0px;">Phát sinh tăng: 0<span style="text-decoration: underline;">đ</span></span></br>
-              <span style="font-size: 15px;font-weight: bold; display: inline-flex;align-items:flex-end; gap: 3px;"> 
+              <span style="font-size: 15px;font-weight: bold; display: inline-flex;align-items:flex-end; gap: 3px;">
                 <div style="width: 7px;height:7px;background: ${
                   bdPrice[1] > 0 ? "#70ad47" : "#c00000"
                 };border-radius: 50%; margin-bottom:3px;"></div>Biến động tài sản: ${
@@ -195,46 +217,61 @@ const ChartReport: any = (date: any) => {
         },
       },
       legend: {
-        symbolWidth: 12, // set the width of the legend symbol
-        symbolHeight: 12, // set the height of the legend symbol
+        // symbolWidth: 12, // set the width of the legend symbol
+        // symbolHeight: 12, // set the height of the legend symbol
         symbolRadius: 0,
-        // backgroundColor: 'red'
         squareSymbol: true,
+        // x: -10,
+        y: 7,
+        // itemMarginTop: 10,
+        // itemMarginBottom: -10,
+        // itemDistance: 20,
+        itemStyle: {
+          fontWeight: "bold",
+          fontSize: "12px",
+          color: "#333333",
+          fontFamily:
+            '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif',
+        },
       },
       plotOptions: {
         column: {
-          pointPadding: 0,
-          borderWidth: 0,
-          pointWidth: 42,
+          pointPadding: 0.1,
+          groupPadding: 0.2,
+          borderWidth: 1,
+          borderColor: "#fff",
           borderRadius: 0,
           states: {
             hover: {
               color: "rgb(137,198,96)",
             },
           },
-          // symbolWidth: 20, // set the width of the legend symbol
-          // symbolHeight: 20, // set the height of the legend symbol
-          // symbolRadius: 5,
+          // legendSymbol: 'rectangle'
         },
-        // line: {},
+        // line: {
+        //   legendSymbol: 'lineMarker'
+
+        // },
+        series: {
+          // showInLegend: true,
+          // lineWidth: 15,
+          marker: {
+            enabled: true,
+          },
+        },
       },
       series: series,
-      responsive: {
-        rules: [
-          {
-            condition: {
-              maxWidth: 500,
-            },
-          },
-        ],
-      },
     });
-  }, [arrLine, assetReport.Table2, date.date]);
+    return () => {
+      chart.destroy();
+    };
+  }, [arrLine, assetReport.Table2, changeOption, date]);
+
   return (
-    <figure className="highcharts-figure">
+    <figure className="highcharts-figure my-3">
       <div id="container-asset_report"></div>
     </figure>
   );
 };
 
-export default ChartReport;
+export default React.memo(ChartReport);

@@ -1,7 +1,11 @@
 body{
     height: 100%;
 }
-
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
 .message { 
     // padding-top: 15px;
     text-align: center;
@@ -31,3 +35,153 @@ a:hover{
 .contentMain{
     min-height: calc( 100vh - 41px - 40px - 34px);
  }
+
+ @keyframes fallAnimation {
+    0% {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
+.scroll{
+  scrollbar-width: thin; /* Đảm bảo thanh cuộn xuất hiện trên các trình duyệt mới nhất */
+  scrollbar-color: gray transparent;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scroll::-webkit-scrollbar-track {
+  background-color: #F0F0F0;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background-color: #A9A9A9;
+}
+.react-date-picker__clear-button{
+  display: none;
+}
+.react-date-picker__calendar-button{
+  display: none;
+}
+.react-calendar__month-view__days__day--weekend {
+  abbr{
+    color: black; /* Màu chữ tùy chỉnh cho ngày cuối tuần */
+  }
+}
+.react-calendar__tile--active{
+  abbr{
+    color: white; /* Màu chữ tùy chỉnh cho ngày cuối tuần */
+  }
+}
+.react-date-picker__calendar--open{
+  width: 230px !important;
+  font-size: 12px !important;
+}
+
+//tùy chỉnh màu cho ngày hiện tại
+.react-calendar__tile--now {
+  background: white !important;
+  &:hover{
+    background: #E6E6E6 !important;
+  }
+}
+.react-calendar__tile--active, .react-calendar__tile--hasActive{
+  // background: blue !important;
+  background-image: linear-gradient(to bottom,#08c,#04c) !important;
+  border-radius: 4px !important;
+  color: white !important;
+  &:hover{
+    background-image: linear-gradient(to bottom,#08c,#04c) !important;
+  }
+}
+.react-calendar__year-view__months__month{
+  font-size: 12px !important;
+  padding: 12px 0px !important;
+}
+
+//tùy chỉnh màu cho ngày không thuộc tháng hiện tại
+.react-calendar__month-view__days__day--neighboringMonth {
+  abbr{
+    color: #757575 !important;
+  }
+}
+
+//tùy chỉnh thứ trong tuần
+abbr:where([title]) {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 11px !important;
+}
+
+//tùy chỉnh màu cho thứ trong tuần
+.react-calendar__month-view__weekdays__weekday{
+  padding: 10px;
+  background-color: #F3F3F3;
+  border-radius: 5px;
+}
+
+.react-calendar__navigation{
+  margin-bottom: 0px !important;
+  height: 30px !important;
+  background-color: #F3F3F3;
+  border-radius: 5px;
+}
+.react-calendar__navigation__next2-button{
+  display: none;
+}
+.react-calendar__navigation__prev2-button{
+  display: none;
+}
+
+.react-calendar__month-view__days__day{
+  font-size: 12px !important;
+  padding: 4px 0px 4px 0px !important;
+}
+
+.react-calendar__year-view__months{
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 5px;
+  padding: 8px !important;
+}
+
+.react-calendar__navigation__label__labelText{
+  font-weight: 600 !important;
+}
+
+.react-calendar__century-view__decades__decade{
+  // white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  max-width: 3ch;
+}
+
+.react-date-picker__calendar-button{
+  width: max-content;
+}
+
+.react-date-picker__inputGroup__divider{
+  font-size: 13px !important;
+}
+.react-date-picker__inputGroup__input{
+  font-size: 12px !important;
+  max-width: min-content !important;
+  outline: none;
+}
+
+.react-date-picker__inputGroup{ 
+  padding: 0px 10px !important;
+  width: 100%;
+}
+.react-date-picker__wrapper{
+  border-radius: .25rem;
+  border: none !important;
+  height: 28px !important;
+} 

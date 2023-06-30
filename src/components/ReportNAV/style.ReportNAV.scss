@@ -1,0 +1,155 @@
+.body__content_reportNAV {
+  .view_BCBDTSR{
+    width: 55%;
+    margin: 0 auto;
+    @media (max-width:1000px){
+      width: 80%;
+    }
+    @media (min-width: 1201px) and (max-width: 1400px){
+      width: 80%;
+    }
+    @media (min-width: 1001px) and (max-width: 1200px){
+      width: 80%;
+    }
+  }
+  table {
+    tr {
+      height: 22px !important;
+    }
+    td {
+      padding: 1px 5px;
+      line-height: 22px;
+      font-family: arial;
+      font-size: 8pt;
+      font-weight: bold;
+      white-space: nowrap;
+      text-align: left;
+      vertical-align: top;
+      // border: 0 !important;
+      span {
+        &.lblTuNgay {
+          width: 45px;
+          float: left;
+          line-height: 33px;
+        }
+        &.lblDenNgay {
+          width: 51px;
+          float: left;
+          line-height: 33px;
+        }
+      }
+      #cboBeginning {
+        width: 113px;
+        float: left;
+        height: 31px;
+        font-weight: initial;
+      }
+      #cboEndOfTern {
+        width: 100px;
+        float: right;
+        height: 31px;
+        font-weight: initial;
+      }
+      .form-control {
+        font-size: 12px;
+        padding: 6px 8px;
+        display: block;
+        height: 34px;
+        width: 100%;
+        color: #555;
+        background: #fff;
+        border: 1px solid #ccc;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+        line-height: 1.42857143;
+        border-radius: 4px;
+        background-image: none;
+        margin: 0;
+        &:focus {
+          border-color: #66afe9;
+          outline: 0;
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+            0 0 8px rgba(102, 175, 233, 0.6);
+        }
+      }
+      &.P5 {
+        input {
+          height: 30px;
+        }
+        #Panel1 {
+          border-color: #dddddd;
+          border-width: 1px;
+          border-style: Solid;
+        }
+        .lineBtn {
+          line-height: 8px !important;
+        }
+      }
+      
+      #noteShow2,#noteShow3 {
+        font-weight: 300;
+        background-color: #fffff0;
+        padding: 0 10px;
+        bottom: -31px;
+        position: absolute;
+        left: 200px;
+        border: 1px solid #dedede;
+        transition-delay: 1s;
+        max-width: 300px;
+        border-radius: 5px;
+        box-shadow: 5px 5px 13px 0 #a39f9f;
+        z-index: 100;
+        left: 107px;
+        bottom: 27px;
+        font-size: 12px;
+        &::before {
+          content: "";
+          position: absolute;
+          bottom: -7px;
+          left: 10px;
+          border-top: 7px solid #fffff0;
+          border-left: 7px solid transparent;
+          border-right: 7px solid transparent;
+          bottom: -7px;
+        }
+      }
+      #noteShow3{
+        left: 125px;
+      }
+    }
+  }
+  .asset__report__BCLL__tbl {
+    .tableAR {
+      font-family: arial;
+      font-size: 9pt;
+      white-space: nowrap;
+      padding: 2px;
+      tr {
+        font-weight: bold;
+        background-color: #ececec !important;
+      }
+      td {
+        border: 1px solid #dedede;
+        padding: 1px 5px;
+        line-height: 22px !important;
+        text-align: center;
+        font-size: 9pt;
+        height: 23px;
+        span {
+          cursor: pointer;
+          color: #000;
+        }
+      }
+      thead {
+        background: #e7e6e6 !important;
+      }
+    }
+  }
+}
+input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+
+
+

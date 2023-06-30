@@ -10,7 +10,7 @@ export const dispatchDataTable :any = createAsyncThunk(
 export const dispatchDataTableBuy :any = createAsyncThunk(
   'data/dispatchDataTableBuy',
   async (dataBuy, thunkAPI) => {
-    console.log( "dataBuy", dataBuy);
+    // console.log( "dataBuy", dataBuy);
     return dataBuy;
     
   }
@@ -18,7 +18,7 @@ export const dispatchDataTableBuy :any = createAsyncThunk(
 export const dispatchDataMouseEventHandler :any = createAsyncThunk(
   'data/dispatchDataMouseEventHandler',
   async (dataMouse, thunkAPI) => {
-    console.log( "dataMouse", dataMouse);
+    // console.log( "dataMouse", dataMouse);
     return dataMouse;
     
   }
@@ -26,7 +26,7 @@ export const dispatchDataMouseEventHandler :any = createAsyncThunk(
 export const dispatchDataMouseEventHandlerBuy :any = createAsyncThunk(
   'data/dispatchDataMouseEventHandlerBuy',
   async (dataMouseBuy, thunkAPI) => {
-    console.log( "dataMouseBuy", dataMouseBuy);
+    // console.log( "dataMouseBuy", dataMouseBuy);
     return dataMouseBuy;
     
   }

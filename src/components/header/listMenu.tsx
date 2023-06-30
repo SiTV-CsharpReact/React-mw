@@ -90,13 +90,14 @@ const ListMenu = () => {
               </Link>
             </li>
             <li>
-              <Link
-                to="/transfer/ordersavings"
-                onClick={() => ChangeGetActiveMenu("/transfer/ordersavings")}
-                className="Foreign-Hide ezfu-hover-itemMenu"
-              >
-                {t("home:menu.TienchoVay")}
-                <input type="image" src={New} height={16} width={28} />
+              <Link to="/transfer/ordersavings" className="Foreign-Hide">
+                {t("home:menu.TienchoVay")}  
+                <input
+                  type="image"
+                  src={New}
+                  height={16}
+                  width={28}
+                />
               </Link>
             </li>
             <li>
@@ -122,11 +123,10 @@ const ListMenu = () => {
             <li>
               <Link
                 to="/report/AdvReport"
-                className="MarPro-Hide ezfu-hover-itemMenu"
-                onClick={() => ChangeGetActiveMenu("/report/AdvReport")}
+                className="MarPro-Hide"
                 style={{ display: "none" }}
               >
-                {t("home:menu.LSUTTTC")}
+                {t("home:menu.LSUTTBCK")}
               </Link>
             </li>
             <li>
