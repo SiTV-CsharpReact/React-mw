@@ -40,8 +40,8 @@ import TransBalance from "./components/TransBalance/TransBalance";
 const App: React.FC = () => {
   return (
     <div>
-      <AppProvider>
-        <Routes>
+      <AppProvider> 
+      <Routes> 
           <Route path="/" element={<LayoutMarketWatch />} />
           <Route path="/test" element={<TableMarketWatchTest />} />
           <Route
@@ -50,7 +50,6 @@ const App: React.FC = () => {
           />
           <Route path="/dynamic-dashboard" element={<MyLayout />} />
           {/* Report */}
-
           {/* Quản lý tài khoản */}
           <Route path="/report/ReportTransBalance" element={<TransBalance />} />
           <Route path="/report/AssetReport2" element={<AssetReport />} />

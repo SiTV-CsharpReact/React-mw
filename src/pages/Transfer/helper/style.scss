@@ -7,10 +7,18 @@ body{
   box-sizing: border-box;
 }
 .message { 
-    padding-top: 15px;
+    // padding-top: 15px;
     text-align: center;
     font-size: 18px;
     color: #ff0000;
+    & .updateLinkTransfer {
+        font-size: 13px;
+        padding-top: 0px !important;
+       
+        &:hover{
+            text-decoration: underline !important;
+        }
+    }
 }
 .message a {
     color: #337ab7;
