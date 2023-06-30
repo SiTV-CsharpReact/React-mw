@@ -16,7 +16,7 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
   const [dataSpline, setDataSpline] = useState<any>([]);
   const [timeFirst, setTimeFirst] = useState(0);
   const [timeLast, setTimeLast] = useState(0);
-  const [indexValue, setIndexValue] = useState(0);
+  const [indexValue, setIndexValue] = useState(6.34);
 
   useEffect(() => {
     if (dataChartOption?.length > 0) {
@@ -36,7 +36,7 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
       // data.map((item: any, ind: number) => {
       //   if (ind === 0) {
       //     const v = item?.TimeJS;
-      //     setIndexValue(item?.Index);
+      //     set6.34(item?.Index);
       //     setTimeFirst(item?.TimeJS);
       //     const l = new Date(timeFirst);
       //     l.setHours(l.getHours() + 6);
@@ -68,13 +68,13 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
             enabled: false,
           },
         },
-        data: [],
+        data: dataCol,
       },
       {
         name: "Spline",
         type: "spline",
         yAxis: 1,
-        data: [],
+        data: dataSpline,
       },
     ];
     Highcharts.chart(`container__chart__time`, {
@@ -110,17 +110,17 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
             xAxis.setExtremes(xmin, xmax, true, false);
             console.log(xAxis);
 
-            const yAxis = this.yAxis[1];
-            const yExtremes = yAxis.getExtremes();
+            // const yAxis = this.yAxis[1];
+            // const yExtremes = yAxis.getExtremes();
 
-            const minIndex = Number(yExtremes.dataMin);
-            const maxIndex = Number(yExtremes.dataMax);
-            const lengthStep = Math.round(minIndex * 0.9).toString().length - 2;
+            // const minIndex = Number(yExtremes.dataMin);
+            // const maxIndex = Number(yExtremes.dataMax);
+            // const lengthStep = Math.round(minIndex * 0.9).toString().length - 2;
 
-            const step = 10 ** lengthStep;
-            const newMin = Math.floor((minIndex * 0.95) / step) * step;
-            const newMax = Math.ceil(maxIndex / step) * step;
-            yAxis.setExtremes(newMin, newMax, true, false);
+            // const step = 10 ** lengthStep;
+            // const newMin = Math.floor((minIndex * 0.95) / step) * step;
+            // const newMax = Math.ceil(maxIndex / step) * step;
+            // yAxis.setExtremes(newMin, newMax, true, false);
 
             this.redraw();
           },
@@ -185,12 +185,12 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
           },
           gridLineWidth: 0,
           gridLineColor: "#6d6d6d1f",
-          // tickAmount: 8,
+          tickAmount: 4,
           plotLines: [
             {
               color: "#FFFF00",
               width: 1,
-              value: indexValue,
+              value: 6.34,
               zIndex: 10,
             },
           ],
@@ -211,7 +211,7 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
         formatter: function () {
           const index: any = this.points?.map((e: any, ind) => {
             if (ind === 1) {
-              if (e.y >= indexValue) {
+              if (e.y >= 6.34) {
                 e.series.chart.tooltip.options.borderColor = "#07d800";
               } else {
                 e.series.chart.tooltip.options.borderColor = "red";
@@ -245,7 +245,7 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
           lineWidth: 1.5,
           zones: [
             {
-              value: indexValue,
+              value: 6.34,
               color: "red",
             },
             {
@@ -261,7 +261,7 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
       },
       series: series,
     });
-  }, [dataCol, dataSpline, indexValue, timeFirst, timeLast]);
+  }, [dataCol, dataSpline, 6.34, timeFirst, timeLast]);
   return (
     <div className="chart__for__time">
       <figure className="highcharts-figure">
