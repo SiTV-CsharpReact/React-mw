@@ -35,7 +35,6 @@ const OrderMarketW = () => {
   const { t } = useTranslation(["home"]);
   // color mua ban
   const [color, setColor] = useState(true);
-  const [valueInput, setValueInput] = useState<string>("");
   const [valueInputPrice, setValueInputPrice] = useState<number>(0);
   const [valueInputKl, setValueInputKl] = useState<number>(0);
   const [gdSuccess, setGdSuccess] = useState(false);
@@ -129,7 +128,7 @@ const OrderMarketW = () => {
       setGdSuccess(true);
       setTimeout(() => {
         setSubmit(false);
-        setValueInput("");
+        setInputValue("");
         setValueInputPrice(0);
         setValueInputKl(0);
       }, 3000);
@@ -149,7 +148,7 @@ const OrderMarketW = () => {
 
     try {
       await validationSchema.validate({
-        txtSymbol: valueInput || dataShow.San || dataTable.ma || dataBuy.ma,
+        txtSymbol: inputValue || dataShow.San || dataTable.ma || dataBuy.ma,
       });
     } catch (error: any) {
       alert("Chưa nhập Mã chứng khoán");
@@ -174,7 +173,7 @@ const OrderMarketW = () => {
 
   const handelInputChange = (e: any) => {
     const value = e.target.value;
-    setValueInput(value.toUpperCase());
+    setInputValue(value.toUpperCase());
     const results: any = dataOrder.filter((item) =>
       item.toUpperCase().includes(value)
     );
@@ -187,16 +186,18 @@ const OrderMarketW = () => {
   useEffect(() => {
       if (dataBuy.ma) {
       setInputValue(dataBuy.ma)
-    }
-      // setInputValue(dataTable.ma ? dataTable.ma : (dataBuy.ma ? dataBuy.ma : inputValue) || dataShow.ma);
-      // console.log("sell",dataTable.ma, dataShow.ma,);
-      // console.log("buy",dataBuy.ma)
+      }
     }, [dataBuy.ma]);
   useEffect(() => {
     if (dataTable.ma) {
       setInputValue(dataTable.ma)
     }
-  },[dataTable.ma])
+  }, [dataTable.ma])
+   useEffect(() => {
+    if (dataShow.ma) {
+      setInputValue(dataShow.ma)
+    }
+  },[dataShow.ma])
   return (
     <div className="text-black bg-white" id="tablepricelist">
       {/* đặt lệnh */}
@@ -318,7 +319,7 @@ const OrderMarketW = () => {
                           name="txtSymbol"
                           value={inputValue} 
                         />
-                        {showResults && valueInput && (
+                        {showResults && inputValue && (
                           <div style={{
                             overflow: "auto", boxShadow: "rgba(0, 0, 0, 0.176) 0px 6px 12px 0px", outlineColor: "rgb(85, 85, 85)"
                             ,border:"1px rgba(0, 0, 0, 0.15)"
@@ -328,7 +329,7 @@ const OrderMarketW = () => {
                                 <li
                                   onClick={() => {
                                     let result = item.split("-");
-                                    setValueInput(result[0]);
+                                    setInputValue(result[0]);
                                     setSearchResults([]);
                                     setShowResults(false)
                                   }}
@@ -548,7 +549,7 @@ const OrderMarketW = () => {
                             {t("home:Order.ORDER_MUA")}
                             </td>
                             <td className="text-center border-r border border-[#dedede]">
-                              {valueInput ||
+                              {inputValue ||
                                 dataTable.ma ||
                                 dataBuy.ma ||
                                 dataShow.ma}
