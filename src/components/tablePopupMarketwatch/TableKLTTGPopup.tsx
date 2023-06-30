@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/configureStore";
 import { formatNumber } from "../../utils/util";
 
-const TableKLTTGPopup: React.FC<any> = ({ dataResult }) => {
+const TableKLTTGPopup: React.FC<any> = ({ dataKLTTG }) => {
   
   const { dataMouse } = useAppSelector(state => state.dataMouse);
   const { dataMouseBuy } = useAppSelector(state => state.dataMouseBuy);
@@ -22,7 +22,7 @@ const TableKLTTGPopup: React.FC<any> = ({ dataResult }) => {
         </tr>
       </thead>
       <tbody>
-        {dataResult.map((item: any, index: any) => {
+        {dataKLTTG.map((item: any, index: any) => {
            const color =
             dataMouse.priceF < item.MP ? "red"
               : dataMouse > item.MP

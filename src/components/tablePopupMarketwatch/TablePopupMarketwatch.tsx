@@ -26,7 +26,7 @@ interface DraggableProps {
 }
 const TablePopupMarketwatch = () => {
   const dispatch = useAppDispatch();
-  const [dataResult, setDataResult] = useState([]);
+  const [dataKLTTG, setDataKLTTG] = useState([]);
   const [dataResultSearch, setDataResultSearch] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
@@ -52,56 +52,61 @@ const TablePopupMarketwatch = () => {
   };
   const fetchDataTableHNX = async (code?: string) => {
     if (code !== "" && code !== undefined) {
-      const res:any = await axios.get(
+      const res: any = await axios.get(
         `https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${code}`
       );
-      console.log("")
-      res.data.map((obj:DataTable) =>
-      obj.Info?.sort((a: any, b: any) => {
-        const indexA = Number(a[0]);
-        const indexB = Number(b[0]);
-        if (indexA < indexB) {
-          return -1;
-        }
-        if (indexA > indexB) {
-          return 1;
-        }
-        return 0;
-      }) )
+      console.log("");
+      res.data.map((obj: DataTable) =>
+        obj.Info?.sort((a: any, b: any) => {
+          const indexA = Number(a[0]);
+          const indexB = Number(b[0]);
+          if (indexA < indexB) {
+            return -1;
+          }
+          if (indexA > indexB) {
+            return 1;
+          }
+          return 0;
+        })
+      );
       setDataItemHNX(res.data);
       return res.data;
     } else {
-      const res:any = await axios.get(
+      const res: any = await axios.get(
         `https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${stockDetail}`
       );
-      res.data.map((obj:DataTable) =>
-      obj.Info?.sort((a: any, b: any) => {
-        const indexA = Number(a[0]);
-        const indexB = Number(b[0]);
-        if (indexA < indexB) {
-          return -1;
-        }
-        if (indexA > indexB) {
-          return 1;
-        }
-        return 0;
-      }) )
+      res.data.map((obj: DataTable) =>
+        obj.Info?.sort((a: any, b: any) => {
+          const indexA = Number(a[0]);
+          const indexB = Number(b[0]);
+          if (indexA < indexB) {
+            return -1;
+          }
+          if (indexA > indexB) {
+            return 1;
+          }
+          return 0;
+        })
+      );
       setDataItemHNX(res.data);
       return res.data;
     }
   };
-  const fethData = async () => {
-    const { data } = await axios.get("http://localhost:9999/Data");
-    setDataResult(data);
-  };
-  const fethDataSearch = async () => {
-    const { data } = await axios.get("http://localhost:6868/Data");
-    console.log("data", data);
-    setDataResultSearch(data);
-  };
+
   useEffect(() => {
+    const fethData = async () => {
+      const { data } = await axios.get("http://localhost:9999/Data");
+      setDataKLTTG(data);
+    };
+    const fethDataSearch = async () => {
+      const { data } = await axios.get("http://localhost:6868/Data");
+      console.log("data", data);
+      setDataResultSearch(data);
+    };
     fethData();
     fethDataSearch();
+  }, []);
+  useEffect(() => {
     fetchDataTableHNX();
     fetchDataTableHSX();
   }, [stockDetail]);
@@ -111,15 +116,15 @@ const TablePopupMarketwatch = () => {
   };
   useEffect(() => {
     const results = dataResultSearch.filter(
-      (item: any) => item.Code.toUpperCase().includes(dataCheck),
+      (item: any) => item.Code.toUpperCase().includes(dataCheck)
       // console.log("filteredData", dataCheck)
     );
     setFilteredData(results);
   }, [dataCheck, dataResultSearch]);
 
   const [position, setPosition] = useState({
-    x: (window.innerWidth - 1230) /2,    // - đi witdh tablle chia 2
-    y: (window.innerHeight - 721 -40) /2 ,
+    x: (window.innerWidth - 1230) / 2, // - đi witdh tablle chia 2
+    y: (window.innerHeight - 721 - 40) / 2,
   });
   const handleDrag = (e: DraggableEvent, ui: DraggableData) => {
     const { x, y } = position;
@@ -182,8 +187,10 @@ const TablePopupMarketwatch = () => {
               </div>
               <div className="inline-block pu-div-title">
                 <h2 className="pu-title">
-                   {dataItemHNX.length !== 0  ?dataItemHNX[0]?.Info[0][1]:dataItemHSX[0]?.Info[0][1] } -{" "}
-                  {getCompanyNameByCode(dataItemHNX[0]?.Info[0][1])}
+                  {dataItemHNX.length !== 0
+                    ? dataItemHNX[0]?.Info[0][1]
+                    : dataItemHSX[0]?.Info[0][1]}{" "}
+                  - {getCompanyNameByCode(dataItemHNX[0]?.Info[0][1])}
                 </h2>
               </div>
             </div>
@@ -248,12 +255,14 @@ const TablePopupMarketwatch = () => {
           </div>
         </div>
         <div>
-          <TableDetailPopup dataItem={dataItemHNX.length !==0 ? dataItemHNX :dataItemHSX} />
+          <TableDetailPopup
+            dataItem={dataItemHNX.length !== 0 ? dataItemHNX : dataItemHSX}
+          />
         </div>
         <div className="flex pu-info mt-[5px]">
           <div className="pu-basic w-[409px] mx-1">
-            <TableBasicPopup stockCode={stockDetail}/>
-            <TableReportingPopup stockCode={stockDetail}/>
+            <TableBasicPopup stockCode={stockDetail} />
+            <TableReportingPopup stockCode={stockDetail} />
           </div>
           <div className="pu-hrz-realtime w-[391px] mx-1">
             <div
@@ -266,7 +275,7 @@ const TablePopupMarketwatch = () => {
                 }
               }}
             >
-              <TableKLTTGPopup dataResult={dataResult} />
+              <TableKLTTGPopup dataKLTTG={dataKLTTG} />
             </div>
             <div className="w-full pu-div-PT">
               <TableGDTTPopup />
@@ -276,8 +285,8 @@ const TablePopupMarketwatch = () => {
             </div>
           </div>
           <div className="pu-hrz-chart">
-            <ChartPopup />     
-            <ChartWithOption stockCode={stockDetail}/>
+            <ChartPopup />
+            <ChartWithOption stockCode={stockDetail} />
           </div>
         </div>
       </div>
