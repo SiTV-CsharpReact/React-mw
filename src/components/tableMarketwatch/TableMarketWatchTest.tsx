@@ -28,27 +28,27 @@ const TableMarketWatchTest = () => {
   const dispatch = useAppDispatch();
   // rest sort 
   //setRowData
-  const {ListDataTable ,DataPined ,RowPined ,keyActiveMan} = useAppSelector((state) => state.tableTest );
+  const { ListDataTable, DataPined, RowPined, keyActiveMan } = useAppSelector((state) => state.tableTest);
   // pinned
   const pinned = useAppSelector((state) => state.categories.row);
   // call data 
-  const HanDelCate  = useCallback( async ()=>{
+  const HanDelCate = useCallback(async () => {
     let result = await dispatch(fetchCategoryAsync());
     if (result?.payload?.Data[0]?.List) {
       let data = {
         Floor: "danh-muc",
         Query: result?.payload?.Data[0]?.List,
-        RowPined : result?.payload?.Data[0]?.Row,
+        RowPined: result?.payload?.Data[0]?.Row,
       };
       await handelGetData(data);
     } else {
       let data = {
         Floor: "HSX",
         Query: "s=quote&l=All",
-        RowPined : null,
-        KeyMenuChildren : null
+        RowPined: null,
+        KeyMenuChildren: null
       };
-      let newCookie={
+      let newCookie = {
         tab: "VNI",
         codeList: ""
       }
@@ -56,19 +56,19 @@ const TableMarketWatchTest = () => {
       setCookie(newCookie)
       await handelGetData(data);
     }
-   } , [dispatch])
+  }, [dispatch])
   const handelGetData = useCallback(
     (Data: any) => {
       dispatch(getDataTable(Data));
     },
     [dispatch]
   );
- 
+
   useEffect(() => {
-    if(keyActiveMan === 0){
+    if (keyActiveMan === 0) {
       HanDelCate();
     }
-  }, [dispatch,HanDelCate]);
+  }, [dispatch, HanDelCate]);
   useEffect(() => {
     const socketHSX = new WebSocket(
       "wss://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=l4Qv5el2qo7nNiXubQ1oHGbFB%2F4w1UNE4vpgPXPs5nz6VP7b6bGYnMwB2aivGfMOUNZ%2F0QwrXmR%2BwkqRkEukXGYDdn8iKHzVZ%2BIiwFO2A1nxyh0%2FCdX3rc3omFIBjraz&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=5"
@@ -87,7 +87,7 @@ const TableMarketWatchTest = () => {
       // console.log(gridOptions.api)
       // gridOptions.api.setRowData(event.data);
     };
-  
+
     socketHNX.onmessage = (event) => {
       // updateQuote(event.data)
       updateQuote(event.data);
@@ -103,7 +103,7 @@ const TableMarketWatchTest = () => {
       socketHSX.close();
       socketHNX.close();
     };
-    
+
   }, []);
   // useEffect(() => {
   //   const socketHNX = new WebSocket(
@@ -153,9 +153,9 @@ const TableMarketWatchTest = () => {
   };
   const updateTableHNX = (dataHNX: any) => {
     var vTextClass = "",
-    vImageClass = "",
-    vName = "",
-    vStrs = "";
+      vImageClass = "",
+      vName = "",
+      vStrs = "";
     const arrRowID = dataHNX.RowID;
     const arrInfo = dataHNX.Info;
     if (dataHNX) {
@@ -218,7 +218,7 @@ const TableMarketWatchTest = () => {
             if (vCLassIndex) {
               if (vTextClass) {
                 vCLassIndex.className = vTextClass + " px-0.5";
-           
+
                 // console.log(vCLassIndex,vTextClass)
                 //vCLassIndex.classList.add(vTextClass);
               }
@@ -230,10 +230,10 @@ const TableMarketWatchTest = () => {
                 //vCLassIndex.classList.add(vTextClass);
               }
             }
-        
+
           }
           //hsx
-          if(vStrs[1]==="ChangePercent"){
+          if (vStrs[1] === "ChangePercent") {
             var v = parseFloat(dataHNX[1]);
             if (v === 0) {
               // = tham chieu, vang
@@ -251,10 +251,10 @@ const TableMarketWatchTest = () => {
               vTextClass = g_CLASS_INDEX[2][0];
               vImageClass = g_CLASS_INDEX[2][1];
             }
-            if(vCLassIndexHSX){
+            if (vCLassIndexHSX) {
               if (vTextClass) {
                 vCLassIndexHSX.className = vTextClass + " px-0.5";
-           
+
                 // console.log(vCLassIndex,vTextClass)
                 //vCLassIndex.classList.add(vTextClass);
               }
@@ -339,24 +339,24 @@ const TableMarketWatchTest = () => {
     }
   };
   const containerStyle = { width: "100%", height: "100%" };
-const gridStyle = { height: "100%", width: "100%" };
-  const HandleHistory= ()=>{
-      dispatch(handleHistoryPrices("tets"))
+  const gridStyle = { height: "100%", width: "100%" };
+  const HandleHistory = () => {
+    dispatch(handleHistoryPrices("tets"))
   }
   useEffect(() => {
     document.addEventListener("contextmenu", (event) => {
       event.preventDefault();
     });
     return () => {
-      document.removeEventListener("contextmenu", () => {});
+      document.removeEventListener("contextmenu", () => { });
     };
   }, []);
   //  ******************************************************************
-const [option ,setOntion] =useState(null)
+  const [option, setOntion] = useState(null)
 
   return (
     <div style={containerStyle}>
-       
+
       <div style={gridStyle} className="ag-theme-alpine-dark table__price">
         <AgGridReact
           ref={gridRef}
@@ -386,7 +386,7 @@ const [option ,setOntion] =useState(null)
           }}
         />
       </div>
-    
+
     </div>
   );
 };

@@ -12,8 +12,8 @@ export const fetchChartOptionAsync = createAsyncThunk<[], DataStockCode>(
   async (data) => {
     try {
       const response = await agent.dataTableBasic.postFormData({
-        "action": "gw_realtime",
-        "symbol": data.stockCode
+        action: "gw_realtime",
+        symbol: data.stockCode,
       });
       return response.data;
     } catch (error) {

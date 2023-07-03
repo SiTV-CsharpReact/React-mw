@@ -18,13 +18,13 @@ const ChartPopup = () => {
     ];
     const gradient: any = [0, 0, 50, 500];
     const chart = Highcharts.chart("container", {
-      chart: {    
+      chart: {
         type: "column",
         // zoomType: "xy",
         height: 160,
         // width: 225,
         polar: true,
-        backgroundColor: "#505050",
+        backgroundColor: "#303030",
         plotBackgroundColor: {
           linearGradient: gradient,
           stops: [
@@ -32,8 +32,6 @@ const ChartPopup = () => {
             [1, "#917c05"],
           ],
         },
-        // plotBorderColor: "#333333",
-        // plotBorderWidth: 1,
       },
       credits: {
         enabled: false,
@@ -51,7 +49,7 @@ const ChartPopup = () => {
           },
         },
         height: 120,
-        lineWidth: 0,
+        lineWidth: 1,
         offset: -10,
         // crosshair: true,
       },
@@ -68,11 +66,13 @@ const ChartPopup = () => {
           distance: 8,
         },
         height: 120,
+        // lineColor: 0,
         endOnTick: true,
         maxPadding: 0.01,
         minorTickInterval: 5,
         tickAmount: 5,
-        gridLineWidth: 0,
+        gridLineWidth: 1,
+        gridLineColor: "#272412",
       },
       tooltip: {
         backgroundColor: "#ffffffc9",
@@ -116,12 +116,9 @@ const ChartPopup = () => {
       },
       series: series,
     });
-    return () => {
-      chart.destroy();
-    };
   }, []);
   return (
-    <div className="w-full bg-[#333333]">
+    <div className="pu-div-chart-rt">
       <figure className="highcharts-figure">
         <div id="container"></div>
       </figure>

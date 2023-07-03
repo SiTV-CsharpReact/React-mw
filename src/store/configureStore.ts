@@ -22,6 +22,8 @@ import statusTableMWSlice from "../components/chartMarketwatch/statusTableSlice"
 import chartIndexSlice from "../components/chartIndex/chartIndexSlice";
 import { dataSliceThongke } from "../components/tableMarketwatch/helper/tableFormThongke";
 import chartOptionSlice from "../components/tablePopupMarketwatch/chartOptionSlice";
+import RespportSlice from "../pages/Report/ResportSlice";
+import TransferSlice from "../pages/Transfer/TransferSlice";
 
 export const store = configureStore({
   reducer: {
@@ -76,6 +78,8 @@ export const store = configureStore({
     dataApi: dataSliceShow.reducer,
     dataApiPendingOder : dataSliceShow.reducer,
     
+    report :RespportSlice.reducer,
+    transfer : TransferSlice.reducer
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

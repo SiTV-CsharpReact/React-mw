@@ -159,7 +159,7 @@ const TableAssetReportShort: React.FC<IpropsTableReport> = ({
                   : "!text-[#00b050]"
               }`}
             >
-              {item.APROFIT_LOSS_RATE}%
+              {Number(item.APROFIT_LOSS_RATE).toFixed(2)}%
             </td>
           </tr>
         ))}

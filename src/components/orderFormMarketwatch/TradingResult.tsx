@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import excell from "../../images/excel.png";
 import pfd from "../../images/pdf.png";
 import * as XLSX from "xlsx";
@@ -12,6 +12,8 @@ import { useTranslation } from "react-i18next";
 import { Tooltip } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { getDataApi } from "./data";
+import {useReactToPrint} from "react-to-print";
+
 const Tbody = (props: any) => {
   const [drop, setDrop] = React.useState(false);
   console.log(
@@ -261,6 +263,7 @@ const TradingResult = () => {
   const [dataArrSell, setDataArrSell] = useState([]);
   const [data, setData] = useState<any>([]);
   const [dataSell, setDataSell] = useState<any>([]);
+  const componentPDF = useRef<any>()
   const { dataApi } = useAppSelector((state) => state.dataApi)
   const handleExportToExcel = (e: any) => {
     e.preventDefault();
@@ -279,29 +282,11 @@ const TradingResult = () => {
     link.dispatchEvent(new MouseEvent("click"));
     URL.revokeObjectURL(url);
   };
-  const handleExportToPDF = () => {
-    const table = document.getElementById("table-id");
-    const doc: any = new jsPDF("p", "pt");
-    doc.addFont("Helvetica", "Helvetica", "normal");
-    doc.setFont("Helvetica");
-    if (table) {
-      doc.autoTable({
-        html: table,
-        startX: 20,
-        styles: {
-          size: 10,
-          fontSize: 4,
-          cellPadding: 6,
-          fillColor: "gray",
-          font: "Helvetica",
-          lowercase: true,
-        },
-        tableWidth: "auto",
-        margin: { top: 20 },
-      });
-    }
-    doc.save("filename.pdf");
-  };
+const handleExportToPDF = useReactToPrint({
+    content: () => componentPDF.current,
+    documentTitle: "Export PDF",
+    onAfterPrint: () => alert("Export is successfully"),
+  })
   const fetchBuyData = async () => {
     const buyData = dataApi?.Table?.filter((items: any) => items.ABUYSELL === "B");
     const uniqueData = _.uniqBy(buyData, "ASTOCKCODE");
@@ -410,7 +395,9 @@ const TradingResult = () => {
           </div>
         </div>
       </div>
-
+      <div ref={componentPDF} style={{width:"100%"}}>
+        
+              
       <div className="flex gap-[10px] mx-auto mt-[2px] ml-5 mr-7 ">
         {/* buy */}
         <div className="w-1/2 border-gray-300 h-fit">
@@ -498,7 +485,8 @@ const TradingResult = () => {
             </tbody>
           </table>
         </div>
-      </div>
+        </div>
+        </div>
     </div>
   );
 };
