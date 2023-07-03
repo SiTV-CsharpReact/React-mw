@@ -41,8 +41,8 @@ import ConditionalOderText from "./pages/Stoploss/ConditionalOderText";
 const App: React.FC = () => {
   return (
     <div>
-      <AppProvider> 
-      <Routes> 
+      <AppProvider>
+        <Routes>
           <Route path="/" element={<LayoutMarketWatch />} />
           <Route path="/test" element={<TableMarketWatchTest />} />
           <Route
@@ -77,10 +77,6 @@ const App: React.FC = () => {
             path="/report/ClientActivityRange"
             element={<HistoryOrder />}
           />
-<<<<<<< HEAD
-          <Route path="/report/TransBalance" element={<TransBalance />} />
-=======
->>>>>>> b6b3084bafb322e08200f445ac49af25fdb85827
           <Route path="/report/TradeLog" element={<HistoryMatching />} />
           <Route path="/report/PendingSettlement" element={<HistoryForpay />} />
           {/* Lịch sử ứng trước tiền bán CK */}
@@ -129,7 +125,10 @@ const App: React.FC = () => {
 
           {/* Stoploss */}
           <Route path="/stoploss/orderform" element={<ConditionalOrder />} />
-          <Route path="/stoploss/orderform_test" element={<ConditionalOderText />} />
+          <Route
+            path="/stoploss/orderform_test"
+            element={<ConditionalOderText />}
+          />
 
           <Route path="/stoploss/history" element={<ConditionalOrderBook />} />
           {/* Oddlot */}
