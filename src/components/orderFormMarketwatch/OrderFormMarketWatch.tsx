@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useContext, useEffect, useRef, useState } from "react";
 import "flowbite";
 import React from "react";
 import Switch from "@mui/material/Switch";
@@ -43,6 +43,127 @@ const OrderMarketW = () => {
   const [showResults, setShowResults] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [success, setSuccess] = useState("");
+
+  const [valueInputMaCk, setValueInputMaCk] = useState<any>("");
+  const [focusMaCk, setFocusMaCk] = useState<any>(false);
+  const [suggestionsMaCk, setSuggestionsMaCk] = useState<any>([]);
+  const [selectedIndexMaCk, setSelectedIndexMaCk] = useState<any>(-1);
+
+  var availableTags = [
+    {
+      Code: "AAV",
+      Exchange: 2,
+      ScripName: "Công ty Cổ phần AAV Group",
+      Basic_Price: 4600,
+      Ceiling_Price: 5000,
+      Floor_Price: 4200,
+      Stock_Type2: 2,
+      ScripNameEN: "AAV Group Joint Stock Company",
+      ID: "1786",
+    },
+    {
+      Code: "ADC",
+      Exchange: 2,
+      ScripName: "Công ty Cổ phần Mỹ thuật và Truyền Thông",
+      Basic_Price: 18000,
+      Ceiling_Price: 19800,
+      Floor_Price: 16200,
+      Stock_Type2: 2,
+      ScripNameEN: "Art Design & Communication Joint Stock Company",
+      ID: "984",
+    },
+    {
+      Code: "ALT",
+      Exchange: 2,
+      ScripName: "Công ty Cổ phần Văn hóa Tân Bình",
+      Basic_Price: 13600,
+      Ceiling_Price: 14900,
+      Floor_Price: 12300,
+      Stock_Type2: 2,
+      ScripNameEN: "ALTA Company",
+      ID: "4",
+    },
+    {
+      Code: "XYZ",
+      Exchange: 1,
+      ScripName: "Công ty Cổ phần XYZ",
+      Basic_Price: 8000,
+      Ceiling_Price: 9000,
+      Floor_Price: 7000,
+      Stock_Type2: 1,
+      ScripNameEN: "XYZ Joint Stock Company",
+      ID: "567",
+    },
+    {
+      Code: "DEF",
+      Exchange: 2,
+      ScripName: "Công ty Cổ phần DEF",
+      Basic_Price: 25000,
+      Ceiling_Price: 28000,
+      Floor_Price: 22000,
+      Stock_Type2: 2,
+      ScripNameEN: "DEF Joint Stock Company",
+      ID: "789",
+    },
+    {
+      Code: "GHI",
+      Exchange: 1,
+      ScripName: "Công ty Cổ phần GHI",
+      Basic_Price: 12000,
+      Ceiling_Price: 14000,
+      Floor_Price: 10000,
+      Stock_Type2: 1,
+      ScripNameEN: "GHI Joint Stock Company",
+      ID: "987",
+    },
+    {
+      Code: "ABC",
+      Exchange: 1,
+      ScripName: "Công ty Cổ phần ABC",
+      Basic_Price: 15000,
+      Ceiling_Price: 17000,
+      Floor_Price: 13000,
+      Stock_Type2: 1,
+      ScripNameEN: "ABC Joint Stock Company",
+      ID: "123",
+    },
+    {
+      Code: "EFG",
+      Exchange: 2,
+      ScripName: "Công ty Cổ phần EFG",
+      Basic_Price: 32000,
+      Ceiling_Price: 35000,
+      Floor_Price: 30000,
+      Stock_Type2: 2,
+      ScripNameEN: "EFG Joint Stock Company",
+      ID: "456",
+    },
+    {
+      Code: "HIJ",
+      Exchange: 1,
+      ScripName: "Công ty Cổ phần HIJ",
+      Basic_Price: 2500,
+      Ceiling_Price: 2800,
+      Floor_Price: 2200,
+      Stock_Type2: 1,
+      ScripNameEN: "HIJ Joint Stock Company",
+      ID: "789",
+    },
+    {
+      Code: "KLM",
+      Exchange: 2,
+      ScripName: "Công ty Cổ phần KLM",
+      Basic_Price: 6200,
+      Ceiling_Price: 6900,
+      Floor_Price: 5700,
+      Stock_Type2: 2,
+      ScripNameEN: "KLM Joint Stock Company",
+      ID: "1011",
+    },
+  ];
+
+  const inputRef = useRef<any>(null);
+
   // ghi lenh cho gui
   const [order, setOrder] = useState(true);
   //const dispatch = useAppDispatch();
@@ -103,17 +224,75 @@ const OrderMarketW = () => {
     setOrder(!order);
   };
 
-  const dataOrder: string[] = [
-    "AAV - HNX.NY - Công ty Cổ phần AAV Group",
-    "ADC - HNX.NY - Công ty Cổ phần Mỹ thuật và Truyền Thông",
-    "ALT - HNX.NY - Công ty Cổ phần Văn hóa Tân Bình",
-    "AMC - HNX.NY - Công ty Cổ phần Khoáng Sản Á Châu",
-    "AME - HNX.NY - Công ty Cổ phần Alphanam E&C",
-    "AMV - HNX.NY - Công ty Cổ phần Sản xuất kinh doanh dược và trang thiết bị Y tế Việt Mỹ",
-    "API - HNX.NY - Công ty Cổ phần Đầu tư Châu Á - Thái Bình Dương",
-    "APS - HNX.NY - Công ty Cổ phần Chứng khoán Châu Á Thái Bình Dương",
-    "ARM - HNX.NY - Công ty Cổ phần Xuất nhập khẩu Hàng không",
-  ];
+  // xử lí input mã CK
+  const handleChangeMaCK = (e: any) => {
+    const value = e.target.value;
+    setValueInputMaCk(value);
+
+    // Lọc các gợi ý dựa trên giá trị nhập vào
+    handleFilter(value);
+  };
+  // xử lí lọc data giá trị nhập vào input MaCK
+  const handleFilter = (value: any) => {
+    const filteredSuggestions = availableTags.filter((tag) =>
+      tag.Code.toLowerCase().startsWith(value.toLowerCase())
+    );
+
+    setSuggestionsMaCk(filteredSuggestions);
+  };
+  // Xử lí khi nhấn phím Input MaCK
+  const handleKeyDown = (e: any) => {
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setSelectedIndexMaCk((prevIndex: number) =>
+        prevIndex > 0 ? prevIndex - 1 : suggestionsMaCk.length - 1
+      );
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setSelectedIndexMaCk((prevIndex: number) =>
+        prevIndex < suggestionsMaCk.length - 1 ? prevIndex + 1 : 0
+      );
+    }
+    if ((e.key === "Enter" || e.key === "Tab") && selectedIndexMaCk !== -1) {
+      e.preventDefault();
+      setValueMaCk(suggestionsMaCk[selectedIndexMaCk].Code);
+    }
+  };
+  // HighLight Kí tự Mã CK
+  const highlightMatch = (text: string) => {
+    const input = valueInputMaCk.toLowerCase();
+    const startIndex = text.toLowerCase().indexOf(input);
+    const endIndex = startIndex + input.length;
+
+    if (startIndex === -1) {
+      return text;
+    }
+
+    return (
+      <>
+        {text.substring(0, startIndex)}
+        <span className="font-semibold text-[#FF0000]">
+          {text.substring(startIndex, endIndex)}
+        </span>
+        {text.substring(endIndex)}
+      </>
+    );
+  };
+
+  // Hàm setValue MaCK
+  const setValueMaCk = (value: string) => {
+    setValueInputMaCk(value);
+    setFocusMaCk(false);
+    inputRef.current.blur();
+  };
+  // set lại active sau mỗi lần value thay đổi
+  useEffect(() => {
+    setSelectedIndexMaCk(-1);
+  }, [valueInputMaCk]);
+  // Xử lí Active màu khi hover vào phần tử
+  const handleHover = (index: number) => {
+    setSelectedIndexMaCk(index);
+  };
 
   const handelInputChangePrice = (e: any) => {
     const value = e.target.value;
@@ -124,11 +303,6 @@ const OrderMarketW = () => {
     setValueInputKl(value.toUpperCase());
   };
 
-  // const handelCheck = () => {
-  //   const item : any = dataOrder.map((item,index) => item.split("-"));
-  //   setValueInput(item[0][0])
-  //   console.log("item",item[0])
-  // }
   const handelSuccess = (e: any) => {
     e.preventDefault();
     if (!success) {
@@ -144,13 +318,21 @@ const OrderMarketW = () => {
     }
   };
   const validationSchema = yup.object().shape({
-    txtSymbol: yup.string().required( `${t("home:menu.CHECK_VLN")} ${t("home:Order.ORDER_MCK")} ` ),
+    txtSymbol: yup
+      .string()
+      .required(`${t("home:menu.CHECK_VLN")} ${t("home:Order.ORDER_MCK")} `),
   });
   const validationSchemaPrice = yup.object().shape({
-    txtSymbol: yup.number().min(1).required( `"${t("home:menu.CHECK_VLN")} ${t("home:Order.ORDER_MCK")}"`),
+    txtSymbol: yup
+      .number()
+      .min(1)
+      .required(`"${t("home:menu.CHECK_VLN")} ${t("home:Order.ORDER_MCK")}"`),
   });
   const validationSchemaKl = yup.object().shape({
-    txtSymbol: yup.number().min(1).required( `"${t("home:menu.CHECK_VLN")} ${t("home:Order.ORDER_MKL")}"`),
+    txtSymbol: yup
+      .number()
+      .min(1)
+      .required(`"${t("home:menu.CHECK_VLN")} ${t("home:Order.ORDER_MKL")}"`),
   });
   const handleClick = async (e: any) => {
     e.preventDefault();
@@ -180,15 +362,6 @@ const OrderMarketW = () => {
     setSubmit(!submit);
   };
 
-  const handelInputChange = (e: any) => {
-    const value = e.target.value;
-    setValueInput(value.toUpperCase());
-    const results: any = dataOrder.filter((item) =>
-      item.toUpperCase().includes(value)
-    );
-    setSearchResults(results);
-    setShowResults(value !== "");
-  };
   const handelPopup = () => {
     setPopup(!popup);
   };
@@ -228,7 +401,7 @@ const OrderMarketW = () => {
                     // className="normal-case tabSell "
                     onClick={() => setColor(false)}
                   >
-                    {t("home:Order.ORDER_BAN")} 
+                    {t("home:Order.ORDER_BAN")}
                   </div>
 
                   <input
@@ -300,41 +473,58 @@ const OrderMarketW = () => {
                         <span className="absolute top-[-20px] right-[3px] !text-[12px] !text-[#333]">
                           TLV:{dataShow.TLV ? dataShow.TLV : 0}%
                         </span>
-                        <input
-                          type="text"
-                          className="form-control relative ui-autocomplete-input size-input p-[2px] w-[100%] mr-[14px] rounded-md pl-[8px]"
-                          placeholder={`${t("home:Order.ORDER_MCK")}`}
-                          id="txtSymbol"
-                          // onFocus={() => setShowResults(true)}
-                          // onBlur={() => setShowResults(false)}
-                          onChange={handelInputChange}
-                          name="txtSymbol"
-                          value={
-                            dataTable.ma
-                              ? dataTable.ma
-                              : (dataBuy.ma ? dataBuy.ma : valueInput) ||
-                                dataShow.ma
-                          }
-                        />
-                        {showResults && valueInput && (
-                          <div className="absolute pl-3 bg-white rounded-md shadow-xl ">
-                            <ul>
-                              {searchResults.map((item: any, index) => (
-                                <li
-                                  onClick={() => {
-                                    let result = item.split("-");
-                                    setValueInput(result[0]);
-                                    setSearchResults([]);
-                                  }}
-                                  className="my-2 cursor-pointer hover:bg-[#63a9e066]"
-                                  key={index}
-                                >
-                                  {item}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
+
+                        <div className="relative h-[28px]">
+                          <input
+                            ref={inputRef}
+                            type="text"
+                            value={valueInputMaCk}
+                            onChange={handleChangeMaCK}
+                            placeholder={`${t("home:Order.ORDER_MCK")}`}
+                            id="txtSymbol"
+                            onKeyDown={handleKeyDown}
+                            autoComplete="off"
+                            onFocus={() => {
+                              setFocusMaCk(true);
+                              handleFilter(valueInputMaCk);
+                            }}
+                            onBlur={() => {
+                              setFocusMaCk(false);
+                            }}
+                            className={`form-control relative ui-autocomplete-input size-input p-[2px] mr-[14px] rounded-md pl-[8px] text-[12px] ${
+                              focusMaCk === true
+                                ? "border-[#66afe9] inputFocus"
+                                : ""
+                            } transition-all w-full h-full outline-none shadow-[inset_0px_0px_7px_0px_rgba(0, 0, 0, 0.075)]`}
+                          />
+                          <ul
+                            className={`${
+                              focusMaCk === true && suggestionsMaCk.length > 0
+                                ? ""
+                                : "hidden"
+                            } text-[9pt] rounded-md mt-[2px] py-[5px] bg-white absolute w-[450px] max-h-[212px] overflow-x-auto border left-0`}
+                          >
+                            {suggestionsMaCk.map((tag: any, index: number) => (
+                              <li
+                                key={tag.Code}
+                                onMouseEnter={() => {
+                                  handleHover(index);
+                                }}
+                                onMouseDown={() => {
+                                  setValueMaCk(tag.Code);
+                                }}
+                                className={`hover:bg-activeOrderMck ${
+                                  selectedIndexMaCk === index
+                                    ? "bg-activeOrderMck"
+                                    : ""
+                                } cursor-pointer whitespace-nowrap px-[5px] py-[2px]`}
+                              >
+                                {highlightMatch(tag.Code)} - {tag.ScripName} -{" "}
+                                {tag.ScripNameEN}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -479,14 +669,14 @@ const OrderMarketW = () => {
                       id="btnBuySend"
                       className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] ml-[10px]  text-13px rounded-md text-white w-4/5"
                     >
-                   {t("home:Order.ORDER_GUI")} 
+                      {t("home:Order.ORDER_GUI")}
                     </button>
                   ) : (
                     <button
                       id="btnBuySend"
                       className="btn btnBuyGui btnSaveTemplate bg-[#d71920] ml-[10px]  text-13px rounded-md text-white w-4/5"
                     >
-                    {t("home:Order.ORDER_GUI")} 
+                      {t("home:Order.ORDER_GUI")}
                     </button>
                   )}
                   {/* <input
@@ -520,26 +710,26 @@ const OrderMarketW = () => {
                         <thead>
                           <tr className=" bg-[#EEEEEE] border border-[#dedede]">
                             <th className="text-center  font-extralight !text-[#000000] w-[170px] text-sm border-r border border-[#dedede]">
-                            {t("home:Order.ORDER_BAN")}
+                              {t("home:Order.ORDER_BAN")}
                             </th>
                             <th className="text-center font-extralight !text-[#000000] w-[170px] text-sm border-r border border-[#dedede]">
-                            {t("home:Order.ORDER_MCK")}
+                              {t("home:Order.ORDER_MCK")}
                             </th>
                             <th className="text-center font-extralight !text-[#000000] w-[170px] text-sm border-r border border-[#dedede]">
-                            {t("home:Order.OPTIONS_KL")}  
+                              {t("home:Order.OPTIONS_KL")}
                             </th>
                             <th className="text-center font-extralight !text-[#000000] w-[110px] text-sm border-r border border-[#dedede]">
-                            {t("home:base.Gia")}  
+                              {t("home:base.Gia")}
                             </th>
                             <th className="text-center font-extralight !text-[#000000] w-[240px] text-sm border-r border border-[#dedede]">
-                            {t("home:base.ThongBao")}
+                              {t("home:base.ThongBao")}
                             </th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr className="border border-[#dedede]">
                             <td className="text-center border-r border border-[#dedede]">
-                            {t("home:Order.ORDER_MUA")}
+                              {t("home:Order.ORDER_MUA")}
                             </td>
                             <td className="text-center border-r border border-[#dedede]">
                               {valueInput ||

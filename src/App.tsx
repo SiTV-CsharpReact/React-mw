@@ -77,10 +77,7 @@ const App: React.FC = () => {
             path="/report/ClientActivityRange"
             element={<HistoryOrder />}
           />
-          <Route
-            path="/report/TransBalance"
-            element={<TransBalance />}
-          />
+          <Route path="/report/TransBalance" element={<TransBalance />} />
           <Route path="/report/TradeLog" element={<HistoryMatching />} />
           <Route path="/report/PendingSettlement" element={<HistoryForpay />} />
           {/* Lịch sử ứng trước tiền bán CK */}
