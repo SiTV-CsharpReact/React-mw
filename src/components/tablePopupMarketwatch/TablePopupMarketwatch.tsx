@@ -288,7 +288,7 @@ const TablePopupMarketwatch = () => {
           <div className="pu-hrz-chart">
             <ChartPopup />
             <ChartWithOption stockCode={stockDetail} />
-            <NewsPopup/>
+            <NewsPopup stockCode={stockDetail}/>
           </div>
          
         </div>

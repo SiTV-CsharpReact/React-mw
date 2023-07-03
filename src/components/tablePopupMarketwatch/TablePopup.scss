@@ -509,3 +509,24 @@
     }
 }
 
+#ulNews .slick-track {
+  margin: 0 !important;
+  background-color: #333;
+  color:#929292;
+}
+#ulNews .slick-slide{
+  background-color: #333;
+  padding:1px 10px;
+  height: 24px !important;
+  border-bottom: 1px solid rgba(80, 80, 80, 0.48);
+  & a{
+    color: #929292;
+    display: inline-block;
+    white-space: nowrap;
+    max-width: 390px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  
+    font-size: 11.3333px;
+  }
+}

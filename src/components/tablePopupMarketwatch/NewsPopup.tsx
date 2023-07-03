@@ -1,6 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { DataStockCode } from '../../models/stockCode'
+import agent from '../../api/agent';
+import { News } from '../../models/new';
+import { getCookie } from '../../utils/util';
+import Slider from 'react-slick';
+import { Tooltip } from '@mui/material';
+// import 'swiper/modules/...';
+// import { Swiper, SwiperSlide } from 'swiper/react';
+// // import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+// import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
-const NewsPopup = () => {
+// import 'swiper/css';
+// import 'swiper/css/pagination';
+// import 'swiper/css/navigation';
+const settings = {
+  // dots: true,
+  //     infinite: true,
+      slidesToShow: 5,
+      slidesToScroll: 1,
+      autoplay: true,
+      speed: 2000,
+
+  vertical: true,
+  verticalSwiping: true,
+};
+// import './styles.css';
+const NewsPopup: React.FC<DataStockCode> = (data) => {
+  const cookie =getCookie("aspfpt_language");
+  console.log(cookie)
+  const [dataNew, setDataNew] = useState<News | null>(null);
+  const RP = {
+    action: "news",
+    symbol: data?.stockCode,
+  };
+  useEffect(() => {
+    fetchDataTableBasic();
+  }, [cookie]);
+  const fetchDataTableBasic = async () => {
+    const dataTable = await agent.dataTableBasic.postFormData(RP);
+    setDataNew(dataTable.data)
+  console.log(dataTable.data)}
   return (
     <div className='mt-[5px]'> 
     <div className='px-[5px] py-[2px] rounded-t-sm text-[#929292] text-xs font-bold bg-bgPopup border-b border-bgBoxPopupBorder '>
@@ -10,121 +49,43 @@ const NewsPopup = () => {
             <ul
   id="ulNews"
   className="pu-ul-news"
-  style={{ height: 105, overflow: "hidden" }}
 >
-  <li>
-    <div>
-      <a
-        href="http://www.fpts.com.vn/FileStore2/File/2023/02/09/BVS_2023-2-9_2e0486e_BVSC_CBTT_QD_cua_TGD_ve_viec_DTCCCTG_07-02-2023.pdf"
-        target="_blank"
-        title="BVSC CBTT Quyết định của Tổng Giám đốc về việc Đầu tư chứng chỉ tiền gửi (15:38:05 09/02/2023)"
-      >
-        BVSC CBTT Quyết định của Tổng Giám đốc về việc Đầu tư chứng chỉ tiền gửi
-      </a>
+<Slider {...settings} className='color-white'>
+{cookie === "VN"? dataNew?.VN.map((data,index)=>(
+     <Tooltip  title= {`${data.Title} (${data.ShowTime} ${data.ShowDate})` }>
+<li key={index}>
+     <div>
+    
+          <a
+         className='color-white'
+           href={`http://www.fpts.com.vn/${data.Path} `}
+           // title="BVSC CBTT Quyết định của Tổng Giám đốc về việc Đầu tư chứng chỉ tiền gửi (15:38:05 09/02/2023)" 
+         >
+          {data.Title}
+         </a>
+          
     </div>
-  </li>
-  <li>
-    <div>
-      <a
-        href="http://www.fpts.com.vn"
-        target="_blank"
-        title="BVSC CBTT Quyết định sửa đổi lập Phòng Giao dịch Thành Công (15:55:30 30/12/2022)"
-      >
-        BVSC CBTT Quyết định sửa đổi lập Phòng Giao dịch Thành Công
-      </a>
-    </div>
-  </li>
-  <li>
-    <div>
-      <a
-        href="http://www.fpts.com.vn"
-        target="_blank"
-        title="BVSC CBTT về việc sửa đổi Quyết định chấp thuận lập chi nhánh công ty chứng khoán (16:42:23 27/10/2022)"
-      >
-        BVSC CBTT về việc sửa đổi Quyết định chấp thuận lập chi nhánh công ty
-        chứng khoán
-      </a>
-    </div>
-  </li>
-  <li>
-    <div>
-      <a
-        href="http://www.fpts.com.vn"
-        target="_blank"
-        title="BVSC CBTT ngày ĐKCC để thực hiện quyền chi trả cổ tức bằng tiền năm tài chính 2021 (18:05:40 22/09/2022)"
-      >
-        BVSC CBTT ngày ĐKCC để thực hiện quyền chi trả cổ tức bằng tiền năm tài
-        chính 2021
-      </a>
-    </div>
-  </li>
-  <li>
-    <div>
-      <a
-        href="http://www.fpts.com.vn/FileStore2/File/2022/07/20/BVS_2022-7-20_f1ecef5_BVSC_CBTT_ung_truoc_tien_ban_CK.pdf"
-        target="_blank"
-        title="BVSC CBTT Quyết định chấp thuận được cung cấp dịch vụ ứng trước tiền bán chứng khoán (17:11:41 20/07/2022)"
-      >
-        BVSC CBTT Quyết định chấp thuận được cung cấp dịch vụ ứng trước tiền bán
-        chứng khoán
-      </a>
-    </div>
-  </li>
-  <li>
-    <div>
-      <a
-        href="http://www.fpts.com.vn/FileStore2/File/2022/07/14/BVS_2022-7-14_d27925e_BVSC_CBTT_Bo_nhiem_lai_Pho_Tong_Giam_doc.pdf"
-        target="_blank"
-        title="Thay đổi nhân sự (08:35:02 15/07/2022)"
-      >
-        Thay đổi nhân sự
-      </a>
-    </div>
-  </li>
-  <li>
-    <div>
-      <a
-        href="http://www.fpts.com.vn/FileStore2/File/2022/05/06/BVS_2022-5-6_7ef8a25_BVSC_CBTT_QD_chap_thuan_la_thanh_vien_GD_tai_VNX_29-04-2022.pdf"
-        target="_blank"
-        title="BVSC CBTT Quyết định chấp thuận là thành viên giao dịch tại VNX (13:28:04 06/05/2022)"
-      >
-        BVSC CBTT Quyết định chấp thuận là thành viên giao dịch tại VNX
-      </a>
-    </div>
-  </li>
-  <li>
-    <div>
-      <a
-        href="http://www.fpts.com.vn/FileStore2/File/2022/02/25/BVS_2022-2-25_cdcf5fc_BVSC_CBTT_NQ_HDQT_To_chuc_DHCD_2022.pdf"
-        target="_blank"
-        title="BVSC CBTT Nghị quyết HĐQT về việc  tổ chức ĐHĐCĐ thường niên năm 2022 (16:50:15 25/02/2022)"
-      >
-        BVSC CBTT Nghị quyết HĐQT về việc tổ chức ĐHĐCĐ thường niên năm 2022
-      </a>
-    </div>
-  </li>
-  <li>
-    <div>
-      <a
-        href="http://www.fpts.com.vn/FileStore2/File/2022/02/14/BVS_2022-2-14_e753002_BVSC_CBTT_GCN_dang_ky_DN_thay_doi_lan_thu_11.pdf"
-        target="_blank"
-        title="Thay đổi giấy đăng ký kinh doanh (14:57:02 14/02/2022)"
-      >
-        Thay đổi giấy đăng ký kinh doanh
-      </a>
-    </div>
-  </li>
-  <li>
-    <div>
-      <a
-        href="http://www.fpts.com.vn"
-        target="_blank"
-        title="Thay đổi giấy đăng ký kinh doanh (13:39:03 12/01/2022)"
-      >
-        Thay đổi giấy đăng ký kinh doanh
-      </a>
-    </div>
-  </li>
+    
+ </li>
+ </Tooltip>
+  )):dataNew?.EN.map((data,index)=>(
+    
+    <li key={index}>
+        <div>
+          <Tooltip  title= {`${data.Title} (${data.ShowTime} ${data.ShowDate})` }>
+          <a
+         className='color-white'
+           href={`http://www.fpts.com.vn/${data.Path} `}
+           // title="BVSC CBTT Quyết định của Tổng Giám đốc về việc Đầu tư chứng chỉ tiền gửi (15:38:05 09/02/2023)" 
+         >
+          {data.Title}
+         </a>
+          </Tooltip>
+    
+       </div>
+    </li>
+     ))}
+      </Slider>
 </ul>
 
             </div>

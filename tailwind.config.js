@@ -68,7 +68,7 @@ module.exports = {
       bgPannelLink: "#dedede",
       invert: "#646464",
       bgPopup: "#424242",
-      bgBoxPopupBorder:"#202020"
+      bgBoxPopupBorder:"#202020",
       //'tooltipNoti':'#2371af'
       activeOrderMck: "rgba(99, 169, 224, 0.4)"
     },
