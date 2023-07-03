@@ -70,6 +70,7 @@ module.exports = {
       bgPopup: "#424242",
       bgBoxPopupBorder:"#202020"
       //'tooltipNoti':'#2371af'
+      activeOrderMck: "rgba(99, 169, 224, 0.4)"
     },
     fontSize: {
       textHeadTableMarket: "0.675rem",
