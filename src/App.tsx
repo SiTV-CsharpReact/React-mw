@@ -41,8 +41,8 @@ import ConditionalOderText from "./pages/Stoploss/ConditionalOderText";
 const App: React.FC = () => {
   return (
     <div>
-      <AppProvider> 
-      <Routes> 
+      <AppProvider>
+        <Routes>
           <Route path="/" element={<LayoutMarketWatch />} />
           <Route path="/test" element={<TableMarketWatchTest />} />
           <Route
@@ -125,7 +125,10 @@ const App: React.FC = () => {
 
           {/* Stoploss */}
           <Route path="/stoploss/orderform" element={<ConditionalOrder />} />
-          <Route path="/stoploss/orderform_test" element={<ConditionalOderText />} />
+          <Route
+            path="/stoploss/orderform_test"
+            element={<ConditionalOderText />}
+          />
 
           <Route path="/stoploss/history" element={<ConditionalOrderBook />} />
           {/* Oddlot */}
