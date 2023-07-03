@@ -67,6 +67,8 @@ module.exports = {
       textHeaderTableGDTT: "#F7FFAA",
       bgPannelLink: "#dedede",
       invert: "#646464",
+      bgPopup: "#424242",
+      bgBoxPopupBorder:"#202020"
       //'tooltipNoti':'#2371af'
     },
     fontSize: {

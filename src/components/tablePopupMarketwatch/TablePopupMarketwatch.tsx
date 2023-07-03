@@ -19,6 +19,7 @@ import axios from "axios";
 import { getCompanyNameByCode } from "../../utils/util";
 import { DataTable } from "../../models/modelTableHNX";
 import ChartWithOption from "./ChartWithOption";
+import NewsPopup from "./NewsPopup";
 interface DraggableProps {
   initialPosition?: { x: number; y: number };
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;
@@ -287,7 +288,9 @@ const TablePopupMarketwatch = () => {
           <div className="pu-hrz-chart">
             <ChartPopup />
             <ChartWithOption stockCode={stockDetail} />
+            <NewsPopup/>
           </div>
+         
         </div>
       </div>
     </Draggable>
