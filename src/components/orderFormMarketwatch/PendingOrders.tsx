@@ -42,7 +42,7 @@ const PendingOrders: React.FC<Props> = (value) => {
       console.log(error);
     }
   };
-  console.log(data, "data ne")
+  // console.log(data, "data ne")
 
   const hanDelSubmit = () => {
     // let filteredData: any = [...dataAfter.dataCoppy];
@@ -97,6 +97,7 @@ const PendingOrders: React.FC<Props> = (value) => {
     content: () => componentPDF.current,
     documentTitle: "Export PDF",
     onAfterPrint: () => alert("Export is successfully"),
+           
   })
   return (
     <div>

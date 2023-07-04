@@ -7,12 +7,12 @@ const initialState = {
   dataChartOption: [],
   status: "loading",
 };
-export const fetchChartOptionAsync = createAsyncThunk<[], DataStockCode>(
-  "chartOptions",
+export const fetchNewsAsync = createAsyncThunk<[], DataStockCode>(
+  "news",
   async (data) => {
     try {
       const response = await agent.dataTableBasic.postFormData({
-        action: "gw_realtime",
+        action: "new",
         symbol: data.stockCode,
       });
       return response.data;
@@ -21,21 +21,21 @@ export const fetchChartOptionAsync = createAsyncThunk<[], DataStockCode>(
     }
   }
 );
-const chartOptionSlice = createSlice({
-  name: "ChartOption",
+const NewsSlice = createSlice({
+  name: "News",
   initialState,
   reducers: {
-    setStatusTable: (state, action: PayloadAction<[]>) => {
+    setStatusNews: (state, action: PayloadAction<[]>) => {
       state.dataChartOption = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchChartOptionAsync.pending, (state) => {
+      .addCase(fetchNewsAsync.pending, (state) => {
         state.isLoading = false;
         state.status = "loading";
       })
-      .addCase(fetchChartOptionAsync.fulfilled, (state, action) => {
+      .addCase(fetchNewsAsync.fulfilled, (state, action) => {
         state.isLoading = true;
         state.dataChartOption = action.payload;
         // const result = action.payload;
@@ -44,5 +44,5 @@ const chartOptionSlice = createSlice({
   },
 });
 
-export const { setStatusTable } = chartOptionSlice.actions;
-export default chartOptionSlice;
+export const { setStatusNews } = NewsSlice.actions;
+export default NewsSlice;

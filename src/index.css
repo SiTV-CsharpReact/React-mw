@@ -382,6 +382,7 @@ th.sort-table.active::after {
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 /* Track */

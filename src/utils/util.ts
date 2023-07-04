@@ -246,7 +246,7 @@ var ARRAY_EXCHANGE = [
   ["HA", "HNX.NY"],
   ["UP", "HNX.UPCOM"],
 ];
-function getCookie(cname: any) {
+export function getCookie(cname: any) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
   let ca = decodedCookie.split(";");
