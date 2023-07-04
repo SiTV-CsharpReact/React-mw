@@ -3,7 +3,7 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
-import { DataTable, DataGDTT } from "../../models/modelTableHNX";
+import { DataTable, DataGDTT ,dataCK } from "../../models/modelTableHNX";
 import agent from "../../api/agent";
 import { TableParams } from "../../models/modelLinkTable";
 import { RootState } from "../../store/configureStore";
@@ -30,16 +30,23 @@ interface TableState {
   dataTableThongkeIndex: any[];
   loadingTableThongke: number;
   dataTableThongkePrice: any[];
-  paginationPageTbTKIndex : number,
-  paginationPageTbTKPrice : number,
-  paginationPageTbTKOrderLenh : number,
-  paginationPageTbTKKhopLenh : number,
-  paginationPageTbTKTH : number,
+  paginationPageTbTKIndex: number;
+  paginationPageTbTKPrice: number;
+  paginationPageTbTKOrderLenh: number;
+  paginationPageTbTKKhopLenh: number;
+  paginationPageTbTKTH: number;
   dataTableThongkeOrderLenh: any[];
 
   dataTableThongkeKhopLenh: any[];
 
   dataTableThongkeTH: any[];
+  stockCode: string;
+  keyMenu: string;
+  nameMenu: string;
+  floorMenu: string;
+  dataHNX :dataCK[];
+  dataHSX :dataCK[];
+  dataUPCOM : dataCK[];
 }
 type params = {
   Floor: string;
@@ -183,6 +190,21 @@ export const getdataTableThongKe = createAsyncThunk(
     } catch (error) {}
   }
 );
+export const getDataChungKhoan = createAsyncThunk("table_getdataChungkhoan", async()=>{
+  try {
+      const dataHNX =  await agent.tableThongke.dataHNX()
+      const dataHSX =  await agent.tableThongke.dataHSX()
+      const dataUPCOM = dataHNX
+       const dataCK ={
+        dataHNX: dataHNX.sort((a:dataCK, b:dataCK) => a.Sy.localeCompare(b.Sy)),
+        dataHSX :dataHSX.sort((a:dataCK, b:dataCK) => a.Sy.localeCompare(b.Sy)),
+        dataUPCOM : dataUPCOM.sort((a:dataCK, b:dataCK) => a.Sy.localeCompare(b.Sy)),
+      }
+      return dataCK
+  } catch (error) {
+    
+  }
+})
 export const SortTableThongkeIndex = createAsyncThunk(
   "table_thongke_index",
   async (query: any) => {
@@ -191,7 +213,7 @@ export const SortTableThongkeIndex = createAsyncThunk(
       let result = {
         action_type: query?.action,
         data: data.Body,
-        panigation : data?.Header?.PageCount
+        panigation: data?.Header?.PageCount,
       };
       return result;
     } catch (error) {}
@@ -228,13 +250,19 @@ export const tableTestSlice = createSlice({
     dataTableThongkeOrderLenh: [],
     dataTableThongkeKhopLenh: [],
     loadingTableThongke: 0,
-    paginationPageTbTKIndex : 0,
-    paginationPageTbTKPrice : 0,
-    paginationPageTbTKOrderLenh : 0,
-    paginationPageTbTKKhopLenh : 0,
-    paginationPageTbTKTH : 0,
-
-   
+    paginationPageTbTKIndex: 0,
+    paginationPageTbTKPrice: 0,
+    paginationPageTbTKOrderLenh: 0,
+    paginationPageTbTKKhopLenh: 0,
+    paginationPageTbTKTH: 0,
+    // table price thống kê
+    stockCode: "",
+    keyMenu: "",
+    nameMenu: "",
+    floorMenu: "",
+    dataHNX :[] as dataCK[],
+    dataHSX :[] as dataCK[],
+    dataUPCOM :[] as dataCK[],
   }),
   reducers: {
     setProductParams: (state, action) => {
@@ -306,12 +334,21 @@ export const tableTestSlice = createSlice({
       }
     },
     //  lịch sử giá
-    handleHistoryPrices: (state, actions) => {
+    handleHistoryPrices: (state, action) => {
+      let { stockCode, keyMenu, nameMenu, floor } = action.payload;
       state.KeyMenuChildren = 1;
       state.floor = "TableTK";
+      state.stockCode = stockCode;
+      state.keyMenu = keyMenu;
+      state.nameMenu = nameMenu;
+      state.floorMenu = floor;
     },
     HandleKeyActiveMain: (state) => {
       state.keyActiveMan = 1;
+    },
+    handleSetStockCode: (state) => {
+      // reset lại stock code
+      state.stockCode = "";
     },
   },
 
@@ -434,22 +471,21 @@ export const tableTestSlice = createSlice({
       })
       .addCase(SortTableThongkeIndex.fulfilled, (state, action) => {
         state.loadingTableThongke = 2;
-        
+
         let data = action.payload;
         if (data?.action_type === VARIBLE_ACTICON_TYPE.ACTION_INDEX) {
           state.dataTableThongkeIndex = data?.data;
-          state.paginationPageTbTKIndex = data.panigation
-          
+          state.paginationPageTbTKIndex = data.panigation;
         } else if (data?.action_type === VARIBLE_ACTICON_TYPE.ACTION_PRICE) {
           // giá
           state.dataTableThongkePrice = data?.data;
-          state.paginationPageTbTKPrice = data.panigation
-         
-
-        } else if (data?.action_type === VARIBLE_ACTICON_TYPE.ACTION_ORDERLENH) {
+          state.paginationPageTbTKPrice = data.panigation;
+        } else if (
+          data?.action_type === VARIBLE_ACTICON_TYPE.ACTION_ORDERLENH
+        ) {
           // đặt lệnh
-          state.paginationPageTbTKOrderLenh = data.panigation
-         
+          state.paginationPageTbTKOrderLenh = data.panigation;
+
           state.dataTableThongkeOrderLenh = data?.data.map((e: any) => {
             return e.Data;
           });
@@ -457,7 +493,7 @@ export const tableTestSlice = createSlice({
           //khớp lệnh
           state.paginationPageTbTKKhopLenh = data.panigation;
           state.dataTableThongkeKhopLenh = data?.data.map((e: any) => {
-                return e.Data;
+            return e.Data;
           });
         } else if (data?.action_type === VARIBLE_ACTICON_TYPE.ACTION_TH) {
           //thỏa thuận
@@ -469,7 +505,15 @@ export const tableTestSlice = createSlice({
       })
       .addCase(SortTableThongkeIndex.rejected, (state) => {
         state.loadingTableThongke = 3;
-      });
+      })
+      .addCase(getDataChungKhoan.pending,(state) => {})
+      .addCase(getDataChungKhoan.fulfilled,(state,action) => {
+          const data =  action.payload
+          state.dataHSX  = data?.dataHSX
+          state.dataHNX =  data?.dataHNX
+          state.dataUPCOM = data?.dataUPCOM
+      })
+      .addCase(getDataChungKhoan.rejected,(state) => {})
   },
 });
 
@@ -483,4 +527,5 @@ export const {
   getDataCookie,
   handleHistoryPrices,
   HandleKeyActiveMain,
+  handleSetStockCode,
 } = tableTestSlice.actions;

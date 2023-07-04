@@ -1,7 +1,7 @@
 
 export const getDateTime =()=>{
     var ngayHienTai = new Date();
-    var ngay = ngayHienTai.getDate(); // 16
+    var ngay = ngayHienTai.getDate().toString().padStart(2, "0"); // 16
     var thangHtai = (ngayHienTai.getMonth() + 1).toString().padStart(2, "0");  //06 
     var nam = ngayHienTai.getFullYear(); // 2023
     let thangTR= ( Number(thangHtai)-1).toString().padStart(2, "0"); 
@@ -35,6 +35,14 @@ export const DateTimeCover = (date?: any)=>{
             return data;
     }
   
+}
+export const converDate = (date :any) =>{
+    if(date){
+        const [year, month, day] = date.slice(0, 10).split("-");
+    const formattedDate = `${day}/${month}/${year}`;
+    return formattedDate;
+    }
+    
 }
 export const DefaultSelect = [{value: "" , label : "Tất cả "}]
 export const SanGD = [
