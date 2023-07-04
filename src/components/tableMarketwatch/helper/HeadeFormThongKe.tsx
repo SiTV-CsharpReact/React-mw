@@ -85,6 +85,7 @@ const HeaderFromThongke = ({ ChangeFuncion }: Props) => {
   // sàn
   const handleExchangeChange = (e: any) => {
     setData({ ...data, center: e.target.value });
+    setData({ ...data, code: 0 });
     setSelectedExchange(Number(e.target.value));
     ChangeFuncion({ ...data, center: e.target.value });
     setSelectedStock( e.target.value == 1 ? dataHSX :  e.target.value == 2 ?  dataHNX :  dataUPCOM)
