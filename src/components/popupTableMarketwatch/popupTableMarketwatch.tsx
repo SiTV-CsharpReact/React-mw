@@ -35,13 +35,17 @@ interface Props {
           document.removeEventListener("mousedown", handleClickOutside);
         };
       }, [popupRef]);
+      const historyStock =() =>{
+        dispatch(showDetailStock(selectedValue.value))
+        setSelectedValueProp({...selectedValue, status: false}); 
+      }
       const handleTest = (e:any)=>{
         let data = {
            stockCode : e,
            keyMenu, nameMenu ,floor
 
         }
-        console.log("data", data)
+
        dispatch(handleHistoryPrices(data)) // thay đổi sàn 
         dispatch(setHistoryMenu())   // chuyển sang table giá 
         dispatch(historyPriceActiveMenu()) // chặn chuyển tab sang danh mục cá nhân
