@@ -54,7 +54,6 @@ const OrderMarketW = () => {
   //const {data} = useAppSelector(state => state.counter);
   const [counter, setCounter] = useState(0);
   const { dataTable } = useAppSelector((state) => state.dataTable);
-  console.log("TCT ne", dataTable.TCT)
   const { dataBuy } = useAppSelector((state) => state.dataBuy);
   const { dataShow } = useAppSelector((state) => state.dataShow);
   // popup
@@ -135,6 +134,7 @@ const OrderMarketW = () => {
         setSubmit(false);
         setInputValue("");
         setValueInputPrice(0);
+        setGdSuccess(false)
         setValueInputKl(0);
       }, 3000);
     }
