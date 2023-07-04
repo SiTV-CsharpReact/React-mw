@@ -39,9 +39,8 @@ import StockDetails from "./pages/Report/StockDetails";
 import TransBalance from "./components/TransBalance/TransBalance";
 const App: React.FC = () => {
   return (
-    <div>
-      <AppProvider> 
-      <Routes> 
+      <AppProvider>
+        <Routes>
           <Route path="/" element={<LayoutMarketWatch />} />
           <Route path="/test" element={<TableMarketWatchTest />} />
           <Route
@@ -130,7 +129,6 @@ const App: React.FC = () => {
           <Route path="/tradingview" element={<TradingViewWidget />} />
         </Routes>
       </AppProvider>
-    </div>
   );
 };
 
