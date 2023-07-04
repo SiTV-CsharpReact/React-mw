@@ -188,5 +188,17 @@
         "KLB": " K.lượng bán",
         "CHON": "chọn",
         "HTC" : "Hiện tất cả "
+    },
+    "AcceptReport":{
+        "Atr1":"Dữ liệu cập nhật gần nhất:",
+        "Atr2":"GIÁ TRỊ TÀI SẢN RÒNG (I + II + III)",
+        "Atr3":"CHỨNG KHOÁN",
+        "Atr4":"TIỀN",
+        "Atr5":"DƯ NỢ VAY KÝ QUỸ",
+        "Atr6":"CHI TIẾT CHỨNG KHOÁN",
+        "Atr7":"(Xem rút gọn)",
+        "Atr8":"LÃI/LỖ DỰ KIẾN",
+        "Atr9":"Mã CK",
+        "Atr10":"CK có \n sẵn"
     }
 }

@@ -7,7 +7,7 @@ body .panel-horizontally {
 body {
   display: flex;
   flex-direction: column;
-  color: #333;
+  color: #000;
   font-size: 13px;
   /* overflow: auto !important; */
   min-width: 975px;

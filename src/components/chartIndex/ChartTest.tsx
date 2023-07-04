@@ -300,9 +300,7 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
             hour + ":" + minutes
           }</b></span><br/><span style="color:#000">Index:  <b style="font-size:12px;color:#000" class="font-bold text-sm">${
             index[1].y
-          }</b></span><br/><span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm">${formatNumber(
-            this.y
-          )} </b></span>`;
+          }</b></span><br/><span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm">${formatNumber(this.y)} </b></span>`;
         },
       },
       legend: {
@@ -331,9 +329,6 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
       },
       series: series,
     });
-    return () => {
-      // chart.destroy();
-    };
   }, [dataBar, dataSpline, indexValue, name, timeFirst, timeLast]);
 
   return (

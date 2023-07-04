@@ -154,10 +154,6 @@ abbr:where([title]) {
   text-align: left;
   max-width: 3ch;
 }
-.react-date-picker__wrapper{
-  border: thin solid #e5e7eb !important;
-  border-radius: 2px;
-}
 
 .react-date-picker__calendar-button{
   width: max-content;
@@ -178,5 +174,6 @@ abbr:where([title]) {
 }
 .react-date-picker__wrapper{
   border-radius: .25rem;
-  border: 1px solid #ced4da !important;
+  border: none !important;
+  height: 28px !important;
 } 

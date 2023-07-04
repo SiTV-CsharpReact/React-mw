@@ -6,6 +6,7 @@
     "@aspnet/signalr": "^1.0.27",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.10.6",
+    "@garage-panda/react-pdf-export": "^0.2.2",
     "@hookform/resolvers": "^3.1.0",
     "@microsoft/signalr": "^7.0.3",
     "@mui/icons-material": "^5.11.11",
@@ -68,6 +69,7 @@
     "react-slick": "^0.29.0",
     "react-table": "^7.8.0",
     "react-tabs": "^6.0.1",
+    "react-to-print": "^2.14.13",
     "redux": "^4.2.1",
     "rxjs": "^7.8.0",
     "sass": "^1.60.0",
@@ -96,7 +98,8 @@
     "DataKiQuy": "json-server dataPopup.json --watch --port 9999",
     "DataChartIndex": "json-server chart.json --watch --port 8000",
     "BCTS": "json-server data.json --watch --port 2908",
-    "Transfer": "json-server db.json --watch --port 3000"
+    "Transfer": "json-server db.json --watch --port 8060",
+    "TransBalance": "json-server priceTable.json --watch --port 3111"
   },
   "eslintConfig": {
     "extends": [

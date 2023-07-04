@@ -450,8 +450,11 @@
   }
 }
 .chart__for__time {
+  .highcharts-axis-labels span:first-child{
+    // left: 2px !important;
+  }
   .highcharts-axis-labels span:last-child {
     // left: 370px !important;
-    // text-overflow: unset !important;
+    text-overflow: unset !important;
   }
 }

@@ -1,9 +1,7 @@
 import React from "react";
 import ChartOption from "./ChartOption";
-import ChartPopup from "./ChartPopup";
-import { DataStockCode } from "../../models/stockCode";
 
-const ChartWithOption: React.FC<DataStockCode> = (data) => {
+const ChartWithOption: React.FC<any> = (props) => {
   return (
     <div className="pu-content-chart">
       <div className="content-bt-time">
@@ -38,7 +36,7 @@ const ChartWithOption: React.FC<DataStockCode> = (data) => {
           </a>
         </div>
       </div>
-      <ChartOption stockCode={data.stockCode} />
+      <ChartOption dataItem={props.dataItem} />
     </div>
   );
 };

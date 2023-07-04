@@ -23,10 +23,10 @@ const MoneyTransferMain = () => {
     const fetchBalanceDetail = async () => {
       try {
         const balanceDetailPromise = axios.get(
-          "http://localhost:3000/TableGetBalanceDetail"
+          "http://localhost:8060/TableGetBalanceDetail"
         );
         const templatePromise = axios.get(
-          "http://localhost:3000/TableTemplate"
+          "http://localhost:8060/TableTemplate"
         );
         const [balanceDetailResponse, templateResponse] = await Promise.all([
           balanceDetailPromise,
@@ -102,6 +102,7 @@ const MoneyTransferMain = () => {
       content: "",
     });
   };
+  console.log(balanceDetail);
   return (
     <>
       <LayoutPage
@@ -205,24 +206,30 @@ const MoneyTransferMain = () => {
               {t("home:Transfer.DonVi")}: VNĐ
             </div>
             {/*-----------------------------------------Table Show Money------------------------------------------*/}
-            <div className="text-xs -translate-y-[1px] border border-borderTransfer ">
-              <table className="w-full">
+            <div className="text-xs -translate-y-[1px]  ">
+              <table className="w-full border border-borderTransfer">
                 <thead className="bg-[#F3F3F3]">
                   <tr className="border-b border-borderTransfer">
                     <th className="font-bold leading-4 border-r border-borderTransfer h-[58px]">
-                      {t("home:Transfer.SoDuTienMat")}
-                      <br />
-                      <span className="text-[11pt]">A</span>
+                      <span>
+                        {t("home:Transfer.SoDuTienMat")}
+                        <br />
+                        <span className="text-[11pt]">A</span>
+                      </span>
                     </th>
                     <th className="leading-4 border-r border-borderTransfer">
-                      {t("home:Transfer.TienUngTruoc")}
-                      <br />
-                      <span className="text-[11pt]">B</span>
+                      <span>
+                        {t("home:Transfer.TienUngTruoc")}
+                        <br />
+                        <span className="text-[11pt]">B</span>
+                      </span>
                     </th>
                     <th className="leading-4 w-[36%]">
-                      {t("home:Transfer.SoDuCoTheRut")}
-                      <br />
-                      <span className="text-[11pt]">C = A + B</span>
+                      <span>
+                        {t("home:Transfer.SoDuCoTheRut")}
+                        <br />
+                        <span className="text-[11pt]">C = A + B</span>
+                      </span>
                     </th>
                   </tr>
                 </thead>
@@ -244,7 +251,7 @@ const MoneyTransferMain = () => {
             </div>
 
             {/*-----------------------------------------Choose Template Money------------------------------------------*/}
-            <div className="mt-[9px] border border-[#CCCCCC] pb-[10px] shadow-[0_1px_5px_rgba(0,0,0,.2)]">
+            <div className="mt-[8px] border border-[#CCCCCC] pb-[10px] shadow-[0_1px_5px_rgba(0,0,0,.2)]">
               <div className="flex gap-1 p-[6px]">
                 <img src="/arrow2.jpg" alt="arrow" />
                 <span className="text-xs">
@@ -473,12 +480,12 @@ const MoneyTransferMain = () => {
                         >
                           <label htmlFor="" className="text-xs"></label>
                         </p>
-                        <div className="flex gap-1">
+                        <div className="flex items-start gap-1">
                           <textarea
                             typeof="text"
                             cols={30}
                             rows={1}
-                            className="w-[400px] min-h-[37px] px-3 py-1 border border-[#ced4da] outline-none text-gray-700 rounded-[4px] transition-all text-xs bg-white focus:border-blue-300 focus:shadow-[0px_0px_0px_4px_rgba(200,237,255,0.5)]"
+                            className="w-[400px] resize-y min-h-[37px] px-3 py-1 border border-[#ced4da] outline-none overflow-auto text-gray-700 rounded-[4px] transition-all text-xs bg-white focus:border-blue-300 focus:shadow-[0px_0px_0px_4px_rgba(200,237,255,0.5)]"
                             onChange={(e: any) => {
                               setValue({
                                 ...value,
@@ -486,7 +493,7 @@ const MoneyTransferMain = () => {
                               });
                             }}
                           />
-                          <div className="flex gap-1 font-bold w-10 my-auto text-[12px] whitespace-nowrap cursor-pointer">
+                          <div className="font-bold w-10 text-[12px] whitespace-nowrap">
                             <span className="font-bold text-[#FF0000]">
                               (*)
                             </span>

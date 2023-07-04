@@ -19,6 +19,7 @@ import axios from "axios";
 import { getCompanyNameByCode } from "../../utils/util";
 import { DataTable } from "../../models/modelTableHNX";
 import ChartWithOption from "./ChartWithOption";
+import { fetchChartOptionAsync } from "./chartOptionSlice";
 interface DraggableProps {
   initialPosition?: { x: number; y: number };
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;
@@ -155,6 +156,10 @@ const TablePopupMarketwatch = () => {
       }
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchChartOptionAsync({ stockCode: stockDetail }));
+  }, [dispatch, stockDetail]);
   // console.log(dataItemHNX, dataItemHSX)
   // Kiểm tra và đặt lại giá trị cho dataMouse.maF và dataMouseBuy.maB nếu selectedCode tồn tại
   return (
@@ -275,7 +280,10 @@ const TablePopupMarketwatch = () => {
                 }
               }}
             >
-              <TableKLTTGPopup dataKLTTG={dataKLTTG} />
+              <TableKLTTGPopup
+                dataKLTTG={dataKLTTG?.map((item) => item).reverse()}
+                dataItem={dataItemHNX.length !== 0 ? dataItemHNX : dataItemHSX}
+              />
             </div>
             <div className="w-full pu-div-PT">
               <TableGDTTPopup />
@@ -286,7 +294,9 @@ const TablePopupMarketwatch = () => {
           </div>
           <div className="pu-hrz-chart">
             <ChartPopup />
-            <ChartWithOption stockCode={stockDetail} />
+            <ChartWithOption
+              dataItem={dataItemHNX.length !== 0 ? dataItemHNX : dataItemHSX}
+            />
           </div>
         </div>
       </div>

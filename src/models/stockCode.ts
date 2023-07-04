@@ -1,3 +1,4 @@
 export interface DataStockCode {
-    stockCode:string
-  }
+  stockCode: string;
+  dataItem?: any;
+}

@@ -1,22 +1,31 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import React, { useEffect, useState } from "react";
+import { useAppSelector } from "../../store/configureStore";
 import * as Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import { fetchChartOptionAsync } from "./chartOptionSlice";
-// import { HighchartsProvider } from "react-jsx-highcharts";
-import { DataStockCode } from "../../models/stockCode";
-import { _getDateTs } from "../chartIndex/util/app.chart";
+import {
+  _getDateTs,
+  drawChart,
+  maxNumber,
+  minNumber,
+} from "../chartIndex/util/app.chart";
 import { formatNumber } from "../../utils/util";
-const ChartOption: React.FC<DataStockCode> = (data) => {
-  const dispatch = useAppDispatch();
+const ChartOption: React.FC<any> = (props) => {
   const { isLoading, dataChartOption, status } = useAppSelector(
     (state) => state.chartOption
   );
   const [dataCol, setDataCol] = useState<any>([]);
   const [dataSpline, setDataSpline] = useState<any>([]);
-  const [timeFirst, setTimeFirst] = useState(0);
-  const [timeLast, setTimeLast] = useState(0);
   const [indexValue, setIndexValue] = useState(0);
+
+  useEffect(() => {
+    props.dataItem?.map((item: any) => {
+      // eslint-disable-next-line array-callback-return
+      return item.Info?.map((e: any, ind: number) => {
+        if (ind === 1) {
+          setIndexValue(e[1]);
+        }
+      });
+    });
+  }, [props.dataItem]);
 
   useEffect(() => {
     if (dataChartOption?.length > 0) {
@@ -31,19 +40,6 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
           y: item?.Index,
         };
       });
-      console.log(arrSpline);
-      
-      // data.map((item: any, ind: number) => {
-      //   if (ind === 0) {
-      //     const v = item?.TimeJS;
-      //     setIndexValue(item?.Index);
-      //     setTimeFirst(item?.TimeJS);
-      //     const l = new Date(timeFirst);
-      //     l.setHours(l.getHours() + 6);
-      //     setTimeLast(l.getTime());
-      //   }
-      //   return "";
-      // });
       const arrCol = data?.map((item: any) => ({
         x: item?.TimeJS,
         y: item?.Vol,
@@ -51,10 +47,7 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
       setDataCol(arrCol);
       setDataSpline(arrSpline);
     }
-  }, [dataChartOption, timeFirst]);
-  useEffect(() => {
-    dispatch(fetchChartOptionAsync({ stockCode: data.stockCode }));
-  }, [data.stockCode, dispatch]);
+  }, [dataChartOption]);
 
   useEffect(() => {
     const gradient: any = [0, 0, 50, 500];
@@ -68,13 +61,13 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
             enabled: false,
           },
         },
-        data: [],
+        data: dataCol,
       },
       {
         name: "Spline",
         type: "spline",
         yAxis: 1,
-        data: [],
+        data: dataSpline,
       },
     ];
     Highcharts.chart(`container__chart__time`, {
@@ -92,36 +85,89 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
         plotBorderWidth: 1,
         plotBorderColor: "#545454",
         events: {
-          load: function () {
+          load: function (e: any) {
             const xAxis = this.xAxis[0];
             const today = new Date();
             const dd = today.getDate();
             const mm = today.getMonth(); //January is 0!
             const yyyy = today.getFullYear();
-            const HH1 = "9";
-            const HH2 = "15";
-            const MM = "00"; // minute
+            const HH1 = 9;
+            const HH2 = 15;
+            const MM = 0; // minute
 
-            const xminTmp = new Date(yyyy, mm, dd, Number(HH1), Number(MM));
-            const xmaxTmp = new Date(yyyy, mm, dd, Number(HH2), Number(MM));
+            const xminTmp = new Date(yyyy, mm, dd, HH1, MM);
+            const xmaxTmp = new Date(yyyy, mm, dd, HH2, MM);
 
             const xmin = _getDateTs(xminTmp);
             const xmax = _getDateTs(xmaxTmp);
             xAxis.setExtremes(xmin, xmax, true, false);
-            console.log(xAxis);
 
-            const yAxis = this.yAxis[1];
-            const yExtremes = yAxis.getExtremes();
+            const myArr: any = Object.values(drawChart(dataChartOption));
 
-            const minIndex = Number(yExtremes.dataMin);
-            const maxIndex = Number(yExtremes.dataMax);
-            const lengthStep = Math.round(minIndex * 0.9).toString().length - 2;
+            let min, max;
+            let arrPr: any = [],
+              arrSub: any = [],
+              minSub;
+            for (let i = 0; i < myArr.length; i++) {
+              const price = myArr[i][0];
+              const vol = myArr[i][1];
+              arrPr.push(price);
+              // arrVol.push(vol);
+              var next = myArr[i + 1];
 
-            const step = 10 ** lengthStep;
-            const newMin = Math.floor((minIndex * 0.95) / step) * step;
-            const newMax = Math.ceil(maxIndex / step) * step;
-            yAxis.setExtremes(newMin, newMax, true, false);
+              if (typeof next === "undefined") {
+                next = myArr[0];
+              }
+              const sub = Math.abs(Math.round((price - next[0]) * 100) / 100);
+              if (sub > 0) {
+                arrSub.push(sub);
+              }
+            }
 
+            min = minNumber(arrPr);
+            max = maxNumber(arrPr);
+            minSub = minNumber(arrSub);
+            let tick, barwidth;
+            var sub = max - min;
+
+            if (max < 50) {
+              tick = minSub;
+              barwidth = 0.02;
+              min -= barwidth;
+              max += barwidth;
+            } else if (max > 100) {
+              tick = minSub < 0.5 && minSub !== 0 ? minSub : 0.5;
+              barwidth = 0.05;
+              min -= barwidth;
+              max += barwidth;
+            } else if (minSub < 0.5) {
+              tick = 0.1;
+              barwidth = 0.05;
+              min -= barwidth;
+              max += barwidth;
+              barwidth = 0.2;
+              min -= barwidth;
+              max += barwidth;
+            } else {
+              tick = 1;
+            }
+            // if (sub > 0) {
+            //   let countTick = Math.round(sub / tick);
+            //   if (countTick > 15) {
+            //     let tempTick = Math.round(countTick / 10);
+            //     tick = max < 50 ? 0.1 : 0.5;
+            //   }
+            const plotLine: any = this.yAxis[1].options.plotLines;
+            if (max < plotLine[0].value) {
+              max = max + sub;
+            }
+            console.log({ min, max, tick, sub, arrPr, arrSub });
+            this.yAxis[1].update({
+              tickInterval: parseFloat(sub.toFixed(1)),
+              tickAmount: e.target.yAxis[1].tickAmount,
+            });
+            this.yAxis[1].setExtremes(min, max, true, false);
+            console.log(this.yAxis[1]);
             this.redraw();
           },
         },
@@ -141,8 +187,7 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
           useHTML: true,
           style: {
             color: "#a5a5a5",
-            fontSize: "9px",
-            // width: 396,
+            fontSize: "6pt",
           },
           align: "center",
           y: 15,
@@ -153,7 +198,6 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
         tickInterval: 3600000,
         gridLineWidth: 1,
         gridLineColor: "#6d6d6d1f",
-        width: "300px",
       },
       yAxis: [
         {
@@ -180,12 +224,11 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
               fontSize: "9px",
               color: "#a5a5a5",
             },
-            distance: 8,
-            // enabled: false,
+            distance: 10,
+            y: 2,
           },
-          gridLineWidth: 0,
+          gridLineWidth: 1,
           gridLineColor: "#6d6d6d1f",
-          // tickAmount: 8,
           plotLines: [
             {
               color: "#FFFF00",
@@ -261,7 +304,7 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
       },
       series: series,
     });
-  }, [dataCol, dataSpline, indexValue, timeFirst, timeLast]);
+  }, [dataChartOption, dataCol, dataSpline, indexValue]);
   return (
     <div className="chart__for__time">
       <figure className="highcharts-figure">
