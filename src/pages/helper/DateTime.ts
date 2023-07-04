@@ -27,7 +27,7 @@ export const DateTimeCover = (date?: any)=>{
             var thangHtai = (ngayHienTai.getMonth() + 1).toString().padStart(2, "0");  //06 
             var nam = ngayHienTai.getFullYear(); // 2023
             let thangTR= ( Number(thangHtai)-1).toString().padStart(2, "0"); 
-            let StartDay = `${ngay}/${thangTR}-${nam}`;
+            let StartDay = `${ngay}/${thangTR}/${nam}`;
             let EndDay = `${ngay}/${thangHtai}/${nam}`;
             let data = {
                 StartDay,EndDay
