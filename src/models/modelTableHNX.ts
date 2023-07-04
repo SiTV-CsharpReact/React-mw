@@ -74,3 +74,11 @@ export interface DataGDTT {
   f340: string;
   f341: string;
 }
+export interface dataCK {
+     Sy: string;
+    Ex: string,
+    Re: string,
+    Ce: string,
+    Fl: string
+
+}

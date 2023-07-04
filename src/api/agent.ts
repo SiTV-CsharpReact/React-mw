@@ -23,12 +23,11 @@ const requests = {
     axios
       .post(url, body, {
         headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        // console.log(response)
-        const responseBody = response;
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then((response) => {
+        console.log(response)
+        const responseBody = response.data;
         return responseBody;
       })
       .catch((error) => {
@@ -106,7 +105,9 @@ const transfer = {
 }
 const tableThongke = {
     getdataThongke :(params :any) => requests.get(`http://eztrade4.fpts.com.vn//hnx/data.ashx?${params}`),
-    sortThongkeIndex : (query : any) =>requests.post("http://priceboard3.fpts.com.vn/Root/Data.ashx", query)
+    sortThongkeIndex : (query : any) =>requests.post("http://priceboard3.fpts.com.vn/Root/Data.ashx", query),
+    dataHNX :  ()=>  requests.get("http://localhost:1420/DataHNX"),
+    dataHSX :  ()=>  requests.get("http://localhost:1420/DataHSX"),
 }
 const agent = {
     TableHNX,

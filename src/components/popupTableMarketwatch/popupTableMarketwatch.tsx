@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useAppDispatch } from '../../store/configureStore';
+import { useAppDispatch, useAppSelector ,RootState } from '../../store/configureStore';
 import { showDetailStock } from './popupTableSlice';
 import TablePopupMarketwatch from '../tablePopupMarketwatch/TablePopupMarketwatch';
 import { handleHistoryPrices } from '../tableMarketwatch/tableTestSlice';
@@ -19,6 +19,10 @@ interface Props {
  
   const PopupTableMarketwatch = ({ selectedValue, setSelectedValueProp  }: Popup) =>  {
     const dispatch = useAppDispatch();
+    const { keyMenu, nameMenu ,floor} = useAppSelector(
+      (state: RootState) => state.menuBar
+    );
+    
     const popupRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         function handleClickOutside(e: any) {
@@ -31,15 +35,19 @@ interface Props {
           document.removeEventListener("mousedown", handleClickOutside);
         };
       }, [popupRef]);
-      const handleTest = ()=>{
-       dispatch(handleHistoryPrices("test"))
-        dispatch(setHistoryMenu())
-        dispatch(historyPriceActiveMenu())
-        setSelectedValueProp({...selectedValue, status: false}); 
-      }
-      const historyStock =() =>{
-        dispatch(showDetailStock(selectedValue.value))
-        setSelectedValueProp({...selectedValue, status: false}); 
+      const handleTest = (e:any)=>{
+        let data = {
+           stockCode : e,
+           keyMenu, nameMenu ,floor
+
+        }
+        console.log("data", data)
+       dispatch(handleHistoryPrices(data)) // thay đổi sàn 
+        dispatch(setHistoryMenu())   // chuyển sang table giá 
+        dispatch(historyPriceActiveMenu()) // chặn chuyển tab sang danh mục cá nhân
+      setSelectedValueProp({...selectedValue, status: false});   // tắt popuptable 
+
+
       }
   return (
     <div
@@ -78,7 +86,7 @@ interface Props {
               Chi tiết <b>{selectedValue.value}</b>
             </span>
           </li>
-          <li onClick={handleTest}>
+          <li onClick={() =>{ handleTest(selectedValue.value)}}>
             <i className="fa fa-history text-[#009688]"></i>
           <span >
               Lịch sử giá  <b>{selectedValue.value}</b>

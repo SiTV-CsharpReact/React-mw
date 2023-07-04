@@ -284,6 +284,7 @@
   &.tableTransfer {
     margin-top: 20px;
   }
+ 
 }
 
 .TablePage th {
@@ -341,6 +342,44 @@ $backgroundTotalBuySell: #f2f2d0;
 }
 .TablePage thead {
   font-weight: bold;
+}
+#tableHistoryMatChing{
+  & tbody{
+     & tr{
+      border: 1px solid #dedede;
+      background-color: white;
+      &:hover{
+        background-color: #efe;
+      }
+      & td{
+        border: 1px solid #dedede;
+        font-size: 12px;
+        text-align: right;
+      }
+      & .textCenter{
+        text-align: center;
+      }
+    }
+    & .totalBuySell{
+      background-color: #f2f2d0;
+      font-weight: bold;
+    }
+    & .stockCodeTD{
+      font-weight: bold;
+      position: relative;
+      & .icontable{
+        position: absolute;
+        top: -2px;
+        right: 3px; 
+        color: rgb(198, 195, 195);
+        font-size: 15px;
+        & .MuiSvgIcon-root{
+          font-size: 22pt;
+        }
+      }
+    }
+   
+  } 
 }
 #contentActionGD {
   min-height: 630px;

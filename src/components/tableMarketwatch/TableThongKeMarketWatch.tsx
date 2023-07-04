@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { stocks } from "../../models/marketwacthTable";
 import { DatePicker, Space } from "antd";
 import HeaderFromThongke from "./helper/HeadeFormThongKe";
@@ -8,12 +8,11 @@ import {
   RootState,
   useAppDispatch,
 } from "../../store/configureStore";
-import { getdataTableThongKe, SortTableThongkeIndex } from "./tableTestSlice";
+import { getDataChungKhoan, getdataTableThongKe, SortTableThongkeIndex } from "./tableTestSlice";
 import { DateTimeCover, getDateTime } from "../../pages/helper/DateTime";
 import { formatNumberMarket, formatNumberPhanTram } from "../../utils/util";
 import PanigationTableThongKe from "./helper/Panigation";
 import { VARIBLE_ACTICON_TYPE } from "./helper/varible";
-const { RangePicker } = DatePicker;
 type DateValue = {
   action: string;
   center: any;
@@ -35,8 +34,8 @@ type DataValues = {
   page_size: any;
 };
 const TableThongKeMarketWatch = () => {
-  const { KeyMenuChildren } = useAppSelector((state: RootState) => state.table);
   const {
+    KeyMenuChildren,
     dataTableThongkeIndex,
     dataTableThongkeTH,
     dataTableThongkePrice,
@@ -71,56 +70,13 @@ const TableThongKeMarketWatch = () => {
     page_size: 400,
   });
   const dispatch = useAppDispatch();
-  // console.log("KeyMenuChildren",KeyMenuChildren)
-  // const [products, setProducts] = useState([]);
-
-  // const params = useParams<{ id: string }>()
-  // const paramstock  = stocks.find(
-  //   paramstock => paramstock.id === params.id
-  // )
-  // useEffect(()=>{
-  //     if(paramstock){
-  //      if(paramstock.id){
-  //        fetchTable(paramstock.id)
-  //      }
-  //      else{
-  //        fetchTable("HNX")
-  //      }
-  //     }
-  //    },[paramstock?.id])
-  //   //console.log(products)
-  //  // useEffect(()=>{
-  //  //     dispatch(fetchTableHNXAsync())
-  //  //     //dispatch(fetchStatusAsync())
-  //  // },[dispatch])
-  //  const fetchTable = async(param:string) => {
-  //    let valueParam ="thong-ke-index";
-  //     switch(param) {
-  //      case "thong-ke-index":
-  //        valueParam= "s=bi";
-  //        break;
-  //        case "thong-ke-gia":
-  //          valueParam = "s=bi";
-  //          break;
-  //           case "thong-ke-dat-lenh":
-  //             valueParam = "s=bi";
-  //             break;
-  //               case "Giao-dich-KL-NDTNN":
-  //                 valueParam = "s=bi";
-  //                 break;
-  //                 case "Giao-dich-TT-NDTNN":
-  //                   valueParam = "s=bi";
-  //                   break;
-  //        default:p
-  //          break;
-  //     }
-  //      const res = await fetch(`http://marketstream.fpts.com.vn/hnx/data.ashx?${valueParam}`);
-  //      const data = await res.json();
-  //      setProducts(data)
-  //  }
+  const handleChungKhoan = useCallback(()=>{
+    dispatch(getDataChungKhoan())
+  },[])
   useEffect(() => {
     dispatch(getdataTableThongKe());
-  }, []);
+    handleChungKhoan()
+  }, [handleChungKhoan]);
   const ChangeBegin_time = (e: any) => {
     const { StartDay } = DateTimeCover(e.target.value);
     setData({ ...data, begin_date: StartDay });
@@ -335,7 +291,7 @@ const TableThongKeMarketWatch = () => {
                 ? dataTableThongkeIndex.map((item: any, index: number) => {
                     return (
                       <tr>
-                        <td>{formatNumberMarket(item[0][1])}</td>
+                        <td>{item[0][1]}</td>
                         <td>{formatNumberMarket(item[1][1])}</td>
                         <td>{formatNumberMarket(item[2][1])}</td>
                         <td>{formatNumberMarket(item[3][1])}</td>

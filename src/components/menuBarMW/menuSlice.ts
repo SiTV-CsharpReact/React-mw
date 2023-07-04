@@ -20,12 +20,14 @@ interface ComponentState {
     statusChart: boolean;
     keyMenu : number,
     nameMenu :any,
+    floor : string
   }
   
   const initialState: ComponentState = {
     statusChart: true,
     keyMenu : 0,
     nameMenu : "",
+    floor : "HSX"
   };
 const menuSlice = createSlice({
     name: 'component',
@@ -37,6 +39,7 @@ const menuSlice = createSlice({
       setActiveMenu  (state, action) {
         state.nameMenu = action.payload?.nameMenu;
         state.keyMenu = action.payload?.keyMenu;
+        state.floor = action.payload?.floor;
       },
       setHistoryMenu :  ( state)=> {
           state.keyMenu = 4
