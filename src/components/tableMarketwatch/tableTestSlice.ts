@@ -186,7 +186,7 @@ export const getdataTableThongKe = createAsyncThunk(
       // mặc định call nhưng chưa biết nó để lmj
       let params = "s=bi";
 
-      const data = await agent.tableThongke.getdataThongke(params);
+      // const data = await agent.tableThongke.getdataThongke(params);
     } catch (error) {}
   }
 );

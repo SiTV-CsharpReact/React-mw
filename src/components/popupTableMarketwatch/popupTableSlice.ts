@@ -18,9 +18,7 @@ const popupTableSlice = createSlice({
             state.visible = !state.visible;
             state.code = action.payload;
           },
-   
     },
-    
 });
 
 export const { showDetailStock} = popupTableSlice.actions;
