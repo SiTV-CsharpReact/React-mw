@@ -109,7 +109,6 @@ const HeaderFromThongke = ({ ChangeFuncion }: Props) => {
     dispatch(dispatchDataThongke(dataThongke));
   };
   // call api
-  console.log("stockCode" ,stockCode)
   const handelSubmit = () => {
     const action_type =
       KeyMenuChildren == 1
