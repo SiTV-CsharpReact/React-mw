@@ -82,7 +82,7 @@ const dataGDTTtable = {
 };
 const chartIndex = {
   get: () =>
-    requests.get("http://priceboard3.fpts.com.vn/chart/data.ashx?s=full"),
+    requests.get(BASE_URL+"/chart/data.ashx?s=full"),
   //get: () => requests.get('http://localhost:8000/dataChartIndex'),
 };
 var formData = new FormData();
@@ -90,8 +90,8 @@ formData.append('key1', 'value1')
 formData.append('key2', 'value2')
 const dataTableBasic ={
    
-    post: (dataValueBasic:RPChart) => requests.post("http://priceboard3.fpts.com.vn/Root/Data.ashx", dataValueBasic),
-    postFormData: (dataValueBasic:RPChart) =>requests.postFormData("http://priceboard3.fpts.com.vn/Root/Data.ashx", dataValueBasic)
+    post: (dataValueBasic:RPChart) => requests.post(BASE_URL+"/Root/Data.ashx", dataValueBasic),
+    postFormData: (dataValueBasic:RPChart) =>requests.postFormData(BASE_URL+"/Root/Data.ashx", dataValueBasic)
     //  requests.postFormData("/Root/Data.ashx", dataValueBasic,   {'Content-Type': 'multipart/form-data'},)
       
 }
@@ -105,8 +105,8 @@ const transfer = {
     hometransferds : ()=> requests.get("http://localhost:2000/dataTransferds")
 }
 const tableThongke = {
-    getdataThongke :(params :any) => requests.get(`http://eztrade4.fpts.com.vn//hnx/data.ashx?${params}`),
-    sortThongkeIndex : (query : any) =>requests.post("http://priceboard3.fpts.com.vn/Root/Data.ashx", query),
+    getdataThongke :(params :any) => requests.get(`${BASE_URL}/hnx/data.ashx?${params}`),
+    sortThongkeIndex : (query : any) =>requests.post(BASE_URL+"/Root/Data.ashx", query),
     dataHNX :  ()=>  requests.get("http://localhost:1420/DataHNX"),
     dataHSX :  ()=>  requests.get("http://localhost:1420/DataHSX"),
 }
@@ -129,12 +129,12 @@ const agent = {
 // const dataTableBasic = {
 //   post: (dataValueBasic: RPChart) =>
 //     requests.post(
-//       "http://priceboard3.fpts.com.vn/Root/Data.ashx",
+//       base_url+"/Root/Data.ashx",
 //       dataValueBasic
 //     ),
 //   postFormData: (dataValueBasic: RPChart) =>
 //     requests.postFormData(
-//       "http://priceboard3.fpts.com.vn/Root/Data.ashx",
+//       base_url+"/Root/Data.ashx",
 //       dataValueBasic
 //     ),
 //   //  requests.postFormData("/Root/Data.ashx", dataValueBasic,   {'Content-Type': 'multipart/form-data'},)

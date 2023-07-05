@@ -65,8 +65,6 @@ export function _getDateTs(dateTime: any) {
   var d;
   d = new Date(dateTime).getTime();
   return d;
-  // if (!isNaN(d)) {
-  //   return d;
   // }
   // dateTime = dateTime.toString().replace(/-/g, " "); //1 Jan 2010 works but 1-Jan-2010 doesn't
   // d = new Date(dateTime).getTime();
@@ -80,6 +78,35 @@ export function _getDateTs(dateTime: any) {
   //   return d;
   // }
 }
-export function drawChart(data: any) {
-  //    console.log(data.HNX)
+export function drawChart(data: any): any {
+  const arrPriceVol = data.map((item: any) => [item[4], item[5]]);
+  const arr = arrPriceVol.reduce((acc: any, [price, vol]: any) => {
+    if (!acc[price]) {
+      acc[price] = [price, vol];
+    } else {
+      acc[price][1] += vol;
+    }
+    return acc;
+  }, {});
+  return arr;
+}
+
+export function minNumber(arr: any): number {
+  let minNum = arr[arr.length - 1];
+  for (let i = 0; i < arr.length; i++) {
+    if (minNum > arr[i]) {
+      minNum = arr[i];
+    }
+  }
+  return minNum;
+}
+
+export function maxNumber(arr: any): number {
+  let maxNum = arr[arr.length - 1];
+  for (let i = 0; i < arr.length; i++) {
+    if (maxNum < arr[i]) {
+      maxNum = arr[i];
+    }
+  }
+  return maxNum;
 }

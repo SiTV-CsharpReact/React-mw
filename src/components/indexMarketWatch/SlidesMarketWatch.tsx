@@ -92,45 +92,45 @@ const SlidesMarketWatch = () => {
   }, [isHoveringLeft, isHoveringRight, sliderRef]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleHoverRight = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsHoveringRight(true);
-    !visible && e.currentTarget.classList.add("scrollingHotSpotRightVisible");
-  };
+  // const handleHoverRight = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   setIsHoveringRight(true);
+  //   !visible && e.currentTarget.classList.add("scrollingHotSpotRightVisible");
+  // };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleLeaveRight = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsHoveringRight(false);
-    !visible &&
-      e.currentTarget.classList.remove("scrollingHotSpotRightVisible");
-  };
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // const handleLeaveRight = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   setIsHoveringRight(false);
+  //   !visible &&
+  //     e.currentTarget.classList.remove("scrollingHotSpotRightVisible");
+  // };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleHoverLeft = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsHoveringLeft(true);
-    !visible && e.currentTarget.classList.add("scrollingHotSpotLeftVisible");
-  };
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // const handleHoverLeft = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   setIsHoveringLeft(true);
+  //   !visible && e.currentTarget.classList.add("scrollingHotSpotLeftVisible");
+  // };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleLeaveLeft = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsHoveringLeft(false);
-    !visible && e.currentTarget.classList.remove("scrollingHotSpotLeftVisible");
-  };
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // const handleLeaveLeft = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   setIsHoveringLeft(false);
+  //   !visible && e.currentTarget.classList.remove("scrollingHotSpotLeftVisible");
+  // };
   //kéo sang phải và sang trái liên tục
-  const handleHover = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      handleHoverLeft(e);
-      handleHoverRight(e);
-    },
-    [handleHoverLeft, handleHoverRight]
-  );
+  // const handleHover = useCallback(
+  //   (e: React.MouseEvent<HTMLDivElement>) => {
+  //     handleHoverLeft(e);
+  //     handleHoverRight(e);
+  //   },
+  //   [handleHoverLeft, handleHoverRight]
+  // );
 
-  const handleLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      handleLeaveLeft(e);
-      handleLeaveRight(e);
-    },
-    [handleLeaveLeft, handleLeaveRight]
-  );
+  // const handleLeave = useCallback(
+  //   (e: React.MouseEvent<HTMLDivElement>) => {
+  //     handleLeaveLeft(e);
+  //     handleLeaveRight(e);
+  //   },
+  //   [handleLeaveLeft, handleLeaveRight]
+  // );
 
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -158,6 +158,7 @@ const SlidesMarketWatch = () => {
     setIsDragging(false);
   };
 
+<<<<<<< HEAD
   const handleMouseLeave = (e: any) => {
     clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover
     // scrollInterval = null;
@@ -207,29 +208,65 @@ const SlidesMarketWatch = () => {
 
   // const handleMouseMoveButton = (event: any) => {
   //   setSpeed(event.clientX - event.target.getBoundingClientRect().left);
+=======
+  const handleMouseEnter = (value: any, event: any) => {
+    // const buttonWidth = event.target.offsetWidth;
+    // const buttonRect = event.target.getBoundingClientRect();
+    // const mouseX = event.clientX - buttonRect.left;
+    // console.log(mouseX);
+
+  
+    if (value === "left") {
+      !visible &&  event.currentTarget.classList.add("scrollingHotSpotLeftVisible");
+      setScrollInterval(
+        setInterval(() => {
+          divRef.current.scrollLeft -= 1; // tốc độc scroll
+        }, 8)
+      );
+    }
+    if (value === "right") {
+      !visible &&  event.currentTarget.classList.add("scrollingHotSpotRightVisible");
+      setScrollInterval(
+        setInterval(() => {
+          divRef.current.scrollLeft += 1; // tốc độc scroll
+          //console.log(divRef.current.scrollLeft)
+        }, 1)
+      );
+    }
+  };
+
+  const handleMouseLeave = (e:any) => {
+    clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover
+    setScrollInterval(null);
+    e.currentTarget.classList.remove("scrollingHotSpotLeftVisible");
+    e.currentTarget.classList.remove("scrollingHotSpotRightVisible");
+  };
+  // const handleMouseMoveButton = (event) => {
+  //   setMouseX(event.clientX - event.target.getBoundingClientRect().left);
+>>>>>>> fab57128a0cd22a3d166d2d27a8212d4c9aae27b
   // };
   // console.log(speed);
 
-  const settings = {
-    // className: "center",
-    // centerMode: true,
-    dots: false,
-    speed: visible ? 300 : 4000,
-    // infinite: true,
-    slidesToShow: slidesToShow,
-    slidesToScroll: slidesToShow,
-    // slidesToShow: 7, // Hiển thị 3 slide trên một lần trượt
-    // slidesToScroll: 7,
-    autoplay: isHoveringLeft || isHoveringRight,
-    autoplaySpeed: 4000,
-    cssEase: "linear",
-    centerPadding: "50px",
-    draggable: true,
-    swipeToSlide: true,
-    infinite: false,
-    onMouseEnter: handleHover,
-    onMouseLeave: handleLeave,
-  };
+  // const settings = {
+  //   // className: "center",
+  //   // centerMode: true,
+  //   dots: false,
+  //   speed: visible ? 300 : 4000,
+  //   // infinite: true,
+  //   slidesToShow: slidesToShow,
+  //   slidesToScroll: slidesToShow,
+  //   // slidesToShow: 7, // Hiển thị 3 slide trên một lần trượt
+  //   // slidesToScroll: 7,
+  //   autoplay: isHoveringLeft || isHoveringRight,
+  //   autoplaySpeed: 4000,
+  //   cssEase: "linear",
+  //   centerPadding: "50px",
+  //   draggable: true,
+  //   swipeToSlide: true,
+  //   infinite: false,
+  //   onMouseEnter: handleHover,
+  //   onMouseLeave: handleLeave,
+  // };
 
   return (
     <div

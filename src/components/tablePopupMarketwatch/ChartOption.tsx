@@ -1,22 +1,31 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import React, { useEffect, useState } from "react";
+import { useAppSelector } from "../../store/configureStore";
 import * as Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import { fetchChartOptionAsync } from "./chartOptionSlice";
-// import { HighchartsProvider } from "react-jsx-highcharts";
-import { DataStockCode } from "../../models/stockCode";
-import { _getDateTs } from "../chartIndex/util/app.chart";
+import {
+  _getDateTs,
+  drawChart,
+  maxNumber,
+  minNumber,
+} from "../chartIndex/util/app.chart";
 import { formatNumber } from "../../utils/util";
-const ChartOption: React.FC<DataStockCode> = (data) => {
-  const dispatch = useAppDispatch();
+const ChartOption: React.FC<any> = (props) => {
   const { isLoading, dataChartOption, status } = useAppSelector(
     (state) => state.chartOption
   );
   const [dataCol, setDataCol] = useState<any>([]);
   const [dataSpline, setDataSpline] = useState<any>([]);
-  const [timeFirst, setTimeFirst] = useState(0);
-  const [timeLast, setTimeLast] = useState(0);
-  const [indexValue, setIndexValue] = useState(6.34);
+  const [indexValue, setIndexValue] = useState(0);
+
+  useEffect(() => {
+    props.dataItem?.map((item: any) => {
+      // eslint-disable-next-line array-callback-return
+      return item.Info?.map((e: any, ind: number) => {
+        if (ind === 1) {
+          setIndexValue(e[1]);
+        }
+      });
+    });
+  }, [props.dataItem]);
 
   useEffect(() => {
     if (dataChartOption?.length > 0) {
@@ -31,19 +40,6 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
           y: item?.Index,
         };
       });
-      console.log(arrSpline);
-      
-      // data.map((item: any, ind: number) => {
-      //   if (ind === 0) {
-      //     const v = item?.TimeJS;
-      //     set6.34(item?.Index);
-      //     setTimeFirst(item?.TimeJS);
-      //     const l = new Date(timeFirst);
-      //     l.setHours(l.getHours() + 6);
-      //     setTimeLast(l.getTime());
-      //   }
-      //   return "";
-      // });
       const arrCol = data?.map((item: any) => ({
         x: item?.TimeJS,
         y: item?.Vol,
@@ -51,10 +47,7 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
       setDataCol(arrCol);
       setDataSpline(arrSpline);
     }
-  }, [dataChartOption, timeFirst]);
-  useEffect(() => {
-    dispatch(fetchChartOptionAsync({ stockCode: data.stockCode }));
-  }, [data.stockCode, dispatch]);
+  }, [dataChartOption]);
 
   useEffect(() => {
     const gradient: any = [0, 0, 50, 500];
@@ -79,9 +72,7 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
     ];
     Highcharts.chart(`container__chart__time`, {
       chart: {
-        //  marginLeft: , // Đặt khoảng cách giữa highcharts-plot-background và highcharts-container là 20px
-        width: 390,
-        height: 180,
+        height: 160,
         polar: true,
         backgroundColor: "#303030",
         plotBackgroundColor: {
@@ -94,37 +85,108 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
         plotBorderWidth: 1,
         plotBorderColor: "#545454",
         events: {
-          load: function () {
+          load: function (e: any) {
             const xAxis = this.xAxis[0];
             const today = new Date();
             const dd = today.getDate();
             const mm = today.getMonth(); //January is 0!
             const yyyy = today.getFullYear();
-            const HH1 = "9";
-            const HH2 = "15";
-            const MM = "00"; // minute
+            const HH1 = 9;
+            const HH2 = 15;
+            const MM = 0; // minute
 
-            const xminTmp = new Date(yyyy, mm, dd, Number(HH1), Number(MM));
-            const xmaxTmp = new Date(yyyy, mm, dd, Number(HH2), Number(MM));
+            const xminTmp = new Date(yyyy, mm, dd, HH1, MM);
+            const xmaxTmp = new Date(yyyy, mm, dd, HH2, MM);
 
             const xmin = _getDateTs(xminTmp);
             const xmax = _getDateTs(xmaxTmp);
             xAxis.setExtremes(xmin, xmax, true, false);
-            console.log(xAxis);
-            setTimeFirst(xmin);
-            setTimeLast(xmax);
-            // const yAxis = this.yAxis[1];
-            // const yExtremes = yAxis.getExtremes();
+            // console.log(this.yAxis[1].series);
+            let arr: any = [];
+            // eslint-disable-next-line array-callback-return
+            this.yAxis[1].series.map((item: any) => {
+              arr = Array.from(new Set(item.yData)).sort(
+                (a: any, b: any) => a - b
+              );
+              // return result;
+            });
+            // let data: any = [];
+            // this.options.series?.map((item: any, ind) => {
+            //   if (ind === 1) return (data = item.data);
+            // });
+            // console.log(data);
 
-            // const minIndex = Number(yExtremes.dataMin);
-            // const maxIndex = Number(yExtremes.dataMax);
-            // const lengthStep = Math.round(minIndex * 0.9).toString().length - 2;
+            // const myArr: any = Object.values(drawChart(dataChartOption));
+            // console.log(this.options.series);
 
-            // const step = 10 ** lengthStep;
-            // const newMin = Math.floor((minIndex * 0.95) / step) * step;
-            // const newMax = Math.ceil(maxIndex / step) * step;
-            // yAxis.setExtremes(newMin, newMax, true, false);
+            let min, max;
+            let arrPr: any = [],
+              arrSub: any = [],
+              minSub;
+            for (let i = 0; i < arr.length; i++) {
+              const price = arr[i];
+              arrPr.push(price);
+              var next = arr[i + 1];
 
+              if (typeof next === "undefined") {
+                next = arr[0];
+              }
+              const sub = Math.abs(Math.round((price - next) * 100) / 100);
+              console.log(sub);
+
+              if (sub > 0) {
+                arrSub.push(sub);
+              }
+            }
+
+            min = minNumber(arrPr);
+            max = maxNumber(arrPr);
+            minSub = minNumber(arrSub);
+            console.log(minSub);
+            
+            var tick, barwidth;
+            var sub = max - min;
+
+            if (max < 50) {
+              tick = minSub;
+              barwidth = 0.02;
+              min -= barwidth;
+              max += barwidth;
+            } else if (max > 100) {
+              tick = minSub < 0.5 && minSub !== 0 ? minSub : 0.5;
+              barwidth = 0.05;
+              min -= barwidth;
+              max += barwidth;
+            } else if (minSub < 0.5) {
+              tick = 0.1;
+              barwidth = 0.05;
+              min -= barwidth;
+              max += barwidth;
+            } else {
+              tick = 1;
+              barwidth = 0.2;
+              min -= barwidth;
+              max += barwidth;
+            }
+            // console.log(tick);
+
+            const plotLine: any = this.yAxis[1].options.plotLines;
+            if (max <= plotLine[0].value) {
+              max = max + sub;
+            }
+            console.log({ min, max, tick, sub, arrPr, arrSub, arr });
+            this.yAxis[1].update({
+              tickInterval: parseFloat(sub.toFixed(1)),
+              tickAmount: e.target.yAxis[1].tickAmount,
+            });
+            // console.log(this.yAxis[1]);
+
+            this.yAxis[1].setExtremes(
+              parseFloat(min.toFixed(1)),
+              parseFloat(max.toFixed(1)),
+              true,
+              false
+            );
             this.redraw();
           },
         },
@@ -144,25 +206,20 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
           useHTML: true,
           style: {
             color: "#a5a5a5",
-            fontSize: "8px",
-            // width: 396,
+            fontSize: "6pt",
           },
           align: "center",
           y: 15,
         },
-        
-        lineWidth: 1,
+        lineWidth: 0,
         lineColor: "#5f5f5f",
         tickWidth: 0,
         tickInterval: 3600000,
-        minPadding: 0,
-        maxPadding: 0,
         gridLineWidth: 1,
         gridLineColor: "#6d6d6d1f",
-        // width: "390px",
+        height: 140,
       },
       yAxis: [
-        
         {
           title: {
             text: "",
@@ -174,6 +231,7 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
           labels: {
             enabled: false,
           },
+          height: 140,
         },
         {
           title: {
@@ -183,26 +241,24 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
           lineWidth: 0,
           lineColor: "#5f5f5f",
           labels: {
-            padding: 0,
             style: {
-              // width: 50,
-              fontSize: "8px",
+              fontSize: "9px",
               color: "#a5a5a5",
             },
-            distance: 4,
-            // enabled: false,
+            distance: 10,
+            y: 2,
           },
-          gridLineWidth: 0,
+          gridLineWidth: 1,
           gridLineColor: "#6d6d6d1f",
-          tickAmount: 4,
           plotLines: [
             {
               color: "#FFFF00",
               width: 1,
-              value: 6.34,
+              value: indexValue,
               zIndex: 10,
             },
           ],
+          height: 140,
         },
       ],
       time: {
@@ -220,7 +276,7 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
         formatter: function () {
           const index: any = this.points?.map((e: any, ind) => {
             if (ind === 1) {
-              if (e.y >= 6.34) {
+              if (e.y >= indexValue) {
                 e.series.chart.tooltip.options.borderColor = "#07d800";
               } else {
                 e.series.chart.tooltip.options.borderColor = "red";
@@ -254,7 +310,7 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
           lineWidth: 1.5,
           zones: [
             {
-              value: 6.34,
+              value: indexValue,
               color: "red",
             },
             {
@@ -270,7 +326,7 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
       },
       series: series,
     });
-  }, [dataCol, dataSpline, 6.34, timeFirst, timeLast]);
+  }, [dataChartOption, dataCol, dataSpline, indexValue]);
   return (
     <div className="chart__for__time">
       <figure className="highcharts-figure">
