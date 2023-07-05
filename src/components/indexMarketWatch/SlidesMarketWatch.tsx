@@ -52,6 +52,7 @@ const SlidesMarketWatch = () => {
   const slideWidth = 220;
   const slidesToShow = Math.floor(screenWidth / slideWidth);
   const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
+  const [speed, setSpeed] = useState(0);
 
   const dispatch = useAppDispatch();
   const {
@@ -134,9 +135,10 @@ const SlidesMarketWatch = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [scrollInterval, setScrollInterval] = useState<any>(null);
+  // const [scrollInterval, setScrollInterval] = useState<any>(null);
   const scrollRef = useRef(null);
   const divRef = useRef<any>(null);
+  let scrollInterval: any = null;
   // const [mouseX, setMouseX] = useState(0);
   const handleMouseDown = (event: any) => {
     setIsDragging(true);
@@ -156,41 +158,57 @@ const SlidesMarketWatch = () => {
     setIsDragging(false);
   };
 
-  const handleMouseEnter = (value: any, event: any) => {
-    // const buttonWidth = event.target.offsetWidth;
-    // const buttonRect = event.target.getBoundingClientRect();
-    // const mouseX = event.clientX - buttonRect.left;
-    // console.log(mouseX);
-
-  
-    if (value === "left") {
-      !visible &&  event.currentTarget.classList.add("scrollingHotSpotLeftVisible");
-      setScrollInterval(
-        setInterval(() => {
-          divRef.current.scrollLeft -= 1; // tốc độc scroll
-        }, 8)
-      );
-    }
-    if (value === "right") {
-      !visible &&  event.currentTarget.classList.add("scrollingHotSpotRightVisible");
-      setScrollInterval(
-        setInterval(() => {
-          divRef.current.scrollLeft += 1; // tốc độc scroll
-          //console.log(divRef.current.scrollLeft)
-        }, 1)
-      );
-    }
-  };
-
-  const handleMouseLeave = (e:any) => {
+  const handleMouseLeave = (e: any) => {
     clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover
-    setScrollInterval(null);
-    e.currentTarget.classList.remove("scrollingHotSpotLeftVisible");
-    e.currentTarget.classList.remove("scrollingHotSpotRightVisible");
+    // scrollInterval = null;
+    !visible &&
+      e.currentTarget.classList.remove("scrollingHotSpotRightVisible");
+    !visible && e.currentTarget.classList.remove("scrollingHotSpotLeftVisible");
+    // handleMouseMoveButton(null);
+    // handleMouseEnter(null, null);
   };
-  // const handleMouseMoveButton = (event) => {
-  //   setMouseX(event.clientX - event.target.getBoundingClientRect().left);
+
+  let handleMouseEnter = (value: any, event: any) => {
+    if (value === "right") {
+      !visible &&
+        event.currentTarget.classList.add("scrollingHotSpotRightVisible");
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      scrollInterval = setInterval(() => {
+        divRef.current.scrollLeft += 1; // tốc độc scroll
+        const divElement = divRef.current;
+        const isAtRightEdge =
+          divElement.scrollLeft + divElement.clientWidth >=
+          divElement.scrollWidth;
+
+        if (isAtRightEdge) {
+          !visible &&
+            event.currentTarget.classList.remove(
+              "scrollingHotSpotRightVisible"
+            );
+          clearInterval(scrollInterval);
+          handleMouseEnter(null, null);
+        }
+      }, 1);
+    }
+
+    if (value === "left") {
+      !visible &&
+        event.currentTarget.classList.add("scrollingHotSpotLeftVisible");
+      scrollInterval = setInterval(() => {
+        divRef.current.scrollLeft -= 1; // tốc độc scroll
+        if (divRef.current.scrollLeft === 0) {
+          clearInterval(scrollInterval);
+          event.currentTarget.classList.remove("scrollingHotSpotLeftVisible");
+          handleMouseEnter(null, null);
+        }
+      }, 8);
+    }
+  };
+
+  // const handleMouseMoveButton = (event: any) => {
+  //   setSpeed(event.clientX - event.target.getBoundingClientRect().left);
   // };
+  // console.log(speed);
 
   // const settings = {
   //   // className: "center",
@@ -229,7 +247,9 @@ const SlidesMarketWatch = () => {
         onMouseEnter={(e) => {
           handleMouseEnter("left", e);
         }}
-        onMouseLeave={handleMouseLeave}
+        onMouseLeave={(e: any) => {
+          handleMouseLeave(e);
+        }}
       />
       <ul className="my-1 col-priceboard class-chart">
         <div
@@ -547,7 +567,12 @@ const SlidesMarketWatch = () => {
         onMouseEnter={(e) => {
           handleMouseEnter("right", e);
         }}
-        onMouseLeave={handleMouseLeave}
+        onMouseLeave={(e: any) => {
+          handleMouseLeave(e);
+        }}
+        // onMouseMove={(e) => {
+        //   handleMouseMoveButton(e);
+        // }}
       />
     </div>
   );
