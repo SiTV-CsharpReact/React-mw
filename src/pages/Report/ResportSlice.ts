@@ -6,7 +6,6 @@ import { elements } from "chart.js";
 export const getdata = createAsyncThunk("reportSlice_getdata", async () => {
   try {
     let data = await agent.report.get();
-    data = data.filter((e: ReportData) => e.ASTOCKCODE);
     const  ArrayAlike = (data:any)=> {
         let mang_moi:any = [];
       
@@ -27,7 +26,7 @@ export const getdata = createAsyncThunk("reportSlice_getdata", async () => {
         return mang_moi;
       }
       let mang_moi = ArrayAlike(data);
-      console.log(mang_moi);
+      return mang_moi;
   } catch (e) {}
 });
 export const getDataHisOrder = createAsyncThunk(
@@ -51,12 +50,15 @@ const RespportSlice = createSlice({
   name: "reportSlice",
   initialState: {
     dataHisOrder: [] as hisOrder[],
+    dataTradeLog : [] as  ReportData[],
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getdata.pending, (state) => {})
-      .addCase(getdata.fulfilled, (state) => {})
+      .addCase(getdata.fulfilled, (state,action) => {
+        state.dataTradeLog = action.payload
+      })
       .addCase(getdata.rejected, (state) => {})
       .addCase(getDataHisOrder.pending, (state) => {})
       .addCase(getDataHisOrder.fulfilled, (state, action) => {

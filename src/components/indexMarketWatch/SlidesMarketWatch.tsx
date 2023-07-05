@@ -166,14 +166,14 @@ const SlidesMarketWatch = () => {
     if (value === "left") {
       setScrollInterval(
         setInterval(() => {
-          divRef.current.scrollLeft -= 1;
+          divRef.current.scrollLeft -= 1; // tốc độc scroll
         }, 8)
       );
     }
     if (value === "right") {
       setScrollInterval(
         setInterval(() => {
-          divRef.current.scrollLeft += 1;
+          divRef.current.scrollLeft += 1; // tốc độc scroll
         }, 1)
       );
     }

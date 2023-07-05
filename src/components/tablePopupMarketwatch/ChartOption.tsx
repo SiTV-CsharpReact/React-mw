@@ -80,8 +80,8 @@ const ChartOption: React.FC<DataStockCode> = (data) => {
     Highcharts.chart(`container__chart__time`, {
       chart: {
         //  marginLeft: , // Đặt khoảng cách giữa highcharts-plot-background và highcharts-container là 20px
-        // width:400,
-        height: 160,
+        width: 390,
+        height: 180,
         polar: true,
         backgroundColor: "#303030",
         plotBackgroundColor: {

@@ -21,9 +21,9 @@ import { dataSliceShow } from "../components/orderFormMarketwatch/data";
 import statusTableMWSlice from "../components/chartMarketwatch/statusTableSlice";
 import chartIndexSlice from "../components/chartIndex/chartIndexSlice";
 import { dataSliceThongke } from "../components/tableMarketwatch/helper/tableFormThongke";
-import chartOptionSlice from "../components/tablePopupMarketwatch/chartOptionSlice";
 import RespportSlice from "../pages/Report/ResportSlice";
 import TransferSlice from "../pages/Transfer/TransferSlice";
+import chartOptionSlice from "../components/tablePopupMarketwatch/chartOptionSlice";
 
 export const store = configureStore({
   reducer: {

@@ -313,6 +313,7 @@ const OrderMarketW = () => {
         setSubmit(false);
         setValueInput("");
         setValueInputPrice(0);
+        setGdSuccess(false)
         setValueInputKl(0);
       }, 3000);
     }

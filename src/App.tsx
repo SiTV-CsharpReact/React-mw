@@ -40,7 +40,6 @@ import TransBalance from "./components/TransBalance/TransBalance";
 import ConditionalOderText from "./pages/Stoploss/ConditionalOderText";
 const App: React.FC = () => {
   return (
-    <div>
       <AppProvider>
         <Routes>
           <Route path="/" element={<LayoutMarketWatch />} />
@@ -136,7 +135,6 @@ const App: React.FC = () => {
           <Route path="/tradingview" element={<TradingViewWidget />} />
         </Routes>
       </AppProvider>
-    </div>
   );
 };
 

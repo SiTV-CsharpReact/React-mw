@@ -14,10 +14,15 @@ import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { setStatusChart } from "../menuBarMW/menuSlice";
 import React from "react";
 import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
+import { getActiveMenu } from "./helper/activMenu";
 const Header = () => { 
   const dispatch = useAppDispatch();
   const { mode } = useAppSelector((state) => state.settingColorMode);
-
+    const HangdleAction = ()=>{
+      dispatch(statusChartMarketwatch({visible:false,code:""}))
+      localStorage.setItem("activeMenuHeader","" );
+      getActiveMenu();
+    }
   return (
     <Box
       component="header"
@@ -26,7 +31,7 @@ const Header = () => {
     >
       <div className="header-left">
         <Link to="/" className={`text-fontLogo font-bold italic ${mode}-text`}
-          onClick={() => dispatch(statusChartMarketwatch({visible:false,code:""}))}>
+          onClick={HangdleAction}>
           <span>Ez</span>
           <span className="text-colorTextLogo">Trade</span>
         </Link>
