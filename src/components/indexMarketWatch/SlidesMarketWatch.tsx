@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Slider from "react-slick";
 import "./slide.scss";
 import "slick-carousel/slick/slick.css";
@@ -46,7 +52,6 @@ const SlidesMarketWatch = () => {
   const slideWidth = 220;
   const slidesToShow = Math.floor(screenWidth / slideWidth);
   const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
-  
 
   const dispatch = useAppDispatch();
   const {
@@ -126,6 +131,62 @@ const SlidesMarketWatch = () => {
     [handleLeaveLeft, handleLeaveRight]
   );
 
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [scrollInterval, setScrollInterval] = useState<any>(null);
+  const scrollRef = useRef(null);
+  const divRef = useRef<any>(null);
+  // const [mouseX, setMouseX] = useState(0);
+  const handleMouseDown = (event: any) => {
+    setIsDragging(true);
+    setStartX(event.pageX - divRef.current.offsetLeft);
+    setScrollLeft(divRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (event: any) => {
+    if (!isDragging) return;
+    event.preventDefault();
+    const x = event.pageX - divRef.current.offsetLeft;
+    const walk = x - startX; // Tốc độ kéo
+    divRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseEnter = (value: any, event: any) => {
+    // const buttonWidth = event.target.offsetWidth;
+    // const buttonRect = event.target.getBoundingClientRect();
+    // const mouseX = event.clientX - buttonRect.left;
+    // console.log(mouseX);
+    !visible &&
+      event.currentTarget.classList.add("scrollingHotSpotLeftVisible");
+    if (value === "left") {
+      setScrollInterval(
+        setInterval(() => {
+          divRef.current.scrollLeft -= 1; // tốc độc scroll
+        }, 8)
+      );
+    }
+    if (value === "right") {
+      setScrollInterval(
+        setInterval(() => {
+          divRef.current.scrollLeft += 1; // tốc độc scroll
+        }, 1)
+      );
+    }
+  };
+
+  const handleMouseLeave = () => {
+    clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover
+    setScrollInterval(null);
+  };
+  // const handleMouseMoveButton = (event) => {
+  //   setMouseX(event.clientX - event.target.getBoundingClientRect().left);
+  // };
+
   const settings = {
     // className: "center",
     // centerMode: true,
@@ -160,14 +221,19 @@ const SlidesMarketWatch = () => {
     >
       <div
         className={`scrollingHotSpotLeft ${visible ? "!h-full" : ""}`}
-        onMouseEnter={handleHoverLeft}
-        onMouseLeave={handleLeaveLeft}
+        onMouseEnter={(e) => {
+          handleMouseEnter("left", e);
+        }}
+        onMouseLeave={handleMouseLeave}
       />
-      <ul className="my-1 col-priceboard class-chart bg-black">
-        <Slider
-          {...(settings as any)}
-          className="custom-carousel my-slider bg-black"
-          ref={(slider) => setSliderRef(slider)}
+      <ul className="my-1 col-priceboard class-chart">
+        <div
+          className="flex w-full overflow-x-hidden whitespace-nowrap cursor-grab"
+          ref={divRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
         >
           {INDEX.VNXALL && (
             <SlideMarketItem
@@ -469,12 +535,14 @@ const SlidesMarketWatch = () => {
               dataChartIndex={dataChartIndex}
             />
           )}
-        </Slider>
+        </div>
       </ul>
       <div
         className={`scrollingHotSpotRight ${visible ? "!h-full" : ""}`}
-        onMouseEnter={handleHoverRight}
-        onMouseLeave={handleLeaveRight}
+        onMouseEnter={(e) => {
+          handleMouseEnter("right", e);
+        }}
+        onMouseLeave={handleMouseLeave}
       />
     </div>
   );
