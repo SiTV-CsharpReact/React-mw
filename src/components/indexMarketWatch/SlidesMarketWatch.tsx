@@ -158,7 +158,6 @@ const SlidesMarketWatch = () => {
     setIsDragging(false);
   };
 
-<<<<<<< HEAD
   const handleMouseLeave = (e: any) => {
     clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover
     // scrollInterval = null;
@@ -208,42 +207,6 @@ const SlidesMarketWatch = () => {
 
   // const handleMouseMoveButton = (event: any) => {
   //   setSpeed(event.clientX - event.target.getBoundingClientRect().left);
-=======
-  const handleMouseEnter = (value: any, event: any) => {
-    // const buttonWidth = event.target.offsetWidth;
-    // const buttonRect = event.target.getBoundingClientRect();
-    // const mouseX = event.clientX - buttonRect.left;
-    // console.log(mouseX);
-
-  
-    if (value === "left") {
-      !visible &&  event.currentTarget.classList.add("scrollingHotSpotLeftVisible");
-      setScrollInterval(
-        setInterval(() => {
-          divRef.current.scrollLeft -= 1; // tốc độc scroll
-        }, 8)
-      );
-    }
-    if (value === "right") {
-      !visible &&  event.currentTarget.classList.add("scrollingHotSpotRightVisible");
-      setScrollInterval(
-        setInterval(() => {
-          divRef.current.scrollLeft += 1; // tốc độc scroll
-          //console.log(divRef.current.scrollLeft)
-        }, 1)
-      );
-    }
-  };
-
-  const handleMouseLeave = (e:any) => {
-    clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover
-    setScrollInterval(null);
-    e.currentTarget.classList.remove("scrollingHotSpotLeftVisible");
-    e.currentTarget.classList.remove("scrollingHotSpotRightVisible");
-  };
-  // const handleMouseMoveButton = (event) => {
-  //   setMouseX(event.clientX - event.target.getBoundingClientRect().left);
->>>>>>> fab57128a0cd22a3d166d2d27a8212d4c9aae27b
   // };
   // console.log(speed);
 
