@@ -1,5 +1,12 @@
 import { g_ARRAY_COLOR_CLASS, g_ID_TD_STAT_CONTROLCODE, g_arrHAMarketStatus, g_arrHOMarketStatus, g_arrUPMarketStatus } from "../configs/app.config";
-
+export function formatNumbertoDecimal(number:any) {
+  const decimalPart = number % 1;
+  if (decimalPart !== 0) {
+    return number.toFixed(2);
+  } else {
+    return number.toString();
+  }
+}
 export function formatNumber(number: any) {
   if (!number || number === 0 || number === "0") return 0; // hoac ''
   else return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
