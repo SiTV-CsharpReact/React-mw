@@ -3,7 +3,7 @@ import { useAppSelector } from '../../store/configureStore';
 import { formatNumberMarket, setColorMarket} from '../../utils/util';
 
 const TableDetailPopup: React.FC<any> = ({ dataItem, dataTableHSX, dataResult ,handleShowDetail}) => {
-  // console.log("first row", dataItem)
+  console.log("first row", dataItem)
   let { dataMouse  }: any = useAppSelector(state => state.dataMouse);
   let { dataMouseBuy }: any = useAppSelector(state => state.dataMouseBuy);
   
