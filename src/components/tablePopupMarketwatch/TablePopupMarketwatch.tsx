@@ -276,13 +276,13 @@ const TablePopupMarketwatch = () => {
                 }
               }}
             >
-              <TableKLTTGPopup dataKLTTG={dataKLTTG} />
+              <TableKLTTGPopup stockCode={stockDetail} />
             </div>
             <div className="w-full pu-div-PT">
               <TableGDTTPopup />
             </div>
             <div className="pu-vertical pu-div-oddlot">
-              <TableGDLLPopup />
+              <TableGDLLPopup stockCode={stockDetail}/>
             </div>
           </div>
           <div className="pu-hrz-chart">

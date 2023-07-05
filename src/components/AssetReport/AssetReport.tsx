@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import "./style.AssetReport.scss";
 import TableAssetValue from "./TableAssetValue";
 import TableAssetReport from "./TableAssetReport";
@@ -9,16 +9,42 @@ import TitlePage from "../../pages/Layout/TitlePage";
 import LayoutPage from "../../pages/Layout/LayoutPage";
 import execlImg from "../../images/excel.png";
 import pdfImg from "../../images/pdf.png";
-
+import {useReactToPrint} from "react-to-print";
+import * as XLSX from 'xlsx'
 const AssetReport = () => {
+  const componentPDF = useRef<any>()
   const { mode } = useAppSelector((state) => state.settingColorMode);
   const { assetReport } = useAppSelector((state) => state.assetReport);
   // console.log(assetReport);
+  const handleExportToPDF = useReactToPrint({
+    content: () => componentPDF.current,
+    documentTitle: "Export PDF",
+    onAfterPrint: () => alert("Export is successfully"),
+           
+  })
+  const handleExportToExcel = (e: any) => {
+    e.preventDefault();
 
+    const table = document.getElementById("tableAssetReport");
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.table_to_sheet(table);
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    const excelData = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelData], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    const url = URL.createObjectURL(data);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "filename.xlsx";
+    link.dispatchEvent(new MouseEvent("click"));
+    URL.revokeObjectURL(url);
+  };
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchAssetReport());
   }, [dispatch]);
+
   return (
     <div className={`${mode}-bg`}>
       <LayoutPage content="Báo cáo tài sản" PageTitle="Báo cáo tài sản">
@@ -42,6 +68,7 @@ const AssetReport = () => {
                   src={execlImg}
                   alt=""
                   className="h-[25px] w-[25px]"
+                  onClick={handleExportToExcel}
                 />
                 &nbsp; {" "}
                 <input
@@ -49,10 +76,11 @@ const AssetReport = () => {
                   src={pdfImg}
                   alt=""
                   className="h-[25px] w-[25px"
+                  onClick={handleExportToPDF}
                 />
               </div>
             </div>
-            <div className="report__tabcondition_BCTS">
+            <div className="report__tabcondition_BCTS" ref={componentPDF} id="tableAssetReport">
               <TableAssetValue />
               <TableAssetReport />
             </div>

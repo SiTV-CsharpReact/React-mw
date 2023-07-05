@@ -50,22 +50,6 @@ export const dataSlice = createSlice({
        TranC: '',
       key:""
     },
-     dataMouse: {
-      maF: '',
-      priceF: 0,
-       SanT: '',
-      TCT: '',
-       TranC: '',
-      dataPopup:[]
-    },
-     dataMouseBuy: {
-      maB: '',
-       priceB: 0,
-       SanT: '',
-      TCT: '',
-       TranC: '',
-      dataPopup:[]
-    },
   }, 
   reducers: {
       setProductParams: (state, action) => {
@@ -81,12 +65,6 @@ export const dataSlice = createSlice({
      builder.addCase(dispatchDataTableBuy.fulfilled, (state:any, action) => {
       state.dataBuy = action.payload;
      });
-     builder.addCase(dispatchDataMouseEventHandler.fulfilled, (state:any, action) => {
-      state.dataMouse = action.payload;
-    });
-     builder.addCase(dispatchDataMouseEventHandlerBuy.fulfilled, (state:any, action) => {
-      state.dataMouseBuy = action.payload;
-    });
   },
 });
 

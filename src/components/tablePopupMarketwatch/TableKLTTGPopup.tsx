@@ -2,12 +2,25 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/configureStore";
 import { formatNumber } from "../../utils/util";
+import { DataStockCode } from "../../models/stockCode";
+import agent from "../../api/agent";
+import { TableKLTTG } from "../../models/tableKLTTTG";
 
-const TableKLTTGPopup: React.FC<any> = ({ dataKLTTG }) => {
-  
-  const { dataMouse } = useAppSelector(state => state.dataMouse);
-  const { dataMouseBuy } = useAppSelector(state => state.dataMouseBuy);
-
+const TableKLTTGPopup: React.FC<DataStockCode> = ( data ) => {
+  const [dataTable,setDataTable] = useState<TableKLTTG| null>(null)
+  const RP = {
+    action: "le",
+    symbol: data?.stockCode,
+    max_score:0
+  };
+useEffect(()=>{
+  fetchDataTableKLTTG()
+},[])
+const fetchDataTableKLTTG = async ()=>{
+  const  dataRP = await agent.dataTableBasic.postFormData(RP)
+  setDataTable(dataRP.data)
+}
+console.log(RP,data?.stockCode,dataTable)
   return (
     <table id="tbpuRT" className="pu-table-realtime">
       <thead style={{}}>
@@ -22,17 +35,17 @@ const TableKLTTGPopup: React.FC<any> = ({ dataKLTTG }) => {
         </tr>
       </thead>
       <tbody>
-        {dataKLTTG.map((item: any, index: any) => {
-           const color =
-            dataMouse.priceF < item.MP ? "red"
-              : dataMouse > item.MP
-              ? "green"
-              : "yellow";
-          const colorBuy =
-            dataMouseBuy.priceB < item.MP ? "red"
-              : dataMouseBuy > item.MP
-              ? "green"
-              : "yellow";
+        {dataTable?.Body.map((item: any, index: any) => {
+          //  const color =
+          //   dataMouse.priceF < item.MP ? "red"
+          //     : dataMouse > item.MP
+          //     ? "green"
+          //     : "yellow";
+          // const colorBuy =
+          //   dataMouseBuy.priceB < item.MP ? "red"
+          //     : dataMouseBuy > item.MP
+          //     ? "green"
+          //     : "yellow";
           
           return  <tr key={index} style={{ height: "22px" }}>
           <td style={{color: color || colorBuy }} className="text-center pu-w">{item.MT}</td>
