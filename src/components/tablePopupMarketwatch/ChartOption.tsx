@@ -101,24 +101,39 @@ const ChartOption: React.FC<any> = (props) => {
             const xmin = _getDateTs(xminTmp);
             const xmax = _getDateTs(xmaxTmp);
             xAxis.setExtremes(xmin, xmax, true, false);
+            // console.log(this.yAxis[1].series);
+            let arr: any = [];
+            // eslint-disable-next-line array-callback-return
+            this.yAxis[1].series.map((item: any) => {
+              arr = Array.from(new Set(item.yData)).sort(
+                (a: any, b: any) => a - b
+              );
+              // return result;
+            });
+            // let data: any = [];
+            // this.options.series?.map((item: any, ind) => {
+            //   if (ind === 1) return (data = item.data);
+            // });
+            // console.log(data);
 
-            const myArr: any = Object.values(drawChart(dataChartOption));
+            // const myArr: any = Object.values(drawChart(dataChartOption));
+            // console.log(this.options.series);
 
             let min, max;
             let arrPr: any = [],
               arrSub: any = [],
               minSub;
-            for (let i = 0; i < myArr.length; i++) {
-              const price = myArr[i][0];
-              const vol = myArr[i][1];
+            for (let i = 0; i < arr.length; i++) {
+              const price = arr[i];
               arrPr.push(price);
-              // arrVol.push(vol);
-              var next = myArr[i + 1];
+              var next = arr[i + 1];
 
               if (typeof next === "undefined") {
-                next = myArr[0];
+                next = arr[0];
               }
-              const sub = Math.abs(Math.round((price - next[0]) * 100) / 100);
+              const sub = Math.abs(Math.round((price - next) * 100) / 100);
+              console.log(sub);
+
               if (sub > 0) {
                 arrSub.push(sub);
               }
@@ -127,7 +142,9 @@ const ChartOption: React.FC<any> = (props) => {
             min = minNumber(arrPr);
             max = maxNumber(arrPr);
             minSub = minNumber(arrSub);
-            let tick, barwidth;
+            console.log(minSub);
+            
+            var tick, barwidth;
             var sub = max - min;
 
             if (max < 50) {
@@ -145,29 +162,31 @@ const ChartOption: React.FC<any> = (props) => {
               barwidth = 0.05;
               min -= barwidth;
               max += barwidth;
+            } else {
+              tick = 1;
               barwidth = 0.2;
               min -= barwidth;
               max += barwidth;
-            } else {
-              tick = 1;
             }
-            // if (sub > 0) {
-            //   let countTick = Math.round(sub / tick);
-            //   if (countTick > 15) {
-            //     let tempTick = Math.round(countTick / 10);
-            //     tick = max < 50 ? 0.1 : 0.5;
-            //   }
+            // console.log(tick);
+
             const plotLine: any = this.yAxis[1].options.plotLines;
-            if (max < plotLine[0].value) {
+            if (max <= plotLine[0].value) {
               max = max + sub;
             }
-            console.log({ min, max, tick, sub, arrPr, arrSub });
+            console.log({ min, max, tick, sub, arrPr, arrSub, arr });
             this.yAxis[1].update({
               tickInterval: parseFloat(sub.toFixed(1)),
               tickAmount: e.target.yAxis[1].tickAmount,
             });
-            this.yAxis[1].setExtremes(min, max, true, false);
-            console.log(this.yAxis[1]);
+            // console.log(this.yAxis[1]);
+
+            this.yAxis[1].setExtremes(
+              parseFloat(min.toFixed(1)),
+              parseFloat(max.toFixed(1)),
+              true,
+              false
+            );
             this.redraw();
           },
         },
@@ -192,12 +211,13 @@ const ChartOption: React.FC<any> = (props) => {
           align: "center",
           y: 15,
         },
-        lineWidth: 1,
+        lineWidth: 0,
         lineColor: "#5f5f5f",
         tickWidth: 0,
         tickInterval: 3600000,
         gridLineWidth: 1,
         gridLineColor: "#6d6d6d1f",
+        height: 140,
       },
       yAxis: [
         {
@@ -211,6 +231,7 @@ const ChartOption: React.FC<any> = (props) => {
           labels: {
             enabled: false,
           },
+          height: 140,
         },
         {
           title: {
@@ -237,6 +258,7 @@ const ChartOption: React.FC<any> = (props) => {
               zIndex: 10,
             },
           ],
+          height: 140,
         },
       ],
       time: {

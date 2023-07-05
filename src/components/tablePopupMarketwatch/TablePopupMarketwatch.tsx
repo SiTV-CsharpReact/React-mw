@@ -20,6 +20,7 @@ import { getCompanyNameByCode } from "../../utils/util";
 import { DataTable } from "../../models/modelTableHNX";
 import ChartWithOption from "./ChartWithOption";
 import { fetchChartOptionAsync } from "./chartOptionSlice";
+import NewsPopup from "./NewsPopup";
 interface DraggableProps {
   initialPosition?: { x: number; y: number };
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;
@@ -297,7 +298,10 @@ const TablePopupMarketwatch = () => {
             <ChartWithOption
               dataItem={dataItemHNX.length !== 0 ? dataItemHNX : dataItemHSX}
             />
+            {/* <ChartWithOption stockCode={stockDetail} /> */}
+            <NewsPopup stockCode={stockDetail}/>
           </div>
+         
         </div>
       </div>
     </Draggable>

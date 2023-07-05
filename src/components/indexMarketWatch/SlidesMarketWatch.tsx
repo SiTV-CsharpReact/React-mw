@@ -163,10 +163,10 @@ const SlidesMarketWatch = () => {
         onMouseEnter={handleHoverLeft}
         onMouseLeave={handleLeaveLeft}
       />
-      <ul className="my-1 col-priceboard class-chart">
+      <ul className="my-1 col-priceboard class-chart bg-black">
         <Slider
           {...(settings as any)}
-          className="custom-carousel my-slider"
+          className="custom-carousel my-slider bg-black"
           ref={(slider) => setSliderRef(slider)}
         >
           {INDEX.VNXALL && (

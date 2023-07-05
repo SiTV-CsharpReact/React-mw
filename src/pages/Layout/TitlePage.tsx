@@ -17,7 +17,7 @@ const TitlePage:React.FC<Props> = ({content,Title,Icon,LinkPage}:Props) => {
     <div className={`w-full bg-[#dedede] ${mode}-bg`}>
       <ul className="flex ml-[127px] mb-0 mt-0 navigation">
         <li className="text-sm py-[10px] pr-[10px] pl-0 text-[#007db7]" >
-           {content ?  content : "Chưa đăng ký dịch vụ" }   &nbsp; <label htmlFor="" >
+           {content ?  content : "Chưa đăng ký dịch vụ" }  <label htmlFor="" >
            {Icon === true ?  <Tooltip title={Title ? Title : ""}>
             <a href={LinkPage}  target="_blank" > <i className="fa fa-info-circle" aria-hidden="true"  id="iconPage"></i></a> 
             

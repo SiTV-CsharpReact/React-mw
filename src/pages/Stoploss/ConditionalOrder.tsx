@@ -75,7 +75,7 @@ const ConditionalOrder = () => {
                         <label htmlFor="">ĐK kích hoạt: Khi giá khớp gần nhất </label>
                         <br />
                       </div>
-                      <div className="fromGrupCondi_action   " id="fromGrupCondi_actionDK">
+                      <div className="fromGrupCondi_action " id="fromGrupCondi_actionDK">
                         <div>
                           <select name="" id="">
                             <option value="" selected>
