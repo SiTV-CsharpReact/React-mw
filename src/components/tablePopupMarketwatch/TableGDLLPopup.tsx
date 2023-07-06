@@ -88,4 +88,4 @@ const fetchDataTableKLTTG = async ()=>{
   );
 };
 
-export default TableGDLLPopup;
+export default React.memo(TableGDLLPopup);

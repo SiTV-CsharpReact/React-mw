@@ -51,7 +51,7 @@ const TableHSX = {
 const Company = {
   get: () =>
     requests.get(
-      "http://localhost:8430/api/stock/v1/cache/stock_info_cn/eztrade?code=ALL"
+      "http://dscache.fpts.com.vn/api/stock/v1/cache/stock_info/eztrade?code=ALL"
     ),
 };
 const Category = {

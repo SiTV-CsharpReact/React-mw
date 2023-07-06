@@ -90,47 +90,6 @@ const SlidesMarketWatch = () => {
     }
   }, [isHoveringLeft, isHoveringRight, sliderRef]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // const handleHoverRight = (e: React.MouseEvent<HTMLDivElement>) => {
-  //   setIsHoveringRight(true);
-  //   !visible && e.target.classList.add("scrollingHotSpotRightVisible");
-  // };
-
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // const handleLeaveRight = (e: React.MouseEvent<HTMLDivElement>) => {
-  //   setIsHoveringRight(false);
-  //   !visible &&
-  //     e.target.classList.remove("scrollingHotSpotRightVisible");
-  // };
-
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // const handleHoverLeft = (e: React.MouseEvent<HTMLDivElement>) => {
-  //   setIsHoveringLeft(true);
-  //   !visible && e.target.classList.add("scrollingHotSpotLeftVisible");
-  // };
-
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // const handleLeaveLeft = (e: React.MouseEvent<HTMLDivElement>) => {
-  //   setIsHoveringLeft(false);
-  //   !visible && e.target.classList.remove("scrollingHotSpotLeftVisible");
-  // };
-  //kéo sang phải và sang trái liên tục
-  // const handleHover = useCallback(
-  //   (e: React.MouseEvent<HTMLDivElement>) => {
-  //     handleHoverLeft(e);
-  //     handleHoverRight(e);
-  //   },
-  //   [handleHoverLeft, handleHoverRight]
-  // );
-
-  // const handleLeave = useCallback(
-  //   (e: React.MouseEvent<HTMLDivElement>) => {
-  //     handleLeaveLeft(e);
-  //     handleLeaveRight(e);
-  //   },
-  //   [handleLeaveLeft, handleLeaveRight]
-  // );
-
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -206,30 +165,6 @@ const SlidesMarketWatch = () => {
     !visible && e.target.classList.remove("scrollingHotSpotRightVisible");
     !visible && e.target.classList.remove("scrollingHotSpotLeftVisible");
   };
-  // const handleMouseMoveButton = (event: any) => {
-  //   let speed = event.clientX - event.target.getBoundingClientRect().left;
-  //   return speed;
-  // };
-  // const settings = {
-  //   // className: "center",
-  //   // centerMode: true,
-  //   dots: false,
-  //   speed: visible ? 300 : 4000,
-  //   // infinite: true,
-  //   slidesToShow: slidesToShow,
-  //   slidesToScroll: slidesToShow,
-  //   // slidesToShow: 7, // Hiển thị 3 slide trên một lần trượt
-  //   // slidesToScroll: 7,
-  //   autoplay: isHoveringLeft || isHoveringRight,
-  //   autoplaySpeed: 4000,
-  //   cssEase: "linear",
-  //   centerPadding: "50px",
-  //   draggable: true,
-  //   swipeToSlide: true,
-  //   infinite: false,
-  //   onMouseEnter: handleHover,
-  //   onMouseLeave: handleLeave,
-  // };
 
   return (
     <div

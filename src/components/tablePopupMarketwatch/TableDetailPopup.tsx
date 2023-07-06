@@ -3,20 +3,20 @@ import { useAppSelector } from '../../store/configureStore';
 import { formatNumberMarket, setColorMarket} from '../../utils/util';
 
 const TableDetailPopup: React.FC<any> = ({ dataItem, dataTableHSX, dataResult ,handleShowDetail}) => {
-  console.log("first row", dataItem)
-  let { dataMouse  }: any = useAppSelector(state => state.dataMouse);
-  let { dataMouseBuy }: any = useAppSelector(state => state.dataMouseBuy);
+  // console.log("first row", dataItem)
+  // let { dataMouse  }: any = useAppSelector(state => state.dataMouse);
+  // let { dataMouseBuy }: any = useAppSelector(state => state.dataMouseBuy);
   
-  const color = dataResult?.map((item: any) => item.MP)
-         const colorY =  dataMouse.priceF < color ? "red"
-              : dataMouse > color
-              ? "#00FF00"
-              : "yellow";
-          const colorBuy =
-            dataMouseBuy.priceB < color ? "red"
-              : dataMouseBuy > color
-              ? "green"
-                : "#F7FF31";
+  // const color = dataResult?.map((item: any) => item.MP)
+  //        const colorY =  dataMouse.priceF < color ? "red"
+  //             : dataMouse > color
+  //             ? "#00FF00"
+  //             : "yellow";
+  //         const colorBuy =
+  //           dataMouseBuy.priceB < color ? "red"
+  //             : dataMouseBuy > color
+  //             ? "green"
+  //               : "#F7FF31";
 
   return (
     <table id="tbLPRT" className="table table-bordered table-priceboard text-[#B9B9B9]">
@@ -107,7 +107,7 @@ const TableDetailPopup: React.FC<any> = ({ dataItem, dataTableHSX, dataResult ,h
         <td
           className="ccc_ fixedcol"
         >
-          <span style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+          <span className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[11][1],
                             dataItem[0]?.Info[2][1],
@@ -130,118 +130,118 @@ const TableDetailPopup: React.FC<any> = ({ dataItem, dataTableHSX, dataResult ,h
             {/* {dataMouse.SanT || dataMouseBuy.SanT} */}
             { formatNumberMarket(dataItem[0]?.Info[3][1]) }
         </td>
-        <td style={{color :colorY || colorBuy}}>{formatNumberMarket(dataItem[0]?.Info?.[4][1])}</td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td >{formatNumberMarket(dataItem[0]?.Info?.[4][1])}</td>
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[5][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[5][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[5][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[6][1])} </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[7][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[7][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[7][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[8][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[9][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[9][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[9][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[10][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[11][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[11][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[11][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[12][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[11][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{formatNumberMarket(dataItem[0]?.Info?.[13][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[15][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[14][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[15][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[15][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[17][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[16][1])} </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[17][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[17][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[19][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[18][1]) } </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[19][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[19][1])} </td>
-        <td style={{color :colorY || colorBuy}} className="br_ !text-sm !text-[#white]">{ formatNumberMarket(dataItem[0]?.Info?.[20][1])} </td>
-        <td style={{color :colorY || colorBuy}} className="g__ !text-sm !text-[#B9B9B9]">{ formatNumberMarket(dataItem[0]?.Info?.[21][1])} </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className="br_ !text-sm !text-[#white]">{ formatNumberMarket(dataItem[0]?.Info?.[20][1])} </td>
+        <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumberMarket(dataItem[0]?.Info?.[21][1])} </td>
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[22][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[22][1])} </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[23][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[23][1])} </td>
-        <td style={{color :colorY || colorBuy}} className={` text-right ${setColorMarket(
+        <td className={` text-right ${setColorMarket(
                             dataItem[0]?.Info[1][1],
                             dataItem[0]?.Info[24][1],
                             dataItem[0]?.Info[2][1],
                             dataItem[0]?.Info[3][1]
                           )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[24][1])} </td>
-        <td style={{color :colorY || colorBuy}} className="gr_ !text-sm"> </td>
+        <td className="gr_ !text-sm"> </td>
         <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumberMarket(dataItem[0]?.Info?.[26][1])} </td>
         <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumberMarket(dataItem[0]?.Info?.[27][1])} </td>
         <td className="g__ !text-sm !text-[#B9B9B9]"> 

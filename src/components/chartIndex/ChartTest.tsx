@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import { formatNumber } from "../../utils/util";
 import "./chartIndex.scss";
+import { _getDateTs, minNumber } from "./util/app.chart";
 
 type TProps = {
   name: string;
@@ -161,6 +162,27 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
         backgroundColor: "#000",
         width: 205,
         height: 98,
+        events: {
+          load: function (e: any) {
+            const xAxis = this.xAxis[0];
+            const today = new Date();
+            const dd = today.getDate();
+            const mm = today.getMonth(); //January is 0!
+            const yyyy = today.getFullYear();
+            const HH1 = 9;
+            const HH2 = 15;
+            const MM = 0; // minute
+
+            const xminTmp = new Date(yyyy, mm, dd, HH1, MM);
+            const xmaxTmp = new Date(yyyy, mm, dd, HH2, MM);
+
+            const xmin = _getDateTs(xminTmp);
+            const xmax = _getDateTs(xmaxTmp);
+            xAxis.setExtremes(xmin, xmax, true, false);
+            // console.log(this.yAxis[1].series);
+            this.redraw();
+          },
+        },
       },
       title: {
         text: "",
@@ -311,6 +333,7 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
         enabled: false,
       },
       plotOptions: {
+    
         spline: {
           lineWidth: 1.5,
           zones: [

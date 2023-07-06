@@ -50,7 +50,7 @@ interface Props {
 
       }
       const historyStock =() =>{
-        dispatch(showDetailStock(selectedValue.value))
+        dispatch(showDetailStock({visible:true,code:selectedValue.value}))
         setSelectedValueProp({...selectedValue, status: false}); 
       }
   return (
