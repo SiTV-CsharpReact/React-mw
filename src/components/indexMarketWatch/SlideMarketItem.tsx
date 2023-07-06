@@ -42,9 +42,9 @@ const SlideMarketItem: React.FC<Props> = ({
 }: Props) => {
   return (
     <>
-      <li className="dvChar bg-blackt">
+      <li className="dvChart bg-black">
         <div>
-          <p className="text-sm bg-black whitespace-nowrap">
+          <p className="text-sm text-center bg-black whitespace-nowrap">
             <span id="" className="mar_">
               {name}:
             </span>

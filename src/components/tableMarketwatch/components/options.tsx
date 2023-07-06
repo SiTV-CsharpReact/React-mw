@@ -11,6 +11,7 @@ import { CellRender } from "./CellRenderComponent";
 import { addDatatPined } from "../tableTestSlice";
 import { setCookie } from "../../../models/cookie";
 import CustomHeader from "../CustomHeader";
+import { CellOtherColorRender } from "./CellOtherColorComponent";
 
 
 
@@ -155,12 +156,12 @@ const ColumnDef = (props: any, props2: any) => {
               }}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
             />
-            <span
+            <div
               className="pt-1 pl-1"
               onDoubleClick={(e) => handleDoubleClick(e, value)}
             >
               {value}
-            </span>
+            </div>
           </div>
         );
       },
@@ -183,7 +184,7 @@ const ColumnDef = (props: any, props2: any) => {
         fontWeight: "",
         color: setColorMarkettest("", params),
       }),
-      cellRenderer: CellRender,
+      cellRenderer: CellOtherColorRender,
     },
     {
       field: "Tran",
@@ -199,7 +200,7 @@ const ColumnDef = (props: any, props2: any) => {
         color: setColorMarkettest("", params),
         textAlign: "right",
       }),
-      cellRenderer: CellRender,
+      cellRenderer: CellOtherColorRender,
     },
     {
       field: "San",
@@ -215,7 +216,7 @@ const ColumnDef = (props: any, props2: any) => {
         color: setColorMarkettest("", params),
         textAlign: "right",
       }),
-      cellRenderer: CellRender,
+      cellRenderer: CellOtherColorRender,
     },
     {
       headerName: "Mua",
@@ -498,7 +499,7 @@ const ColumnDef = (props: any, props2: any) => {
             color: setColorMarkettest("", params),
             textAlign: "right",
           }),
-          cellRenderer: CellRender,
+          cellRenderer: CellOtherColorRender,
         },
         {
           field: "KLKhop",
@@ -514,21 +515,7 @@ const ColumnDef = (props: any, props2: any) => {
             color: setColorMarkettest("KLKhop", params),
             textAlign: "right",
           }),
-          cellRenderer: (params: any) => {
-            const dataIndex = RowDataIndex.KLKhop; // Get the index of the column= RowDataIndex.KL3; // Get the index of the column
-            const value = params.value; // Get the value of the cell
-            const rowid = params.data.RowID; // Get the
-
-            return (
-              <div
-                data-index={dataIndex}
-                data-comp={rowid}
-                className="custom-cell"
-              >
-                {formatNumberMarket(value)}
-              </div>
-            );
-          },
+          cellRenderer: CellOtherColorRender
         },
         {
           field: "Chenhlech",
@@ -545,15 +532,7 @@ const ColumnDef = (props: any, props2: any) => {
             color: setColorMarkettest("Chenhlech", params),
             textAlign: "right",
           }),
-          cellRenderer: (params: any) => {
-            const dataIndex = RowDataIndex.Chenhlech; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-            const value = params.value; // Get the value of the cell
-            return (
-              <div data-index={dataIndex} className="custom-cell">
-                {formatNumberMarket(value)}
-              </div>
-            );
-          },
+          cellRenderer: CellOtherColorRender
         },
         {
           field: "Chenhlech1",
@@ -597,11 +576,11 @@ const ColumnDef = (props: any, props2: any) => {
                 data-index={dataIndex} className="cursor-pointer custom-cell">
                 {showPrice && (
                   // <div style={{ color:   parseInt(valuePT) >= 0 ? "#00FF00" : "#FF0000", }}>
-                       <div style={{ color: setColorMarkettest("Chenhlech", params) }}>
+                       <div className="custom-cell-other" style={{ color: setColorMarkettest("Chenhlech", params) }}>
                     {formatNumberMarket(valuePT.trim())}
                   </div>
                 )}
-                <div style={{ color: setColorMarkettest("Chenhlech", params) }}>
+                <div className="custom-cell-other" style={{ color: setColorMarkettest("Chenhlech", params) }}>
                   {showPrice ? null : formatNumberMarket(valueCT.trim())}
                 </div>
               </div>
@@ -637,15 +616,7 @@ const ColumnDef = (props: any, props2: any) => {
             color: setColorMarkettest("Chenhlech", params),
             textAlign: "right",
           }),
-          cellRenderer: (params: any) => {
-            const dataIndex = RowDataIndex.Chenhlech; // Get the index of the column= column ? allColumns.indexOf(column) : -1; // Get the index of the column
-            const value = params.value; // Get the value of the cell
-            return (
-              <div data-index={dataIndex} className="custom-cell">
-                {formatNumberMarket(value)}
-              </div>
-            );
-          },
+          cellRenderer: CellOtherColorRender
         },
       ],
     },
@@ -906,7 +877,7 @@ const ColumnDef = (props: any, props2: any) => {
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
-      cellRenderer: CellRender,
+      cellRenderer: CellOtherColorRender,
     },
     {
       field: "MOC",
@@ -923,7 +894,7 @@ const ColumnDef = (props: any, props2: any) => {
         color: setColorMarkettest("", params),
         textAlign: "right",
       }),
-      cellRenderer: CellRender,
+      cellRenderer: CellOtherColorRender,
     },
     {
       field: "CaoNhat",
@@ -940,7 +911,7 @@ const ColumnDef = (props: any, props2: any) => {
         color: setColorMarkettest("", params),
         textAlign: "right",
       }),
-      cellRenderer: CellRender,
+      cellRenderer: CellOtherColorRender,
     },
     {
       field: "ThapNhat",
@@ -956,7 +927,7 @@ const ColumnDef = (props: any, props2: any) => {
         color: setColorMarkettest("", params),
         textAlign: "right",
       }),
-      cellRenderer: CellRender,
+      cellRenderer: CellOtherColorRender,
       suppressMenu: true,
     },
     {
@@ -973,7 +944,7 @@ const ColumnDef = (props: any, props2: any) => {
         color: setColorMarkettest("", params),
         textAlign: "right",
       }),
-      cellRenderer: CellRender,
+      cellRenderer: CellOtherColorRender,
       suppressMenu: true,
     },
     {
@@ -986,7 +957,7 @@ const ColumnDef = (props: any, props2: any) => {
       cellClass: "score-cell tc-cell",
       headerClass: "custom-header tc-header",
       suppressMenu: true,
-      cellRenderer: CellRender,
+      cellRenderer: CellOtherColorRender,
     },
     {
       field: "NNBan",
@@ -998,7 +969,7 @@ const ColumnDef = (props: any, props2: any) => {
       maxWidth: 100,
       headerClass: "custom-header tc-header",
       suppressMenu: true,
-      cellRenderer: CellRender,
+      cellRenderer: CellOtherColorRender,
     },
     {
       field: "RoomCL",
@@ -1010,7 +981,7 @@ const ColumnDef = (props: any, props2: any) => {
       cellClass: "score-cell tc-cell",
       headerClass: "custom-header  tc-header",
       suppressMenu: true,
-      cellRenderer: CellRender,
+      cellRenderer: CellOtherColorRender,
     },
   ], 
    [

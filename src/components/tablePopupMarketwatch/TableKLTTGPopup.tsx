@@ -33,7 +33,7 @@ console.log(RP,data?.stockCode,dataTable)
         </tr>
       </thead>
       <tbody>
-        {dataTable?.Body.map((item: any, index: any) => {
+        {dataTable?.Body.reverse().map((item: any, index: any) => {
           //  const color =
           //   dataMouse.priceF < item.MP ? "red"
           //     : dataMouse > item.MP
@@ -65,4 +65,4 @@ console.log(RP,data?.stockCode,dataTable)
   );
 };
 
-export default TableKLTTGPopup;
+export default React.memo(TableKLTTGPopup);

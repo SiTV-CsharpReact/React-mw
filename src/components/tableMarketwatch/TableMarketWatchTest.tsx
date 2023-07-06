@@ -328,11 +328,14 @@ const TableMarketWatchTest = () => {
     if (valueTCS) {
       valueTCS.textContent = `${formatNumberMarket(arrValue)}`;
       // gán màu bg
+      const test1  = valueTCS;
       const test = valueTCS.parentElement;
       if (test) {
+        test1.style.backgroundColor = "#888888"
         test.style.backgroundColor = "#888888";
         setTimeout(function () {
           test.style.backgroundColor = "";
+          test1.style.backgroundColor = "";
         }, 500);
       }
       // sau 0.5s xóa màu bg

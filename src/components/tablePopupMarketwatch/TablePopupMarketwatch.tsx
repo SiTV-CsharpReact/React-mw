@@ -254,7 +254,7 @@ const TablePopupMarketwatch = () => {
             <span
               className="pu-close"
               title="Đóng cửa sổ"
-              onClick={() => dispatch(showDetailStock(""))}
+              onClick={() => dispatch(showDetailStock({visible:false,code:""}))}
             >
               <i className="fa fa-times fa-lg !text-sm" />
             </span>
