@@ -9,9 +9,5 @@ export const converReport = (data:ReportData[])=>{
       }
       grupData[stockCode].push(item);
     });
-    test(grupData)
     return grupData
-}
-export const test = (grup:any)=>{
-    const abc = grup
 }

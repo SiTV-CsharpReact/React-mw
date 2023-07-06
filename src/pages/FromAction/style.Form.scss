@@ -348,13 +348,18 @@ $backgroundTotalBuySell: #f2f2d0;
      & tr{
       border: 1px solid #dedede;
       background-color: white;
-      &:hover{
+      &.tdHover:hover {
         background-color: #efe;
+        & .sellHover{
+          background-color: white;
+        }
       }
       & td{
         border: 1px solid #dedede;
         font-size: 12px;
         text-align: right;
+        
+        
       }
       & .textCenter{
         text-align: center;
@@ -363,18 +368,21 @@ $backgroundTotalBuySell: #f2f2d0;
     & .totalBuySell{
       background-color: #f2f2d0;
       font-weight: bold;
+      &:hover{
+        background-color: #efe;
+      }
     }
     & .stockCodeTD{
       font-weight: bold;
       position: relative;
       & .icontable{
         position: absolute;
-        top: -2px;
-        right: 3px; 
+        top: 0px;
+        right: 15px; 
         color: rgb(198, 195, 195);
         font-size: 15px;
-        & .MuiSvgIcon-root{
-          font-size: 22pt;
+        & button{
+          font-size: 14pt;
         }
       }
     }
