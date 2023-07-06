@@ -52,7 +52,6 @@ const SlidesMarketWatch = () => {
   const slideWidth = 220;
   const slidesToShow = Math.floor(screenWidth / slideWidth);
   const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
-  const [speed, setSpeed] = useState(0);
 
   const dispatch = useAppDispatch();
   const {
@@ -94,26 +93,26 @@ const SlidesMarketWatch = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // const handleHoverRight = (e: React.MouseEvent<HTMLDivElement>) => {
   //   setIsHoveringRight(true);
-  //   !visible && e.currentTarget.classList.add("scrollingHotSpotRightVisible");
+  //   !visible && e.target.classList.add("scrollingHotSpotRightVisible");
   // };
 
   // // eslint-disable-next-line react-hooks/exhaustive-deps
   // const handleLeaveRight = (e: React.MouseEvent<HTMLDivElement>) => {
   //   setIsHoveringRight(false);
   //   !visible &&
-  //     e.currentTarget.classList.remove("scrollingHotSpotRightVisible");
+  //     e.target.classList.remove("scrollingHotSpotRightVisible");
   // };
 
   // // eslint-disable-next-line react-hooks/exhaustive-deps
   // const handleHoverLeft = (e: React.MouseEvent<HTMLDivElement>) => {
   //   setIsHoveringLeft(true);
-  //   !visible && e.currentTarget.classList.add("scrollingHotSpotLeftVisible");
+  //   !visible && e.target.classList.add("scrollingHotSpotLeftVisible");
   // };
 
   // // eslint-disable-next-line react-hooks/exhaustive-deps
   // const handleLeaveLeft = (e: React.MouseEvent<HTMLDivElement>) => {
   //   setIsHoveringLeft(false);
-  //   !visible && e.currentTarget.classList.remove("scrollingHotSpotLeftVisible");
+  //   !visible && e.target.classList.remove("scrollingHotSpotLeftVisible");
   // };
   //kéo sang phải và sang trái liên tục
   // const handleHover = useCallback(
@@ -135,10 +134,12 @@ const SlidesMarketWatch = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  // const [scrollInterval, setScrollInterval] = useState<any>(null);
-  const scrollRef = useRef(null);
+
+  // let speed = 0;
+  const scrollRef = useRef<any>(null);
   const divRef = useRef<any>(null);
   let scrollInterval: any = null;
+  let scrollInterval1: any = null;
   // const [mouseX, setMouseX] = useState(0);
   const handleMouseDown = (event: any) => {
     setIsDragging(true);
@@ -158,23 +159,14 @@ const SlidesMarketWatch = () => {
     setIsDragging(false);
   };
 
-  const handleMouseLeave = (e: any) => {
-    clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover
-    // scrollInterval = null;
-    !visible &&
-      e.currentTarget.classList.remove("scrollingHotSpotRightVisible");
-    !visible && e.currentTarget.classList.remove("scrollingHotSpotLeftVisible");
-    // handleMouseMoveButton(null);
-    // handleMouseEnter(null, null);
-  };
+  let speed = 0; // Biến lưu trữ giá trị speed
 
-  let handleMouseEnter = (value: any, event: any) => {
+  let handleMouseEnter = (value: any, event: any, speed: any) => {
     if (value === "right") {
-      !visible &&
-        event.currentTarget.classList.add("scrollingHotSpotRightVisible");
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      !visible && event.target.classList.add("scrollingHotSpotRightVisible");
+
       scrollInterval = setInterval(() => {
-        divRef.current.scrollLeft += 1; // tốc độc scroll
+        divRef.current.scrollLeft += speed; // tốc độc scroll
         const divElement = divRef.current;
         const isAtRightEdge =
           divElement.scrollLeft + divElement.clientWidth >=
@@ -182,34 +174,42 @@ const SlidesMarketWatch = () => {
 
         if (isAtRightEdge) {
           !visible &&
-            event.currentTarget.classList.remove(
-              "scrollingHotSpotRightVisible"
-            );
+            event.target.classList.remove("scrollingHotSpotRightVisible");
           clearInterval(scrollInterval);
-          handleMouseEnter(null, null);
+          handleMouseEnter(null, null, 0);
         }
       }, 1);
     }
 
     if (value === "left") {
-      !visible &&
-        event.currentTarget.classList.add("scrollingHotSpotLeftVisible");
+      !visible && event.target.classList.add("scrollingHotSpotLeftVisible");
       scrollInterval = setInterval(() => {
-        divRef.current.scrollLeft -= 1; // tốc độc scroll
+        divRef.current.scrollLeft -= speed; // tốc độc scroll
         if (divRef.current.scrollLeft === 0) {
           clearInterval(scrollInterval);
-          event.currentTarget.classList.remove("scrollingHotSpotLeftVisible");
-          handleMouseEnter(null, null);
+          event.target.classList.remove("scrollingHotSpotLeftVisible");
+          handleMouseEnter(null, null, 0);
         }
       }, 8);
     }
   };
 
-  // const handleMouseMoveButton = (event: any) => {
-  //   setSpeed(event.clientX - event.target.getBoundingClientRect().left);
-  // };
-  // console.log(speed);
+  const handleMouseMoveButton = (event: any) => {
+    // handleMouseEnter("right", event, 0);
+    speed = event.clientX - event.target.getBoundingClientRect().left;
+    console.log(speed);
+  };
 
+  const handleMouseLeave = (e: any) => {
+    clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover
+    console.log("Log nè");
+    !visible && e.target.classList.remove("scrollingHotSpotRightVisible");
+    !visible && e.target.classList.remove("scrollingHotSpotLeftVisible");
+  };
+  // const handleMouseMoveButton = (event: any) => {
+  //   let speed = event.clientX - event.target.getBoundingClientRect().left;
+  //   return speed;
+  // };
   // const settings = {
   //   // className: "center",
   //   // centerMode: true,
@@ -245,7 +245,7 @@ const SlidesMarketWatch = () => {
       <div
         className={`scrollingHotSpotLeft ${visible ? "!h-full" : ""}`}
         onMouseEnter={(e) => {
-          handleMouseEnter("left", e);
+          handleMouseEnter("left", e, 2);
         }}
         onMouseLeave={(e: any) => {
           handleMouseLeave(e);
@@ -565,14 +565,15 @@ const SlidesMarketWatch = () => {
       <div
         className={`scrollingHotSpotRight ${visible ? "!h-full" : ""}`}
         onMouseEnter={(e) => {
-          handleMouseEnter("right", e);
+          handleMouseEnter("right", e, 2);
         }}
-        onMouseLeave={(e: any) => {
+        onMouseOut={(e: any) => {
           handleMouseLeave(e);
         }}
-        // onMouseMove={(e) => {
-        //   handleMouseMoveButton(e);
-        // }}
+        onMouseMove={(e) => {
+          handleMouseMoveButton(e);
+        }}
+        ref={scrollRef}
       />
     </div>
   );
