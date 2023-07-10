@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./table.scss";
 import { formatNumber } from "../../utils/util";
 import { useAppSelector, RootState } from "../../store/configureStore";
@@ -21,13 +21,13 @@ const TableGDTTMarketWatch = () => {
   }, [valueInput]);
 
   const filterData = (value: any) => {
-    let filteredData = products.filter((item: any) => {
+    let filteredData = products?.filter((item: any) => {
       return item.Info[1][1].includes(value.toUpperCase());
     });
     setDataFilter(filteredData);
 
     let uniqueValues = new Set(
-      filteredData.map((item: any) => item.Info[1][1])
+      filteredData?.map((item: any) => item.Info[1][1])
     );
     // Chuyển đổi đối tượng Set thành mảng
     let uniqueValuesArray = Array.from(uniqueValues);
@@ -37,8 +37,6 @@ const TableGDTTMarketWatch = () => {
   const handleSetValueInput = (e: any) => {
     setValueInput(e.target.value); // Giá trị của Autocomplete
   };
-
-  console.log(prices);
 
   return (
     <div id="dvFixedH">
