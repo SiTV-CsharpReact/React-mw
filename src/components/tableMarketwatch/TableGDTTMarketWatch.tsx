@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./table.scss";
 import { formatNumber } from "../../utils/util";
 import { useAppSelector, RootState } from "../../store/configureStore";
@@ -11,7 +11,7 @@ const TableGDTTMarketWatch = () => {
   const [dataFilter, setDataFilter] = useState<any>([]);
   const [inputFilter, setInputFilter] = useState<any>([]);
   const [focus, setFocus] = useState(false);
-
+  console.log(products);
   useEffect(() => {
     setDataFilter(products);
   }, [products]);
@@ -35,31 +35,45 @@ const TableGDTTMarketWatch = () => {
   };
 
   const handleSetValueInput = (e: any) => {
-    e.preventDefault();
-    setValueInput(e.target.value);
+    setValueInput(e.target.value); // Giá trị của Autocomplete
   };
+
+  console.log(prices);
 
   return (
     <div id="dvFixedH">
       <div className="border-t dvContentLP border-borderHeadTableMarket">
         <div className="grid grid-cols-4 p-3">
-          <div className="relative text-center">
-            <input
-              placeholder="Nhập mã cần tìm"
-              className="h-24 col-span-1 pl-1 text-black border outline-none w-44 border-borderBodyTableMarket"
-              onChange={handleSetValueInput}
-              value={valueInput}
-              onFocus={() => {
-                setFocus(true);
-              }}
-              onBlur={() => {
-                setFocus(false);
-              }}
-            ></input>
+          <div className="relative flex flex-col items-center">
+            <div className="relative h-auto max-w-min">
+              <label
+                className={`${
+                  focus || valueInput !== ""
+                    ? "inputTableGDTT text-white"
+                    : "top-[50%] -translate-y-[50%] "
+                } absolute bg-[#131722] text-gray-600 text-[11px] ml-1 px-1 leading-[8px] cursor-text `}
+                htmlFor="maCk"
+              >
+                {focus || valueInput !== "" ? "Mã" : "Nhập mã cần tìm"}
+              </label>
+              <input
+                className="h-24 bg-[#131722] focus:border-white col-span-1 pl-1 border outline-none w-44 border-borderBodyTableMarket text-white text-[11px]"
+                onChange={handleSetValueInput}
+                value={valueInput}
+                name="maCk"
+                id="maCk"
+                onFocus={() => {
+                  setFocus(true);
+                }}
+                onBlur={() => {
+                  setFocus(false);
+                }}
+              ></input>
+            </div>
             <div
               className={`${
                 focus
-                  ? "absolute flex flex-col items-start w-full max-h-[200px] overflow-y-auto text-black bg-white"
+                  ? "absolute top-[25px] flex flex-col items-start w-full max-h-[200px] overflow-y-auto text-white bg-[#1e1e1e] border border-[#3d414b]"
                   : "hidden"
               } `}
             >

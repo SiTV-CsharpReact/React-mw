@@ -648,3 +648,16 @@
 // // .disable-hover {
 // //   pointer-events: none !important;
 // // }
+
+.inputTableGDTT{
+  animation: slideDown 0.15s linear forwards;
+}
+@keyframes slideDown {
+  0% {
+  }
+  100% {
+    top: 0px;
+    transform: translateY(-50%);
+  }
+}
+
