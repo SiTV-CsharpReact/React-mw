@@ -3,7 +3,8 @@ var LANGUAGE_EN_FULL = 'en-US';
 // ngon ngu
 var LANGUAGE_VN = 'VN';
 var LANGUAGE_EN = 'EN';
-
+export const san_HNX ="hnx";
+export const san_HSX="hsx"
 var ARRAY_INDEX_LANGUAGE = [0,1];
 var COOKIE_LANGUAGE_NAME = 'aspfpt_language';
 var g_CurrentLanguage = ""

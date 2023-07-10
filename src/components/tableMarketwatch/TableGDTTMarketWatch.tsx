@@ -4,9 +4,9 @@ import { formatNumber } from "../../utils/util";
 import { useAppSelector, RootState } from "../../store/configureStore";
 
 const TableGDTTMarketWatch = () => {
-  const prices = useAppSelector((state: RootState) => state.table.DataBi);
-  const products = useAppSelector((state: RootState) => state.table.DataPt);
-  const floor = useAppSelector((state: RootState) => state.table.NameFloor);
+  const prices = useAppSelector((state) => state.table.DataBi);
+  const products = useAppSelector((state) => state.table.DataPt);
+  const floor = useAppSelector((state) => state.table.NameFloor);
   const [valueInput, setValueInput] = useState<any>("");
   const [dataFilter, setDataFilter] = useState<any>([]);
   const [inputFilter, setInputFilter] = useState<any>([]);
@@ -17,7 +17,7 @@ const TableGDTTMarketWatch = () => {
   }, [products]);
 
   useEffect(() => {
-    filterData(valueInput);
+  filterData(valueInput);
   }, [valueInput]);
 
   const filterData = (value: any) => {

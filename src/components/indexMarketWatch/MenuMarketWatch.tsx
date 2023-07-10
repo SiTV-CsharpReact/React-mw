@@ -1,17 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-
-import axios from "axios";
-import { ObjectMenuHNX, ObjectMenuHSX } from "../../models/modelListMenuHSX";
 import {
-  iconColorMenuMarket,
-  setColorMenuMarket,
   fStatusMarketHNX,
   fStatusMarketUPCOM,
   formatNumberMarket,
   tinhGiaTC,
   tinhGiaCT,
-  checkSTTMarket,
-  checkSTTMarketValue,
   colorTextMenu,
 } from "../../utils/util";
 import {
@@ -19,22 +12,8 @@ import {
   g_CLASS_INDEX,
 } from "../../configs/app.config";
 import "./styleMenuBarMW.css";
-import { AppContext } from "../../Context/AppContext";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 import SlidesMarketWatch from "./SlidesMarketWatch";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/configureStore";
 const MenuMarketWatch = () => {
-  const [isHoveringLeft, setIsHoveringLeft] = useState(false);
-  const [isHoveringRight, setIsHoveringRight] = useState(false);
-  const [sliderRef, setSliderRef] = useState<Slider | null>(null);
-  const screenWidth = window.innerWidth;
-  const slideWidth = 220;
-  const slidesToShow = Math.floor(screenWidth / slideWidth);
-  const [valueHSX, setValueHSX] = useState<ObjectMenuHSX | null>(null);
-  const [valueHNX, setValueHNX] = useState<ObjectMenuHNX | null>(null);
   const [loading, setLoading] = useState(true);
   const arrayPrice = [5, 7, 9, 11, 14, 16, 18];
   const arrayKL = [6, 8, 10, 12, 15, 17, 19];
@@ -47,35 +26,8 @@ const MenuMarketWatch = () => {
     "text-yellow",
     "text-violet",
   ];
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        setLoading(true);
-        const responseHSX = await axios.get(
-          `http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`
-        );
-        const responseHNX = await axios.get(
-          `http://marketstream.fpts.com.vn/hnx/data.ashx?s=index`
-        );
-        setValueHSX(responseHSX.data);
-        setValueHNX(responseHNX.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchData();
-  }, []);
 
-  const [dataHNX, setDataHNX] = useState("{}");
-  const [dataHSX, setDataHSX] = useState("{}");
   useEffect(() => {
-    // const socket = io('ws://eztradereact.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=dnL897L7K8vCFfdm%2FU2B%2B8L3mgJxVC9qXt8YejdUGsaMoHgfj%2FPPyVumCVpn5PvW2sxZanXnmvvNU49qowDUIJ5hYyfNfe56xdHs6Gf3cOQ84am2ZKvvswyYk8wE4dyq&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=1');
-
-    // socket.on("newData", (data) => {
-    //   console.log(data);
-    // });
     const socketHSX = new WebSocket(
       "ws://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=QFYjcEdKNTcQpQ5eM8gSgArpZ8iaLyhAzsOc2yA9Uzj6jAmKV%2Bnt5UMBQQ6IxAg2ytcl36jeKKHXgSbB5HdJNA%2FVdbAn7QKNCQ76UmWHPecxhUD87ZajL354hy24brH6&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=8"
     );
@@ -84,9 +36,7 @@ const MenuMarketWatch = () => {
     };
     socketHSX.onmessage = (event) => {
       updateQuote(event.data);
-      // updateDataRealTime(event.data);
-      // updateQuote(event.data)
-      // setDataHNX(event.data);
+
     };
     socketHSX.onclose = () => {
       console.log("WebSocket connection closed.");
@@ -114,39 +64,6 @@ const MenuMarketWatch = () => {
       socketHNX.close();
     };
   }, []);
-  useEffect(() => {
-    // const currentSlide = sliderRef?.innerSlider
-    // const totalSlides = sliderRef?.current?.slickGetOption('slidesToShow');
-    if (sliderRef && (isHoveringLeft || isHoveringRight)) {
-      //console.log(sliderRef?.innerSlider)
-      if (isHoveringLeft) {
-        sliderRef.slickPrev();
-      }
-      if (isHoveringRight) {
-        sliderRef.slickNext();
-      }
-      // thời gian delay giữa các lần chuyển slide
-    }
-  }, [isHoveringLeft, isHoveringRight, sliderRef]);
-
-  const handleHoverRight = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsHoveringRight(true);
-    e.currentTarget.classList.add("scrollingHotSpotRightVisible");
-  };
-
-  const handleLeaveRight = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsHoveringRight(false);
-    e.currentTarget.classList.remove("scrollingHotSpotRightVisible");
-  };
-  const handleHoverLeft = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsHoveringLeft(true);
-    e.currentTarget.classList.add("scrollingHotSpotLeftVisible");
-  };
-
-  const handleLeaveLeft = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsHoveringLeft(false);
-    e.currentTarget.classList.remove("scrollingHotSpotLeftVisible");
-  };
   const updateTableHNX = (dataHNX: any) => {
     // console.log(dataHNX)
     var vTextClass = "",
@@ -469,23 +386,8 @@ const MenuMarketWatch = () => {
   //   }
   // };
 
-  if (loading)
-    return <div className="bg-headerMenuTableMarket">Loading...</div>;
-  const settings = {
-    // className: "center",
-    // centerMode: true,
-    dots: false,
-    speed: 500,
-    infinite: true,
-    slidesToShow: slidesToShow,
-    slidesToScroll: slidesToShow,
-    // slidesToShow: 7, // Hiển thị 3 slide trên một lần trượt
-    // slidesToScroll: 7,
-    autoplay: isHoveringLeft || isHoveringRight,
-    autoplaySpeed: 500,
-    cssEase: "linear",
-    center: "5px",
-  };
+  // if (loading)
+  //   return <div className="bg-headerMenuTableMarket">Loading...</div>;
   return <SlidesMarketWatch />;
 };
 
