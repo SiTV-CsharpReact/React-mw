@@ -11,6 +11,7 @@ interface Props {
   classParentDropDown: string;
   classLabel?: string;
   required?: boolean;
+  children?: any;
 }
 
 const ItemDropDown: React.FC<Props> = ({
@@ -24,6 +25,7 @@ const ItemDropDown: React.FC<Props> = ({
   classLabel,
   classParentDropDown,
   required,
+  children,
 }) => {
   const [focus, setFocus] = useState(false);
   const [isTrue, setIsTrue] = useState(false);
@@ -43,7 +45,7 @@ const ItemDropDown: React.FC<Props> = ({
           >
             <input
               type="text"
-              className="rounded-[4px] text-[12px] h-[27px] !border-none w-full pr-[30px] outline-none cursor-pointer"
+              className="rounded-[4px] text-[12px] h-full !border-none w-full pr-[30px] outline-none cursor-pointer"
               onClick={() => {
                 setIsTrue(!isTrue);
               }}
@@ -95,15 +97,14 @@ const ItemDropDown: React.FC<Props> = ({
         <div
           className={`${
             required === true
-              ? "flex items-center w-1 whitespace-nowrap translate-y-[5px]"
+              ? "flex items-center w-1 whitespace-nowrap"
               : "hidden"
           } `}
         >
-          <p className="flex items-center text-[21px] font-bold text-[#ff0000]">
-            *
-          </p>
+          <p className="flex items-center font-bold text-[#ff0000]">(*)</p>
         </div>
       </div>
+      {children}
     </div>
   );
 };
