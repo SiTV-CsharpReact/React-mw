@@ -63,7 +63,7 @@ export const getDataTable = createAsyncThunk(
   async (Param: params) => {
     try {
       if (Param.Query === "thoa-thuan-hsx") {
-        const DataBi = await agent.dataGDTTtable.listBi(Param.Floor);
+        const DataBi = await agent.dataGDTTtable.listBi("hnx");
         const DataPt = await agent.dataGDTTtable.listPt(Param.Floor);
         let data = {
           index: 1,
@@ -175,7 +175,16 @@ export const getDataTable = createAsyncThunk(
         return data;
       }
     } catch (error: any) {
-      console.error("error lỗi table slice ");
+      let data = {
+        index: 0,
+        floor: "MAIN",
+        NameFloor: Param.Floor,
+        RowPined: Param.RowPined,
+        product: [],
+        KeyMenuChildren: null,
+      };
+      return  data
+    
     }
   }
 );
@@ -455,6 +464,7 @@ export const tableTestSlice = createSlice({
             state.NameFloor = "HNX";
           }
         }
+
       })
       .addCase(getDataTable.rejected, (state, action) => {
         state.DataBi = state.DataBi;

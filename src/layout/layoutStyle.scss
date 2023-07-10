@@ -1,0 +1,47 @@
+
+.fts-heaer{
+    width: 100%;
+    height: auto;
+    background-color:  #007db8;
+    padding: 4px 0;
+    & .headerAuth{
+        width: 80%;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+    & .fts-left{
+        width: 50%;
+        text-transform: uppercase;
+        color: #fff;
+        text-align: left;
+        position: relative;
+        top: 1px;
+        span,a{
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+        a:hover{
+            text-decoration: none;
+            color: white;
+        }
+    }
+    & .fts-Rigth{
+        text-align: right;
+        & .fpts-language{
+            margin: 0;
+            padding: 0;
+            float: right;
+            img{
+                width: 30px;
+            }
+        }
+        
+    }
+    }
+}
+.mainAu{
+    width: 100%;
+    margin: auto;
+}

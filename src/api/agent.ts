@@ -1,19 +1,65 @@
-import axios, { AxiosResponse } from "axios"
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import { RPChart } from "../models/modelChart";
+import { getCoookieStorage ,RemoveCookie} from "./authen";
 const responseBody = (response: AxiosResponse) => response.data;
-const BASE_URL = "https://marketstream.fpts.com.vn/";
+const BASE_URL1 = "https://marketstream.fpts.com.vn/";
+const BASE_URL = "http://priceboard3.fpts.com.vn/";
 const URL_EZTRADE = "http://eztrade0.fpts.com"
-// mặc định gửi authenticated token lên 
-// axios.defaults.headers.common['Authorization'] = 'Bearer ' + "auth_token";
-// axios.interceptors.request.use(
-//     config => {
-//       config.headers.Authorization = 'Bearer ' + "auth_token";
-//       return config;
-//     },
-//     error => {
-//       return Promise.reject(error);
-//     }
-//   );  
+// mặc định gửi authenticated token lên sever
+
+  axios.interceptors.request.use(
+    (config) => {
+      const token = getCoookieStorage() // Lấy token từ local storage hoặc nơi lưu trữ khác
+      if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`; // Thêm header Authorization với giá trị token
+        
+      }
+      return config
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  )
+
+  const responseInterceptor = (res:any) => {
+    // xử lý response  trả về 
+    const token = getCoookieStorage() 
+    if(token){
+        return res;
+    }else{
+        let result  =  RemoveCookie()  
+        if(result)  window.location.reload();
+    }
+    
+  };
+  const errorInterceptor = (axiosError:any) => {
+    // && axiosError.response
+    console.log("lỗi" ,axiosError)
+    if (axiosError) {
+      const statusCode = axiosError.response?.status;
+        if(statusCode === 404) {
+            let result  =  RemoveCookie()
+            if(result)  window.location.reload();
+        }
+    }
+    return Promise.reject(axiosError);
+  };
+  
+axios.create({
+    headers: {
+        'accept': 'application/json',
+        'Cache-Control': 'no-cache',    
+        'Access-Control-Allow-Origin': '*', // Thêm header Access-Control-Allow-Origin
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE', // Thêm header Access-Control-Allow-Methods
+      },
+      withCredentials: true, // Cho phép gửi cookie trong yêu cầu
+})
+axios.interceptors.response.use(responseInterceptor ,errorInterceptor)
+
+
+
+
+
 
 const requests = {
     get: (url: string, params?: URLSearchParams) => axios.get(url, {params}).then(responseBody),
@@ -31,6 +77,9 @@ const requests = {
     }),
     put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
     delete: (url: string) => axios.delete(url).then(responseBody),
+}
+const Authen ={
+    login: (query :any) =>requests.post("http://eztrade4.fpts.com.vn/sg/api/gateway/v1/account/login",query.toString())
 }
 const TableHNX = {
     list: (params: URLSearchParams) => requests.get(BASE_URL+'hnx/data.ashx', params),
@@ -52,11 +101,11 @@ const Ministry ={
     get: () => requests.get('http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/s5g/default/ministry'),
 }
 const ListDataTable = {
-    list: (floor :  string ,valueParam :  string  ) => requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?${valueParam}`)
+    list: (floor :  string ,valueParam :  string  ) => requests.get(`${BASE_URL}${floor}/data.ashx?${valueParam}`)
 }
 const dataGDTTtable = {
-    listPt : (floor : string)=>requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=pt`),
-    listBi : (floor : string)=>requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=bi`)
+    listPt : (floor : string)=>requests.get(`${BASE_URL}${floor}/data.ashx?s=pt`),
+    listBi : (floor : string)=>requests.get(`${BASE_URL}${floor}/data.ashx?s=bi`)
 }
 const chartIndex = {
     get: () => requests.get('http://priceboard3.fpts.com.vn/chart/data.ashx?s=full'),
@@ -78,16 +127,17 @@ const report = {
     getHisOrder : () =>  requests.get("http://localhost:2000/orderHis")
 }
 const transfer = {
-    getdataTempalte : ()=> requests.get("  http://localhost:2000/dataTranfer"),
+    getdataTempalte : ()=> requests.get("http://localhost:2000/dataTranfer"),
     hometransferds : ()=> requests.get("http://localhost:2000/dataTransferds")
 }
 const tableThongke = {
-    getdataThongke :(params :any) => requests.get(`http://eztrade4.fpts.com.vn//hnx/data.ashx?${params}`),
+    getdataThongke :(params :any) => requests.get(`${BASE_URL}/hnx/data.ashx?${params}`),
     sortThongkeIndex : (query : any) =>requests.post("http://priceboard3.fpts.com.vn/Root/Data.ashx", query),
     dataHNX :  ()=>  requests.get("http://localhost:1420/DataHNX"),
     dataHSX :  ()=>  requests.get("http://localhost:1420/DataHSX"),
 }
 const agent = {
+    Authen,
     TableHNX,
     TableHSX,
     Company,
@@ -102,74 +152,3 @@ const agent = {
     tableThongke
 }
 export default agent;
-// import axios, { AxiosInstance, AxiosResponse } from "axios";
-
-// const BASE_URL = "http://marketstream.fpts.com.vn/";
-
-// class Api {
-//   http: AxiosInstance;
-//   constructor() {
-//     this.http = axios.create({
-//       baseURL: BASE_URL,
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-//   }
-
-//   async get<T>(url: string, params?: any): Promise<T> {
-//     try {
-//       const response = await this.http.get(url, { params });
-//       return response.data;
-//     } catch (error:any) {
-//       throw error.response.data;
-//     }
-//   }
-
-//   async post<T>(url: string, data?: any): Promise<T> {
-//     try {
-//       const response = await this.http.post(url, data);
-//       return response.data;
-//     } catch (error:any) {
-//       throw error.response.data;
-//     }
-//   }
-
-//   async put<T>(url: string, data?: any): Promise<T> {
-//     try {
-//       const response = await this.http.put(url, data);
-//       return response.data;
-//     } catch (error:any) {
-//       throw error.response.data;
-//     }
-//   }
-
-//   async delete<T>(url: string): Promise<T> {
-//     try {
-//       const response = await this.http.delete(url);
-//       return response.data;
-//     } catch (error:any) {
-//       throw error.response.data;
-//     }
-//   }
-// }
-
-// class TableApi {
-//   api: Api;
-//   constructor(api: Api) {
-//     this.api = api;
-//   }
-
-//   list(params?: any) {
-//     return this.api.get("/", params);
-//   }
-
-//   get(id: string) {
-//     return this.api.get(`/${id}`);
-//   }
-// }
-
-// const api = new Api();
-// const tableApi = new TableApi(api);
-
-// export { tableApi };
