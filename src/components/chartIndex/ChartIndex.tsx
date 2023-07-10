@@ -4,8 +4,6 @@ import { fetchChartIndexAsync } from "./chartIndexSlice";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { drawChart } from "./util/app.chart";
-import { chartIndex } from "../../models/chartIndex";
-import axios from "axios";
 
 const gradient: any = [0, 0, 50, 500];
 // const xAxis: any = [

@@ -7,6 +7,7 @@ import ImagePriceBoard from "../../images/calendar-7-32.png";
 import axios from "axios";
 import { useAppSelector } from "../../store/configureStore";
 import { Data } from "./config/interface.config";
+import agent from "../../api/agent";
 
 const TableWithChart = () => {
   const stockCode = useAppSelector((state) => state.chart.code);
@@ -14,9 +15,10 @@ const TableWithChart = () => {
   const symbolNew = stockCode === "" ? "FTS" : stockCode;
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get<Data[]>(
-        `http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${stockCode}`
-      );
+      // const response = await axios.get<Data[]>(
+      //   `http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${stockCode}`
+      // );
+      const response = await agent.TableHSX.getOneStock(stockCode)
       setDataChart(response.data);
     };
     fetchData();

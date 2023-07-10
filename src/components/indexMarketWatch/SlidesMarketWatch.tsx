@@ -5,7 +5,6 @@ import React, {
   useRef,
   useState,
 } from "react";
-import Slider from "react-slick";
 import "./slide.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -45,14 +44,9 @@ import { fetchChartIndexAsync } from "../chartIndex/chartIndexSlice";
 const SlidesMarketWatch = () => {
   const { visible } = useAppSelector((state) => state.chart);
   const height = useContext(AppContext);
-  const [isHoveringLeft, setIsHoveringLeft] = useState(false);
-  const [isHoveringRight, setIsHoveringRight] = useState(false);
-  const [sliderRef, setSliderRef] = useState<Slider | null>(null);
   const screenWidth = visible ? window.innerWidth - 650 : window.innerWidth;
-  const slideWidth = 220;
-  const slidesToShow = Math.floor(screenWidth / slideWidth);
   const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
-
+  console.log(dataChartIndex)
   const dispatch = useAppDispatch();
   const {
     marketHSX: { valueHSX },
@@ -63,7 +57,6 @@ const SlidesMarketWatch = () => {
   const { INDEX } = useAppSelector(
     (state: RootState) => state.settingMarketwatch
   );
-
   useEffect(() => {
     dispatch(fetchHSXMarketAsync());
   }, [dispatch]);
@@ -75,21 +68,6 @@ const SlidesMarketWatch = () => {
   useEffect(() => {
     dispatch(fetchChartIndexAsync());
   }, [dispatch]);
-
-  useEffect(() => {
-    // const currentSlide = sliderRef?.innerSlider
-    // const totalSlides = sliderRef?.current?.slickGetOption('slidesToShow');
-    if (sliderRef && (isHoveringLeft || isHoveringRight)) {
-      if (isHoveringLeft) {
-        sliderRef.slickPrev();
-      }
-      if (isHoveringRight) {
-        sliderRef.slickNext();
-      }
-      // thời gian delay giữa các lần chuyển slide
-    }
-  }, [isHoveringLeft, isHoveringRight, sliderRef]);
-
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -160,8 +138,7 @@ const SlidesMarketWatch = () => {
   };
 
   const handleMouseLeave = (e: any) => {
-    clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover
-    console.log("Log nè");
+    clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover    
     !visible && e.target.classList.remove("scrollingHotSpotRightVisible");
     !visible && e.target.classList.remove("scrollingHotSpotLeftVisible");
   };
@@ -514,4 +491,4 @@ const SlidesMarketWatch = () => {
   );
 };
 
-export default SlidesMarketWatch;
+export default React.memo(SlidesMarketWatch);

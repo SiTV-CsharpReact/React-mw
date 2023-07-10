@@ -4,9 +4,9 @@ import { formatNumber } from "../../utils/util";
 import { useAppSelector, RootState } from "../../store/configureStore";
 
 const TableGDTTMarketWatch = () => {
-  const prices = useAppSelector((state: RootState) => state.table.DataBi);
-  const products = useAppSelector((state: RootState) => state.table.DataPt);
-  const floor = useAppSelector((state: RootState) => state.table.NameFloor);
+  const prices = useAppSelector((state) => state.table.DataBi);
+  const products = useAppSelector((state) => state.table.DataPt);
+  const floor = useAppSelector((state) => state.table.NameFloor);
   const [valueInput, setValueInput] = useState<any>("");
   const [dataFilter, setDataFilter] = useState<any>([]);
   const [inputFilter, setInputFilter] = useState<any>([]);
@@ -17,17 +17,17 @@ const TableGDTTMarketWatch = () => {
   }, [products]);
 
   useEffect(() => {
-    filterData(valueInput);
+  filterData(valueInput);
   }, [valueInput]);
 
   const filterData = (value: any) => {
-    let filteredData = products.filter((item: any) => {
+    let filteredData = products?.filter((item: any) => {
       return item.Info[1][1].includes(value.toUpperCase());
     });
     setDataFilter(filteredData);
 
     let uniqueValues = new Set(
-      filteredData.map((item: any) => item.Info[1][1])
+      filteredData?.map((item: any) => item.Info[1][1])
     );
     // Chuyển đổi đối tượng Set thành mảng
     let uniqueValuesArray = Array.from(uniqueValues);

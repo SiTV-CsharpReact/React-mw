@@ -21,6 +21,7 @@ import { DataTable } from "../../models/modelTableHNX";
 import ChartWithOption from "./ChartWithOption";
 import { fetchChartOptionAsync } from "./chartOptionSlice";
 import NewsPopup from "./NewsPopup";
+import agent from "../../api/agent";
 interface DraggableProps {
   initialPosition?: { x: number; y: number };
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;
@@ -39,17 +40,19 @@ const TablePopupMarketwatch = () => {
   // console.log("s",{ stockDetail });
   const fetchDataTableHSX = async (code?: string) => {
     if (code !== "" && code !== undefined) {
-      const res = await axios.get(
-        `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`
-      );
+      const res = await agent.TableHSX.getOneStock(code)
+      // const res = await axios.get(
+      //   `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`
+      // );
       setDataItemHSX(res.data);
       return res.data;
     } else {
-      const res = await axios.get(
-        `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${stockDetail}`
-      );
-      setDataItemHSX(res.data);
-      return res.data;
+      if(code){
+        const res = await agent.TableHNX.getOneStock(code)
+        setDataItemHSX(res.data);
+        return res.data;
+      }
+    
     }
   };
   const fetchDataTableHNX = async (code?: string) => {
