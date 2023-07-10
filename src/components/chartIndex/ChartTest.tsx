@@ -162,6 +162,28 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
         backgroundColor: "#000",
         width: 205,
         height: 98,
+        events: {
+          load: function (e: any) {
+            const xAxis = this.xAxis[0];
+            const today = new Date();
+            const dd = today.getDate();
+            const mm = today.getMonth(); //January is 0!
+            const yyyy = today.getFullYear();
+            const HH1 = 9;
+            const HH2 = 15;
+            const MM = 0; // minute
+
+            const xminTmp = new Date(yyyy, mm, dd, HH1, MM);
+            const xmaxTmp = new Date(yyyy, mm, dd, HH2, MM);
+
+            const xmin = _getDateTs(xminTmp);
+            const xmax = _getDateTs(xmaxTmp);
+            xAxis.setExtremes(xmin, xmax, true, false);
+            // console.log(this.yAxis[1].series);
+    
+          
+          },
+        },
       },
     
       title: {
@@ -182,8 +204,8 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
         tickWidth: 0,
         minPadding: 0,
         maxPadding: 0,
-        min: timeFirst, // Giới hạn trục x từ 9 giờ
-        max: timeLast,
+        // min: timeFirst, // Giới hạn trục x từ 9 giờ
+        // max: timeLast,
         tickInterval: 3600000,
         // height: 75,
         labels: {

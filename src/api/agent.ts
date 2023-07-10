@@ -91,7 +91,7 @@ const dataGDTTtable = {
 };
 const chartIndex = {
   get: () =>
-    requests.get(BASE_URL+"/chart/data.ashx?s=full"),
+    requests.get("https://marketstream.fpts.com.vn/chart/data.ashx?s=full"),
   //get: () => requests.get('http://localhost:8000/dataChartIndex'),
 };
 var formData = new FormData();
