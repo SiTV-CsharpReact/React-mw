@@ -1,36 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./table.scss";
 import { formatNumber } from "../../utils/util";
 import { useAppSelector, RootState } from "../../store/configureStore";
 
 const TableGDTTMarketWatch = () => {
-  const prices = useAppSelector((state) => state.table.DataBi);
-  const products = useAppSelector((state) => state.table.DataPt);
-  const floor = useAppSelector((state) => state.table.NameFloor);
+  const prices = useAppSelector((state: RootState) => state.table.DataBi);
+  const products = useAppSelector((state: RootState) => state.table.DataPt);
+  const floor = useAppSelector((state: RootState) => state.table.NameFloor);
   const [valueInput, setValueInput] = useState<any>("");
   const [dataFilter, setDataFilter] = useState<any>([]);
   const [inputFilter, setInputFilter] = useState<any>([]);
   const [focus, setFocus] = useState(false);
-  console.log(products);
+  console.log(floor);
   useEffect(() => {
     setDataFilter(products);
   }, [products]);
 
   useEffect(() => {
-  filterData(valueInput);
+    filterData(valueInput);
   }, [valueInput]);
 
   const filterData = (value: any) => {
-    let filteredData = products?.filter((item: any) => {
-      return item.Info[1][1].includes(value.toUpperCase());
+    const filteredData = products?.filter((item: any) => {
+      return floor === "HSX"
+        ? item.Info[1][1].includes(value.toUpperCase())
+        : item.Info[0][1].includes(value.toUpperCase());
     });
+
     setDataFilter(filteredData);
 
-    let uniqueValues = new Set(
-      filteredData?.map((item: any) => item.Info[1][1])
+    const uniqueValues = new Set(
+      filteredData.map((item: any) =>
+        floor === "HSX" ? item.Info[1][1] : item.Info[0][1]
+      )
     );
-    // Chuyển đổi đối tượng Set thành mảng
-    let uniqueValuesArray = Array.from(uniqueValues);
+
+    const uniqueValuesArray = Array.from(uniqueValues);
     setInputFilter(uniqueValuesArray);
   };
 
@@ -91,22 +96,46 @@ const TableGDTTMarketWatch = () => {
           </div>
           {/* check floor  */}
           {prices ? (
-            floor === "hnx" ? (
+            floor === "HSX" ? (
               <div className="flex justify-around col-span-2 pt-1 font-bold">
                 <span>
-                  Tổng KL GDTT :<label> {formatNumber(prices[4]?.f240)}</label>
+                  Tổng KL GDTT :
+                  <label>
+                    {" "}
+                    {parseFloat(
+                      prices[4]?.f240.replace(/,/g, "")
+                    ).toLocaleString()}
+                  </label>
                 </span>
                 <span>
-                  Tổng KL GDTT : <label> {formatNumber(prices[4]?.f241)}</label>
+                  Tổng KL GDTT :{" "}
+                  <label>
+                    {" "}
+                    {parseFloat(
+                      prices[4]?.f241.replace(/,/g, "")
+                    ).toLocaleString()}
+                  </label>
                 </span>
               </div>
             ) : (
               <div className="flex justify-around col-span-2 pt-1 font-bold">
                 <span>
-                  Tổng KL GDTT :<label> {formatNumber(prices[4]?.f240)}</label>
+                  Tổng KL GDTT :
+                  <label>
+                    {" "}
+                    {parseFloat(
+                      prices[2]?.f240.replace(/,/g, "")
+                    ).toLocaleString()}
+                  </label>
                 </span>
                 <span>
-                  Tổng KL GDTT : <label> {formatNumber(prices[4]?.f241)}</label>
+                  Tổng KL GDTT :{" "}
+                  <label>
+                    {" "}
+                    {parseFloat(
+                      prices[2]?.f241.replace(/,/g, "")
+                    ).toLocaleString()}
+                  </label>
                 </span>
               </div>
             )
@@ -163,48 +192,66 @@ const TableGDTTMarketWatch = () => {
                   <th className="hbrb">Tổng GT</th>
                 </tr>
               </thead>
-              {dataFilter != null ? (
-                <tbody id="tbdPT_HA">
-                  {dataFilter.length > 0
-                    ? dataFilter?.map((product: any) => (
-                        <tr
-                          key={product.RowID}
-                          className={`${
-                            product.Info[5][1] === product.Info[4][1]
-                              ? "text-[#66CCFF]"
-                              : product.Info[5][1] === product.Info[2][1]
-                              ? "text-[#F7FF31]"
-                              : product.Info[5][1] === product.Info[3][1]
-                              ? "text-[#FF00FF]"
-                              : product.Info[5][1] > product.Info[4][1] &&
-                                product.Info[5][1] < product.Info[2][1]
-                              ? "text-[#FF0000]"
-                              : "text-[#00FF00]"
-                          }`}
-                        >
-                          <td>{product.Info[1][1]}</td>
-                          <td className="text-right">
-                            {formatNumber(product.Info[5][1])}
-                          </td>
-                          <td className="text-right">
-                            {formatNumber(product.Info[6][1])}
-                          </td>
-                          <td className="text-right text-white">
-                            {formatNumber(product.Info[7][1])}
-                          </td>
-                          <td className="text-right text-white">
-                            {product.Info[8][1].toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2,
-                            })}
-                          </td>
-                        </tr>
-                      ))
-                    : ""}
-                </tbody>
-              ) : (
-                ""
-              )}
+              <tbody id="tbdPT_HA">
+                {dataFilter != null &&
+                  dataFilter.length > 0 &&
+                  dataFilter.map((product: any) => {
+                    const condition = floor === "HSX";
+                    const colorClass = condition
+                      ? (product.Info[5][1] === product.Info[4][1] &&
+                          "text-[#66CCFF]") ||
+                        (product.Info[5][1] === product.Info[2][1] &&
+                          "text-[#F7FF31]") ||
+                        (product.Info[5][1] === product.Info[3][1] &&
+                          "text-[#FF00FF]") ||
+                        (product.Info[5][1] > product.Info[4][1] &&
+                          product.Info[5][1] < product.Info[2][1] &&
+                          "text-[#FF0000]") ||
+                        "text-[#00FF00]"
+                      : (product.Info[7][1] === product.Info[2][1] &&
+                          "text-[#66CCFF]") ||
+                        (product.Info[7][1] === product.Info[1][1] &&
+                          "text-[#F7FF31]") ||
+                        (product.Info[7][1] === product.Info[3][1] &&
+                          "text-[#FF00FF]") ||
+                        (product.Info[7][1] > product.Info[2][1] &&
+                          product.Info[7][1] < product.Info[1][1] &&
+                          "text-[#FF0000]") ||
+                        "text-[#00FF00]";
+
+                    return (
+                      <tr key={product.RowID} className={colorClass}>
+                        <td>
+                          {condition ? product.Info[1][1] : product.Info[0][1]}
+                        </td>
+                        <td className="text-right">
+                          {formatNumber(
+                            condition ? product.Info[5][1] : product.Info[7][1]
+                          )}
+                        </td>
+                        <td className="text-right">
+                          {formatNumber(product.Info[6][1])}
+                        </td>
+                        <td className="text-right text-white">
+                          {formatNumber(
+                            condition ? product.Info[7][1] : product.Info[8][1]
+                          )}
+                        </td>
+                        <td className="text-right text-white">
+                          {condition
+                            ? product.Info[8][1].toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })
+                            : product.Info[9][1].toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
             </table>
           </div>
           <div className="col-span-1 pl-2">
