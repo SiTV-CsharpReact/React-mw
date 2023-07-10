@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { RPChart } from "../models/modelChart";
 const responseBody = (response: AxiosResponse) => response.data;
-const BASE_URL = "https://marketstream.fpts.com.vn/";
+const BASE_URL = "http://priceboard3.fpts.com.vn/";
 const URL_EZTRADE = "http://eztrade0.fpts.com";
 // mặc định gửi authenticated token lên
 // axios.defaults.headers.common['Authorization'] = 'Bearer ' + "auth_token";
@@ -23,11 +23,11 @@ const requests = {
     axios
       .post(url, body, {
         headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    }).then((response) => {
-        console.log(response)
-        const responseBody = response.data;
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        const responseBody = response;
         return responseBody;
       })
       .catch((error) => {
@@ -41,18 +41,27 @@ const TableHNX = {
   list: (params: URLSearchParams) =>
     requests.get(BASE_URL + "hnx/data.ashx", params),
   get: () => requests.get(BASE_URL + "/hnx/data.ashx?s=quote&l=HNXIndex"),
+  getOneStock: (params:string) => requests.get(BASE_URL + `/hnx/data.ashx?s=quote&l=${params}`),
 };
 const TableHSX = {
   list: (params: URLSearchParams) =>
     requests.get(BASE_URL + "hsx/data.ashx", params),
   get: () => requests.get(BASE_URL + "/hsx/data.ashx?s=quote&l=All"),
+  getOneStock: (params:string) => requests.get(BASE_URL + `/hsx/data.ashx?s=quote&l=${params}`),
+};
+const Index = {
+  get: (params:string) =>
+    requests.get(
+      BASE_URL+`${params}/data.ashx?s=index`
+    ),
 };
 const Company = {
   get: () =>
     requests.get(
-      "http://localhost:8430/api/stock/v1/cache/stock_info_cn/eztrade?code=ALL"
+      "http://dscache.fpts.com.vn/api/stock/v1/cache/stock_info/eztrade?code=ALL"
     ),
 };
+
 const Category = {
   get: () =>
     requests.get(
@@ -64,35 +73,33 @@ const Category = {
 const Ministry = {
   get: () =>
     requests.get(
-      "http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/s5g/default/ministry"
+      "hhttp://priceboard3.fpts.com/api/stock/v1/mw/s5g/default/ministry"
     ),
 };
 const ListDataTable = {
   list: (floor: string, valueParam: string) =>
     requests.get(
-      `http://marketstream.fpts.com.vn/${floor}/data.ashx?${valueParam}`
+      BASE_URL+`${floor}/data.ashx?${valueParam}`
     ),
 };
 const dataGDTTtable = {
   listPt: (floor: string) =>
-    requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=pt`),
-  listBi: (floor: string) =>
-    requests.get(`http://marketstream.fpts.com.vn/${floor}/data.ashx?s=bi`),
+    requests.get(BASE_URL+`${floor}/data.ashx?s=pt`),
+    listBi: (floor: string) =>
+    requests.get(BASE_URL+`${floor}/data.ashx?s=bi`),
+    
 };
 const chartIndex = {
   get: () =>
-    requests.get("http://priceboard3.fpts.com.vn/chart/data.ashx?s=full"),
+    requests.get("https://marketstream.fpts.com.vn/chart/data.ashx?s=full"),
   //get: () => requests.get('http://localhost:8000/dataChartIndex'),
 };
 var formData = new FormData();
 formData.append('key1', 'value1')
 formData.append('key2', 'value2')
-const dataTableBasic ={
-   
-    post: (dataValueBasic:RPChart) => requests.post("http://priceboard3.fpts.com.vn/Root/Data.ashx", dataValueBasic),
-    postFormData: (dataValueBasic:RPChart) =>requests.postFormData("http://priceboard3.fpts.com.vn/Root/Data.ashx", dataValueBasic)
-    //  requests.postFormData("/Root/Data.ashx", dataValueBasic,   {'Content-Type': 'multipart/form-data'},)
-      
+const dataTableBasic ={ 
+    post: (dataValueBasic:RPChart) => requests.post(BASE_URL+"/Root/Data.ashx", dataValueBasic),
+    postFormData: (dataValueBasic:RPChart) =>requests.postFormData(BASE_URL+"/Root/Data.ashx", dataValueBasic)   
 }
 // table Lịch sử khớp lệnh
 const report = {
@@ -104,14 +111,15 @@ const transfer = {
     hometransferds : ()=> requests.get("http://localhost:2000/dataTransferds")
 }
 const tableThongke = {
-    getdataThongke :(params :any) => requests.get(`http://eztrade4.fpts.com.vn//hnx/data.ashx?${params}`),
-    sortThongkeIndex : (query : any) =>requests.post("http://priceboard3.fpts.com.vn/Root/Data.ashx", query),
+    getdataThongke :(params :any) => requests.get(`${BASE_URL}/hnx/data.ashx?${params}`),
+    sortThongkeIndex : (query : any) =>requests.post(BASE_URL+"/Root/Data.ashx", query),
     dataHNX :  ()=>  requests.get("http://localhost:1420/DataHNX"),
     dataHSX :  ()=>  requests.get("http://localhost:1420/DataHSX"),
 }
 const agent = {
     TableHNX,
     TableHSX,
+    Index,
     Company,
     Category,
     Ministry,
@@ -123,101 +131,5 @@ const agent = {
     transfer,
     tableThongke
 }
-// formData.append("key1", "value1");
-// formData.append("key2", "value2");
-// const dataTableBasic = {
-//   post: (dataValueBasic: RPChart) =>
-//     requests.post(
-//       "http://priceboard3.fpts.com.vn/Root/Data.ashx",
-//       dataValueBasic
-//     ),
-//   postFormData: (dataValueBasic: RPChart) =>
-//     requests.postFormData(
-//       "http://priceboard3.fpts.com.vn/Root/Data.ashx",
-//       dataValueBasic
-//     ),
-//   //  requests.postFormData("/Root/Data.ashx", dataValueBasic,   {'Content-Type': 'multipart/form-data'},)
-// };
-// const agent = {
-//   TableHNX,
-//   TableHSX,
-//   Company,
-//   Category,
-//   Ministry,
-//   ListDataTable,
-//   dataGDTTtable,
-//   chartIndex,
-//   dataTableBasic,
-// };
 export default agent;
-// import axios, { AxiosInstance, AxiosResponse } from "axios";
 
-// const BASE_URL = "http://marketstream.fpts.com.vn/";
-
-// class Api {
-//   http: AxiosInstance;
-//   constructor() {
-//     this.http = axios.create({
-//       baseURL: BASE_URL,
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-//   }
-
-//   async get<T>(url: string, params?: any): Promise<T> {
-//     try {
-//       const response = await this.http.get(url, { params });
-//       return response.data;
-//     } catch (error:any) {
-//       throw error.response.data;
-//     }
-//   }
-
-//   async post<T>(url: string, data?: any): Promise<T> {
-//     try {
-//       const response = await this.http.post(url, data);
-//       return response.data;
-//     } catch (error:any) {
-//       throw error.response.data;
-//     }
-//   }
-
-//   async put<T>(url: string, data?: any): Promise<T> {
-//     try {
-//       const response = await this.http.put(url, data);
-//       return response.data;
-//     } catch (error:any) {
-//       throw error.response.data;
-//     }
-//   }
-
-//   async delete<T>(url: string): Promise<T> {
-//     try {
-//       const response = await this.http.delete(url);
-//       return response.data;
-//     } catch (error:any) {
-//       throw error.response.data;
-//     }
-//   }
-// }
-
-// class TableApi {
-//   api: Api;
-//   constructor(api: Api) {
-//     this.api = api;
-//   }
-
-//   list(params?: any) {
-//     return this.api.get("/", params);
-//   }
-
-//   get(id: string) {
-//     return this.api.get(`/${id}`);
-//   }
-// }
-
-// const api = new Api();
-// const tableApi = new TableApi(api);
-
-// export { tableApi };

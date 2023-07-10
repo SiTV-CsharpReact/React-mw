@@ -72,14 +72,14 @@ export const store = configureStore({
     dataShow: dataSliceShow.reducer,
     // chart index
     chartIndex: chartIndexSlice.reducer,
-    report :RespportSlice.reducer,
-    transfer : TransferSlice.reducer,
    // chart option
    chartOption: chartOptionSlice.reducer,
    
     dataApi: dataSliceShow.reducer,
     dataApiPendingOder : dataSliceShow.reducer,
     
+    report :RespportSlice.reducer,
+    transfer : TransferSlice.reducer
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

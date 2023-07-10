@@ -99,10 +99,12 @@
     "DataPopup": "json-server dataPopup.json --watch --port 6868",
     "DataKiQuy": "json-server dataPopup.json --watch --port 9999",
     "DataChartIndex": "json-server chart.json --watch --port 8000",
+    "BCTS": "json-server data.json --watch --port 2908",
     "Transfer": "json-server db.json --watch --port 8060",
     "TransBalance": "json-server priceTable.json --watch --port 3111",
     "testResport": "json-server testResport.json --watch --port 2000",
-    "dataHNX_HSX" : "json-server dataHNX.json --watch --port 1420 " 
+    "dataHNX_HSX" : "json-server dataHNX.json --watch --port 1420 ",
+    "dataGDTTMarket" : "json-server dataTableGDTTMarketWatch.json --watch --port 1280 "
   },
   "eslintConfig": {
     "extends": [

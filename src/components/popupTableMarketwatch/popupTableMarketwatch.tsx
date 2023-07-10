@@ -35,10 +35,6 @@ interface Props {
           document.removeEventListener("mousedown", handleClickOutside);
         };
       }, [popupRef]);
-      const historyStock =() =>{
-        dispatch(showDetailStock(selectedValue.value))
-        setSelectedValueProp({...selectedValue, status: false}); 
-      }
       const handleTest = (e:any)=>{
         let data = {
            stockCode : e,
@@ -52,6 +48,10 @@ interface Props {
       setSelectedValueProp({...selectedValue, status: false});   // tắt popuptable 
 
 
+      }
+      const historyStock =() =>{
+        dispatch(showDetailStock({visible:true,code:selectedValue.value}))
+        setSelectedValueProp({...selectedValue, status: false}); 
       }
   return (
     <div

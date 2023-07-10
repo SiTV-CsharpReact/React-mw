@@ -42,9 +42,9 @@ const SlideMarketItem: React.FC<Props> = ({
 }: Props) => {
   return (
     <>
-      <li className="dvChart">
-        <div >
-          <p className="text-sm whitespace-nowrap">
+      <li className="dvChart bg-black">
+        <div>
+          <p className="text-sm text-center bg-black whitespace-nowrap">
             <span id="" className="mar_">
               {name}:
             </span>
@@ -64,10 +64,13 @@ const SlideMarketItem: React.FC<Props> = ({
             >
               {valueChange}
             </span>
-            <span id="" className={`${setColorMenuMarket(valueChange)} px-0.5`}>
+            <span
+              id=""
+              className={`${setColorMenuMarket(valueChange)} px-0.5 bg-black`}
+            >
               <span
                 id={id[3]}
-                className={`${setColorMenuMarket(valueChange)} px-0.5`}
+                className={`${setColorMenuMarket(valueChange)} px-0.5 bg-black`}
               >
                 {valueChangePercent}
               </span>
@@ -76,46 +79,46 @@ const SlideMarketItem: React.FC<Props> = ({
           </p>
           {!visible && (
             <>
-              <p className="text-xs text-center whitespace-nowrap">
+              <p className="text-xs text-center bg-black whitespace-nowrap">
                 <span className="mar_ spQtty">KL:</span>
-                <span id={id[4]} className="mar_ txtIndex">
+                <span id={id[4]} className="bg-black mar_ txtIndex">
                   {valueTotalSharesAOM}
                 </span>
-                <span className="mar_ spValue">GT:</span>
-                <span id={id[5]} className="mar_ txtIndex">
+                <span className="bg-black mar_ spValue">GT:</span>
+                <span id={id[5]} className="bg-black mar_ txtIndex">
                   {valueTotalValuesAOM}
                 </span>
-                <span className="mar_ spUnit">tỷ</span>
+                <span className="bg-black mar_ spUnit">tỷ</span>
               </p>
-              <p className="text-xs text-center whitespace-nowrap">
-                <span className="arrowUp" />
-                <span id={id[6]} className="maru txtIndex">
+              <p className="text-xs text-center bg-black whitespace-nowrap">
+                <span className="bg-black arrowUp" />
+                <span id={id[6]} className="bg-black maru txtIndex">
                   {valueUp}
                 </span>
-                <span className="marc txtIndex">
+                <span className="bg-black marc txtIndex">
                   (
-                  <span className="marc" id={id[7]}>
+                  <span className="bg-black marc" id={id[7]}>
                     {valueCeiling}
                   </span>
                   )
                 </span>
-                <span className="square" />
-                <span id={id[8]} className="marn txtIndex">
+                <span className="bg-black square" />
+                <span id={id[8]} className="bg-black marn txtIndex">
                   {valueNoChange}
                 </span>
-                <span className="arrowDown" />
+                <span className="bg-black arrowDown" />
                 <span id={id[9]} className="mard txtIndex">
                   {valueDown}
                 </span>
-                <span className="marf txtIndex">
+                <span className="bg-black marf txtIndex">
                   (
-                  <span className="marf" id={id[10]}>
+                  <span className="bg-black marf" id={id[10]}>
                     {valueFloor}
                   </span>
                   )
                 </span>
                 <span
-                  className="HO_MarketStat txtIndex"
+                  className="bg-black HO_MarketStat txtIndex"
                   id={`${id[11] !== undefined ? id[11] : ""}`}
                 >
                   {status}

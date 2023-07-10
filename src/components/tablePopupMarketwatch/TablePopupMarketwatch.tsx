@@ -19,7 +19,9 @@ import axios from "axios";
 import { getCompanyNameByCode } from "../../utils/util";
 import { DataTable } from "../../models/modelTableHNX";
 import ChartWithOption from "./ChartWithOption";
+import { fetchChartOptionAsync } from "./chartOptionSlice";
 import NewsPopup from "./NewsPopup";
+import agent from "../../api/agent";
 interface DraggableProps {
   initialPosition?: { x: number; y: number };
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;
@@ -38,17 +40,19 @@ const TablePopupMarketwatch = () => {
   // console.log("s",{ stockDetail });
   const fetchDataTableHSX = async (code?: string) => {
     if (code !== "" && code !== undefined) {
-      const res = await axios.get(
-        `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`
-      );
+      const res = await agent.TableHSX.getOneStock(code)
+      // const res = await axios.get(
+      //   `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`
+      // );
       setDataItemHSX(res.data);
       return res.data;
     } else {
-      const res = await axios.get(
-        `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${stockDetail}`
-      );
-      setDataItemHSX(res.data);
-      return res.data;
+      if(code){
+        const res = await agent.TableHNX.getOneStock(code)
+        setDataItemHSX(res.data);
+        return res.data;
+      }
+    
     }
   };
   const fetchDataTableHNX = async (code?: string) => {
@@ -156,6 +160,10 @@ const TablePopupMarketwatch = () => {
       }
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchChartOptionAsync({ stockCode: stockDetail }));
+  }, [dispatch, stockDetail]);
   // console.log(dataItemHNX, dataItemHSX)
   // Kiểm tra và đặt lại giá trị cho dataMouse.maF và dataMouseBuy.maB nếu selectedCode tồn tại
   return (
@@ -249,7 +257,7 @@ const TablePopupMarketwatch = () => {
             <span
               className="pu-close"
               title="Đóng cửa sổ"
-              onClick={() => dispatch(showDetailStock(""))}
+              onClick={() => dispatch(showDetailStock({visible:false,code:""}))}
             >
               <i className="fa fa-times fa-lg !text-sm" />
             </span>
@@ -276,18 +284,21 @@ const TablePopupMarketwatch = () => {
                 }
               }}
             >
-              <TableKLTTGPopup dataKLTTG={dataKLTTG} />
+              <TableKLTTGPopup stockCode={stockDetail} />
             </div>
             <div className="w-full pu-div-PT">
               <TableGDTTPopup />
             </div>
             <div className="pu-vertical pu-div-oddlot">
-              <TableGDLLPopup />
+              <TableGDLLPopup stockCode={stockDetail}/>
             </div>
           </div>
           <div className="pu-hrz-chart">
             <ChartPopup />
-            <ChartWithOption stockCode={stockDetail} />
+            <ChartWithOption
+              dataItem={dataItemHNX.length !== 0 ? dataItemHNX : dataItemHSX}
+            />
+            {/* <ChartWithOption stockCode={stockDetail} /> */}
             <NewsPopup stockCode={stockDetail}/>
           </div>
          

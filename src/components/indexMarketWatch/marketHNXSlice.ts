@@ -1,14 +1,14 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ObjectMenuHNX } from "../../models/modelListMenuHSX";
+import agent from "../../api/agent";
+import { san_HNX } from "../../configs/app.config";
 
 export const fetchHNXMarketAsync = createAsyncThunk<ObjectMenuHNX>(
   "market/fetchMarketHNX",
   async () => {
-    const responseHSX = await axios.get(
-      `http://marketstream.fpts.com.vn/hnx/data.ashx?s=index`
-    );
-    return responseHSX.data;
+    const responseHSX = await agent.Index.get(san_HNX)
+    return responseHSX;
   }
 );
 
