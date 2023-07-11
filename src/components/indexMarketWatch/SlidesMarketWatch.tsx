@@ -46,7 +46,7 @@ const SlidesMarketWatch = () => {
   const height = useContext(AppContext);
   const screenWidth = visible ? window.innerWidth - 650 : window.innerWidth;
   const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
-  console.log(dataChartIndex)
+
   const dispatch = useAppDispatch();
   const {
     marketHSX: { valueHSX },

@@ -16,6 +16,7 @@ import ColumnDef from "./components/options";
 import { setCookie } from "../../models/cookie";
 import { g_CLASS_INDEX } from "../../configs/app.config";
 import { async } from "q";
+import { setActiveMenu } from "../menuBarMW/menuSlice";
 
 // LicenseManager.setLicenseKey(
 //   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
@@ -41,6 +42,7 @@ const TableMarketWatchTest = () => {
         Query: result?.payload?.Data[0]?.List,
         RowPined: result?.payload?.Data[0]?.Row,
       };
+    
       await handelGetData(data);
     } else {
       let data = {
@@ -56,6 +58,13 @@ const TableMarketWatchTest = () => {
       localStorage.setItem("activePriceboardTabMenu", "VNI");
       setCookie(newCookie)
       await handelGetData(data);
+      let activeMenu = {
+        nameMenu: "VNI",
+        keyMenu: 0,
+        floor : "HSX"
+      };
+
+      dispatch(setActiveMenu(activeMenu))
     }
   }, [dispatch])
   const handelGetData = useCallback(
