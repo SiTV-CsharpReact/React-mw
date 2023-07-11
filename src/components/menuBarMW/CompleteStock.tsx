@@ -80,21 +80,39 @@ const CompleteStock = (props: any) => {
   };
   //  chữ tìm kiếm màu đỏ
   const getHighlightedText = (text: string, highlight: string) => {
-    const parts = text.split(new RegExp(`(${highlight})`, "gi"));
+    // const parts = text.split(new RegExp(`(${highlight})`, "gi"));
+    // return (
+    //   <span>
+    //     {parts.map((part, index) =>
+    //       part.toLowerCase() === highlight.toLowerCase() ? (
+    //         <span key={index} style={{ color: "yellow" }}>
+    //           {part}
+    //         </span>
+    //       ) : (
+    //         part
+    //       )
+    //     )}
+    //   </span>
+    // );
+    const input = Value.toLowerCase();
+    const startIndex = text.toLowerCase().indexOf(input);
+    const endIndex = startIndex + input.length;
+
+    if (startIndex === -1) {
+      return text;
+    }
     return (
-      <span>
-        {parts.map((part, index) =>
-          part.toLowerCase() === highlight.toLowerCase() ? (
-            <span key={index} style={{ color: "red" }}>
-              {part}
-            </span>
-          ) : (
-            part
-          )
-        )}
-      </span>
+      <>
+        {text.substring(0, startIndex)}
+        <span className="font-semibold text-[#FF0000]">
+          {text.substring(startIndex, endIndex)}
+        </span>
+        {text.substring(endIndex)}
+      </>
     );
+  // };
   };
+
   // dã lọc song
   const searchResults = testdata.filter((item) =>
     item.toLowerCase().includes(searchTerm.toLowerCase())
