@@ -80,20 +80,6 @@ const CompleteStock = (props: any) => {
   };
   //  chữ tìm kiếm màu đỏ
   const getHighlightedText = (text: string, highlight: string) => {
-    // const parts = text.split(new RegExp(`(${highlight})`, "gi"));
-    // return (
-    //   <span>
-    //     {parts.map((part, index) =>
-    //       part.toLowerCase() === highlight.toLowerCase() ? (
-    //         <span key={index} style={{ color: "yellow" }}>
-    //           {part}
-    //         </span>
-    //       ) : (
-    //         part
-    //       )
-    //     )}
-    //   </span>
-    // );
     const input = Value.toLowerCase();
     const startIndex = text.toLowerCase().indexOf(input);
     const endIndex = startIndex + input.length;
