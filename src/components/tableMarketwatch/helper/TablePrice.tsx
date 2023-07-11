@@ -1,27 +1,8 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { formatNumberMarket } from "../../../utils/util";
-import { useSelector } from "react-redux";
-import { RootState, useAppSelector } from "../../../store/configureStore";
 
+import { useAppSelector } from "../../../store/configureStore";
 const TablePrices = () => {
-  const { dataThongke } = useAppSelector(state => state.dataThongke);
-  console.log("first order", dataThongke)
-  const stockDetail = useSelector((state: RootState) => state.popupTable.code);
-  const [data, setData] = useState([])
-  const fetchDataPrice = async () => { 
-    try {
-    const {data} = await axios.get("http://localhost:3009/Body");
-    console.log("res", data);
-    setData(data)
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-  useEffect(() => {
-    fetchDataPrice()
-  },[dataThongke])
+  const { dataTableThongkePrice } = useAppSelector((state) => state.tableTest);
   return (
     <>
       <table
@@ -31,7 +12,7 @@ const TablePrices = () => {
         <thead style={{}}>
           <tr>
             <th className="hbrb" rowSpan={2}>
-              Ngày Giá 
+              Ngày Giá
             </th>
             <th className="hbrb" rowSpan={2}>
               Mã
@@ -84,27 +65,63 @@ const TablePrices = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item: any, index: any) => {
-            return <tr>
-              <td className="hover:bg-[#444444] !text-center">{ item?.Data[0][1]  }</td>
-            <td className="hover:bg-[#444444]">{  dataThongke.ma }</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(item?.Data[2][1])}</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(item?.Data[3][1])}</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(item?.Data[4][1])}</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(item?.Data[5][1])}</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(item?.Data[6][1])}</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(item?.Data[7][1])}</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(item?.Data[8][1])}</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(parseFloat(item?.Data[9][1]).toFixed(2))}</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(item?.Data[10][1])}</td>
-            <td className="hover:bg-[#444444]">{formatNumberMarket(parseFloat(item?.Data[11][1]).toFixed(2))}</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(item?.Data[12][1])}</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(item?.Data[13][1])}</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(item?.Data[14][1])}</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(item?.Data[15][1])}</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(item?.Data[16][1])}</td>
-            <td className="hover:bg-[#444444]">{ formatNumberMarket(item?.Data[17][1])}</td>
-          </tr>
+          {dataTableThongkePrice.map((item: any, index: any) => {
+            return (
+              <tr>
+                <td className="hover:bg-[#444444] !text-center">
+                  {item?.Data[0][1]}
+                </td>
+                <td className="hover:bg-[#444444] ">{item?.Data[1][1]}</td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(item?.Data[2][1])}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(item?.Data[3][1])}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(item?.Data[4][1])}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(item?.Data[5][1])}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(item?.Data[6][1])}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(item?.Data[7][1])}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(item?.Data[8][1])}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(parseFloat(item?.Data[9][1]).toFixed(2))}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(item?.Data[10][1])}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(parseFloat(item?.Data[11][1]).toFixed(2))}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(item?.Data[12][1])}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(item?.Data[13][1])}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(item?.Data[14][1])}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(item?.Data[15][1])}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(item?.Data[16][1])}
+                </td>
+                <td className="hover:bg-[#444444]">
+                  {formatNumberMarket(item?.Data[17][1])}
+                </td>
+              </tr>
+            );
           })}
         </tbody>
       </table>

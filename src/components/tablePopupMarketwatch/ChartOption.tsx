@@ -1,104 +1,338 @@
-import React, { useEffect, useRef } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import React, { useEffect, useState } from "react";
+import { useAppSelector } from "../../store/configureStore";
 import * as Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import { fetchChartOptionAsync } from "./chartOptionSlice";
-// import { HighchartsProvider } from "react-jsx-highcharts";
-import { DataStockCode } from "../../models/stockCode";
-const ChartOption: React.FC<DataStockCode> = (data) => {
-  const dispatch = useAppDispatch();
+import {
+  _getDateTs,
+  drawChart,
+  maxNumber,
+  minNumber,
+} from "../chartIndex/util/app.chart";
+import { formatNumber } from "../../utils/util";
+const ChartOption: React.FC<any> = (props) => {
   const { isLoading, dataChartOption, status } = useAppSelector(
     (state) => state.chartOption
   );
+  const [dataCol, setDataCol] = useState<any>([]);
+  const [dataSpline, setDataSpline] = useState<any>([]);
+  const [indexValue, setIndexValue] = useState(0);
 
   useEffect(() => {
-    dispatch(fetchChartOptionAsync({ stockCode: data.stockCode }));
-  }, []);
-  const linear = [
-    { x: 0, y: 0 },
-    { x: 0, y: 50 },
-    { x: 50, y: 200 },
-    { x: 500, y: 200 },
-  ];
-  const options: Highcharts.Options = {
-    chart: {
-      height: 160,
-      backgroundColor: "#333333",
-    },
-    credits: {
-      enabled: false,
-    },
-    title: {
-      text: "",
-    },
-    yAxis: {
-      min: 0,
-      height: 160,
-      gridLineWidth: 1,
-      labels: {
+    props.dataItem?.map((item: any) => {
+      // eslint-disable-next-line array-callback-return
+      return item.Info?.map((e: any, ind: number) => {
+        if (ind === 1) {
+          setIndexValue(e[1]);
+        }
+      });
+    });
+  }, [props.dataItem]);
+
+  useEffect(() => {
+    if (dataChartOption?.length > 0) {
+      const data = dataChartOption?.map((item: any) => ({
+        TimeJS: _getDateTs(item[0]),
+        Index: item[4],
+        Vol: item[5],
+      }));
+      const arrSpline = data?.map((item: any) => {
+        return {
+          x: item?.TimeJS,
+          y: item?.Index,
+        };
+      });
+      const arrCol = data?.map((item: any) => ({
+        x: item?.TimeJS,
+        y: item?.Vol,
+      }));
+      setDataCol(arrCol);
+      setDataSpline(arrSpline);
+    }
+  }, [dataChartOption]);
+
+  useEffect(() => {
+    const gradient: any = [0, 0, 50, 500];
+    const series: any = [
+      {
+        name: "Column",
+        type: "column",
+        yAxis: 0,
+        state: {
+          hover: {
+            enabled: false,
+          },
+        },
+        data: dataCol,
+      },
+      {
+        name: "Spline",
+        type: "spline",
+        yAxis: 1,
+        data: dataSpline,
+      },
+    ];
+    Highcharts.chart(`container__chart__time`, {
+      chart: {
+        height: 160,
+        polar: true,
+        backgroundColor: "#303030",
+        plotBackgroundColor: {
+          linearGradient: gradient,
+          stops: [
+            [0, "#080808"],
+            [1, "#917c05"],
+          ],
+        },
+        plotBorderWidth: 1,
+        plotBorderColor: "#545454",
+        events: {
+          load: function (e: any) {
+            const xAxis = this.xAxis[0];
+            const today = new Date();
+            const dd = today.getDate();
+            const mm = today.getMonth(); //January is 0!
+            const yyyy = today.getFullYear();
+            const HH1 = 9;
+            const HH2 = 15;
+            const MM = 0; // minute
+
+            const xminTmp = new Date(yyyy, mm, dd, HH1, MM);
+            const xmaxTmp = new Date(yyyy, mm, dd, HH2, MM);
+
+            const xmin = _getDateTs(xminTmp);
+            const xmax = _getDateTs(xmaxTmp);
+            xAxis.setExtremes(xmin, xmax, true, false);
+            // console.log(this.yAxis[1].series);
+            let arr: any = [];
+            // eslint-disable-next-line array-callback-return
+            this.yAxis[1].series.map((item: any) => {
+              arr = Array.from(new Set(item.yData)).sort(
+                (a: any, b: any) => a - b
+              );
+              // return result;
+            });
+            // let data: any = [];
+            // this.options.series?.map((item: any, ind) => {
+            //   if (ind === 1) return (data = item.data);
+            // });
+            // console.log(data);
+
+            // const myArr: any = Object.values(drawChart(dataChartOption));
+            // console.log(this.options.series);
+
+            let min, max;
+            let arrPr: any = [],
+              arrSub: any = [],
+              minSub;
+            for (let i = 0; i < arr.length; i++) {
+              const price = arr[i];
+              arrPr.push(price);
+              var next = arr[i + 1];
+
+              if (typeof next === "undefined") {
+                next = arr[0];
+              }
+              const sub = Math.abs(Math.round((price - next) * 100) / 100);
+              console.log(sub);
+
+              if (sub > 0) {
+                arrSub.push(sub);
+              }
+            }
+
+            min = minNumber(arrPr);
+            max = maxNumber(arrPr);
+            minSub = minNumber(arrSub);
+            console.log(minSub);
+            
+            var tick, barwidth;
+            var sub = max - min;
+
+            if (max < 50) {
+              tick = minSub;
+              barwidth = 0.02;
+              min -= barwidth;
+              max += barwidth;
+            } else if (max > 100) {
+              tick = minSub < 0.5 && minSub !== 0 ? minSub : 0.5;
+              barwidth = 0.05;
+              min -= barwidth;
+              max += barwidth;
+            } else if (minSub < 0.5) {
+              tick = 0.1;
+              barwidth = 0.05;
+              min -= barwidth;
+              max += barwidth;
+            } else {
+              tick = 1;
+              barwidth = 0.2;
+              min -= barwidth;
+              max += barwidth;
+            }
+            // console.log(tick);
+
+            const plotLine: any = this.yAxis[1].options.plotLines;
+            if (max <= plotLine[0].value) {
+              max = max + sub;
+            }
+            console.log({ min, max, tick, sub, arrPr, arrSub, arr });
+            this.yAxis[1].update({
+              tickInterval: parseFloat(sub.toFixed(1)),
+              tickAmount: e.target.yAxis[1].tickAmount,
+            });
+            // console.log(this.yAxis[1]);
+
+            this.yAxis[1].setExtremes(
+              parseFloat(min.toFixed(1)),
+              parseFloat(max.toFixed(1)),
+              true,
+              false
+            );
+            this.redraw();
+          },
+        },
+      },
+      credits: {
         enabled: false,
       },
       title: {
         text: "",
       },
-      maxPadding: 0,
-      gridLineColor: "#222012",
-    },
-    xAxis: {
-      type: "datetime",
-      tickInterval: 3600 * 1000,
-      gridLineWidth: 1,
-      gridLineColor: "#222012",
-      startOnTick: true,
-      labels: {
-        rotation: 0,
-        style: {
-          color: "#969696",
-          fontSize: "8px",
+      xAxis: {
+        type: "datetime",
+        dateTimeLabelFormats: {
+          hour: "%H h",
         },
+        labels: {
+          useHTML: true,
+          style: {
+            color: "#a5a5a5",
+            fontSize: "6pt",
+          },
+          align: "center",
+          y: 15,
+        },
+        lineWidth: 0,
+        lineColor: "#5f5f5f",
+        tickWidth: 0,
+        tickInterval: 3600000,
+        gridLineWidth: 1,
+        gridLineColor: "#6d6d6d1f",
+        height: 140,
       },
-      height: 120,
-      tickWidth: 0,
-      maxPadding: 0,
-      minPadding: 0,
-    },
-    legend: {
-      symbolPadding: 0,
-      symbolWidth: 0,
-      symbolHeight: 0,
-      squareSymbol: false,
-    },
-    plotOptions: {
-      line: {
-        states: {
-          hover: { enabled: false },
+      yAxis: [
+        {
+          title: {
+            text: "",
+          },
+          gridLineWidth: 0,
+          opposite: true,
+          lineWidth: 0,
+          lineColor: "#5f5f5f",
+          labels: {
+            enabled: false,
+          },
+          height: 140,
         },
-        marker: {
-          enabled: false,
+        {
+          title: {
+            text: "",
+          },
+          endOnTick: true,
+          lineWidth: 0,
+          lineColor: "#5f5f5f",
+          labels: {
+            style: {
+              fontSize: "9px",
+              color: "#a5a5a5",
+            },
+            distance: 10,
+            y: 2,
+          },
+          gridLineWidth: 1,
+          gridLineColor: "#6d6d6d1f",
+          plotLines: [
+            {
+              color: "#FFFF00",
+              width: 1,
+              value: indexValue,
+              zIndex: 10,
+            },
+          ],
+          height: 140,
         },
+      ],
+      time: {
+        useUTC: false,
       },
-    },
-    series: [
-      {
-        name: "",
-        type: "line",
-        data: dataChartOption,
-        color: "#00ff00",
-        marker: {
-          enabled: false,
-        },
-      },
-    ],
-  };
+      tooltip: {
+        shared: true,
+        shadow: false,
+        backgroundColor: "#ffffffc9",
+        borderColor: "#07d800",
+        borderRadius: 5,
+        borderWidth: 1,
+        padding: 6,
+        useHTML: true,
+        formatter: function () {
+          const index: any = this.points?.map((e: any, ind) => {
+            if (ind === 1) {
+              if (e.y >= indexValue) {
+                e.series.chart.tooltip.options.borderColor = "#07d800";
+              } else {
+                e.series.chart.tooltip.options.borderColor = "red";
+              }
+              return { x: e.x, y: e.y };
+            }
+            return "";
+          });
 
-  const chartComponentRef = useRef<any>(null);
+          const hour: any = new Date(Number(index[1].x)).getHours();
+          const minutes =
+            new Date(Number(index[1].x)).getMinutes().toString().length === 1
+              ? "0" + new Date(Number(index[1].x)).getMinutes()
+              : new Date(Number(index[1].x)).getMinutes();
 
+          return `<span style="color:#000">Thời gian: <b style="font-size:12px;font-weight:600;color:#000" class="font-bold text-sm">${
+            hour + ":" + minutes
+          }</b></span><br/><span style="color:#000">Index:  <b style="font-size:12px;color:#000" class="font-bold text-sm">${
+            index[1].y
+          }</b></span><br/><span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm">${formatNumber(
+            this.y
+          )} </b></span>`;
+        },
+      },
+      legend: {
+        enabled: false,
+      },
+      plotOptions: {
+        spline: {
+          color: "#00FF00",
+          lineWidth: 1.5,
+          zones: [
+            {
+              value: indexValue,
+              color: "red",
+            },
+            {
+              color: "#00c010",
+            },
+          ],
+        },
+        column: {
+          color: "#5F9DFE",
+          borderWidth: 0,
+          borderRadius: 0,
+        },
+      },
+      series: series,
+    });
+  }, [dataChartOption, dataCol, dataSpline, indexValue]);
   return (
-    <>
-      {/* <HighchartsProvider Highcharts={Highcharts}>
-        <HighchartsReact options={options} ref={chartComponentRef} />
-      </HighchartsProvider> */}
-    </>
+    <div className="chart__for__time">
+      <figure className="highcharts-figure">
+        <div id={`container__chart__time`}></div>
+      </figure>
+    </div>
   );
 };
 

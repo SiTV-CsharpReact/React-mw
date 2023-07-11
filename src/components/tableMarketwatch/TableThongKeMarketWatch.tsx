@@ -1,96 +1,148 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from "react";
 import { stocks } from "../../models/marketwacthTable";
 import { DatePicker, Space } from "antd";
-import dayjs, { Dayjs } from "dayjs";
 import HeaderFromThongke from "./helper/HeadeFormThongKe";
 import TableChange from "./helper/MainTable";
-import { useAppSelector ,RootState} from "../../store/configureStore";
-const { RangePicker } = DatePicker;
-
+import {
+  useAppSelector,
+  RootState,
+  useAppDispatch,
+} from "../../store/configureStore";
+import { getDataChungKhoan, getdataTableThongKe, SortTableThongkeIndex } from "./tableTestSlice";
+import { DateTimeCover, getDateTime } from "../../pages/helper/DateTime";
+import { formatNumberMarket, formatNumberPhanTram } from "../../utils/util";
+import PanigationTableThongKe from "./helper/Panigation";
+import { VARIBLE_ACTICON_TYPE } from "./helper/varible";
+type DateValue = {
+  action: string;
+  center: any;
+  time: any;
+  begin_date: any;
+  end_date: any;
+  selected_page: any;
+  page_size: any;
+};
+type DataValues = {
+  action: string;
+  center: any; //san
+  code: any; // max ck
+  type: any; // loai ck
+  date: any;
+  begin_date: any;
+  end_date: any;
+  selected_page: any;
+  page_size: any;
+};
 const TableThongKeMarketWatch = () => {
-  const { KeyMenuChildren } = useAppSelector((state:RootState) => state.table);
-  // console.log("KeyMenuChildren",KeyMenuChildren)
-  // const [products, setProducts] = useState([]);
-
-  // const params = useParams<{ id: string }>()
-  // const paramstock  = stocks.find(
-  //   paramstock => paramstock.id === params.id
-  // )
-  // useEffect(()=>{
-  //     if(paramstock){
-  //      if(paramstock.id){
-  //        fetchTable(paramstock.id)
-  //      }
-  //      else{
-  //        fetchTable("HNX")
-  //      }
-  //     }
-  //    },[paramstock?.id])
-  //   //console.log(products)
-  //  // useEffect(()=>{
-  //  //     dispatch(fetchTableHNXAsync())
-  //  //     //dispatch(fetchStatusAsync())
-  //  // },[dispatch])
-  //  const fetchTable = async(param:string) => {
-  //    let valueParam ="thong-ke-index";
-  //     switch(param) {
-  //      case "thong-ke-index":
-  //        valueParam= "s=bi";
-  //        break;
-  //        case "thong-ke-gia":
-  //          valueParam = "s=bi";
-  //          break;
-  //           case "thong-ke-dat-lenh":
-  //             valueParam = "s=bi";
-  //             break;
-  //               case "Giao-dich-KL-NDTNN":
-  //                 valueParam = "s=bi";
-  //                 break;
-  //                 case "Giao-dich-TT-NDTNN":
-  //                   valueParam = "s=bi";
-  //                   break;
-  //        default:p
-  //          break;
-  //     }
-  //      const res = await fetch(`http://marketstream.fpts.com.vn/hnx/data.ashx?${valueParam}`);
-  //      const data = await res.json();
-  //      setProducts(data)
-  //  }
-  let time = new Date()
-  const formattedDate = time.toLocaleDateString("vi-VN", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
+  const {
+    KeyMenuChildren,
+    dataTableThongkeIndex,
+    dataTableThongkeTH,
+    dataTableThongkePrice,
+    dataTableThongkeOrderLenh,
+    dataTableThongkeKhopLenh,
+    paginationPageTbTKIndex,
+    paginationPageTbTKPrice,
+    paginationPageTbTKOrderLenh,
+    paginationPageTbTKKhopLenh,
+    paginationPageTbTKTH,
+  } = useAppSelector((state: RootState) => state.tableTest);
+  const { tuNgay, denNgay } = getDateTime(); // show input
+  const { StartDay, EndDay } = DateTimeCover();
+  const [data, setData] = useState<DateValue>({
+    action: VARIBLE_ACTICON_TYPE.ACTION_INDEX,
+    center: 1,
+    time: 0,
+    begin_date: StartDay,
+    end_date: EndDay,
+    selected_page: 1,
+    page_size: 400,
   });
-  const defaultDate: Dayjs = dayjs();
-  const [floor,setFloor ] = useState<string>("1")
-  const [Dot,setDot ] = useState<string>("1")
-  const [TimeStart,setTimeStart ] = useState<any>(formattedDate)
-  const [TimeEnd,setTimeEnd] = useState<any>(formattedDate)
-  const converTime = (e:any)=>{
-    const convertedDate = new Date(e.$d);
-    const year = convertedDate.getFullYear();
-    const month = convertedDate.getMonth(); 
-    const day = convertedDate.getDate();
-    return year +"//" +( month + 1) + "//" + day
-  }
-const tets = (e:any)=>{
- let a =  converTime(e)
- console.log("converted",a , defaultDate)
-}
-
-  const HandeFillter = ()=>{
-  
-    let data = {
-      floor ,
-      TimeStart
+  const [resultSort, setReultSort] = useState<DataValues>({
+    action: "",
+    center: 1,
+    code: 0,
+    type: 0,
+    date: "",
+    begin_date: "",
+    end_date: "",
+    selected_page: 1,
+    page_size: 400,
+  });
+  const dispatch = useAppDispatch();
+  const handleChungKhoan = useCallback(()=>{
+    dispatch(getDataChungKhoan())
+  },[])
+  useEffect(() => {
+    dispatch(getdataTableThongKe());
+    handleChungKhoan()
+  }, [handleChungKhoan]);
+  const ChangeBegin_time = (e: any) => {
+    const { StartDay } = DateTimeCover(e.target.value);
+    setData({ ...data, begin_date: StartDay });
+  };
+  const ChangeEnd_time = (e: any) => {
+    const { EndDay } = DateTimeCover(e.target.value);
+    setData({ ...data, end_date: EndDay });
+  };
+  const HandeFillter = () => {
+    const result = new FormData();
+    result.append("action", data.action);
+    result.append("begin_date", data.begin_date);
+    result.append("end_date", data.end_date);
+    result.append("center", data.center);
+    result.append("time", data.time);
+    result.append("selected_page", data.selected_page);
+    result.append("page_size", data.page_size);
+    let query = {
+      action: data.action,
+      result: result,
+    };
+    dispatch(SortTableThongkeIndex(query));
+  };
+  const changePage = (page: any) => {
+    if (KeyMenuChildren === 0) {
+      const result = new FormData();
+      result.append("action", data.action);
+      result.append("begin_date", data.begin_date);
+      result.append("end_date", data.end_date);
+      result.append("center", data.center);
+      result.append("time", data.time);
+      result.append("selected_page", page);
+      result.append("page_size", data.page_size);
+      let query = {
+        action: data.action,
+        result: result,
+      };
+      dispatch(SortTableThongkeIndex(query));
+    } else {
+      const action_type =
+        KeyMenuChildren == 1
+          ? VARIBLE_ACTICON_TYPE.ACTION_PRICE
+          : KeyMenuChildren == 2
+          ? VARIBLE_ACTICON_TYPE.ACTION_ORDERLENH
+          : KeyMenuChildren == 3
+          ? VARIBLE_ACTICON_TYPE.ACTION_GDKL
+          : VARIBLE_ACTICON_TYPE.ACTION_TH;
+      const result = new FormData();
+      result.append("action", action_type);
+      result.append("begin_date", resultSort.begin_date);
+      result.append("end_date", resultSort.end_date);
+      result.append("center", resultSort.center);
+      result.append("date", resultSort.date);
+      result.append("code", resultSort.code);
+      result.append("type", resultSort.type);
+      result.append("selected_page", page);
+      result.append("page_size", resultSort.page_size);
+      let query = {
+        action: action_type,
+        result: result,
+      };
+      dispatch(SortTableThongkeIndex(query));
     }
-    console.log("voo"  ,defaultDate)
-  }
-
+  };
   return (
-    <div>
+    <>
       {KeyMenuChildren === 0 ? (
         <>
           <div
@@ -103,8 +155,10 @@ const tets = (e:any)=>{
               style={{}}
             >
               <label className="label_price col-priceboard">Sàn</label>
-              <select 
-              onChange={(e)=>setFloor(e.target.value)}
+              <select
+                onChange={(e) =>
+                  setData({ ...data, center: Number(e.target.value) })
+                }
                 className="col-xs-8 col-sm-8 input"
                 id="slCenterHIST_INDEX"
               >
@@ -114,13 +168,13 @@ const tets = (e:any)=>{
                 <option label="HNX" value={2}>
                   HNX
                 </option>
-                <option label="UPCOM" value={4}>
+                <option label="UPCOM" value={3}>
                   UPCOM
                 </option>
-                <option label="VN30" value={5}>
+                <option label="VN30" value={4}>
                   VN30
                 </option>
-                <option label="HNX30" value={6}>
+                <option label="HNX30" value={5}>
                   HNX30
                 </option>
               </select>
@@ -133,8 +187,11 @@ const tets = (e:any)=>{
               <select
                 className="col-xs-8 col-sm-8 input"
                 id="slSessionHIST_INDEX"
+                onChange={(e) =>
+                  setData({ ...data, time: Number(e.target.value) })
+                }
               >
-                <option label="Tất cả" value={0}>
+                <option label="Tất cả" selected value={0}>
                   Tất cả
                 </option>
                 <option value={1}>1</option>
@@ -146,36 +203,36 @@ const tets = (e:any)=>{
               className="flex form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price"
               style={{}}
             >
-              <label className="label_price col-priceboard">Từ ngày</label>
-              <Space direction="vertical" size={12}>
-                <DatePicker
-                  defaultValue={defaultDate}
-                  showToday={true}
-                  renderExtraFooter={() => "extra footer"}
-                  onChange={(e)=>tets(e)}
-                />
-              </Space>
+              <label className="label_price col-priceboard" id="label_price">
+                Từ ngày
+              </label>
+              <input
+                className="input"
+                type="date"
+                defaultValue={tuNgay}
+                onChange={(e) => ChangeBegin_time(e)}
+              />
             </div>
             <div
               className="flex form-group col-xs-2 col-sm-2 col-priceboard div-group-stt-price"
               style={{}}
             >
-              <label className="label_price col-priceboard">Đến ngày</label>
-
-              <Space direction="vertical" size={12}>
-                <DatePicker
-                  showToday={true}
-                  defaultValue={defaultDate}
-                  renderExtraFooter={() => "extra footer"}
-                />
-              </Space>
+              <label className="label_price col-priceboard" id="label_price">
+                Đến ngày
+              </label>
+              <input
+                className="input"
+                type="date"
+                defaultValue={denNgay}
+                onChange={(e) => ChangeEnd_time(e)}
+              />
             </div>
             <div
               className="form-group col-xs-2 col-sm-2 col-priceboard"
               style={{}}
             >
               <button
-              onClick={HandeFillter}
+                onClick={HandeFillter}
                 className="btn btn-success button_Statistics"
                 id="btnViewHIST_INDEX"
               >
@@ -206,7 +263,7 @@ const tets = (e:any)=>{
                 </th>
                 <th className="hbrb" colSpan={2}>
                   Thay đổi Index
-                </th> 
+                </th>
                 <th className="hbrb" rowSpan={2}>
                   Tổng GTGD
                 </th>
@@ -229,16 +286,71 @@ const tets = (e:any)=>{
                 <th className="hbrb">%</th>
               </tr>
             </thead>
-            <tbody>{/*Content*/}</tbody>
+            <tbody>
+              {dataTableThongkeIndex
+                ? dataTableThongkeIndex.map((item: any, index: number) => {
+                    return (
+                      <tr>
+                        <td>{item[0][1]}</td>
+                        <td>{formatNumberMarket(item[1][1])}</td>
+                        <td>{formatNumberMarket(item[2][1])}</td>
+                        <td>{formatNumberMarket(item[3][1])}</td>
+                        <td>{formatNumberPhanTram(item[4][1])}</td>
+                        <td>{formatNumberMarket(item[5][1])}</td>
+                        <td>{formatNumberMarket(item[6][1])}</td>
+                        <td>{formatNumberPhanTram(item[7][1])}</td>
+                        <td>{formatNumberMarket(item[8][1])}</td>
+                        <td>{formatNumberMarket(item[9][1])}</td>
+                        <td>{formatNumberPhanTram(item[10][1])}</td>
+                      </tr>
+                    );
+                  })
+                : ""}
+            </tbody>
           </table>
         </>
       ) : (
         <>
-          <HeaderFromThongke />
+          <HeaderFromThongke ChangeFuncion={setReultSort} />
           <TableChange />
         </>
       )}
-    </div>
+      {KeyMenuChildren == 0 &&  dataTableThongkeIndex.length > 0 ? (
+        <div className="panigation">
+          <PanigationTableThongKe panigation={paginationPageTbTKIndex} ChangeFucion={changePage} />
+        </div>
+      ) : (
+        ""
+      )}
+      {KeyMenuChildren == 4 && dataTableThongkeTH.length > 0 ? (
+        <div className="panigation">
+          <PanigationTableThongKe panigation={paginationPageTbTKTH} ChangeFucion={changePage} />
+        </div>
+      ) : (
+        ""
+      )}
+      { KeyMenuChildren == 1 && dataTableThongkePrice.length > 0 ? (
+        <div className="panigation">
+          <PanigationTableThongKe panigation={paginationPageTbTKPrice} ChangeFucion={changePage} />
+        </div>
+      ) : (
+        ""
+      )}
+      { KeyMenuChildren == 2 && dataTableThongkeOrderLenh.length > 0 ? (
+        <div className="panigation">
+          <PanigationTableThongKe panigation={paginationPageTbTKOrderLenh} ChangeFucion={changePage} />
+        </div>
+      ) : (
+        ""
+      )}
+      {KeyMenuChildren == 3 && dataTableThongkeKhopLenh.length > 0 ? (
+        <div className="panigation">
+          <PanigationTableThongKe panigation={paginationPageTbTKKhopLenh} ChangeFucion={changePage} />
+        </div>
+      ) : (
+        ""
+      )}
+    </>
   );
 };
 

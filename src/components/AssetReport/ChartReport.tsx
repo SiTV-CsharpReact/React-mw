@@ -76,9 +76,7 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
         type: "line",
         backgroundColor: "#ececec",
         spacingRight: 20,
-        spacingLeft: 10,
-        // spacingTop: -20,
-        // spacingBottom: 10,
+        spacingLeft: changeOption === 89 ? 9 : 10,
         events: {
           load: function () {
             //cách tính bước nhảy, min, max
@@ -136,11 +134,11 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
             fontFamily:
               '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif',
           },
-          y: 19,
+          y: changeOption === 89 ? 16 : 19,
         },
         lineWidth: 1,
         lineColor: "#ccd6eb",
-        height: 220,
+        height: changeOption === 89 ? 177 : 220,
       },
       yAxis: [
         {
@@ -160,7 +158,7 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
             },
           },
           gridLineWidth: 1,
-          height: 220,
+          height: changeOption === 89 ? 177 : 220,
         },
         {
           title: {
@@ -180,7 +178,7 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
               return this.value + " %";
             },
           },
-          height: 220,
+          height: changeOption === 89 ? 177 : 220,
         },
       ],
       tooltip: {
@@ -246,15 +244,8 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
               color: "rgb(137,198,96)",
             },
           },
-          // legendSymbol: 'rectangle'
         },
-        // line: {
-        //   legendSymbol: 'lineMarker'
-
-        // },
         series: {
-          // showInLegend: true,
-          // lineWidth: 15,
           marker: {
             enabled: true,
           },

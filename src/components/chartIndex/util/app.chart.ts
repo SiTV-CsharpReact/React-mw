@@ -61,24 +61,52 @@ export function initXDatetime(objCInitData: chartIndex) {
     xmax = _getDateTs(xmaxTmp);
   }
 }
-function _getDateTs(dateTime: any) {
+export function _getDateTs(dateTime: any) {
   var d;
-  d = dateTime.getTime();
-  if (!isNaN(d)) {
-    return d;
-  }
-  dateTime = dateTime.toString().replace(/-/g, " "); //1 Jan 2010 works but 1-Jan-2010 doesn't
   d = new Date(dateTime).getTime();
-  if (!isNaN(d)) {
-    return d;
-  }
-  // may be what we've is a time stamp.
-  if ((d = parseInt(dateTime)) > 100000) {
-    // we are not handling something that's up on 1st Jan 1971, as yet.
-    // assume it is a valid time stamp and just send it back.
-    return d;
-  }
+  return d;
+  // }
+  // dateTime = dateTime.toString().replace(/-/g, " "); //1 Jan 2010 works but 1-Jan-2010 doesn't
+  // d = new Date(dateTime).getTime();
+  // if (!isNaN(d)) {
+  //   return d;
+  // }
+  // // may be what we've is a time stamp.
+  // if ((d = parseInt(dateTime)) > 100000) {
+  //   // we are not handling something that's up on 1st Jan 1971, as yet.
+  //   // assume it is a valid time stamp and just send it back.
+  //   return d;
+  // }
 }
-export function drawChart(data: any) {
-  //    console.log(data.HNX)
+export function drawChart(data: any): any {
+  const arrPriceVol = data.map((item: any) => [item[4], item[5]]);
+  const arr = arrPriceVol.reduce((acc: any, [price, vol]: any) => {
+    if (!acc[price]) {
+      acc[price] = [price, vol];
+    } else {
+      acc[price][1] += vol;
+    }
+    return acc;
+  }, {});
+  return arr;
+}
+
+export function minNumber(arr: any): number {
+  let minNum = arr[arr.length - 1];
+  for (let i = 0; i < arr.length; i++) {
+    if (minNum > arr[i]) {
+      minNum = arr[i];
+    }
+  }
+  return minNum;
+}
+
+export function maxNumber(arr: any): number {
+  let maxNum = arr[arr.length - 1];
+  for (let i = 0; i < arr.length; i++) {
+    if (maxNum < arr[i]) {
+      maxNum = arr[i];
+    }
+  }
+  return maxNum;
 }

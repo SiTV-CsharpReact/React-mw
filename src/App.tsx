@@ -33,14 +33,13 @@ import ReportCW from "./pages/Report/ReportCW";
 import ListFee from "./pages/Report/ListFee";
 import DepositoryHistory from "./pages/RightCustody/DepositoryHistory";
 import ReportNAV from "./pages/Report/ReportNAV";
-//import ReportNAV from "./components/ReportNAV/ReportNAV";
+// import ReportNAV from "./components/ReportNAV/ReportNAV";
 import ReportTransSummary from "./pages/Report/ReportTransSummary";
 import StockDetails from "./pages/Report/StockDetails";
 import TransBalance from "./components/TransBalance/TransBalance";
 import ConditionalOderText from "./pages/Stoploss/ConditionalOderText";
 const App: React.FC = () => {
   return (
-    <div>
       <AppProvider>
         <Routes>
           <Route path="/" element={<LayoutMarketWatch />} />
@@ -51,7 +50,6 @@ const App: React.FC = () => {
           />
           <Route path="/dynamic-dashboard" element={<MyLayout />} />
           {/* Report */}
-
           {/* Quản lý tài khoản */}
           <Route path="/report/ReportTransBalance" element={<TransBalance />} />
           <Route path="/report/AssetReport2" element={<AssetReport />} />
@@ -126,7 +124,10 @@ const App: React.FC = () => {
 
           {/* Stoploss */}
           <Route path="/stoploss/orderform" element={<ConditionalOrder />} />
-          <Route path="/stoploss/orderform_test" element={<ConditionalOderText />} />
+          <Route
+            path="/stoploss/orderform_test"
+            element={<ConditionalOderText />}
+          />
 
           <Route path="/stoploss/history" element={<ConditionalOrderBook />} />
           {/* Oddlot */}
@@ -134,7 +135,6 @@ const App: React.FC = () => {
           <Route path="/tradingview" element={<TradingViewWidget />} />
         </Routes>
       </AppProvider>
-    </div>
   );
 };
 

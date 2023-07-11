@@ -19,6 +19,9 @@ import axios from "axios";
 import { getCompanyNameByCode } from "../../utils/util";
 import { DataTable } from "../../models/modelTableHNX";
 import ChartWithOption from "./ChartWithOption";
+import { fetchChartOptionAsync } from "./chartOptionSlice";
+import NewsPopup from "./NewsPopup";
+import agent from "../../api/agent";
 interface DraggableProps {
   initialPosition?: { x: number; y: number };
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;
@@ -26,7 +29,7 @@ interface DraggableProps {
 }
 const TablePopupMarketwatch = () => {
   const dispatch = useAppDispatch();
-  const [dataResult, setDataResult] = useState([]);
+  const [dataKLTTG, setDataKLTTG] = useState([]);
   const [dataResultSearch, setDataResultSearch] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
@@ -37,71 +40,78 @@ const TablePopupMarketwatch = () => {
   // console.log("s",{ stockDetail });
   const fetchDataTableHSX = async (code?: string) => {
     if (code !== "" && code !== undefined) {
-      const res = await axios.get(
-        `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`
-      );
+      const res = await agent.TableHSX.getOneStock(code)
+      // const res = await axios.get(
+      //   `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`
+      // );
       setDataItemHSX(res.data);
       return res.data;
     } else {
-      const res = await axios.get(
-        `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${stockDetail}`
-      );
-      setDataItemHSX(res.data);
-      return res.data;
+      if(code){
+        const res = await agent.TableHNX.getOneStock(code)
+        setDataItemHSX(res.data);
+        return res.data;
+      }
+    
     }
   };
   const fetchDataTableHNX = async (code?: string) => {
     if (code !== "" && code !== undefined) {
-      const res:any = await axios.get(
+      const res: any = await axios.get(
         `https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${code}`
       );
-      console.log("")
-      res.data.map((obj:DataTable) =>
-      obj.Info?.sort((a: any, b: any) => {
-        const indexA = Number(a[0]);
-        const indexB = Number(b[0]);
-        if (indexA < indexB) {
-          return -1;
-        }
-        if (indexA > indexB) {
-          return 1;
-        }
-        return 0;
-      }) )
+      console.log("");
+      res.data.map((obj: DataTable) =>
+        obj.Info?.sort((a: any, b: any) => {
+          const indexA = Number(a[0]);
+          const indexB = Number(b[0]);
+          if (indexA < indexB) {
+            return -1;
+          }
+          if (indexA > indexB) {
+            return 1;
+          }
+          return 0;
+        })
+      );
       setDataItemHNX(res.data);
       return res.data;
     } else {
-      const res:any = await axios.get(
+      const res: any = await axios.get(
         `https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${stockDetail}`
       );
-      res.data.map((obj:DataTable) =>
-      obj.Info?.sort((a: any, b: any) => {
-        const indexA = Number(a[0]);
-        const indexB = Number(b[0]);
-        if (indexA < indexB) {
-          return -1;
-        }
-        if (indexA > indexB) {
-          return 1;
-        }
-        return 0;
-      }) )
+      res.data.map((obj: DataTable) =>
+        obj.Info?.sort((a: any, b: any) => {
+          const indexA = Number(a[0]);
+          const indexB = Number(b[0]);
+          if (indexA < indexB) {
+            return -1;
+          }
+          if (indexA > indexB) {
+            return 1;
+          }
+          return 0;
+        })
+      );
       setDataItemHNX(res.data);
       return res.data;
     }
   };
-  const fethData = async () => {
-    const { data } = await axios.get("http://localhost:9999/Data");
-    setDataResult(data);
-  };
-  const fethDataSearch = async () => {
-    const { data } = await axios.get("http://localhost:6868/Data");
-    console.log("data", data);
-    setDataResultSearch(data);
-  };
+
   useEffect(() => {
+    const fethData = async () => {
+      const { data } = await axios.get("http://localhost:9999/Data");
+      setDataKLTTG(data);
+    };
+    const fethDataSearch = async () => {
+      const { data } = await axios.get("http://localhost:6868/Data");
+      console.log("data", data);
+      setDataResultSearch(data);
+    };
     fethData();
     fethDataSearch();
+  }, []);
+  useEffect(() => {
     fetchDataTableHNX();
     fetchDataTableHSX();
   }, [stockDetail]);
@@ -111,15 +121,15 @@ const TablePopupMarketwatch = () => {
   };
   useEffect(() => {
     const results = dataResultSearch.filter(
-      (item: any) => item.Code.toUpperCase().includes(dataCheck),
+      (item: any) => item.Code.toUpperCase().includes(dataCheck)
       // console.log("filteredData", dataCheck)
     );
     setFilteredData(results);
   }, [dataCheck, dataResultSearch]);
 
   const [position, setPosition] = useState({
-    x: (window.innerWidth - 1230) /2,    // - đi witdh tablle chia 2
-    y: (window.innerHeight - 721 -40) /2 ,
+    x: (window.innerWidth - 1230) / 2, // - đi witdh tablle chia 2
+    y: (window.innerHeight - 721 - 40) / 2,
   });
   const handleDrag = (e: DraggableEvent, ui: DraggableData) => {
     const { x, y } = position;
@@ -150,6 +160,10 @@ const TablePopupMarketwatch = () => {
       }
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchChartOptionAsync({ stockCode: stockDetail }));
+  }, [dispatch, stockDetail]);
   // console.log(dataItemHNX, dataItemHSX)
   // Kiểm tra và đặt lại giá trị cho dataMouse.maF và dataMouseBuy.maB nếu selectedCode tồn tại
   return (
@@ -182,8 +196,10 @@ const TablePopupMarketwatch = () => {
               </div>
               <div className="inline-block pu-div-title">
                 <h2 className="pu-title">
-                   {dataItemHNX.length !== 0  ?dataItemHNX[0]?.Info[0][1]:dataItemHSX[0]?.Info[0][1] } -{" "}
-                  {getCompanyNameByCode(dataItemHNX[0]?.Info[0][1])}
+                  {dataItemHNX.length !== 0
+                    ? dataItemHNX[0]?.Info[0][1]
+                    : dataItemHSX[0]?.Info[0][1]}{" "}
+                  - {getCompanyNameByCode(dataItemHNX[0]?.Info[0][1])}
                 </h2>
               </div>
             </div>
@@ -241,19 +257,21 @@ const TablePopupMarketwatch = () => {
             <span
               className="pu-close"
               title="Đóng cửa sổ"
-              onClick={() => dispatch(showDetailStock(""))}
+              onClick={() => dispatch(showDetailStock({visible:false,code:""}))}
             >
               <i className="fa fa-times fa-lg !text-sm" />
             </span>
           </div>
         </div>
         <div>
-          <TableDetailPopup dataItem={dataItemHNX.length !==0 ? dataItemHNX :dataItemHSX} />
+          <TableDetailPopup
+            dataItem={dataItemHNX.length !== 0 ? dataItemHNX : dataItemHSX}
+          />
         </div>
         <div className="flex pu-info mt-[5px]">
           <div className="pu-basic w-[409px] mx-1">
-            <TableBasicPopup stockCode={stockDetail}/>
-            <TableReportingPopup stockCode={stockDetail}/>
+            <TableBasicPopup stockCode={stockDetail} />
+            <TableReportingPopup stockCode={stockDetail} />
           </div>
           <div className="pu-hrz-realtime w-[391px] mx-1">
             <div
@@ -266,19 +284,24 @@ const TablePopupMarketwatch = () => {
                 }
               }}
             >
-              <TableKLTTGPopup dataResult={dataResult} />
+              <TableKLTTGPopup stockCode={stockDetail} />
             </div>
             <div className="w-full pu-div-PT">
               <TableGDTTPopup />
             </div>
             <div className="pu-vertical pu-div-oddlot">
-              <TableGDLLPopup />
+              <TableGDLLPopup stockCode={stockDetail}/>
             </div>
           </div>
           <div className="pu-hrz-chart">
-            <ChartPopup />     
-            <ChartWithOption stockCode={stockDetail}/>
+            <ChartPopup />
+            <ChartWithOption
+              dataItem={dataItemHNX.length !== 0 ? dataItemHNX : dataItemHSX}
+            />
+            {/* <ChartWithOption stockCode={stockDetail} /> */}
+            <NewsPopup stockCode={stockDetail}/>
           </div>
+         
         </div>
       </div>
     </Draggable>

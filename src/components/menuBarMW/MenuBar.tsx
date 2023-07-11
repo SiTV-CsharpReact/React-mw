@@ -7,6 +7,7 @@ import {
   HandleKeyActiveMain,
   getDataCookie,
   getDataTable,
+  handleSetStockCode,
 } from "../tableMarketwatch/tableTestSlice";
 import { useSelector } from "react-redux";
 import { activeMenuDanhmuc, historyPriceActiveMenu } from "./danhmucSlice";
@@ -23,20 +24,16 @@ interface MenuItem {
 
 const MenuBar = () => {
   const dispatch = useAppDispatch();
+  const { keyMenu, nameMenu } = useSelector(
+    (state: RootState) => state.menuBar
+  );
   const [activeMenuItemName, setActiveMenuItemChild] = useState<string | null>(
-    null
+    nameMenu
   ); // teen menu item
   const { row, name, data } = useSelector(
     (state: RootState) => state.categories
   );
-  const { keyMenu, nameMenu } = useSelector(
-    (state: RootState) => state.menuBar
-  );
   const handleItemClick = (path: string, key: number) => {
-    // setIsActiveMenu(key);
-    // setactiveNameFloor(path);
-    // localStorage.setItem("activePriceboarFloor", path);
-    // click set lại active menu
     let activeCate = {
       row: null,
       name: "",
@@ -62,6 +59,7 @@ const MenuBar = () => {
     let activeMenu = {
       nameMenu: name,
       keyMenu: key,
+      floor : floor
     };
     let cookie = {
       tab: name,
@@ -72,6 +70,7 @@ const MenuBar = () => {
     dispatch(setActiveMenu(activeMenu)); // cập nhật lại menu
     dispatch(historyPriceActiveMenu())// cập lại menu category
     dispatch(HandleKeyActiveMain()) // check  call menu category
+    dispatch(handleSetStockCode()) // reset lại stock code table giá 
     let result = await dispatch(getDataTable(data));
     if (result?.payload) {
       dispatch(getDataCookie(cookie.codeList)); // cập nhật lại menu
@@ -120,7 +119,7 @@ const MenuBar = () => {
                   <Link
                     to=""
                     className={`${
-                      activeMenuItemName === child.name ? "active" : ""
+                      nameMenu === child.name ? "active" : ""
                     } `}
                   >
                     {child.name}
@@ -155,10 +154,10 @@ const MenuBar = () => {
                     <Link
                       to=""
                       className={`${
-                        activeMenuItemName === child.name ? "active" : ""
+                        nameMenu === child.name ? "active" : ""
                       } `}
                     >
-                      {child.name}
+                      {child.name} 
                     </Link>
                   </li>
                 );

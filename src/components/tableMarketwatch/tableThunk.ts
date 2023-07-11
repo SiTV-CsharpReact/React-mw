@@ -1,24 +1,23 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-export const dispatchDataTable :any = createAsyncThunk(
-  'data/dispatchDataTable',
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+export const dispatchDataTable: any = createAsyncThunk(
+  "data/dispatchDataTable",
   async (dataTable, thunkAPI) => {
-    console.log( "dataTable",dataTable);
+    console.log("dataTable", dataTable);
     return dataTable;
-    
   }
 );
 
 
 export const dataSlice = createSlice({
-  name: 'data',
+  name: "data",
   initialState: {
     dataTable: {
-      ma: '',
+      ma: "",
       price: 0,
-      SanT: '',
-      TCT: '',
-      TranC: '',
-      key:""
+      SanT: "",
+      TCT: "",
+      TranC: "",
+      key: "",
     },
    
   }, 
@@ -28,12 +27,12 @@ export const dataSlice = createSlice({
         },
   },
   extraReducers: (builder) => {
-    builder.addCase(dispatchDataTable.fulfilled, (state:any, action) => {
+    builder.addCase(dispatchDataTable.fulfilled, (state: any, action) => {
       state.dataTable = action.payload;
     });
     
   },
 });
 
-export const { } = dataSlice.actions;
+export const {} = dataSlice.actions;
 export default dataSlice.reducer;

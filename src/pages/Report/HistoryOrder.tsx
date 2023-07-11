@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import FromAction from "../FromAction/FromAction";
 import SelectAction from "../FromAction/SelectAction";
@@ -7,48 +7,61 @@ import { SanGD, MaCK, TTlenh, TTXX, getDateTime } from "../helper/DateTime";
 
 import LayoutPage from "../Layout/LayoutPage";
 import ExcelPdfAction from "../FromAction/ExcelPdfAction";
+import { getDataHisOrder } from "./ResportSlice";
+import { RootState, useAppDispatch } from "../../store/configureStore";
+import { useSelector } from "react-redux";
 let { tuNgay, denNgay } = getDateTime();
-type TypeValue = {
-  SanGD: any;
-  MaCK: any;
-  TTlenh: any;
-  tuNgay: any;
-  denNgay: any;
-  TTXX: any;
+type TypeValueType = {
+  BuySell: any;
+  Exchange: any;
+  FromDate: any;
+  OrderStatus: any;
+  StockCode: any;
+  ToDate: any;
 };
 const HistoryOrder = () => {
-  const [data, setData] = useState<TypeValue>({
-    SanGD: "",
-    MaCK: "",
-    TTlenh: "",
-    tuNgay: "",
-    denNgay: "",
-    TTXX: "",
+  const dispatch = useAppDispatch();
+  const [data, setData] = useState<TypeValueType>({
+    BuySell: "",
+    Exchange: "",
+    FromDate : tuNgay,
+    OrderStatus: "",
+    StockCode: "",
+    ToDate: denNgay,
+
   });
   const ChangeSanGD = (e: any) => {
-    setData({ ...data, SanGD: e });
+    setData({ ...data, Exchange: e });
   };
   const ChangeMaCK = (e: any) => {
-    setData({ ...data, MaCK: e });
+    setData({ ...data, StockCode: e });
   };
   const ChangeTTlenh = (e: any) => {
-    setData({ ...data, TTlenh: e });
+    setData({ ...data, OrderStatus: e });
   };
   const ChangeTuNgay = (e: any) => {
-    setData({ ...data, tuNgay: e });
+    setData({ ...data, FromDate: e });
   };
   const ChangeDenNgay = (e: any) => {
-    setData({ ...data, denNgay: e });
+    setData({ ...data, ToDate: e });
   };
   const ChangeTTSS = (e: any) => {
-    setData({ ...data, TTXX: e });
+    setData({ ...data, BuySell: e });
   };
+const AddSummit = (e :TypeValueType)=>{
+  console.log("e",e) // cập nhật 
+}
+
+  useEffect(() => {
+    dispatch(getDataHisOrder());
+  }, [dispatch]);
+  const { dataHisOrder } = useSelector((state: RootState) => state.report);
   return (
     <>
       <LayoutPage content="Lịch sử đặt lệnh" PageTitle="Lịch sử đặt lệnh">
         <div className="HeaderPage">
           <div>
-            <FromAction data={data}>
+            <FromAction data={data} ChangeFuncion={AddSummit} >
               <SelectAction
                 Title="Sàn GD"
                 Options={SanGD}
@@ -82,8 +95,8 @@ const HistoryOrder = () => {
             </FromAction>
           </div>
           <div className="fileExcelPDF">
-              <ExcelPdfAction />
-            </div>
+            <ExcelPdfAction />
+          </div>
         </div>
 
         <div className="contentActionGD">
@@ -104,7 +117,39 @@ const HistoryOrder = () => {
                 <th>Thông báo</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              {dataHisOrder
+                ? dataHisOrder.map((element: any, index: number) => {
+                    return (
+                      <tr>
+                        <td>
+                          {" "}
+                          {(element?.ABACKUPDATE)?.replace(
+                            /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/,
+                            "$3/$2/$1 $4:$5:$6"
+                          )}
+                        </td>
+                        <td> {element?.ASTOCKCODE}</td>
+                        <td>
+                          {" "}
+                          {element?.APRODUCTTYPE === "CASH"
+                            ? "Lệnh thường"
+                            : ""}
+                        </td>
+                        <td> {element?.ABUYSELL === "B" ? "Bán" : "Mua"}</td>
+                        <td> {element?.AORDERTYPE_VN}</td>
+                        <td> {element?.AQUANTITY}</td>
+                        <td> {element?.APRICE}</td>
+                        <td> {element?.AEXCHANGE}</td>
+                        <td> {element?.AORDERSTATUS_VN}</td>
+                        <td> {element?.ATRADINGACCOUNT}</td>
+                        <td> {element?.ATRANID}</td>
+                        <td> {element?.AMESSAGE_VN}</td>
+                      </tr>
+                    );
+                  })
+                : ""}
+            </tbody>
           </table>
           <p>
             Báo cáo chỉ hiển thị dữ liệu của 180 ngày gần nhất. Nếu Khách hàng

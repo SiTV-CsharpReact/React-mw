@@ -1,7 +1,7 @@
 
 export const getDateTime =()=>{
     var ngayHienTai = new Date();
-    var ngay = ngayHienTai.getDate(); // 16
+    var ngay = ngayHienTai.getDate().toString().padStart(2, "0"); // 16
     var thangHtai = (ngayHienTai.getMonth() + 1).toString().padStart(2, "0");  //06 
     var nam = ngayHienTai.getFullYear(); // 2023
     let thangTR= ( Number(thangHtai)-1).toString().padStart(2, "0"); 
@@ -11,6 +11,38 @@ export const getDateTime =()=>{
         tuNgay,denNgay
     }
     return data;
+}
+export const DateTimeCover = (date?: any)=>{
+    if(date){
+        var split_date = date.split("-");
+        var converted_date = split_date[2] + "/" + split_date[1] + "/" + split_date[0];
+        let data = {
+            StartDay :converted_date,
+            EndDay:converted_date
+        }
+        return data
+    }else{
+          var ngayHienTai = new Date();
+            var ngay = ngayHienTai.getDate(); // 16
+            var thangHtai = (ngayHienTai.getMonth() + 1).toString().padStart(2, "0");  //06 
+            var nam = ngayHienTai.getFullYear(); // 2023
+            let thangTR= ( Number(thangHtai)-1).toString().padStart(2, "0"); 
+            let StartDay = `${ngay}/${thangTR}/${nam}`;
+            let EndDay = `${ngay}/${thangHtai}/${nam}`;
+            let data = {
+                StartDay,EndDay
+            }
+            return data;
+    }
+  
+}
+export const converDate = (date :any) =>{
+    if(date){
+        const [year, month, day] = date.slice(0, 10).split("-");
+    const formattedDate = `${day}/${month}/${year}`;
+    return formattedDate;
+    }
+    
 }
 export const DefaultSelect = [{value: "" , label : "Tất cả "}]
 export const SanGD = [

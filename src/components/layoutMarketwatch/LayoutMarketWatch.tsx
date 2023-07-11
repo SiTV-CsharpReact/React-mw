@@ -207,7 +207,7 @@ const LayoutMarketWatch: React.FC = () => {
       : e.target;
     const rowID = vCell.querySelector("div.custom-cell").dataset.comp;
     const trValue = document.querySelector(
-      `div[data-index="0"][data-comp="${rowID}"] span`
+      `div[data-index="0"][data-comp="${rowID}"] div`
     )?.innerHTML;
     // console.log("click", trValue);
     if (trValue) {

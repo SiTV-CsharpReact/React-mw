@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useAppDispatch } from '../../store/configureStore';
+import { useAppDispatch, useAppSelector ,RootState } from '../../store/configureStore';
 import { showDetailStock } from './popupTableSlice';
 import TablePopupMarketwatch from '../tablePopupMarketwatch/TablePopupMarketwatch';
 import { handleHistoryPrices } from '../tableMarketwatch/tableTestSlice';
@@ -19,6 +19,10 @@ interface Props {
  
   const PopupTableMarketwatch = ({ selectedValue, setSelectedValueProp  }: Popup) =>  {
     const dispatch = useAppDispatch();
+    const { keyMenu, nameMenu ,floor} = useAppSelector(
+      (state: RootState) => state.menuBar
+    );
+    
     const popupRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         function handleClickOutside(e: any) {
@@ -31,10 +35,23 @@ interface Props {
           document.removeEventListener("mousedown", handleClickOutside);
         };
       }, [popupRef]);
-      const handleTest = ()=>{
-       dispatch(handleHistoryPrices("test"))
-        dispatch(setHistoryMenu())
-        dispatch(historyPriceActiveMenu())
+      const handleTest = (e:any)=>{
+        let data = {
+           stockCode : e,
+           keyMenu, nameMenu ,floor
+
+        }
+        console.log("data", data)
+       dispatch(handleHistoryPrices(data)) // thay đổi sàn 
+        dispatch(setHistoryMenu())   // chuyển sang table giá 
+        dispatch(historyPriceActiveMenu()) // chặn chuyển tab sang danh mục cá nhân
+      setSelectedValueProp({...selectedValue, status: false});   // tắt popuptable 
+
+
+      }
+      const historyStock =() =>{
+        dispatch(showDetailStock({visible:true,code:selectedValue.value}))
+        setSelectedValueProp({...selectedValue, status: false}); 
       }
   return (
     <div
@@ -49,49 +66,49 @@ interface Props {
       >
      
         <ul className="context-menu-list" id="idContextMenu">
-          <li>
+          <li onClick={()=> setSelectedValueProp({...selectedValue, status: false})}>  
             <i className="fa fa-arrow-left text-[#00A4FF]"></i>
             <span>
               Mua <b>{selectedValue.value}</b>
             </span>
           </li>
-          <li>
+          <li onClick={()=> setSelectedValueProp({...selectedValue, status: false})}>
             <i className="fa fa-arrow-right text-[#f44336]"></i>
             <span>
               Bán <b>{selectedValue.value}</b>
             </span>
           </li>
-          <li>
+          <li onClick={()=> setSelectedValueProp({...selectedValue, status: false})}>
             <i className="fa fa-language text-[#22B14C]"></i>
             <span>
               Thông tin doanh nghiệp <b>{selectedValue.value}</b>
             </span>
           </li>
-          <li onClick={()=> dispatch(showDetailStock(selectedValue.value))}>
+          <li onClick={()=> historyStock()}>
             <i className="fa fa-sign-out text-[#2371AF]"></i>
             <span>
               Chi tiết <b>{selectedValue.value}</b>
             </span>
           </li>
-          <li onClick={handleTest}>
+          <li onClick={() =>{ handleTest(selectedValue.value)}}>
             <i className="fa fa-history text-[#009688]"></i>
           <span >
               Lịch sử giá  <b>{selectedValue.value}</b>
             </span>
           </li>
-          <li>
+          <li onClick={()=> setSelectedValueProp({...selectedValue, status: false})}>
             <i className="fa fa-bar-chart text-[#795548]"></i>
             <span>
               Phân tích Kỹ thuật <b>{selectedValue.value}</b>
             </span>
           </li>
-          <li>
+          <li onClick={()=> setSelectedValueProp({...selectedValue, status: false})}>
             <i className="fa fa-close text-[#f44336]"></i>
             <span>
               Bỏ mã <b>{selectedValue.value}</b>
             </span>
           </li>
-          <li>
+          <li onClick={()=> setSelectedValueProp({...selectedValue, status: false})}>
             <i className="fa fa-info-circle text-[#949831]"></i>
             <span>Ghi thành DM mặc định</span>
           </li>
