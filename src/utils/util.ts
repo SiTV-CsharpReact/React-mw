@@ -1,5 +1,12 @@
 import { g_ARRAY_COLOR_CLASS, g_ID_TD_STAT_CONTROLCODE, g_arrHAMarketStatus, g_arrHOMarketStatus, g_arrUPMarketStatus } from "../configs/app.config";
-
+export function formatNumbertoDecimal(number:any) {
+  const decimalPart = number % 1;
+  if (decimalPart !== 0) {
+    return number.toFixed(2);
+  } else {
+    return number.toString();
+  }
+}
 export function formatNumber(number: any) {
   if (!number || number === 0 || number === "0") return 0; // hoac ''
   else return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
@@ -246,7 +253,7 @@ var ARRAY_EXCHANGE = [
   ["HA", "HNX.NY"],
   ["UP", "HNX.UPCOM"],
 ];
-function getCookie(cname: any) {
+export function getCookie(cname: any) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
   let ca = decodedCookie.split(";");
@@ -269,19 +276,22 @@ const g_CurrentLanguage = getCookie("aspfpt_language");
 // HO => HOSE; HA => HNX.NY; UP => HNX.UPCOM
 const mapCompanyName = () => {
   // console.log(g_arrStockInfo)
-  const arr = [...g_arrStockInfo];
-  if (arr) {
-    return arr.map(function (v) {
-      return {
-        cpnyID: parseInt(v.ID),
-        stock_code: v.Code,
-        CodeID: 0,
-        Ex: exChangeConvert(v.Exchange),
-        name: g_CurrentLanguage === "VN" ? v.ScripName : v.ScripNameEN,
-      };
-    });
+  if(g_arrStockInfo){
+    const arr = [...g_arrStockInfo];
+    if (arr) {
+      return arr.map(function (v) {
+        return {
+          cpnyID: parseInt(v.ID),
+          stock_code: v.Code,
+          CodeID: 0,
+          Ex: exChangeConvert(v.Exchange),
+          name: g_CurrentLanguage === "VN" ? v.ScripName : v.ScripNameEN,
+        };
+      });
+    }
+    console.log(arr);
   }
-  console.log(arr);
+ 
 };
 
 // mapCompanyName();
@@ -295,8 +305,8 @@ const exChangeConvert = (number: number) => {
       return "HO";
   }
 };
-const listDataCompany = mapCompanyName();
-//console.log(listDataCompany)
+export const listDataCompany = mapCompanyName();
+console.log(listDataCompany)
 const getExchangeName = (vEx: string) => {
   for (var i = 0; i < ARRAY_EXCHANGE.length; i++)
     if (vEx === ARRAY_EXCHANGE[i][0]) return ARRAY_EXCHANGE[i][1];

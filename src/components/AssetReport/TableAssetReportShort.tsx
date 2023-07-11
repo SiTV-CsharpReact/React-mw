@@ -1,6 +1,6 @@
 import React from "react";
 import { IpropsTableReport } from "./TableAssetReport";
-import { formatNumber } from "../../utils/util";
+import { formatNumber, formatNumbertoDecimal } from "../../utils/util";
 import { useAppSelector } from "../../store/configureStore";
 
 const TableAssetReportShort: React.FC<IpropsTableReport> = ({
@@ -39,82 +39,114 @@ const TableAssetReportShort: React.FC<IpropsTableReport> = ({
         </tr>
         <tr>
           <td
-            className={`text-xs font-bold ${label !== "ASTOCKCODE" ? 'tablesorter' : label === "ASTOCKCODE" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
+            className={`text-xs font-bold ${
+              label !== "ASTOCKCODE"
+                ? "tablesorter"
+                : label === "ASTOCKCODE" && sort === "asc"
+                ? "tablesorter-headerAsc"
+                : "tablesorter-headerDesc"
+            }`}
             style={{ width: "5%" }}
             onClick={() => handleSort("ASTOCKCODE")}
           >
-            <div>
-              Mã CK
-            </div>
+            <div>Mã CK</div>
           </td>
           <td
-            className={`text-xs font-bold ${label !== "ATRADING_READY_TOTAL" ? 'tablesorter' : label === "ATRADING_READY_TOTAL" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
+            className={`text-xs font-bold ${
+              label !== "ATRADING_READY_TOTAL"
+                ? "tablesorter"
+                : label === "ATRADING_READY_TOTAL" && sort === "asc"
+                ? "tablesorter-headerAsc"
+                : "tablesorter-headerDesc"
+            }`}
             style={{ width: "6%" }}
             onClick={() => handleSort("ATRADING_READY_TOTAL")}
           >
-            <div>
-              CK có sẵn
-            </div>
+            <div>CK có sẵn</div>
           </td>
           <td
-            className={`text-xs font-bold ${label !== "AWAIT_REC_RIGHT" ? 'tablesorter' : label === "AWAIT_REC_RIGHT" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
+            className={`text-xs font-bold ${
+              label !== "AWAIT_REC_RIGHT"
+                ? "tablesorter"
+                : label === "AWAIT_REC_RIGHT" && sort === "asc"
+                ? "tablesorter-headerAsc"
+                : "tablesorter-headerDesc"
+            }`}
             style={{ width: "6%" }}
             onClick={() => handleSort("AWAIT_REC_RIGHT")}
           >
-            <div>
-              CK chở về{" "}
-            </div>
+            <div>CK chở về </div>
           </td>
           <td
-            className={`text-xs font-bold ${label !== "ATOTAL_AMOUNT" ? 'tablesorter' : label === "ATOTAL_AMOUNT" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
+            className={`text-xs font-bold ${
+              label !== "ATOTAL_AMOUNT"
+                ? "tablesorter"
+                : label === "ATOTAL_AMOUNT" && sort === "asc"
+                ? "tablesorter-headerAsc"
+                : "tablesorter-headerDesc"
+            }`}
             style={{ width: "5%" }}
             onClick={() => handleSort("ATOTAL_AMOUNT")}
           >
-            <div>
-              Tổng KL
-            </div>
+            <div>Tổng KL</div>
           </td>
           <td className="text-xs font-bold" style={{ width: "5%" }}>
             <div>Giá TT</div>
           </td>
           <td
-            className={`text-xs font-bold ${label !== "AMARKET_VALUE" ? 'tablesorter' : label === "AMARKET_VALUE" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
+            className={`text-xs font-bold ${
+              label !== "AMARKET_VALUE"
+                ? "tablesorter"
+                : label === "AMARKET_VALUE" && sort === "asc"
+                ? "tablesorter-headerAsc"
+                : "tablesorter-headerDesc"
+            }`}
             style={{ width: "6%" }}
             onClick={() => handleSort("AMARKET_VALUE")}
           >
-            <div>
-              Thành tiền{" "}
-            </div>
+            <div>Thành tiền </div>
           </td>
           <td className="text-xs font-bold" style={{ width: "5%" }}>
             <div>Giá vốn TB</div>
           </td>
           <td
-            className={`text-xs font-bold ${label !== "AROOT_VALUE" ? 'tablesorter' : label === "AROOT_VALUE" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
+            className={`text-xs font-bold ${
+              label !== "AROOT_VALUE"
+                ? "tablesorter"
+                : label === "AROOT_VALUE" && sort === "asc"
+                ? "tablesorter-headerAsc"
+                : "tablesorter-headerDesc"
+            }`}
             style={{ width: "8%" }}
             onClick={() => handleSort("AROOT_VALUE")}
           >
-            <div>
-              Tổng giá vốn
-            </div>
+            <div>Tổng giá vốn</div>
           </td>
           <td
-            className={`text-xs font-bold  ${label !== "APROFIT_LOSS_VAL" ? 'tablesorter' : label === "APROFIT_LOSS_VAL" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
+            className={`text-xs font-bold  ${
+              label !== "APROFIT_LOSS_VAL"
+                ? "tablesorter"
+                : label === "APROFIT_LOSS_VAL" && sort === "asc"
+                ? "tablesorter-headerAsc"
+                : "tablesorter-headerDesc"
+            }`}
             style={{ width: "5%" }}
             onClick={() => handleSort("APROFIT_LOSS_VAL")}
           >
-            <div>
-              Lãi/Lỗ{" "}
-            </div>
+            <div>Lãi/Lỗ </div>
           </td>
           <td
-            className={`text-xs font-bold ${label !== "APROFIT_LOSS_RATE" ? 'tablesorter' : label === "APROFIT_LOSS_RATE" && sort === "asc" ? 'tablesorter-headerAsc': 'tablesorter-headerDesc'}`}
+            className={`text-xs font-bold ${
+              label !== "APROFIT_LOSS_RATE"
+                ? "tablesorter"
+                : label === "APROFIT_LOSS_RATE" && sort === "asc"
+                ? "tablesorter-headerAsc"
+                : "tablesorter-headerDesc"
+            }`}
             style={{ width: "5%" }}
             onClick={() => handleSort("APROFIT_LOSS_RATE")}
           >
-            <div>
-              % Lãi/Lỗ{" "}
-            </div>
+            <div>% Lãi/Lỗ </div>
           </td>
         </tr>
       </thead>
@@ -159,7 +191,7 @@ const TableAssetReportShort: React.FC<IpropsTableReport> = ({
                   : "!text-[#00b050]"
               }`}
             >
-              {Number(item.APROFIT_LOSS_RATE).toFixed(2)}%
+              {formatNumbertoDecimal(item.APROFIT_LOSS_RATE)}%
             </td>
           </tr>
         ))}
@@ -213,7 +245,7 @@ const TableAssetReportShort: React.FC<IpropsTableReport> = ({
                 : "!text-[#00b050]"
             }`}
           >
-            {(
+            {formatNumbertoDecimal(
               (assetReport?.Table1?.reduce(
                 (a: any, b: any) => a + b.APROFIT_LOSS_VAL,
                 0
@@ -222,8 +254,8 @@ const TableAssetReportShort: React.FC<IpropsTableReport> = ({
                   (a: any, b: any) => a + b.AROOT_VALUE,
                   0
                 )) *
-              100
-            ).toFixed(2)}
+                100
+            )}
             %
           </td>
         </tr>

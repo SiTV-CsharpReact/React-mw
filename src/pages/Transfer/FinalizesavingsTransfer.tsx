@@ -130,7 +130,7 @@ const FinalizesavingsTransfer = () => {
           <div
             className={`fixed py-10 flex items-center top-0 bottom-0 left-0 right-0 z-50 overflow-y-auto  overflow-x-hidden transition-all ${
               isTrue.showModal
-                ? "opacity-100 visible bg-black bg-opacity-20"
+                ? "opacity-100 visible bg-[#000] bg-opacity-20"
                 : "opacity-0 invisible"
             }`}
             onClick={handleShowModal}

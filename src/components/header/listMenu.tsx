@@ -124,7 +124,7 @@ const ListMenu = () => {
               <Link
                 to="/report/AdvReport"
                 className="MarPro-Hide"
-                style={{ display: "none" }}
+                // style={{ display: "none" }}
               >
                 {t("home:menu.LSUTTBCK")}
               </Link>

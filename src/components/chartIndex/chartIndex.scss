@@ -1,17 +1,19 @@
-.highcharts-container {
+.chart__slide__market {
+  .highcharts-container {
     margin: 0 auto;
   }
-  .highcharts-tooltip { 
+  .highcharts-tooltip {
     z-index: 9999 !important;
   }
-  .highcharts-background{
-  height: 100px;
+  .highcharts-background {
+    height: 100px;
   }
-  .highcharts-axis-labels span:first-child{
-   left: 2px !important;
-   text-overflow:unset !important;
+  .highcharts-axis-labels span:first-child {
+    left: 2px !important;
+    text-overflow: unset !important;
   }
-  .highcharts-axis-labels span:last-child{
+  .highcharts-axis-labels span:last-child {
     left: 186px !important;
-    text-overflow:unset !important;
-   }
+    text-overflow: unset !important;
+  }
+}

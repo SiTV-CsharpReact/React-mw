@@ -110,14 +110,16 @@
     justify-content: end;
     height: 25px;
     font-size: 10pt !important;
-
+    background-color: #1D1D1D;
     & span {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
   }
-
+  & .custom-cell-other{
+    background-color: #444;
+  }
   & .tc-header {
     background-color: #444;
     /* Màu nền cho header của trường TC */
@@ -135,7 +137,7 @@
   }
 
   & .tc-cell {
-    background-color: #444;
+    background-color: #444 !important;
   }
 
   & .custom-header {
@@ -426,7 +428,9 @@
 
 
 
-
+.input__filter input::placeholder {
+  font-size: 16px;
+}
 
 // .arrow__tooltip {
 //   // color: red;
@@ -646,3 +650,16 @@
 // // .disable-hover {
 // //   pointer-events: none !important;
 // // }
+
+.inputTableGDTT{
+  animation: slideDown 0.15s linear forwards;
+}
+@keyframes slideDown {
+  0% {
+  }
+  100% {
+    top: 0px;
+    transform: translateY(-50%);
+  }
+}
+

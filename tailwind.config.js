@@ -13,7 +13,7 @@ module.exports = {
       24: "24px",
       7: "28px",
       8: "32px",
-      3: '12px'
+      3: "12px",
     },
     minHeight: {
       500: "500px",
@@ -29,6 +29,7 @@ module.exports = {
       borderBodyTableMarket: "#505050",
       borderHeadTableMarket: "#858585",
       borderTransfer: "#CCCCCC",
+      borderPopup: "#333",
       BGTableMarket: "#1D1D1D",
       BGTableHoverMarket: "#444444",
       textTableMarketTC: "#F7FF31",
@@ -67,7 +68,10 @@ module.exports = {
       textHeaderTableGDTT: "#F7FFAA",
       bgPannelLink: "#dedede",
       invert: "#646464",
+      bgPopup: "#424242",
+      bgBoxPopupBorder: "#202020",
       //'tooltipNoti':'#2371af'
+      activeOrderMck: "rgba(99, 169, 224, 0.4)",
     },
     fontSize: {
       textHeadTableMarket: "0.675rem",

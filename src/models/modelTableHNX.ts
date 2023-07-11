@@ -1,7 +1,7 @@
 export interface DataTable {
   RowID?: string;
   Info?: Array<Array<string>>;
-  MCK : any
+  MCK?: any;
 }
 export interface ProductParams {
   value: string;
@@ -75,10 +75,9 @@ export interface DataGDTT {
   f341: string;
 }
 export interface dataCK {
-     Sy: string;
-    Ex: string,
-    Re: string,
-    Ce: string,
-    Fl: string
-
+  Sy: string;
+  Ex: string;
+  Re: string;
+  Ce: string;
+  Fl: string;
 }

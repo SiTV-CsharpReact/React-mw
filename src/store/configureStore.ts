@@ -25,6 +25,7 @@ import RespportSlice from "../pages/Report/ResportSlice";
 import TransferSlice from "../pages/Transfer/TransferSlice";
 import chartOptionSlice from "../components/tablePopupMarketwatch/chartOptionSlice";
 import AuthenCationSlice from "../components/Authencation/AuthencationSlice";
+import dataTablePopupDetail from "../components/tablePopupMarketwatch/dataTablePopupDetailSlice";
 
 export const store = configureStore({
   reducer: {
@@ -55,10 +56,10 @@ export const store = configureStore({
     //báo cáo tài sản
     assetReport: assetReportSlice.reducer,
     //
-     dataTable: dataSlice.reducer,
-     dataBuy: dataSlice.reducer,
-     
-    dataThongke : dataSliceThongke.reducer,
+    dataTable: dataSlice.reducer,
+    dataBuy: dataSlice.reducer,
+
+    dataThongke: dataSliceThongke.reducer,
     dataMouse: dataSlice.reducer,
     dataMouseBuy: dataSlice.reducer,
     //set status show table chart
@@ -74,14 +75,16 @@ export const store = configureStore({
     dataShow: dataSliceShow.reducer,
     // chart index
     chartIndex: chartIndexSlice.reducer,
-    report :RespportSlice.reducer,
-    transfer : TransferSlice.reducer,
-   // chart option
-   chartOption: chartOptionSlice.reducer,
-   
+    // chart option
+    chartOption: chartOptionSlice.reducer,
+
     dataApi: dataSliceShow.reducer,
-    dataApiPendingOder : dataSliceShow.reducer,
-    
+    dataApiPendingOder: dataSliceShow.reducer,
+
+    report: RespportSlice.reducer,
+    transfer: TransferSlice.reducer,
+
+    dataPopupDetail: dataTablePopupDetail.reducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

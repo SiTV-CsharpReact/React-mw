@@ -14,12 +14,13 @@ import { getCookie } from "../../models/cookie";
 import { VARIBLE_ACTICON_TYPE } from "./helper/varible";
 
 interface TableState {
+  activeFloor : number;
   productsLoaded: boolean;
   ListDataTable: DataTable[];
   productParams: TableParams;
   status: string;
   index: number;
-  floor: string;
+  // floor: string;
   NameFloor: string;
   DataPt: DataTable[];
   DataBi: DataGDTT[];
@@ -195,7 +196,7 @@ export const getdataTableThongKe = createAsyncThunk(
       // mặc định call nhưng chưa biết nó để lmj
       let params = "s=bi";
 
-      const data = await agent.tableThongke.getdataThongke(params);
+      // const data = await agent.tableThongke.getdataThongke(params);
     } catch (error) {}
   }
 );
@@ -240,11 +241,11 @@ function initParams() {
 export const tableTestSlice = createSlice({
   name: "table",
   initialState: dataTableAdapter.getInitialState<TableState>({
+    activeFloor : 0,
     productsLoaded: false,
     ListDataTable: [] as DataTable[],
     status: "idle",
     index: 0,
-    floor: "MAIN",
     DataBi: [] as DataGDTT[],
     DataPt: [] as DataTable[],
     RowPined: null,
@@ -266,7 +267,7 @@ export const tableTestSlice = createSlice({
     paginationPageTbTKTH: 0,
     // table price thống kê
     stockCode: "",
-    keyMenu: "",
+    keyMenu: "" ,
     nameMenu: "",
     floorMenu: "",
     dataHNX :[] as dataCK[],
@@ -320,7 +321,7 @@ export const tableTestSlice = createSlice({
       }
     },
     // tab menu cookie
-    getDataCookie: (state, action) => {
+    getDataCookie: (state ,action) => {
       let tab = localStorage.getItem("activePriceboardTabMenu");
       let StringCookie = { tab: tab, codeList: "" };
       const arraydata = getCookie(StringCookie); /// return array codelis
@@ -346,7 +347,7 @@ export const tableTestSlice = createSlice({
     handleHistoryPrices: (state, action) => {
       let { stockCode, keyMenu, nameMenu, floor } = action.payload;
       state.KeyMenuChildren = 1;
-      state.floor = "TableTK";
+      state.activeFloor = 2;
       state.stockCode = stockCode;
       state.keyMenu = keyMenu;
       state.nameMenu = nameMenu;
@@ -359,8 +360,11 @@ export const tableTestSlice = createSlice({
       // reset lại stock code
       state.stockCode = "";
     },
+    // reset lại floor
+    HandleSetActiveFloor : (state ,action) => {
+      state.activeFloor = action.payload
+    }
   },
-
   extraReducers: (builder) => {
     builder
       .addCase(getDataTable.pending, (state, action) => {
@@ -376,7 +380,6 @@ export const tableTestSlice = createSlice({
         let dataTable = data?.product;
         state.RowPined = data?.RowPined;
         if (data?.index === 0) {
-          state.floor = "MAIN";
           state.index = data?.index;
           const mergedArray = dataTable.map((element: any) => {
             const infoArray = element.Info.map(
@@ -434,33 +437,31 @@ export const tableTestSlice = createSlice({
 
             state.ListDataTable = mergedArray;
           } else {
-            if (data.NameFloor === "HNX") {
-              state.floor = "MAIN";
+            if (data.NameFloor === "HNX") { 
               state.ListDataTable = mergedArray;
               state.NameFloor = data?.NameFloor;
             } else {
-              state.floor = "MAIN";
               state.ListDataTable = mergedArray;
               state.NameFloor = data?.NameFloor;
             }
           }
         } else if (data?.index === 2) {
-          state.floor = "TableTK";
+          // state.floor = "TableTK";
           state.KeyMenuChildren = data?.KeyMenuChildren;
           state.DataPt = data.product?.DataPt?.PUT_EXEC;
           state.DataBi = data.product?.DataBi;
-          state.floor = "TableTK";
+          // state.floor = "TableTK";
           state.NameFloor = "HSX";
         } else {
           if (data?.NameFloor === "HSX") {
             state.DataPt = data.product?.DataPt?.PUT_EXEC;
             state.DataBi = data.product?.DataBi;
-            state.floor = "GDTT";
+            // state.floor = "GDTT";
             state.NameFloor = "HSX";
           } else {
             state.DataPt = data?.product?.DataPt;
             state.DataBi = data?.product?.DataBi;
-            state.floor = "GDTT";
+            // state.floor = "GDTT";
             state.NameFloor = "HNX";
           }
         }
@@ -470,7 +471,7 @@ export const tableTestSlice = createSlice({
         state.DataBi = state.DataBi;
         state.DataPt = state.DataPt;
         state.NameFloor = state.NameFloor;
-        state.floor = "MAIN";
+        // state.floor = "MAIN";
         state.productsLoaded = true;
         state.status = "idle";
         state.ListDataTable = state.ListDataTable;
@@ -538,4 +539,5 @@ export const {
   handleHistoryPrices,
   HandleKeyActiveMain,
   handleSetStockCode,
+  HandleSetActiveFloor
 } = tableTestSlice.actions;

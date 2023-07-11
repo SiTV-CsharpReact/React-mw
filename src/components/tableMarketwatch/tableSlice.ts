@@ -74,7 +74,7 @@ export const fetchTableHSXAsync = createAsyncThunk<
 export const getDataTable = createAsyncThunk("table/getDataTable" , async (Param :params)=>{
     try {
       if(Param.Query === "thoa-thuan-hsx"){
-            const DataBi = await agent.dataGDTTtable.listBi(Param.Floor)
+            const DataBi = await agent.dataGDTTtable.listBi("hnx")
             const DataPt = await agent.dataGDTTtable.listPt(Param.Floor)
             let data = {
                 index : 1,
