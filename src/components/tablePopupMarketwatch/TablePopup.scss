@@ -401,6 +401,14 @@
   .pu-div-chart-rt {
     padding: 5px 3px 0 3px;
     background: #303030;
+    rect.highcharts-plot-background {
+      height: 130px;
+      width: 343px;
+    }
+    rect.highcharts-plot-border {
+      height: 130px;
+      width: 343px;
+    }
   }
   .pu-content-chart {
     padding: 3px;

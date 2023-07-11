@@ -1,23 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/configureStore";
 import * as Highcharts from "highcharts";
-import {
-  _getDateTs,
-  drawChart,
-  maxNumber,
-  minNumber,
-} from "../chartIndex/util/app.chart";
+import { _getDateTs, maxNumber, minNumber } from "../chartIndex/util/app.chart";
 import { formatNumber } from "../../utils/util";
-const ChartOption: React.FC<any> = (props) => {
+const ChartOption = () => {
   const { isLoading, dataChartOption, status } = useAppSelector(
     (state) => state.chartOption
   );
+  const { dataDetailPopup } = useAppSelector((state) => state.dataPopupDetail);
   const [dataCol, setDataCol] = useState<any>([]);
   const [dataSpline, setDataSpline] = useState<any>([]);
   const [indexValue, setIndexValue] = useState(0);
 
+  const arrPr = React.useMemo(() => {
+    if (dataChartOption.length > 0) {
+      const arr = dataChartOption
+        .map((item) => {
+          return item[4];
+        })
+        // eslint-disable-next-line array-callback-return
+        .filter((value, index, ar) => {
+          if (ar.indexOf(value) === index) {
+            return value;
+          }
+        });
+      return arr;
+    }
+    return [];
+  }, [dataChartOption]);
+
   useEffect(() => {
-    props.dataItem?.map((item: any) => {
+    dataDetailPopup?.map((item: any) => {
       // eslint-disable-next-line array-callback-return
       return item.Info?.map((e: any, ind: number) => {
         if (ind === 1) {
@@ -25,7 +38,7 @@ const ChartOption: React.FC<any> = (props) => {
         }
       });
     });
-  }, [props.dataItem]);
+  }, [dataDetailPopup]);
 
   useEffect(() => {
     if (dataChartOption?.length > 0) {
@@ -70,10 +83,12 @@ const ChartOption: React.FC<any> = (props) => {
         data: dataSpline,
       },
     ];
+
     Highcharts.chart(`container__chart__time`, {
       chart: {
         height: 160,
         polar: true,
+        type: "column",
         backgroundColor: "#303030",
         plotBackgroundColor: {
           linearGradient: gradient,
@@ -85,7 +100,12 @@ const ChartOption: React.FC<any> = (props) => {
         plotBorderWidth: 1,
         plotBorderColor: "#545454",
         events: {
-          load: function (e: any) {
+          load: function () {
+            this.yAxis[1].update({
+              labels: {
+                format: "{value:.1f}",
+              },
+            });
             const xAxis = this.xAxis[0];
             const today = new Date();
             const dd = today.getDate();
@@ -101,92 +121,90 @@ const ChartOption: React.FC<any> = (props) => {
             const xmin = _getDateTs(xminTmp);
             const xmax = _getDateTs(xmaxTmp);
             xAxis.setExtremes(xmin, xmax, true, false);
-            // console.log(this.yAxis[1].series);
-            let arr: any = [];
-            // eslint-disable-next-line array-callback-return
-            this.yAxis[1].series.map((item: any) => {
-              arr = Array.from(new Set(item.yData)).sort(
-                (a: any, b: any) => a - b
-              );
-              // return result;
-            });
-            // let data: any = [];
-            // this.options.series?.map((item: any, ind) => {
-            //   if (ind === 1) return (data = item.data);
-            // });
-            // console.log(data);
 
-            // const myArr: any = Object.values(drawChart(dataChartOption));
-            // console.log(this.options.series);
+            let price_min, price_max, tick, minSub;
+            let barwidth: number;
+            let arrSub: any = [];
+            price_min = minNumber(arrPr);
+            price_max = maxNumber(arrPr);
 
-            let min, max;
-            let arrPr: any = [],
-              arrSub: any = [],
-              minSub;
-            for (let i = 0; i < arr.length; i++) {
-              const price = arr[i];
-              arrPr.push(price);
-              var next = arr[i + 1];
+            if (arrPr.length === 0) {
+              const min = Number(indexValue) - 0.1;
+              const max = Number(indexValue) + 0.1;
 
-              if (typeof next === "undefined") {
-                next = arr[0];
+              this.yAxis[1].setExtremes(min, max, true, false);
+              console.log(this.yAxis[1]);
+              
+            } else {
+              for (let i = 0; i < arrPr.length; i++) {
+                let next = arrPr[i + 1];
+                if (typeof next === "undefined") {
+                  next = arrPr[0];
+                  arrSub.push(Math.abs(Math.round(arrPr[i] - next) * 10) / 10);
+                }
               }
-              const sub = Math.abs(Math.round((price - next) * 100) / 100);
-              console.log(sub);
+              minSub = minNumber(arrSub);
+              if (price_min > indexValue) {
+                tick = 0.1;
+                price_min = indexValue - tick;
+                price_max += tick;
+              } else {
+                if (price_max < 50) {
+                  tick = 0.1;
+                  barwidth = 0.05;
+                  price_min -= tick;
+                  price_max += tick;
+                } else if (price_max >= 50) {
+                  tick = minSub > 0.5 ? minSub : 0.5;
+                  barwidth = 0.1;
+                  price_min -= tick;
+                  price_max += tick;
+                } else if (minSub < 0.5) {
+                  tick = 0.1;
+                  barwidth = 0.05;
+                  price_min -= tick;
+                  price_max += tick;
+                } else {
+                  tick = 1;
+                  barwidth = 0.2;
+                  price_min -= tick;
+                  price_max += tick;
+                }
+              }
+
+              let sub = price_max - price_min;
 
               if (sub > 0) {
-                arrSub.push(sub);
+                let countTick = Math.round(sub / tick);
+
+                if (countTick > 20) {
+                  let tempTick = Math.round(countTick / 15);
+                  tick = 0.5;
+                  barwidth = 0.05;
+                  price_min -= tick;
+                  price_max += tick;
+                }
               }
+
+              // eslint-disable-next-line array-callback-return
+              this.series[0].points.map((e) => {
+                e.update({
+                  pointWidth: barwidth,
+                });
+              });
+              let tickPosition: any = [];
+              for (let i = price_min; i <= price_max; i += tick) {
+                tickPosition.push(i);
+              }
+
+              this.yAxis[1].update({
+                tickPositions: tickPosition.map(
+                  (item: any) => Math.round(item * 10) / 10
+                ),
+                max: price_max,
+                min: price_min,
+              });
             }
-
-            min = minNumber(arrPr);
-            max = maxNumber(arrPr);
-            minSub = minNumber(arrSub);
-            console.log(minSub);
-            
-            var tick, barwidth;
-            var sub = max - min;
-
-            if (max < 50) {
-              tick = minSub;
-              barwidth = 0.02;
-              min -= barwidth;
-              max += barwidth;
-            } else if (max > 100) {
-              tick = minSub < 0.5 && minSub !== 0 ? minSub : 0.5;
-              barwidth = 0.05;
-              min -= barwidth;
-              max += barwidth;
-            } else if (minSub < 0.5) {
-              tick = 0.1;
-              barwidth = 0.05;
-              min -= barwidth;
-              max += barwidth;
-            } else {
-              tick = 1;
-              barwidth = 0.2;
-              min -= barwidth;
-              max += barwidth;
-            }
-            // console.log(tick);
-
-            const plotLine: any = this.yAxis[1].options.plotLines;
-            if (max <= plotLine[0].value) {
-              max = max + sub;
-            }
-            console.log({ min, max, tick, sub, arrPr, arrSub, arr });
-            this.yAxis[1].update({
-              tickInterval: parseFloat(sub.toFixed(1)),
-              tickAmount: e.target.yAxis[1].tickAmount,
-            });
-            // console.log(this.yAxis[1]);
-
-            this.yAxis[1].setExtremes(
-              parseFloat(min.toFixed(1)),
-              parseFloat(max.toFixed(1)),
-              true,
-              false
-            );
             this.redraw();
           },
         },
@@ -300,6 +318,30 @@ const ChartOption: React.FC<any> = (props) => {
             this.y
           )} </b></span>`;
         },
+        positioner: function (labelWidth, labelHeight, point) {
+          var tooltipX, tooltipY;
+          // Calculate tooltip X position
+          if (point.plotX + labelWidth > this.chart.plotWidth) {
+            tooltipX = point.plotX - labelWidth + this.chart.plotLeft - 10;
+          } else if (point.plotX - labelWidth < 0) {
+            tooltipX = point.plotX + this.chart.plotLeft + 10;
+          } else {
+            tooltipX = point.plotX + this.chart.plotLeft - labelWidth / 2;
+          }
+          // Calculate tooltip Y position
+          if (point.plotY + labelHeight > this.chart.plotHeight) {
+            tooltipY = point.plotY - labelHeight + this.chart.plotTop - 10;
+          } else if (point.plotY - labelHeight < 0) {
+            tooltipY = point.plotY + this.chart.plotTop + 10;
+          } else {
+            tooltipY = point.plotY + this.chart.plotTop - labelHeight - 10;
+          }
+
+          return {
+            x: tooltipX,
+            y: tooltipY,
+          };
+        },
       },
       legend: {
         enabled: false,
@@ -314,7 +356,7 @@ const ChartOption: React.FC<any> = (props) => {
               color: "red",
             },
             {
-              color: "#00c010",
+              color: "#00FF00",
             },
           ],
         },
@@ -326,7 +368,7 @@ const ChartOption: React.FC<any> = (props) => {
       },
       series: series,
     });
-  }, [dataChartOption, dataCol, dataSpline, indexValue]);
+  }, [arrPr, dataChartOption, dataCol, dataSpline, indexValue]);
   return (
     <div className="chart__for__time">
       <figure className="highcharts-figure">
@@ -336,4 +378,4 @@ const ChartOption: React.FC<any> = (props) => {
   );
 };
 
-export default React.memo(ChartOption);
+export default ChartOption;

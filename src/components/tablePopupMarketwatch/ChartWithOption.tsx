@@ -1,7 +1,7 @@
 import React from "react";
 import ChartOption from "./ChartOption";
 
-const ChartWithOption: React.FC<any> = (props) => {
+const ChartWithOption = () => {
   return (
     <div className="pu-content-chart">
       <div className="content-bt-time">
@@ -36,7 +36,7 @@ const ChartWithOption: React.FC<any> = (props) => {
           </a>
         </div>
       </div>
-      <ChartOption dataItem={props.dataItem} />
+      <ChartOption />
     </div>
   );
 };
