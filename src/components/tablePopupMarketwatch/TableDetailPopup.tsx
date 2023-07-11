@@ -3,7 +3,6 @@ import { formatNumberMarket, setColorMarket} from '../../utils/util';
 
 const TableDetailPopup = () => {
   const {dataDetailPopup} = useAppSelector(state=>state.dataPopupDetail)
-  
   return (
     <table id="tbLPRT" className="table table-bordered table-priceboard text-[#B9B9B9]">
     <thead className='bg-[#333333]' style={{ fontFamily:"Arial,Sans-Serif"}}>

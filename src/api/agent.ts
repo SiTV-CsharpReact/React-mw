@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { RPChart } from "../models/modelChart";
 const responseBody = (response: AxiosResponse) => response.data;
-const BASE_URL = "http://priceboard3.fpts.com.vn/";
+const BASE_URL = "http://marketstream.fpts.com.vn/";
 const URL_EZTRADE = "http://eztrade0.fpts.com";
 // mặc định gửi authenticated token lên
 // axios.defaults.headers.common['Authorization'] = 'Bearer ' + "auth_token";

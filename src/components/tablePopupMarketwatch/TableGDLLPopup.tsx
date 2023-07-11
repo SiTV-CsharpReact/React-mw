@@ -7,7 +7,9 @@ import agent from "../../api/agent";
 const TableGDLLPopup= () => {
   const [dataTable, setDataTable] = useState<TableGDLL | null>(null);
   const { code } = useAppSelector((state) => state.popupTable);
-
+  const { dataDetailPopup } = useAppSelector(
+    (state) => state.dataPopupDetail
+  );
   useEffect(() => {
     const RP = {
       action: "po",
