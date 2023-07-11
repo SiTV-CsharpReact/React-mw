@@ -30,7 +30,7 @@ const TableGDTTMarketWatch = () => {
     setDataFilter(filteredData);
 
     const uniqueValues = new Set(
-      filteredData.map((item: any) =>
+      filteredData?.map((item: any) =>
         floor === "HSX" ? item.Info[1][1] : item.Info[0][1]
       )
     );

@@ -269,7 +269,7 @@ export function getCookie(cname: any) {
   return "";
 }
 export const g_arrCompanyInfo = localStorage.getItem("CacheSI");
-console.log("first company info", g_arrCompanyInfo)
+// console.log("first company info", g_arrCompanyInfo)
 const cachedValue = localStorage.getItem("CacheSI");
 const g_arrStockInfo = cachedValue ? JSON.parse(cachedValue) : [];
 const g_CurrentLanguage = getCookie("aspfpt_language");
@@ -306,7 +306,7 @@ const exChangeConvert = (number: number) => {
   }
 };
 export const listDataCompany = mapCompanyName();
-console.log(listDataCompany)
+// console.log(listDataCompany)
 const getExchangeName = (vEx: string) => {
   for (var i = 0; i < ARRAY_EXCHANGE.length; i++)
     if (vEx === ARRAY_EXCHANGE[i][0]) return ARRAY_EXCHANGE[i][1];
