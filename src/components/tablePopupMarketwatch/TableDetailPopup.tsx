@@ -1,23 +1,9 @@
-import React from 'react'
 import { useAppSelector } from '../../store/configureStore';
 import { formatNumberMarket, setColorMarket} from '../../utils/util';
 
-const TableDetailPopup: React.FC<any> = ({ dataItem, dataTableHSX, dataResult ,handleShowDetail}) => {
-  // console.log("first row", dataItem)
-  // let { dataMouse  }: any = useAppSelector(state => state.dataMouse);
-  // let { dataMouseBuy }: any = useAppSelector(state => state.dataMouseBuy);
+const TableDetailPopup = () => {
+  const {dataDetailPopup} = useAppSelector(state=>state.dataPopupDetail)
   
-  // const color = dataResult?.map((item: any) => item.MP)
-  //        const colorY =  dataMouse.priceF < color ? "red"
-  //             : dataMouse > color
-  //             ? "#00FF00"
-  //             : "yellow";
-  //         const colorBuy =
-  //           dataMouseBuy.priceB < color ? "red"
-  //             : dataMouseBuy > color
-  //             ? "green"
-  //               : "#F7FF31";
-
   return (
     <table id="tbLPRT" className="table table-bordered table-priceboard text-[#B9B9B9]">
     <thead className='bg-[#333333]' style={{ fontFamily:"Arial,Sans-Serif"}}>
@@ -25,7 +11,7 @@ const TableDetailPopup: React.FC<any> = ({ dataItem, dataTableHSX, dataResult ,h
         <th rowSpan={2} className="hbrb text-[#B9B9B9]">
           Mã
         </th>
-        <th rowSpan={2} className="hg_b !text-[#B9B9B9]">
+      <th rowSpan={2} className="hg_b !text-[#B9B9B9]">
           TC
         </th>
         <th rowSpan={2} className="hg_b !text-[#B9B9B9]">
@@ -108,144 +94,144 @@ const TableDetailPopup: React.FC<any> = ({ dataItem, dataTableHSX, dataResult ,h
           className="ccc_ fixedcol"
         >
           <span className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[11][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[11][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
                           )}`} >
               {/* {dataMouse.maF || dataMouseBuy.maB || displayCode} */}
-              { dataItem[0]?.Info[0][1] || dataItem[0]?.RowID }
+              { dataDetailPopup[0]?.Info[0][1] || dataDetailPopup[0]?.RowID }
 
           </span>
         </td>
           <td  className="g_r text-[#F7FF31] !font-medium" >
             {/* {dataMouse.TCT || dataMouseBuy.TCT} */}
-            { formatNumberMarket(dataItem[0]?.Info[1][1]) }
+            { formatNumberMarket(dataDetailPopup[0]?.Info[1][1]) }
         </td>
         <td  className="g_c  text-[#FF00FF] !font-medium" >
             {/* {dataMouse.TranC || dataMouseBuy.TranC} */}
-            { formatNumberMarket(dataItem[0]?.Info[2][1]) }
+            { formatNumberMarket(dataDetailPopup[0]?.Info[2][1]) }
         </td>
         <td  className="grf  !text-[#66CCFF] text-[13.3px] !font-medium" >
             {/* {dataMouse.SanT || dataMouseBuy.SanT} */}
-            { formatNumberMarket(dataItem[0]?.Info[3][1]) }
+            { formatNumberMarket(dataDetailPopup[0]?.Info[3][1]) }
         </td>
-        <td >{formatNumberMarket(dataItem[0]?.Info?.[4][1])}</td>
+        <td >{formatNumberMarket(dataDetailPopup[0]?.Info?.[4][1])}</td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[5][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[5][1]) } </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[5][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[5][1]) } </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[5][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[6][1])} </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[5][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[6][1])} </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[7][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[7][1]) } </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[7][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[7][1]) } </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[7][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[8][1]) } </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[7][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[8][1]) } </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[9][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[9][1]) } </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[9][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[9][1]) } </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[9][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[10][1]) } </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[9][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[10][1]) } </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[11][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[11][1]) } </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[11][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[11][1]) } </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[11][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[12][1]) } </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[11][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[12][1]) } </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[11][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{formatNumberMarket(dataItem[0]?.Info?.[13][1]) } </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[11][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{formatNumberMarket(dataDetailPopup[0]?.Info?.[13][1]) } </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[15][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[14][1]) } </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[15][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[14][1]) } </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[15][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[15][1]) } </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[15][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[15][1]) } </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[17][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[16][1])} </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[17][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[16][1])} </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[17][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[17][1]) } </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[17][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[17][1]) } </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[19][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[18][1]) } </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[19][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[18][1]) } </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[19][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[19][1])} </td>
-        <td className="br_ !text-sm !text-[#white]">{ formatNumberMarket(dataItem[0]?.Info?.[20][1])} </td>
-        <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumberMarket(dataItem[0]?.Info?.[21][1])} </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[19][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[19][1])} </td>
+        <td className="br_ !text-sm !text-[#white]">{ formatNumberMarket(dataDetailPopup[0]?.Info?.[20][1])} </td>
+        <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumberMarket(dataDetailPopup[0]?.Info?.[21][1])} </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[22][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[22][1])} </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[22][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[22][1])} </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[23][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[23][1])} </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[23][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[23][1])} </td>
         <td className={` text-right ${setColorMarket(
-                            dataItem[0]?.Info[1][1],
-                            dataItem[0]?.Info[24][1],
-                            dataItem[0]?.Info[2][1],
-                            dataItem[0]?.Info[3][1]
-                          )}`}>{ formatNumberMarket(dataItem[0]?.Info?.[24][1])} </td>
+                            dataDetailPopup[0]?.Info[1][1],
+                            dataDetailPopup[0]?.Info[24][1],
+                            dataDetailPopup[0]?.Info[2][1],
+                            dataDetailPopup[0]?.Info[3][1]
+                          )}`}>{ formatNumberMarket(dataDetailPopup[0]?.Info?.[24][1])} </td>
         <td className="gr_ !text-sm"> </td>
-        <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumberMarket(dataItem[0]?.Info?.[26][1])} </td>
-        <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumberMarket(dataItem[0]?.Info?.[27][1])} </td>
+        <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumberMarket(dataDetailPopup[0]?.Info?.[26][1])} </td>
+        <td className="g__ !text-sm !text-[#B9B9B9]">{ formatNumberMarket(dataDetailPopup[0]?.Info?.[27][1])} </td>
         <td className="g__ !text-sm !text-[#B9B9B9]"> 
-        {formatNumberMarket(dataItem[0]?.Info[28][1])}
+        {formatNumberMarket(dataDetailPopup[0]?.Info[28][1])}
         </td>
       </tr>
     </tbody>

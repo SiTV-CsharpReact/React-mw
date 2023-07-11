@@ -202,8 +202,8 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
         tickWidth: 0,
         minPadding: 0,
         maxPadding: 0,
-        min: timeFirst, // Giới hạn trục x từ 9 giờ
-        max: timeLast,
+        // min: timeFirst, // Giới hạn trục x từ 9 giờ
+        // max: timeLast,
         tickInterval: 3600000,
         // height: 75,
         labels: {
