@@ -39,13 +39,13 @@ import { useTranslation } from "react-i18next";
 import { getDataApi, getDataApiPendingOder } from "../orderFormMarketwatch/data";
 
 function RenderTable() {
-  const floor = useAppSelector((state) => state.tableTest.floor)
-  switch (floor) {
-    case "MAIN":
+  const {activeFloor} = useAppSelector((state) => state.tableTest)
+  switch (activeFloor) {
+    case 0:
       return <TableMarketWatchTest />;
-    case "GDTT":
+    case 1:
       return <TableGDTTMarketWatch />;
-    case "TableTK":
+    case 2:
       return <TableThongKeMarketWatch />;
     default:
       break;
@@ -83,6 +83,7 @@ const LayoutMarketWatch: React.FC = () => {
   // row danh mục
   // tao useState resize khi height window thay đổi
   const { row, name } = useSelector((state: RootState) => state.categories);
+  const {ListDataTable, productsLoaded} = useAppSelector((state: RootState) => state.tableTest)
   const [heightComponent, setHeightComponent] = useState(initialState);
   const [selectedValue, setSelectedValue] = useState({
     x: 0,
@@ -230,6 +231,9 @@ const LayoutMarketWatch: React.FC = () => {
     console.log(`x: ${data.x}, y: ${data.y}`);
   };
   const status = useAppSelector((state) => state.popupTable.visible);
+  if(!ListDataTable && !productsLoaded){
+    return <div>  Loading ... </div>
+  }
   return (
     <div className="relative">
       {/* popup theo table */}
@@ -265,7 +269,7 @@ const LayoutMarketWatch: React.FC = () => {
                     : "169px",
               }}
             >
-              <MenuMarketWatch />
+              {ListDataTable ? <MenuMarketWatch /> : ""}
             </div>
             {/* Menu Table */}
             <div
