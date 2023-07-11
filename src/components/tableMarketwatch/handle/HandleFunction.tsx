@@ -1,7 +1,6 @@
 import React from "react";
 import { useAppDispatch } from "../../../store/configureStore";
 import { dispatchDataTable } from "../tableThunk";
-import { dispatchDataTableBuy } from "../tableThunk";
 import { statusChartMarketwatch } from "../../chartMarketwatch/chartMarketwatchSlice";
 
 const HandleFunction = () => {
@@ -14,7 +13,6 @@ const HandleFunction = () => {
 
   const handleClickBuy = (dataTable: any) => {
     // console.log("dataTable",dataTable)
-    dispatch(dispatchDataTableBuy(dataTable));
   };
 
   const handleDoubleClick = (e: any, val: any) => {

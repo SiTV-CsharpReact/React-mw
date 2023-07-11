@@ -48,7 +48,7 @@ const CompleteStock = (props: any) => {
       timeoutIdRef.current = setTimeout(() => {
         setSearchTerm(e.value);
         setShow(true);
-      }, 1000);
+      }, 10);
     }
   };
   const AddMaCate = (e: any) => {
