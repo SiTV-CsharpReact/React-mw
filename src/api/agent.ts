@@ -58,7 +58,7 @@ const Index = {
 const Company = {
   get: () =>
     requests.get(
-      "http://dscache.fpts.com.vn/api/stock/v1/cache/stock_info/eztrade?code=ALL"
+      "http://priceboard3.fpts.com.vn/api/ApiData/get_cache_stockinfo"
     ),
 };
 

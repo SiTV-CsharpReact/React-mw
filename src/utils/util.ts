@@ -277,19 +277,19 @@ const g_CurrentLanguage = getCookie("aspfpt_language");
 const mapCompanyName = () => {
   // console.log(g_arrStockInfo)
   if(g_arrStockInfo){
-    // const arr = [...g_arrStockInfo];
-    // if (arr) {
-    //   return arr.map(function (v) {
-    //     return {
-    //       cpnyID: parseInt(v.ID),
-    //       stock_code: v.Code,
-    //       CodeID: 0,
-    //       Ex: exChangeConvert(v.Exchange),
-    //       name: g_CurrentLanguage === "VN" ? v.ScripName : v.ScripNameEN,
-    //     };
-    //   });
-    // }
-    // console.log(arr);
+    const arr = [...g_arrStockInfo];
+    if (arr) {
+      return arr.map(function (v) {
+        return {
+          cpnyID: parseInt(v.ID),
+          stock_code: v.Code,
+          CodeID: 0,
+          Ex: exChangeConvert(v.Exchange),
+          name: g_CurrentLanguage === "VN" ? v.ScripName : v.ScripNameEN,
+        };
+      });
+    }
+    console.log(arr);
   }
  
 };
@@ -305,8 +305,8 @@ const exChangeConvert = (number: number) => {
       return "HO";
   }
 };
-const listDataCompany = mapCompanyName();
-//console.log(listDataCompany)
+export const listDataCompany = mapCompanyName();
+console.log(listDataCompany)
 const getExchangeName = (vEx: string) => {
   for (var i = 0; i < ARRAY_EXCHANGE.length; i++)
     if (vEx === ARRAY_EXCHANGE[i][0]) return ARRAY_EXCHANGE[i][1];
@@ -319,27 +319,27 @@ export const getCompanyNameByCode = (vStockCode: string) => {
   var name = "",
     element = "",
     cpnyID = 0;
-  // if (listDataCompany) {
-  //   // const dataCom = JSON.parse(g_arrCompanyInfo)
-  //   // const dataCompany = dataCom.Data;
-  //   for (var i = 0; i < listDataCompany.length; i++) {
-  //     // element = dataCompany[i];
-  //     // console.log(element)
-  //     //console.log(listDataCompany[i])
+  if (listDataCompany) {
+    // const dataCom = JSON.parse(g_arrCompanyInfo)
+    // const dataCompany = dataCom.Data;
+    for (var i = 0; i < listDataCompany.length; i++) {
+      // element = dataCompany[i];
+      // console.log(element)
+      //console.log(listDataCompany[i])
 
-  //     if (vStockCode === listDataCompany[i].stock_code) {
-  //       // NamLD
-  //       // Sua lai tra gia tri companyName theo dang mang [fullname cong ty, cpnyID]
-  //       name =
-  //         getExchangeName(listDataCompany[i].Ex) +
-  //         " - " +
-  //         listDataCompany[i].name;
-  //       //return [name, element.cpnyID];
-  //       cpnyID = listDataCompany[i].cpnyID;
-  //       break;
-  //     }
-  //   }
-  // }
+      if (vStockCode === listDataCompany[i].stock_code) {
+        // NamLD
+        // Sua lai tra gia tri companyName theo dang mang [fullname cong ty, cpnyID]
+        name =
+          getExchangeName(listDataCompany[i].Ex) +
+          " - " +
+          listDataCompany[i].name;
+        //return [name, element.cpnyID];
+        cpnyID = listDataCompany[i].cpnyID;
+        break;
+      }
+    }
+  }
   console.log(name)
   return [name];
 };

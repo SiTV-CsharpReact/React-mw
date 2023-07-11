@@ -97,7 +97,10 @@ const CompleteStock = (props: any) => {
   };
   // dã lọc song
   const searchResults = testdata.filter((item) =>
-    item.toLowerCase().includes(searchTerm.toLowerCase())
+    item.toLowerCase().startsWith(searchTerm.toLowerCase())
+    // const filteredSuggestions = availableTags.filter((tag) =>
+    // tag.Code.toLowerCase().startsWith(value.toLowerCase())
+  // );
   );
 
   return (
