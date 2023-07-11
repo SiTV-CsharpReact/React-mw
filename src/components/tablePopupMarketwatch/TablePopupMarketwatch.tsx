@@ -9,6 +9,8 @@ import { fetchChartOptionAsync } from "./chartOptionSlice";
 import TableWrapPopup from "./TableWrapPopup";
 import { fetchDataSearchPopupAsync } from "./dataTablePopupDetailSlice";
 
+import NewsPopup from "./NewsPopup";
+import agent from "../../api/agent";
 interface DraggableProps {
   initialPosition?: { x: number; y: number };
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;

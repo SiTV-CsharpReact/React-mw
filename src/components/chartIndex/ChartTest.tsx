@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import { formatNumber } from "../../utils/util";
 import "./chartIndex.scss";
-import { _getDateTs, minNumber } from "./util/app.chart";
+import { _getDateTs } from "./util/app.chart";
 
 type TProps = {
   name: string;
@@ -180,10 +180,12 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
             const xmax = _getDateTs(xmaxTmp);
             xAxis.setExtremes(xmin, xmax, true, false);
             // console.log(this.yAxis[1].series);
-            this.redraw();
+    
+          
           },
         },
       },
+    
       title: {
         text: "",
       },
@@ -333,7 +335,6 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
         enabled: false,
       },
       plotOptions: {
-    
         spline: {
           lineWidth: 1.5,
           zones: [
@@ -364,3 +365,4 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
 };
 
 export default React.memo(ChartTest);
+

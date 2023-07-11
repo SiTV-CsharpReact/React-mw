@@ -222,13 +222,6 @@ const SettingTable = () => {
                             htmlFor="cbChartHNX"
                           />
                           <ColCompoent
-                            name="HNX"
-                            id="cbChartHNX"
-                            checked={type.HNX}
-                            handleChange={handleChange}
-                            htmlFor="cbChartHNX"
-                          />
-                          <ColCompoent
                             name="HNX30"
                             id="cbChartHNX30"
                             checked={type.HNX30}
