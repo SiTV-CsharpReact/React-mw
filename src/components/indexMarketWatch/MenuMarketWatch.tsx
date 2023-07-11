@@ -87,6 +87,7 @@ const MenuMarketWatch = () => {
           updateDataTable(arrRowID, arrInfo[0][0], arrInfo[0][1]);
         }
       } else {
+        // mau index
         //tạo biến tdIndex lấy element
         const tdIndexMenu = document.getElementById(`${dataHNX[0]}`);
         // lay gia trị đằng sau

@@ -79,33 +79,46 @@ export function _getDateTs(dateTime: any) {
   // }
 }
 export function drawChart(data: any): any {
-  const arrPriceVol = data.map((item: any) => [item[4], item[5]]);
-  const arr = arrPriceVol.reduce((acc: any, [price, vol]: any) => {
-    if (!acc[price]) {
-      acc[price] = [price, vol];
+  // return
+  const arrVol = data?.Body?.map((item: any) => ({
+    MQ: item?.MQ,
+    MP: item?.MP,
+  }));
+  const arr = arrVol?.reduce((acc: any, curr: any) => {
+    const exist = acc.find((item: any) => item.MP === curr.MP);
+    if (exist) {
+      exist.MQ += curr.MQ;
     } else {
-      acc[price][1] += vol;
+      acc.push({ MP: curr.MP, MQ: curr.MQ });
     }
     return acc;
-  }, {});
+  }, []);
   return arr;
 }
 
 export function minNumber(arr: any): number {
-  let minNum = arr[arr.length - 1];
-  for (let i = 0; i < arr.length; i++) {
-    if (minNum > arr[i]) {
-      minNum = arr[i];
+  let minNum = arr[0];
+  if (arr.length === 1) {
+    minNum = arr[0];
+  } else {
+    for (let i = 1; i < arr.length; i++) {
+      if (minNum > arr[i]) {
+        minNum = arr[i];
+      }
     }
   }
   return minNum;
 }
 
 export function maxNumber(arr: any): number {
-  let maxNum = arr[arr.length - 1];
-  for (let i = 0; i < arr.length; i++) {
-    if (maxNum < arr[i]) {
-      maxNum = arr[i];
+  let maxNum = arr[0];
+  if (arr.length === 1) {
+    maxNum = arr[0];
+  } else {
+    for (let i = 0; i < arr.length; i++) {
+      if (maxNum < arr[i]) {
+        maxNum = arr[i];
+      }
     }
   }
   return maxNum;
