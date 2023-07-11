@@ -169,11 +169,11 @@ const HeaderFromThongke = ({ ChangeFuncion }: Props) => {
               <option className="pl-[8px] py-[1px]" value="0">
                 Tất Cả
               </option>  
-             {selectedStock.map((item:dataCK,index:number)=>{
+             {selectedStock && selectedStock.length > 0 ? selectedStock.map((item:dataCK,index:number)=>{
                 return  <> 
                     <option key={index+1} value={item?.Sy}>{item.Sy}</option>
                 </>
-             })}
+             }) : ""}
             </select>
           </div>
         </div>

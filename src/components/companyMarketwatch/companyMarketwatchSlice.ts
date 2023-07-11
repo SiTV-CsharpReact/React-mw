@@ -5,11 +5,13 @@ import {
 } from "@reduxjs/toolkit";
 import agent from "../../api/agent";
 import { Root } from "../../models/root";
-export const fetchCompanyAsync = createAsyncThunk<Root>(
+export const fetchCompanyAsync = createAsyncThunk<any>(
     "table/fecthCompany",
     async () => {
         const res = await agent.Company.get();       
+        console.log(res)
         return res;
+        
     }
 );
 export const companySlice = createSlice({
@@ -37,7 +39,9 @@ export const companySlice = createSlice({
             .addCase(fetchCompanyAsync.fulfilled, (state, action) => {
                 state.productsLoaded = true;
                 state.data = action.payload;
-                const result = JSON.stringify(action.payload.Data)
+                console.log(action.payload)
+                const result = JSON.stringify(action.payload)
+              
                 localStorage.setItem("CacheSI", result);
                 state.status = "oke";
             })

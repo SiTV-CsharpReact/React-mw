@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { RPChart } from "../models/modelChart";
 const responseBody = (response: AxiosResponse) => response.data;
-const BASE_URL = "http://priceboard3.fpts.com.vn/";
+const BASE_URL = "http://marketstream.fpts.com.vn/";
 const URL_EZTRADE = "http://eztrade0.fpts.com";
 // mặc định gửi authenticated token lên
 // axios.defaults.headers.common['Authorization'] = 'Bearer ' + "auth_token";
@@ -58,7 +58,7 @@ const Index = {
 const Company = {
   get: () =>
     requests.get(
-      "http://dscache.fpts.com.vn/api/stock/v1/cache/stock_info/eztrade?code=ALL"
+      "http://priceboard3.fpts.com.vn/api/ApiData/get_cache_stockinfo"
     ),
 };
 
@@ -90,32 +90,44 @@ const dataGDTTtable = {
     
 };
 const chartIndex = {
-  get: () =>
-    requests.get("https://marketstream.fpts.com.vn/chart/data.ashx?s=full"),
+  get: () => requests.get(BASE_URL + "/chart/data.ashx?s=full"),
   //get: () => requests.get('http://localhost:8000/dataChartIndex'),
 };
 var formData = new FormData();
-formData.append('key1', 'value1')
-formData.append('key2', 'value2')
-const dataTableBasic ={ 
-    post: (dataValueBasic:RPChart) => requests.post(BASE_URL+"/Root/Data.ashx", dataValueBasic),
-    postFormData: (dataValueBasic:RPChart) =>requests.postFormData(BASE_URL+"/Root/Data.ashx", dataValueBasic)   
-}
+formData.append("key1", "value1");
+formData.append("key2", "value2");
+const dataTableBasic = {
+  post: (dataValueBasic: RPChart) =>
+    requests.post(BASE_URL + "/Root/Data.ashx", dataValueBasic),
+  postFormData: (dataValueBasic: RPChart) =>
+    requests.postFormData(BASE_URL + "/Root/Data.ashx", dataValueBasic),
+  //  requests.postFormData("/Root/Data.ashx", dataValueBasic,   {'Content-Type': 'multipart/form-data'},)
+};
 // table Lịch sử khớp lệnh
 const report = {
-    get : () => requests.get("http://localhost:2000/data"),
-    getHisOrder : () =>  requests.get("http://localhost:2000/orderHis")
-}
+  get: () => requests.get("http://localhost:2000/data"),
+  getHisOrder: () => requests.get("http://localhost:2000/orderHis"),
+};
 const transfer = {
-    getdataTempalte : ()=> requests.get("  http://localhost:2000/dataTranfer"),
-    hometransferds : ()=> requests.get("http://localhost:2000/dataTransferds")
-}
+  getdataTempalte: () => requests.get("  http://localhost:2000/dataTranfer"),
+  hometransferds: () => requests.get("http://localhost:2000/dataTransferds"),
+};
 const tableThongke = {
-    getdataThongke :(params :any) => requests.get(`${BASE_URL}/hnx/data.ashx?${params}`),
-    sortThongkeIndex : (query : any) =>requests.post(BASE_URL+"/Root/Data.ashx", query),
-    dataHNX :  ()=>  requests.get("http://localhost:1420/DataHNX"),
-    dataHSX :  ()=>  requests.get("http://localhost:1420/DataHSX"),
-}
+  getdataThongke: (params: any) =>
+    requests.get(`${BASE_URL}/hnx/data.ashx?${params}`),
+  sortThongkeIndex: (query: any) =>
+    requests.post(BASE_URL + "/Root/Data.ashx", query),
+  dataHNX: () => requests.get("http://localhost:1420/DataHNX"),
+  dataHSX: () => requests.get("http://localhost:1420/DataHSX"),
+};
+
+const tableDetailPopup = {
+  get: (params: any) =>
+    requests.get(
+      `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${params}`
+    ),
+};
+
 const agent = {
     TableHNX,
     TableHSX,

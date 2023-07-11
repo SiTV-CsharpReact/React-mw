@@ -1,10 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { getDataTable } from "../tableMarketwatch/tableSlice";
 import {
   useAppDispatch,
   useAppSelector,
   RootState,
 } from "../../store/configureStore";
+import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 
 const CompleteStock = (props: any) => {
   const companies: string[] = [
@@ -19,10 +20,16 @@ const CompleteStock = (props: any) => {
     "ARM - HNX.NY - Công ty Cổ phần Xuất nhập khẩu Hàng không",
     "BRM - HNX.NY - Công ty Cổ phần Xuất nhập khẩu Hàng không",
   ];
+
   const { isLoading, data, status, row, name } = useAppSelector(
     (state: RootState) => state.categories
   );
   const dispatch = useAppDispatch();
+  const dataCompleteStock = useAppSelector((state) => state.company);
+  useEffect(()=>{
+    dispatch(fetchCompanyAsync)
+  })
+  console.log(dataCompleteStock)
   const [show, setShow] = useState(false);
   const [isActiveShowALL, setActiveShowALl] = useState(false);
   const [Value, setValue] = useState("");
@@ -48,7 +55,7 @@ const CompleteStock = (props: any) => {
       timeoutIdRef.current = setTimeout(() => {
         setSearchTerm(e.value);
         setShow(true);
-      }, 1000);
+      }, 10);
     }
   };
   const AddMaCate = (e: any) => {
@@ -80,24 +87,31 @@ const CompleteStock = (props: any) => {
   };
   //  chữ tìm kiếm màu đỏ
   const getHighlightedText = (text: string, highlight: string) => {
-    const parts = text.split(new RegExp(`(${highlight})`, "gi"));
+    const input = Value.toLowerCase();
+    const startIndex = text.toLowerCase().indexOf(input);
+    const endIndex = startIndex + input.length;
+
+    if (startIndex === -1) {
+      return text;
+    }
     return (
-      <span>
-        {parts.map((part, index) =>
-          part.toLowerCase() === highlight.toLowerCase() ? (
-            <span key={index} style={{ color: "red" }}>
-              {part}
-            </span>
-          ) : (
-            part
-          )
-        )}
-      </span>
+      <>
+        {text.substring(0, startIndex)}
+        <span className="font-semibold text-[#FF0000]">
+          {text.substring(startIndex, endIndex)}
+        </span>
+        {text.substring(endIndex)}
+      </>
     );
+  // };
   };
+
   // dã lọc song
   const searchResults = testdata.filter((item) =>
-    item.toLowerCase().includes(searchTerm.toLowerCase())
+    item.toLowerCase().startsWith(searchTerm.toLowerCase())
+    // const filteredSuggestions = availableTags.filter((tag) =>
+    // tag.Code.toLowerCase().startsWith(value.toLowerCase())
+  // );
   );
 
   return (

@@ -8,13 +8,15 @@ import { arrayColor, colorTextMenu, fStatusMarketHNX, fStatusMarketUPCOM, format
 
 // import { LicenseManager } from "ag-grid-enterprise";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
-import { getDataTable, handleHistoryPrices } from "./tableTestSlice";
+import { getDataCookie, getDataTable, handleHistoryPrices } from "./tableTestSlice";
 import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
 
 import { defaultColDef, gridOptions } from "./interface/config.tablegrid";
 import ColumnDef from "./components/options";
 import { setCookie } from "../../models/cookie";
 import { g_CLASS_INDEX } from "../../configs/app.config";
+import { async } from "q";
+import { setActiveMenu } from "../menuBarMW/menuSlice";
 
 // LicenseManager.setLicenseKey(
 //   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
@@ -40,6 +42,7 @@ const TableMarketWatchTest = () => {
         Query: result?.payload?.Data[0]?.List,
         RowPined: result?.payload?.Data[0]?.Row,
       };
+    
       await handelGetData(data);
     } else {
       let data = {
@@ -55,11 +58,22 @@ const TableMarketWatchTest = () => {
       localStorage.setItem("activePriceboardTabMenu", "VNI");
       setCookie(newCookie)
       await handelGetData(data);
+      let activeMenu = {
+        nameMenu: "VNI",
+        keyMenu: 0,
+        floor : "HSX"
+      };
+
+      dispatch(setActiveMenu(activeMenu))
     }
   }, [dispatch])
   const handelGetData = useCallback(
-    (Data: any) => {
-      dispatch(getDataTable(Data));
+   async (Data: any) => {
+     let result = await dispatch(getDataTable(Data));
+     if(result?.payload){
+      dispatch(getDataCookie(""));
+     }
+    //  console.log("vô đây result: " + result?.payload)
     },
     [dispatch]
   );
@@ -77,7 +91,7 @@ const TableMarketWatchTest = () => {
       "wss://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=JWiUHUXRVLCXtTY7Na0DSx2vODWGuDSFrc6Da7FVAcRg9EYCUqCkDYfa3bsaKn305erm6aBpsrUmoFZ70viczLA1hDqUzrrqmuaZWu0UZDyUzynPYy0gGJu4gHM7dZVg&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=1"
     );
     socketHSX.onopen = () => {
-      //console.log("WebSocket connection established.");
+      // console.log("WebSocket connection established.");
     };
     socketHNX.onopen = () => {
       //console.log("WebSocket connection established.");

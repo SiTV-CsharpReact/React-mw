@@ -6,27 +6,8 @@ export const dispatchDataTable: any = createAsyncThunk(
     return dataTable;
   }
 );
-export const dispatchDataTableBuy: any = createAsyncThunk(
-  "data/dispatchDataTableBuy",
-  async (dataBuy, thunkAPI) => {
-    // console.log( "dataBuy", dataBuy);
-    return dataBuy;
-  }
-);
-export const dispatchDataMouseEventHandler: any = createAsyncThunk(
-  "data/dispatchDataMouseEventHandler",
-  async (dataMouse, thunkAPI) => {
-    // console.log( "dataMouse", dataMouse);
-    return dataMouse;
-  }
-);
-export const dispatchDataMouseEventHandlerBuy: any = createAsyncThunk(
-  "data/dispatchDataMouseEventHandlerBuy",
-  async (dataMouseBuy, thunkAPI) => {
-    // console.log( "dataMouseBuy", dataMouseBuy);
-    return dataMouseBuy;
-  }
-);
+
+
 export const dataSlice = createSlice({
   name: "data",
   initialState: {
@@ -38,29 +19,18 @@ export const dataSlice = createSlice({
       TranC: "",
       key: "",
     },
-    dataBuy: {
-      ma: "",
-      price: 0,
-      SanT: "",
-      TCT: "",
-      TranC: "",
-      key: "",
-    },
+   
   }, 
   reducers: {
-    setProductParams: (state, action) => {
-      //console.log(state.productParams);
-      console.log("action", action);
-      //state.productParams = { ...state.productParams, ...action.payload };
-    },
+      setProductParams: (state, action) => {
+            console.log("action",action)
+        },
   },
   extraReducers: (builder) => {
     builder.addCase(dispatchDataTable.fulfilled, (state: any, action) => {
       state.dataTable = action.payload;
     });
-    builder.addCase(dispatchDataTableBuy.fulfilled, (state: any, action) => {
-      state.dataBuy = action.payload;
-     });
+    
   },
 });
 
