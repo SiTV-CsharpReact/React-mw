@@ -1,9 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./table.scss";
-import { formatNumber } from "../../utils/util";
-import { useAppSelector, RootState } from "../../store/configureStore";
+import { formatNumber, listDataCompany } from "../../utils/util";
+import {
+  useAppSelector,
+  RootState,
+  useAppDispatch,
+} from "../../store/configureStore";
 
 const TableGDTTMarketWatch = () => {
+  // CHeck Floor
+  const { keyMenu, nameMenu } = useAppSelector(
+    (state: RootState) => state.menuBar
+  );
+  const dispath = useAppDispatch();
   const prices = useAppSelector((state: RootState) => state.table.DataBi);
   const products = useAppSelector((state: RootState) => state.table.DataPt);
   const floor = useAppSelector((state: RootState) => state.table.NameFloor);
@@ -11,17 +20,53 @@ const TableGDTTMarketWatch = () => {
   const [dataFilter, setDataFilter] = useState<any>([]);
   const [inputFilter, setInputFilter] = useState<any>([]);
   const [focus, setFocus] = useState(false);
-  console.log(floor);
+  const [iFloor, setIFloor] = useState<any>(floor);
+  console.log(products);
+  const [listDataStockCode, setListDataStockCode] = useState<any>({
+    HA: [],
+    HO: [],
+    UPCOM: [],
+  });
+  // Lọc mã theo sàn
   useEffect(() => {
-    setDataFilter(products);
-  }, [products]);
+    let listDataStockCodeHa: any = [];
+    let listDataStockCodeHo: any = [];
+    let listDataStockCodeUpcom: any = [];
+    listDataCompany?.map((item) => {
+      if (item.Ex === "HA") {
+        listDataStockCodeHa.push(item.stock_code);
+      } else if (item.Ex === "HO") {
+        listDataStockCodeHo.push(item.stock_code);
+      } else if (item.Ex === "UP") {
+        listDataStockCodeUpcom.push(item.stock_code);
+      }
+    });
+    setListDataStockCode({
+      ...listDataStockCode,
+      HA: listDataStockCodeHa,
+      HO: listDataStockCodeHo,
+      UPCOM: listDataStockCodeUpcom,
+    });
+  }, [listDataCompany]);
 
   useEffect(() => {
-    filterData(valueInput);
-  }, [valueInput]);
+    if (keyMenu === 2 && nameMenu === "Giao dịch thỏa thuận") {
+      setIFloor("upcom");
+    } else {
+      setIFloor(floor);
+    }
+  }, [dispath, floor, keyMenu, nameMenu]);
 
+  // Gán data product vào biến
+  useEffect(() => {
+    if (iFloor === "HSX") {
+      setDataFilter(products);
+    }
+  }, [iFloor, products]);
+
+  // Lọc data theo sàn
   const filterData = (value: any) => {
-    const filteredData = products?.filter((item: any) => {
+    const filteredData = dataFilter?.filter((item: any) => {
       return floor === "HSX"
         ? item.Info[1][1].includes(value.toUpperCase())
         : item.Info[0][1].includes(value.toUpperCase());
@@ -30,7 +75,7 @@ const TableGDTTMarketWatch = () => {
     setDataFilter(filteredData);
 
     const uniqueValues = new Set(
-      filteredData.map((item: any) =>
+      filteredData?.map((item: any) =>
         floor === "HSX" ? item.Info[1][1] : item.Info[0][1]
       )
     );
@@ -39,9 +84,13 @@ const TableGDTTMarketWatch = () => {
     setInputFilter(uniqueValuesArray);
   };
 
-  const handleSetValueInput = (e: any) => {
-    setValueInput(e.target.value); // Giá trị của Autocomplete
-  };
+  // Lọc data theo mã
+  useEffect(() => {
+    filterData(valueInput);
+  }, [valueInput]);
+  // const test = dataFilter?.filter((item: any) => {
+  //   return listDataStockCode.UPCOM.includes(item.Info[0][1]);
+  // });
 
   return (
     <div id="dvFixedH">
@@ -61,7 +110,9 @@ const TableGDTTMarketWatch = () => {
               </label>
               <input
                 className="h-24 bg-[#131722] focus:border-white col-span-1 pl-1 border outline-none w-44 border-borderBodyTableMarket text-white text-[11px]"
-                onChange={handleSetValueInput}
+                onChange={(e: any) => {
+                  setValueInput(e.target.value);
+                }}
                 value={valueInput}
                 name="maCk"
                 id="maCk"
@@ -192,66 +243,128 @@ const TableGDTTMarketWatch = () => {
                   <th className="hbrb">Tổng GT</th>
                 </tr>
               </thead>
-              <tbody id="tbdPT_HA">
-                {dataFilter != null &&
-                  dataFilter.length > 0 &&
-                  dataFilter.map((product: any) => {
-                    const condition = floor === "HSX";
-                    const colorClass = condition
-                      ? (product.Info[5][1] === product.Info[4][1] &&
-                          "text-[#66CCFF]") ||
-                        (product.Info[5][1] === product.Info[2][1] &&
-                          "text-[#F7FF31]") ||
-                        (product.Info[5][1] === product.Info[3][1] &&
-                          "text-[#FF00FF]") ||
-                        (product.Info[5][1] > product.Info[4][1] &&
-                          product.Info[5][1] < product.Info[2][1] &&
-                          "text-[#FF0000]") ||
-                        "text-[#00FF00]"
-                      : (product.Info[7][1] === product.Info[2][1] &&
-                          "text-[#66CCFF]") ||
-                        (product.Info[7][1] === product.Info[1][1] &&
-                          "text-[#F7FF31]") ||
-                        (product.Info[7][1] === product.Info[3][1] &&
-                          "text-[#FF00FF]") ||
-                        (product.Info[7][1] > product.Info[2][1] &&
-                          product.Info[7][1] < product.Info[1][1] &&
-                          "text-[#FF0000]") ||
-                        "text-[#00FF00]";
-
-                    return (
-                      <tr key={product.RowID} className={colorClass}>
-                        <td>
-                          {condition ? product.Info[1][1] : product.Info[0][1]}
-                        </td>
-                        <td className="text-right">
-                          {formatNumber(
-                            condition ? product.Info[5][1] : product.Info[7][1]
-                          )}
-                        </td>
-                        <td className="text-right">
-                          {formatNumber(product.Info[6][1])}
-                        </td>
-                        <td className="text-right text-white">
-                          {formatNumber(
-                            condition ? product.Info[7][1] : product.Info[8][1]
-                          )}
-                        </td>
-                        <td className="text-right text-white">
-                          {condition
-                            ? product.Info[8][1].toLocaleString(undefined, {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })
-                            : product.Info[9][1].toLocaleString(undefined, {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
-                        </td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
+              {iFloor === "HSX"
+                ? dataFilter != null && (
+                    <tbody id="tbdPT_HA">
+                      {dataFilter.length > 0
+                        ? dataFilter?.map((product: any) => (
+                            <tr
+                              key={product.RowID}
+                              className={`${
+                                product.Info[5][1] === product.Info[4][1]
+                                  ? "text-[#66CCFF]"
+                                  : product.Info[5][1] === product.Info[2][1]
+                                  ? "text-[#F7FF31]"
+                                  : product.Info[5][1] === product.Info[3][1]
+                                  ? "text-[#FF00FF]"
+                                  : product.Info[5][1] > product.Info[4][1] &&
+                                    product.Info[5][1] < product.Info[2][1]
+                                  ? "text-[#FF0000]"
+                                  : "text-[#00FF00]"
+                              }`}
+                            >
+                              <td>{product.Info[1][1]}</td>
+                              <td className="text-right">
+                                {formatNumber(product.Info[5][1])}
+                              </td>
+                              <td className="text-right">
+                                {formatNumber(product.Info[6][1])}
+                              </td>
+                              <td className="text-right text-white">
+                                {formatNumber(product.Info[7][1])}
+                              </td>
+                              <td className="text-right text-white">
+                                {product.Info[8][1].toLocaleString(undefined, {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
+                              </td>
+                            </tr>
+                          ))
+                        : ""}
+                    </tbody>
+                  )
+                : iFloor === "HNX"
+                ? dataFilter != null && (
+                    <tbody id="tbdPT_HA">
+                      {dataFilter.length > 0
+                        ? dataFilter?.map((product: any) => (
+                            <tr
+                              key={product.RowID}
+                              className={`${
+                                product.Info[7][1] === product.Info[2][1]
+                                  ? "text-[#66CCFF]"
+                                  : product.Info[7][1] === product.Info[1][1]
+                                  ? "text-[#F7FF31]"
+                                  : product.Info[7][1] === product.Info[3][1]
+                                  ? "text-[#FF00FF]"
+                                  : product.Info[7][1] > product.Info[2][1] &&
+                                    product.Info[7][1] < product.Info[1][1]
+                                  ? "text-[#FF0000]"
+                                  : "text-[#00FF00]"
+                              }`}
+                            >
+                              <td>{product.Info[0][1]}</td>
+                              <td className="text-right">
+                                {formatNumber(product.Info[7][1])}
+                              </td>
+                              <td className="text-right">
+                                {formatNumber(product.Info[6][1])}
+                              </td>
+                              <td className="text-right text-white">
+                                {formatNumber(product.Info[8][1])}
+                              </td>
+                              <td className="text-right text-white">
+                                {product.Info[9][1].toLocaleString(undefined, {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
+                              </td>
+                            </tr>
+                          ))
+                        : ""}
+                    </tbody>
+                  )
+                : dataFilter != null && (
+                    <tbody id="tbdPT_HA">
+                      {dataFilter.length > 0
+                        ? dataFilter?.map((product: any) => (
+                            <tr
+                              key={product.RowID}
+                              className={`${
+                                product.Info[5][1] === product.Info[4][1]
+                                  ? "text-[#66CCFF]"
+                                  : product.Info[5][1] === product.Info[2][1]
+                                  ? "text-[#F7FF31]"
+                                  : product.Info[5][1] === product.Info[3][1]
+                                  ? "text-[#FF00FF]"
+                                  : product.Info[5][1] > product.Info[4][1] &&
+                                    product.Info[5][1] < product.Info[2][1]
+                                  ? "text-[#FF0000]"
+                                  : "text-[#00FF00]"
+                              }`}
+                            >
+                              <td>{product.Info[1][1]}</td>
+                              <td className="text-right">
+                                {formatNumber(product.Info[5][1])}
+                              </td>
+                              <td className="text-right">
+                                {formatNumber(product.Info[6][1])}
+                              </td>
+                              <td className="text-right text-white">
+                                {formatNumber(product.Info[7][1])}
+                              </td>
+                              <td className="text-right text-white">
+                                {product.Info[8][1].toLocaleString(undefined, {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
+                              </td>
+                            </tr>
+                          ))
+                        : ""}
+                    </tbody>
+                  )}
             </table>
           </div>
           <div className="col-span-1 pl-2">
