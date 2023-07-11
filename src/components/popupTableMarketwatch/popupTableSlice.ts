@@ -10,7 +10,7 @@ const initialState: ComponentState = {
   visible: false,
   code: '',
 };
-const popupTableSlice = createSlice({
+const   popupTableSlice = createSlice({
     name: 'DetailStock',
     initialState,
     reducers: {
