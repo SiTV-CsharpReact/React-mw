@@ -32,6 +32,8 @@ type Props = {
   setHeightPriceBoard(heightPriceBoard: number): void;
 };
 const OrderMarketW = () => {
+  
+
   const { t } = useTranslation(["home"]);
   // color mua ban
   const [color, setColor] = useState(true);

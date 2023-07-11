@@ -1,10 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { getDataTable } from "../tableMarketwatch/tableSlice";
 import {
   useAppDispatch,
   useAppSelector,
   RootState,
 } from "../../store/configureStore";
+import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 
 const CompleteStock = (props: any) => {
   const companies: string[] = [
@@ -19,10 +20,16 @@ const CompleteStock = (props: any) => {
     "ARM - HNX.NY - Công ty Cổ phần Xuất nhập khẩu Hàng không",
     "BRM - HNX.NY - Công ty Cổ phần Xuất nhập khẩu Hàng không",
   ];
+
   const { isLoading, data, status, row, name } = useAppSelector(
     (state: RootState) => state.categories
   );
   const dispatch = useAppDispatch();
+  const dataCompleteStock = useAppSelector((state) => state.company);
+  useEffect(()=>{
+    dispatch(fetchCompanyAsync)
+  })
+  console.log(dataCompleteStock)
   const [show, setShow] = useState(false);
   const [isActiveShowALL, setActiveShowALl] = useState(false);
   const [Value, setValue] = useState("");

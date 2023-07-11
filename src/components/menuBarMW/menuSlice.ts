@@ -26,7 +26,7 @@ interface ComponentState {
   const initialState: ComponentState = {
     statusChart: true,
     keyMenu : 0,
-    nameMenu : "VNI",
+    nameMenu : "",
     floor : "HSX"
   };
 const menuSlice = createSlice({
