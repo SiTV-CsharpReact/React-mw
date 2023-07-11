@@ -5,6 +5,7 @@ import { RootState, useAppDispatch } from "../../store/configureStore";
 // import { getDataTable , } from "../tableMarketwatch/tableSlice";
 import {
   HandleKeyActiveMain,
+  HandleSetActiveFloor,
   getDataCookie,
   getDataTable,
   handleSetStockCode,
@@ -13,6 +14,7 @@ import { useSelector } from "react-redux";
 import { activeMenuDanhmuc, historyPriceActiveMenu } from "./danhmucSlice";
 import { setActiveMenu } from "./menuSlice";
 import { setCookie } from "../../models/cookie";
+import { string } from "yargs";
 
 interface MenuItem {
   name: string;
@@ -27,9 +29,6 @@ const MenuBar = () => {
   const { keyMenu, nameMenu } = useSelector(
     (state: RootState) => state.menuBar
   );
-  const [activeMenuItemName, setActiveMenuItemChild] = useState<string | null>(
-    nameMenu
-  ); // teen menu item
   const { row, name, data } = useSelector(
     (state: RootState) => state.categories
   );
@@ -48,7 +47,6 @@ const MenuBar = () => {
     floor: string,
     KeyMenuChildren?: any
   ) => {
-    setActiveMenuItemChild(name);
     localStorage.setItem("activePriceboardTabMenu", name);
     let data = {
       Floor: floor,
@@ -75,13 +73,20 @@ const MenuBar = () => {
     if (result?.payload) {
       dispatch(getDataCookie(cookie.codeList)); // cập nhật lại menu
     }
+    if(name == "Giao dịch thỏa thuận"){
+      dispatch(HandleSetActiveFloor(1))
+    }else if(key == 4 ){
+      dispatch(HandleSetActiveFloor(2))
+    }else{
+      dispatch(HandleSetActiveFloor(0))
+    }
   };
   const renderMenuItem = (item: any, key: number) => {
     return (
       <div
         key={key}
         className={`group list-sub-menu ${
-          !row && !name && keyMenu === key ? "active" : ""
+        !row && !name && keyMenu === key ? "active" : ""
         } `}
         onClick={() => handleItemClick(item.path, key)}
       >
