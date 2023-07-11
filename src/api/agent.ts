@@ -1,21 +1,77 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import { RPChart } from "../models/modelChart";
+import { getCoookieStorage ,RemoveCookie} from "./authen";
 const responseBody = (response: AxiosResponse) => response.data;
+const BASE_URL2 = "https://marketstream.fpts.com.vn/";
 const BASE_URL1 = "http://priceboard3.fpts.com.vn/";
 const BASE_URL = "https://eztrade.fpts.com.vn/";
 
-const URL_EZTRADE = "http://eztrade0.fpts.com";
-// mặc định gửi authenticated token lên
-// axios.defaults.headers.common['Authorization'] = 'Bearer ' + "auth_token";
-// axios.interceptors.request.use(
-//     config => {
-//       config.headers.Authorization = 'Bearer ' + "auth_token";
-//       return config;
+const URL_EZTRADE = "http://eztrade0.fpts.com"
+// mặc định gửi authenticated token lên sever
+
+//   axios.interceptors.request.use(
+//     (config) => {
+//       const token = getCoookieStorage()// Lấy token từ local storage hoặc nơi lưu trữ khác
+//     //   nếu có 
+//       if (token) {
+//         config.headers['Authorization'] = `Bearer ${token}`; // Thêm header Authorization với giá trị token
+//         return config
+//       }
+//     //   else{
+//     //     // nếu không có 
+//     //     const result = RemoveCookie()
+//     //     if(result) {
+//     //         window.location.reload()
+//     //         // đẩy sang login 
+//     //     }
+//     //   }
+//       return config
 //     },
-//     error => {
+//     (error) => {
 //       return Promise.reject(error);
 //     }
-//   );
+//   )
+
+//   const responseInterceptor = (res:any) => {
+//     // xử lý response  trả về 
+//     const token = getCoookieStorage() 
+//     if(token){
+//         return res;
+//     // }else{
+//     //     let result  =  RemoveCookie()  
+//     //     if(result)  window.location.href= "https://accounts.fpts.com.vn/Login?href=eztrade";
+//     }
+//     return res;
+//   };
+//   const errorInterceptor = (axiosError:any) => {
+//     // && axiosError.response
+//     console.log("lỗi" ,axiosError)
+//     // if (axiosError) {
+//     //   const statusCode = axiosError.response?.status;
+//     //     if(statusCode === 404) { // lỗi 404 đẩy về trang login 
+//     //         let result  =  RemoveCookie()
+//     //         // if(result)  window.location.reload();
+//     //     }
+//     // }
+//     return Promise.reject(axiosError);
+//   };
+  
+// axios.create({
+//     headers: {
+//         'accept': 'application/json',
+//         'Cache-Control': 'no-cache',    
+//         'Access-Control-Allow-Credentials': 'true',
+//         'Access-Control-Allow-Origin': '*', // Thêm header Access-Control-Allow-Origin
+//         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE', // Thêm header Access-Control-Allow-Methods
+//       },
+//       withCredentials: true, // Cho phép gửi cookie trong yêu cầu
+// })
+// axios.interceptors.response.use(responseInterceptor ,errorInterceptor)
+
+
+
+
+
 
 const requests = {
   get: (url: string, params?: URLSearchParams) =>
@@ -35,10 +91,13 @@ const requests = {
       .catch((error) => {
         console.log("Lỗi trong quá trình gửi yêu cầu: " + error);
         throw error;
-      }),
-  put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
-  delete: (url: string) => axios.delete(url).then(responseBody),
-};
+    }),
+    put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
+    delete: (url: string) => axios.delete(url).then(responseBody),
+}
+const Authen ={
+    login: (query :any) =>requests.post("http://eztrade4.fpts.com.vn/sg/api/gateway/v1/account/login",query.toString())
+}
 const TableHNX = {
   list: (params: URLSearchParams) =>
     requests.get(BASE_URL + "hnx/data.ashx", params),
@@ -79,18 +138,12 @@ const Ministry = {
     ),
 };
 const ListDataTable = {
-  list: (floor: string, valueParam: string) =>
-    requests.get(
-      BASE_URL+`${floor}/data.ashx?${valueParam}`
-    ),
-};
+    list: (floor :  string ,valueParam :  string  ) => requests.get(`${BASE_URL}${floor}/data.ashx?${valueParam}`)
+}
 const dataGDTTtable = {
-  listPt: (floor: string) =>
-    requests.get(BASE_URL+`${floor}/data.ashx?s=pt`),
-    listBi: (floor: string) =>
-    requests.get(BASE_URL+`${floor}/data.ashx?s=bi`),
-    
-};
+    listPt : (floor : string)=>requests.get(`${BASE_URL}${floor}/data.ashx?s=pt`),
+    listBi : (floor : string)=>requests.get(`${BASE_URL}${floor}/data.ashx?s=bi`)
+}
 const chartIndex = {
   get: () =>
     requests.get("https://marketstream.fpts.com.vn/chart/data.ashx?s=full"),
@@ -106,10 +159,10 @@ const dataTableBasic ={
 // table Lịch sử khớp lệnh
 const report = {
     get : () => requests.get("http://localhost:2000/data"),
-    getHisOrder : () =>  requests.get("http://localhost:2000/orderHis")
+    getHisOrder : () =>  requests.get("https://eztrade.fpts.com.vn/report/api/ApiData/GetOrderHis")
 }
 const transfer = {
-    getdataTempalte : ()=> requests.get("  http://localhost:2000/dataTranfer"),
+    getdataTempalte : ()=> requests.get("http://localhost:2000/dataTranfer"),
     hometransferds : ()=> requests.get("http://localhost:2000/dataTransferds")
 }
 const tableThongke = {
@@ -119,6 +172,7 @@ const tableThongke = {
     dataHSX :  ()=>  requests.get("http://localhost:1420/DataHSX"),
 }
 const agent = {
+    Authen,
     TableHNX,
     TableHSX,
     Index,
@@ -134,4 +188,3 @@ const agent = {
     tableThongke
 }
 export default agent;
-

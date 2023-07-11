@@ -176,7 +176,16 @@ export const getDataTable = createAsyncThunk(
         return data;
       }
     } catch (error: any) {
-      console.error("error lỗi table slice ");
+      let data = {
+        index: 0,
+        floor: "MAIN",
+        NameFloor: Param.Floor,
+        RowPined: Param.RowPined,
+        product: [],
+        KeyMenuChildren: null,
+      };
+      return  data
+    
     }
   }
 );
@@ -456,6 +465,7 @@ export const tableTestSlice = createSlice({
             state.NameFloor = "HNX";
           }
         }
+
       })
       .addCase(getDataTable.rejected, (state, action) => {
         state.DataBi = state.DataBi;

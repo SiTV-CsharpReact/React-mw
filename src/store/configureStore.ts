@@ -24,11 +24,13 @@ import { dataSliceThongke } from "../components/tableMarketwatch/helper/tableFor
 import RespportSlice from "../pages/Report/ResportSlice";
 import TransferSlice from "../pages/Transfer/TransferSlice";
 import chartOptionSlice from "../components/tablePopupMarketwatch/chartOptionSlice";
+import AuthenCationSlice from "../components/Authencation/AuthencationSlice";
 
 export const store = configureStore({
   reducer: {
     //trang chủ marketwatch
     // layout
+    Authen : AuthenCationSlice.reducer,
     layout: LayoutMarketWatchSLice.reducer,
     // Get danh sách công ty để map với stockcode
     company: companySlice.reducer,
