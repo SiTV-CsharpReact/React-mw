@@ -2,59 +2,71 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import { RPChart } from "../models/modelChart";
 import { getCoookieStorage ,RemoveCookie} from "./authen";
 const responseBody = (response: AxiosResponse) => response.data;
-const BASE_URL1 = "https://marketstream.fpts.com.vn/";
-const BASE_URL = "http://priceboard3.fpts.com.vn/";
+const BASE_URL2 = "https://marketstream.fpts.com.vn/";
+const BASE_URL1 = "http://priceboard3.fpts.com.vn/";
+const BASE_URL = "https://eztrade.fpts.com.vn/";
+
 const URL_EZTRADE = "http://eztrade0.fpts.com"
 // mặc định gửi authenticated token lên sever
 
-  axios.interceptors.request.use(
-    (config) => {
-      const token = getCoookieStorage() // Lấy token từ local storage hoặc nơi lưu trữ khác
-      if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`; // Thêm header Authorization với giá trị token
-        
-      }
-      return config
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  )
+//   axios.interceptors.request.use(
+//     (config) => {
+//       const token = getCoookieStorage()// Lấy token từ local storage hoặc nơi lưu trữ khác
+//     //   nếu có 
+//       if (token) {
+//         config.headers['Authorization'] = `Bearer ${token}`; // Thêm header Authorization với giá trị token
+//         return config
+//       }
+//     //   else{
+//     //     // nếu không có 
+//     //     const result = RemoveCookie()
+//     //     if(result) {
+//     //         window.location.reload()
+//     //         // đẩy sang login 
+//     //     }
+//     //   }
+//       return config
+//     },
+//     (error) => {
+//       return Promise.reject(error);
+//     }
+//   )
 
-  const responseInterceptor = (res:any) => {
-    // xử lý response  trả về 
-    const token = getCoookieStorage() 
-    if(token){
-        return res;
-    }else{
-        let result  =  RemoveCookie()  
-        if(result)  window.location.reload();
-    }
-    
-  };
-  const errorInterceptor = (axiosError:any) => {
-    // && axiosError.response
-    console.log("lỗi" ,axiosError)
-    if (axiosError) {
-      const statusCode = axiosError.response?.status;
-        if(statusCode === 404) {
-            let result  =  RemoveCookie()
-            if(result)  window.location.reload();
-        }
-    }
-    return Promise.reject(axiosError);
-  };
+//   const responseInterceptor = (res:any) => {
+//     // xử lý response  trả về 
+//     const token = getCoookieStorage() 
+//     if(token){
+//         return res;
+//     // }else{
+//     //     let result  =  RemoveCookie()  
+//     //     if(result)  window.location.href= "https://accounts.fpts.com.vn/Login?href=eztrade";
+//     }
+//     return res;
+//   };
+//   const errorInterceptor = (axiosError:any) => {
+//     // && axiosError.response
+//     console.log("lỗi" ,axiosError)
+//     // if (axiosError) {
+//     //   const statusCode = axiosError.response?.status;
+//     //     if(statusCode === 404) { // lỗi 404 đẩy về trang login 
+//     //         let result  =  RemoveCookie()
+//     //         // if(result)  window.location.reload();
+//     //     }
+//     // }
+//     return Promise.reject(axiosError);
+//   };
   
-axios.create({
-    headers: {
-        'accept': 'application/json',
-        'Cache-Control': 'no-cache',    
-        'Access-Control-Allow-Origin': '*', // Thêm header Access-Control-Allow-Origin
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE', // Thêm header Access-Control-Allow-Methods
-      },
-      withCredentials: true, // Cho phép gửi cookie trong yêu cầu
-})
-axios.interceptors.response.use(responseInterceptor ,errorInterceptor)
+// axios.create({
+//     headers: {
+//         'accept': 'application/json',
+//         'Cache-Control': 'no-cache',    
+//         'Access-Control-Allow-Credentials': 'true',
+//         'Access-Control-Allow-Origin': '*', // Thêm header Access-Control-Allow-Origin
+//         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE', // Thêm header Access-Control-Allow-Methods
+//       },
+//       withCredentials: true, // Cho phép gửi cookie trong yêu cầu
+// })
+// axios.interceptors.response.use(responseInterceptor ,errorInterceptor)
 
 
 
@@ -124,7 +136,7 @@ const dataTableBasic ={
 // table Lịch sử khớp lệnh
 const report = {
     get : () => requests.get("http://localhost:2000/data"),
-    getHisOrder : () =>  requests.get("http://localhost:2000/orderHis")
+    getHisOrder : () =>  requests.get("https://eztrade.fpts.com.vn/report/api/ApiData/GetOrderHis")
 }
 const transfer = {
     getdataTempalte : ()=> requests.get("http://localhost:2000/dataTranfer"),

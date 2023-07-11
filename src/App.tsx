@@ -49,24 +49,20 @@ import { getToken } from "./components/Authencation/AuthencationSlice";
 import MainlayoutScreen from "./layout/LayoutSreen";
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { token ,isLoadingToken } = useAppSelector((state: RootState) => state.Authen);
+  // const { token ,isLoadingToken } = useAppSelector((state: RootState) => state.Authen);
   useEffect(() => {
     dispatch(getToken());
   }, [dispatch]);
-  if(isLoadingToken == 0){
-    return <div> Loading</div>
-  }
+ 
   return (
     <AppProvider>
-      {/* 
+      <Header/>
       <Routes>
-          <Route path="/login" element={!token ? <LayoutAthentication />   : <Navigate to="/"  replace={true}/> } />
-        
-            <Route path="/" element={ token ?  <LayoutMarketWatch />  : <Navigate to="/login" replace={true} />   } />
+            <Route path="/" element={  <LayoutMarketWatch />     } />
             <Route path="/test" element={<TableMarketWatchTest />} />
             <Route
               path="/dynamic-dashboard-test"
-              element={  token ?  <DynamicDashboard />  : <Navigate to="/login" replace={true} />}
+              element={   <DynamicDashboard />  }
             />
             <Route path="/dynamic-dashboard" element={<MyLayout />} />
            
@@ -75,7 +71,7 @@ const App: React.FC = () => {
               element={<TransBalance />}
             />
             <Route path="/report/AssetReport2" element={<AssetReport />} />
-            <Route path="/report/ReportNAV" element={token ?  <ReportNAV />  : <Navigate to="/login" replace={true} />} />
+            <Route path="/report/ReportNAV" element={ <ReportNAV />  } />
 
             <Route path="/report/reportprofitloss" element={<AssetReport />} />
 
@@ -85,36 +81,36 @@ const App: React.FC = () => {
             />
             <Route path="/report/StockDetails" element={<StockDetails />} />
 
-            <Route path="/report/CurrMargin" element={token ? <CurrMargin />  : <Navigate to="/login" replace={true} />} />
-            <Route path="/report/StockSettlement" element={token ? <StockSettlement />  : <Navigate to="/login" replace={true} />} />
-            <Route path="/report/CashSettlement" element={token ?  <CashSettlement/>  : <Navigate to="/login" replace={true} />} />
-            <Route path="/report/StockSettlement" element={token ? <AssetReport />  : <Navigate to="/login" replace={true} />} />
-            <Route path="/report/CashSettlement" element={ token ? <AssetReport /> : <Navigate to="/login" replace={true} />} />
+            <Route path="/report/CurrMargin" element={<CurrMargin />  } />
+            <Route path="/report/StockSettlement" element={<StockSettlement />  } />
+            <Route path="/report/CashSettlement" element={ <CashSettlement/>  } />
+            <Route path="/report/StockSettlement" element={<AssetReport />  } />
+            <Route path="/report/CashSettlement" element={ <AssetReport /> } />
 
  
 
             <Route
               path="/report/ClientActivityRange"
-              element={token ?  <HistoryOrder />  : <Navigate to="/login" replace={true} />}
+              element={ <HistoryOrder />  }
             />
-            <Route path="/report/TradeLog" element={token ?  <HistoryMatching />  : <Navigate to="/login" replace={true} />} />
+            <Route path="/report/TradeLog" element={ <HistoryMatching />  } />
             <Route
               path="/report/PendingSettlement"
-              element={token ?  <HistoryForpay />  : <Navigate to="/login" replace={true} />}
+              element={ <HistoryForpay />  }
             />
   
             <Route
               path="/report/AdvReport"
-              element={token ?  <HistoryAdvReportMoney />  : <Navigate to="/login" replace={true} />}
+              element={ <HistoryAdvReportMoney />  }
             />
            
-            <Route path="/transfer" element={token ? <MoneyTransferMain />  : <Navigate to="/login" replace={true} />} />
-            <Route path="/transfer/template" element={token ? <MoneyTransferForm />  : <Navigate to="/login" replace={true} />} />
+            <Route path="/transfer" element={<MoneyTransferMain />  } />
+            <Route path="/transfer/template" element={<MoneyTransferForm />  } />
             <Route
               path="/transfer/home/transferds"
-              element={token ? <MoneyTransferDerivative />  : <Navigate to="/login" replace={true} />}
+              element={<MoneyTransferDerivative />  }
             />
-            <Route path="/transfer/history" element={token ? <MoneyHistory />  : <Navigate to="/login" replace={true} />} />
+            <Route path="/transfer/history" element={<MoneyHistory />  } />
             <Route
               path="/transfer/ordersavings"
               element={<OrdersavingsTransfer />}
@@ -158,13 +154,13 @@ const App: React.FC = () => {
        
           <Route path="/oddlot/History" element={<HistoryCkSell />} />
           <Route path="/tradingview" element={<TradingViewWidget />} />
-        </Routes> */}
-      <Routes>
-        <Route path="/" element={token  && isLoadingToken == 1? <MainlayoutScreen />  : <Navigate to="/login"/>}>
+        </Routes>
+      {/* <Routes>
+        <Route path="/" element={ <MainlayoutScreen />}>
           <Route path="/" element={<LayoutMarketWatch />} />
             <Route
               path="/dynamic-dashboard-test"
-              element={  token ?  <DynamicDashboard />  : <Navigate to="/login" replace={true} />}
+              element={   <DynamicDashboard />  }
             />
             <Route path="/dynamic-dashboard" element={<MyLayout />} />
            
@@ -173,7 +169,7 @@ const App: React.FC = () => {
               element={<TransBalance />}
             />
             <Route path="/report/AssetReport2" element={<AssetReport />} />
-            <Route path="/report/ReportNAV" element={token ?  <ReportNAV />  : <Navigate to="/login" replace={true} />} />
+            <Route path="/report/ReportNAV" element={ <ReportNAV />  } />
 
             <Route path="/report/reportprofitloss" element={<AssetReport />} />
 
@@ -183,36 +179,36 @@ const App: React.FC = () => {
             />
             <Route path="/report/StockDetails" element={<StockDetails />} />
 
-            <Route path="/report/CurrMargin" element={token ? <CurrMargin />  : <Navigate to="/login" replace={true} />} />
-            <Route path="/report/StockSettlement" element={token ? <StockSettlement />  : <Navigate to="/login" replace={true} />} />
-            <Route path="/report/CashSettlement" element={token ?  <CashSettlement/>  : <Navigate to="/login" replace={true} />} />
-            <Route path="/report/StockSettlement" element={token ? <AssetReport />  : <Navigate to="/login" replace={true} />} />
-            <Route path="/report/CashSettlement" element={ token ? <AssetReport /> : <Navigate to="/login" replace={true} />} />
+            <Route path="/report/CurrMargin" element={<CurrMargin />  } />
+            <Route path="/report/StockSettlement" element={<StockSettlement />  } />
+            <Route path="/report/CashSettlement" element={ <CashSettlement/>  } />
+            <Route path="/report/StockSettlement" element={<AssetReport />  } />
+            <Route path="/report/CashSettlement" element={ <AssetReport /> } />
 
  
 
             <Route
               path="/report/ClientActivityRange"
-              element={token ?  <HistoryOrder />  : <Navigate to="/login" replace={true} />}
+              element={ <HistoryOrder />  }
             />
-            <Route path="/report/TradeLog" element={token ?  <HistoryMatching />  : <Navigate to="/login" replace={true} />} />
+            <Route path="/report/TradeLog" element={ <HistoryMatching />  } />
             <Route
               path="/report/PendingSettlement"
-              element={token ?  <HistoryForpay />  : <Navigate to="/login" replace={true} />}
+              element={ <HistoryForpay />  }
             />
   
             <Route
               path="/report/AdvReport"
-              element={token ?  <HistoryAdvReportMoney />  : <Navigate to="/login" replace={true} />}
+              element={ <HistoryAdvReportMoney />  }
             />
            
-            <Route path="/transfer" element={token ? <MoneyTransferMain />  : <Navigate to="/login" replace={true} />} />
-            <Route path="/transfer/template" element={token ? <MoneyTransferForm />  : <Navigate to="/login" replace={true} />} />
+            <Route path="/transfer" element={<MoneyTransferMain />  } />
+            <Route path="/transfer/template" element={<MoneyTransferForm />  } />
             <Route
               path="/transfer/home/transferds"
-              element={token ? <MoneyTransferDerivative />  : <Navigate to="/login" replace={true} />}
+              element={<MoneyTransferDerivative />  }
             />
-            <Route path="/transfer/history" element={token ? <MoneyHistory />  : <Navigate to="/login" replace={true} />} />
+            <Route path="/transfer/history" element={<MoneyHistory />  } />
             <Route
               path="/transfer/ordersavings"
               element={<OrdersavingsTransfer />}
@@ -261,10 +257,10 @@ const App: React.FC = () => {
         <Route path="/login" element={ !token  && isLoadingToken == 2 ? <LayoutAthentication/> :  <Navigate to="/"/>} > 
         
         </Route>
-        <Route path="*" element={<Navigate to="/login"/>} > 
+        <Route path="*" element={<Navigate to="/login"/>} >  
         
         </Route>
-      </Routes>
+      </Routes> */}
     </AppProvider>
   );
 };
