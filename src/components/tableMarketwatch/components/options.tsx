@@ -4,7 +4,7 @@ import { RowDataIndex } from "../interface/config.tablegrid";
 import { Tooltip } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../store/configureStore";
 // import { dispatchDataTableBuy } from "../tableBuy";
-import { dispatchDataMouseEventHandler, dispatchDataMouseEventHandlerBuy, dispatchDataTable , dispatchDataTableBuy } from "../tableThunk";
+import {  dispatchDataTable  } from "../tableThunk";
 import { statusChartMarketwatch } from "../../chartMarketwatch/chartMarketwatchSlice";
 import { RowData } from "../../../models/tableMarketwatch";
 import { CellRender } from "./CellRenderComponent";
@@ -44,34 +44,7 @@ const ColumnDef = (props: any, props2: any) => {
     // console.log("dataTable ii",dataTable)
     dispatch(dispatchDataTable(dataTable));
   };
-  const handleClickR = (dataTableR: any) => {
-    dispatch(dispatchDataTable(dataTableR));
-  };
-  const handleClickRight = (dataTableMou: any): React.MouseEventHandler<HTMLDivElement> => {
-  return (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    handleClickR(dataTableMou);
-    dispatch(dispatchDataMouseEventHandler(dataTableMou));
 
-  };
-  };
-    const handleClickBuyR = (dataTable: any) => {
-    // console.log("dataTable",dataTable)
-    dispatch(dispatchDataTableBuy(dataTable));
-  };
-
-  const handleClickBuy = (dataTable: any) => {
-    // console.log("dataTable",dataTable)
-    dispatch(dispatchDataTableBuy(dataTable));
-  };
-    const handleClickRightBuy = (dataTableBUYR: any): React.MouseEventHandler<HTMLDivElement> => {
-  return (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    handleClickBuyR(dataTableBUYR);
-    dispatch(dispatchDataMouseEventHandlerBuy(dataTableBUYR));
-
-  };
-};
 
   const handleDoubleClick = (e: any, val: any) => {
     if (e.detail === 2) {
@@ -294,7 +267,6 @@ const ColumnDef = (props: any, props2: any) => {
                   onDoubleClick={() =>
                     handleClick({ ma: params.data.MCK, price: value,SanT:SanT,TCT:TCT ,TranC:TranC ,key:"S" })
                   }
-                  onContextMenu={handleClickRight({ maF: params.data.MCK, priceF: value ,SanT:SanT,TCT:TCT ,TranC:TranC,dataPopup:dataPopup })}
                 >
                   {formatNumberMarket(value)}
                 </div>
@@ -367,7 +339,6 @@ const ColumnDef = (props: any, props2: any) => {
                   onDoubleClick={() =>
                     handleClick({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC,key:"S"})
                   }
-                  onContextMenu={handleClickRight({dataPopup:dataPopup, maF: params.data.MCK, priceF: value,SanT:SanT,TCT:TCT ,TranC:TranC,})}
 
                 >
                   {formatNumberMarket(value)}
@@ -439,7 +410,6 @@ const ColumnDef = (props: any, props2: any) => {
                   onDoubleClick={() =>
                     handleClick({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC ,key:"S"})
                   }
-                  onContextMenu={handleClickRight({dataPopup:dataPopup, maF: params.data.MCK, priceF: value ,SanT:SanT,TCT:TCT ,TranC:TranC })}
 
                 >
                   {formatNumberMarket(value)}
@@ -683,9 +653,8 @@ const ColumnDef = (props: any, props2: any) => {
                   data-comp={rowid}
                   className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClickBuy({ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC,key:"B" })
+                    handleClick({ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC,key:"B" })
                   }
-                  onContextMenu={handleClickRightBuy({dataPopup:dataPopup, maB: params.data.MCK, priceB: value,SanT:SanT,TCT:TCT ,TranC:TranC, })}
 
                 >
                   {formatNumberMarket(value)}
@@ -753,10 +722,8 @@ const ColumnDef = (props: any, props2: any) => {
                   data-comp={rowid}
                   className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClickBuy({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC,key:"B" })
+                    handleClick({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC,key:"B" })
                   }
-                  onContextMenu={handleClickRightBuy({dataPopup:dataPopup, maB: params.data.MCK, priceB: value ,SanT:SanT,TCT:TCT ,TranC:TranC,})}
-
                 >
                   {formatNumberMarket(value)}
                 </div>
@@ -825,10 +792,8 @@ const ColumnDef = (props: any, props2: any) => {
                   data-comp={rowid}
                   className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClickBuy({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC,key:"B" })
+                    handleClick({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC,key:"B" })
                   }
-                  onContextMenu={handleClickRightBuy({ maB: params.data.MCK, priceB: value,SanT:SanT,TCT:TCT ,TranC:TranC})}
-
                 >
                   {formatNumberMarket(value)}
                 </div>
@@ -1024,7 +989,6 @@ const ColumnDef = (props: any, props2: any) => {
     INDEX.cbcol28,
     INDEX.cbcol4,
     handleClick,
-    handleClickBuy,
     handleDoubleClick,
     handlePinRow,
     widthWindow,

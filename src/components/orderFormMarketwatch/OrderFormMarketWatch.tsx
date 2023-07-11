@@ -54,25 +54,21 @@ const OrderMarketW = () => {
   //const {data} = useAppSelector(state => state.counter);
   const [counter, setCounter] = useState(0);
   const { dataTable } = useAppSelector((state) => state.dataTable);
-  console.log("TCT ne", dataTable.TCT)
-  const { dataBuy } = useAppSelector((state) => state.dataBuy);
   const { dataShow } = useAppSelector((state) => state.dataShow);
   // popup
   const [popup, setPopup] = useState(false);
   useEffect(() => {
-    if (dataTable.key && dataTable) {
+    if (dataTable.key === "S" ) {
       console.log("key day any",dataTable.key)
       setColor(false);
     }
-  }, [dataTable]);
+  }, [dataTable.key]);
 
   useEffect(() => {
-    if (dataBuy.key && dataBuy) {
-      console.log("dataBuy day any",dataBuy.key)
-
+    if (dataTable.key === "B") {
       setColor(true);
     }
-  }, [dataBuy]);
+  }, [dataTable.key]);
 
   const incrementCounter = () => {
     setValueInputKl(valueInputKl + 100);
@@ -120,11 +116,6 @@ const OrderMarketW = () => {
     setValueInputKl(value.toUpperCase());
   };
 
-  // const handelCheck = () => {
-  //   const item : any = dataOrder.map((item,index) => item.split("-"));
-  //   setValueInput(item[0][0])
-  //   console.log("item",item[0])
-  // }
   const handelSuccess = (e: any) => {
     e.preventDefault();
     if (!success) {
@@ -153,7 +144,7 @@ const OrderMarketW = () => {
 
     try {
       await validationSchema.validate({
-        txtSymbol: inputValue || dataShow.San || dataTable.ma || dataBuy.ma,
+        txtSymbol: inputValue || dataShow.San || dataTable.ma ,
       });
     } catch (error: any) {
       alert("Chưa nhập Mã chứng khoán");
@@ -167,7 +158,7 @@ const OrderMarketW = () => {
     }
     try {
       await validationSchemaPrice.validate({
-        txtSymbol: valueInputPrice || dataBuy.price || dataTable.price,
+        txtSymbol: valueInputPrice  || dataTable.price,
       });
     } catch (error) {
       alert("Chưa nhập Giá");
@@ -188,23 +179,23 @@ const OrderMarketW = () => {
   const handelPopup = () => {
     setPopup(!popup);
   };
-  useEffect(() => {
-      if (dataBuy.ma) {
-      setInputValue(dataBuy.ma)
-    }
-    if (dataBuy.price) {
-      setValueInputPrice(dataBuy.price)
-    }
-    if (dataBuy.TranC) {
-      setTranC(Number(dataBuy.TranC))
-    }
-     if (dataBuy.TCT) {
-      setTCT(Number(dataBuy.TCT))
-    }
-     if (dataBuy.SanT) {
-      setSanT(Number(dataBuy.SanT))
-    }
-    }, [dataBuy.ma,dataBuy.price,dataBuy.SanT,dataBuy.TCT,dataBuy.TranC]);
+  // useEffect(() => {
+  //   if (dataBuy.ma) {
+  //     setInputValue(dataBuy.ma)
+  //   }
+  //   if (dataBuy.price) {
+  //     setValueInputPrice(dataBuy.price)
+  //   }
+  //   if (dataBuy.TranC) {
+  //     setTranC(Number(dataBuy.TranC))
+  //   }
+  //   if (dataBuy.TCT) {
+  //     setTCT(Number(dataBuy.TCT))
+  //   }
+  //   if (dataBuy.SanT) {
+  //     setSanT(Number(dataBuy.SanT))
+  //   }
+  //   }, [dataBuy.ma,dataBuy.price,dataBuy.SanT,dataBuy.TCT,dataBuy.TranC]);
   useEffect(() => {
     if (dataTable.ma) {
       setInputValue(dataTable.ma)
@@ -564,7 +555,7 @@ const OrderMarketW = () => {
                             <td className="text-center border-r border border-[#dedede]">
                               {inputValue ||
                                 dataTable.ma ||
-                                dataBuy.ma ||
+                                // dataBuy.ma ||
                                 dataShow.ma}
                             </td>
                             <td className="text-center border-r border border-[#dedede]">
@@ -572,8 +563,9 @@ const OrderMarketW = () => {
                             </td>
                             <td className="text-center border-r border border-[#dedede]">
                               {valueInputPrice ||
-                                dataTable.price ||
-                                dataBuy.price}
+                                dataTable.price 
+                                // dataBuy.price
+                              }
                             </td>
                             <td>
                               {gdSuccess && (

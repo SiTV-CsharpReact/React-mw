@@ -24,7 +24,6 @@ import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlic
 import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 import { dispatchDataTable } from "./tableThunk";
-import { dispatchDataTableBuy } from "./tableThunk";
 import { getDataTable } from "./tableSlice";
 import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
 const showKLPT = (value: string) => {
@@ -127,7 +126,6 @@ const TableMarketWatch = () => {
   };
   const handleClickBuy = (dataTable: any) => {
     console.log("dataTable", dataTable);
-    dispatch(dispatchDataTableBuy(dataTable));
   };
   // sort products
   products.forEach((obj) =>

@@ -5,8 +5,6 @@ import { formatNumber } from "../../utils/util";
 
 const TableKLTTGPopup: React.FC<any> = ({ dataResult }) => {
   
-  const { dataMouse } = useAppSelector(state => state.dataMouse);
-  const { dataMouseBuy } = useAppSelector(state => state.dataMouseBuy);
 
   return (
     <table id="tbpuRT" className="pu-table-realtime">
@@ -23,22 +21,13 @@ const TableKLTTGPopup: React.FC<any> = ({ dataResult }) => {
       </thead>
       <tbody>
         {dataResult.map((item: any, index: any) => {
-           const color =
-            dataMouse.priceF < item.MP ? "red"
-              : dataMouse > item.MP
-              ? "green"
-              : "yellow";
-          const colorBuy =
-            dataMouseBuy.priceB < item.MP ? "red"
-              : dataMouseBuy > item.MP
-              ? "green"
-              : "yellow";
+           const color = ""
           
           return  <tr key={index} style={{ height: "22px" }}>
-          <td style={{color: color || colorBuy }} className="text-center pu-w">{item.MT}</td>
-          <td  style={{color: color || colorBuy }} className="pu-w">{formatNumber(item.MP)}</td>
-          <td  style={{color: color || colorBuy }} className="pu-w">{formatNumber(item.MQ)}</td>
-          <td  style={{color: color || colorBuy }} className="pu-w">{formatNumber(item.TQ)}</td>
+          <td style={{color: color  }} className="text-center pu-w">{item.MT}</td>
+          <td  style={{color: color  }} className="pu-w">{formatNumber(item.MP)}</td>
+          <td  style={{color: color  }} className="pu-w">{formatNumber(item.MQ)}</td>
+          <td  style={{color: color  }} className="pu-w">{formatNumber(item.TQ)}</td>
         </tr>
         })}
        
