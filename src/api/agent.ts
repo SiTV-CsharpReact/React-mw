@@ -126,7 +126,7 @@ const Company = {
 const Category = {
   get: () =>
     requests.get(
-      "http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C000700"
+      " http://localhost:8060/categori"
     ),
   // fetch  đata
   fetchData: () => requests.get("http://localhost:30/categori"),
@@ -178,8 +178,6 @@ const tableThongke = {
     requests.get(`${BASE_URL}/hnx/data.ashx?${params}`),
   sortThongkeIndex: (query: any) =>
     requests.post(BASE_URL + "/Root/Data.ashx", query),
-  dataHNX: () => requests.get("http://localhost:1420/DataHNX"),
-  dataHSX: () => requests.get("http://localhost:1420/DataHSX"),
 };
 
 const tableDetailPopup = {

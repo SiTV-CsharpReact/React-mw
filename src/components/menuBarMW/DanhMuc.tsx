@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import { fetchTableHNXAsync, fetchTableHSXAsync, getDataTable, setProductParams } from "../tableMarketwatch/tableSlice";
 import { setActiveMenu } from "./menuSlice";
-import { getDataTable } from "../tableMarketwatch/tableTestSlice";
+import { HandleSetActiveFloor, getDataTable } from "../tableMarketwatch/tableTestSlice";
 // import { fetchDataTableHNXAsync, } from "../tableMarketwatch/tableSlice";
 
 // interface IProp {
@@ -46,6 +46,7 @@ const handleItemChildClick = async (
     keyMenu : -1,
     nameMenu : ""
   }
+  dispatch(HandleSetActiveFloor(0))
   dispatch(setActiveMenu(activeMenu)) // cập nhật active menu 
   dispatch(activeMenuDanhmuc(activeCate )) // cập nhật active danh mục 
   await dispatch(getDataTable(data));
@@ -60,7 +61,7 @@ const handleItemChildClick = async (
           <React.Fragment key={index}>
             <li className="relative">
               <Link to="" className=" "  onClick={() => handleItemChildClick(item.Name,item.List ,item.Row ,'danh-muc',)}> 
-                {item.Name}
+                {item.Name} 
               </Link>  
               <span id={`btDel${index}`} className="imgDel keep" />
             </li>
