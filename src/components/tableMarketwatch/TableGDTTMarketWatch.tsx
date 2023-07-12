@@ -8,7 +8,7 @@ const TableGDTTMarketWatch = () => {
     (state: RootState) => state.menuBar
   );
   const { DataBi, DataPt, NameFloor } = useAppSelector(
-    (state: RootState) => state.table
+    (state: RootState) => state.tableTest
   );
   const [input, setInput] = useState<any>({
     value: "",
@@ -105,11 +105,12 @@ const TableGDTTMarketWatch = () => {
   useEffect(() => {
     filterData(input.value);
   }, [input.value]);
+  console.log(DataBi)
 
   // Render table body
   const renderTableBody = () => {
     if (data.filter != null && data.filter.length > 0) {
-      return data.filter.map((product: any) => {
+      return data.filter.sort().map((product: any) => {
         let colorClass = "";
 
         if (iFloor === "HSX") {
@@ -271,7 +272,7 @@ const TableGDTTMarketWatch = () => {
                   <label>
                     {" "}
                     {parseFloat(
-                      DataBi[2]?.f240.replace(/,/g, "")
+                      DataBi[4]?.f240?.replace(/,/g, "")
                     ).toLocaleString()}
                   </label>
                 </span>
@@ -280,7 +281,7 @@ const TableGDTTMarketWatch = () => {
                   <label>
                     {" "}
                     {parseFloat(
-                      DataBi[2]?.f241.replace(/,/g, "")
+                      DataBi[4]?.f241?.replace(/,/g, "")
                     ).toLocaleString()}
                   </label>
                 </span>

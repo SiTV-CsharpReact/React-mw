@@ -204,9 +204,7 @@ export const checkSTTMarketValue = (value: string, status?: string) => {
 // status sàn HNX
 export const fStatusMarketHNX = (value?:string) =>{
     let valueStatus = ""
-    g_arrHAMarketStatus.map((g_HNXStatus)=>{
-      //console.log(g_HNXStatus[0])
-         
+    g_arrHAMarketStatus.forEach((g_HNXStatus) => {
           if(g_HNXStatus[0] === value){
             valueStatus= g_HNXStatus[1]
           }
@@ -215,35 +213,26 @@ export const fStatusMarketHNX = (value?:string) =>{
     return valueStatus
   }
   // status HSX
-  export const fStatusMarketHSX = (value?:string) =>{
-    // console.log(value)
-    let valueStatus = ""
-    g_arrHOMarketStatus.map((g_HSXStatus)=>{
-      //console.log(g_HNXStatus[0])
-         
-          if(g_HSXStatus[0] === value){
-            valueStatus= g_HSXStatus[1]
-            // console.log(valueStatus)
-          }
-    })
-   
-    return valueStatus
-  }
+  export const fStatusMarketHSX = (value?: string) => {
+    let valueStatus = "";
+    g_arrHOMarketStatus.forEach((g_HSXStatus: any) => {
+      if (g_HSXStatus[0] === value) {
+        valueStatus = g_HSXStatus[2];
+      }
+    });
+  
+    return valueStatus;
+  };
   //status sàn UPCOM
   export const fStatusMarketUPCOM = (value?:string) =>{
-    // console.log(value)
     let valueStatus = ""
-    g_arrUPMarketStatus.map((g_UPCStatus)=>{
-      //console.log(g_HNXStatus[0])
-         
+    g_arrUPMarketStatus.forEach((g_UPCStatus)=>{  
           if(g_UPCStatus[0] === value){
             valueStatus= g_UPCStatus[1]
           }
           
     })
-    // console.log(valueStatus)
     return valueStatus;
-
   }
   export const HNXStatus =() =>{
     

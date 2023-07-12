@@ -4,7 +4,7 @@ import { AgGridReact } from "ag-grid-react";
 // import "ag-grid-community/styles/ag-grid.css";
 // import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./table.scss";
-import { arrayColor, colorTextMenu, fStatusMarketHNX, fStatusMarketUPCOM, formatNumberMarket } from "../../utils/util";
+import { arrayColor, colorTextMenu, fStatusMarketHNX, fStatusMarketHSX, fStatusMarketUPCOM, formatNumberMarket } from "../../utils/util";
 
 // import { LicenseManager } from "ag-grid-enterprise";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
@@ -291,7 +291,7 @@ const TableMarketWatchTest = () => {
           if (fStatusMarketHNX(dataHNX[1]) !== "") {
             tdIndexMenu.innerHTML = fStatusMarketHNX(dataHNX[1]);
             tdIndexMenu.style.backgroundColor = "#888888";
-            arrayColor.map((arrayColorText: string) => {
+            arrayColor.forEach((arrayColorText: string) => {
               tdIndexMenu.classList.remove(arrayColorText);
             });
             setTimeout(function () {
@@ -302,16 +302,28 @@ const TableMarketWatchTest = () => {
           else if (fStatusMarketUPCOM(dataHNX[1]) !== "") {
             tdIndexMenu.innerHTML = fStatusMarketUPCOM(dataHNX[1]);
             tdIndexMenu.style.backgroundColor = "#888888";
-            arrayColor.map((arrayColorText: string) => {
+            arrayColor.forEach((arrayColorText: string) => {
               tdIndexMenu.classList.remove(arrayColorText);
             });
             setTimeout(function () {
               tdIndexMenu.style.backgroundColor = "";
             }, 500);
-          } else {
+          }
+             // check thị trường HSX
+             else if (fStatusMarketHSX(dataHNX[1]) !== "") {
+              tdIndexMenu.innerHTML = fStatusMarketHSX(dataHNX[1]);
+              tdIndexMenu.style.backgroundColor = "#888888";
+              arrayColor.forEach((arrayColorText: string) => {
+                tdIndexMenu.classList.remove(arrayColorText);
+              });
+              setTimeout(function () {
+                tdIndexMenu.style.backgroundColor = "";
+              }, 500);
+            }           
+        else {
             tdIndexMenu.innerHTML = `${dataHNX[1]}`;
             tdIndexMenu.style.backgroundColor = "#888888";
-            arrayColor.map((arrayColorText: string) => {
+            arrayColor.forEach((arrayColorText: string) => {
               tdIndexMenu.classList.remove(arrayColorText);
             });
             //tdIndexMenu.style.color = colorTextMenu(dataHNX[1])
