@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./table.scss";
 import { formatNumber, listDataCompany } from "../../utils/util";
 import { useAppSelector, RootState } from "../../store/configureStore";
@@ -25,15 +25,6 @@ const TableGDTTMarketWatch = () => {
     default: [],
   });
   const [iFloor, setIFloor] = useState<any>(NameFloor);
-
-  // Gán mã theo sàn vào biến
-  useEffect(() => {
-    if (keyMenu === 2 && nameMenu === "Giao dịch thỏa thuận") {
-      setIFloor("upcom");
-    } else {
-      setIFloor(NameFloor);
-    }
-  }, [NameFloor, keyMenu, nameMenu]);
 
   // Lọc mã theo sàn
   const filterStockCodesByExchange = (listDataCompany: any) => {
@@ -64,6 +55,15 @@ const TableGDTTMarketWatch = () => {
     filterStockCodesByExchange(listDataCompany);
   }, [listDataCompany]);
 
+  // Gán mã theo sàn vào biến
+  useEffect(() => {
+    if (keyMenu === 2 && nameMenu === "Giao dịch thỏa thuận") {
+      setIFloor("upcom");
+    } else {
+      setIFloor(NameFloor);
+    }
+  }, [NameFloor, keyMenu, nameMenu]);
+
   // Gán data product vào biến
   useEffect(() => {
     if (iFloor === "HSX") {
@@ -79,15 +79,15 @@ const TableGDTTMarketWatch = () => {
       });
       setData({ ...data, default: newData, filter: newData });
     }
-    setInput({ ...input, value: "" });
+    setInput({ ...input, value: "", filter: "" });
   }, [iFloor, listDataStockCode, DataPt]);
 
   // Lọc data theo Input nhập vào
   const filterData = (value: any) => {
     const filteredData = data.default?.filter((item: any) => {
       return NameFloor === "HSX"
-        ? item.Info[1][1].includes(value?.toUpperCase())
-        : item.Info[0][1].includes(value?.toUpperCase());
+        ? item.Info[1][1]?.includes(value?.toUpperCase())
+        : item.Info[0][1]?.includes(value?.toUpperCase());
     });
 
     const uniqueValues = new Set(
@@ -109,7 +109,19 @@ const TableGDTTMarketWatch = () => {
   // Render table body
   const renderTableBody = () => {
     if (data.filter != null && data.filter.length > 0) {
-      return data.filter.map((product: any) => {
+      const sortedData = data.filter?.slice().sort((a: any, b: any) => {
+        const valueA = iFloor === "HSX" ? a.Info[1][1] : a.Info[0][1];
+        const valueB = iFloor === "HSX" ? b.Info[1][1] : b.Info[0][1];
+
+        // Sắp xếp theo thứ tự ABC
+        if (typeof valueA === "string" && typeof valueB === "string") {
+          return valueA.localeCompare(valueB);
+        } else {
+          return data.filter;
+        }
+      });
+
+      return sortedData?.map((product: any) => {
         let colorClass = "";
 
         if (iFloor === "HSX") {
@@ -186,7 +198,6 @@ const TableGDTTMarketWatch = () => {
 
     return null;
   };
-
   return (
     <div id="dvFixedH">
       <div className="border-t dvContentLP border-borderHeadTableMarket">
@@ -198,7 +209,7 @@ const TableGDTTMarketWatch = () => {
                   input.focus || input.value !== ""
                     ? "inputTableGDTT text-white"
                     : "top-[50%] -translate-y-[50%] "
-                } absolute bg-[#131722] text-gray-600 text-[11px] ml-1 px-1 leading-[8px] cursor-text `}
+                } absolute bg-[#131722] text-white text-[11px] ml-1 px-1 leading-[8px] cursor-text `}
                 htmlFor="maCk"
               >
                 {input.focus || input.value !== "" ? "Mã" : "Nhập mã cần tìm"}
@@ -228,17 +239,19 @@ const TableGDTTMarketWatch = () => {
               } `}
             >
               {input.filter.length > 0 &&
-                input.filter?.map((item: any) => (
-                  <span
-                    key={item}
-                    className="cursor-pointer leading-[24px] text-left px-[7px] text-xs hover:bg-[#9e9e9e] whitespace-nowrap w-full"
-                    onMouseDown={() => {
-                      setInput({ ...input, value: item });
-                    }}
-                  >
-                    {item}
-                  </span>
-                ))}
+                input.filter
+                  .sort((a: string, b: string) => a.localeCompare(b))
+                  .map((item: any) => (
+                    <span
+                      key={item}
+                      className="cursor-pointer leading-[24px] text-left px-[7px] text-xs hover:bg-[#9e9e9e] whitespace-nowrap w-full"
+                      onMouseDown={() => {
+                        setInput({ ...input, value: item });
+                      }}
+                    >
+                      {item}
+                    </span>
+                  ))}
             </div>
           </div>
           {/* check NameFloor  */}
@@ -250,7 +263,7 @@ const TableGDTTMarketWatch = () => {
                   <label>
                     {" "}
                     {parseFloat(
-                      DataBi[4]?.f240.replace(/,/g, "")
+                      DataBi[4]?.f240?.replace(/,/g, "")
                     ).toLocaleString()}
                   </label>
                 </span>
@@ -259,7 +272,7 @@ const TableGDTTMarketWatch = () => {
                   <label>
                     {" "}
                     {parseFloat(
-                      DataBi[4]?.f241.replace(/,/g, "")
+                      DataBi[4]?.f241?.replace(/,/g, "")
                     ).toLocaleString()}
                   </label>
                 </span>
@@ -271,7 +284,7 @@ const TableGDTTMarketWatch = () => {
                   <label>
                     {" "}
                     {parseFloat(
-                      DataBi[2]?.f240.replace(/,/g, "")
+                      DataBi[4]?.f240?.replace(/,/g, "")
                     ).toLocaleString()}
                   </label>
                 </span>
@@ -280,7 +293,7 @@ const TableGDTTMarketWatch = () => {
                   <label>
                     {" "}
                     {parseFloat(
-                      DataBi[2]?.f241.replace(/,/g, "")
+                      DataBi[4]?.f241?.replace(/,/g, "")
                     ).toLocaleString()}
                   </label>
                 </span>
