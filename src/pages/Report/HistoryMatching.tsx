@@ -662,7 +662,7 @@ const HistoryMatching = () => {
                       : ""}
                     {/* tổng */}
                     {ArrayMua.length > 0 ? (
-                      <tr className="totalBuySell">
+                      <tr  key="tongmua" className="totalBuySell">
                         <td className="textCenter" colSpan={4}>
                           Tổng Mua
                         </td>
@@ -679,7 +679,7 @@ const HistoryMatching = () => {
                       <>
                       {/* mappp p pp  */}
              
-                        <tr className="tdHover">
+                        <tr key="ban" className="tdHover">
                           <td
                             className="sellHover textCenter"
                             rowSpan={
@@ -919,7 +919,7 @@ const HistoryMatching = () => {
                       : ""}
                     {/* tổng bán  */}
                     {ArrayBan.length > 0 ? (
-                      <tr className="totalBuySell">
+                      <tr className="totalBuySell" key="tongban">
                         <td className="textCenter" colSpan={4}>
                           Tổng Bán
                         </td>

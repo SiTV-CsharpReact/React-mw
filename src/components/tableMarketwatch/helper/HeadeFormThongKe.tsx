@@ -1,9 +1,5 @@
-import ReactDatePicker from "react-datepicker";
-import { DatePicker, Space } from "antd";
-import dayjs, { Dayjs } from "dayjs";
 import "./index.scss";
-import axios from "axios";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useAppDispatch,
   useAppSelector,
@@ -13,7 +9,7 @@ import { dispatchDataThongke } from "./tableFormThongke";
 import { DateTimeCover, getDateTime } from "../../../pages/helper/DateTime";
 import { SortTableThongkeIndex } from "../tableTestSlice";
 import { VARIBLE_ACTICON_TYPE } from "./varible";
-import { dataCK } from "../../../models/modelTableHNX";
+
 type DataValue = {
   action: string;
   center: any; //san
@@ -32,13 +28,12 @@ const HeaderFromThongke = ({ ChangeFuncion }: Props) => {
   const { stockCode, KeyMenuChildren } = useAppSelector(
     (state: RootState) => state.tableTest
   );
-  const { keyMenu, nameMenu, floorMenu , dataHNX ,dataHSX ,dataUPCOM } = useAppSelector(
+  const {  nameMenu, floorMenu} = useAppSelector(
     (state: RootState) => state.tableTest
   );
-  const center  = nameMenu == "UPCOM" ? 4 : floorMenu == "HNX"? 2 : 1
+  const {dataCompanyHNX ,dataCompanyHSX ,dataCompanyUpcom}  = useAppSelector((state:RootState) =>  state.company)
   const { tuNgay, denNgay } = getDateTime();
   const { StartDay, EndDay } = DateTimeCover();
-
   const [data, setData] = useState<DataValue>({
     action: "",
     center: nameMenu == "UPCOM" ? 4 : floorMenu == "HNX"? 2 : 1,
@@ -79,7 +74,7 @@ const HeaderFromThongke = ({ ChangeFuncion }: Props) => {
     }
   }, []);
   const [selectedExchange, setSelectedExchange] = useState(nameMenu == "UPCOM" ? 4 : floorMenu == "HNX"? 2 : 1); // Mặc định chọn HOSE
-  const [selectedStock, setSelectedStock] = useState(nameMenu == "UPCOM"? dataUPCOM:   floorMenu == "HNX"? dataHNX :dataHSX ) // mặc định HSX
+  const [selectedStock, setSelectedStock] = useState(nameMenu == "UPCOM"? dataCompanyUpcom:   floorMenu == "HNX"? dataCompanyHNX :dataCompanyHSX ) // mặc định HSX
   const [selectedCk ,setSelectedCk ] = useState(stockCode ? stockCode : 0)
   const dispatch = useAppDispatch();
   // sàn
@@ -88,7 +83,7 @@ const HeaderFromThongke = ({ ChangeFuncion }: Props) => {
     setData({ ...data, code: 0 });
     setSelectedExchange(Number(e.target.value));
     ChangeFuncion({ ...data, center: e.target.value });
-    setSelectedStock( e.target.value == 1 ? dataHSX :  e.target.value == 2 ?  dataHNX :  dataUPCOM)
+    setSelectedStock( e.target.value == 1 ? dataCompanyHSX :  e.target.value == 2 ?  dataCompanyHNX :  dataCompanyUpcom)
   };
   const handleTuNgay = (e: any) => {
     let { StartDay } = DateTimeCover(e.target.value);
@@ -153,7 +148,7 @@ const HeaderFromThongke = ({ ChangeFuncion }: Props) => {
               <option label="HNX" selected value={2}>
                 HNX
               </option>
-              <option label="UPCOM" value={4}>
+              <option label="UPCOM" value={3}>
                 UPCOM
               </option>
             </select>
@@ -169,9 +164,9 @@ const HeaderFromThongke = ({ ChangeFuncion }: Props) => {
               <option className="pl-[8px] py-[1px]" value="0">
                 Tất Cả
               </option>  
-             {selectedStock && selectedStock.length > 0 ? selectedStock.map((item:dataCK,index:number)=>{
+             {selectedStock && selectedStock.length > 0 ? selectedStock.map((item:any,index:number)=>{
                 return  <> 
-                    <option key={index+1} value={item?.Sy}>{item.Sy}</option>
+                    <option key={index+1} value={item?.Code}>{item.Code}</option>
                 </>
              }) : ""}
             </select>
