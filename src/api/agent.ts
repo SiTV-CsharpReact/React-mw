@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
+import axios, { AxiosResponse } from "axios";
 import { RPChart } from "../models/modelChart";
 import { getCoookieStorage ,RemoveCookie} from "./authen";
 const responseBody = (response: AxiosResponse) => response.data;
@@ -126,7 +126,7 @@ const Company = {
 const Category = {
   get: () =>
     requests.get(
-      "http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C000700"
+      " http://localhost:8060/categori"
     ),
   // fetch  đata
   fetchData: () => requests.get("http://localhost:30/categori"),
@@ -138,12 +138,18 @@ const Ministry = {
     ),
 };
 const ListDataTable = {
-    list: (floor :  string ,valueParam :  string  ) => requests.get(`${BASE_URL}${floor}/data.ashx?${valueParam}`)
-}
+  list: (floor: string, valueParam: string) =>
+    requests.get(
+      BASE_URL+`${floor}/data.ashx?${valueParam}`
+    ),
+};
 const dataGDTTtable = {
-    listPt : (floor : string)=>requests.get(`${BASE_URL}${floor}/data.ashx?s=pt`),
-    listBi : (floor : string)=>requests.get(`${BASE_URL}${floor}/data.ashx?s=bi`)
-}
+  listPt: (floor: string) =>
+    requests.get(BASE_URL+`${floor}/data.ashx?s=pt`),
+    listBi: (floor: string) =>
+    requests.get(BASE_URL+`${floor}/data.ashx?s=bi`),
+    
+};
 const chartIndex = {
   get: () => requests.get(BASE_URL + "/chart/data.ashx?s=full"),
   //get: () => requests.get('http://localhost:8000/dataChartIndex'),
@@ -172,8 +178,6 @@ const tableThongke = {
     requests.get(`${BASE_URL}/hnx/data.ashx?${params}`),
   sortThongkeIndex: (query: any) =>
     requests.post(BASE_URL + "/Root/Data.ashx", query),
-  dataHNX: () => requests.get("http://localhost:1420/DataHNX"),
-  dataHSX: () => requests.get("http://localhost:1420/DataHSX"),
 };
 
 const tableDetailPopup = {
