@@ -3,7 +3,7 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
-import { DataTable, DataGDTT ,dataCK } from "../../models/modelTableHNX";
+import { DataTable, DataGDTT  } from "../../models/modelTableHNX";
 import agent from "../../api/agent";
 import { TableParams } from "../../models/modelLinkTable";
 import { RootState } from "../../store/configureStore";
@@ -45,9 +45,6 @@ interface TableState {
   keyMenu: string;
   nameMenu: string;
   floorMenu: string;
-  dataHNX :dataCK[];
-  dataHSX :dataCK[];
-  dataUPCOM : dataCK[];
 }
 type params = {
   Floor: string;
@@ -62,6 +59,7 @@ const dataTableAdapter = createEntityAdapter<DataTable>({
 export const getDataTable = createAsyncThunk(
   "table/getDataTable",
   async (Param: params) => {
+    console.log("Param",Param)
     try {
       if (Param.Query === "thoa-thuan-hsx") {
         const DataBi = await agent.dataGDTTtable.listBi("hnx");
@@ -176,7 +174,16 @@ export const getDataTable = createAsyncThunk(
         return data;
       }
     } catch (error: any) {
-      console.error("error lỗi table slice ");
+      let data = {
+        index: 0,
+        floor: "MAIN",
+        NameFloor: Param.Floor,
+        RowPined: Param.RowPined,
+        product: [],
+        KeyMenuChildren: null,
+      };
+      return  data
+    
     }
   }
 );
@@ -191,21 +198,6 @@ export const getdataTableThongKe = createAsyncThunk(
     } catch (error) {}
   }
 );
-export const getDataChungKhoan = createAsyncThunk("table_getdataChungkhoan", async()=>{
-  try {
-      const dataHNX =  await agent.tableThongke.dataHNX()
-      const dataHSX =  await agent.tableThongke.dataHSX()
-      const dataUPCOM = dataHNX
-       const dataCK ={
-        dataHNX: dataHNX.sort((a:dataCK, b:dataCK) => a.Sy.localeCompare(b.Sy)),
-        dataHSX :dataHSX.sort((a:dataCK, b:dataCK) => a.Sy.localeCompare(b.Sy)),
-        dataUPCOM : dataUPCOM.sort((a:dataCK, b:dataCK) => a.Sy.localeCompare(b.Sy)),
-      }
-      return dataCK
-  } catch (error) {
-    
-  }
-})
 export const SortTableThongkeIndex = createAsyncThunk(
   "table_thongke_index",
   async (query: any) => {
@@ -261,9 +253,6 @@ export const tableTestSlice = createSlice({
     keyMenu: "" ,
     nameMenu: "",
     floorMenu: "",
-    dataHNX :[] as dataCK[],
-    dataHSX :[] as dataCK[],
-    dataUPCOM :[] as dataCK[],
   }),
   reducers: {
     setProductParams: (state, action) => {
@@ -368,6 +357,7 @@ export const tableTestSlice = createSlice({
         state.productsLoaded = true;
         state.status = "idle";
         let data = action.payload;
+        
         let dataTable = data?.product;
         state.RowPined = data?.RowPined;
         if (data?.index === 0) {
@@ -422,11 +412,11 @@ export const tableTestSlice = createSlice({
           if (data?.RowPined) {
             let indexCut = data?.RowPined;
             let newdata = mergedArray ? mergedArray.splice(0, indexCut) : [];
-            state.DataPined = newdata.map((e: any) => {
+            state.DataPined  = newdata.map((e : any) => {
               return { ...e, isPined: true };
             });
-
             state.ListDataTable = mergedArray;
+
           } else {
             if (data.NameFloor === "HNX") { 
               state.ListDataTable = mergedArray;
@@ -456,6 +446,7 @@ export const tableTestSlice = createSlice({
             state.NameFloor = "HNX";
           }
         }
+
       })
       .addCase(getDataTable.rejected, (state, action) => {
         state.DataBi = state.DataBi;
@@ -507,14 +498,6 @@ export const tableTestSlice = createSlice({
       .addCase(SortTableThongkeIndex.rejected, (state) => {
         state.loadingTableThongke = 3;
       })
-      .addCase(getDataChungKhoan.pending,(state) => {})
-      .addCase(getDataChungKhoan.fulfilled,(state,action) => {
-          const data =  action.payload
-          state.dataHSX  = data?.dataHSX
-          state.dataHNX =  data?.dataHNX
-          state.dataUPCOM = data?.dataUPCOM
-      })
-      .addCase(getDataChungKhoan.rejected,(state) => {})
   },
 });
 

@@ -35,17 +35,6 @@ export interface ProductParamsHNX {
   NNBan: string;
   RoomCL: string;
 }
-// export interface IAddress {
-//   street: string;
-// }
-
-// export interface IUser {
-//   id: number;
-//   name: string;
-//   username: string;
-//   address: IAddress;
-// }
-
 export interface DataGDTT {
   f8: string;
   f9: string;
@@ -73,11 +62,4 @@ export interface DataGDTT {
   f336: string;
   f340: string;
   f341: string;
-}
-export interface dataCK {
-  Sy: string;
-  Ex: string;
-  Re: string;
-  Ce: string;
-  Fl: string;
 }
