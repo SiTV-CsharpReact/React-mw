@@ -57,6 +57,7 @@ const TableGDTTMarketWatch = () => {
 
   // Gán mã theo sàn vào biến
   useEffect(() => {
+    setInput({ ...input, value: "", filter: "" });
     if (keyMenu === 2 && nameMenu === "Giao dịch thỏa thuận") {
       setIFloor("upcom");
     } else {
@@ -66,6 +67,7 @@ const TableGDTTMarketWatch = () => {
 
   // Gán data product vào biến
   useEffect(() => {
+    setInput({ ...input, value: "", filter: "" });
     if (iFloor === "HSX") {
       setData({ ...data, default: DataPt, filter: DataPt });
     } else if (iFloor === "HNX") {
@@ -79,7 +81,6 @@ const TableGDTTMarketWatch = () => {
       });
       setData({ ...data, default: newData, filter: newData });
     }
-    setInput({ ...input, value: "", filter: "" });
   }, [iFloor, listDataStockCode, DataPt]);
 
   // Lọc data theo Input nhập vào
