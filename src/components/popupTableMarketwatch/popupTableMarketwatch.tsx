@@ -4,7 +4,7 @@ import {
   useAppSelector,
   RootState,
 } from "../../store/configureStore";
-import { showDetailStock } from "./popupTableSlice";
+import { showDetailStock ,setLLTG } from "./popupTableSlice";
 import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatch";
 import { handleHistoryPrices } from "../tableMarketwatch/tableTestSlice";
 import { setHistoryMenu } from "../menuBarMW/menuSlice";
@@ -56,7 +56,8 @@ const PopupTableMarketwatch = ({
     setSelectedValueProp({ ...selectedValue, status: false }); // tắt popuptable
   };
   const historyStock = () => {
-    dispatch(showDetailStock({ visible: true, code: selectedValue.value }));
+    dispatch(showDetailStock({visible: true, code: selectedValue.value }));
+    dispatch(setLLTG(floor));
     setSelectedValueProp({ ...selectedValue, status: false });
     let stockCode = selectedValue.value
     dispatch(fetchDataTableKLTTGAsync(stockCode));

@@ -31,7 +31,6 @@ export const fetchDataTableKLTTGAsync = createAsyncThunk<[], any>(
 export const fetchDataDetailPopupAsync = createAsyncThunk<[], any>(
   "dataPopupDetail",
   async (code) => {
-    console.log("floor" ,code)
     try {
       if (code.floor === "HSX") {
         const res = await axios.get(

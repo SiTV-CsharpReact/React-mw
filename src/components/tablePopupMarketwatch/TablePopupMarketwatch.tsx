@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import "./TablePopup.scss";
-import { showDetailStock } from "../popupTableMarketwatch/popupTableSlice";
+import { showDetailStock  ,setLLTG} from "../popupTableMarketwatch/popupTableSlice";
 
 import { fetchChartOptionAsync } from "./chartOptionSlice";
 import TableWrapPopup from "./TableWrapPopup";
@@ -49,15 +49,14 @@ const TablePopupMarketwatch = () => {
     setShowPopup(!showPopup);
   };
   const AddStockCode = (CodeCk: Company) => {
-   
     detailStockcode(CodeCk.Code);
     let floor = CodeCk.Exchange === 1 ? "HSX" : "HNX";
     let stockCode = CodeCk.Code
     dispatch(fetchDataDetailPopupAsync({ stockCode ,floor }));
     dispatch(fetchDataDetailPopupAsync({ stockCode, floor }));
     dispatch(fetchDataTableKLTTGAsync(stockCode))
-
     dispatch(showDetailStock({ visible: true, code: CodeCk.Code }));
+    dispatch(setLLTG(floor));
   };
   const detailStockcode = (codeCk: string) => {
     let CodenCt = dataCompanyTotal.find((e: Company) => e.Code == codeCk);
@@ -112,11 +111,6 @@ const TablePopupMarketwatch = () => {
                           : "UPCOM"
                       } - ${stockCode.ScripName}`
                     : ""}
-                  {/* : `${dataItemHNX.length !== 0
-                  ? dataItemHNX[0]?.Info[0][1]
-                  : dataItemHSX[0]?.Info[0][1]}{" "}
-                - ${getCompanyNameByCode(dataItemHNX[0]?.Info[0][1])}  `    }
-                  */}
                 </h2>
               </div>
             </div>
