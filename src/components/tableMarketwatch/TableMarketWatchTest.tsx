@@ -17,6 +17,7 @@ import { setCookie } from "../../models/cookie";
 import { g_CLASS_INDEX } from "../../configs/app.config";
 import { async } from "q";
 import { setActiveMenu } from "../menuBarMW/menuSlice";
+import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 
 // LicenseManager.setLicenseKey(
 //   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
@@ -32,7 +33,6 @@ const TableMarketWatchTest = () => {
   //setRowData
   const { ListDataTable, DataPined, RowPined, keyActiveMan } = useAppSelector((state) => state.tableTest);
   // pinned
-  const pinned = useAppSelector((state) => state.categories.row);
   // call data 
   const HanDelCate = useCallback(async () => {
     let result = await dispatch(fetchCategoryAsync());
@@ -77,11 +77,15 @@ const TableMarketWatchTest = () => {
     },
     [dispatch]
   );
+  const HanDleConpany = useCallback(async() =>{
+      await  dispatch(fetchCompanyAsync())
+  },[])
 
   useEffect(() => {
     if (keyActiveMan === 0) {
       HanDelCate();
     }
+    HanDleConpany()
   }, [dispatch, HanDelCate]);
   useEffect(() => {
     const socketHSX = new WebSocket(
@@ -381,8 +385,6 @@ const TableMarketWatchTest = () => {
     };
   }, []);
   //  ******************************************************************
-  const [option, setOntion] = useState(null)
-
   return (
     <div style={containerStyle}>
 

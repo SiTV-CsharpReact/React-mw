@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { getDataTable } from "../tableMarketwatch/tableSlice";
+import { getDataTable } from "../tableMarketwatch/tableTestSlice";
 import {
   useAppDispatch,
   useAppSelector,
   RootState,
 } from "../../store/configureStore";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
+import { Company } from "../../models/root";
 
 const CompleteStock = (props: any) => {
   const companies: string[] = [
@@ -24,12 +25,8 @@ const CompleteStock = (props: any) => {
   const { isLoading, data, status, row, name } = useAppSelector(
     (state: RootState) => state.categories
   );
+  const  {dataCompanyTotal}  = useAppSelector((state:RootState) =>state.company)
   const dispatch = useAppDispatch();
-  const dataCompleteStock = useAppSelector((state) => state.company);
-  useEffect(()=>{
-    dispatch(fetchCompanyAsync)
-  })
-  console.log(dataCompleteStock)
   const [show, setShow] = useState(false);
   const [isActiveShowALL, setActiveShowALl] = useState(false);
   const [Value, setValue] = useState("");
@@ -40,7 +37,6 @@ const CompleteStock = (props: any) => {
     // api add mã in  danh mục
     let resilt = await dispatch(getDataTable(data));
   };
-
   const HandelChangeInput = (e: any) => {
     // tim kiếm
     setValue(e.value);
@@ -62,17 +58,17 @@ const CompleteStock = (props: any) => {
     //  add mã
     setShow(false);
     setValue("");
-    const valueMa = e.split("-"); // chuỗi đầu cần lấy
-    let a = data?.Data.find((e: any) => e.Row == row);
-
-    let bqueryy: any = a?.List.concat(`,${valueMa[0]}`).trim();
-    let result = a?.List.includes(valueMa[0].trim());
+    let ListCode = data?.Data.find((elemnet: any) => elemnet.Name == name);
+    let bqueryy: any = ListCode?.List.concat(`,${e.trim()}`);
+    let result = ListCode?.List.includes(e.trim());
     if (result) {
+      // khi mã đã có  trong list 
       console.log("result", result);
     }
     let dataSerr = {
       Floor: "danh-muc",
       Query: bqueryy,
+      RowPined: row
     };
     CallApi(dataSerr);
   };
@@ -107,13 +103,15 @@ const CompleteStock = (props: any) => {
   };
 
   // dã lọc song
-  const searchResults = testdata.filter((item) =>
-    item.toLowerCase().startsWith(searchTerm.toLowerCase())
-    // const filteredSuggestions = availableTags.filter((tag) =>
-    // tag.Code.toLowerCase().startsWith(value.toLowerCase())
-  // );
+  const searchResults = dataCompanyTotal.filter((item) =>{
+    let name  =`${item.Code} "-" ${item.Exchange === 1 ? "HSX" :item.Exchange === 2? "HNX" : "UPCOM" } "-" ${item.ScripName}`
+      const NameTo =   name.toLowerCase().startsWith(searchTerm.toLowerCase())
+      return  NameTo
+  } 
   );
-
+  if(isLoading == 1){
+    return  <div> Loading ...</div>
+  }
   return (
     <div
       className={`input_complete form-control relative ${
@@ -138,7 +136,7 @@ const CompleteStock = (props: any) => {
           <i className="fa fa-caret-down fa-iconALl"> </i>
         </label>
       </div>
-      {show && searchResults.length > 0 ? (
+      {show ? (
         <>
           <div
             className={`ms-trigger-ico showALLData ${
@@ -146,21 +144,25 @@ const CompleteStock = (props: any) => {
             }`}
           >
             <div className={`menuShowAllData ${props.width ? "" : ""}`}>
-              {isActiveShowALL
-                ? testdata
-                  ? testdata.map((e) => {
-                      return <div onClick={() => AddMaCate(e)}>{e}</div>;
+              {isActiveShowALL  && searchResults.length> 0
+                ? dataCompanyTotal.length > 0 ?
+               dataCompanyTotal?.map((e:Company) => {
+                      return <div onClick={() => AddMaCate(e.Code)}>
+                          {e.Code} - {e.Exchange === 1 ? "HSX" :e.Exchange === 2? "HNX" : "UPCOM" } - {e.ScripName}
+
+                      </div>;
                     })
-                  : ""
-                : searchResults.length > 0
-                ? searchResults.map((e) => {
+                  : "" 
+              : searchResults.length > 0
+                ? searchResults.map((item) => {
+                  let name  =`${item.Code} - ${item.Exchange === 1 ? "HSX" :item.Exchange === 2? "HNX" : "UPCOM" } - ${item.ScripName}`
                     return (
-                      <div onClick={() => AddMaCate(e)}>
-                        {getHighlightedText(e, searchTerm)}
+                      <div onClick={() => AddMaCate(item.Code)}>
+                        {getHighlightedText(name, searchTerm)}
                       </div>
                     );
                   })
-                : ""}
+                : ""} 
             </div>
           </div>
           <label
