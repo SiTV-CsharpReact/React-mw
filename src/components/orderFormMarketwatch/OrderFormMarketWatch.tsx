@@ -3,7 +3,7 @@ import "flowbite";
 import React from "react";
 import Switch from "@mui/material/Switch";
 // import { AiOutlineLoading3Quarters, AiFillCloseCircle, AiOutlineKey, AiOutlineUnorderedList } from 'react-icons/ai';
-import { FormControlLabel, styled } from "@mui/material";
+import { FormControlLabel, Tooltip, styled } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import TableTotalMonney from "./TableTotalMonney";
@@ -61,7 +61,6 @@ const OrderMarketW = () => {
   const [popup, setPopup] = useState(false);
   useEffect(() => {
     if (dataTable.key === "S" ) {
-      console.log("key day any",dataTable.key)
       setColor(false);
     }
   }, [dataTable.key]);
@@ -181,23 +180,7 @@ const OrderMarketW = () => {
   const handelPopup = () => {
     setPopup(!popup);
   };
-  // useEffect(() => {
-  //   if (dataBuy.ma) {
-  //     setInputValue(dataBuy.ma)
-  //   }
-  //   if (dataBuy.price) {
-  //     setValueInputPrice(dataBuy.price)
-  //   }
-  //   if (dataBuy.TranC) {
-  //     setTranC(Number(dataBuy.TranC))
-  //   }
-  //   if (dataBuy.TCT) {
-  //     setTCT(Number(dataBuy.TCT))
-  //   }
-  //   if (dataBuy.SanT) {
-  //     setSanT(Number(dataBuy.SanT))
-  //   }
-  //   }, [dataBuy.ma,dataBuy.price,dataBuy.SanT,dataBuy.TCT,dataBuy.TranC]);
+
   useEffect(() => {
     if (dataTable.ma) {
       setInputValue(dataTable.ma)
@@ -219,8 +202,10 @@ const OrderMarketW = () => {
     if (dataShow.ma) {
       setInputValue(dataShow.ma)
     }
-  },[dataShow.ma])
-  return (
+   }, [dataShow.ma])
+  
+   const priceSm = `Mã CK có giá trần tính SM là ${formatNumber(dataShow.giaTranSm)}`
+   return (
     <div className="text-black bg-white" id="tablepricelist">
       {/* đặt lệnh */}
       <Protal popup={popup} handelClosed={() => setPopup(!popup)}></Protal>
@@ -328,7 +313,11 @@ const OrderMarketW = () => {
                           {dataShow.San === "HNX.LISTED" ? "HNX" : dataShow.San}
                         </span>
                         <span className="absolute top-[-20px] right-[3px] !text-[12px] !text-[#333]">
-                          TLV:{dataShow.TLV ? dataShow.TLV : 0}%
+                           TLV:{dataShow.TLV ? dataShow.TLV : 0}% 
+                           <Tooltip  title={priceSm}>
+                           <i className="fa fa-info-circle absolute" aria-hidden="true" style={{fontSize:" 13px",marginLeft:" 2px",color:"#717171"}}></i>
+                             
+                           </Tooltip>
                         </span>
                         <input
                           type="text"
@@ -495,7 +484,8 @@ const OrderMarketW = () => {
                    {t("home:Order.ORDER_GUI")} 
                     </button>
                   ) : (
-                    <button
+                       <button
+                      onClick={handleClick}
                       id="btnBuySend"
                       className="btn btnBuyGui btnSaveTemplate bg-[#d71920] ml-[10px]  text-13px rounded-md text-white w-4/5"
                     >
@@ -518,13 +508,13 @@ const OrderMarketW = () => {
                   {/* <input id="btnBuySend" type="button" className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] rounded-lg pl-10 pr-10 mt-[7px] ml-[15px]" value="Gửi"  /> */}
                 </div>
                 {submit && (
-                  <div className="bg-white-500 w-[660px] bottom-[60px] shadow-2xl  left-[27%] absolute  h-[205px] bg-white rounded-md">
-                    <div className="bg-[#034E94] text-white pt-2 relative text-xl h-[40px] text-center items-center">
+                  <div className="bg-white-500 w-[660px] bottom-[60px] z-50 shadow-2xl  left-[27%] absolute  h-[205px] bg-white rounded-md">
+                    <div  style={{background : color ? "#034E94" : "red"}} className=" text-white pt-2 relative text-xl h-[40px] text-center items-center">
                       <h1 className="text-[18px]">XÁC NHẬN LỆNH</h1>
                       <p onClick={() => setSubmit(!submit)}>
                         <img
                           className="absolute cursor-pointer  top-[-13px] right-[-10px] text-4xl text-gray-500"
-                          src="http://eztrade4.fpts.com.vn/images/EzFuture-09.png"
+                          src="http://eztrade4.fpts.com.vn/images/EzFuture-09.png" alt=""
                         />
                       </p>
                     </div>
@@ -557,7 +547,6 @@ const OrderMarketW = () => {
                             <td className="text-center border-r border border-[#dedede]">
                               {inputValue ||
                                 dataTable.ma ||
-                                // dataBuy.ma ||
                                 dataShow.ma}
                             </td>
                             <td className="text-center border-r border border-[#dedede]">
@@ -566,7 +555,6 @@ const OrderMarketW = () => {
                             <td className="text-center border-r border border-[#dedede]">
                               {valueInputPrice ||
                                 dataTable.price 
-                                // dataBuy.price
                               }
                             </td>
                             <td>
@@ -604,11 +592,11 @@ const OrderMarketW = () => {
                       </div>
 
                       <button
-                        style={{ border: "1px solid #92ddad" }}
+                        style={{ border: color ?  "1px solid #034E94"  : "1px solid #red" , background: color ?  " #034E94"  : "red" }}
                         onClick={handelSuccess}
-                        className="p-1 pl-6 pr-6 text-white bg-[#0FB44B] rounded-2xl"
+                        className="p-1 pl-6 pr-6 text-white w-[115px] rounded-2xl"
                       >
-                        GỬI LỆNH
+                        {color ? "MUA" : "BÁN"}
                       </button>
                       <button
                         onClick={() => setSubmit(false)}
@@ -638,7 +626,8 @@ const OrderMarketW = () => {
                 <button className="refresh" id="btnReset">
                   <img
                     className="mt-[2px] mr-[8px] ml-[10px] "
-                    src="http://priceboard3.fpts.com.vn/images/EzFuture-05.png"
+                     src="http://priceboard3.fpts.com.vn/images/EzFuture-05.png"
+                     alt=""
                   />
                   <span className="text-13px"> {t("home:Order.ORDER_LL")}</span>
                 </button>
@@ -649,7 +638,7 @@ const OrderMarketW = () => {
             <></>
           ) : (
             <div className="bottom-center">
-              <img src={IconNext}></img>
+              <img src={IconNext} alt=""></img>
             </div>
           )}
           {order ? <></> : <RecordPending />}

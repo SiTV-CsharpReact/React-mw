@@ -10,13 +10,11 @@ export const dispatchData :any = createAsyncThunk(
 
 export const getDataApi = createAsyncThunk('dataApi/DataApi', async () => {
   const response = await axios.get('http://localhost:3005/Data')
-  console.log(response.data,"hihi")
 
   return response.data
 })
 export const getDataApiPendingOder = createAsyncThunk('dataApiPendingOder/DataApiPendingOder', async () => {
   const response = await axios.get('http://localhost:3006/items')
-  console.log(response.data,"hihi")
   return response.data
 })
 export const dataSliceShow = createSlice({
@@ -26,6 +24,7 @@ export const dataSliceShow = createSlice({
       ma: '',
       San: '',
       TLV: '',
+      giaTranSm:0
     },
     dataApi: [] as any,
     dataApiPendingOder: [] as any,
