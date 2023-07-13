@@ -39,14 +39,14 @@ const TablePopupMarketwatch = () => {
     fethData();
     fethDataSearch();
   }, []);
- 
+
   const handleChange = (e: any) => {
     setDataCheck(e.target.value.toUpperCase());
     setShowPopup(true);
   };
   useEffect(() => {
-    const results = dataResultSearch.filter(
-      (item: any) => item.Code.toUpperCase().includes(dataCheck)
+    const results = dataResultSearch.filter((item: any) =>
+      item.Code.toUpperCase().includes(dataCheck)
     );
     setFilteredData(results);
   }, [dataCheck, dataResultSearch]);
@@ -62,9 +62,9 @@ const TablePopupMarketwatch = () => {
   const handelClick = () => {
     setShowPopup(!showPopup);
   };
-  
+
   useEffect(() => {
-    dispatch(fetchDataSearchPopupAsync(""));
+    // dispatch(fetchDataSearchPopupAsync(""));
     dispatch(fetchChartOptionAsync({ stockCode: code }));
   }, [code, dispatch]);
   // Kiểm tra và đặt lại giá trị cho dataMouse.maF và dataMouseBuy.maB nếu selectedCode tồn tại

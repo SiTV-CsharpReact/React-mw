@@ -3,6 +3,7 @@ import { formatNumberMarket, setColorMarket} from '../../utils/util';
 
 const TableDetailPopup = () => {
   const {dataDetailPopup} = useAppSelector(state=>state.dataPopupDetail)
+  console.log({dataDetailPopup});
   
   return (
     <table id="tbLPRT" className="table table-bordered table-priceboard text-[#B9B9B9]">
@@ -100,7 +101,7 @@ const TableDetailPopup = () => {
                             dataDetailPopup[0]?.Info[3][1]
                           )}`} >
               {/* {dataMouse.maF || dataMouseBuy.maB || displayCode} */}
-              { dataDetailPopup[0]?.Info[0][1] || dataDetailPopup[0]?.RowID }
+              { dataDetailPopup[0]?.Info[0][1] || dataDetailPopup[0]?.Info[1][0] }
 
           </span>
         </td>

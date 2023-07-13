@@ -1,0 +1,121 @@
+.body__content__report {
+  span {
+    color: #000000;
+  }
+  .asset__report__TONGTT__tbl2__tbody {
+    margin: 20px;
+    #showNoteText4 {
+      font-weight: bold;
+      font-size: 16px;
+      font-family: Arial;
+      padding: 0 0 0 15px;
+      > i.fa.fa-info-circle {
+        font-size: 16px;
+        margin-left: 1px;
+        color: #717171;
+      }
+      #totalGTTTvaTien {
+      }
+    }
+  }
+  #buttonRutGon {
+    margin-right: 15px;
+    border-radius: 4px !important;
+    border: 1px solid #dedede;
+    padding: 5px 15px;
+    background-color: #ececec;
+    margin-bottom: 5px;
+    font-family: Arial;
+    &:hover {
+      background-color: #f7f7f7;
+      cursor: pointer;
+      border: 1px solid #717171;
+    }
+  }
+  #buttonDayDu {
+    margin-right: 15px;
+    border-radius: 4px !important;
+    border: 1px solid #dedede;
+    padding: 5px 15px;
+    background-color: #ececec;
+    margin-bottom: 5px;
+    font-family: Arial;
+    &:hover {
+      background-color: #f7f7f7;
+      cursor: pointer;
+      border: 1px solid #717171;
+    }
+  }
+  .body__content__asset__report__2 {
+    .report__tabcondition_BCTS {
+      display: grid;
+      margin-top: 5px;
+      grid-template-columns: 395px 1fr;
+      background-color: rgb(255, 255, 255);
+      padding: 0px 20px;
+      grid-template-columns: 330px 1fr;
+      // gap: 15px;
+      @media (max-width: 1000px) {
+        display: flex;
+        flex-direction: column;
+      }
+      @media screen and (min-width: 1700px) and (max-width: 1950px) {
+        grid-template-columns: 400px 1fr;
+      }
+      @media (min-width: 1001px) and (max-width: 1200px) {
+        display: flex;
+        flex-direction: column;
+      }
+      .report__tabcondition__left {
+        width: 100%;
+        padding-right: 15px;
+        padding-bottom: 10px;
+        line-height: 25px;
+        @media (max-width: 1000px) {
+          padding-right: 0;
+        }
+        @media (min-width: 1001px) and (max-width: 1200px) {
+          padding-right: 0;
+        }
+        .fit__table__leftBCTS {
+          background-color: #ececec;
+          padding: 5px;
+          margin-right: 0 !important;
+          @media screen and (min-width: 1700px) and (max-width: 1950px) {
+            padding: 17px 5px !important;
+          }
+          table {
+            td {
+              line-height: 22px !important;
+              text-align: left;
+              border: 0;
+              @media screen and (min-width: 1700px) and (max-width: 1950px) {
+                padding: 4px 5px !important;
+              }
+              span {
+                font-size: 12px;
+                font-family: Arial;
+                &.report__text__profile_name__BCTH {
+                  padding-left: 10px;
+                }
+                > i.fa.fa-info-circle {
+                  font-size: 14px;
+                  margin-left: 1px;
+                  color: #717171;
+                }
+              }
+              input[type="button"] {
+                border-radius: 4px !important;
+                border: 1px solid #0055ba;
+                color: #fff;
+                padding: 2px 35px;
+                background-color: #0055ba;
+                float: right;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
