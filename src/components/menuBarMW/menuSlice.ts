@@ -25,7 +25,7 @@ interface ComponentState {
   
   const initialState: ComponentState = {
     statusChart: true,
-    keyMenu : 0,
+    keyMenu : -1,
     nameMenu : "",
     floor : "HSX"
   };

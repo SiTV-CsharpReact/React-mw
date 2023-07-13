@@ -32,29 +32,29 @@ const URL_EZTRADE = "http://eztrade0.fpts.com"
 //     }
 //   )
 
-//   const responseInterceptor = (res:any) => {
-//     // xử lý response  trả về 
-//     const token = getCoookieStorage() 
-//     if(token){
-//         return res;
-//     // }else{
-//     //     let result  =  RemoveCookie()  
-//     //     if(result)  window.location.href= "https://accounts.fpts.com.vn/Login?href=eztrade";
-//     }
-//     return res;
-//   };
-//   const errorInterceptor = (axiosError:any) => {
-//     // && axiosError.response
-//     console.log("lỗi" ,axiosError)
-//     // if (axiosError) {
-//     //   const statusCode = axiosError.response?.status;
-//     //     if(statusCode === 404) { // lỗi 404 đẩy về trang login 
-//     //         let result  =  RemoveCookie()
-//     //         // if(result)  window.location.reload();
-//     //     }
-//     // }
-//     return Promise.reject(axiosError);
-//   };
+  // const responseInterceptor = (res:any) => {
+  //   // xử lý response  trả về 
+  //   const token = getCoookieStorage() 
+  //   if(token){
+  //       return res;
+  //   // }else{
+  //   //     let result  =  RemoveCookie()  
+  //   //     if(result)  window.location.href= "https://accounts.fpts.com.vn/Login?href=eztrade";
+  //   }
+  //   return res;
+  // };
+  // const errorInterceptor = (axiosError:any) => {
+  //   // && axiosError.response
+  //   console.log("lỗi" ,axiosError)
+  //   // if (axiosError) {
+  //   //   const statusCode = axiosError.response?.status;
+  //   //     if(statusCode === 404) { // lỗi 404 đẩy về trang login 
+  //   //         let result  =  RemoveCookie()
+  //   //         // if(result)  window.location.reload();
+  //   //     }
+  //   // }
+  //   return Promise.reject(axiosError);
+  // };
   
 // axios.create({
 //     headers: {

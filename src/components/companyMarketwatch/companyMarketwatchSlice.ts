@@ -23,10 +23,15 @@ export const fetchCompanyAsync = createAsyncThunk<any>(
       dataCompanyHNX :dataCompanyHNX.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
       dataCompanyUpcom : dataCompanyUpcom.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
     }
-
     return data
    } catch (error) {
-    return  error
+    let data = {
+   dataCompanyHSX : [],
+    dataCompanyHNX: [],
+    dataCompanyUpcom: [],
+    dataCompanyTotal: [],
+    }
+    return  data
    }
   }
 );
@@ -53,11 +58,13 @@ export const companySlice = createSlice({
       .addCase(fetchCompanyAsync.pending, (state) => {
         state.productsLoaded = false;
         state.status = 1;
+        state.dataCompanyTotal =[]
       })
       .addCase(fetchCompanyAsync.fulfilled, (state, action) => {
         state.productsLoaded = true;
         state.status = 2;
         let data = action.payload;
+    
         state.dataCompanyTotal = data.dataCompanyTotal
         state.dataCompanyHNX = data.dataCompanyHNX
         state.dataCompanyHSX = data.dataCompanyHSX
@@ -65,12 +72,13 @@ export const companySlice = createSlice({
       })
 
       .addCase(fetchCompanyAsync.rejected, (state, action) => {
+     
         state.productsLoaded = true;
         state.status = 3;
         state.dataCompanyHSX = [];
         state.dataCompanyHNX = [];
         state.dataCompanyUpcom = [];
-        state.dataCompanyUpcom = [];
+        state.dataCompanyTotal = [];
       });
   },
 });
