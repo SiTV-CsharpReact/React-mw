@@ -136,7 +136,7 @@ const CompleteStock = (props: any) => {
           <i className="fa fa-caret-down fa-iconALl"> </i>
         </label>
       </div>
-      {show ? (
+      {show && searchResults.length> 0 ? (
         <>
           <div
             className={`ms-trigger-ico showALLData ${
