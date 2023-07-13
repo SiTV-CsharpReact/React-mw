@@ -59,7 +59,6 @@ const dataTableAdapter = createEntityAdapter<DataTable>({
 export const getDataTable = createAsyncThunk(
   "table/getDataTable",
   async (Param: params) => {
-    console.log("Param",Param)
     try {
       if (Param.Query === "thoa-thuan-hsx") {
         const DataBi = await agent.dataGDTTtable.listBi("hnx");

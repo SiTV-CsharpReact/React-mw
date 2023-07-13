@@ -149,7 +149,6 @@ const CompleteStock = (props: any) => {
                dataCompanyTotal?.map((e:Company) => {
                       return <div onClick={() => AddMaCate(e.Code)}>
                           {e.Code} - {e.Exchange === 1 ? "HSX" :e.Exchange === 2? "HNX" : "UPCOM" } - {e.ScripName}
-
                       </div>;
                     })
                   : "" 

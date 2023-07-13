@@ -10,6 +10,7 @@ const initialState = {
 export const fetchChartOptionAsync = createAsyncThunk<[], DataStockCode>(
   "chartOptions",
   async (data) => {
+  
     try {
       const response = await agent.dataTableBasic.postFormData({
         action: "gw_realtime",

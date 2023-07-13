@@ -9,8 +9,8 @@ import NoteBottom from "./NoteBottom";
 import { useTranslation } from "react-i18next";
 import TitlePage from "../../pages/Layout/TitlePage";
 import "./TransBalance.scss";
-import TableTransValue from "./TableTransValue";
 import TableTransReport from "./TableTransReport";
+import TableTransValue from "./TableTransValue";
 
 const TransBalance = () => {
   const [short, setShort] = useState(false);
