@@ -9,7 +9,7 @@ type TProps = {
   san: string;
   dataChartIndex: any;
 };
-const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
+const ChartIndexSlide: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
   const [dataSpline, setDataSpline] = useState([]);
   const [dataBar, setDataBar] = useState([]);
   const [indexValue, setIndexValue] = useState(0);
@@ -364,5 +364,5 @@ const ChartTest: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
   );
 };
 
-export default React.memo(ChartTest);
+export default React.memo(ChartIndexSlide);
 

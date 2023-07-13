@@ -33,10 +33,30 @@ export const fetchDataDetailPopupAsync = createAsyncThunk<[], any>(
   "dataPopupDetail",
   async (code) => {
     try {
-      const res = await axios.get(
-        `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`
-      );
-      return res.data;
+      if (code.floor === "HSX") {
+        const res = await axios.get(
+          `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code.code}`
+        );
+        return res.data;
+      } else {
+        const res = await axios.get(
+          `https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${code.code}`
+        );
+        const data = res.data?.map((obj: DataTable) => ({
+          Info: obj.Info?.sort((a: any, b: any) => {
+            const indexA = Number(a[0]);
+            const indexB = Number(b[0]);
+            if (indexA < indexB) {
+              return -1;
+            }
+            if (indexA > indexB) {
+              return 1;
+            }
+            return 0;
+          }),
+        }));
+        return data;
+      }
     } catch (error) {
       console.log("error ở đây", error);
     }
@@ -56,6 +76,7 @@ export const fetchDataSearchPopupAsync = createAsyncThunk<[], any>(
     }
   }
 );
+
 const dataTablePopupDetail = createSlice({
   name: "DataPopupDetail",
   initialState,

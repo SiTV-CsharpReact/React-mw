@@ -8,7 +8,7 @@ const TableGDTTMarketWatch = () => {
     (state: RootState) => state.menuBar
   );
   const { DataBi, DataPt, NameFloor } = useAppSelector(
-    (state: RootState) => state.table
+    (state: RootState) => state.tableTest
   );
   const [input, setInput] = useState<any>({
     value: "",
@@ -106,6 +106,7 @@ const TableGDTTMarketWatch = () => {
   useEffect(() => {
     filterData(input.value);
   }, [input.value]);
+  console.log(DataBi)
 
   // Render table body
   const renderTableBody = () => {
