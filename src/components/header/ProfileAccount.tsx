@@ -9,8 +9,12 @@ import { useTranslation } from "react-i18next";
 import useDarkMode from "./useDarkMode";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { changeModeTheme } from "./DarkModeSlice";
+import { RemoveCookie, getCoookieStorage } from "../../api/authen";
+import { useNavigate  } from "react-router-dom";
+import { getToken } from "../Authencation/AuthencationSlice";
 // import { changeTheme } from "./DarkModeSlice";
 const ProfileAccount: any = () => {
+  const navigate = useNavigate();
   const { i18n } = useTranslation(["home", "report"]);
   const { t } = useTranslation(["home"]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -34,6 +38,19 @@ const ProfileAccount: any = () => {
   const changeTheme = (theme: string) => {
     dispatch(changeModeTheme(theme));
   };
+  const LogOut =()=>{
+    let removeToken = RemoveCookie()
+    console.log("removeToken" ,removeToken)
+    if(removeToken){
+      let Token = getCoookieStorage()
+      if(Token == undefined || Token === null || Token === ""){
+        dispatch(getToken())
+          return navigate("/login")
+      }
+      dispatch(getToken())
+    }
+
+  }
 
   return (
     <Box>
@@ -226,13 +243,13 @@ const ProfileAccount: any = () => {
               {/* <span>|</span> */}
             </li>
             <a
-              href="/LogOut"
               style={{ color: "black" }}
               id="idLogOut"
               className={`${mode}-text`}
+              onClick={LogOut}
             >
               <li>
-                <i className="fa fa-sign-out"></i>
+                <i className="fa fa-sign-out" ></i>
                 {/* <FontAwesomeIcon icon={faSignOut}  className="icon_account"/> */}
                 {t("home:base.PROFILE_T")}
               </li>

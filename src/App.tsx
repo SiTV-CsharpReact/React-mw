@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, redirect } from "react-router-dom";
 // import AssetReport from "./pages/Report/AssetReport";
 import LayoutMarketWatch from "./components/layoutMarketwatch/LayoutMarketWatch";
 import AppProvider from "./Context/AppContext";
@@ -37,92 +37,119 @@ import ReportNAV from "./pages/Report/ReportNAV";
 import ReportTransSummary from "./pages/Report/ReportTransSummary";
 import StockDetails from "./pages/Report/StockDetails";
 import TransBalance from "./components/TransBalance/TransBalance";
+import Header from "./components/header/Header";
+import LayoutAthentication from "./layout/LayoutAuthen";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "./store/configureStore";
+import { useEffect } from "react";
+import { getToken } from "./components/Authencation/AuthencationSlice";
+import MainlayoutScreen from "./layout/LayoutSreen";
 import ConditionalOderText from "./pages/Stoploss/ConditionalOderText";
 const App: React.FC = () => {
+  const dispatch = useAppDispatch();
+  // const { token ,isLoadingToken } = useAppSelector((state: RootState) => state.Authen);
+  useEffect(() => {
+    dispatch(getToken());
+  }, [dispatch]);
+ 
   return (
-      <AppProvider>
-        <Routes>
-          <Route path="/" element={<LayoutMarketWatch />} />
-          <Route path="/test" element={<TableMarketWatchTest />} />
-          <Route
-            path="/dynamic-dashboard-test"
-            element={<DynamicDashboard />}
-          />
-          <Route path="/dynamic-dashboard" element={<MyLayout />} />
-          {/* Report */}
-          {/* Quản lý tài khoản */}
-          <Route path="/report/ReportTransBalance" element={<TransBalance />} />
-          <Route path="/report/AssetReport2" element={<AssetReport />} />
-          <Route path="/report/ReportNAV" element={<ReportNAV />} />
+    <AppProvider>
+      <Header/>
+      <Routes>
+            <Route path="/" element={  <LayoutMarketWatch />     } />
+            <Route path="/test" element={<TableMarketWatchTest />} />
+            <Route
+              path="/dynamic-dashboard-test"
+              element={   <DynamicDashboard />  }
+            />
+            <Route path="/dynamic-dashboard" element={<MyLayout />} />
+           
+            <Route
+              path="/report/ReportTransBalance"
+              element={<TransBalance />}
+            />
+            <Route path="/report/AssetReport2" element={<AssetReport />} />
+            <Route path="/report/ReportNAV" element={ <ReportNAV />  } />
 
-          <Route path="/report/reportprofitloss" element={<AssetReport />} />
+            <Route path="/report/reportprofitloss" element={<AssetReport />} />
 
-          <Route
-            path="/report/ReportTransSummary"
-            element={<ReportTransSummary />}
-          />
-          <Route path="/report/StockDetails" element={<StockDetails />} />
+            <Route
+              path="/report/ReportTransSummary"
+              element={<ReportTransSummary />}
+            />
+            <Route path="/report/StockDetails" element={<StockDetails />} />
 
-          <Route path="/report/CurrMargin" element={<AssetReport />} />
-          <Route path="/report/StockSettlement" element={<AssetReport />} />
-          <Route path="/report/CashSettlement" element={<AssetReport />} />
-          <Route path="/report/CurrMargin" element={<AssetReport />} />
-          <Route path="/report/StockSettlement" element={<AssetReport />} />
-          <Route path="/report/CashSettlement" element={<AssetReport />} />
+            <Route path="/report/CurrMargin" element={<CurrMargin />  } />
+            <Route path="/report/StockSettlement" element={<StockSettlement />  } />
+            <Route path="/report/CashSettlement" element={ <CashSettlement/>  } />
+            <Route path="/report/StockSettlement" element={<AssetReport />  } />
+            <Route path="/report/CashSettlement" element={ <AssetReport /> } />
 
-          {/* lịch sử giao dịch */}
+ 
 
-          <Route
-            path="/report/ClientActivityRange"
-            element={<HistoryOrder />}
-          />
-          <Route path="/report/TradeLog" element={<HistoryMatching />} />
-          <Route path="/report/PendingSettlement" element={<HistoryForpay />} />
-          {/* Lịch sử ứng trước tiền bán CK */}
-          <Route path="/report/AdvReport" element={<HistoryAdvReportMoney />} />
-          {/* Transfer */}
-          <Route path="/transfer" element={<MoneyTransferMain />} />
-          <Route path="/transfer/template" element={<MoneyTransferForm />} />
-          <Route
-            path="/transfer/home/transferds"
-            element={<MoneyTransferDerivative />}
-          />
-          <Route path="/transfer/history" element={<MoneyHistory />} />
-          <Route
-            path="/transfer/ordersavings"
-            element={<OrdersavingsTransfer />}
-          />
-          <Route
-            path="/transfer/savingshistory"
-            element={<SavingshistoryTransfer />}
-          />
-          <Route
-            path="/transfer/finalizesavings"
-            element={<FinalizesavingsTransfer />}
-          />
+            <Route
+              path="/report/ClientActivityRange"
+              element={ <HistoryOrder />  }
+            />
+            <Route path="/report/TradeLog" element={ <HistoryMatching />  } />
+            <Route
+              path="/report/PendingSettlement"
+              element={ <HistoryForpay />  }
+            />
+  
+            <Route
+              path="/report/AdvReport"
+              element={ <HistoryAdvReportMoney />  }
+            />
+           
+            <Route path="/transfer" element={<MoneyTransferMain />  } />
+            <Route path="/transfer/template" element={<MoneyTransferForm />  } />
+            <Route
+              path="/transfer/home/transferds"
+              element={<MoneyTransferDerivative />  }
+            />
+            <Route path="/transfer/history" element={<MoneyHistory />  } />
+            <Route
+              path="/transfer/ordersavings"
+              element={<OrdersavingsTransfer />}
+            />
+            <Route
+              path="/transfer/savingshistory"
+              element={<SavingshistoryTransfer />}
+            />
+            <Route
+              path="/transfer/finalizesavings"
+              element={<FinalizesavingsTransfer />}
+            />
 
-          <Route path="/transfer/home/transferds" element={<AssetReport />} />
-          {/* Rightcustory */}
-          <Route
-            path="/rightscustody/AdvanceOrderForm"
-            element={<AdvanceRightCustody />}
-          />
-          <Route
-            path="/rightscustody/AdvanceHistory"
-            element={<AdvanceHistoryCustody />}
-          />
-          <Route path="/rightscustody/OverView" element={<OverViewCustody />} />
-          <Route
-            path="/rightscustody/CustodyOrderForm"
-            element={<RegistrationOnline />}
-          />
+            <Route path="/transfer/home/transferds" element={<AssetReport />} />
 
-          <Route
-            path="/rightscustody/AdvanceOrderForm"
-            element={<AssetReport />}
-          />
+            <Route
+              path="/rightscustody/AdvanceOrderForm"
+              element={<AdvanceRightCustody />}
+            />
+            <Route
+              path="/rightscustody/AdvanceHistory"
+              element={<AdvanceHistoryCustody />}
+            />
+            <Route
+              path="/rightscustody/OverView"
+              element={<OverViewCustody />}
+            />
+            <Route
+              path="/rightscustody/CustodyOrderForm"
+              element={<RegistrationOnline />}
+            />
 
-          {/* Stoploss */}
+            <Route
+              path="/rightscustody/AdvanceOrderForm"
+              element={<AssetReport />}
+            />
+
+         
           <Route path="/stoploss/orderform" element={<ConditionalOrder />} />
           <Route
             path="/stoploss/orderform_test"
@@ -130,7 +157,7 @@ const App: React.FC = () => {
           />
 
           <Route path="/stoploss/history" element={<ConditionalOrderBook />} />
-          {/* Oddlot */}
+       
           <Route path="/oddlot/History" element={<HistoryCkSell />} />
           <Route path="/tradingview" element={<TradingViewWidget />} />
         </Routes>

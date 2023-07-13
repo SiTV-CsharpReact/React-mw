@@ -8,7 +8,7 @@ import {
   RootState,
   useAppDispatch,
 } from "../../store/configureStore";
-import { getDataChungKhoan, getdataTableThongKe, SortTableThongkeIndex } from "./tableTestSlice";
+import { getdataTableThongKe, SortTableThongkeIndex } from "./tableTestSlice";
 import { DateTimeCover, getDateTime } from "../../pages/helper/DateTime";
 import { formatNumberMarket, formatNumberPhanTram } from "../../utils/util";
 import PanigationTableThongKe from "./helper/Panigation";
@@ -70,13 +70,10 @@ const TableThongKeMarketWatch = () => {
     page_size: 400,
   });
   const dispatch = useAppDispatch();
-  const handleChungKhoan = useCallback(()=>{
-    dispatch(getDataChungKhoan())
-  },[])
   useEffect(() => {
     dispatch(getdataTableThongKe());
-    handleChungKhoan()
-  }, [handleChungKhoan]);
+
+  }, []);
   const ChangeBegin_time = (e: any) => {
     const { StartDay } = DateTimeCover(e.target.value);
     setData({ ...data, begin_date: StartDay });
