@@ -9,7 +9,9 @@
         padding: 5px;
         line-height: 1.2em;
         font-size: 9pt;
-        
+        &:hover{
+            cursor: pointer;
+        }
     }
     & .liboder{
         border-bottom: 1px solid rgba(128, 128, 128, 0.15);

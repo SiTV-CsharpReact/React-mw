@@ -9,6 +9,7 @@ import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatc
 import { handleHistoryPrices } from "../tableMarketwatch/tableTestSlice";
 import { setHistoryMenu } from "../menuBarMW/menuSlice";
 import { historyPriceActiveMenu } from "../menuBarMW/danhmucSlice";
+import { fetchDataDetailPopupAsync, fetchDataTableKLTTGAsync } from "../tablePopupMarketwatch/dataTablePopupDetailSlice";
 
 interface Props {
   x: number;
@@ -49,7 +50,6 @@ const PopupTableMarketwatch = ({
       nameMenu,
       floor,
     };
-    console.log("data", data);
     dispatch(handleHistoryPrices(data)); // thay đổi sàn
     dispatch(setHistoryMenu()); // chuyển sang table giá
     dispatch(historyPriceActiveMenu()); // chặn chuyển tab sang danh mục cá nhân
@@ -58,7 +58,10 @@ const PopupTableMarketwatch = ({
   const historyStock = () => {
     dispatch(showDetailStock({ visible: true, code: selectedValue.value }));
     setSelectedValueProp({ ...selectedValue, status: false });
-    console.log({ floor });
+    let stockCode = selectedValue.value
+    dispatch(fetchDataTableKLTTGAsync(stockCode));
+    dispatch(fetchDataDetailPopupAsync({ stockCode, floor }));
+    dispatch(fetchDataTableKLTTGAsync(stockCode))
   };
   return (
     <div

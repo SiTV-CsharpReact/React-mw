@@ -28,7 +28,7 @@ const TableKLTTGPopup = () => {
     //   setDataTable(dataRP.data);
     // };
     // fetchDataTableKLTTG();
-  }, [code, dispatch]);
+  }, []);
 
   useEffect(() => {
     dataDetailPopup?.map((item: any) => {

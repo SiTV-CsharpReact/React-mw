@@ -6,7 +6,9 @@ import { showDetailStock } from "../popupTableMarketwatch/popupTableSlice";
 
 import { fetchChartOptionAsync } from "./chartOptionSlice";
 import TableWrapPopup from "./TableWrapPopup";
-import { fetchDataSearchPopupAsync } from "./dataTablePopupDetailSlice";
+import {
+  fetchDataDetailPopupAsync, fetchDataTableKLTTGAsync,
+} from "./dataTablePopupDetailSlice";
 import { Company } from "../../models/root";
 import SearchStockCode from "../SearchStockCode/SearchStockCode";
 interface DraggableProps {
@@ -18,18 +20,19 @@ const TablePopupMarketwatch = () => {
   const dispatch = useAppDispatch();
   const [showPopup, setShowPopup] = useState(false);
   const [ValueInput, setValueInput] = useState("");
-  const [stockCode, setStockCode] = useState<Company> (
-   { Code: "",
-   Exchange: 0,
-   ScripName: "",
-   Basic_Price: 0,
-   Ceiling_Price: 0,
-   Floor_Price: 0,
-   Stock_Type2: 0,
-   ScripNameEN: "",
-   ID: "",}
-  );
+  const [stockCode, setStockCode] = useState<Company>({
+    Code: "",
+    Exchange: 0,
+    ScripName: "",
+    Basic_Price: 0,
+    Ceiling_Price: 0,
+    Floor_Price: 0,
+    Stock_Type2: 0,
+    ScripNameEN: "",
+    ID: "",
+  });
   const { code } = useAppSelector((state) => state.popupTable);
+  const { dataCompanyTotal } = useAppSelector((state) => state.company);
   const handleChange = (e: any) => {
     setValueInput(e.toUpperCase());
     setShowPopup(true);
@@ -45,12 +48,29 @@ const TablePopupMarketwatch = () => {
   const handelClick = () => {
     setShowPopup(!showPopup);
   };
-  const AddStockCode = (CodeCk:string)=>{
-    dispatch(showDetailStock({ visible: true, code:CodeCk }))
-  }
+  const AddStockCode = (CodeCk: Company) => {
+   
+    detailStockcode(CodeCk.Code);
+    let floor = CodeCk.Exchange === 1 ? "HSX" : "HNX";
+    let stockCode = CodeCk.Code
+    dispatch(fetchDataDetailPopupAsync({ stockCode ,floor }));
+    dispatch(fetchDataDetailPopupAsync({ stockCode, floor }));
+    dispatch(fetchDataTableKLTTGAsync(stockCode))
+
+    dispatch(showDetailStock({ visible: true, code: CodeCk.Code }));
+  };
+  const detailStockcode = (codeCk: string) => {
+    let CodenCt = dataCompanyTotal.find((e: Company) => e.Code == codeCk);
+    if (CodenCt) setStockCode(CodenCt);
+  };
   useEffect(() => {
-    // dispatch(fetchDataSearchPopupAsync(""));
-    dispatch(fetchChartOptionAsync({ stockCode: code }));
+    const getAllData = async () => {
+      let result = await dispatch(fetchChartOptionAsync({ stockCode: code }));
+      if (result.payload) {
+        detailStockcode(code);
+      }
+    };
+    getAllData();
   }, [code, dispatch]);
   // Kiểm tra và đặt lại giá trị cho dataMouse.maF và dataMouseBuy.maB nếu selectedCode tồn tại
   return (
@@ -70,7 +90,7 @@ const TablePopupMarketwatch = () => {
                       type="text"
                       placeholder="Nhập mã Chứng khoán"
                       autoComplete="nofill"
-                      onChange={(e) =>handleChange(e.target.value)}
+                      onChange={(e) => handleChange(e.target.value)}
                       onClick={handelClick}
                       className="cursor-pointer"
                       value={ValueInput}
@@ -82,29 +102,34 @@ const TablePopupMarketwatch = () => {
                 </div>
               </div>
               <div className="inline-block pu-div-title">
-                <h2 className="pu-title"> 
-                {stockCode.Code ? 
-                 `${stockCode.Code} - ${stockCode.Exchange === 1 ? "HSX" :stockCode.Exchange === 2? "HNX" : "UPCOM" } - ${stockCode.ScripName}`
-                :  `${code}` } 
-                {/* : `${dataItemHNX.length !== 0
+                <h2 className="pu-title">
+                  {stockCode.Code
+                    ? `${stockCode.Code} - ${
+                        stockCode.Exchange === 1
+                          ? "HSX"
+                          : stockCode.Exchange === 2
+                          ? "HNX"
+                          : "UPCOM"
+                      } - ${stockCode.ScripName}`
+                    : ""}
+                  {/* : `${dataItemHNX.length !== 0
                   ? dataItemHNX[0]?.Info[0][1]
                   : dataItemHSX[0]?.Info[0][1]}{" "}
                 - ${getCompanyNameByCode(dataItemHNX[0]?.Info[0][1])}  `    }
                   */}
-                 
                 </h2>
               </div>
             </div>
             {/*  */}
-            <SearchStockCode 
-            valueInput={ValueInput} 
-            setShowPoup={setShowPopup}  
-            showPopup={showPopup}
-            ChangeFunction={setStockCode}
-            SearchStockCode= {AddStockCode}  
-            setValueInput ={setValueInput}
-            border={true}
-             />
+            <SearchStockCode
+              valueInput={ValueInput}
+              setShowPoup={setShowPopup}
+              showPopup={showPopup}
+              ChangeFunction={setStockCode}
+              SearchStockCode={AddStockCode}
+              setValueInput={setValueInput}
+              border={true}
+            />
 
             {/* vd */}
           </div>

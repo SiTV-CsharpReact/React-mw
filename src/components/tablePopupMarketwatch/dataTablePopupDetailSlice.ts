@@ -8,7 +8,6 @@ const initialState = {
   isLoading: false,
   dataDetailPopup: [] as any,
   dataTableKLTTG: [] as any,
-  dataTableSearch: [] as any,
   status: "loading",
 };
 
@@ -32,15 +31,16 @@ export const fetchDataTableKLTTGAsync = createAsyncThunk<[], any>(
 export const fetchDataDetailPopupAsync = createAsyncThunk<[], any>(
   "dataPopupDetail",
   async (code) => {
+    console.log("floor" ,code)
     try {
       if (code.floor === "HSX") {
         const res = await axios.get(
-          `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code.code}`
+          `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code.stockCode}`
         );
         return res.data;
       } else {
         const res = await axios.get(
-          `https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${code.code}`
+          `https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${code.stockCode}`
         );
         const data = res.data?.map((obj: DataTable) => ({
           Info: obj.Info?.sort((a: any, b: any) => {
@@ -63,19 +63,7 @@ export const fetchDataDetailPopupAsync = createAsyncThunk<[], any>(
   }
 );
 
-export const fetchDataSearchPopupAsync = createAsyncThunk<[], any>(
-  "dataSearch",
-  async () => {
-    try {
-      const res = await axios.get(
-        `https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=All`
-      );
-      return res.data;
-    } catch (error) {
-      console.log("error ở đây", error);
-    }
-  }
-);
+
 
 const dataTablePopupDetail = createSlice({
   name: "DataPopupDetail",
@@ -87,9 +75,6 @@ const dataTablePopupDetail = createSlice({
     setDataKLTTG: (state, action) => {
       state.dataTableKLTTG = action.payload;
     },
-    setDataSearch: (state, action) => {
-      state.dataTableSearch = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -100,8 +85,6 @@ const dataTablePopupDetail = createSlice({
       .addCase(fetchDataDetailPopupAsync.fulfilled, (state, action) => {
         state.isLoading = true;
         state.dataDetailPopup = action.payload;
-        // const result = action.payload;
-        // console.log(result)
       })
       .addCase(fetchDataTableKLTTGAsync.pending, (state) => {
         state.isLoading = false;
@@ -111,14 +94,6 @@ const dataTablePopupDetail = createSlice({
         state.isLoading = true;
         state.dataTableKLTTG = action.payload;
       })
-      .addCase(fetchDataSearchPopupAsync.pending, (state) => {
-        state.isLoading = false;
-        state.status = "loading";
-      })
-      .addCase(fetchDataSearchPopupAsync.fulfilled, (state, action) => {
-        state.isLoading = true;
-        state.dataTableSearch = action.payload;
-      });
   },
 });
 

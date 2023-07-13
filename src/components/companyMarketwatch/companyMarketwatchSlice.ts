@@ -1,6 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import agent from "../../api/agent";
 import { Company, Root } from "../../models/root";
+import { actions } from "react-table";
 export const fetchCompanyAsync = createAsyncThunk<any>(
   "company/getdata",
   async () => {
@@ -18,7 +19,7 @@ export const fetchCompanyAsync = createAsyncThunk<any>(
       (item: Company) => item.Exchange === 3
     );
     let data = {
-      dataCompanyTotal :dataCompanyHSX.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
+      dataCompanyTotal :dataCompanyTotal.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
       dataCompanyHSX: dataCompanyHSX.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
       dataCompanyHNX :dataCompanyHNX.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
       dataCompanyUpcom : dataCompanyUpcom.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
@@ -44,6 +45,7 @@ export const companySlice = createSlice({
     dataCompanyHNX: [] as Company[],
     dataCompanyHSX: [] as Company[],
     status: 0,
+    dataDetail :null ,
   },
 
   reducers: {
@@ -51,6 +53,7 @@ export const companySlice = createSlice({
       // state.data = action.payload;
     //   state.status = 1;
     },
+
   },
 
   extraReducers: (builder) => {
@@ -82,4 +85,5 @@ export const companySlice = createSlice({
       });
   },
 });
+export const {getDataSuccess}  = companySlice.actions
 export default companySlice;

@@ -46,7 +46,7 @@ const SearchStockCode = ({
   // lọc Chữ
   const searchResults =
     dataCompanyTotal &&
-    dataCompanyTotal.filter((item) => {
+    dataCompanyTotal.filter((item:Company) => {
       let name = `${item.Code} "-" ${
         item.Exchange === 1 ? "HSX" : item.Exchange === 2 ? "HNX" : "UPCOM"
       } "-" ${item.ScripName}`;
@@ -56,7 +56,7 @@ const SearchStockCode = ({
   const AddStockCode = (stockCode: Company) => {
     setShowPoup(!showPopup);
     ChangeFunction(stockCode);
-    SearchStockCode(stockCode.Code);
+    SearchStockCode(stockCode);
     setValueInput("");
   };
   return (
@@ -70,6 +70,7 @@ const SearchStockCode = ({
           <ul >
             {dataCompanyTotal && dataCompanyTotal.length > 0
               ? searchResults.map((item: Company, index: number) => {
+               
                   let name = `${item.Code} - ${
                     item.Exchange === 1
                       ? "HSX"
