@@ -12,6 +12,7 @@ import "./TransBalance.scss";
 import TableTransValue from "./TableTransValue";
 import TableTransReport from "./TableTransReport";
 
+
 const TransBalance = () => {
   const [short, setShort] = useState(false);
 

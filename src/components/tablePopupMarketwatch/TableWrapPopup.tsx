@@ -8,21 +8,8 @@ import TableKLTTGPopup from "./TableKLTTGPopup";
 import TableReportingPopup from "./TableReportingPopup";
 import TableBasicPopup from "./TableBasicPopup";
 import TableDetailPopup from "./TableDetailPopup";
-import { useAppDispatch, useAppSelector } from "../../store/configureStore";
-import {
-  fetchDataDetailPopupAsync,
-  fetchDataTableKLTTGAsync,
-} from "./dataTablePopupDetailSlice";
 
 const TableWrapPopup = () => {
-  const { code } = useAppSelector((state) => state.popupTable);
-  const { floor } = useAppSelector((state) => state.menuBar);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchDataTableKLTTGAsync(code));
-
-    dispatch(fetchDataDetailPopupAsync({ code, floor }));
-  }, [code, floor, dispatch]);
   return (
     <>
       <div>

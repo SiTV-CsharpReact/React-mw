@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import "./TablePopup.scss";
-import { showDetailStock } from "../popupTableMarketwatch/popupTableSlice";
-import axios from "axios";
-import { getCompanyNameByCode } from "../../utils/util";
+import { showDetailStock  ,setLLTG} from "../popupTableMarketwatch/popupTableSlice";
+
 import { fetchChartOptionAsync } from "./chartOptionSlice";
 import TableWrapPopup from "./TableWrapPopup";
-import { fetchDataSearchPopupAsync } from "./dataTablePopupDetailSlice";
-
-import NewsPopup from "./NewsPopup";
-import agent from "../../api/agent";
+import {
+  fetchDataDetailPopupAsync, fetchDataTableKLTTGAsync,
+} from "./dataTablePopupDetailSlice";
+import { Company } from "../../models/root";
+import SearchStockCode from "../SearchStockCode/SearchStockCode";
 interface DraggableProps {
   initialPosition?: { x: number; y: number };
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;
@@ -18,41 +18,25 @@ interface DraggableProps {
 }
 const TablePopupMarketwatch = () => {
   const dispatch = useAppDispatch();
-  const [dataKLTTG, setDataKLTTG] = useState([]);
-  const [dataResultSearch, setDataResultSearch] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-  const [filteredData, setFilteredData] = useState([]);
-  const [dataCheck, setDataCheck] = useState("");
-  const [dataItemHNX, setDataItemHNX] = useState<any[]>([]);
-  const [dataItemHSX, setDataItemHSX] = useState<any[]>([]);
+  const [ValueInput, setValueInput] = useState("");
+  const [stockCode, setStockCode] = useState<Company>({
+    Code: "",
+    Exchange: 0,
+    ScripName: "",
+    Basic_Price: 0,
+    Ceiling_Price: 0,
+    Floor_Price: 0,
+    Stock_Type2: 0,
+    ScripNameEN: "",
+    ID: "",
+  });
   const { code } = useAppSelector((state) => state.popupTable);
-  const { dataTableSearch } = useAppSelector((state) => state.dataPopupDetail);
-
-  useEffect(() => {
-    const fethData = async () => {
-      const { data } = await axios.get("http://localhost:9999/Data");
-      setDataKLTTG(data);
-    };
-    const fethDataSearch = async () => {
-      const { data } = await axios.get("http://localhost:6868/Data");
-      console.log("data", data);
-      setDataResultSearch(data);
-    };
-    fethData();
-    fethDataSearch();
-  }, []);
-
+  const { dataCompanyTotal } = useAppSelector((state) => state.company);
   const handleChange = (e: any) => {
-    setDataCheck(e.target.value.toUpperCase());
+    setValueInput(e.toUpperCase());
     setShowPopup(true);
   };
-  useEffect(() => {
-    const results = dataResultSearch.filter((item: any) =>
-      item.Code.toUpperCase().includes(dataCheck)
-    );
-    setFilteredData(results);
-  }, [dataCheck, dataResultSearch]);
-
   const [position, setPosition] = useState({
     x: (window.innerWidth - 1230) / 2, // - đi witdh tablle chia 2
     y: (window.innerHeight - 721 - 40) / 2,
@@ -64,10 +48,28 @@ const TablePopupMarketwatch = () => {
   const handelClick = () => {
     setShowPopup(!showPopup);
   };
-
+  const AddStockCode = (CodeCk: Company) => {
+    detailStockcode(CodeCk.Code);
+    let floor = CodeCk.Exchange === 1 ? "HSX" : "HNX";
+    let stockCode = CodeCk.Code
+    dispatch(fetchDataDetailPopupAsync({ stockCode ,floor }));
+    dispatch(fetchDataDetailPopupAsync({ stockCode, floor }));
+    dispatch(fetchDataTableKLTTGAsync(stockCode))
+    dispatch(showDetailStock({ visible: true, code: CodeCk.Code }));
+    dispatch(setLLTG(floor));
+  };
+  const detailStockcode = (codeCk: string) => {
+    let CodenCt = dataCompanyTotal.find((e: Company) => e.Code == codeCk);
+    if (CodenCt) setStockCode(CodenCt);
+  };
   useEffect(() => {
-    // dispatch(fetchDataSearchPopupAsync(""));
-    dispatch(fetchChartOptionAsync({ stockCode: code }));
+    const getAllData = async () => {
+      let result = await dispatch(fetchChartOptionAsync({ stockCode: code }));
+      if (result.payload) {
+        detailStockcode(code);
+      }
+    };
+    getAllData();
   }, [code, dispatch]);
   // Kiểm tra và đặt lại giá trị cho dataMouse.maF và dataMouseBuy.maB nếu selectedCode tồn tại
   return (
@@ -87,10 +89,10 @@ const TablePopupMarketwatch = () => {
                       type="text"
                       placeholder="Nhập mã Chứng khoán"
                       autoComplete="nofill"
-                      onChange={handleChange}
+                      onChange={(e) => handleChange(e.target.value)}
                       onClick={handelClick}
                       className="cursor-pointer"
-                      value={dataCheck.toUpperCase()}
+                      value={ValueInput}
                     />
                   </div>
                   <div className="ms-trigger">
@@ -100,56 +102,28 @@ const TablePopupMarketwatch = () => {
               </div>
               <div className="inline-block pu-div-title">
                 <h2 className="pu-title">
-                  {dataItemHNX.length !== 0
-                    ? dataItemHNX[0]?.Info[0][1]
-                    : dataItemHSX[0]?.Info[0][1]}{" "}
-                  - {getCompanyNameByCode(dataItemHNX[0]?.Info[0][1])}
+                  {stockCode.Code
+                    ? `${stockCode.Code} - ${
+                        stockCode.Exchange === 1
+                          ? "HSX"
+                          : stockCode.Exchange === 2
+                          ? "HNX"
+                          : "UPCOM"
+                      } - ${stockCode.ScripName}`
+                    : ""}
                 </h2>
               </div>
             </div>
             {/*  */}
-            {showPopup && (
-              <div
-                style={{ overflowY: "scroll" }}
-                className="w-[500px]  overflow-hidden shadow-2xl left-[25%] top-[36px] z-50 h-[310px] bg-[#FBFBFB] rounded-sm absolute"
-              >
-                {showPopup &&
-                  filteredData.map((item: any, index: any) => {
-                    let parts = item.Code.split(
-                      new RegExp(`(${dataCheck})`, "gi")
-                    );
-                    return (
-                      <div
-                        onClick={() => setShowPopup(!showPopup)}
-                        className="py-1 cursor-pointer pl-2 border-b hover:bg-[#EEEEEE]"
-                        key={index}
-                      >
-                        <p className="!font-medium">
-                          {parts.map((part: any, partIndex: any) => (
-                            <span
-                              key={partIndex}
-                              style={{
-                                color:
-                                  part.toUpperCase() === dataCheck
-                                    ? "#FF0000"
-                                    : "inherit",
-                                fontWeight:
-                                  part.toUpperCase() === dataCheck
-                                    ? "bold"
-                                    : "medium",
-                              }}
-                            >
-                              {part}
-                            </span>
-                          ))}
-                          <span> - {item.ScripName}</span>
-                        </p>
-                        <p></p>
-                      </div>
-                    );
-                  })}
-              </div>
-            )}
+            <SearchStockCode
+              valueInput={ValueInput}
+              setShowPoup={setShowPopup}
+              showPopup={showPopup}
+              ChangeFunction={setStockCode}
+              SearchStockCode={AddStockCode}
+              setValueInput={setValueInput}
+              border={true}
+            />
 
             {/* vd */}
           </div>

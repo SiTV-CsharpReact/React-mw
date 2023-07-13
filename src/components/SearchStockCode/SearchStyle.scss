@@ -1,0 +1,19 @@
+
+.menuSearch{
+    border : 1px solid  black;
+    border-radius: 3px;
+    box-shadow: 0 3px 10px rgba(251, 251, 251, 0.4);
+    background: rgb(251, 251, 251);
+    border-radius: 1px;
+    &  ul li {
+        padding: 5px;
+        line-height: 1.2em;
+        font-size: 9pt;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+    & .liboder{
+        border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+    }
+}

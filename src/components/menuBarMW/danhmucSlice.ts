@@ -3,7 +3,7 @@ import agent from "../../api/agent";
 import { CategoriesMarketWatch, Category } from "../../models/category";
 // <CategoriesMarketWatch>
 export const fetchCategoryAsync = createAsyncThunk(
-  "table/getCateolcadf",
+  "table_fecthCategory/getCateolcadf",
   async () => {
     // const res = await agent.Category.get();
   try {
@@ -16,6 +16,14 @@ export const fetchCategoryAsync = createAsyncThunk(
     // return res;
   }
 );
+export const AddCategori = createAsyncThunk("table_fecthCategory/addCategori" , async(Query:any)=>{
+  try {
+      const data = await agent.Category.AddCate(Query)
+      console.log("vô data  Query " ,Query ,  data)
+  } catch (error) {
+    
+  }
+})
 
 export const danhmucSlice = createSlice({
   name: "table_fecthCategory",

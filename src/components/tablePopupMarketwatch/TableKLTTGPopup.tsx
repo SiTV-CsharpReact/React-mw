@@ -8,27 +8,12 @@ const TableKLTTGPopup = () => {
   const [priceSan, setPriceSan] = useState(0);
 
   // const [dataTable, setDataTable] = useState<TableKLTTG | null>(null);
-  const { code } = useAppSelector((state) => state.popupTable);
+  const { floorLTG } = useAppSelector((state) => state.popupTable);
   const { dataTableKLTTG, dataDetailPopup } = useAppSelector(
     (state) => state.dataPopupDetail
   );
-  const { floor } = useAppSelector((state) => state.menuBar);
-
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    // dispatch(fetchDataTableKLTTGAsync(code));
-    // const RP = {
-    //   action: "le",
-    //   symbol: props?.stockCode,
-    //   max_score: 0,
-    // };
-    // const fetchDataTableKLTTG = async () => {
-    //   const dataRP = await agent.dataTableBasic.postFormData(RP);
-    //   setDataTable(dataRP.data);
-    // };
-    // fetchDataTableKLTTG();
-  }, [code, dispatch]);
 
   useEffect(() => {
     dataDetailPopup?.map((item: any) => {
@@ -45,9 +30,7 @@ const TableKLTTGPopup = () => {
         }
       });
     });
-    console.log({ dataDetailPopup });
   }, [dataDetailPopup]);
-
   return (
     <>
       <div
@@ -111,7 +94,7 @@ const TableKLTTGPopup = () => {
                     }`,
                   }}
                 >
-                  {formatNumber(item.MP)}
+                  {formatNumber(item.MP)} 
                 </div>
                 <div
                   className="text-center col-span-2 border-[#333] text-[8pt] border-l border-b"
@@ -129,9 +112,9 @@ const TableKLTTGPopup = () => {
                     }`,
                   }}
                 >
-                  {floor === "HSX"
+                  {floorLTG === "HSX"
                     ? formatNumber(item.MQ * 10)
-                    : formatNumber(item.MQ)}
+                    : formatNumber(item.MQ)} 
                 </div>
                 <div
                   className="text-center col-span-2 border-[#333] text-[8pt] border-r border-b"
@@ -149,7 +132,7 @@ const TableKLTTGPopup = () => {
                     }`,
                   }}
                 >
-                  {floor === "HSX"
+                  {floorLTG === "HSX"
                     ? formatNumber(item.TQ * 10)
                     : formatNumber(item.TQ)}
                 </div>

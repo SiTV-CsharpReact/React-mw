@@ -4,11 +4,12 @@ import {
   useAppSelector,
   RootState,
 } from "../../store/configureStore";
-import { showDetailStock } from "./popupTableSlice";
+import { showDetailStock ,setLLTG } from "./popupTableSlice";
 import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatch";
 import { handleHistoryPrices } from "../tableMarketwatch/tableTestSlice";
 import { setHistoryMenu } from "../menuBarMW/menuSlice";
 import { historyPriceActiveMenu } from "../menuBarMW/danhmucSlice";
+import { fetchDataDetailPopupAsync, fetchDataTableKLTTGAsync } from "../tablePopupMarketwatch/dataTablePopupDetailSlice";
 
 interface Props {
   x: number;
@@ -49,16 +50,19 @@ const PopupTableMarketwatch = ({
       nameMenu,
       floor,
     };
-    console.log("data", data);
     dispatch(handleHistoryPrices(data)); // thay đổi sàn
     dispatch(setHistoryMenu()); // chuyển sang table giá
     dispatch(historyPriceActiveMenu()); // chặn chuyển tab sang danh mục cá nhân
     setSelectedValueProp({ ...selectedValue, status: false }); // tắt popuptable
   };
   const historyStock = () => {
-    dispatch(showDetailStock({ visible: true, code: selectedValue.value }));
+    dispatch(showDetailStock({visible: true, code: selectedValue.value }));
+    dispatch(setLLTG(floor));
     setSelectedValueProp({ ...selectedValue, status: false });
-    console.log({ floor });
+    let stockCode = selectedValue.value
+    dispatch(fetchDataTableKLTTGAsync(stockCode));
+    dispatch(fetchDataDetailPopupAsync({ stockCode, floor }));
+    dispatch(fetchDataTableKLTTGAsync(stockCode))
   };
   return (
     <div

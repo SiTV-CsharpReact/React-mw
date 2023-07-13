@@ -4,7 +4,6 @@ export const getCoookieStorage = () => {
   // lấy cookie
   const token = Cookie.get("aspfpt_sessiontoken");
   const cookie = document.cookie
-  console.log("cookie",token);
   return token;
 };
 // adđ cookie
