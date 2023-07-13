@@ -99,7 +99,7 @@ const TableDetailPopup = () => {
                             dataDetailPopup[0]?.Info[3][1]
                           )}`} >
               {/* {dataMouse.maF || dataMouseBuy.maB || displayCode} */}
-              { dataDetailPopup[0]?.Info[0][1] || dataDetailPopup[0]?.RowID }
+              { dataDetailPopup[0]?.Info[0][1] || dataDetailPopup[0]?.Info[1][0] }
 
           </span>
         </td>

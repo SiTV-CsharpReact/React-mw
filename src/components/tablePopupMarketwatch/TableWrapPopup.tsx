@@ -16,12 +16,13 @@ import {
 
 const TableWrapPopup = () => {
   const { code } = useAppSelector((state) => state.popupTable);
+  const { floor } = useAppSelector((state) => state.menuBar);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchDataTableKLTTGAsync(code));
 
-    dispatch(fetchDataDetailPopupAsync(code));
-  }, [code, dispatch]);
+    dispatch(fetchDataDetailPopupAsync({ code, floor }));
+  }, [code, floor, dispatch]);
   return (
     <>
       <div>
@@ -35,13 +36,6 @@ const TableWrapPopup = () => {
         <div className="pu-hrz-realtime w-[391px] mx-1">
           <div
             className="pu-vertical pu-div-realtime"
-            onScroll={function (e: any) {
-              if (e.currentTarget.scrollTop > 0) {
-                e.target.classList.add("stick");
-              } else {
-                e.target.classList.remove("stick");
-              }
-            }}
           >
             <TableKLTTGPopup />
           </div>

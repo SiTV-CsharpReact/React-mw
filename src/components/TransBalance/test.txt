@@ -3,6 +3,7 @@ import { RootState, useAppSelector } from "../../store/configureStore";
 import { formatNumber, formatNumberMarket } from "../../utils/util";
 import axios from "axios";
 import io from 'socket.io-client';
+
 const TableAsset = (props: any) => {
     const {assetReport } = useAppSelector((state) => state.assetReport);
     const [dataTable, setDataTable] = useState([])
@@ -15,7 +16,7 @@ const TableAsset = (props: any) => {
     useEffect(() => {
         if (props.short)
             setShort(!short);
-    }, [props.short]);
+    }, [props.short, short]);
     const handleSort = (key: string) => {
         setLabel(key);
         if (sort === "asc") {
