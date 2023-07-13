@@ -142,6 +142,8 @@ input[type="checkbox"].priceboard2 {
   color: #1d1d1d;
   border: none;
   /* font-style: italic; */
+  outline: none;
+  border-radius: 4px;
   width: 70%;
   &:focus {
     border: 1px solid #2ff50f !important;
