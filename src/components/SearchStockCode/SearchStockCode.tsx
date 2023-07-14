@@ -61,11 +61,10 @@ const SearchStockCode = ({
   };
   return (
     <>
-      {" "}
       {showPopup ? (
         <div
           style={{ overflowY: "scroll" }}
-          className="menuSearch  w-[500px]  overflow-hidden shadow-2xl left-[25%] top-[36px] z-50 h-[310px] bg-[#FBFBFB] rounded-sm absolute"
+          className= {` ${border ?  "" : "NoneBoder" } menuSearch  w-[500px]  overflow-hidden shadow-2xl left-[25%] top-[36px] z-50 h-[310px] bg-[#FBFBFB] rounded-sm absolute `}
         >
           <ul >
             {dataCompanyTotal && dataCompanyTotal.length > 0
@@ -80,7 +79,7 @@ const SearchStockCode = ({
                   } - ${item.ScripName}`;
                   return (
                     <>
-                      <li className={border ? "liboder" : ""} key={index} onClick={() => AddStockCode(item)}>
+                      <li className={border ? "liboder" : "LinoneBorder"} key={index} onClick={() => AddStockCode(item)}>
                         {getHighlightedText(name, valueInput)}
                       </li>
                     </>

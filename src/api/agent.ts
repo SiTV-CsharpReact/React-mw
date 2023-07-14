@@ -45,7 +45,7 @@ const URL_EZTRADE = "http://eztrade0.fpts.com"
   };
   const errorInterceptor = (axiosError:any) => {
     // && axiosError.response
-    console.log("lỗi" ,axiosError)
+    // console.log("lỗi" ,axiosError)
     // if (axiosError) {
     //   const statusCode = axiosError.response?.status;
     //     if(statusCode === 404) { // lỗi 404 đẩy về trang login 

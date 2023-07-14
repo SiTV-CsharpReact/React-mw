@@ -4,7 +4,7 @@ import { RowDataIndex } from "../interface/config.tablegrid";
 import { Tooltip } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../store/configureStore";
 // import { dispatchDataTableBuy } from "../tableBuy";
-import {  dispatchDataTable  } from "../tableThunk";
+import {  dispatchDataTable, setDataOrder  } from "../orderComanSlice";
 import { statusChartMarketwatch } from "../../chartMarketwatch/chartMarketwatchSlice";
 import { RowData } from "../../../models/tableMarketwatch";
 import { CellRender } from "./CellRenderComponent";
@@ -12,6 +12,7 @@ import { addDatatPined } from "../tableTestSlice";
 import { setCookie } from "../../../models/cookie";
 import CustomHeader from "../CustomHeader";
 import { CellOtherColorRender } from "./CellOtherColorComponent";
+import { Company } from "../../../models/root";
 
 
 
@@ -41,9 +42,19 @@ const ColumnDef = (props: any, props2: any) => {
   const dispatch = useAppDispatch();
   const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
   const {RowPined} = useAppSelector((state) => state.tableTest)
+  const {dataCompanyTotal} = useAppSelector((state) => state.company)
   const handleClick = (dataTable: any) => {
-    // console.log("dataTable ii",dataTable)
+
     dispatch(dispatchDataTable(dataTable));
+    const dataCode = dataCompanyTotal.find((item:Company) =>  item.Code ===  dataTable.ma)
+    if(dataCode){
+      let san = dataCode?.Exchange === 1 ?  "HSX" :"HNX"
+      const data = {
+        key  :"B",
+        dataOrder :{...dataCode , Exchange :san}
+      }
+      dispatch(setDataOrder(data))
+    }
   };
 
 

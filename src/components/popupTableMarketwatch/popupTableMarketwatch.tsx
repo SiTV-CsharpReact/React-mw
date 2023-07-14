@@ -4,12 +4,16 @@ import {
   useAppSelector,
   RootState,
 } from "../../store/configureStore";
-import { showDetailStock ,setLLTG } from "./popupTableSlice";
-import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatch";
+import { showDetailStock, setLLTG } from "./popupTableSlice";
 import { handleHistoryPrices } from "../tableMarketwatch/tableTestSlice";
 import { setHistoryMenu } from "../menuBarMW/menuSlice";
 import { historyPriceActiveMenu } from "../menuBarMW/danhmucSlice";
-import { fetchDataDetailPopupAsync, fetchDataTableKLTTGAsync } from "../tablePopupMarketwatch/dataTablePopupDetailSlice";
+import {
+  fetchDataDetailPopupAsync,
+  fetchDataTableKLTTGAsync,
+} from "../tablePopupMarketwatch/dataTablePopupDetailSlice";
+import { Company } from "../../models/root";
+import { setDataOrder } from "../tableMarketwatch/orderComanSlice";
 
 interface Props {
   x: number;
@@ -30,7 +34,7 @@ const PopupTableMarketwatch = ({
   const { keyMenu, nameMenu, floor } = useAppSelector(
     (state: RootState) => state.menuBar
   );
-
+  const {dataCompanyTotal}  = useAppSelector((state:RootState) =>  state.company)
   const popupRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     function handleClickOutside(e: any) {
@@ -56,13 +60,24 @@ const PopupTableMarketwatch = ({
     setSelectedValueProp({ ...selectedValue, status: false }); // tắt popuptable
   };
   const historyStock = () => {
-    dispatch(showDetailStock({visible: true, code: selectedValue.value }));
+    dispatch(showDetailStock({ visible: true, code: selectedValue.value }));
     dispatch(setLLTG(floor));
     setSelectedValueProp({ ...selectedValue, status: false });
-    let stockCode = selectedValue.value
+    let stockCode = selectedValue.value;
     dispatch(fetchDataTableKLTTGAsync(stockCode));
     dispatch(fetchDataDetailPopupAsync({ stockCode, floor }));
-    dispatch(fetchDataTableKLTTGAsync(stockCode))
+  };
+  const BuySeillStockCode = (key: string ) => {
+    setSelectedValueProp({ ...selectedValue, status: false });
+    const dataCode = dataCompanyTotal.find((item:Company) =>  item.Code ===  selectedValue.value)
+    if(dataCode){
+      let san = dataCode?.Exchange === 1 ?  "HSX" :"HNX"
+      const data = {
+        key ,
+        dataOrder :{...dataCode , Exchange :san}
+      }
+      dispatch(setDataOrder(data))
+    }
   };
   return (
     <div
@@ -76,21 +91,13 @@ const PopupTableMarketwatch = ({
       }}
     >
       <ul className="context-menu-list" id="idContextMenu">
-        <li
-          onClick={() =>
-            setSelectedValueProp({ ...selectedValue, status: false })
-          }
-        >
+        <li onClick={() => BuySeillStockCode("M")}>
           <i className="fa fa-arrow-left text-[#00A4FF]"></i>
           <span>
             Mua <b>{selectedValue.value}</b>
           </span>
         </li>
-        <li
-          onClick={() =>
-            setSelectedValueProp({ ...selectedValue, status: false })
-          }
-        >
+        <li onClick={() => BuySeillStockCode("B")}>
           <i className="fa fa-arrow-right text-[#f44336]"></i>
           <span>
             Bán <b>{selectedValue.value}</b>
@@ -106,7 +113,7 @@ const PopupTableMarketwatch = ({
             Thông tin doanh nghiệp <b>{selectedValue.value}</b>
           </span>
         </li>
-        <li onClick={() => historyStock()}>
+        <li onClick={historyStock}>
           <i className="fa fa-sign-out text-[#2371AF]"></i>
           <span>
             Chi tiết <b>{selectedValue.value}</b>
