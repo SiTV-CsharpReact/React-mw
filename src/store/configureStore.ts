@@ -12,7 +12,7 @@ import { marketHSXSlice } from "../components/indexMarketWatch/marketHSXSlice";
 import settingMarketWatchSlice from "../components/indexMarketWatch/marketShowSlice";
 import marketHNXSlice from "../components/indexMarketWatch/marketHNXSlice";
 import assetReportSlice from "../components/AssetReport/AssetReportSlice";
-import { dataSlice } from "../components/tableMarketwatch/tableThunk";
+import OrderComanSlice from "../components/tableMarketwatch/orderComanSlice";
 // import {tableBuy} from '../components/tableMarketwatch/tableBuy';
 import changeThemeModeSlice from "../components/header/DarkModeSlice";
 import LayoutMarketWatchSLice from "../components/layoutMarketwatch/LayoutMarketWatchSLice";
@@ -56,12 +56,10 @@ export const store = configureStore({
     //báo cáo tài sản
     assetReport: assetReportSlice.reducer,
     //
-    dataTable: dataSlice.reducer,
-    dataBuy: dataSlice.reducer,
-
+   
     dataThongke: dataSliceThongke.reducer,
-    dataMouse: dataSlice.reducer,
-    dataMouseBuy: dataSlice.reducer,
+    orderComan :  OrderComanSlice.reducer,
+ 
     //set status show table chart
     statusTable: statusTableMWSlice.reducer,
 

@@ -1,10 +1,13 @@
 
 .menuSearch{
-    border : 1px solid  black;
-    border-radius: 3px;
-    box-shadow: 0 3px 10px rgba(251, 251, 251, 0.4);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    box-shadow: 0px 0px 3px 0.5px #9a29294f;
     background: rgb(251, 251, 251);
     border-radius: 1px;
+    height: auto;
+    max-height: 302px;
     &  ul li {
         padding: 5px;
         line-height: 1.2em;
@@ -16,4 +19,13 @@
     & .liboder{
         border-bottom: 1px solid rgba(128, 128, 128, 0.15);
     }
+    & .LinoneBorder{
+
+    }
+}
+.NoneBoder {
+    top: 106%;
+    border: none;
+    box-shadow: 0px 0px 3px 0.5px #a80c0c4f;
+    border-radius: 2px;
 }

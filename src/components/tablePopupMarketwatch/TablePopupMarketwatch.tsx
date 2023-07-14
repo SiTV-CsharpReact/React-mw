@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import "./TablePopup.scss";
-import { showDetailStock  ,setLLTG} from "../popupTableMarketwatch/popupTableSlice";
+import {
+  showDetailStock,
+  setLLTG,
+} from "../popupTableMarketwatch/popupTableSlice";
 
 import { fetchChartOptionAsync } from "./chartOptionSlice";
 import TableWrapPopup from "./TableWrapPopup";
 import {
-  fetchDataDetailPopupAsync, fetchDataTableKLTTGAsync,
+  fetchDataDetailPopupAsync,
+  fetchDataTableKLTTGAsync,
 } from "./dataTablePopupDetailSlice";
 import { Company } from "../../models/root";
 import SearchStockCode from "../SearchStockCode/SearchStockCode";
@@ -34,8 +38,14 @@ const TablePopupMarketwatch = () => {
   const { code } = useAppSelector((state) => state.popupTable);
   const { dataCompanyTotal } = useAppSelector((state) => state.company);
   const handleChange = (e: any) => {
-    setValueInput(e.toUpperCase());
-    setShowPopup(true);
+    if(e === ""){
+      setShowPopup(!showPopup);
+      setValueInput(e.toUpperCase());
+    }else{
+      setShowPopup(true);
+      setValueInput(e.toUpperCase());
+    }
+    
   };
   const [position, setPosition] = useState({
     x: (window.innerWidth - 1230) / 2, // - đi witdh tablle chia 2
@@ -51,29 +61,30 @@ const TablePopupMarketwatch = () => {
   const AddStockCode = (CodeCk: Company) => {
     detailStockcode(CodeCk.Code);
     let floor = CodeCk.Exchange === 1 ? "HSX" : "HNX";
-    let stockCode = CodeCk.Code
-    dispatch(fetchDataDetailPopupAsync({ stockCode ,floor }));
+    let stockCode = CodeCk.Code;
     dispatch(fetchDataDetailPopupAsync({ stockCode, floor }));
-    dispatch(fetchDataTableKLTTGAsync(stockCode))
+    dispatch(fetchDataDetailPopupAsync({ stockCode, floor }));
+    dispatch(fetchDataTableKLTTGAsync(stockCode));
     dispatch(showDetailStock({ visible: true, code: CodeCk.Code }));
     dispatch(setLLTG(floor));
   };
   const detailStockcode = (codeCk: string) => {
     let CodenCt = dataCompanyTotal.find((e: Company) => e.Code == codeCk);
+
     if (CodenCt) setStockCode(CodenCt);
   };
   useEffect(() => {
     const getAllData = async () => {
       let result = await dispatch(fetchChartOptionAsync({ stockCode: code }));
-      if (result.payload) {
-        detailStockcode(code);
-      }
+      detailStockcode(code);
     };
     getAllData();
   }, [code, dispatch]);
   // Kiểm tra và đặt lại giá trị cho dataMouse.maF và dataMouseBuy.maB nếu selectedCode tồn tại
   return (
     <Draggable handle=".pu-header" position={position} onDrag={handleDrag}>
+
+      <> 
       <div className="pu-window text-[#B9B9B9]">
         <div className="pu-header">
           <div className="flex pu-grtitle">
@@ -98,6 +109,15 @@ const TablePopupMarketwatch = () => {
                   <div className="ms-trigger">
                     <div className="fa fa-search top-[2px] absolute left-[2px]" />
                   </div>
+                  <SearchStockCode
+                    valueInput={ValueInput}
+                    setShowPoup={setShowPopup}
+                    showPopup={showPopup}
+                    ChangeFunction={setStockCode}
+                    SearchStockCode={AddStockCode}
+                    setValueInput={setValueInput}
+                    border={true}
+                  />
                 </div>
               </div>
               <div className="inline-block pu-div-title">
@@ -115,15 +135,6 @@ const TablePopupMarketwatch = () => {
               </div>
             </div>
             {/*  */}
-            <SearchStockCode
-              valueInput={ValueInput}
-              setShowPoup={setShowPopup}
-              showPopup={showPopup}
-              ChangeFunction={setStockCode}
-              SearchStockCode={AddStockCode}
-              setValueInput={setValueInput}
-              border={true}
-            />
 
             {/* vd */}
           </div>
@@ -145,7 +156,8 @@ const TablePopupMarketwatch = () => {
         </div>
         <TableWrapPopup />
       </div>
-    </Draggable>
+      </>
+      </Draggable>
   );
 };
 export default React.memo(TablePopupMarketwatch);

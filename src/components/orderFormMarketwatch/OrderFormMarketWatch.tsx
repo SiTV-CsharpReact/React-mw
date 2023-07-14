@@ -1,11 +1,9 @@
-import { memo, useContext, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
 import "flowbite";
 import React from "react";
-import Switch from "@mui/material/Switch";
 // import { AiOutlineLoading3Quarters, AiFillCloseCircle, AiOutlineKey, AiOutlineUnorderedList } from 'react-icons/ai';
 import { FormControlLabel, Tooltip, styled } from "@mui/material";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import TableTotalMonney from "./TableTotalMonney";
 import "./styleOrderForm.scss";
 import IconNext from "../../images/icon-next.png";
@@ -16,13 +14,17 @@ import {
 } from "../../store/configureStore";
 import StockBalance from "./StockBalance";
 import RecordPending from "./RecordPending";
-import { AppContext } from "../../Context/AppContext";
-import { useSelector } from "react-redux";
-import axios from "axios";
 import * as yup from "yup";
 import { formatNumber } from "../../utils/util";
 import Protal from "./Portol";
 import { useTranslation } from "react-i18next";
+import SearchStockCode from "../SearchStockCode/SearchStockCode";
+import { Company } from "../../models/root";
+import {
+  setDataOrder,
+  setValueOrder,
+  ResetStockCode,
+} from "../tableMarketwatch/orderComanSlice";
 type Props = {
   windowHeight: number;
   heightOrderForm: number;
@@ -32,45 +34,46 @@ type Props = {
   setHeightPriceBoard(heightPriceBoard: number): void;
 };
 const OrderMarketW = () => {
-  
-
   const { t } = useTranslation(["home"]);
   // color mua ban
-  const [color, setColor] = useState(true);
+  const { dataShow } = useAppSelector((state) => state.dataShow);
+  const { SanT, maCode, price, TCT, TranC, key, san } = useAppSelector(
+    (state: RootState) => state.orderComan
+  );
   const [valueInputPrice, setValueInputPrice] = useState<number>(0);
-  const [TranC, setTranC] = useState<number>(0);
-  const [TCT, setTCT] = useState<number>(0);
-  const [SanT, setSanT] = useState<number>(0);
   const [valueInputKl, setValueInputKl] = useState<number>(0);
 
   const [gdSuccess, setGdSuccess] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [submit, setSubmit] = useState(false);
-  const [dataCheck, setDataCheck] = useState(false);
   const [success, setSuccess] = useState("");
+
   // ghi lenh cho gui
   const [order, setOrder] = useState(true);
-  const [inputValue, setInputValue] = useState('');
-  //const dispatch = useAppDispatch();
+
+  const dispatch = useAppDispatch();
   //const {data} = useAppSelector(state => state.counter);
-  const [counter, setCounter] = useState(0);
-  const { dataTable } = useAppSelector((state) => state.dataTable);
-  const { dataShow } = useAppSelector((state) => state.dataShow);
+
+  const [inputValue, setInputValue] = useState("");
+  const [color, setColor] = useState(true);
+  // lấy ra chi tiết 1 mã code
+  const [stockCode, setStockCode] = useState<Company>({
+    Code: "",
+    Exchange: 0,
+    ScripName: "",
+    Basic_Price: 0,
+    Ceiling_Price: 0,
+    Floor_Price: 0,
+    Stock_Type2: 0,
+    ScripNameEN: "",
+    ID: "",
+  });
   // popup
+  // console.log(" SanT, maCode, price, TCT, TranC, key,san" , SanT, maCode, price, TCT, TranC, key,san)
+  useEffect(() => {
+    key == "M" ? setColor(true) : setColor(false);
+  }, [key]);
   const [popup, setPopup] = useState(false);
-  useEffect(() => {
-    if (dataTable.key === "S" ) {
-      setColor(false);
-    }
-  }, [dataTable.key]);
-
-  useEffect(() => {
-    if (dataTable.key === "B") {
-      setColor(true);
-    }
-  }, [dataTable.key]);
-
   const incrementCounter = () => {
     setValueInputKl(valueInputKl + 100);
   };
@@ -95,23 +98,38 @@ const OrderMarketW = () => {
   const toggleOrder = () => {
     setOrder(!order);
   };
-
-  const dataOrder: string[] = [
-    "AAV - HNX.NY - Công ty Cổ phần AAV Group",
-    "ADC - HNX.NY - Công ty Cổ phần Mỹ thuật và Truyền Thông",
-    "ALT - HNX.NY - Công ty Cổ phần Văn hóa Tân Bình",
-    "AMC - HNX.NY - Công ty Cổ phần Khoáng Sản Á Châu",
-    "AME - HNX.NY - Công ty Cổ phần Alphanam E&C",
-    "AMV - HNX.NY - Công ty Cổ phần Sản xuất kinh doanh dược và trang thiết bị Y tế Việt Mỹ",
-    "API - HNX.NY - Công ty Cổ phần Đầu tư Châu Á - Thái Bình Dương",
-    "APS - HNX.NY - Công ty Cổ phần Chứng khoán Châu Á Thái Bình Dương",
-    "ARM - HNX.NY - Công ty Cổ phần Xuất nhập khẩu Hàng không",
-  ];
+  let timeOutString = useRef<number | any>(null);
 
   const handelInputChangePrice = (e: any) => {
     const value = e.target.value;
     setValueInputPrice(value.toUpperCase());
+    if (timeOutString?.current) {
+      clearTimeout(timeOutString?.current);
+    }
+    if (value) {
+      timeOutString.current = setTimeout(() => {
+        isChangePrice(value);
+      }, 1000);
+    }
   };
+  // kiểm tra giá
+
+  const isChangePrice = (value: number) => {
+    // SanT, maCode, price, TCT, TranC, key,san
+    if (SanT > 0 && TranC > 0) {
+      // k cho người dùng nhập giá lớn hơn giá trần và nhỏ hơn giá sàn 
+      if (value > TranC || value < SanT ){
+      //   let mesage = `Quý khách vui lòng nhập trong khoảng ${SanT} - ${ TranC}`
+      //   toast.error(mesage, {
+      //     position: toast.POSITION.BOTTOM_RIGHT,
+          
+      // });
+   
+      }
+       
+    }
+  };
+
   const handelInputChangeKl = (e: any) => {
     const value = e.target.value;
     setValueInputKl(value.toUpperCase());
@@ -132,80 +150,93 @@ const OrderMarketW = () => {
     }
   };
   const validationSchema = yup.object().shape({
-    txtSymbol: yup.string().required( `${t("home:menu.CHECK_VLN")} ${t("home:Order.ORDER_MCK")} ` ),
+    txtSymbol: yup
+      .string()
+      .required(`${t("home:menu.CHECK_VLN")} ${t("home:Order.ORDER_MCK")} `),
   });
   const validationSchemaPrice = yup.object().shape({
-    txtSymbol: yup.number().min(1).required( `"${t("home:menu.CHECK_VLN")} ${t("home:Order.ORDER_MCK")}"`),
+    txtSymbol: yup
+      .number()
+      .min(1)
+      .required(`"${t("home:menu.CHECK_VLN")} ${t("home:Order.ORDER_MCK")}"`),
   });
   const validationSchemaKl = yup.object().shape({
-    txtSymbol: yup.number().min(1).required( `"${t("home:menu.CHECK_VLN")} ${t("home:Order.ORDER_MKL")}"`),
+    txtSymbol: yup
+      .number()
+      .min(1)
+      .required(`"${t("home:menu.CHECK_VLN")} ${t("home:Order.ORDER_MKL")}"`),
   });
   const handleClick = async (e: any) => {
     e.preventDefault();
 
-    try {
-      await validationSchema.validate({
-        txtSymbol: inputValue || dataShow.San || dataTable.ma ,
-      });
-    } catch (error: any) {
-      alert("Chưa nhập Mã chứng khoán");
-      return false;
-    }
-    try {
-      await validationSchemaKl.validate({ txtSymbol: valueInputKl });
-    } catch (error) {
-      alert("Chưa nhập Khối lượng");
-      return;
-    }
-    try {
-      await validationSchemaPrice.validate({
-        txtSymbol: valueInputPrice  || dataTable.price,
-      });
-    } catch (error) {
-      alert("Chưa nhập Giá");
-      return;
-    }
-    setSubmit(!submit);
+    // try {
+    //   await validationSchema.validate({
+    //     txtSymbol: inputValue || dataShow.San || dataTable.ma ,
+    //   });
+    // } catch (error: any) {
+    //   alert("Chưa nhập Mã chứng khoán");
+    //   return false;
+    // }
+    // try {
+    //   await validationSchemaKl.validate({ txtSymbol: valueInputKl });
+    // } catch (error) {
+    //   alert("Chưa nhập Khối lượng");
+    //   return;
+    // }
+    // try {
+    //   await validationSchemaPrice.validate({
+    //     txtSymbol: valueInputPrice  || dataTable.price,
+    //   });
+    // } catch (error) {
+    //   alert("Chưa nhập Giá");
+    //   return;
+    // }
+    // setSubmit(!submit);
   };
-
+  // tìm kiếm mã chứng khoán
   const handelInputChange = (e: any) => {
     const value = e.target.value;
-    setInputValue(value.toUpperCase());
-    const results: any = dataOrder.filter((item) =>
-      item.toUpperCase().includes(value)
-    );
-    setSearchResults(results);
-    setShowResults(value !== "");
+    setStockCode({ ...stockCode, Code: value });
+    if (value === "") {
+      setInputValue(value.toUpperCase());
+      setShowResults(false);
+      dispatch(setValueOrder(value));
+    } else {
+      setShowResults(true);
+      setInputValue(value.toUpperCase());
+    }
+  };
+  // thêm mã chứng khoán
+  const AddStockCode = (CodeCk: Company) => {
+    let san = CodeCk?.Exchange == 1 ? "HSX" : "HNX";
+    let data = {
+      key: key,
+      dataOrder: { ...CodeCk, Exchange: san },
+    };
+
+    setInputValue(CodeCk.Code);
+    dispatch(setDataOrder(data));
+    dispatch(setValueOrder(CodeCk.Code));
+    setValueInputPrice(0);
   };
   const handelPopup = () => {
     setPopup(!popup);
   };
-
   useEffect(() => {
-    if (dataTable.ma) {
-      setInputValue(dataTable.ma)
-    }
-     if (dataTable.price) {
-      setValueInputPrice(dataTable.price)
-    }
-     if (dataTable.TranC) {
-      setTranC(Number(dataTable.TranC))
-    }
-     if (dataTable.TCT) {
-      setTCT(Number(dataTable.TCT))
-    }
-     if (dataTable.SanT) {
-      setSanT(Number(dataTable.SanT))
-    }
-  }, [dataTable.ma , dataTable.price,dataTable.SanT,dataTable.TCT,dataTable.TranC])
-   useEffect(() => {
-    if (dataShow.ma) {
-      setInputValue(dataShow.ma)
-    }
-   }, [dataShow.ma])
-  
-   const priceSm = `Mã CK có giá trần tính SM là ${formatNumber(dataShow.giaTranSm)}`
-   return (
+    setInputValue(maCode);
+    setValueInputPrice(0);
+  }, [maCode]);
+  // làm lại
+  const ResetFrom = () => {
+    dispatch(ResetStockCode());
+    setValueInputPrice(0);
+    setInputValue("");
+  };
+  const priceSm = `Mã CK có giá trần tính SM là ${formatNumber(
+    dataShow.giaTranSm
+  )}`;
+  return (
+    <> 
     <div className="text-black bg-white" id="tablepricelist">
       {/* đặt lệnh */}
       <Protal popup={popup} handelClosed={() => setPopup(!popup)}></Protal>
@@ -241,7 +272,7 @@ const OrderMarketW = () => {
                     // className="normal-case tabSell "
                     onClick={() => setColor(false)}
                   >
-                    {t("home:Order.ORDER_BAN")} 
+                    {t("home:Order.ORDER_BAN")}
                   </div>
 
                   <input
@@ -301,23 +332,22 @@ const OrderMarketW = () => {
                       id="txtSymbolBase"
                     >
                       <div className="relative ms-sel-ctn">
-                        {/* <input
-                      type="text"
-                      className="form-control ui-autocomplete-input size-input p-[2px] w-[100%] mr-[14px] rounded-md pl-[8px]  "
-                      placeholder="Mã CK"
-                      id="txtSymbol"
-                      name="txtSymbol"
-                      data-old=""
-                    /> */}
                         <span className="absolute top-[-20px] left-[3px] !text-[12px] !text-[#333]">
-                          {dataShow.San === "HNX.LISTED" ? "HNX" : dataShow.San}
+                          {san}
                         </span>
                         <span className="absolute top-[-20px] right-[3px] !text-[12px] !text-[#333]">
-                           TLV:{dataShow.TLV ? dataShow.TLV : 0}% 
-                           <Tooltip  title={priceSm}>
-                           <i className="fa fa-info-circle absolute" aria-hidden="true" style={{fontSize:" 13px",marginLeft:" 2px",color:"#717171"}}></i>
-                             
-                           </Tooltip>
+                          TLV:{dataShow.TLV ? dataShow.TLV : 0}%
+                          <Tooltip title={priceSm}>
+                            <i
+                              className="fa fa-info-circle absolute"
+                              aria-hidden="true"
+                              style={{
+                                fontSize: " 13px",
+                                marginLeft: " 2px",
+                                color: "#717171",
+                              }}
+                            ></i>
+                          </Tooltip>
                         </span>
                         <input
                           type="text"
@@ -328,31 +358,19 @@ const OrderMarketW = () => {
                           // onBlur={() => setShowResults(false)}
                           onChange={handelInputChange}
                           name="txtSymbol"
-                          value={inputValue} 
+                          value={inputValue ? inputValue : maCode}
+                          autoComplete="off"
                         />
-                        {showResults && inputValue && (
-                          <div style={{
-                            overflow: "auto", boxShadow: "rgba(0, 0, 0, 0.176) 0px 6px 12px 0px", outlineColor: "rgb(85, 85, 85)"
-                            ,border:"1px rgba(0, 0, 0, 0.15)"
-                          }} className="w-[451px] absolute pl-3 bg-white rounded-md shadow-xl ">
-                            <ul className="h-[212px]">
-                              {searchResults.map((item: any, index) => (
-                                <li
-                                  onClick={() => {
-                                    let result = item.split("-");
-                                    setInputValue(result[0]);
-                                    setSearchResults([]);
-                                    setShowResults(false)
-                                  }}
-                                  className="my-2 cursor-pointer hover:bg-[#63a9e066]"
-                                  key={index}
-                                >
-                                  {item}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
+
+                        <SearchStockCode
+                          valueInput={inputValue}
+                          setShowPoup={setShowResults}
+                          showPopup={showResults}
+                          ChangeFunction={setStockCode}
+                          SearchStockCode={AddStockCode}
+                          setValueInput={setInputValue}
+                          border={false}
+                        />
                       </div>
                     </div>
                   </div>
@@ -401,24 +419,27 @@ const OrderMarketW = () => {
                             <span
                               className="spnTran cursor-pointer text-[#ef3eff] pl-[10px]  text-xs"
                               id="spnCeilPrice"
+                              onClick={() => setValueInputPrice(TranC)}
                             >
-                              {TranC}
+                              {TranC / 1000}
                             </span>
                           </td>
                           <td className="border-none">
                             <span
                               className="spnThamChieu cursor-pointer text-[#f26f21] pl-[15px]  text-xs"
                               id="spnRefPrice"
+                              onClick={() => setValueInputPrice(TCT)}
                             >
-                              {TCT} 
+                              {TCT / 1000}
                             </span>
                           </td>
                           <td className="border-none">
                             <span
                               className="spnSan cursor-pointer text-[#00b8ff] pl-[15px]  text-xs"
                               id="spnFloorPrice"
+                              onClick={() => setValueInputPrice(SanT)}
                             >
-                              {SanT} 
+                              {SanT / 1000}
                             </span>
                           </td>
                           <td className="border-none">
@@ -444,9 +465,7 @@ const OrderMarketW = () => {
                           //  value={(dataTable?.ma && dataTable?.price) || (dataBuy?.ma && dataBuy?.price) || ""}
                           onChange={handelInputChangePrice}
                           step={100}
-                          value={
-                               valueInputPrice
-                          }
+                          value={valueInputPrice}
 
                           // value={dataTable.price ? dataTable.price : (dataBuy.price ? dataBuy.price : valueInputPrice)}
                         />
@@ -481,40 +500,30 @@ const OrderMarketW = () => {
                       id="btnBuySend"
                       className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] ml-[10px]  text-13px rounded-md text-white w-4/5"
                     >
-                   {t("home:Order.ORDER_GUI")} 
+                      {t("home:Order.ORDER_GUI")}
                     </button>
                   ) : (
-                       <button
+                    <button
                       onClick={handleClick}
                       id="btnBuySend"
                       className="btn btnBuyGui btnSaveTemplate bg-[#d71920] ml-[10px]  text-13px rounded-md text-white w-4/5"
                     >
-                    {t("home:Order.ORDER_GUI")} 
+                      {t("home:Order.ORDER_GUI")}
                     </button>
                   )}
-                  {/* <input
-                id="btnBuySave"
-                type="button"
-                className="hidden btn btnBuyGhi btnSaveTemplate "
-                value="Ghi"
-              />
-              <button
-                id="btnBuySend"
-                className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] ml-[10px]  text-13px rounded-md text-white w-4/5"
-              >
-                GỬI
-              </button> */}
-
-                  {/* <input id="btnBuySend" type="button" className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] rounded-lg pl-10 pr-10 mt-[7px] ml-[15px]" value="Gửi"  /> */}
                 </div>
                 {submit && (
                   <div className="bg-white-500 w-[660px] bottom-[60px] z-50 shadow-2xl  left-[27%] absolute  h-[205px] bg-white rounded-md">
-                    <div  style={{background : color ? "#034E94" : "red"}} className=" text-white pt-2 relative text-xl h-[40px] text-center items-center">
+                    <div
+                      style={{ background: color ? "#034E94" : "red" }}
+                      className=" text-white pt-2 relative text-xl h-[40px] text-center items-center"
+                    >
                       <h1 className="text-[18px]">XÁC NHẬN LỆNH</h1>
                       <p onClick={() => setSubmit(!submit)}>
                         <img
                           className="absolute cursor-pointer  top-[-13px] right-[-10px] text-4xl text-gray-500"
-                          src="http://eztrade4.fpts.com.vn/images/EzFuture-09.png" alt=""
+                          src="http://eztrade4.fpts.com.vn/images/EzFuture-09.png"
+                          alt=""
                         />
                       </p>
                     </div>
@@ -523,39 +532,41 @@ const OrderMarketW = () => {
                         <thead>
                           <tr className=" bg-[#EEEEEE] border border-[#dedede]">
                             <th className="text-center  font-extralight !text-[#000000] w-[170px] text-sm border-r border border-[#dedede]">
-                            {t("home:Order.ORDER_BAN")}
+                              {t("home:Order.ORDER_BAN")}
                             </th>
                             <th className="text-center font-extralight !text-[#000000] w-[170px] text-sm border-r border border-[#dedede]">
-                            {t("home:Order.ORDER_MCK")}
+                              {t("home:Order.ORDER_MCK")}
                             </th>
                             <th className="text-center font-extralight !text-[#000000] w-[170px] text-sm border-r border border-[#dedede]">
-                            {t("home:Order.OPTIONS_KL")}  
+                              {t("home:Order.OPTIONS_KL")}
                             </th>
                             <th className="text-center font-extralight !text-[#000000] w-[110px] text-sm border-r border border-[#dedede]">
-                            {t("home:base.Gia")}  
+                              {t("home:base.Gia")}
                             </th>
                             <th className="text-center font-extralight !text-[#000000] w-[240px] text-sm border-r border border-[#dedede]">
-                            {t("home:base.ThongBao")}
+                              {t("home:base.ThongBao")}
                             </th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr className="border border-[#dedede]">
                             <td className="text-center border-r border border-[#dedede]">
-                            {t("home:Order.ORDER_MUA")}
+                              {t("home:Order.ORDER_MUA")}
                             </td>
                             <td className="text-center border-r border border-[#dedede]">
-                              {inputValue ||
-                                dataTable.ma ||
-                                dataShow.ma}
+                              {/* {inputValue ||
+                                dataTable.ma || 
+                                dataShow.ma} */}{" "}
+                              mã 1
                             </td>
                             <td className="text-center border-r border border-[#dedede]">
                               {valueInputKl}
                             </td>
                             <td className="text-center border-r border border-[#dedede]">
-                              {valueInputPrice ||
+                              {/* {valueInputPrice ||
                                 dataTable.price 
-                              }
+                              } */}
+                              mã 2
                             </td>
                             <td>
                               {gdSuccess && (
@@ -592,7 +603,12 @@ const OrderMarketW = () => {
                       </div>
 
                       <button
-                        style={{ border: color ?  "1px solid #034E94"  : "1px solid #red" , background: color ?  " #034E94"  : "red" }}
+                        style={{
+                          border: color
+                            ? "1px solid #034E94"
+                            : "1px solid #red",
+                          background: color ? " #034E94" : "red",
+                        }}
                         onClick={handelSuccess}
                         className="p-1 pl-6 pr-6 text-white w-[115px] rounded-2xl"
                       >
@@ -623,11 +639,11 @@ const OrderMarketW = () => {
               </div>
               <div className="divReset w-[10%]">
                 <div className="h-[14px]"></div>
-                <button className="refresh" id="btnReset">
+                <button className="refresh" id="btnReset" onClick={ResetFrom}>
                   <img
                     className="mt-[2px] mr-[8px] ml-[10px] "
-                     src="http://priceboard3.fpts.com.vn/images/EzFuture-05.png"
-                     alt=""
+                    src="http://priceboard3.fpts.com.vn/images/EzFuture-05.png"
+                    alt=""
                   />
                   <span className="text-13px"> {t("home:Order.ORDER_LL")}</span>
                 </button>
@@ -647,6 +663,9 @@ const OrderMarketW = () => {
 
       {/* <div id="draggableH" className="ui-draggable ui-draggable-handle" style={{ top: anchorEl2 ? "431px" : "263.469px",background : "transparent" }} ></div>   */}
     </div>
+    
+      <ToastContainer/>
+    </>
   );
 };
 
