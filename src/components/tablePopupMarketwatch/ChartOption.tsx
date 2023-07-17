@@ -11,7 +11,7 @@ const ChartOption = () => {
   const [dataCol, setDataCol] = useState<any>([]);
   const [dataSpline, setDataSpline] = useState<any>([]);
   const [indexValue, setIndexValue] = useState(0);
-
+  console.log(dataDetailPopup);
   const arrPr = React.useMemo(() => {
     if (dataChartOption.length > 0) {
       const arr = dataChartOption
@@ -134,7 +134,6 @@ const ChartOption = () => {
 
               this.yAxis[1].setExtremes(min, max, true, false);
               console.log(this.yAxis[1]);
-              
             } else {
               for (let i = 0; i < arrPr.length; i++) {
                 let next = arrPr[i + 1];

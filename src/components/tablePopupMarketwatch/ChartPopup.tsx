@@ -18,7 +18,6 @@ const ChartPopup = () => {
     }
     return [];
   }, [dataTableKLTTG]);
-
   useEffect(() => {
     const series: any = [
       {

@@ -9,9 +9,8 @@ const TableKLTTGPopup = () => {
   const { dataTableKLTTG, dataDetailPopup } = useAppSelector(
     (state) => state.dataPopupDetail
   );
-
+  console.log(dataTableKLTTG);
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     // dispatch(fetchDataTableKLTTGAsync(code));
     // const RP = {
@@ -36,7 +35,6 @@ const TableKLTTGPopup = () => {
       });
     });
   }, [dataDetailPopup]);
-
   return (
     <table id="tbpuRT" className="pu-table-realtime">
       <thead style={{}}>

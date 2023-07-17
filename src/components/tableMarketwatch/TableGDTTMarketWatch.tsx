@@ -216,7 +216,7 @@ const TableGDTTMarketWatch = () => {
                 {input.focus || input.value !== "" ? "Mã" : "Nhập mã cần tìm"}
               </label>
               <input
-                className="h-24 bg-[#131722] focus:border-white col-span-1 pl-1 border outline-none w-44 border-borderBodyTableMarket text-white text-[11px]"
+                className="h-[26px] bg-[#131722] focus:border-white col-span-1 pl-1 border outline-none w-44 border-borderBodyTableMarket text-white text-[11px]"
                 onChange={(e: any) => {
                   setInput({ ...input, value: e.target.value });
                 }}
