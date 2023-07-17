@@ -403,7 +403,7 @@ const HistoryMatching = () => {
               </tr>
             </thead>
             <tbody>
-              {dataTradeLog.map((item: any, index: number) => {
+              {dataTradeLog   && dataTradeLog.length > 0? dataTradeLog.map((item: any, index: number) => {
                 // mua
                 const ArrayMua = item?.filter(
                   (e: ReportData) =>
@@ -933,7 +933,7 @@ const HistoryMatching = () => {
                     )}
                   </>
                 );
-              })}
+              }) :""}
             </tbody>
           </table>
         </div>

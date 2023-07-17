@@ -25,6 +25,7 @@ interface MenuItem {
 }
 
 const MenuBar = () => {
+  document.title ="EzTrade"
   const dispatch = useAppDispatch();
   const { keyMenu, nameMenu } = useSelector(
     (state: RootState) => state.menuBar

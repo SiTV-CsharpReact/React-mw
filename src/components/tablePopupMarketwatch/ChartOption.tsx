@@ -14,20 +14,20 @@ const ChartOption = () => {
   console.log(dataDetailPopup);
   const arrPr = React.useMemo(() => {
     if (dataChartOption.length > 0) {
-      const arr = dataChartOption
-        .map((item) => {
-          return item[4];
-        })
-        // eslint-disable-next-line array-callback-return
-        .filter((value, index, ar) => {
-          if (ar.indexOf(value) === index) {
-            return value;
-          }
-        });
+      const arr = dataChartOption.map((item) => {
+        return item[4];
+      });
+      // eslint-disable-next-line array-callback-return
+      // .filter((value, index, ar) => {
+      //   if (ar.indexOf(value) === index) {
+      //     return value;
+      //   }
+      // });
       return arr;
     }
     return [];
   }, [dataChartOption]);
+  // console.log({ arrPr });
 
   useEffect(() => {
     dataDetailPopup?.map((item: any) => {
@@ -122,7 +122,7 @@ const ChartOption = () => {
             const xmax = _getDateTs(xmaxTmp);
             xAxis.setExtremes(xmin, xmax, true, false);
 
-            let price_min, price_max, tick, minSub;
+            let price_min, price_max: number, tick, minSub;
             let barwidth: number;
             let arrSub: any = [];
             price_min = minNumber(arrPr);
@@ -137,9 +137,12 @@ const ChartOption = () => {
             } else {
               for (let i = 0; i < arrPr.length; i++) {
                 let next = arrPr[i + 1];
+
                 if (typeof next === "undefined") {
                   next = arrPr[0];
-                  arrSub.push(Math.abs(Math.round(arrPr[i] - next) * 10) / 10);
+                  arrSub.push(
+                    Math.abs(Math.round((arrPr[i] - next) * 10) / 10)
+                  );
                 }
               }
               minSub = minNumber(arrSub);
@@ -147,27 +150,32 @@ const ChartOption = () => {
                 tick = 0.1;
                 price_min = indexValue - tick;
                 price_max += tick;
+                barwidth = 0.05;
               } else {
-                if (price_max < 50) {
-                  tick = 0.1;
+                if (price_max < indexValue) {
+                  tick = 0.5;
+                  price_max = indexValue + tick;
+                  price_min -= tick;
                   barwidth = 0.05;
-                  price_min -= tick;
-                  price_max += tick;
-                } else if (price_max >= 50) {
-                  tick = minSub > 0.5 ? minSub : 0.5;
-                  barwidth = 0.1;
-                  price_min -= tick;
-                  price_max += tick;
-                } else if (minSub < 0.5) {
-                  tick = 0.1;
-                  barwidth = 0.05;
-                  price_min -= tick;
-                  price_max += tick;
                 } else {
-                  tick = 1;
-                  barwidth = 0.2;
-                  price_min -= tick;
-                  price_max += tick;
+                  if (price_max < 50) {
+                    tick = 0.1;
+                    barwidth = 0.05;
+                    price_min -= tick;
+                    price_max += tick;
+                  } else {
+                    if (minSub < 0.5) {
+                      tick = 0.1;
+                      barwidth = 0.05;
+                      price_min -= tick;
+                      price_max += tick;
+                    } else {
+                      tick = 1;
+                      barwidth = 0.2;
+                      price_min -= tick;
+                      price_max += tick;
+                    }
+                  }
                 }
               }
 
@@ -195,13 +203,19 @@ const ChartOption = () => {
               for (let i = price_min; i <= price_max; i += tick) {
                 tickPosition.push(i);
               }
+              const exist = tickPosition.find(
+                (e: number) => e < Number(price_max.toFixed(1))
+              );
+
+              if (!exist) {
+                tickPosition.push(price_max);
+              }
+              console.log({ tickPosition, price_max, price_min });
 
               this.yAxis[1].update({
                 tickPositions: tickPosition.map(
                   (item: any) => Math.round(item * 10) / 10
                 ),
-                max: price_max,
-                min: price_min,
               });
             }
             this.redraw();

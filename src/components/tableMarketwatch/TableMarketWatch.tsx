@@ -23,7 +23,7 @@ import FooterMarket from "../footerMarketwatch/FooterMarket";
 import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
-import { dispatchDataTable } from "./tableThunk";
+import { dispatchDataTable } from "./orderComanSlice";
 import { getDataTable } from "./tableSlice";
 import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
 const showKLPT = (value: string) => {

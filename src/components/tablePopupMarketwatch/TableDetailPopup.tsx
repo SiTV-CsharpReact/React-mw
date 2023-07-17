@@ -105,7 +105,7 @@ const TableDetailPopup = () => {
               )}`}
             >
               {/* {dataMouse.maF || dataMouseBuy.maB || displayCode} */}
-              {dataDetailPopup[0]?.Info[0][1] || dataDetailPopup[0]?.RowID}
+              {dataDetailPopup[0]?.Info[0][1] || dataDetailPopup[0]?.Info[1][0]}
             </span>
           </td>
           <td className="g_r text-[#F7FF31] !font-medium">

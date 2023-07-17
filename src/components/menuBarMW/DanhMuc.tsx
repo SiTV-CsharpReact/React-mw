@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { RootState, useAppDispatch } from "../../store/configureStore";
 import { listStock } from "./codeListSlice";
-import { activeMenuDanhmuc, fetchCategoryAsync } from "./danhmucSlice";
+import { AddCategori, activeMenuDanhmuc, fetchCategoryAsync } from "./danhmucSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import { fetchTableHNXAsync, fetchTableHSXAsync, getDataTable, setProductParams } from "../tableMarketwatch/tableSlice";
@@ -18,6 +18,7 @@ const DanhMuc = (props: any) => {
   const { isLoading, data, status, row, name } = useSelector(
     (state: RootState) => state.categories
   );
+  const [ValueCate ,setInputCate]  = useState("")
 // function handleDispatch(item:string) {
 //   dispatch(fetchTableHNXAsync(item))
 //   dispatch(fetchTableHSXAsync(item))
@@ -26,6 +27,12 @@ const DanhMuc = (props: any) => {
   // Chuyển hướng đến trang chủ
   // navigate('/chung-khoan/danh-muc');
 // }
+
+const HandleAddCate = ()=>{
+  const newData = new FormData()
+  newData.append("menu_private" , ValueCate)
+    dispatch(AddCategori(newData))
+}
 const handleItemChildClick = async (
   name: string,
   query: string,
@@ -69,8 +76,8 @@ const handleItemChildClick = async (
         ))}
          
         <li className="relative">
-          <input className="textBox" placeholder="Thêm danh mục"></input>
-          <span id="btAdd" className="imgAdd keep">
+          <input className="textBox" value={ValueCate} placeholder="Thêm danh mục" onChange={(e) => setInputCate(e.target.value)}></input>
+          <span id="btAdd" className="imgAdd keep" onClick={HandleAddCate}>
             <span></span>
           </span>
         </li>

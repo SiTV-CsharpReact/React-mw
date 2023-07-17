@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
 import ReactDOM from 'react-dom';
-import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { RootState, useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { dispatchData } from './data';
 import { formatNumber } from '../../utils/util';
+import { Company } from '../../models/root';
+import { setDataOrder } from '../tableMarketwatch/orderComanSlice';
 
 
-export default function Protal({ popup = false, handelClosed = () => { } }) {
-     const data = [
+const  Protal = ({ popup = false, handelClosed = () => { } }) =>  {
+     const data = [ 
         ["058C222210", "BCC", "30", "HNX.LISTED", "1000000000"],
         ["058C222210", "BVS", "30", "HNX.LISTED", "1000000000"],
         ["058C222210", "DHT", "30", "HNX.LISTED", "1000000000"], [
@@ -114,6 +116,7 @@ export default function Protal({ popup = false, handelClosed = () => { } }) {
     const [dataCheckSan, setDataCheckSan] = useState("");
     const [filteredData, setFilteredData] = useState([]);
     const [dataKiquy, setDataKiquy] = useState([])
+    const {dataCompanyTotal} = useAppSelector((state:RootState)=>  state.company)
    
 
     const mappedData: any = data.map((item) => {
@@ -127,8 +130,21 @@ export default function Protal({ popup = false, handelClosed = () => { } }) {
     }, []);
     const dispatch = useAppDispatch();
     const handleShow = (dataShow: any) => {
+        let  data = dataCompanyTotal.find((item :Company) =>  item.Code ===  dataShow.ma)
+        // dataShow = {ma: 'ANV', San: 'HSX', TLV: '30', giaTranSm: '60000'}
         dispatch(dispatchData(dataShow));
         handelClosed()
+        let san = data?.Exchange == 1 ? "HSX" :"HNX"
+      
+        if(data){
+            let dataOrder  = {
+                key  : "M",
+                dataOrder : {...data,Exchange  : san}
+            }
+          
+            dispatch(setDataOrder(dataOrder))
+        }
+        
     };
 
     if (typeof document === "undefined") return <div className='model'></div>
@@ -192,7 +208,6 @@ export default function Protal({ popup = false, handelClosed = () => { } }) {
                                     </thead>
                                     <tbody>
                                         {filteredData.length > 0 && filteredData.map((items: any, index: any) => {
-                                            console.log(items,"items day ne")
                                             return (
                                                 <tr key={index} className='hover:bg-[#EEFEED]' style={{ border: "1px solid #ccc" }}>
                                                     <td style={{ border: "1px solid #ccc" }} className='text-center !font-bold'>{items.values[0]}</td>
@@ -229,3 +244,4 @@ export default function Protal({ popup = false, handelClosed = () => { } }) {
     );
 
 }
+export default  React.memo(Protal)

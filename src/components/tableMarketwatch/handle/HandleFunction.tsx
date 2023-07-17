@@ -1,6 +1,6 @@
 import React from "react";
 import { useAppDispatch } from "../../../store/configureStore";
-import { dispatchDataTable } from "../tableThunk";
+import { dispatchDataTable } from "../orderComanSlice";
 import { statusChartMarketwatch } from "../../chartMarketwatch/chartMarketwatchSlice";
 
 const HandleFunction = () => {

@@ -8,16 +8,25 @@ const ChartPopup = () => {
     (state) => state.chartOption
   );
   const { dataTableKLTTG } = useAppSelector((state) => state.dataPopupDetail);
+  const { floor } = useAppSelector((state) => state.menuBar);
+
 
   const data = React.useMemo(() => {
     if (dataTableKLTTG?.Body?.length > 0) {
       const arr = drawChart(dataTableKLTTG)
-        .map((item: any) => ({ ...item, MQ: item.MQ * 10 }))
+        .map((item: any) => ({ ...item, MQ: floor === 'HSX' ? item.MQ * 10 : item.MQ }))
         .sort((a: any, b: any) => a.MP - b.MP);
       return arr;
     }
     return [];
+<<<<<<< HEAD
   }, [dataTableKLTTG]);
+=======
+  }, [dataTableKLTTG, floor]);
+  console.log({data});
+  
+
+>>>>>>> a3f0dd2bdad77c6acea1140a86af2f1d8de1d05a
   useEffect(() => {
     const series: any = [
       {
@@ -113,7 +122,12 @@ const ChartPopup = () => {
                   tickAmount: countTick,
                 });
               }
+              this.series[0].update({
+                type: "column",
+                pointWidth: barwidth * 1000,
+              });
               yAxis.setExtremes(newMin, newMax, true, false);
+              console.log({ barwidth, newMin, newMax });
             } else {
               yAxis.update({
                 tickAmount: 5,
@@ -139,6 +153,7 @@ const ChartPopup = () => {
             color: "#a5a5a5",
             fontSize: "6pt",
           },
+          format: "{value:.2f}",
         },
         lineWidth: 0,
         lineColor: "#5f5f5f",

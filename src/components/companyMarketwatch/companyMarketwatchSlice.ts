@@ -1,6 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import agent from "../../api/agent";
 import { Company, Root } from "../../models/root";
+import { actions } from "react-table";
 export const fetchCompanyAsync = createAsyncThunk<any>(
   "company/getdata",
   async () => {
@@ -18,15 +19,20 @@ export const fetchCompanyAsync = createAsyncThunk<any>(
       (item: Company) => item.Exchange === 3
     );
     let data = {
-      dataCompanyTotal :dataCompanyHSX.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
+      dataCompanyTotal :dataCompanyTotal.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
       dataCompanyHSX: dataCompanyHSX.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
       dataCompanyHNX :dataCompanyHNX.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
       dataCompanyUpcom : dataCompanyUpcom.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
     }
-
     return data
    } catch (error) {
-    return  error
+    let data = {
+   dataCompanyHSX : [],
+    dataCompanyHNX: [],
+    dataCompanyUpcom: [],
+    dataCompanyTotal: [],
+    }
+    return  data
    }
   }
 );
@@ -39,6 +45,7 @@ export const companySlice = createSlice({
     dataCompanyHNX: [] as Company[],
     dataCompanyHSX: [] as Company[],
     status: 0,
+    dataDetail :null ,
   },
 
   reducers: {
@@ -46,6 +53,7 @@ export const companySlice = createSlice({
       // state.data = action.payload;
     //   state.status = 1;
     },
+
   },
 
   extraReducers: (builder) => {
@@ -53,11 +61,13 @@ export const companySlice = createSlice({
       .addCase(fetchCompanyAsync.pending, (state) => {
         state.productsLoaded = false;
         state.status = 1;
+        state.dataCompanyTotal =[]
       })
       .addCase(fetchCompanyAsync.fulfilled, (state, action) => {
         state.productsLoaded = true;
         state.status = 2;
         let data = action.payload;
+    
         state.dataCompanyTotal = data.dataCompanyTotal
         state.dataCompanyHNX = data.dataCompanyHNX
         state.dataCompanyHSX = data.dataCompanyHSX
@@ -65,13 +75,15 @@ export const companySlice = createSlice({
       })
 
       .addCase(fetchCompanyAsync.rejected, (state, action) => {
+     
         state.productsLoaded = true;
         state.status = 3;
         state.dataCompanyHSX = [];
         state.dataCompanyHNX = [];
         state.dataCompanyUpcom = [];
-        state.dataCompanyUpcom = [];
+        state.dataCompanyTotal = [];
       });
   },
 });
+export const {getDataSuccess}  = companySlice.actions
 export default companySlice;
