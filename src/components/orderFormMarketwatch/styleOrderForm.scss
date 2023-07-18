@@ -80,7 +80,11 @@
     padding: 4px 20px 3px;
     height: 29px;
     margin-top: 3px;
-   
+}
+.btnBuyBan{
+    padding: 4px 20px 3px;
+    height: 29px;
+    margin-top: 3px; 
 }
 #btnReset {
     background-color: #fff;
@@ -131,8 +135,15 @@
     padding-right: 20px;
     margin-left: -15px; 
 }
+#btnBuySend:hover{
+    cursor: not-allowed !important;
+} 
 .btnBuyGui:hover, .btnBuyGhi:hover {
-    background-color: #3987c5 !important;
+    background-color: #3987c5  !important;
+}
+.btnBuyBan:hover{
+    background-color: rgb(241 23 51 / 53%) !important;
+    
 }
 #divBot #txtSymbolBase .ms-sel-ctn {
     overflow: auto;
