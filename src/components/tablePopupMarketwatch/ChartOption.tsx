@@ -11,7 +11,7 @@ const ChartOption = () => {
   const [dataCol, setDataCol] = useState<any>([]);
   const [dataSpline, setDataSpline] = useState<any>([]);
   const [indexValue, setIndexValue] = useState(0);
-
+  console.log(dataDetailPopup);
   const arrPr = React.useMemo(() => {
     if (dataChartOption.length > 0) {
       const arr = dataChartOption.map((item) => {

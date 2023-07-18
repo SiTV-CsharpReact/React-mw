@@ -19,10 +19,14 @@ const ChartPopup = () => {
       return arr;
     }
     return [];
+<<<<<<< HEAD
+  }, [dataTableKLTTG]);
+=======
   }, [dataTableKLTTG, floor]);
   console.log({data});
   
 
+>>>>>>> a3f0dd2bdad77c6acea1140a86af2f1d8de1d05a
   useEffect(() => {
     const series: any = [
       {
