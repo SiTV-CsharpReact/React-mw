@@ -43,4 +43,4 @@ const TableWrapPopup = () => {
   );
 };
 
-export default TableWrapPopup;
+export default React.memo(TableWrapPopup);

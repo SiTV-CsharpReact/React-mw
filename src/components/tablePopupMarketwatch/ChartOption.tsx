@@ -133,7 +133,7 @@ const ChartOption = () => {
               const max = Number(indexValue) + 0.1;
 
               this.yAxis[1].setExtremes(min, max, true, false);
-              console.log(this.yAxis[1]);
+           
             } else {
               for (let i = 0; i < arrPr.length; i++) {
                 let next = arrPr[i + 1];
@@ -210,7 +210,7 @@ const ChartOption = () => {
               if (!exist) {
                 tickPosition.push(price_max);
               }
-              console.log({ tickPosition, price_max, price_min });
+         
 
               this.yAxis[1].update({
                 tickPositions: tickPosition.map(

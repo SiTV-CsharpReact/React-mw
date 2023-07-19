@@ -20,8 +20,6 @@ const ChartPopup = () => {
     }
     return [];
   }, [dataTableKLTTG, floor]);
-  console.log({data});
-  
 
   useEffect(() => {
     const series: any = [
@@ -123,7 +121,7 @@ const ChartPopup = () => {
                 pointWidth: barwidth * 1000,
               });
               yAxis.setExtremes(newMin, newMax, true, false);
-              console.log({ barwidth, newMin, newMax });
+            
             } else {
               yAxis.update({
                 tickAmount: 5,
