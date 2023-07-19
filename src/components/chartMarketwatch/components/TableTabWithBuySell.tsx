@@ -49,8 +49,10 @@ const TableTabWithBuySell = () => {
                     {dataTable.Info[11][1]}
                   </span>
                   <span className="px-1">
-                    {parseFloat(dataTable.Info[11][1]) -
-                      parseFloat(dataTable.Info[1][1])}
+                    {(
+                      parseFloat(dataTable.Info[11][1]) -
+                      parseFloat(dataTable.Info[1][1])
+                    ).toFixed(1)}
                   </span>
                   <span>
                     (
