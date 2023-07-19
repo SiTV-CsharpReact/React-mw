@@ -1,14 +1,16 @@
 import React from 'react'
 import CachedIcon from '@mui/icons-material/Cached';
 import { useTranslation } from 'react-i18next';
+import { formatNumberMarket } from '../../utils/util';
 interface IMyProps {
   status: boolean,
+  priceMoney?: Number
 }
-const TableTotalMonney: React.FC<IMyProps> = (status:IMyProps) => {
+const TableTotalMonney: React.FC<IMyProps> = ({priceMoney, status}:IMyProps) => {
   const { t } = useTranslation(["home"]);
   //console.log(status)
   return (
-    <div className={`bottom__sdTien ml-[13%] mr-[3%] float-left  SDTM ${status.status?'ml-[13%]':'absolute top-[110px] ml-[25px]'}`}>
+    <div className={`bottom__sdTien ml-[13%] mr-[3%] float-left  SDTM ${status?'ml-[13%]':'absolute top-[110px] ml-[25px]'}`}>
           <div className=" bg-[#b3b3b3] h-[25px] ">
             <span className="px-2.5 text-[#0055ba] uppercase text-15px leading-[25px]">
             {t("home:Order.CASH_SDT")} 
@@ -23,7 +25,7 @@ const TableTotalMonney: React.FC<IMyProps> = (status:IMyProps) => {
           <div className='text-13px'>
           <div className="bottom__sdTien__title flex justify-between  text-13px	">
             <span className=""> {t("home:Order.CASH_SDTM")}</span>
-            <span className="font-bold">7,860,601,494</span>
+            <span className="font-bold">{formatNumberMarket(priceMoney)} </span>
           </div>
           <div className="bottom__sdTien__title  flex justify-between text-13px	">
             <span className="">{t("home:Order.CASH_TUT")}</span>
@@ -38,7 +40,7 @@ const TableTotalMonney: React.FC<IMyProps> = (status:IMyProps) => {
            <div className="tt-t"></div>
           <div className="bottom__sdTien__title   flex justify-between text-13px">
             <span className="">{t("home:Order.CASH_SDCTGG")}:</span>
-            <span className="font-bold">7,860,601,494</span>
+            <span className="font-bold">{formatNumberMarket(priceMoney)}</span>
           </div>
           </div>
         </div>
