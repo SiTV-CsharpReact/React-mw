@@ -14,7 +14,6 @@ const TableKLTTGPopup = () => {
   );
   const dispatch = useAppDispatch();
 
-
   useEffect(() => {
     dataDetailPopup?.map((item: any) => {
       // eslint-disable-next-line array-callback-return
@@ -33,9 +32,7 @@ const TableKLTTGPopup = () => {
   }, [dataDetailPopup]);
   return (
     <>
-      <div
-        className="w-full"
-      >
+      <div className="w-full">
         <div className="sticky top-0 left-0 w-full bg-black">
           <div className="grid-cols-8 text-center text-[8pt] text-[#B9B9B9] border border-[#333]">
             Khớp lệnh theo thời gian
@@ -94,7 +91,7 @@ const TableKLTTGPopup = () => {
                     }`,
                   }}
                 >
-                  {formatNumber(item.MP)} 
+                  {formatNumber(item.MP)}
                 </div>
                 <div
                   className="text-center col-span-2 border-[#333] text-[8pt] border-l border-b"
@@ -114,7 +111,7 @@ const TableKLTTGPopup = () => {
                 >
                   {floorLTG === "HSX"
                     ? formatNumber(item.MQ * 10)
-                    : formatNumber(item.MQ)} 
+                    : formatNumber(item.MQ)}
                 </div>
                 <div
                   className="text-center col-span-2 border-[#333] text-[8pt] border-r border-b"
@@ -140,7 +137,7 @@ const TableKLTTGPopup = () => {
             ))}
         </div>
       </div>
-      {/* <table id="tbpuRT" className="pu-table-realtime w-full">
+      {/* <table id="tbpuRT" className="w-full pu-table-realtime">
         <thead className="sticky top-0 left-0">
           <tr style={{ height: "22px" }}>
             <th colSpan={4}>Khớp lệnh theo thời gian</th>
