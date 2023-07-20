@@ -20,7 +20,7 @@ const ChartMarketwatch = () => {
   return (
     <section className="">
       <div
-        className={`float-left col-auto chart-layout-left w-[calc(100%-${
+        className={`float-left col-auto chart-layout-left !w-[calc(100%-${
           hiddenChartRight ? "40px" : "350px"
         })]`}
       >
