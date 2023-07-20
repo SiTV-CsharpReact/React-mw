@@ -10,23 +10,20 @@ const ChartPopup = () => {
   const { dataTableKLTTG } = useAppSelector((state) => state.dataPopupDetail);
   const { floor } = useAppSelector((state) => state.menuBar);
 
-
   const data = React.useMemo(() => {
     if (dataTableKLTTG?.Body?.length > 0) {
       const arr = drawChart(dataTableKLTTG)
-        .map((item: any) => ({ ...item, MQ: floor === 'HSX' ? item.MQ * 10 : item.MQ }))
+        .map((item: any) => ({
+          ...item,
+          MQ: floor === "HSX" ? item.MQ * 10 : item.MQ,
+        }))
         .sort((a: any, b: any) => a.MP - b.MP);
       return arr;
     }
     return [];
-<<<<<<< HEAD
-  }, [dataTableKLTTG]);
-=======
   }, [dataTableKLTTG, floor]);
-  console.log({data});
-  
+  console.log({ data });
 
->>>>>>> a3f0dd2bdad77c6acea1140a86af2f1d8de1d05a
   useEffect(() => {
     const series: any = [
       {

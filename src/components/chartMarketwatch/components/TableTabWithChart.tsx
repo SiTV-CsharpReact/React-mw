@@ -59,12 +59,13 @@ const TableTabWithChart = () => {
         inverted: true,
       },
     ];
+
     const chart = Highcharts.chart("container", {
       chart: {
         type: "bar",
         backgroundColor: "#000000",
         plotBorderWidth: 0,
-        inverted: true, // Flip the chart to horizontal
+        inverted: true,
       },
 
       title: {
@@ -80,7 +81,7 @@ const TableTabWithChart = () => {
             fontSize: "9pt",
           },
         },
-        reversed: true,
+        reversed: false,
       },
       yAxis: {
         min: 0,
@@ -91,6 +92,7 @@ const TableTabWithChart = () => {
         gridLineColor: "#343434",
         labels: {
           rotation: 0,
+          overflow: "justify",
           useHTML: true,
           style: {
             color: "#ffffff",
@@ -102,41 +104,53 @@ const TableTabWithChart = () => {
         reversed: true,
         enabled: false, // Ẩn chú giải
       },
-
+      tooltip: {
+        headerFormat: "",
+        pointFormatter: function () {
+          // Tùy chỉnh thông tin hiển thị khi hover
+          return (
+            '<span style="color: #000000">Khối lượng: </span><b>' +
+            this.y?.toLocaleString() +
+            '<br><span style="color: #000000">Giá: </span> <b>' +
+            this.category +
+            "</b>"
+          );
+        },
+      },
       plotOptions: {
-        series: {
-          stacking: "normal",
+        // series: {
+        //   stacking: "normal",
+        //   borderWidth: 0,
+        //   color: "#089981",
+        //   dataLabels: {
+        //     enabled: true,
+        //     align: "right", // Đặt số ở bên phải
+        //     style: {
+        //       textOutline: "none", // Xóa viền cho dataLabels
+        //       color: "#ffffff", // Màu trắng
+        //       // display: "none",
+        //       fontSize: "8pt",
+        //       fontWeight: "normal",
+        //       enabled: true,
+        //     },
+        //   },
+        // },
+        bar: {
+          borderRadius: "0%",
           borderWidth: 0,
-          color: "#089981",
           dataLabels: {
             enabled: true,
-            align: "right", // Đặt số ở bên phải
-            // inside: true, // Đặt số bên trong
-            x: 0,
             style: {
               textOutline: "none", // Xóa viền cho dataLabels
               color: "#ffffff", // Màu trắng
-              fontSize: "8pt",
+              // display: "none",
+              fontSize: "7pt",
               fontWeight: "normal",
             },
           },
-
-          tooltip: {
-            headerFormat: "",
-            pointFormatter: function () {
-              // Tùy chỉnh thông tin hiển thị khi hover
-              return (
-                '<span style="color: #000000">Khối lượng: </span><b>' +
-                this.y?.toLocaleString() +
-                '<br><span style="color: #000000">Giá: </span> <b>' +
-                this.category +
-                "</b>"
-              );
-            },
-          },
+          groupPadding: 0.1,
         },
       },
-
       colors:
         dataTable?.map((item: any) =>
           item.MP == dataChart[0]?.Info[3][1]
@@ -156,6 +170,7 @@ const TableTabWithChart = () => {
       },
       series: series,
     });
+
     return () => {
       chart.destroy();
     };
