@@ -16,8 +16,8 @@ const TableTabWithChart = () => {
   const [matchingByPrice, setMatchingByPrice] = useState(false);
   const [dataTable, setDataTable] = useState<any>([]);
   useEffect(() => {
-    dispatch(fetchDataTableKLTTGAsync(stockCode));
-  }, [stockCode, dispatch]);
+    dispatch(fetchDataTableKLTTGAsync(symbolNew));
+  }, [symbolNew, dispatch]);
 
   const { dataTableKLTTG } = useAppSelector((state) => state.dataPopupDetail);
 
@@ -29,7 +29,7 @@ const TableTabWithChart = () => {
       setDataChart(response.data);
     };
     fetchData();
-  }, [stockCode, symbolNew]);
+  }, [symbolNew]);
 
   useEffect(() => {
     const transformedData = dataTableKLTTG?.Body?.reduce(
@@ -118,23 +118,6 @@ const TableTabWithChart = () => {
         },
       },
       plotOptions: {
-        // series: {
-        //   stacking: "normal",
-        //   borderWidth: 0,
-        //   color: "#089981",
-        //   dataLabels: {
-        //     enabled: true,
-        //     align: "right", // Đặt số ở bên phải
-        //     style: {
-        //       textOutline: "none", // Xóa viền cho dataLabels
-        //       color: "#ffffff", // Màu trắng
-        //       // display: "none",
-        //       fontSize: "8pt",
-        //       fontWeight: "normal",
-        //       enabled: true,
-        //     },
-        //   },
-        // },
         bar: {
           borderRadius: "0%",
           borderWidth: 0,
