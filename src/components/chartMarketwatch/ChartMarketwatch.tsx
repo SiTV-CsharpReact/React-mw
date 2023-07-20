@@ -16,21 +16,28 @@ import TradingViewWidget from "../Chart/TradingViewWidget";
 const ChartMarketwatch = () => {
   const dispatch = useAppDispatch();
   const [statusTable, setStatusTable] = useState<number>(1);
+  const [hiddenChartRight, setHiddenChartRight] = useState<boolean>(false);
   return (
-    <section className="chart-layout">
-      <div className="float-left chart-layout-left ">
+    <section className="">
+      <div
+        className={`float-left col-auto chart-layout-left w-[calc(100%-${
+          hiddenChartRight ? "40px" : "350px"
+        })]`}
+      >
         <div className="chart-layout-header float-left w-full h-[30px]">
           <div className="float-left w-[900px] index-chart">
             <div>
               <SlidesIndexChartMarketwatch />
             </div>
           </div>
-           <DateTime />
+          <DateTime />
           <div className="float-right">
             <Tooltip title="Hiển thị bảng giá">
               <button
                 className="p-[5px] h-30 w-[30] hover:bg-spnTitlePanelBottom"
-                onClick={() => dispatch(statusChartMarketwatch({visible:false,code:""}))}
+                onClick={() =>
+                  dispatch(statusChartMarketwatch({ visible: false, code: "" }))
+                }
               >
                 <img src={ImagePriceBoard} height={20} width={20} alt="" />
               </button>
@@ -38,23 +45,38 @@ const ChartMarketwatch = () => {
           </div>
         </div>
         <div className="w-full tv_chart_container" id="tv_chart_container">
-        <TradingViewWidget/>
+          <TradingViewWidget />
         </div>
       </div>
 
-      <div className="chart-layout-right float-right w-[350px]  ">
-        <div className="mt-content">
-        {/* condition1 ? expression1 : condition2 ? expression2 : expression3; */}
-          {statusTable ===1? <TableTabWithBuySell /> :statusTable ===2?<TableTabWithChart />:<TableTabWithDanhMuc />}
-        
-       
+      <div
+        className={`chart-layout-right float-right ${
+          hiddenChartRight ? "w-[40px]" : "w-[350px]"
+        } `}
+      >
+        <div className={`${hiddenChartRight === true && "hidden"} mt-content`}>
+          {/* condition1 ? expression1 : condition2 ? expression2 : expression3; */}
+          {statusTable === 1 ? (
+            <TableTabWithBuySell />
+          ) : statusTable === 2 ? (
+            <TableTabWithChart />
+          ) : (
+            <TableTabWithDanhMuc />
+          )}
         </div>
         <div className="mt-menu-tab" style={{ width: "40px", float: "right" }}>
           <ul className="ul-menu-tab">
             <li
               title="Danh mục"
-              onClick={() =>setStatusTable(0)}
-              className= {`${statusTable ===0 ? "active" :""}`}
+              onClick={() => {
+                setStatusTable(0);
+                if (statusTable !== 0) {
+                  setHiddenChartRight(false);
+                } else {
+                  setHiddenChartRight(!hiddenChartRight);
+                }
+              }}
+              className={`${statusTable === 0 ? "active" : ""}`}
             >
               <img
                 src={ImagePriceBoard}
@@ -65,20 +87,34 @@ const ChartMarketwatch = () => {
             </li>
             <li
               title="Top Mua/Bán"
-              className= {`${statusTable ===1 ? "active" :""}`}
-              onClick={() => setStatusTable(1)}
+              className={`${statusTable === 1 ? "active" : ""}`}
+              onClick={() => {
+                setStatusTable(1);
+                if (statusTable !== 1) {
+                  setHiddenChartRight(false);
+                } else {
+                  setHiddenChartRight(!hiddenChartRight);
+                }
+              }}
             >
               <img
                 src={ImageBuySell}
-height={24}
+                height={24}
                 width={24}
                 alt="Tab Top Mua/Bán"
               />
             </li>
             <li
               title="Khớp lệnh"
-              className= {`${statusTable === 2 ? "active" :""}`}
-              onClick={() => setStatusTable(2)}
+              className={`${statusTable === 2 ? "active" : ""}`}
+              onClick={() => {
+                setStatusTable(2);
+                if (statusTable !== 2) {
+                  setHiddenChartRight(false);
+                } else {
+                  setHiddenChartRight(!hiddenChartRight);
+                }
+              }}
             >
               <img
                 src={ImageHandShake}
