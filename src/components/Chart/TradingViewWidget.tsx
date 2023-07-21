@@ -1,12 +1,17 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 declare global {
   interface Window {
     TradingView: any;
   }
 }
+interface TradingViewWidgetProps {
+  heightPriceBoard?: number;
+}
 let tvScriptLoadingPromise: Promise<Event>;
 
-export default function TradingViewWidget(): JSX.Element {
+export default function TradingViewWidget({
+  heightPriceBoard,
+}: TradingViewWidgetProps): JSX.Element {
   const onLoadScriptRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
@@ -63,8 +68,11 @@ export default function TradingViewWidget(): JSX.Element {
   }, []);
 
   return (
-    <div className="tradingview-widget-container">
-      <div id="tradingview_1556c" style={{ height: "400px" }} />
+    <div
+      className={` tradingview-widget-container`}
+      style={{ height: heightPriceBoard }}
+    >
+      <div id="tradingview_1556c" className={`h-full`} />
     </div>
   );
 }

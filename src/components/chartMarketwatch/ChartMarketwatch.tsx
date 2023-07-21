@@ -1,5 +1,5 @@
 import { Tooltip } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImagePriceBoard from "../../images/calendar-7-32.png";
 import ImageBuySell from "../../images/ppc-optimization-32.png";
 import ImageHandShake from "../../images/handshake-32.png";
@@ -13,16 +13,22 @@ import TableTabWithBuySell from "./components/TableTabWithBuySell";
 import TableTabWithChart from "./components/TableTabWithChart";
 import TableTabWithDanhMuc from "./components/TableTabWithDanhMuc";
 import TradingViewWidget from "../Chart/TradingViewWidget";
-const ChartMarketwatch = () => {
+
+interface ChartMarketwatchProps {
+  heightPriceBoard: number; // Kiểu dữ liệu của prop "heightPriceBoard" là number
+}
+
+const ChartMarketwatch: React.FC<ChartMarketwatchProps> = ({
+  heightPriceBoard,
+}) => {
   const dispatch = useAppDispatch();
   const [statusTable, setStatusTable] = useState<number>(1);
   const [hiddenChartRight, setHiddenChartRight] = useState<boolean>(false);
   return (
-    <section className="">
+    <section className="h-full ">
       <div
-        className={`float-left col-auto chart-layout-left !w-[calc(100%-${
-          hiddenChartRight ? "40px" : "350px"
-        })]`}
+        className={`float-left chart-layout-left h-full `}
+        style={{ width: `calc(100% - ${hiddenChartRight ? 40 : 350}px)` }}
       >
         <div className="chart-layout-header float-left w-full h-[30px]">
           <div className="float-left w-[900px] index-chart">
@@ -44,8 +50,11 @@ const ChartMarketwatch = () => {
             </Tooltip>
           </div>
         </div>
-        <div className="w-full tv_chart_container" id="tv_chart_container">
-          <TradingViewWidget />
+        <div
+          className="w-full h-[100%] tv_chart_container"
+          id="tv_chart_container"
+        >
+          <TradingViewWidget heightPriceBoard={heightPriceBoard} />
         </div>
       </div>
 
@@ -130,4 +139,4 @@ const ChartMarketwatch = () => {
   );
 };
 
-export default React.memo(ChartMarketwatch);
+export default ChartMarketwatch;
