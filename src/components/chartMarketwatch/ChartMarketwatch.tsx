@@ -25,7 +25,7 @@ const ChartMarketwatch: React.FC<ChartMarketwatchProps> = ({
   const [statusTable, setStatusTable] = useState<number>(1);
   const [hiddenChartRight, setHiddenChartRight] = useState<boolean>(false);
   return (
-    <section className="h-full ">
+    <section style={{ height: heightPriceBoard }}>
       <div
         className={`float-left chart-layout-left h-full `}
         style={{ width: `calc(100% - ${hiddenChartRight ? 40 : 350}px)` }}
@@ -59,7 +59,7 @@ const ChartMarketwatch: React.FC<ChartMarketwatchProps> = ({
       </div>
 
       <div
-        className={`chart-layout-right float-right ${
+        className={`chart-layout-right h-full float-right ${
           hiddenChartRight ? "w-[40px]" : "w-[350px]"
         } `}
       >
@@ -68,7 +68,7 @@ const ChartMarketwatch: React.FC<ChartMarketwatchProps> = ({
           {statusTable === 1 ? (
             <TableTabWithBuySell />
           ) : statusTable === 2 ? (
-            <TableTabWithChart />
+            <TableTabWithChart heightPriceBoard={heightPriceBoard} />
           ) : (
             <TableTabWithDanhMuc />
           )}

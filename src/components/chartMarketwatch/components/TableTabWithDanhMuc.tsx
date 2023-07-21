@@ -25,7 +25,6 @@ const TableTabWithDanhMuc = () => {
   const { ListDataTable, DataPined } = useAppSelector(
     (state) => state.tableTest
   );
-  console.log("row", ListDataTable);
 
   const columnDefs = React.useMemo(
     () => [
@@ -167,7 +166,7 @@ const TableTabWithDanhMuc = () => {
   );
 
   return (
-    <div className="h-full tbDanhMuc w-full relative">
+    <div className="relative w-full h-full tbDanhMuc">
       <div className="flex items-center">
         <DanhMuc class="flex-1 w-full" />
         <CompleteStock width="!w-[34%]" />
@@ -175,10 +174,13 @@ const TableTabWithDanhMuc = () => {
       <div className="w-full tab1_body">
         <div
           className="ag-theme-alpine-dark"
-          style={{ height: 400, width: "100%", background: "#000 !important" }}
+          style={{
+            height: "100%",
+            width: "100%",
+            background: "#000 !important",
+          }}
         >
           <AgGridReact
-            
             rowHeight={45}
             rowDragManaged={true}
             pinnedTopRowData={DataPined}
