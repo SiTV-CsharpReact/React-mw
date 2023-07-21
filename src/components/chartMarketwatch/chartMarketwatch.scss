@@ -19,7 +19,8 @@ ul.ul-menu-tab > li:hover {
 .mt-content {
   width: calc(100% - 40px);
   float: left;
-  
+  height: 100%;
+  overflow: auto;
 }
 .mt-menu-tab {
   width: 40px;
@@ -167,3 +168,37 @@ table.no-index tr.no-border > td {
   // flex-direction: column;
   // text-align: right;
 }
+
+
+.custom-loader {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  animation: s4 4s infinite;
+}
+.custom-loader::before,
+.custom-loader::after {    
+  content:"";
+  grid-area: 1/1;
+  border:8px solid;
+  border-radius: 50%;
+  border-color:#766DF4 #766DF4 #0000 #0000;
+  mix-blend-mode: darken;
+  animation: s4 1s infinite linear;
+}
+
+
+.custom-loader {
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  padding:1px;
+  background:conic-gradient(#0000 10%,#766DF4) content-box;
+  -webkit-mask:
+    repeating-conic-gradient(#0000 0deg,#000 1deg 20deg,#0000 21deg 36deg),
+    radial-gradient(farthest-side,#0000 calc(100% - 9px),#000 calc(100% - 8px));
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
+  animation:s4 2s infinite steps(10);
+}
+@keyframes s4 {to{transform: rotate(1turn)}}

@@ -66,11 +66,15 @@ export default function TradingViewWidget({
       }
     }
   }, []);
+  let setHeight = 0;
+  if (heightPriceBoard) {
+    setHeight = heightPriceBoard - 30;
+  }
 
   return (
     <div
       className={` tradingview-widget-container`}
-      style={{ height: heightPriceBoard }}
+      style={{ height: setHeight }}
     >
       <div id="tradingview_1556c" className={`h-full`} />
     </div>

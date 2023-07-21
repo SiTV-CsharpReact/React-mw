@@ -20,7 +20,7 @@ const TableTabWithBuySell = () => {
   }, [stockCode, symbolNew]);
   return (
     <>
-      <table className="no-index">
+      <table className={`${!dataChart && "hidden"} no-index`}>
         {dataChart.length &&
           dataChart?.map((dataTable, index) => (
             <tbody key={index}>
