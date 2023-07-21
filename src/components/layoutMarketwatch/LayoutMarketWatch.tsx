@@ -36,10 +36,13 @@ import { setOrderCount } from "./LayoutMarketWatchSLice";
 import { useSelector } from "react-redux";
 import CompleteStock from "../menuBarMW/CompleteStock";
 import { useTranslation } from "react-i18next";
-import { getDataApi, getDataApiPendingOder } from "../orderFormMarketwatch/data";
+import {
+  getDataApi,
+  getDataApiPendingOder,
+} from "../orderFormMarketwatch/data";
 
 function RenderTable() {
-  const {activeFloor} = useAppSelector((state) => state.tableTest)
+  const { activeFloor } = useAppSelector((state) => state.tableTest);
   switch (activeFloor) {
     case 0:
       return <TableMarketWatchTest />;
@@ -83,7 +86,9 @@ const LayoutMarketWatch: React.FC = () => {
   // row danh mục
   // tao useState resize khi height window thay đổi
   const { row, name } = useSelector((state: RootState) => state.categories);
-  const {ListDataTable, productsLoaded} = useAppSelector((state: RootState) => state.tableTest)
+  const { ListDataTable, productsLoaded } = useAppSelector(
+    (state: RootState) => state.tableTest
+  );
   const [heightComponent, setHeightComponent] = useState(initialState);
   const [selectedValue, setSelectedValue] = useState({
     x: 0,
@@ -91,7 +96,6 @@ const LayoutMarketWatch: React.FC = () => {
     value: "",
     status: false,
   });
-
   // tinh height khi đổi từ màn hình này sang màn hình khác
   useEffect(() => {
     function handleResize() {
@@ -149,11 +153,11 @@ const LayoutMarketWatch: React.FC = () => {
       orderForm: true,
     });
   };
- 
+
   // show hide order
   const hideOrderForm = () => {
-    dispatch(getDataApi())
-    dispatch(getDataApiPendingOder())
+    dispatch(getDataApi());
+    dispatch(getDataApiPendingOder());
     setHeightComponent({
       ...heightComponent,
       orderForm: !heightComponent.orderForm,
@@ -231,8 +235,8 @@ const LayoutMarketWatch: React.FC = () => {
     console.log(`x: ${data.x}, y: ${data.y}`);
   };
   const status = useAppSelector((state) => state.popupTable.visible);
-  if(!ListDataTable && !productsLoaded){
-    return <div>  Loading ... </div>
+  if (!ListDataTable && !productsLoaded) {
+    return <div> Loading ... </div>;
   }
   return (
     <div className="relative">
@@ -250,7 +254,7 @@ const LayoutMarketWatch: React.FC = () => {
         {/* priceboard */}
         <div
           id="panel-top"
-          className="bg-black resize panel-top "
+          className="bg-black resize panel-top"
           style={{ height: heightComponent.heightPriceBoard }}
         >
           <div
@@ -319,7 +323,11 @@ const LayoutMarketWatch: React.FC = () => {
                     <Tooltip title="Đồ thị">
                       <button
                         className="btn btn-sm btn-chart"
-                        onClick={() => dispatch(statusChartMarketwatch({visible:true,code:""}))}
+                        onClick={() =>
+                          dispatch(
+                            statusChartMarketwatch({ visible: true, code: "" })
+                          )
+                        }
                       >
                         <img src={LineChart} width={20} height={20} alt="" />
                       </button>
@@ -359,25 +367,27 @@ const LayoutMarketWatch: React.FC = () => {
           </div>
           {/* chart */}
           <div
-            className="chart-layout"
+            className="w-full h-full chart-layout"
             style={{ display: componentVisible ? "block" : "none" }}
           >
-            <ChartMarketwatch />
+            <ChartMarketwatch
+              heightPriceBoard={heightComponent.heightPriceBoard}
+            />
           </div>
         </div>
         <div
-            id="draggableH"
-            className="ui-draggable ui-draggable-handle"
-            style={{
-              top: heightComponent.heightPriceBoard,
-              background: "transparent",
-            }}
-            onClick={(e) => e.stopPropagation()}
-            draggable
-            onDragStart={handleDragStart}
-            onDrag={handleDrag}
-            onDragEnd={handleDragEnd}
-          />
+          id="draggableH"
+          className="ui-draggable ui-draggable-handle"
+          style={{
+            top: heightComponent.heightPriceBoard,
+            background: "transparent",
+          }}
+          onClick={(e) => e.stopPropagation()}
+          draggable
+          onDragStart={handleDragStart}
+          onDrag={handleDrag}
+          onDragEnd={handleDragEnd}
+        />
         {/* orderform */}
 
         <div className="absolute w-full z-[100] bg-white">
@@ -402,17 +412,17 @@ const LayoutMarketWatch: React.FC = () => {
               <div className="panel__bottom__link flex justify-end mr-[40px] mb-[14px]">
                 <div className="px-2 group" onClick={() => showTab(1)}>
                   <span className=" size-input hover-text-blue-L">
-                  {t("home:Order.TITLE_LCK")}
+                    {t("home:Order.TITLE_LCK")}
                   </span>
                 </div>
                 <div className="px-2 group" onClick={() => showTab(2)}>
                   <span className=" size-input hover-text-blue-L">
-                  {t("home:Order.TITLE_KQKL")} 
+                    {t("home:Order.TITLE_KQKL")}
                   </span>
                 </div>
                 <div className="px-2 group" onClick={() => showTab(3)}>
                   <span className=" size-input hover-text-blue-L">
-                  {t("home:Order.TITLE_LTN")}
+                    {t("home:Order.TITLE_LTN")}
                   </span>
                 </div>
               </div>
@@ -443,11 +453,11 @@ const LayoutMarketWatch: React.FC = () => {
               id="divArrowBottomDown"
               style={{ display: heightComponent.orderForm ? "block" : "none" }}
               onClick={hideOrderForm}
-            > 
+            >
               {orderCount === 1
-                ?  `${t("home:Order.TITLE_LCK1")}`
+                ? `${t("home:Order.TITLE_LCK1")}`
                 : orderCount === 2
-                ? `${t("home:Order.TITLE_KQKL1")}` 
+                ? `${t("home:Order.TITLE_KQKL1")}`
                 : `${t("home:Order.TITLE_LTN1")}`}
             </div>
             {/* menu link */}
@@ -456,23 +466,37 @@ const LayoutMarketWatch: React.FC = () => {
               className="text-black "
             >
               <div className="flex items-center justify-end panel__bottom__link">
-                <div className="px-3 group" onClick={() => { dispatch(getDataApiPendingOder()); showTab(1)}}>
+                <div
+                  className="px-3 group"
+                  onClick={() => {
+                    dispatch(getDataApiPendingOder());
+                    showTab(1);
+                  }}
+                >
                   <span
                     className={`size-input hover-text-blue-L ${
                       orderCount === 1 ? "active" : ""
                     }`}
                   >
-                     {t("home:Order.TITLE_LCK")}
+                    {t("home:Order.TITLE_LCK")}
                   </span>
                 </div>
                 {/* hihi */}
-                <div className="px-3 group" onClick={() => { dispatch(getDataApi()); showTab(2) }}>
-                <span
-                  className={`size-input hover-text-blue-L ${orderCount === 2 ? "active" : ""}`}
+                <div
+                  className="px-3 group"
+                  onClick={() => {
+                    dispatch(getDataApi());
+                    showTab(2);
+                  }}
                 >
-                  {t("home:Order.TITLE_KQKL")} 
-                </span>
-              </div>
+                  <span
+                    className={`size-input hover-text-blue-L ${
+                      orderCount === 2 ? "active" : ""
+                    }`}
+                  >
+                    {t("home:Order.TITLE_KQKL")}
+                  </span>
+                </div>
 
                 <div className="px-3 group" onClick={() => showTab(3)}>
                   <span
@@ -480,7 +504,7 @@ const LayoutMarketWatch: React.FC = () => {
                       orderCount === 3 ? "active" : ""
                     }`}
                   >
-                   {t("home:Order.TITLE_LTN")}
+                    {t("home:Order.TITLE_LTN")}
                   </span>
                 </div>
                 <div
@@ -558,7 +582,6 @@ const LayoutMarketWatch: React.FC = () => {
               <IntradayOrder />
             </div>
           </div>
-      
         </div>
       </div>
     </div>
