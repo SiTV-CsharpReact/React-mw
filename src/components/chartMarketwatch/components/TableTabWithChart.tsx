@@ -6,8 +6,10 @@ import axios from "axios";
 import { fetchDataTableKLTTGAsync } from "../../tablePopupMarketwatch/dataTablePopupDetailSlice";
 
 const classTable = "border border-[#404040] px-[6px] text-[13px] font-normal";
-
-const TableTabWithChart = () => {
+interface TableTabChartProps {
+  heightPriceBoard?: number;
+}
+const TableTabWithChart = ({ heightPriceBoard }: TableTabChartProps) => {
   const stockCode = useAppSelector((state) => state.chart.code);
   const symbolNew = stockCode === "" ? "FTS" : stockCode;
   const [dataChart, setDataChart] = useState<Data[]>([]);
@@ -16,8 +18,8 @@ const TableTabWithChart = () => {
   const [matchingByPrice, setMatchingByPrice] = useState(false);
   const [dataTable, setDataTable] = useState<any>([]);
   useEffect(() => {
-    dispatch(fetchDataTableKLTTGAsync(stockCode));
-  }, [stockCode, dispatch]);
+    dispatch(fetchDataTableKLTTGAsync(symbolNew));
+  }, [symbolNew, dispatch]);
 
   const { dataTableKLTTG } = useAppSelector((state) => state.dataPopupDetail);
 
@@ -29,7 +31,7 @@ const TableTabWithChart = () => {
       setDataChart(response.data);
     };
     fetchData();
-  }, [stockCode, symbolNew]);
+  }, [symbolNew]);
 
   useEffect(() => {
     const transformedData = dataTableKLTTG?.Body?.reduce(
@@ -59,12 +61,13 @@ const TableTabWithChart = () => {
         inverted: true,
       },
     ];
-    const chart = Highcharts.chart("container", {
+
+    const chart = Highcharts.chart("containerTableTabWithChart", {
       chart: {
         type: "bar",
         backgroundColor: "#000000",
         plotBorderWidth: 0,
-        inverted: true, // Flip the chart to horizontal
+        inverted: true,
       },
 
       title: {
@@ -80,7 +83,7 @@ const TableTabWithChart = () => {
             fontSize: "9pt",
           },
         },
-        reversed: true,
+        reversed: false,
       },
       yAxis: {
         min: 0,
@@ -91,6 +94,7 @@ const TableTabWithChart = () => {
         gridLineColor: "#343434",
         labels: {
           rotation: 0,
+          overflow: "justify",
           useHTML: true,
           style: {
             color: "#ffffff",
@@ -102,41 +106,36 @@ const TableTabWithChart = () => {
         reversed: true,
         enabled: false, // Ẩn chú giải
       },
-
+      tooltip: {
+        headerFormat: "",
+        pointFormatter: function () {
+          // Tùy chỉnh thông tin hiển thị khi hover
+          return (
+            '<span style="color: #000000">Khối lượng: </span><b>' +
+            this.y?.toLocaleString() +
+            '<br><span style="color: #000000">Giá: </span> <b>' +
+            this.category +
+            "</b>"
+          );
+        },
+      },
       plotOptions: {
-        series: {
-          stacking: "normal",
+        bar: {
+          borderRadius: "0%",
           borderWidth: 0,
-          color: "#089981",
           dataLabels: {
             enabled: true,
-            align: "right", // Đặt số ở bên phải
-            // inside: true, // Đặt số bên trong
-            x: 0,
             style: {
               textOutline: "none", // Xóa viền cho dataLabels
               color: "#ffffff", // Màu trắng
-              fontSize: "8pt",
+              // display: "none",
+              fontSize: "7pt",
               fontWeight: "normal",
             },
           },
-
-          tooltip: {
-            headerFormat: "",
-            pointFormatter: function () {
-              // Tùy chỉnh thông tin hiển thị khi hover
-              return (
-                '<span style="color: #000000">Khối lượng: </span><b>' +
-                this.y?.toLocaleString() +
-                '<br><span style="color: #000000">Giá: </span> <b>' +
-                this.category +
-                "</b>"
-              );
-            },
-          },
+          groupPadding: 0.1,
         },
       },
-
       colors:
         dataTable?.map((item: any) =>
           item.MP == dataChart[0]?.Info[3][1]
@@ -156,13 +155,18 @@ const TableTabWithChart = () => {
       },
       series: series,
     });
+
     return () => {
       chart.destroy();
     };
   }, [dataTable, dataTableKLTTG, dataChart]);
 
+  let setHeight = 0;
+  if (heightPriceBoard) {
+    setHeight = heightPriceBoard - 40;
+  }
   return (
-    <div>
+    <div className={` relative`} style={{ height: heightPriceBoard }}>
       <div className="relative z-10 flex flex-col justify-center h-[30px] bg-[#404040] w-full">
         <input
           type="text"
@@ -216,54 +220,67 @@ const TableTabWithChart = () => {
           </div>
         )}
       </div>
+
       <figure
-        className={`${matchingByPrice ? "" : "hidden"}  highcharts-figure`}
+        className={`${
+          matchingByPrice ? "h-[calc(100%-30px)]" : "hidden"
+        }  highcharts-figure overflow-y-scroll`}
       >
-        <div id="container" className="overflow-y-auto"></div>
+        <div
+          id="containerTableTabWithChart"
+          className={`h-full `}
+          style={{ height: setHeight }}
+        ></div>
       </figure>
       {!matchingByPrice && (
-        <div className="h-[400px] overflow-y-auto">
-          <table>
-            <thead>
-              <tr className={` ${classTable}`}>
-                <th className={`py-[11px] ${classTable}`}>Thời gian</th>
-                <th className={` ${classTable}`}>Khối lượng</th>
-                <th className={` ${classTable}`}>Giá</th>
-                <th className={` ${classTable}`}>Tổng KL</th>
-              </tr>
-            </thead>
-            <tbody className={` ${classTable}`}>
-              {dataTableKLTTG?.Body?.map((item: any) => item)
-                .reverse()
-                .map((item: any, index: any) => (
-                  <tr
-                    className={`${
-                      item.MP === dataChart[0]?.Info[3][1]
-                        ? "text-[#66CCFF]"
-                        : item.MP > dataChart[0]?.Info[3][1] &&
-                          item.MP < dataChart[0]?.Info[1][1]
-                        ? "text-[#FF0000]"
-                        : item.MP == dataChart[0]?.Info[1][1]
-                        ? "text-[#F7FF31]"
-                        : item.MP > dataChart[0]?.Info[1][1] &&
-                          item.MP < dataChart[0]?.Info[2][1]
-                        ? "text-[#00FF00]"
-                        : "text-[#FF00FF]"
-                    } text-end`}
-                    key={index}
-                  >
-                    <td className={` ${classTable} py-[3px]`}>{item.MT}</td>
-                    <td className={` ${classTable}`}>
-                      {item.MQ.toLocaleString()}
-                    </td>
-                    <td className={` ${classTable} `}>{item.MP}</td>
-                    <td className={` ${classTable}`}>
-                      {item.TQ.toLocaleString()}
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+        <div className="overflow-y-auto ">
+          {!dataTable ? (
+            <div className="absolute left-[46%] top-[46%] custom-loader"></div>
+          ) : (
+            <table>
+              <thead>
+                <tr className={` ${classTable}`}>
+                  <th className={`py-[11px] ${classTable}`}>Thời gian</th>
+                  <th className={` ${classTable}`}>Khối lượng</th>
+                  <th className={` ${classTable}`}>Giá</th>
+                  <th className={` ${classTable}`}>Tổng KL</th>
+                </tr>
+              </thead>
+              <tbody className={` ${classTable}`}>
+                {dataTableKLTTG?.Body?.map((item: any) => item)
+                  .reverse()
+                  .map((item: any, index: any) => (
+                    <tr
+                      className={`${
+                        item.MP === dataChart[0]?.Info[3][1]
+                          ? "text-[#66CCFF]"
+                          : item.MP > dataChart[0]?.Info[3][1] &&
+                            item.MP < dataChart[0]?.Info[1][1]
+                          ? "text-[#FF0000]"
+                          : item.MP === dataChart[0]?.Info[1][1]
+                          ? "text-[#F7FF31]"
+                          : item.MP > dataChart[0]?.Info[1][1] &&
+                            item.MP < dataChart[0]?.Info[2][1]
+                          ? "text-[#00FF00]"
+                          : item.MP === dataChart[0]?.Info[2][1]
+                          ? "text-[#FF00FF]"
+                          : "text-black"
+                      } text-end transition-all`}
+                      key={index}
+                    >
+                      <td className={` ${classTable} py-[3px]`}>{item.MT}</td>
+                      <td className={` ${classTable}`}>
+                        {item.MQ.toLocaleString()}
+                      </td>
+                      <td className={` ${classTable} `}>{item.MP}</td>
+                      <td className={` ${classTable}`}>
+                        {item.TQ.toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          )}
         </div>
       )}
     </div>

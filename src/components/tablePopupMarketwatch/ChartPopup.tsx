@@ -10,11 +10,13 @@ const ChartPopup = () => {
   const { dataTableKLTTG } = useAppSelector((state) => state.dataPopupDetail);
   const { floor } = useAppSelector((state) => state.menuBar);
 
-
   const data = React.useMemo(() => {
     if (dataTableKLTTG?.Body?.length > 0) {
       const arr = drawChart(dataTableKLTTG)
-        .map((item: any) => ({ ...item, MQ: floor === 'HSX' ? item.MQ * 10 : item.MQ }))
+        .map((item: any) => ({
+          ...item,
+          MQ: floor === "HSX" ? item.MQ * 10 : item.MQ,
+        }))
         .sort((a: any, b: any) => a.MP - b.MP);
       return arr;
     }

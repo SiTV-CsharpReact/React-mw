@@ -1,12 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 declare global {
   interface Window {
     TradingView: any;
   }
 }
+interface TradingViewWidgetProps {
+  heightPriceBoard?: number;
+}
 let tvScriptLoadingPromise: Promise<Event>;
 
-export default function TradingViewWidget(): JSX.Element {
+export default function TradingViewWidget({
+  heightPriceBoard,
+}: TradingViewWidgetProps): JSX.Element {
   const onLoadScriptRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
@@ -14,24 +19,29 @@ export default function TradingViewWidget(): JSX.Element {
 
     if (!tvScriptLoadingPromise) {
       tvScriptLoadingPromise = new Promise((resolve) => {
-        const script = document.createElement('script');
-        script.id = 'tradingview-widget-loading-script';
-        script.src = 'https://s3.tradingview.com/tv.js';
-        script.type = 'text/javascript';
+        const script = document.createElement("script");
+        script.id = "tradingview-widget-loading-script";
+        script.src = "https://s3.tradingview.com/tv.js";
+        script.type = "text/javascript";
         script.onload = resolve;
 
         document.head.appendChild(script);
       });
     }
 
-    tvScriptLoadingPromise.then(() => onLoadScriptRef.current && onLoadScriptRef.current());
+    tvScriptLoadingPromise.then(
+      () => onLoadScriptRef.current && onLoadScriptRef.current()
+    );
 
     return () => {
       onLoadScriptRef.current = null;
     };
 
     function createWidget(): void {
-      if (document.getElementById('tradingview_1556c') && 'TradingView' in window) {
+      if (
+        document.getElementById("tradingview_1556c") &&
+        "TradingView" in window
+      ) {
         new window.TradingView.widget({
           autosize: true,
           symbol: "HNX:AAV",
@@ -51,15 +61,22 @@ export default function TradingViewWidget(): JSX.Element {
           show_popup_button: true,
           popup_width: "1000",
           popup_height: "650",
-          container_id: "tradingview_1556c"
+          container_id: "tradingview_1556c",
         });
       }
     }
   }, []);
+  let setHeight = 0;
+  if (heightPriceBoard) {
+    setHeight = heightPriceBoard - 30;
+  }
 
   return (
-    <div className='tradingview-widget-container'>
-      <div id='tradingview_1556c' style={{ height: '400px' }} />
+    <div
+      className={` tradingview-widget-container`}
+      style={{ height: setHeight }}
+    >
+      <div id="tradingview_1556c" className={`h-full`} />
     </div>
   );
 }

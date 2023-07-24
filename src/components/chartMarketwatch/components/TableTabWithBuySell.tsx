@@ -18,12 +18,11 @@ const TableTabWithBuySell = () => {
     };
     fetchData();
   }, [stockCode, symbolNew]);
-
   return (
     <>
-      <table className="no-index">
-        {dataChart &&
-          dataChart.map((dataTable, index) => (
+      <table className={`${!dataChart && "hidden"} no-index`}>
+        {dataChart.length &&
+          dataChart?.map((dataTable, index) => (
             <tbody key={index}>
               <tr
                 className={`${
@@ -49,8 +48,10 @@ const TableTabWithBuySell = () => {
                     {dataTable.Info[11][1]}
                   </span>
                   <span className="px-1">
-                    {parseFloat(dataTable.Info[11][1]) -
-                      parseFloat(dataTable.Info[1][1])}
+                    {(
+                      parseFloat(dataTable.Info[11][1]) -
+                      parseFloat(dataTable.Info[1][1])
+                    ).toFixed(1)}
                   </span>
                   <span>
                     (

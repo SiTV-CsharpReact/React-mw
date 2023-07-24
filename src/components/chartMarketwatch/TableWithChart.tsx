@@ -18,13 +18,13 @@ const TableWithChart = () => {
       // const response = await axios.get<Data[]>(
       //   `http://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${stockCode}`
       // );
-      const response = await agent.TableHSX.getOneStock(stockCode)
+      const response = await agent.TableHSX.getOneStock(stockCode);
       setDataChart(response.data);
     };
     fetchData();
   }, [stockCode]);
   return (
-    <div className="chart-layout-right float-right w-[350px]  ">
+    <div className="float-right chart-layout-right">
       <div className="mt-content">
         <table className="no-index">
           {dataChart?.map((dataTable: any, index: number) => (
