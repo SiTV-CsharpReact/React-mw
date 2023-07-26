@@ -54,11 +54,12 @@ const NewsPopup = () => {
         <ul id="ulNews" className="pu-ul-news">
           <Slider {...settings} className="color-white">
             {cookie === "VN"
-              ? dataNew?.VN.map((data, index) => (
+              ? dataNew?.VN?.map((data, index) => (
                   <Tooltip
                     title={`${data.Title} (${data.ShowTime} ${data.ShowDate})`}
+                    key={index}
                   >
-                    <li key={index}>
+                    <li>
                       <div>
                         <a
                           className="color-white"
@@ -71,7 +72,7 @@ const NewsPopup = () => {
                     </li>
                   </Tooltip>
                 ))
-              : dataNew?.EN.map((data, index) => (
+              : dataNew?.EN?.map((data, index) => (
                   <li key={index}>
                     <div>
                       <Tooltip

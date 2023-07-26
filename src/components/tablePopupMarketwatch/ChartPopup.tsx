@@ -22,16 +22,17 @@ const ChartPopup = () => {
     }
     return [];
   }, [dataTableKLTTG, floor]);
-  console.log({ data });
+  // console.log({ data });
 
   useEffect(() => {
     const series: any = [
       {
-        name: "",
-        data: data.map((item: any) => item.MQ),
+        data: data.map((item: any) => [item.MP, item.MQ]),
         color: "#008000",
+        pointWidth: 20,
       },
     ];
+
     const gradient: any = [0, 0, 50, 500];
     Highcharts.chart("container", {
       chart: {
@@ -50,88 +51,73 @@ const ChartPopup = () => {
         plotBorderColor: "#545454",
         events: {
           load: function () {
-            const yAxis = this.yAxis[0];
-
-            if (data.length !== 0) {
-              const yExtremes = yAxis.getExtremes();
-              const lengthStep =
-                Math.round(yExtremes.dataMin * 0.9).toString().length - 2;
-              const step = 10 ** lengthStep;
-              const newMin =
-                Math.floor((yExtremes.dataMin * 0.95) / step) * step;
-              const newMax = Math.ceil(yExtremes.dataMax / step) * step;
-
-              const arrPr: any = data?.map((item: any) => item.MP);
-              let min, max, tick, barwidth, minSub;
-              min = minNumber(arrPr);
-              max = maxNumber(arrPr);
-              let arrSub: any = [];
-              for (let i = 0; i < arrPr.length; i++) {
-                let next = arrPr[i + 1];
-                if (typeof next === "undefined") {
-                  next = arrPr[0];
-                }
-                const sub = Math.abs(Math.round((arrPr[0] - next) * 100) / 100);
-                if (sub > 0) {
-                  arrSub.push(sub);
-                }
+            const arrPr: any = data?.map((item: any) => item.MP);
+            let min, max, tick, minSub;
+            let barwidth: number;
+            min = minNumber(arrPr);
+            max = maxNumber(arrPr);
+            let arrSub: any = [];
+            for (let i = 0; i < arrPr.length; i++) {
+              let next = arrPr[i + 1];
+              if (typeof next === "undefined") {
+                next = arrPr[0];
               }
-              minSub = minNumber(arrSub);
-              const sub = max - min;
-              if (max < 50) {
-                tick = minSub;
-                barwidth = 0.02;
-                min -= barwidth;
-                max += barwidth;
-              } else if (max > 100) {
-                tick = minSub < 0.5 && minSub !== 0 ? minSub : 0.5;
-                barwidth = 0.05;
-                min -= barwidth;
-                max += barwidth;
-              } else if (minSub < 0.5) {
-                tick = 0.1;
-                barwidth = 0.05;
-                min -= barwidth;
-                max += barwidth;
-              } else {
-                tick = 1;
-                barwidth = 0.2;
-                min -= barwidth;
-                max += barwidth;
-              }
+              const sub = Math.abs(Math.round((arrPr[0] - next) * 100) / 100);
               if (sub > 0) {
-                const countTick = Math.round(sub / tick);
-                if (countTick > 15) {
-                  const tempTick = Math.round(countTick / 10);
-                  tick = max < 50 ? 0.1 : 0.5;
-                  if (max < 50 && max > 10) {
-                    barwidth = 0.05;
-                  } else if (max <= 10) {
-                    barwidth = 0.01;
-                  } else {
-                    barwidth = 0.05;
-                  }
-
-                  min -= barwidth;
-                  max += barwidth;
-                }
-                yAxis.update({
-                  tickAmount: countTick,
-                });
+                arrSub.push(sub);
               }
-              this.series[0].update({
-                type: "column",
-                pointWidth: barwidth * 1000,
-              });
-              yAxis.setExtremes(newMin, newMax, true, false);
-              console.log({ barwidth, newMin, newMax });
-            } else {
-              yAxis.update({
-                tickAmount: 5,
-              });
-              yAxis.setExtremes(-1, 1, true, false);
             }
-            this.redraw();
+            console.log({ arrPr });
+
+            minSub = minNumber(arrSub);
+            const sub = max - min;
+            if (max < 50) {
+              tick = minSub;
+              barwidth = 0.02;
+              min -= barwidth;
+              max += barwidth;
+            } else if (max > 100) {
+              tick = minSub < 0.5 && minSub !== 0 ? minSub : 0.5;
+              barwidth = 0.05;
+              min -= barwidth;
+              max += barwidth;
+            } else if (minSub < 0.5) {
+              tick = 0.1;
+              barwidth = 0.05;
+              min -= barwidth;
+              max += barwidth;
+            } else {
+              tick = 1;
+              barwidth = 0.2;
+              min -= barwidth;
+              max += barwidth;
+            }
+            this.xAxis[0].setExtremes(min, max, true, false);
+            // for (let i = 0; i < arrPr.length - 1; i++) {
+            //   const value = Number((arrPr[i + 1] - arrPr[i]).toFixed(2));
+            //   if (value === tick) {
+            //     this.xAxis[0].update({
+            //       tickInterval: tick,
+            //     });
+            //   }
+            // }
+
+            const yAxis = this.yAxis[0];
+            const yExtremes = yAxis.getExtremes();
+            const lengthStep =
+              Math.round(yExtremes.dataMin * 0.9).toString().length - 2;
+            const step = 10 ** lengthStep;
+            const newMin = Math.floor((yExtremes.dataMin * 0.95) / step) * step;
+            const newMax = Math.ceil(yExtremes.dataMax / step) * step;
+
+            yAxis.setExtremes(newMin, newMax, true, false);
+
+            this.series.forEach((e) => {
+              e.update({
+                pointWidth: barwidth >= 0.05 ? 10 : barwidth >= 0.02 ? 14 : 10,
+                type: "column",
+              });
+            });
           },
         },
       },
@@ -142,7 +128,6 @@ const ChartPopup = () => {
         text: "",
       },
       xAxis: {
-        categories: data?.map((item: any) => item.MP),
         labels: {
           rotation: 0,
           useHTML: true,
@@ -150,14 +135,16 @@ const ChartPopup = () => {
             color: "#a5a5a5",
             fontSize: "6pt",
           },
-          format: "{value:.2f}",
+          formatter: function () {
+            const value: any = this.value;
+            return Highcharts.numberFormat(value, 2, ".", "");
+          },
         },
         lineWidth: 0,
         lineColor: "#5f5f5f",
         tickWidth: 0,
         offset: -10,
         height: 130,
-        // crosshair: true,
       },
       yAxis: {
         title: {
@@ -171,26 +158,27 @@ const ChartPopup = () => {
           distance: 8,
           formatter: function () {
             const value: any = this.value;
-            if (value >= 1000000) {
-              return value / 1000000 + "M";
-            } else if (value >= 1000) {
-              return value / 1000 + "K";
-            } else if (value >= 500) {
-              return (value / 1000).toFixed(1).replace(/\.0$/, "") + "M";
+            if (value === 500000) {
+              const scale = Math.floor(Math.log10(value)) / 10;
+              return scale + "M";
             } else {
-              return value;
+              if (value >= 1000000) {
+                return value / 1000000 + "M";
+              } else if (value >= 1000) {
+                return value / 1000 + "K";
+              } else if (value >= 500) {
+                return (value / 1000).toFixed(1).replace(/\.0$/, "") + "M";
+              } else {
+                return value;
+              }
             }
           },
         },
-        endOnTick: true,
         lineWidth: 0,
         lineColor: "#5f5f5f",
-        // maxPadding: 0.01,
         gridLineWidth: 1,
         gridLineColor: "#6d6d6d1f",
         height: 130,
-        tickAmount: 6,
-        width: 343,
       },
       tooltip: {
         shadow: false,
@@ -206,9 +194,9 @@ const ChartPopup = () => {
           fontWeight: "500",
         },
         formatter: function () {
-          return `<span style="font-size: '5pt';">Giá: <b>${
+          return `<span style="font-size: '5pt';">Giá: <b>${Number(
             this.key
-          }</b></span></br>
+          )}</b></span></br>
             <span style="font-size: '5pt';">Khối lượng: <b>${formatNumber(
               this.y
             )}</b></span>`;
@@ -216,10 +204,7 @@ const ChartPopup = () => {
         useHTML: true,
       },
       legend: {
-        symbolPadding: 0,
-        symbolWidth: 0,
-        symbolHeight: 0,
-        squareSymbol: false,
+        enabled: false,
       },
       plotOptions: {
         column: {

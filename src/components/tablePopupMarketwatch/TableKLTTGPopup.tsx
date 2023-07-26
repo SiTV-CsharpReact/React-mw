@@ -12,7 +12,7 @@ const TableKLTTGPopup = () => {
   const { dataTableKLTTG, dataDetailPopup } = useAppSelector(
     (state) => state.dataPopupDetail
   );
-  const dispatch = useAppDispatch();
+  const { floor } = useAppSelector((state) => state.menuBar);
 
   useEffect(() => {
     dataDetailPopup?.map((item: any) => {
@@ -32,113 +32,23 @@ const TableKLTTGPopup = () => {
   }, [dataDetailPopup]);
   return (
     <>
-      <div className="w-full">
-        <div className="sticky top-0 left-0 w-full bg-black">
-          <div className="grid-cols-8 text-center text-[8pt] text-[#B9B9B9] border border-[#333]">
-            Khớp lệnh theo thời gian
-          </div>
-          <div className="grid grid-cols-8">
-            <div className="col-span-2 text-center text-[8pt] text-[#B9B9B9] border-l border-b border-[#333]">
-              Thời gian
-            </div>
-            <div className="col-span-2 text-center text-[8pt] text-[#B9B9B9] border-l border-b border-[#333]">
-              Giá
-            </div>
-            <div className="col-span-2 text-center text-[8pt] text-[#B9B9B9] border-l border-b border-[#333]">
-              khối lượng
-            </div>
-            <div className="col-span-2 text-center text-[8pt] text-[#B9B9B9] border-r border-b border-[#333]">
-              Tổng KL
-            </div>
-          </div>
-        </div>
-        <div className="w-full">
-          {dataTableKLTTG?.Body?.map((item: any) => item)
-            .reverse()
-            .map((item: any, ind: number) => (
-              <div key={ind} className="grid grid-cols-8">
-                <div
-                  className="text-center col-span-2 border-[#333] text-[8pt] border-l border-b"
-                  style={{
-                    color: `${
-                      item?.MP === priceTC
-                        ? "#f7ff31"
-                        : item?.MP === priceTran
-                        ? "#ff00ff"
-                        : item?.MP === priceSan
-                        ? "#66ccff"
-                        : item?.MP > priceTC
-                        ? "#00ff00"
-                        : "#ff0000"
-                    }`,
-                  }}
-                >
-                  {item.MT}
-                </div>
-                <div
-                  className="text-center col-span-2 border-[#333] text-[8pt] border-l border-b"
-                  style={{
-                    color: `${
-                      item?.MP === priceTC
-                        ? "#f7ff31"
-                        : item?.MP === priceTran
-                        ? "#ff00ff"
-                        : item?.MP === priceSan
-                        ? "#66ccff"
-                        : item?.MP > priceTC
-                        ? "#00ff00"
-                        : "#ff0000"
-                    }`,
-                  }}
-                >
-                  {formatNumber(item.MP)}
-                </div>
-                <div
-                  className="text-center col-span-2 border-[#333] text-[8pt] border-l border-b"
-                  style={{
-                    color: `${
-                      item?.MP === priceTC
-                        ? "#f7ff31"
-                        : item?.MP === priceTran
-                        ? "#ff00ff"
-                        : item?.MP === priceSan
-                        ? "#66ccff"
-                        : item?.MP > priceTC
-                        ? "#00ff00"
-                        : "#ff0000"
-                    }`,
-                  }}
-                >
-                  {floorLTG === "HSX"
-                    ? formatNumber(item.MQ * 10)
-                    : formatNumber(item.MQ)}
-                </div>
-                <div
-                  className="text-center col-span-2 border-[#333] text-[8pt] border-r border-b"
-                  style={{
-                    color: `${
-                      item?.MP === priceTC
-                        ? "#f7ff31"
-                        : item?.MP === priceTran
-                        ? "#ff00ff"
-                        : item?.MP === priceSan
-                        ? "#66ccff"
-                        : item?.MP > priceTC
-                        ? "#00ff00"
-                        : "#ff0000"
-                    }`,
-                  }}
-                >
-                  {floorLTG === "HSX"
-                    ? formatNumber(item.TQ * 10)
-                    : formatNumber(item.TQ)}
-                </div>
-              </div>
-            ))}
-        </div>
+      <div className="tempHeadTfoot">
+        <table className="pu-table-realtime">
+          <thead>
+            <tr style={{ height: "22px" }}>
+              <th colSpan={4}>Khớp lệnh theo thời gian</th>
+            </tr>
+            <tr className="border" style={{ height: "22.5px" }}>
+              <th style={{ width: "101.7px" }}>Thời gian</th>
+              <th style={{ width: "58.77px" }}>Giá</th>
+              <th style={{ width: "119.73px" }}>Khối lượng</th>
+              <th style={{ width: "99.8px" }}>Tổng KL</th>
+            </tr>
+          </thead>
+        </table>
       </div>
-      {/* <table id="tbpuRT" className="w-full pu-table-realtime">
-        <thead className="sticky top-0 left-0">
+      <table id="tbpuRT" className="pu-table-realtime w-full">
+        <thead>
           <tr style={{ height: "22px" }}>
             <th colSpan={4}>Khớp lệnh theo thời gian</th>
           </tr>
@@ -157,13 +67,13 @@ const TableKLTTGPopup = () => {
                 <td
                   style={{
                     color: `${
-                      item?.MP === priceTC
+                      item?.MP === Number(priceTC)
                         ? "#f7ff31"
-                        : item?.MP === priceTran
+                        : item?.MP === Number(priceTran)
                         ? "#ff00ff"
-                        : item?.MP === priceSan
+                        : item?.MP === Number(priceSan)
                         ? "#66ccff"
-                        : item?.MP > priceTC
+                        : item?.MP > Number(priceTC)
                         ? "#00ff00"
                         : "#ff0000"
                     }`,
@@ -175,13 +85,13 @@ const TableKLTTGPopup = () => {
                 <td
                   style={{
                     color: `${
-                      item?.MP === priceTC
+                      item?.MP === Number(priceTC)
                         ? "#f7ff31"
-                        : item?.MP === priceTran
+                        : item?.MP === Number(priceTran)
                         ? "#ff00ff"
-                        : item?.MP === priceSan
+                        : item?.MP === Number(priceSan)
                         ? "#66ccff"
-                        : item?.MP > priceTC
+                        : item?.MP > Number(priceTC)
                         ? "#00ff00"
                         : "#ff0000"
                     }`,
@@ -193,13 +103,13 @@ const TableKLTTGPopup = () => {
                 <td
                   style={{
                     color: `${
-                      item?.MP === priceTC
+                      item?.MP === Number(priceTC)
                         ? "#f7ff31"
-                        : item?.MP === priceTran
+                        : item?.MP === Number(priceTran)
                         ? "#ff00ff"
-                        : item?.MP === priceSan
+                        : item?.MP === Number(priceSan)
                         ? "#66ccff"
-                        : item?.MP > priceTC
+                        : item?.MP > Number(priceTC)
                         ? "#00ff00"
                         : "#ff0000"
                     }`,
@@ -213,13 +123,13 @@ const TableKLTTGPopup = () => {
                 <td
                   style={{
                     color: `${
-                      item?.MP === priceTC
+                      item?.MP === Number(priceTC)
                         ? "#f7ff31"
-                        : item?.MP === priceTran
+                        : item?.MP === Number(priceTran)
                         ? "#ff00ff"
-                        : item?.MP === priceSan
+                        : item?.MP === Number(priceSan)
                         ? "#66ccff"
-                        : item?.MP > priceTC
+                        : item?.MP > Number(priceTC)
                         ? "#00ff00"
                         : "#ff0000"
                     }`,
@@ -233,7 +143,7 @@ const TableKLTTGPopup = () => {
               </tr>
             ))}
         </tbody>
-      </table> */}
+      </table>
     </>
   );
 };

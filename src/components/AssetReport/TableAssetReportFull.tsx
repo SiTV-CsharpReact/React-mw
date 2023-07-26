@@ -20,7 +20,7 @@ const TableAssetReportFull: React.FC<IpropsTableReport> = ({
 
   return (
     <table className="w-full border-collapse text-center my-0 mx-auto bg-white text-[#002060] border-spacing-0">
-      <thead className="table_detail_BCTS_thead bg-red-500">
+      <thead className="table_detail_BCTS_thead">
         <tr>
           <td colSpan={11} className="text-left">
             <div>

@@ -2,7 +2,8 @@ import { useAppSelector } from "../../store/configureStore";
 import { formatNumberMarket, setColorMarket } from "../../utils/util";
 
 const TableDetailPopup = () => {
-  const { dataDetailPopup } = useAppSelector((state) => state.dataPopupDetail);
+  const {dataDetailPopup} = useAppSelector(state=>state.dataPopupDetail)
+  
   return (
     <table
       id="tbLPRT"
