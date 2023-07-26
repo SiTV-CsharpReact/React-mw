@@ -4,7 +4,13 @@ import { AgGridReact } from "ag-grid-react";
 // import "ag-grid-community/styles/ag-grid.css";
 // import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./table.scss";
-import { arrayColor, colorTextMenu, fStatusMarketHNX, fStatusMarketUPCOM, formatNumberMarket } from "../../utils/util";
+import {
+  arrayColor,
+  colorTextMenu,
+  fStatusMarketHNX,
+  fStatusMarketUPCOM,
+  formatNumberMarket,
+} from "../../utils/util";
 
 // import { LicenseManager } from "ag-grid-enterprise";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
@@ -26,12 +32,14 @@ const TableMarketWatchTest = () => {
 
   const [columnDefs] = ColumnDef(gridRef, pinnedRowsRef);
   const dispatch = useAppDispatch();
-  // rest sort 
+  // rest sort
   //setRowData
-  const { ListDataTable, DataPined, RowPined, keyActiveMan } = useAppSelector((state) => state.tableTest);
+  const { ListDataTable, DataPined, RowPined, keyActiveMan } = useAppSelector(
+    (state) => state.tableTest
+  );
   // pinned
   const pinned = useAppSelector((state) => state.categories.row);
-  // call data 
+  // call data
   const HanDelCate = useCallback(async () => {
     let result = await dispatch(fetchCategoryAsync());
     if (result?.payload?.Data[0]?.List) {
@@ -46,17 +54,17 @@ const TableMarketWatchTest = () => {
         Floor: "HSX",
         Query: "s=quote&l=All",
         RowPined: null,
-        KeyMenuChildren: null
+        KeyMenuChildren: null,
       };
       let newCookie = {
         tab: "VNI",
-        codeList: ""
-      }
+        codeList: "",
+      };
       localStorage.setItem("activePriceboardTabMenu", "VNI");
-      setCookie(newCookie)
+      setCookie(newCookie);
       await handelGetData(data);
     }
-  }, [dispatch])
+  }, [dispatch]);
   const handelGetData = useCallback(
     (Data: any) => {
       dispatch(getDataTable(Data));
@@ -103,7 +111,6 @@ const TableMarketWatchTest = () => {
       socketHSX.close();
       socketHNX.close();
     };
-
   }, []);
   // useEffect(() => {
   //   const socketHNX = new WebSocket(
@@ -181,7 +188,9 @@ const TableMarketWatchTest = () => {
         const vCLassIndex = document.getElementById(`${vIDImage}_3`);
         //HSX
         // const vCLassImageHSX = document.getElementById(`${vIDImage}_Image`);
-        const vCLassIndexHSX = document.getElementById(`${vIDImage}_IndexValue`);
+        const vCLassIndexHSX = document.getElementById(
+          `${vIDImage}_IndexValue`
+        );
         const vCLassPT = document.getElementById(
           `${vIDImage}_6`
         )?.parentElement;
@@ -197,7 +206,6 @@ const TableMarketWatchTest = () => {
               // = tham chieu, vang
               vTextClass = g_CLASS_INDEX[0][0];
               vImageClass = g_CLASS_INDEX[0][1];
-
             }
             if (v > 0) {
               // tang, xanh
@@ -230,7 +238,6 @@ const TableMarketWatchTest = () => {
                 //vCLassIndex.classList.add(vTextClass);
               }
             }
-
           }
           //hsx
           if (vStrs[1] === "ChangePercent") {
@@ -239,7 +246,6 @@ const TableMarketWatchTest = () => {
               // = tham chieu, vang
               vTextClass = g_CLASS_INDEX[0][0];
               vImageClass = g_CLASS_INDEX[0][1];
-
             }
             if (v > 0) {
               // tang, xanh
@@ -328,10 +334,10 @@ const TableMarketWatchTest = () => {
     if (valueTCS) {
       valueTCS.textContent = `${formatNumberMarket(arrValue)}`;
       // gán màu bg
-      const test1  = valueTCS;
+      const test1 = valueTCS;
       const test = valueTCS.parentElement;
       if (test) {
-        test1.style.backgroundColor = "#888888"
+        test1.style.backgroundColor = "#888888";
         test.style.backgroundColor = "#888888";
         setTimeout(function () {
           test.style.backgroundColor = "";
@@ -344,22 +350,21 @@ const TableMarketWatchTest = () => {
   const containerStyle = { width: "100%", height: "100%" };
   const gridStyle = { height: "100%", width: "100%" };
   const HandleHistory = () => {
-    dispatch(handleHistoryPrices("tets"))
-  }
+    dispatch(handleHistoryPrices("tets"));
+  };
   useEffect(() => {
     document.addEventListener("contextmenu", (event) => {
       event.preventDefault();
     });
     return () => {
-      document.removeEventListener("contextmenu", () => { });
+      document.removeEventListener("contextmenu", () => {});
     };
   }, []);
   //  ******************************************************************
-  const [option, setOntion] = useState(null)
+  const [option, setOntion] = useState(null);
 
   return (
     <div style={containerStyle}>
-
       <div style={gridStyle} className="ag-theme-alpine-dark table__price">
         <AgGridReact
           ref={gridRef}
@@ -389,7 +394,6 @@ const TableMarketWatchTest = () => {
           }}
         />
       </div>
-
     </div>
   );
 };

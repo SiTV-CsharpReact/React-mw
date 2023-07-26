@@ -1,0 +1,31 @@
+{
+    "Data": {
+        "Code": 0,
+        "Message": "SUCCESS",
+        "Data": {
+            "Time": "2023-07-24 06:00:14.587",
+            "PurchasingPowerTotal": 1331286,
+            "CashAmount": 1331431,
+            "AdvanceAmount": 0,
+            "RemainingSecurities_leveragedbuyingpower": 0,
+            "PendingBuyCash": 0,
+            "MatchedBuyCash": 0,
+            "TransferringAmount": 0,
+            "RemainingCashAmount": 1331431,
+            "RemainingDebt": 0,
+            "DebtInterest": 0,
+            "ReceivableCashT0": 0,
+            "ReceivableCashT1": 0,
+            "ReceivableCashT2": 0,
+            "ReceivableMatureCW": 0,
+            "ReceivableCashOther": 0,
+            "ReceivableCashTotal": 0,
+            "ReceivableCashOddlot": 0,
+            "ReceivableCashDevidend": 0,
+            "Fees": 145,
+            "FSaving": 0,
+            "SavingTotal": 0,
+            "NetAssetValue": 1331286
+        }
+    }
+}
