@@ -3,7 +3,7 @@ import Cookie from "js-cookie";
 export const getCoookieStorage = () => {
   // lấy cookie
   const token = Cookie.get("aspfpt_sessiontoken");
-  const cookie = document.cookie
+  // const cookie = document.cookie
   return token;
 };
 // adđ cookie

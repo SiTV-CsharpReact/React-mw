@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getCoookieStorage } from "../../api/authen";
-import { async } from "q";
 import agent from "../../api/agent";
 type typevalue =  {
     DataAuthencation: any,
