@@ -3,9 +3,8 @@ import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import * as Highcharts from "highcharts";
 import { _getDateTs, maxNumber, minNumber } from "../chartIndex/util/app.chart";
 import { formatNumber } from "../../utils/util";
-import { useDispatch } from "react-redux";
-import { fetchChartOptionAsync } from "./chartOptionSlice";
-const ChartOption = () => {
+import { fetchChartOptiongwHistoryAsync } from "./chartOptionSlice";
+const ChartOptionHistory = () => {
   const dispatch = useAppDispatch();
   const { code } = useAppSelector((state) => state.popupTable);
   const { isLoading, dataChartOption, status } = useAppSelector(
@@ -15,24 +14,62 @@ const ChartOption = () => {
   const [dataCol, setDataCol] = useState<any>([]);
   const [dataSpline, setDataSpline] = useState<any>([]);
   const [indexValue, setIndexValue] = useState(0);
+  //Fetch data
   useEffect(() => {
     const getAllData = async () => {
-      await dispatch(fetchChartOptionAsync({ stockCode: code }));
+      await dispatch(fetchChartOptiongwHistoryAsync({ stockCode: code }));
     };
     getAllData();
   }, []);
+  // const arrPr = React.useMemo(() => {
+  //   if (dataChartOption.length > 0) {
+  //     const uniqueValuesSet = new Set(dataChartOption.map((item) => item[4]));
+  //     const uniqueValuesArray = Array.from(uniqueValuesSet);
+  //     // uniqueValuesArray.sort((a, b) => a - b);
+
+  //     const minValue = Math.floor(uniqueValuesArray[0]);
+  //     const maxValue = Math.ceil(
+  //       uniqueValuesArray[uniqueValuesArray.length - 1]
+  //     );
+  //     const stepSize = (maxValue - minValue) / 4;
+  //     console.log(stepSize);
+  //     const resultArray = Array.from({ length: 5 }, (_, index) => {
+  //       if (index === 0) {
+  //         return minValue;
+  //       } else if (index === 4) {
+  //         return maxValue;
+  //       } else {
+  //         return minValue + index * stepSize;
+  //       }
+  //     });
+
+  //     return resultArray;
+  //   }
+  //   return [];
+  // }, [dataChartOption]);
+
   const arrPr = React.useMemo(() => {
-    if (dataChartOption.length > 0) {
-      const arr = dataChartOption.map((item) => {
-        return item[4];
+    const last7Values = dataChartOption.slice(-7);
+    if (last7Values.length > 0) {
+      const uniqueValuesSet = new Set(last7Values.map((item) => item[4]));
+      const uniqueValuesArray = Array.from(uniqueValuesSet);
+      uniqueValuesArray.sort((a, b) => a - b);
+      const minValue = Math.floor(uniqueValuesArray[0]);
+      const maxValue = Math.ceil(
+        uniqueValuesArray[uniqueValuesArray.length - 1]
+      );
+
+      const stepSize = (maxValue - minValue) / 4;
+      const resultArray = Array.from({ length: 3 }, (_, index) => {
+        if (index === 0) {
+          return minValue;
+        } else if (index === 4) {
+          return maxValue;
+        } else {
+          return minValue + index * stepSize;
+        }
       });
-      // eslint-disable-next-line array-callback-return
-      // .filter((value, index, ar) => {
-      //   if (ar.indexOf(value) === index) {
-      //     return value;
-      //   }
-      // });
-      return arr;
+      return resultArray;
     }
     return [];
   }, [dataChartOption]);
@@ -47,10 +84,11 @@ const ChartOption = () => {
       });
     });
   }, [dataDetailPopup]);
-  console.log(indexValue);
+
   useEffect(() => {
-    if (dataChartOption?.length > 0) {
-      const data = dataChartOption?.map((item: any) => ({
+    const last7Values = dataChartOption.slice(-7);
+    if (last7Values?.length > 0) {
+      const data = last7Values?.map((item: any) => ({
         TimeJS: _getDateTs(item[0]),
         Index: item[4],
         Vol: item[5],
@@ -69,6 +107,8 @@ const ChartOption = () => {
       setDataSpline(arrSpline);
     }
   }, [dataChartOption]);
+
+  // Lấy 7 giá trị cuối cùng
 
   useEffect(() => {
     const gradient: any = [0, 0, 50, 500];
@@ -92,7 +132,7 @@ const ChartOption = () => {
       },
     ];
 
-    Highcharts.chart(`container__chart__time`, {
+    Highcharts.chart(`container__chart__time__history`, {
       chart: {
         height: 160,
         polar: true,
@@ -116,18 +156,22 @@ const ChartOption = () => {
             });
             const xAxis = this.xAxis[0];
             const today = new Date();
-            const dd = today.getDate();
-            const mm = today.getMonth(); //January is 0!
-            const yyyy = today.getFullYear();
-            const HH1 = 9;
-            const HH2 = 15;
-            const MM = 0; // minute
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(today.getDate() - 6); // Trừ 6 để lấy 7 ngày gần nhất tính từ ngày hiện tại
 
-            const xminTmp = new Date(yyyy, mm, dd, HH1, MM);
-            const xmaxTmp = new Date(yyyy, mm, dd, HH2, MM);
+            const xminTmp = new Date(
+              sevenDaysAgo.getFullYear(),
+              sevenDaysAgo.getMonth(),
+              sevenDaysAgo.getDate()
+            );
+            const xmaxTmp = new Date(
+              today.getFullYear(),
+              today.getMonth(),
+              today.getDate()
+            );
 
-            const xmin = _getDateTs(xminTmp);
-            const xmax = _getDateTs(xmaxTmp);
+            const xmin = xminTmp.getTime();
+            const xmax = xmaxTmp.getTime();
             xAxis.setExtremes(xmin, xmax, true, false);
 
             let price_min, price_max: number, tick, minSub;
@@ -237,7 +281,7 @@ const ChartOption = () => {
       xAxis: {
         type: "datetime",
         dateTimeLabelFormats: {
-          hour: "%H h",
+          day: "%e/%m",
         },
         labels: {
           useHTML: true,
@@ -251,7 +295,7 @@ const ChartOption = () => {
         lineWidth: 0,
         lineColor: "#5f5f5f",
         tickWidth: 0,
-        tickInterval: 3600000,
+        tickInterval: 24 * 3600 * 1000,
         gridLineWidth: 1,
         gridLineColor: "#6d6d6d1f",
         height: 140,
@@ -388,13 +432,14 @@ const ChartOption = () => {
       series: series,
     });
   }, [arrPr, dataChartOption, dataCol, dataSpline, indexValue]);
+  console.log(dataChartOption);
   return (
     <div className="chart__for__time">
       <figure className="highcharts-figure">
-        <div id={`container__chart__time`}></div>
+        <div id={`container__chart__time__history`}></div>
       </figure>
     </div>
   );
 };
 
-export default ChartOption;
+export default ChartOptionHistory;

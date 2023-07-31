@@ -13,7 +13,6 @@ export default function TradingViewWidget({
   heightPriceBoard,
 }: TradingViewWidgetProps): JSX.Element {
   const onLoadScriptRef = useRef<(() => void) | null>(null);
-
   useEffect(() => {
     onLoadScriptRef.current = createWidget;
 
@@ -73,10 +72,15 @@ export default function TradingViewWidget({
 
   return (
     <div
-      className={` tradingview-widget-container`}
+      className={`relative tradingview-widget-container`}
       style={{ height: setHeight }}
     >
-      <div id="tradingview_1556c" className={`h-full`} />
+      <div
+        id="tradingview_1556c"
+        className="z-10"
+        style={{ height: setHeight }}
+      />
+      {/* <div className="absolute h-[35px] bottom-0 left-0 opacity-0 right-0 z-50  bg-textTableMarketTran"></div> */}
     </div>
   );
 }

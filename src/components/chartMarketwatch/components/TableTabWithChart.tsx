@@ -52,7 +52,8 @@ const TableTabWithChart = ({ heightPriceBoard }: TableTabChartProps) => {
   }, [dataTableKLTTG]);
 
   useEffect(() => {
-    let data: any = dataTable?.map((item: any) => item.MQ) || [];
+    let data: any = (dataTable?.length > 0 &&
+      dataTable?.map((item: any) => item.MQ)) || [0, 0, 0, 0];
     const series: any = [
       {
         name: "Up",
@@ -61,6 +62,15 @@ const TableTabWithChart = ({ heightPriceBoard }: TableTabChartProps) => {
         inverted: true,
       },
     ];
+    // const chartContainer: any = document.getElementById(
+    //   "containerTableTabWithChart"
+    // );
+    // if (!dataTable || dataTable.length === 0) {
+    //   chartContainer.style.display = "none";
+    //   return;
+    // } else {
+    //   chartContainer.style.display = "block"; // Hiển thị chart khi có dữ liệu
+    // }
 
     const chart = Highcharts.chart("containerTableTabWithChart", {
       chart: {
@@ -74,7 +84,8 @@ const TableTabWithChart = ({ heightPriceBoard }: TableTabChartProps) => {
         text: "",
       },
       xAxis: {
-        categories: dataTable?.map((item: any) => item.MP) || [],
+        categories: (dataTable?.length > 0 &&
+          dataTable?.map((item: any) => item.MP)) || [0, 0, 0, 0],
         labels: {
           rotation: 0,
           useHTML: true,
@@ -223,7 +234,7 @@ const TableTabWithChart = ({ heightPriceBoard }: TableTabChartProps) => {
 
       <figure
         className={`${
-          matchingByPrice ? "h-[calc(100%-30px)]" : "hidden"
+          matchingByPrice ? { setHeight } : "hidden"
         }  highcharts-figure overflow-y-scroll`}
       >
         <div

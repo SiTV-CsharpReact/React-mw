@@ -367,8 +367,11 @@ const LayoutMarketWatch: React.FC = () => {
           </div>
           {/* chart */}
           <div
-            className="w-full h-full chart-layout"
-            style={{ display: componentVisible ? "block" : "none" }}
+            className="w-full chart-layout"
+            style={{
+              display: componentVisible ? "block" : "none",
+              height: heightComponent.heightPriceBoard,
+            }}
           >
             <ChartMarketwatch
               heightPriceBoard={heightComponent.heightPriceBoard}
