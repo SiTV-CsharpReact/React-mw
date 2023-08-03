@@ -392,12 +392,7 @@ const TableMarketWatchTest = () => {
           suppressDragLeaveHidesColumns={true}
           suppressCellFocus={true}
           rowHeight={25}
-          overlayLoadingTemplate={
-            '<span class="ag-overlay-loading-center">Please wait while your rows are loading</span>'
-          }
-          // overlayNoRowsTemplate={
-          //     " "
-          // }
+          overlayNoRowsTemplate={"Loadding..."}
           rowData={ListDataTable}
           pinnedTopRowData={DataPined}
           columnDefs={columnDefs}
