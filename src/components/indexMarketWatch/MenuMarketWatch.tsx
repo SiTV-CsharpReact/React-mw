@@ -6,6 +6,7 @@ import {
   tinhGiaTC,
   tinhGiaCT,
   colorTextMenu,
+  colorTextTD,
 } from "../../utils/util";
 import {
   ARRAY_COL_ATO_ATC_QTTY,
@@ -182,34 +183,7 @@ const MenuMarketWatch = () => {
     }
   };
 
-  const colorTextTD = (
-    tc?: string,
-    tran?: string,
-    san?: string,
-    price?: number
-  ) => {
-    let Color = "text-white";
-    // if(price=== san){
-    //     Color="text-blue"
-    // }
-    if (price) {
-      if (price === 0) {
-        Color = "text-white";
-      } else if (price === Number(san)) {
-        Color = "text-blue";
-      } else if (price === Number(tran)) {
-        Color = "text-violet";
-      } else if (price === Number(tc)) {
-        Color = "text-yellow";
-      } else if (price > Number(tc)) {
-        Color = "text-green";
-      } else if (price < Number(tc) && price > Number(san)) {
-        Color = "text-red";
-      }
-    }
-
-    return Color;
-  };
+ 
 
   ;
   

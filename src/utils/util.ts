@@ -257,6 +257,36 @@ export function getCookie(cname: any) {
   }
   return "";
 }
+
+export const colorTextTD = (
+  tc?: string,
+  tran?: string,
+  san?: string,
+  price?: number
+) => {
+  let Color = "text-white";
+  // if(price=== san){
+  //     Color="text-blue"
+  // }
+  if (price) {
+    if (price === 0) {
+      Color = "text-white";
+    } else if (price === Number(san)) {
+      Color = "text-blue";
+    } else if (price === Number(tran)) {
+      Color = "text-violet";
+    } else if (price === Number(tc)) {
+      Color = "text-yellow";
+    } else if (price > Number(tc)) {
+      Color = "text-green";
+    } else if (price < Number(tc) && price > Number(san)) {
+      Color = "text-red";
+    }
+  }
+
+  return Color;
+};
+
 export const g_arrCompanyInfo = localStorage.getItem("CacheSI");
 // console.log("first company info", g_arrCompanyInfo)
 const cachedValue = localStorage.getItem("CacheSI");

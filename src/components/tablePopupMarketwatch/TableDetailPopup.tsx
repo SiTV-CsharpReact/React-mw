@@ -95,8 +95,12 @@ const TableDetailPopup = () => {
         </tr>
       </thead>
       <tbody className="bg-[#333333]" id="firstTbody">
-        <tr id="tr215">
-          <td className="ccc_ fixedcol">
+        <tr
+        id={`${ dataDetailPopup[0]?.Info[0][1]}`}
+        >
+          <td className="ccc_ fixedcol"
+             id={`${ dataDetailPopup[0]?.Info[1][1]}`}
+          >
             <span
               className={` text-right ${setColorMarket(
                 dataDetailPopup[0]?.Info[1][1],
@@ -109,20 +113,27 @@ const TableDetailPopup = () => {
               {dataDetailPopup[0]?.Info[0][1] || dataDetailPopup[0]?.Info[1][0]}
             </span>
           </td>
-          <td className="g_r text-[#F7FF31] !font-medium">
+          <td className="g_r text-[#F7FF31] !font-medium"
+            id={`${ dataDetailPopup[0]?.Info[1][1]}`}
+          >
             {/* {dataMouse.TCT || dataMouseBuy.TCT} */}
             {formatNumberMarket(dataDetailPopup[0]?.Info[1][1])}
           </td>
-          <td className="g_c  text-[#FF00FF] !font-medium">
+          <td className="g_c  text-[#FF00FF] !font-medium"
+            id={`${ dataDetailPopup[0]?.Info[1][1]}`}
+          >
             {/* {dataMouse.TranC || dataMouseBuy.TranC} */}
             {formatNumberMarket(dataDetailPopup[0]?.Info[2][1])}
           </td>
-          <td className="grf  !text-[#66CCFF] text-[13.3px] !font-medium">
+          <td className="grf  !text-[#66CCFF] text-[13.3px] !font-medium"
+          
+          >
             {/* {dataMouse.SanT || dataMouseBuy.SanT} */}
             {formatNumberMarket(dataDetailPopup[0]?.Info[3][1])}
           </td>
           <td>{formatNumberMarket(dataDetailPopup[0]?.Info?.[4][1])}</td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0]?.Info[5][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[5][1],
@@ -133,6 +144,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[5][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[6][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[5][1],
@@ -143,6 +155,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[6][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[7][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[7][1],
@@ -153,6 +166,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[7][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[8][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[7][1],
@@ -163,6 +177,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[8][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[9][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[9][1],
@@ -173,6 +188,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[9][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[10][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[9][1],
@@ -183,6 +199,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[10][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[11][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[11][1],
@@ -193,6 +210,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[11][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[12][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[11][1],
@@ -203,6 +221,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[12][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[13][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[11][1],
@@ -213,6 +232,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[13][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[14][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[15][1],
@@ -223,6 +243,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[14][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[15][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[15][1],
@@ -233,6 +254,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[15][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[16][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[17][1],
@@ -243,6 +265,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[16][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[17][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[17][1],
@@ -253,6 +276,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[17][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[18][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[19][1],
@@ -263,6 +287,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[18][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[19][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[19][1],
@@ -272,13 +297,18 @@ const TableDetailPopup = () => {
           >
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[19][1])}{" "}
           </td>
-          <td className="br_ !text-sm !text-[#white]">
+          <td 
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[20][0]}`}
+          className="br_ !text-sm !text-[#white]">
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[20][1])}{" "}
           </td>
-          <td className="g__ !text-sm !text-[#B9B9B9]">
+          <td 
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[21][0]}`}
+          className="g__ !text-sm !text-[#B9B9B9]">
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[21][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[22][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[22][1],
@@ -289,6 +319,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[22][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[23][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[23][1],
@@ -299,6 +330,7 @@ const TableDetailPopup = () => {
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[23][1])}{" "}
           </td>
           <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[24][0]}`}
             className={` text-right ${setColorMarket(
               dataDetailPopup[0]?.Info[1][1],
               dataDetailPopup[0]?.Info[24][1],
@@ -308,14 +340,22 @@ const TableDetailPopup = () => {
           >
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[24][1])}{" "}
           </td>
-          <td className="gr_ !text-sm"> </td>
-          <td className="g__ !text-sm !text-[#B9B9B9]">
+          <td 
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[4][0]}`}
+          className="gr_ !text-sm"> </td>
+          <td 
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[26][0]}`}
+          className="g__ !text-sm !text-[#B9B9B9]">
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[26][1])}{" "}
           </td>
-          <td className="g__ !text-sm !text-[#B9B9B9]">
+          <td 
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[27][0]}`}
+          className="g__ !text-sm !text-[#B9B9B9]">
             {formatNumberMarket(dataDetailPopup[0]?.Info?.[27][1])}{" "}
           </td>
-          <td className="g__ !text-sm !text-[#B9B9B9]">
+          <td
+           id={`${dataDetailPopup[0].RowID}_${dataDetailPopup[0].Info[28][0]}`}
+          className="g__ !text-sm !text-[#B9B9B9]">
             {formatNumberMarket(dataDetailPopup[0]?.Info[28][1])}
           </td>
         </tr>

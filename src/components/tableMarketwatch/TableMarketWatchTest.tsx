@@ -4,7 +4,7 @@ import { AgGridReact } from "ag-grid-react";
 // import "ag-grid-community/styles/ag-grid.css";
 // import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./table.scss";
-import { arrayColor, colorTextMenu, fStatusMarketHNX, fStatusMarketHSX, fStatusMarketUPCOM, formatNumberMarket } from "../../utils/util";
+import { arrayColor, colorTextMenu, colorTextTD, fStatusMarketHNX, fStatusMarketHSX, fStatusMarketUPCOM, formatNumberMarket, tinhGiaCT, tinhGiaTC } from "../../utils/util";
 
 // import { LicenseManager } from "ag-grid-enterprise";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
@@ -18,7 +18,8 @@ import { g_CLASS_INDEX } from "../../configs/app.config";
 import { async } from "q";
 import { setActiveMenu } from "../menuBarMW/menuSlice";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
-
+const arrayPrice = [5, 7, 9, 11, 14, 16, 18];
+  const arrayKL = [6, 8, 10, 12, 15, 17, 19];
 // LicenseManager.setLicenseKey(
 //   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
 // );
@@ -34,6 +35,7 @@ const TableMarketWatchTest = () => {
   const { ListDataTable, DataPined, RowPined, keyActiveMan } = useAppSelector(
     (state) => state.tableTest
   );
+  const status = useAppSelector((state) => state.popupTable.visible);
   // pinned
   // const pinned = useAppSelector((state) => state.categories.row);
   // call data
@@ -348,6 +350,118 @@ const TableMarketWatchTest = () => {
     arrInfo: number,
     arrValue: number
   ) => {
+    const tdIndex = document.getElementById(`${arrRowID}_${arrInfo}`);
+    // const valueTC = document.querySelector(`div[data-index="5"][aria-rowindex="BCC"]`)?.innerHTML;
+    // const valueTCS = document.querySelector(`div[data-index="${arrInfo}"][aria-rowindex="${arrRowID}"]`) as HTMLElement;
+    // if(valueTCS){
+    //   valueTCS.innerHTML = `${formatNumberMarket(arrValue)}`;
+    //   // gán màu bg
+    //   const test =  valueTCS.parentElement;
+    //   if(test){
+    //     test.style.backgroundColor = "#888888";
+    //     setTimeout(function () {
+    //       test.style.backgroundColor = "";
+    //     }, 500);
+    //   }
+    //   // sau 0.5s xóa màu bg
+      
+    // }
+    const valueTC = document.getElementById(`${arrRowID}_TC`)?.innerHTML;
+
+    const valueTran = document.getElementById(`${arrRowID}_Tran`)?.innerHTML;
+    const valueSan = document.getElementById(`${arrRowID}_San`)?.innerHTML;
+    const valuePT = document.getElementById(`${arrRowID}_PT`);
+    const valueCT = document.getElementById(`${arrRowID}_CT`);
+    // nếu lấy được element
+    if (tdIndex) {
+      // update value mới
+      tdIndex.innerHTML = `${formatNumberMarket(arrValue)}`;
+      // gán màu bg
+      tdIndex.style.backgroundColor = "#888888";
+      // sau 0.5s xóa màu bg
+      setTimeout(function () {
+        tdIndex.style.backgroundColor = "";
+      }, 500);
+      // check xem arrInfo trả về có chưa 1 giá trí trong mảng 5,7,9,11,14,16,18 để update màu KL giống bên cạnh
+      const indexPrice = arrayPrice.indexOf(arrInfo);
+      if (indexPrice !== -1) {
+        // lấy dc giá trị TC trần sàn
+        if (valueTC && valueTran && valueSan) {
+          // check khớp lệnh giá ==11 thì tính pt và set color
+          if (arrInfo === 11) {
+            // giá pt
+            const PT = tinhGiaTC(Number(valueTC), arrValue);
+            // giá ct
+            const CT = tinhGiaCT(Number(valueTC), arrValue);
+            //console.log(Number(valueTC),arrValue,PT)
+            const textColor = colorTextTD(
+              valueTC,
+              valueTran,
+              valueSan,
+              arrValue
+            );
+            if (valuePT) valuePT.innerHTML = `${PT}`;
+            if (valueCT) valueCT.innerHTML = `${CT}`;
+            // console.log(tdIndex.classList.contains("text-red text-green text-blue text-white text-yellow text-violet"))
+            // eslint-disable-next-line array-callback-return
+            arrayColor.map((arrayColorText: string) => {
+              tdIndex.classList.remove(arrayColorText);
+              document
+                .getElementById(`${arrRowID}`)
+                ?.classList.remove(arrayColorText);
+              document
+                .getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)
+                ?.classList.remove(arrayColorText);
+              valuePT?.classList.remove(arrayColorText);
+              valueCT?.classList.remove(arrayColorText);
+            });
+            tdIndex.classList.add(textColor);
+            document.getElementById(`${arrRowID}`)?.classList.add(textColor);
+            document
+              .getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)
+              ?.classList.add(textColor);
+            valuePT?.classList.add(textColor);
+            valueCT?.classList.add(textColor);
+          }
+          // gia mo cua cao nhap thap nhat
+          else if (arrInfo === 24 || arrInfo === 22 || arrInfo === 23) {
+            console.log(valueTC, valueTran, valueSan, arrValue);
+            const textColor = colorTextTD(
+              valueTC,
+              valueTran,
+              valueSan,
+              arrValue
+            );
+            arrayColor.map((arrayColorText: string) => {
+              tdIndex.classList.remove(arrayColorText);
+            });
+            tdIndex.classList.add(textColor);
+            //console.log(textColor)
+          }
+          // con không thì up giá trị vào td như bt
+          else {
+            const textColor = colorTextTD(
+              valueTC,
+              valueTran,
+              valueSan,
+              arrValue
+            );
+            // eslint-disable-next-line array-callback-return
+            arrayColor.map((arrayColorText: string) => {
+              tdIndex.classList.remove(arrayColorText);
+              document
+                .getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)
+                ?.classList.remove(arrayColorText);
+            });
+            tdIndex.classList.add(textColor);
+            document
+              .getElementById(`${arrRowID}_${arrayKL[indexPrice]}`)
+              ?.classList.add(textColor);
+         
+          }
+        }
+      }
+    }
     // getID các giá trị cần lấy
     // const arrayPrice = [5, 7, 9, 11, 14, 16, 18];d
     // const valueTC = document.querySelector(`div[data-index="5"][data-comp="BCC"]`)?.innerHTML;
