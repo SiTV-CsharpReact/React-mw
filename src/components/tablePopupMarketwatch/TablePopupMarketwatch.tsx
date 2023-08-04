@@ -85,48 +85,48 @@ const TablePopupMarketwatch = () => {
   // kéo thả
   const draggableRef = useRef<any>(null);
 
-  useEffect(() => {
-    const draggableElement = draggableRef.current;
+  // useEffect(() => {
+  //   const draggableElement = draggableRef.current;
 
-    const handleDrag = (event: DragEvent) => {
-      const draggableRect = draggableElement.getBoundingClientRect();
+  //   const handleDrag = (event: DragEvent) => {
+  //     const draggableRect = draggableElement.getBoundingClientRect();
 
-      const x = event.clientX;
-      const y = event.clientY;
+  //     const x = event.clientX;
+  //     const y = event.clientY;
 
-      // Lấy kích thước của window
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
+  //     // Lấy kích thước của window
+  //     const windowWidth = window.innerWidth;
+  //     const windowHeight = window.innerHeight;
 
-      // Giới hạn vị trí trái của phần tử kéo
-      if (x < 0) {
-        draggableElement.style.left = '0px';
-      }
-      // Giới hạn vị trí phải của phần tử kéo
-      else if (x > windowWidth - draggableRect.width) {
-        draggableElement.style.left = windowWidth - draggableRect.width + 'px';
-      } else {
-        draggableElement.style.left = x + 'px';
-      }
+  //     // Giới hạn vị trí trái của phần tử kéo
+  //     if (x < 0) {
+  //       draggableElement.style.left = '0px';
+  //     }
+  //     // Giới hạn vị trí phải của phần tử kéo
+  //     else if (x > windowWidth - draggableRect.width) {
+  //       draggableElement.style.left = windowWidth - draggableRect.width + 'px';
+  //     } else {
+  //       draggableElement.style.left = x + 'px';
+  //     }
 
-      // Giới hạn vị trí trên của phần tử kéo
-      if (y < 0) {
-        draggableElement.style.top = '0px';
-      }
-      // Giới hạn vị trí dưới của phần tử kéo
-      else if (y > windowHeight - draggableRect.height) {
-        draggableElement.style.top = windowHeight - draggableRect.height + 'px';
-      } else {
-        draggableElement.style.top = y + 'px';
-      }
-    };
+  //     // Giới hạn vị trí trên của phần tử kéo
+  //     if (y < 0) {
+  //       draggableElement.style.top = '0px';
+  //     }
+  //     // Giới hạn vị trí dưới của phần tử kéo
+  //     else if (y > windowHeight - draggableRect.height) {
+  //       draggableElement.style.top = windowHeight - draggableRect.height + 'px';
+  //     } else {
+  //       draggableElement.style.top = y + 'px';
+  //     }
+  //   };
 
-    draggableElement.addEventListener('drag', handleDrag);
+  //   draggableElement.addEventListener('drag', handleDrag);
 
-    return () => {
-      draggableElement.removeEventListener('drag', handleDrag);
-    };
-  }, []);
+  //   return () => {
+  //     draggableElement.removeEventListener('drag', handleDrag);
+  //   };
+  // }, []);
   return (
   
   <Draggable handle=".pu-header" position={position} onDrag={handleDrag} >
