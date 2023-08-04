@@ -1,166 +1,177 @@
-import React, { useEffect, useState } from "react";
-import { RootState, useAppSelector } from "../../store/configureStore";
-import { formatNumber, formatNumberMarket } from "../../utils/util";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useAppSelector } from "../../store/configureStore";
 import axios from "axios";
-import io from 'socket.io-client';
+import TableTransReportFull from "./TableTransReportFull";
+import TableTransReportShort from "./TableTransReportShort";
+import { MyContext } from "./TransBalance";
 
 const TableTransReport = (props: any) => {
-    const {assetReport } = useAppSelector((state) => state.assetReport);
-    const [dataTable, setDataTable] = useState([])
-    const [dataArrHSX, setArrHSX] = useState<any>([])
-    const [dataArrHNX, setArrHNX] = useState<any>([])
-    const [short, setShort] = useState(false);
-    const [sort, setSort] = useState("asc");
-    const [label, setLabel] = useState("");
-    const { mode } = useAppSelector((state) => state.settingColorMode);
-    useEffect(() => {
-        if (props.short)
-            setShort(!short);
-    }, [props.short, short]);
-    const handleSort = (key: string) => {
-        setLabel(key);
-        if (sort === "asc") {
-            const sorted: any = [...dataTable].sort((a: any, b: any) => {
-                if (a[key] === "string" && b[key] === "string") {
-                    return a[key].toLowerCase() > b[key].toLowerCase() ? 1 : -1;
-                }
-                return a[key] > b[key] ? 1 : -1;
-            });
-            setDataTable(sorted);
-            setSort("desc");
-        }
-        if (sort === "desc") {
-            const sorted: any = [...dataTable].sort((a: any, b: any) => {
-                if (a[key] === "string" && b[key] === "string") {
-                    return a[key].toLowerCase() < b[key].toLowerCase() ? 1 : -1;
-                }
-                return a[key] < b[key] ? 1 : -1;
-            });
-            setDataTable(sorted);
-            setSort("asc");
-        }
-    };
-    useEffect(() => {
-        let arr = assetReport?.Table1?.map((item: any) => item);
-        const sorted = arr?.sort((a: any, b: any) =>
-            a.ASTOCKCODE > b.ASTOCKCODE ? 1 : -1
-        );
-        setLabel("ASTOCKCODE");
-        setDataTable(sorted);
-    }, [assetReport]);
-    useEffect(() => {
-        dataTable?.forEach((item: any) => {
-            const code = item?.Value.StockCode;
-            fetchDataHSN(code);
-            fetchDataHNN(code)
-        });
-    }, [dataTable]);
-    const fetchDataHSN = async (code: string) => {
-        try {
-            const { data } = await axios.get(`https://marketstream.fpts.com.vn/hsx/data.ashx?s=quote&l=${code}`)
-             data.map((item: any) =>
-             setArrHSX((prev: any[]) => [...prev, [item?.Info?.[0][1], "HSX", item?.Info?.[31][1]]])
-        )
-       } catch (error : any) {
-        if (error.response) {
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-    }
-       }
-    }
-    const fetchDataTable = async () => {
-       try {
-         const { data } = await axios.get("http://localhost:3111/Data")
-         setDataTable(data)
-       } catch (error) {
-        console.log("loi day ne ")
-       }
-    }
-    const fetchDataHNN = async (code: string) => {
-      try {
-          const { data } = await axios.get(`https://marketstream.fpts.com.vn/hnx/data.ashx?s=quote&l=${code}`)
-          data.map((item: any) =>
-          setArrHNX((prev: any[]) => [...prev, [item?.Info?.[12][1], "HNX", item?.Info?.[31][1]]])
-        )
-      } catch (error) {
-        console.log("loi day ne hiu hiu ")
-      }
-    }
-    useEffect(() => {
-        fetchDataTable()
-    }, [dataTable])
-      const mergedData = dataTable?.map((item: any) => {
-        const dataHSXItem = dataArrHSX?.filter((dataItem: any) => dataItem[0] === item.Key);
-        const dataHNXItem = dataArrHNX?.filter((dataItem: any) => dataItem[0] === item.Key);
+  const [dataTable, setDataTable] = useState({
+    dataTableHSX: [],
+    dataTableHNX: [],
+  });
+  const value = useContext(MyContext);
+  const [data, setData] = useState<any>([]);
+  const [dataReal, setDataReal] = useState<any>({});
+  const [sort, setSort] = useState("asc");
+  const [label, setLabel] = useState("StockCode");
 
+  const arrDataReal = useMemo(() => {
+    const allData = dataTable.dataTableHSX.concat(dataTable.dataTableHNX);
+    const array: any = data?.map((key: any) => {
+      const existItem: any = allData?.find(
+        (item: any) => item[0][1] === key.Key
+      );
+      if (existItem) {
         return {
-            ...item,
-            dataItem: dataHSXItem?.length !== 0 ? dataHSXItem[0] : dataHNXItem?.length !== 0 ? dataHNXItem[0] : []
+          ...key.Value,
+          MarketPrice:
+            existItem[0][1] === dataReal?.RowID
+              ? Number(dataReal?.Info) * 1000
+              : Number(existItem[31][1]) === 0
+              ? Number(existItem[1][1]) * 1000
+              : Number(existItem[31][1]) * 1000,
+          RowID: existItem[0][1],
         };
+      } else {
+        return {
+          ...key.Value,
+          // RowID: existItem[0][1],
+        };
+      }
     });
-    useEffect(() => {
-        const socketHNX = new WebSocket(
-            "wss://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=yWr50kq6iuFWJzRwhs7GR3bBYG%2Blpj7laF9cuG7oMsc4RLrmhYu9N%2Fco3Vl68KnUNXyGX7c5uuHmqFw1J1P1ClWXvR4w%2BXZlFMtR33yYxNAdiR%2FXCJWS%2FxL%2BNGhHlIpB&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=4"
-        );
-        const socketHSX = new WebSocket(
-            "wss://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=Ie5DGpXarjClrWZQsIjTMksj0n592Jg8BUV9ChfmtVfpZPN%2BU8aMlfo5FVEDmh%2BmsAw3qgXN3peJW%2FeT6K7sNohOuAT6LC3KdklEDxpPxalgGUkNKF30LWa612toMv19&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=2"
-        );
-        socketHSX.onopen = () => {
-            console.log("WebSocket connection HSX established.");
-        };
-        socketHNX.onopen = () => {
-            console.log("WebSocket connection HNX established.");
-        };
-        socketHSX.onmessage = (event) => {
-            updateQuote(event.data);
-        };
-        socketHNX.onmessage = (event) => {
-            updateQuote(event.data)
-        };
-        socketHSX.onmessage = (event) => {
-        updateQuote(event.data);
-        };
-        socketHNX.onmessage = (event) => {
-        updateQuote(event.data);
-        };
-        socketHSX.onclose = () => {
-            console.log("WebSocket connection closed.");
-        };
-        socketHNX.onclose = () => {
-            console.log("WebSocket connection closed.");
-        };
-        return () => {
-            socketHSX.close();
-            socketHNX.close();
-        };
-    }, []);
-     const updateQuote = (objRealtime: string) => {
-        try {
-            const dataHNXRealTime = JSON.parse(objRealtime);
-            if (dataHNXRealTime && dataHNXRealTime.M) {
-                const dataM = dataHNXRealTime.M;
-                console.log("firstQuote", dataM);
-                const arrDatas: any[] = [];
-                dataM.forEach((dataLT: any) => {
-                    const changeData = JSON.parse(dataLT.A[0].Change);
-                    if (Array.isArray(changeData)) {
-                        arrDatas.push(changeData);
-                    }
-                });
-                setArrHSX((prevArrHSX: any[]) => prevArrHSX.concat(arrDatas));
-                console.log(arrDatas, "change");
-            }
-        } catch (error) {
-            console.error('Error parsing real-time data:', error);
-        }
-    };
-    let totalSum = 0;
-    let totalGoc = 0;
-    let toTalDk = 0;
-    let tongtoTalPC = 0;
-    return (
-        <div></div>
+
+    return array?.sort((a: any, b: any) =>
+      a.StockCode > b.StockCode ? 1 : -1
     );
+  }, [data, dataReal?.Info, dataReal?.RowID, dataTable.dataTableHNX, dataTable.dataTableHSX]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(`http://localhost:3111/Data`);
+      // setKey(
+      //   (prev: string) =>
+      //     prev + res.data.Data?.map((key: any) => key.Key).toString()
+      // );
+      setData(res.data.Data);
+    };
+    fetchData();
+    // const intervalId = setInterval(fetchData, 10000);
+    // return () => clearInterval(intervalId);
+  }, []);
+
+  //call data từ redis
+  useEffect(() => {
+    const fetchDataTable = async () => {
+      try {
+        const v_key = data?.map((key: any) => key.Key).toString();
+        if (v_key !== "") {
+          const resHSX = await axios.get(
+            `https://eztrade.fpts.com.vn/hsx/data.ashx?s=quote&l=${v_key}`
+          );
+          const resHNX = await axios.get(
+            `https://eztrade.fpts.com.vn/hnx/data.ashx?s=quote&l=${v_key}`
+          );
+          const arrStockHSX = resHSX.data?.map((item: any) => item?.Info);
+          const arrStockHNX = resHNX.data?.map((item: any) => {
+            return item?.Info?.sort((a: any, b: any) => a[0] - b[0]);
+          });
+          setDataTable({
+            ...dataTable,
+            dataTableHSX: arrStockHSX,
+            dataTableHNX: arrStockHNX,
+          });
+        }
+      } catch (error) {
+        console.log("loi day ne ");
+      }
+    };
+    fetchDataTable();
+  }, [data]);
+
+  useEffect(() => {
+    const socketHNX = new WebSocket(
+      "wss://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=kTFRm%2BeMNmbiax8RveWxy0GAoLdm7zLDyeu6Sl%2B9XOzeBCLGUvK7xj9%2FmblOu85GVsX%2Ftr7rLY%2BWirAoK2qmI1uDhMF6LvyLGtqaKvHh4VsFqmUdF8qYN72e%2B4VdDB%2Fk&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=6"
+    );
+    const socketHSX = new WebSocket(
+      "wss://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=UlkClbrQp5fHuOoHMIlHwUlE%2BJZXXiEtEf5oBjp0D116uKZ6AsRQQKnaIFBl5Zl%2BW9v6Cg8n6NehzJToMUgSRdJadlfLITar%2FgczCTqX4C27Ews%2BZiDMTl%2FEH7yHCX2D&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=8"
+    );
+    socketHSX.onopen = () => {
+      console.log("WebSocket connection HSX established.");
+    };
+    socketHNX.onopen = () => {
+      console.log("WebSocket connection HNX established.");
+    };
+
+    socketHSX.onmessage = (event) => {
+      updateQuote(event.data);
+    };
+    socketHNX.onmessage = (event) => {
+      updateQuote(event.data);
+    };
+    socketHSX.onclose = () => {
+      console.log("WebSocket connection closed.");
+    };
+    socketHNX.onclose = () => {
+      console.log("WebSocket connection closed.");
+    };
+    return () => {
+      socketHSX.close();
+      socketHNX.close();
+    };
+  }, []);
+
+  const updateQuote = (objRealtime: any) => {
+    const dataHNXRealTime = JSON.parse(objRealtime);
+    if (dataHNXRealTime.M?.length !== 0) {
+      dataHNXRealTime?.M?.map((data: any) => {
+        const converData = JSON.parse(data?.A[0]?.Change);
+        if (Array.isArray(converData)) {
+          converData?.map((e: any) => {
+            return e?.Info?.map((i: any) => {
+              if (i[0] === 31) {
+                const valueRealTime = {
+                  RowID: e.RowID,
+                  Info: i[1],
+                  Col: i[0],
+                };
+
+                setDataReal(valueRealTime);
+              }
+            });
+          });
+        }
+      });
+    }
+  };
+
+  const handleSort = (key: string) => {
+    setLabel(key);
+    if(sort === 'asc'){
+      setSort('desc');
+    }
+    if(sort === 'desc'){
+      setSort('asc')
+    }
+  };
+
+  return (
+    <div className="asset__report__BCTH__tbl">
+      {props.short ? (
+        <TableTransReportShort
+          renderReport={arrDataReal}
+          label={label}
+          sort={sort}
+        />
+      ) : (
+        <TableTransReportFull
+          renderReport={arrDataReal}
+          label={label}
+          sort={sort}
+          handleSort={handleSort}
+        />
+      )}
+    </div>
+  );
 };
 export default TableTransReport;

@@ -88,6 +88,8 @@ const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
             const newMin = Math.floor((yExtremes.dataMin * 0.95) / step) * step;
             const newMax = Math.ceil(yExtremes.dataMax / step) * step;
             yAxis.setExtremes(newMin, newMax, true, false);
+            console.log({ newMin, newMax, yExtremes, step, lengthStep });
+
             this.yAxis[1].update(
               {
                 tickAmount: date === 0 ? 5 : 4,

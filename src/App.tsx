@@ -38,7 +38,7 @@ import ReportTransSummary from "./pages/Report/ReportTransSummary";
 import StockDetails from "./pages/Report/StockDetails";
 import TransBalance from "./components/TransBalance/TransBalance";
 import Header from "./components/header/Header";
-import LayoutAthentication from "./layout/LayoutAuthen";
+// import LayoutAthentication from "./layout/LayoutAuthen";
 import {
   RootState,
   useAppDispatch,

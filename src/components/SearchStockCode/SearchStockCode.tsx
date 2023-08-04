@@ -1,13 +1,14 @@
-import React from "react";
-import { RootState, useAppSelector } from "../../store/configureStore";
+import React, { useCallback, useEffect } from "react";
+import { RootState, useAppDispatch, useAppSelector } from "../../store/configureStore";
 import "./SearchStyle.scss"
 import { Company } from "../../models/root";
+import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
 type Props = {
   showPopup?: boolean;
   setShowPoup?: any;
   ChangeFunction?: any;
   valueInput: string;
-  setValueInput: any;
+  setValueInput?: any;
   border ? : boolean
   SearchStockCode: any;
 };
@@ -20,9 +21,16 @@ const SearchStockCode = ({
   setValueInput,
   border 
 }: Props) => {
+  const dispatch = useAppDispatch()
   const { dataCompanyTotal } = useAppSelector(
     (state: RootState) => state.company
   );
+  const HanDleConpany = useCallback(async() =>{
+    await  dispatch(fetchCompanyAsync())
+},[])
+useEffect(()=>{
+  HanDleConpany() 
+},[])
   //  chữ tìm kiếm màu đỏ
   const getHighlightedText = (text: string, highlight: string) => {
     const input = valueInput.toLowerCase();
@@ -68,7 +76,7 @@ const SearchStockCode = ({
         >
           <ul >
             {dataCompanyTotal && dataCompanyTotal.length > 0
-              ? searchResults.map((item: Company, index: number) => {
+              ? searchResults.length > 0 ? searchResults.map((item: Company, index: number) => {
                
                   let name = `${item.Code} - ${
                     item.Exchange === 1
@@ -78,13 +86,13 @@ const SearchStockCode = ({
                       : "UPCOM"
                   } - ${item.ScripName}`;
                   return (
-                    <>
+                   
                       <li className={border ? "liboder" : "LinoneBorder"} key={index} onClick={() => AddStockCode(item)}>
                         {getHighlightedText(name, valueInput)}
                       </li>
-                    </>
+                 
                   );
-                })
+                }) : <li>  Mã chứng khoán không tồn tại !</li>
               : ""}
           </ul>
         </div>
