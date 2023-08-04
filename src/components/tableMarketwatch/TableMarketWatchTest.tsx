@@ -80,15 +80,13 @@ const TableMarketWatchTest = () => {
     },
     [dispatch]
   );
-  const HanDleConpany = useCallback(async() =>{
-      await  dispatch(fetchCompanyAsync())
-  },[])
+ 
 
   useEffect(() => {
     if (keyActiveMan === 0) {
       HanDelCate();
     }
-    HanDleConpany()
+    
   }, [dispatch, HanDelCate]);
   useEffect(() => {
     const socketHSX = new WebSocket(

@@ -41,7 +41,6 @@ const SlideMarketItem: React.FC<Props> = ({
   san,
   dataChartIndex,
 }: Props) => {
-  console.log(san)
   return (
     <>
       <li className="dvChart ">
