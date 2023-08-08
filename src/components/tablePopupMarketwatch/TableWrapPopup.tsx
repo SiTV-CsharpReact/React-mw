@@ -20,10 +20,8 @@ const TableWrapPopup = () => {
           <TableBasicPopup />
           <TableReportingPopup />
         </div>
-        <div className="pu-hrz-realtime w-[391px] mx-1">
-          <div
-            className="pu-vertical pu-div-realtime"
-          >
+        <div className="pu-hrz-realtime">
+          <div className="pu-vertical pu-div-realtime">
             <TableKLTTGPopup />
           </div>
           <div className="w-full pu-div-PT">
@@ -43,4 +41,4 @@ const TableWrapPopup = () => {
   );
 };
 
-export default TableWrapPopup;
+export default React.memo(TableWrapPopup);

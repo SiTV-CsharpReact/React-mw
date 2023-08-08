@@ -30,7 +30,6 @@ export const fetchChartOptiongwHistoryAsync = createAsyncThunk<[], any>(
         action: 'gw_history',
         symbol: data.stockCode,
       });
-      console.log("daresponseta" ,response)
       return response.data;
     } catch (error) {
       console.log("error ở đây", error);

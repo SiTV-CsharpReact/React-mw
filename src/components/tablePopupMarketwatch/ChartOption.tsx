@@ -22,19 +22,14 @@ const ChartOption = () => {
     getAllData();
   }, []);
   const arrPr = React.useMemo(() => {
-    if (dataChartOption.length > 0) {
+    if (dataChartOption.length !== 0) {
       const arr = dataChartOption.map((item) => {
         return item[4];
       });
-      // eslint-disable-next-line array-callback-return
-      // .filter((value, index, ar) => {
-      //   if (ar.indexOf(value) === index) {
-      //     return value;
-      //   }
-      // });
       return arr;
+    } else {
+      return [];
     }
-    return [];
   }, [dataChartOption]);
 
   useEffect(() => {
@@ -42,7 +37,7 @@ const ChartOption = () => {
       // eslint-disable-next-line array-callback-return
       return item.Info?.map((e: any, ind: number) => {
         if (ind === 1) {
-          setIndexValue(e[1]);
+          setIndexValue(Number(e[1]));
         }
       });
     });
@@ -133,14 +128,32 @@ const ChartOption = () => {
             let price_min, price_max: number, tick, minSub;
             let barwidth: number;
             let arrSub: any = [];
+            let tickPosition: any = [];
+
             price_min = minNumber(arrPr);
             price_max = maxNumber(arrPr);
 
             if (arrPr.length === 0) {
-              const min = Number(indexValue) - 0.1;
-              const max = Number(indexValue) + 0.1;
+              const calculateMinMax = (
+                num: number
+              ): { min: number; max: number } => {
+                let min = Math.floor(num * 10) / 10;
+                let max = min + 0.1;
+                if (min === indexValue) {
+                  min = indexValue - 0.1;
+                  max = indexValue + 0.1;
+                }
+                return { min, max };
+              };
+              const { max, min } = calculateMinMax(indexValue);
 
-              this.yAxis[1].setExtremes(min, max, true, false);
+              let tickPosition: any = [];
+              for (let i = min; i <= max; i += 0.1) {
+                tickPosition.push(i);
+              }
+              this.yAxis[1].update({
+                tickPositions: tickPosition,
+              });
             } else {
               for (let i = 0; i < arrPr.length; i++) {
                 let next = arrPr[i + 1];
@@ -159,38 +172,31 @@ const ChartOption = () => {
                 price_max += tick;
                 barwidth = 0.05;
               } else {
-                if (price_max < indexValue) {
-                  tick = 0.5;
-                  price_max = indexValue + tick;
-                  price_min -= tick;
+                if (price_max < 50) {
+                  tick = 0.1;
                   barwidth = 0.05;
+                  price_min -= tick;
+                  price_max += tick;
+                } else if (price_max > 100) {
+                  tick = minSub < 0.5 ? 0.1 : 0.5;
+                  barwidth = 0.05;
+                  price_min -= tick;
+                  price_max += tick;
+                } else if (minSub < 0.5) {
+                  tick = 0.1;
+                  barwidth = 0.05;
+                  price_min -= tick;
+                  price_max += tick;
                 } else {
-                  if (price_max < 50) {
-                    tick = 0.1;
-                    barwidth = 0.05;
-                    price_min -= tick;
-                    price_max += tick;
-                  } else {
-                    if (minSub < 0.5) {
-                      tick = 0.1;
-                      barwidth = 0.05;
-                      price_min -= tick;
-                      price_max += tick;
-                    } else {
-                      tick = 1;
-                      barwidth = 0.2;
-                      price_min -= tick;
-                      price_max += tick;
-                    }
-                  }
+                  tick = 1;
+                  barwidth = 0.2;
+                  price_min -= tick;
+                  price_max += tick;
                 }
               }
-
               let sub = price_max - price_min;
-
               if (sub > 0) {
                 let countTick = Math.round(sub / tick);
-
                 if (countTick > 20) {
                   let tempTick = Math.round(countTick / 15);
                   tick = 0.5;
@@ -206,22 +212,25 @@ const ChartOption = () => {
                   pointWidth: barwidth,
                 });
               });
-              let tickPosition: any = [];
-              for (let i = price_min; i <= price_max; i += tick) {
+
+              for (
+                let i = price_min;
+                i <= Math.round(price_max * 10) / 10;
+                i += tick
+              ) {
                 tickPosition.push(i);
               }
-              const exist = tickPosition.find(
-                (e: number) => e < Number(price_max.toFixed(1))
-              );
+              // const exist = tickPosition.find(
+              //   (e: number) => e < Number(price_max.toFixed(1))
+              // );
 
               if (!exist) {
                 tickPosition.push(price_max);
               }
+              console.log({ tickPosition, price_max, price_min });
 
               this.yAxis[1].update({
-                tickPositions: tickPosition.map(
-                  (item: any) => Math.round(item * 10) / 10
-                ),
+                tickPositions: tickPosition,
               });
             }
             this.redraw();
@@ -279,10 +288,10 @@ const ChartOption = () => {
           lineColor: "#5f5f5f",
           labels: {
             style: {
-              fontSize: "9px",
+              fontSize: "6pt",
               color: "#a5a5a5",
             },
-            distance: 10,
+            distance: 6,
             y: 2,
           },
           gridLineWidth: 1,

@@ -140,7 +140,7 @@
           text-align: left;
         }
       }
-      & .P5{
+      & .P5 {
         padding-bottom: 10px !important;
       }
       & .NoteEzTransfer {
@@ -238,35 +238,34 @@
       /* text-align: center; */
       font-size: 9pt;
     }
-   &  #divButton{
-    width: 100%;
-    margin: 0px auto;
-    text-align: center;
-    /* padding: 5px; */
-    padding-top: 15px;
-    padding-bottom: 5px;
-    & #btn-cn{
-      border: 1px solid #2371af;
-      width: auto;
-      height: 34px;
-      color: #333;
-      display: inline-block;
-      padding: 6px 12px;
-      font-size: 12px;
-      font-weight: 400;
+    & #divButton {
+      width: 100%;
+      margin: 0px auto;
       text-align: center;
-      white-space: nowrap;
-      vertical-align: middle;
-      line-height: 0px;
-      border-radius: 4px;
-      margin-right: 4px;
-      &:hover{
-        background-color: #2371af !important;
-        color: #fff;
+      /* padding: 5px; */
+      padding-top: 15px;
+      padding-bottom: 5px;
+      & #btn-cn {
+        border: 1px solid #2371af;
+        width: auto;
+        height: 34px;
+        color: #333;
+        display: inline-block;
+        padding: 6px 12px;
+        font-size: 12px;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        line-height: 0px;
+        border-radius: 4px;
+        margin-right: 4px;
+        &:hover {
+          background-color: #2371af !important;
+          color: #fff;
+        }
       }
     }
-   }
-
   }
 }
 .contentActionGD p {
@@ -284,7 +283,6 @@
   &.tableTransfer {
     margin-top: 20px;
   }
- 
 }
 
 .TablePage th {
@@ -343,51 +341,48 @@ $backgroundTotalBuySell: #f2f2d0;
 .TablePage thead {
   font-weight: bold;
 }
-#tableHistoryMatChing{
-  & tbody{
-     & tr{
+#tableHistoryMatChing {
+  & tbody {
+    & tr {
       border: 1px solid #dedede;
       background-color: white;
       &.tdHover:hover {
         background-color: #efe;
-        & .sellHover{
+        & .sellHover {
           background-color: white;
         }
       }
-      & td{
+      & td {
         border: 1px solid #dedede;
         font-size: 12px;
         text-align: right;
-        
-        
       }
-      & .textCenter{
+      & .textCenter {
         text-align: center;
       }
     }
-    & .totalBuySell{
+    & .totalBuySell {
       background-color: #f2f2d0;
       font-weight: bold;
-      &:hover{
+      &:hover {
         background-color: #efe;
       }
     }
-    & .stockCodeTD{
+    & .stockCodeTD {
       font-weight: bold;
       position: relative;
-      & .icontable{
+      & .icontable {
         position: absolute;
         top: 0px;
-        right: 15px; 
+        right: 15px;
         color: rgb(198, 195, 195);
         font-size: 15px;
-        & button{
+        & button {
           font-size: 14pt;
         }
       }
     }
-   
-  } 
+  }
 }
 #contentActionGD {
   min-height: 630px;
@@ -619,7 +614,7 @@ select {
 }
 // đặt điều kiện lệnh
 .ConditionalOrder_main {
-  width: 65%;
+  width: 68%;
   margin: auto;
   padding-top: 20px;
 }
@@ -639,26 +634,355 @@ select {
 }
 .boxdivCondi {
   margin-bottom: 15px;
+  & #tableLenh {
+    width: 100%;
+    font-size: 12px;
+    & .BGCOrange {
+      background-color: #f47e34;
+    }
+    & .BGCLightGreen {
+      background-color: #84c35b;
+    }
+    & thead {
+      width: 100%;
+    }
+    & tbody {
+      width: 100%;
+      padding: 5px 2px 10px 2px;
+      & tr {
+        padding-bottom: 5px !important;
+
+        & td {
+          // overflow: hidden;
+          padding: 3px;
+          &.TdWidth {
+            width: 10%;
+            & .couter {
+              position: relative;
+              & .button-spinner {
+                position: absolute;
+                right: 10px;
+                top: -4px;
+                font-size: 25px;
+                color: #00000054;
+              }
+              & .up {
+                transform: rotate(-90deg);
+                top: -12px;
+                right: 10px;
+                &:hover {
+                  color: black;
+                }
+              }
+              & .down {
+                right: 10px;
+                transform: rotate(-90deg);
+                bottom: -17px;
+              }
+              & .downHover:hover {
+                color: black;
+              }
+            }
+            & .SelectDisable:hover {
+              cursor: not-allowed;
+            }
+          }
+          &.searchCk {
+            position: relative;
+            & .menuSearch {
+              height: auto;
+              z-index: 2;
+              max-height: 288px;
+            }
+          }
+          &.tdWidthBtn {
+            width: 4%;
+            & #btn-cn {
+              background-color: white;
+            }
+          }
+          &.tdWidthGop {
+            width: 14%;
+            & .abc {
+              display: flex;
+              justify-content: space-between;
+              position: relative;
+              & .textDvi {
+                position: absolute;
+                text-align: center;
+                bottom: -2px;
+                right: 3px;
+              }
+              & .inputDisable {
+                background: rgb(206, 206, 206);
+                color: rgb(0, 0, 0);
+                &:hover {
+                  cursor: not-allowed;
+                }
+              }
+            }
+            & input {
+              width: 70%;
+            }
+            & select {
+              width: 120%;
+            }
+            & .couter {
+              position: relative;
+              & .button-spinner {
+                position: absolute;
+                right: 38%;
+                top: -4px;
+                font-size: 25px;
+                color: #00000054;
+              }
+              & .up {
+                transform: rotate(-90deg);
+                top: -12px;
+                right: 38%;
+                &:hover {
+                  color: black;
+                }
+              }
+              & .down {
+                right: 38%;
+                transform: rotate(-90deg);
+                bottom: -17px;
+              }
+              & .downHover:hover {
+                color: black;
+              }
+              & .btn-hover:hover {
+                cursor: not-allowed;
+                color: #00000054;
+              }
+            }
+          }
+
+          & select {
+            margin: 0px !important;
+            width: 100%;
+            padding-left: 2px;
+            &:focus {
+              box-shadow: 0px 0px 2px 0.2px #2491eb;
+            }
+          }
+          & input {
+            width: 100%;
+            padding: 1px 0px 1px 5px;
+            font-size: 12px;
+            border-radius: 3px;
+            line-height: 25.5px;
+            outline: none;
+            border: 1px solid #ccc;
+
+            &:focus {
+              background-color: #faffbd !important;
+
+              box-shadow: 0px 0px 1px 0.5px #2491eb;
+            }
+          }
+        }
+      }
+    }
+  }
+  & .contenTable {
+    padding-top: 5px;
+    display: grid;
+    grid-template-columns: 15% 25% 24% 25% 11%;
+    & p {
+      width: 100%;
+      font-size: 12px;
+      &.C {
+        font-weight: bold;
+        color: blue;
+        font-size: 13px;
+      }
+      &.textCenter {
+        text-align: center;
+        font-weight: bold;
+        font-size: 12px;
+        color: blue;
+      }
+      &#priceGn {
+        font-size: 16px;
+        color: red;
+        & .textA {
+          font-size: 12px;
+        }
+      }
+      &.PriceCk {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        & span {
+          font-size: 12px;
+          width: 33%;
+          color: blue;
+          &.Flo {
+            color: #00ccff;
+            font-weight: 800;
+          }
+          &.TC {
+            color: #eaba0b;
+            font-weight: 800;
+          }
+          &.Cei {
+            color: #ff00ff;
+            font-weight: 800;
+          }
+        }
+      }
+    }
+  }
+}
+#Boxtablelenh {
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 .borderDiv {
   border: 1px solid #ccc;
-  padding: 3px 0px;
   width: 100%;
+  padding-bottom: 5px;
 }
 .ConditionalOrder_table table {
   border: 1px solid #ccc;
   text-align: center;
+  font-size: 12px;
+  & tbody {
+    & tr {
+      border-bottom: 1px solid rgba(78, 78, 78, 0.305882);
+      padding-top: 5px;
+      &.colorB td {
+        color: red;
+      }
+      & td {
+        width: 8%;
+        color: #2371af;
+        padding: 5px 0px;
+        &.actionInput {
+          width: 14%;
+          & .btn-lenhTh {
+            border-radius: 4px;
+            color: black;
+            padding: 4px 1px;
+            background-color: #e4e4e4;
+            width: 6rem;
+            text-align: center;
+            &:hover{
+              cursor:  not-allowed;
+            }
+          }
+        }
+
+        &.actionHD {
+          width: 10%;
+        }
+        & .ActionCouter {
+          position: relative;
+          & .button-spinner {
+            position: absolute;
+            color: rgba(0, 0, 0, 0.3294117647);
+            right: 28px;
+            font-size: 24px;
+
+            &.up {
+              transform: rotate(-90deg);
+              top: -11px;
+              &:hover {
+                color: black;
+              }
+            }
+            &.down {
+              transform: rotate(-90deg);
+              bottom: -12px;
+              &:hover {
+                color: black;
+              }
+            }
+            &.btnActive:hover {
+              color: rgba(0, 0, 0, 0.3294117647) !important;
+              cursor: not-allowed;
+            }
+          }
+        }
+        & input {
+          width: 75%;
+          padding: 2px;
+          border-radius: 4px;
+          font-size: 12px;
+          text-align: center;
+          color: black;
+          &:focus {
+            background-color: #faffbd !important;
+            box-shadow: 0px 0px 1px 0.5px #2491eb;
+            &.errorMesage{
+              box-shadow: 0px 0px 1px 0.5px #2491eb;
+              // background-color: red !important;
+              border: none;
+
+            }
+          }
+          &.errorMesage{
+            border-color: red;
+          }
+        }
+        & .delete {
+          color: blue;
+        }
+      }
+    }
+  }
 }
 .RHeader {
   font-weight: bold;
   background-color: #d3d3d3;
   padding: 5px 0px;
 }
-.RHeader td {
+.RHeader th {
   padding: 5px 0px;
 }
 .from_sumit_condi {
-  padding-top: 0px !important;
+  padding: 4px;
+  text-align: center;
+  & .contenttail {
+    padding: 2px;
+    color: unset;
+    & p {
+      color: black;
+      font-weight: bold;
+      & a {
+        text-decoration: none;
+        color: #3773aa;
+      }
+      & .nameAcout {
+        font-size: 1.3rem;
+        color: #3773aa;
+      }
+    }
+  }
+}
+.otp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 10px;
+  & input {
+    width: 3.5%;
+    height: 30px;
+    text-align: center;
+    border-radius: 3px;
+    padding: 0.5px;
+    margin: 0px 0.5rem;
+    outline: none;
+    &:focus {
+      background-color: #faffbd !important;
+      border: 1px solid red;
+      outline: none;
+      box-shadow: none;
+      outline: none;
+    }
+  }
 }
 .solenhDieuKien {
   text-align: center;
@@ -697,6 +1021,47 @@ select {
   display: grid;
   grid-template-columns: 1fr 1fr 1.3fr 1.3fr 0.5fr;
   grid-gap: 10px;
+  font-size: 12px !important;
+  & {
+    padding: 0px 7px;
+    div > p {
+      padding-top: 7px;
+    }
+  }
+  & .textcolorBlue {
+    color: #0055ba;
+    font-weight: bold;
+  }
+  & .textcenter {
+    text-align: center;
+  }
+  & .red {
+    color: red;
+    font-weight: bold;
+  }
+  & .C {
+    text-align: center;
+    font-weight: 800;
+  }
+  & .Flo {
+    color: #00ccff;
+  }
+  & .TC {
+    color: #eaba0b;
+  }
+  & .Cei {
+    color: #ff00ff;
+  }
+  & .price {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    font-size: 12px;
+    color: blue;
+  }
+  & #btn-cn {
+    background-color: white;
+  }
 }
 .formCondi table {
   width: 100%;
@@ -711,6 +1076,14 @@ select {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
+  & .searchCk {
+    position: relative;
+    & .menuSearch {
+      top: 100%;
+      min-height: 50px;
+      text-align: left;
+    }
+  }
 }
 #fromGrupCondi_actionDK {
   display: grid;
@@ -747,7 +1120,7 @@ select {
   cursor: no-drop;
 }
 .disableActivon {
-  background: #ededed;
+  background: #eeeeee;
 }
 .fromGrupCondi_actionDK label {
   font-size: 12px;

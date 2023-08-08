@@ -8,6 +8,7 @@
     "@emotion/styled": "^11.10.6",
     "@garage-panda/react-pdf-export": "^0.2.2",
     "@hookform/resolvers": "^3.1.0",
+    "@material-ui/core": "^4.12.4",
     "@microsoft/signalr": "^7.0.3",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.11",

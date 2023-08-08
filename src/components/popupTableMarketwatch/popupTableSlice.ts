@@ -12,7 +12,7 @@ const initialState: ComponentState = {
   code: '',
   floorLTG: ""
 };
-const   popupTableSlice = createSlice({
+const popupTableSlice = createSlice({
     name: 'DetailStock',
     initialState,
     reducers: {
