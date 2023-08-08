@@ -4,7 +4,12 @@ import * as Highcharts from "highcharts";
 import { _getDateTs, maxNumber, minNumber } from "../chartIndex/util/app.chart";
 import { formatNumber } from "../../utils/util";
 import { fetchChartOptiongwHistoryAsync } from "./chartOptionSlice";
-const ChartOptionHistory = () => {
+
+interface ChartOptionHistoryProps {
+  time: any;
+}
+
+const ChartOptionHistory = ({ time }: ChartOptionHistoryProps) => {
   const dispatch = useAppDispatch();
   const { code } = useAppSelector((state) => state.popupTable);
   const { isLoading, dataChartOption, status } = useAppSelector(
@@ -21,35 +26,19 @@ const ChartOptionHistory = () => {
     };
     getAllData();
   }, []);
-  // const arrPr = React.useMemo(() => {
-  //   if (dataChartOption.length > 0) {
-  //     const uniqueValuesSet = new Set(dataChartOption.map((item) => item[4]));
-  //     const uniqueValuesArray = Array.from(uniqueValuesSet);
-  //     // uniqueValuesArray.sort((a, b) => a - b);
-
-  //     const minValue = Math.floor(uniqueValuesArray[0]);
-  //     const maxValue = Math.ceil(
-  //       uniqueValuesArray[uniqueValuesArray.length - 1]
-  //     );
-  //     const stepSize = (maxValue - minValue) / 4;
-  //     console.log(stepSize);
-  //     const resultArray = Array.from({ length: 5 }, (_, index) => {
-  //       if (index === 0) {
-  //         return minValue;
-  //       } else if (index === 4) {
-  //         return maxValue;
-  //       } else {
-  //         return minValue + index * stepSize;
-  //       }
-  //     });
-
-  //     return resultArray;
-  //   }
-  //   return [];
-  // }, [dataChartOption]);
 
   const arrPr = React.useMemo(() => {
-    const last7Values = dataChartOption.slice(-7);
+    const last7Values = dataChartOption.slice(
+      time === "a1w"
+        ? -7
+        : time === "a3m"
+        ? -90
+        : time === "a6m"
+        ? -180
+        : time === "a1y"
+        ? -365
+        : -730
+    );
     if (last7Values.length > 0) {
       const uniqueValuesSet = new Set(last7Values.map((item) => item[4]));
       const uniqueValuesArray = Array.from(uniqueValuesSet);
@@ -60,7 +49,7 @@ const ChartOptionHistory = () => {
       );
 
       const stepSize = (maxValue - minValue) / 4;
-      const resultArray = Array.from({ length: 3 }, (_, index) => {
+      const resultArray = Array.from({ length: 2 }, (_, index) => {
         if (index === 0) {
           return minValue;
         } else if (index === 4) {
@@ -72,7 +61,7 @@ const ChartOptionHistory = () => {
       return resultArray;
     }
     return [];
-  }, [dataChartOption]);
+  }, [dataChartOption, time]);
 
   useEffect(() => {
     dataDetailPopup?.map((item: any) => {
@@ -86,7 +75,17 @@ const ChartOptionHistory = () => {
   }, [dataDetailPopup]);
 
   useEffect(() => {
-    const last7Values = dataChartOption.slice(-7);
+    const last7Values = dataChartOption.slice(
+      time === "a1w"
+        ? -7
+        : time === "a3m"
+        ? -90
+        : time === "a6m"
+        ? -180
+        : time === "a1y"
+        ? -365
+        : -730
+    );
     if (last7Values?.length > 0) {
       const data = last7Values?.map((item: any) => ({
         TimeJS: _getDateTs(item[0]),
@@ -106,7 +105,7 @@ const ChartOptionHistory = () => {
       setDataCol(arrCol);
       setDataSpline(arrSpline);
     }
-  }, [dataChartOption]);
+  }, [dataChartOption, time]);
 
   // Lấy 7 giá trị cuối cùng
 
@@ -154,31 +153,63 @@ const ChartOptionHistory = () => {
                 format: "{value:.1f}",
               },
             });
-            const xAxis = this.xAxis[0];
-            const today = new Date();
-            const sevenDaysAgo = new Date();
-            sevenDaysAgo.setDate(today.getDate() - 6); // Trừ 6 để lấy 7 ngày gần nhất tính từ ngày hiện tại
 
-            const xminTmp = new Date(
-              sevenDaysAgo.getFullYear(),
-              sevenDaysAgo.getMonth(),
-              sevenDaysAgo.getDate()
-            );
-            const xmaxTmp = new Date(
-              today.getFullYear(),
-              today.getMonth(),
-              today.getDate()
-            );
+            if (time === "a1w") {
+              const xAxis = this.xAxis[0];
+              const today = new Date();
+              const sevenDaysAgo = new Date();
+              sevenDaysAgo.setDate(today.getDate() - 6); // Trừ 6 để lấy 7 ngày gần nhất tính từ ngày hiện tại
 
-            const xmin = xminTmp.getTime();
-            const xmax = xmaxTmp.getTime();
-            xAxis.setExtremes(xmin, xmax, true, false);
+              const xminTmp = new Date(
+                sevenDaysAgo.getFullYear(),
+                sevenDaysAgo.getMonth(),
+                sevenDaysAgo.getDate()
+              );
+              const xmaxTmp = new Date(
+                today.getFullYear(),
+                today.getMonth(),
+                today.getDate()
+              );
+
+              const xmin = xminTmp.getTime();
+              const xmax = xmaxTmp.getTime();
+              xAxis.setExtremes(xmin, xmax, true, false);
+            } else {
+              const xAxis = this.xAxis[0];
+              const today = new Date();
+              const threeMonthsAgo = new Date(today);
+              threeMonthsAgo.setMonth(
+                today.getMonth() -
+                  (time === "a3m"
+                    ? 3
+                    : time === "a6m"
+                    ? 6
+                    : time === "a1y"
+                    ? 12
+                    : 24)
+              ); // Trừ 3 để lấy 3 tháng trước tính từ tháng hiện tại
+
+              const xminTmp = new Date(
+                threeMonthsAgo.getFullYear(),
+                threeMonthsAgo.getMonth(),
+                1
+              );
+              const xmaxTmp = new Date(
+                today.getFullYear(),
+                today.getMonth(),
+                today.getDate()
+              );
+
+              const xmin = xminTmp.getTime();
+              const xmax = xmaxTmp.getTime();
+              xAxis.setExtremes(xmin, xmax, true, false);
+            }
 
             let price_min, price_max: number, tick, minSub;
             let barwidth: number;
             let arrSub: any = [];
-            price_min = minNumber(arrPr);
-            price_max = maxNumber(arrPr);
+            price_min = arrPr[0];
+            price_max = arrPr[arrPr.length - 1];
 
             if (arrPr.length === 0) {
               const min = Number(indexValue) - 0.1;
@@ -295,7 +326,16 @@ const ChartOptionHistory = () => {
         lineWidth: 0,
         lineColor: "#5f5f5f",
         tickWidth: 0,
-        tickInterval: 24 * 3600 * 1000,
+        tickInterval:
+          time === "a1w"
+            ? 24 * 3600 * 1000
+            : time === "a3m"
+            ? 24 * 3600 * 1000 * 15
+            : time === "a6m"
+            ? 24 * 3600 * 1000 * 30
+            : time === "a1y"
+            ? 24 * 3600 * 1000 * 30 * 2
+            : 24 * 3600 * 1000 * 30 * 4,
         gridLineWidth: 1,
         gridLineColor: "#6d6d6d1f",
         height: 140,
@@ -431,7 +471,7 @@ const ChartOptionHistory = () => {
       },
       series: series,
     });
-  }, [arrPr, dataChartOption, dataCol, dataSpline, indexValue]);
+  }, [arrPr, dataChartOption, dataCol, dataSpline, indexValue, time]);
   console.log(dataChartOption);
   return (
     <div className="chart__for__time">

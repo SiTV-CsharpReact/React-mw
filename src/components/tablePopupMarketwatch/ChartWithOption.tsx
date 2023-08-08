@@ -56,7 +56,11 @@ const ChartWithOption = () => {
           </a>
         </div>
       </div>
-      {active === "a1d" ? <ChartOption /> : <ChartOptionHistory />}
+      {active === "a1d" ? (
+        <ChartOption />
+      ) : (
+        <ChartOptionHistory time={active} />
+      )}
     </div>
   );
 };
