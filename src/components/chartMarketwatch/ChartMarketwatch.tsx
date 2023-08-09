@@ -27,8 +27,11 @@ const ChartMarketwatch: React.FC<ChartMarketwatchProps> = ({
   return (
     <section style={{ height: heightPriceBoard }}>
       <div
-        className={`float-left chart-layout-left h-full `}
-        style={{ width: `calc(100% - ${hiddenChartRight ? 40 : 350}px)` }}
+        className={`float-left chart-layout-left `}
+        style={{
+          width: `calc(100% - ${hiddenChartRight ? 40 : 350}px)`,
+          height: heightPriceBoard,
+        }}
       >
         <div className="chart-layout-header float-left w-full h-[30px]">
           <div className="float-left w-[900px] index-chart">
@@ -51,8 +54,9 @@ const ChartMarketwatch: React.FC<ChartMarketwatchProps> = ({
           </div>
         </div>
         <div
-          className="w-full h-[100%] tv_chart_container"
+          className="w-full tv_chart_container"
           id="tv_chart_container"
+          style={{ height: heightPriceBoard }}
         >
           <TradingViewWidget heightPriceBoard={heightPriceBoard} />
         </div>

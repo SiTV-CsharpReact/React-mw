@@ -31,12 +31,14 @@ const TableTabWithBuySell = () => {
                     : dataTable.Info[11][1] > dataTable.Info[3][1] &&
                       dataTable.Info[11][1] < dataTable.Info[1][1]
                     ? "text-[#FF0000]"
-                    : dataTable.Info[11][1] == dataTable.Info[1][1]
+                    : dataTable.Info[11][1] === dataTable.Info[1][1]
                     ? "text-[#F7FF31]"
                     : dataTable.Info[11][1] > dataTable.Info[1][1] &&
                       dataTable.Info[11][1] < dataTable.Info[2][1]
                     ? "text-[#00FF00]"
-                    : "text-[#FF00FF]"
+                    : dataTable.Info[11][1] === dataTable.Info[2][1]
+                    ? "text-[#FF00FF]"
+                    : "text-[#000000]"
                 } no-border`}
               >
                 <td colSpan={4} className="h-40">

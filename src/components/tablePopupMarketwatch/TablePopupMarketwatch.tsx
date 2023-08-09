@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import "./TablePopup.scss";
@@ -20,7 +20,6 @@ interface DraggableProps {
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;
   children: React.ReactNode;
 }
-
 
 const TablePopupMarketwatch = () => {
   const dispatch = useAppDispatch();
@@ -76,7 +75,9 @@ const TablePopupMarketwatch = () => {
   };
   useEffect(() => {
     const getAllData = async () => {
-      let result = await dispatch(fetchChartOptionAsync({ stockCode: code }));
+      let result = await dispatch(
+        fetchChartOptionAsync({ stockCode: code, setActions: "gw-realtime" })
+      );
       detailStockcode(code);
     };
     getAllData();
@@ -128,82 +129,79 @@ const TablePopupMarketwatch = () => {
   //   };
   // }, []);
   return (
-  
-  <Draggable handle=".pu-header" position={position} onDrag={handleDrag} >
-
-    <div className="pu-window text-[#B9B9B9]">
-      <div className="pu-header">
-        <div className="flex pu-grtitle">
-          <div className="m-auto">
-            <div className="pu-div-search">
-              <div
-                className="relative ms-ctn form-control"
-                style={{ border: "1px solid #ccc" }}
-                id="ipSearchCode"
-              >
-                <div className="ms-sel-ctn">
-                  <input
-                    type="text"
-                    placeholder="Nhập mã Chứng khoán"
-                    autoComplete="nofill"
-                    onChange={(e) => handleChange(e.target.value)}
-                    onClick={handelClick}
-                    className="cursor-pointer"
-                    value={ValueInput}
+    <Draggable handle=".pu-header" position={position} onDrag={handleDrag}>
+      <div className="pu-window text-[#B9B9B9]">
+        <div className="pu-header">
+          <div className="flex pu-grtitle">
+            <div className="m-auto">
+              <div className="pu-div-search">
+                <div
+                  className="relative ms-ctn form-control"
+                  style={{ border: "1px solid #ccc" }}
+                  id="ipSearchCode"
+                >
+                  <div className="ms-sel-ctn">
+                    <input
+                      type="text"
+                      placeholder="Nhập mã Chứng khoán"
+                      autoComplete="nofill"
+                      onChange={(e) => handleChange(e.target.value)}
+                      onClick={handelClick}
+                      className="cursor-pointer"
+                      value={ValueInput}
+                    />
+                  </div>
+                  <div className="ms-trigger">
+                    <div className="fa fa-search top-[2px] absolute left-[2px]" />
+                  </div>
+                  <SearchStockCode
+                    valueInput={ValueInput}
+                    setShowPoup={setShowPopup}
+                    showPopup={showPopup}
+                    ChangeFunction={setStockCode}
+                    SearchStockCode={AddStockCode}
+                    setValueInput={setValueInput}
+                    border={true}
                   />
                 </div>
-                <div className="ms-trigger">
-                  <div className="fa fa-search top-[2px] absolute left-[2px]" />
-                </div>
-                <SearchStockCode
-                  valueInput={ValueInput}
-                  setShowPoup={setShowPopup}
-                  showPopup={showPopup}
-                  ChangeFunction={setStockCode}
-                  SearchStockCode={AddStockCode}
-                  setValueInput={setValueInput}
-                  border={true}
-                />
+              </div>
+              <div className="inline-block pu-div-title">
+                <h2 className="pu-title">
+                  {stockCode.Code
+                    ? `${stockCode.Code} - ${
+                        stockCode.Exchange === 1
+                          ? "HSX"
+                          : stockCode.Exchange === 2
+                          ? "HNX"
+                          : "UPCOM"
+                      } - ${stockCode.ScripName}`
+                    : ""}
+                </h2>
               </div>
             </div>
-            <div className="inline-block pu-div-title">
-              <h2 className="pu-title">
-                {stockCode.Code
-                  ? `${stockCode.Code} - ${
-                      stockCode.Exchange === 1
-                        ? "HSX"
-                        : stockCode.Exchange === 2
-                        ? "HNX"
-                        : "UPCOM"
-                    } - ${stockCode.ScripName}`
-                  : ""}
-              </h2>
-            </div>
+            {/*  */}
+
+            {/* vd */}
           </div>
-          {/*  */}
-
-          {/* vd */}
+          <div className="pu-div-button">
+            <i
+              className="fa fa-refresh fa-lg !text-sm"
+              title="Cập nhật lại dữ liệu"
+            />
+            <span
+              className="pu-close"
+              title="Đóng cửa sổ"
+              onClick={() =>
+                dispatch(showDetailStock({ visible: false, code: "" }))
+              }
+            >
+              <i className="fa fa-times fa-lg !text-sm" />
+            </span>
+          </div>
         </div>
-        <div className="pu-div-button">
-          <i
-            className="fa fa-refresh fa-lg !text-sm"
-            title="Cập nhật lại dữ liệu"
-          />
-          <span
-            className="pu-close"
-            title="Đóng cửa sổ"
-            onClick={() =>
-              dispatch(showDetailStock({ visible: false, code: "" }))
-            }
-          >
-            <i className="fa fa-times fa-lg !text-sm" />
-          </span>
-        </div>
+        <TableWrapPopup />
       </div>
-      <TableWrapPopup />
-    </div>
-
-      </Draggable>
+    </Draggable>
   );
 };
 export default React.memo(TablePopupMarketwatch);
