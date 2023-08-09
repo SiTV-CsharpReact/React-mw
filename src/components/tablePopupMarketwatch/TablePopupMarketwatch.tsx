@@ -78,7 +78,9 @@ const TablePopupMarketwatch = () => {
   };
   useEffect(() => {
     const getAllData = async () => {
-      let result = await dispatch(fetchChartOptionAsync({ stockCode: code }));
+      let result = await dispatch(
+        fetchChartOptionAsync({ stockCode: code, setActions: "gw-realtime" })
+      );
       detailStockcode(code);
     };
     getAllData();
