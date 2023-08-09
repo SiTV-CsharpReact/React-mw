@@ -21,9 +21,7 @@ const ChartPopup = () => {
       return arr;
     }
     return [];
-  }, [dataTableKLTTG, floor]);
-  // console.log({ data });
-
+  }, [dataTableKLTTG]);
   useEffect(() => {
     const series: any = [
       {

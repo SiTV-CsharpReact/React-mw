@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import "./TablePopup.scss";
@@ -20,7 +20,12 @@ interface DraggableProps {
   onDrag?: (event: DraggableEvent, data: DraggableData) => void;
   children: React.ReactNode;
 }
-
+type Bounds = {
+  top: any;
+  left: any;
+  bottom: any;
+  right: any;
+};
 
 const TablePopupMarketwatch = () => {
   const dispatch = useAppDispatch();
@@ -52,10 +57,7 @@ const TablePopupMarketwatch = () => {
     x: (window.innerWidth - 1230) / 2, // - đi witdh tablle chia 2
     y: (window.innerHeight - 721 - 40) / 2,
   });
-  const handleDrag = (e: DraggableEvent, ui: DraggableData) => {
-    const { x, y } = position;
-    setPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
-  };
+
   const handelClick = (e: any) => {
     setShowPopup(!showPopup);
   };
@@ -83,127 +85,115 @@ const TablePopupMarketwatch = () => {
   }, [code]);
   // Kiểm tra và đặt lại giá trị cho dataMouse.maF và dataMouseBuy.maB nếu selectedCode tồn tại
   // kéo thả
-  const draggableRef = useRef<any>(null);
 
-  // useEffect(() => {
-  //   const draggableElement = draggableRef.current;
-
-  //   const handleDrag = (event: DragEvent) => {
-  //     const draggableRect = draggableElement.getBoundingClientRect();
-
-  //     const x = event.clientX;
-  //     const y = event.clientY;
-
-  //     // Lấy kích thước của window
-  //     const windowWidth = window.innerWidth;
-  //     const windowHeight = window.innerHeight;
-
-  //     // Giới hạn vị trí trái của phần tử kéo
-  //     if (x < 0) {
-  //       draggableElement.style.left = '0px';
-  //     }
-  //     // Giới hạn vị trí phải của phần tử kéo
-  //     else if (x > windowWidth - draggableRect.width) {
-  //       draggableElement.style.left = windowWidth - draggableRect.width + 'px';
-  //     } else {
-  //       draggableElement.style.left = x + 'px';
-  //     }
-
-  //     // Giới hạn vị trí trên của phần tử kéo
-  //     if (y < 0) {
-  //       draggableElement.style.top = '0px';
-  //     }
-  //     // Giới hạn vị trí dưới của phần tử kéo
-  //     else if (y > windowHeight - draggableRect.height) {
-  //       draggableElement.style.top = windowHeight - draggableRect.height + 'px';
-  //     } else {
-  //       draggableElement.style.top = y + 'px';
-  //     }
-  //   };
-
-  //   draggableElement.addEventListener('drag', handleDrag);
-
-  //   return () => {
-  //     draggableElement.removeEventListener('drag', handleDrag);
-  //   };
-  // }, []);
+  const [bounds, setBounds] = useState<Bounds>({
+    left: null,
+    right: null,
+    top: null,
+    bottom: null,
+  });
+  const draggableRef = useRef<HTMLDivElement>(null);
+  const handleDrag = (e: DraggableEvent, ui: DraggableData) => {
+    const { x, y } = position;
+    if(draggableRef.current){
+      draggableRef.current.style.transition = 'transform 0.06s'
+      draggableRef.current.style.transform = `translate(${x + ui.deltaX},  ${y + ui.deltaY })`;
+      // setPosition({ x: x + ui.deltaX, y: y + ui.deltaY });
+    }
+  };
+  // bắt đầu chạy
+  const handleStart = (e: any, data: any) => {
+    if (data) {
+      const right = window.innerWidth - 1231 -9 ;
+      const bottom = window.innerHeight - 680 -43;
+      setBounds({ left: 0, right: right, top: 0, bottom: bottom });
+    }
+  };
+  const handleStop = (e:any ,data:any)=>{
+    setPosition({ x: data.x, y: data.y});
+  }
+console.log("position" ,position)
   return (
-  
-  <Draggable handle=".pu-header" position={position} onDrag={handleDrag} >
-
-    <div className="pu-window text-[#B9B9B9]">
-      <div className="pu-header">
-        <div className="flex pu-grtitle">
-          <div className="m-auto">
-            <div className="pu-div-search">
-              <div
-                className="relative ms-ctn form-control"
-                style={{ border: "1px solid #ccc" }}
-                id="ipSearchCode"
-              >
-                <div className="ms-sel-ctn">
-                  <input
-                    type="text"
-                    placeholder="Nhập mã Chứng khoán"
-                    autoComplete="nofill"
-                    onChange={(e) => handleChange(e.target.value)}
-                    onClick={handelClick}
-                    className="cursor-pointer"
-                    value={ValueInput}
+    <Draggable
+      handle=".pu-header"
+      position={position}
+      // onDrag={handleDrag}
+      bounds={bounds}
+      onStart={handleStart}
+      onStop={handleStop}
+    >
+      <div  className="pu-window text-[#B9B9B9]"   ref={draggableRef}>
+        <div className="pu-header">
+          <div className="flex pu-grtitle">
+            <div className="m-auto">
+              <div className="pu-div-search">
+                <div
+                  className="relative ms-ctn form-control"
+                  style={{ border: "1px solid #ccc" }}
+                  id="ipSearchCode"
+                >
+                  <div className="ms-sel-ctn">
+                    <input
+                      type="text"
+                      placeholder="Nhập mã Chứng khoán"
+                      autoComplete="nofill"
+                      onChange={(e) => handleChange(e.target.value)}
+                      onClick={handelClick}
+                      className="cursor-pointer"
+                      value={ValueInput}
+                    />
+                  </div>
+                  <div className="ms-trigger">
+                    <div className="fa fa-search top-[2px] absolute left-[2px]" />
+                  </div>
+                  <SearchStockCode
+                    valueInput={ValueInput}
+                    setShowPoup={setShowPopup}
+                    showPopup={showPopup}
+                    ChangeFunction={setStockCode}
+                    SearchStockCode={AddStockCode}
+                    setValueInput={setValueInput}
+                    border={true}
                   />
                 </div>
-                <div className="ms-trigger">
-                  <div className="fa fa-search top-[2px] absolute left-[2px]" />
-                </div>
-                <SearchStockCode
-                  valueInput={ValueInput}
-                  setShowPoup={setShowPopup}
-                  showPopup={showPopup}
-                  ChangeFunction={setStockCode}
-                  SearchStockCode={AddStockCode}
-                  setValueInput={setValueInput}
-                  border={true}
-                />
+              </div>
+              <div className="inline-block pu-div-title">
+                <h2 className="pu-title">
+                  {stockCode.Code
+                    ? `${stockCode.Code} - ${
+                        stockCode.Exchange === 1
+                          ? "HSX"
+                          : stockCode.Exchange === 2
+                          ? "HNX"
+                          : "UPCOM"
+                      } - ${stockCode.ScripName}`
+                    : ""}
+                </h2>
               </div>
             </div>
-            <div className="inline-block pu-div-title">
-              <h2 className="pu-title">
-                {stockCode.Code
-                  ? `${stockCode.Code} - ${
-                      stockCode.Exchange === 1
-                        ? "HSX"
-                        : stockCode.Exchange === 2
-                        ? "HNX"
-                        : "UPCOM"
-                    } - ${stockCode.ScripName}`
-                  : ""}
-              </h2>
-            </div>
+            {/*  */}
+
+            {/* vd */}
           </div>
-          {/*  */}
-
-          {/* vd */}
+          <div className="pu-div-button">
+            <i
+              className="fa fa-refresh fa-lg !text-sm"
+              title="Cập nhật lại dữ liệu"
+            />
+            <span
+              className="pu-close"
+              title="Đóng cửa sổ"
+              onClick={() =>
+                dispatch(showDetailStock({ visible: false, code: "" }))
+              }
+            >
+              <i className="fa fa-times fa-lg !text-sm" />
+            </span>
+          </div>
         </div>
-        <div className="pu-div-button">
-          <i
-            className="fa fa-refresh fa-lg !text-sm"
-            title="Cập nhật lại dữ liệu"
-          />
-          <span
-            className="pu-close"
-            title="Đóng cửa sổ"
-            onClick={() =>
-              dispatch(showDetailStock({ visible: false, code: "" }))
-            }
-          >
-            <i className="fa fa-times fa-lg !text-sm" />
-          </span>
-        </div>
+        <TableWrapPopup />
       </div>
-      <TableWrapPopup />
-    </div>
-
-      </Draggable>
+    </Draggable>
   );
 };
 export default React.memo(TablePopupMarketwatch);

@@ -27,6 +27,7 @@ import chartOptionSlice from "../components/tablePopupMarketwatch/chartOptionSli
 import AuthenCationSlice from "../components/Authencation/AuthencationSlice";
 import dataTablePopupDetail from "../components/tablePopupMarketwatch/dataTablePopupDetailSlice";
 import stoplossSlice from "../pages/Stoploss/stoplossSlice";
+import { clientBalenceSlice } from "../components/orderFormMarketwatch/ClientBalance";
 
 export const store = configureStore({
   reducer: {
@@ -84,7 +85,8 @@ export const store = configureStore({
     transfer: TransferSlice.reducer,
 
     dataPopupDetail: dataTablePopupDetail.reducer,
-    stoploss :stoplossSlice
+    stoploss :stoplossSlice,
+    clientBalance: clientBalenceSlice.reducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

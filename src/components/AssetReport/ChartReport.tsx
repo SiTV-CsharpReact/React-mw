@@ -11,6 +11,7 @@ type IDate = {
 const ChartReport: React.FC<IDate> = ({ date }: IDate) => {
   // const { mode } = useAppSelector((state) => state.settingColorMode);
   const { assetReport } = useAppSelector((state) => state.assetReport);
+  console.log(assetReport.Table2)
   const [data, setData] = useState<any>([]);
   const [xAxis, setXAxis] = useState<any>([]);
   const chartRef = useRef<any>(null);

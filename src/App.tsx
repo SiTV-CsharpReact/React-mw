@@ -71,7 +71,7 @@ const App: React.FC = () => {
               path="/report/ReportTransBalance"
               element={<TransBalance />}
             />
-            <Route path="/report/AssetReport2" element={<AssetReport />} />
+            <Route path="/test/bcts" element={<AssetReport />} />
             <Route path="/report/ReportNAV" element={ <ReportNAV />  } />
 
             <Route path="/report/reportprofitloss" element={<AssetReport />} />
