@@ -125,18 +125,16 @@ const Company = {
 
 const Category = {
   get: () =>
-    requests.get(
-      " http://localhost:8060/categori"
-    ),
+    requests.get("http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C222210" ),
   // fetch  đata
   fetchData: () => requests.get("http://localhost:30/categori"),
   // add cate
-  AddCate : (data:any) =>requests.post("https://eztrade.fpts.com.vn/Root/Data.ashx",data )
+  AddCate : (data:any) =>requests.post("http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C222210",data )
 };
 const Ministry = {
   get: () =>
     requests.get(
-      "hhttp://priceboard3.fpts.com/api/stock/v1/mw/s5g/default/ministry"
+      "http://priceboard3.fpts.com/api/stock/v1/mw/s5g/default/ministry"
     ),
 };
 const ListDataTable = {
@@ -168,7 +166,7 @@ const dataTableBasic = {
 };
 // table Lịch sử khớp lệnh
 const report = {
-  get: () => requests.get("http://localhost:2000/data"),
+  post: () => requests.get("http://eztradereacttest.fpts.com.vn/report/api/ApiData/TradedResultHis"),
   getHisOrder: () => requests.get("http://localhost:2000/orderHis"),
 };
 const transfer = {
@@ -191,8 +189,11 @@ const tableDetailPopup = {
 const assetReport = {
   get: () => requests.get("http://eztradereacttest.fpts.com.vn/report/api/ApiData/ReportBCTS"),
 };
-const ClientBalence = {
+const ClientBalance = {
   get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/ClientBalance"),
+}
+const Account = {
+  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/ProfileAccount"),
 }
 const agent = {
     Authen,
@@ -210,6 +211,7 @@ const agent = {
     transfer,
     tableThongke,
     assetReport,
-    ClientBalence
+    ClientBalance,
+    Account
 }
 export default agent;

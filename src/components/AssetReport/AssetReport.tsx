@@ -11,11 +11,18 @@ import execlImg from "../../images/excel.png";
 import pdfImg from "../../images/pdf.png";
 import {useReactToPrint} from "react-to-print";
 import * as XLSX from 'xlsx'
+import { redirect } from "react-router-dom";
 const AssetReport = () => {
   const componentPDF = useRef<any>()
   const { mode } = useAppSelector((state) => state.settingColorMode);
   const { assetReport } = useAppSelector((state) => state.assetReport);
-  // console.log(assetReport);
+  // if (assetReport.Code  === -6789) { 
+  //   console.log("redirect")
+  //   window.location.replace('http://accounts3.fpts.com.vn');
+  // }
+
+ 
+   
   const handleExportToPDF = useReactToPrint({
     content: () => componentPDF.current,
     documentTitle: "Export PDF",

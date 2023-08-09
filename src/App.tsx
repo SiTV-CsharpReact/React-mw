@@ -48,6 +48,7 @@ import { useEffect } from "react";
 import { getToken } from "./components/Authencation/AuthencationSlice";
 import MainlayoutScreen from "./layout/LayoutSreen";
 import ConditionalOderText from "./pages/Stoploss/ConditionalOderText";
+import ChartTradingView from "./components/Chart/TradingView";
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
   // const { token ,isLoadingToken } = useAppSelector((state: RootState) => state.Authen);
@@ -94,7 +95,7 @@ const App: React.FC = () => {
               path="/report/ClientActivityRange"
               element={ <HistoryOrder />  }
             />
-            <Route path="/report/TradeLog" element={ <HistoryMatching />  } />
+            <Route path="/report/TradeLogS" element={ <HistoryMatching />  } />
             <Route
               path="/report/PendingSettlement"
               element={ <HistoryForpay />  }
@@ -111,7 +112,7 @@ const App: React.FC = () => {
               path="/transfer/home/transferds"
               element={<MoneyTransferDerivative />  }
             />
-            <Route path="/transfer/history" element={<MoneyHistory />  } />
+            <Route path="/transfer/histories" element={<MoneyHistory />  } />
             <Route
               path="/transfer/ordersavings"
               element={<OrdersavingsTransfer />}
@@ -160,6 +161,7 @@ const App: React.FC = () => {
        
           <Route path="/oddlot/History" element={<HistoryCkSell />} />
           <Route path="/tradingview" element={<TradingViewWidget />} />
+          <Route path="/tradingviewtest" element={<ChartTradingView />} />
         </Routes>
       </AppProvider>
   );

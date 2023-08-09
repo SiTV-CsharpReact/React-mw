@@ -7,8 +7,11 @@ export const fetchAssetReport = createAsyncThunk(
     // const responseRepot = await axios.get(`http://localhost:8480/api/stock/v1/report/bcts/058C108101`);
     // const responseRepot = await axios.get(`http://eztradereacttest.fpts.com.vn/report/api/ApiData/ReportBCTS`);
     const responseReport =await agent.assetReport.get();
-    if(responseReport?.Code  === 0){
-      return responseReport?.Data;
+    if (responseReport.Code === 0){
+      return responseReport.Data
+    }
+    else if(responseReport.Code === -6789){
+      window.location.replace('http://accounts3.fpts.com.vn');
     }
     return null;
   }
