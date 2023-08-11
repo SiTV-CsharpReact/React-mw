@@ -5,7 +5,7 @@ import { elements } from "chart.js";
 
 export const getdata = createAsyncThunk("reportSlice_getdata", async () => {
   try {
-    let data = await agent.report.get();
+    let data = await agent.report.post();
     const  ArrayAlike = (data:any)=> {
         let mang_moi:any = [];
       

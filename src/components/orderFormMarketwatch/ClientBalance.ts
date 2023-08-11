@@ -5,7 +5,7 @@ import { DataClientBalance } from "../../models/modelClientBalance";
 export const fetchClientBalence = createAsyncThunk(
   "trade/fetchClientBalance",
   async () => {
-    const responseReport =await agent.ClientBalence.get();
+    const responseReport =await agent.ClientBalance.get();
     console.log(responseReport)
     if(responseReport.Code  === 0){
       return responseReport.Data;

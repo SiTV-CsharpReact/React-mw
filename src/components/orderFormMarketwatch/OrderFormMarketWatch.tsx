@@ -29,6 +29,7 @@ import {
   setValueOrder,
   ResetStockCode,
 } from "../tableMarketwatch/orderComanSlice";
+import SignalRComponent from "../chartIndex/connectSignalr";
 type Props = {
   windowHeight: number;
   heightOrderForm: number;
@@ -253,6 +254,7 @@ const OrderMarketW = () => {
   return (
     <>
       <div className="text-black bg-white" id="tablepricelist">
+     
         {/* đặt lệnh */}
         <Protal popup={popup} handelClosed={() => setPopup(!popup)}></Protal>
         <div className="pb-5 panel-bottom">
@@ -721,7 +723,7 @@ const OrderMarketW = () => {
 
         {/* <div id="draggableH" className="ui-draggable ui-draggable-handle" style={{ top: anchorEl2 ? "431px" : "263.469px",background : "transparent" }} ></div>   */}
       </div>
-
+      <SignalRComponent/>
       <ToastContainer />
     </>
   );
