@@ -45,16 +45,15 @@ import {
   useAppSelector,
 } from "./store/configureStore";
 import { useEffect } from "react";
-import { getToken } from "./components/Authencation/AuthencationSlice";
 import MainlayoutScreen from "./layout/LayoutSreen";
 import ConditionalOderText from "./pages/Stoploss/ConditionalOderText";
 import ChartTradingView from "./components/Chart/TradingView";
 const App: React.FC = () => {
-  const dispatch = useAppDispatch();
-  // const { token ,isLoadingToken } = useAppSelector((state: RootState) => state.Authen);
-  useEffect(() => {
-    dispatch(getToken());
-  }, [dispatch]);
+  // const dispatch = useAppDispatch();
+  // // const { token ,isLoadingToken } = useAppSelector((state: RootState) => state.Authen);
+  // useEffect(() => {
+  //   dispatch(getToken());
+  // }, [dispatch]);
  
   return (
     <AppProvider>

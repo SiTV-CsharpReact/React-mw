@@ -15,6 +15,36 @@ import { setStatusChart } from "../menuBarMW/menuSlice";
 import React from "react";
 import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import { getActiveMenu } from "./helper/activMenu";
+
+  // Lay cookie tren header
+  function getCookieHeader(cname:string) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+    }
+var checkSession = getCookieHeader("aspfpt_sessiontoken");
+var checkSessionFlag = true;
+ //load session sau 3s
+ function loadSession() {
+  var checkSession3s = getCookieHeader("aspfpt_sessiontoken");
+  if (checkSession !== checkSession3s) {
+      checkSessionFlag = false;
+      window.location.reload();
+      return;
+  }
+  if (checkSessionFlag) setTimeout(loadSession, 3000);
+  checkSessionFlag = true;
+}
+loadSession();
 const Header = () => { 
   const dispatch = useAppDispatch();
   const { mode } = useAppSelector((state) => state.settingColorMode);

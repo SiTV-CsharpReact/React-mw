@@ -1,21 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CachedIcon from "@mui/icons-material/Cached";
 import { useTranslation } from "react-i18next";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { GetStockBalance, GetStockBalanceMarpro } from "./ClientBalance";
+import { Avatar, Box, Skeleton, TextField, Typography } from "@mui/material";
 const StockBalance = (status: any) => {
   const { t } = useTranslation(["home"]);
+  const dispatch = useAppDispatch();
+  const [dataMax, setDataMax] = useState<number>(10);
+  const StockBalances = useAppSelector(
+    (state) => state.clientBalance.StockBalane
+  );
+  const isLoadingStockBalance = useAppSelector(
+    (state) => state.clientBalance.isLoadingStockBalance
+  );
+  const StockBalancesMarpro = useAppSelector(
+    (state) => state.clientBalance.StockBalaneMarpro
+  );
+  const sttAccount = useAppSelector(
+    (state) => state.ProfileAccount.statusAccount
+  );
+  useEffect(() => {
+    if (sttAccount === 1) {
+      dispatch(GetStockBalance());
+    }
+    // tk marpro thì call api marpro
+    else if (sttAccount === 2) {
+      dispatch(GetStockBalance());
+    } else if (sttAccount === 3) {
+      dispatch(GetStockBalanceMarpro());
+      dispatch(GetStockBalance());
+    }
+  }, [dispatch]);
+
   return (
-    <div
+    <Box
       className={`bottom__sdCKhoan bottom__sdTien mr-[3%] float-left ${
         status.status ? "ml-[13%]" : "absolute top-[110px] ml-[25px]"
       }  `}
       id="bottomSdCKhoan"
     >
-      <div className="bottom__sdCKhoan__title SDTM">
-        <div className="divSoDuCK">
-          <span className="divSoDuCK__title px-2.5 text-[#0055ba] uppercase text-15px leading-[25px]">
-            {/* SỐ DƯ CHỨNG KHOÁN */}
+      <Box className="bottom__sdCKhoan__title SDTM">
+        <Box sx={{display:"flex"}}>
+          <Typography sx={{
+            height:25,
+            fontSize:15,
+            color:"#0055ba",
+            padding:"3px 10px",
+            textTransform:"uppercase"
+            }}>
             {t("home:menu.QLTK_SDCK")}
-          </span>
+          </Typography>
           <CachedIcon
             style={{
               color: "#1d60bc",
@@ -24,31 +59,31 @@ const StockBalance = (status: any) => {
               marginBottom: 2,
             }}
           />
-        </div>
-        <div
+        </Box>
+        <Box
           className="groupSwitch groupSwitchTachKL hidden"
           title="- Chế độ “Tự động tách khối lượng”: KH chỉ cần nhập khối lượng, hệ thống sẽ tự động chọn hợp đồng để bán theo thứ tự ưu tiên: (1) Chứng khoán kỹ quỹ, (2) Chứng khoán thường
 - Lưu ý: Hệ thống chỉ tự động chọn lô chẵn. KH bán lô lẻ cần chọn từng hợp đồng"
         >
-          <span>
+          <Typography>
             Tự động tách khối lượng
             <sup>
-              <img src="/images/info4.png" width={10} height={10} />
+              <Avatar sx={{width:10,height:10}} src="/images/info4.png"  />
             </sup>
             :
-          </span>
-          <label className="switch switchTachKL hidden" id="switchLabel">
-            <input type="checkbox" id="ckTachKL" />
-            <span className="slider round sliderKL roundKL">
-              <span className="on onKL">Bật</span>
-              <span className="off offKL">Tắt</span>
-            </span>
-          </label>
-        </div>
-      </div>
-      <div
+          </Typography>
+          <Typography className="switch switchTachKL hidden" id="switchLabel">
+            <TextField  type="checkbox" id="ckTachKL" />
+            <Typography className="slider round sliderKL roundKL">
+              <Typography className="on onKL">Bật</Typography>
+              <Typography className="off offKL">Tắt</Typography>
+            </Typography>
+          </Typography>
+        </Box>
+      </Box>
+      <Box
         className="bottom__sdCKhoan__content"
-        style={{ display: "block", overflow: "auto", maxHeight: "343px" }}
+        style={{ display: "block", overflow: "auto", maxHeight: "250px" }}
       >
         <table>
           <thead>
@@ -93,7 +128,7 @@ const StockBalance = (status: any) => {
                 Mã HĐ
               </th>
               <th className="bottom__sdCKhoan__content__thead__chonTM font-normal">
-              {t("home:Order.CHON")}
+                {t("home:Order.CHON")}
               </th>
               <th
                 className="bottom__sdCKhoan__content__thead__chonKQ"
@@ -104,37 +139,72 @@ const StockBalance = (status: any) => {
             </tr>
           </thead>
           <tbody id="tbdStockBalance" data-symbol-filter>
-            <tr className="sell">
-              <td className="L bottom__sdCKhoan__content__tbody__mack">AAA</td>
-              <td className="bottom__sdCKhoan__content__tbody__kl R">100</td>
-              <td className="bottom__sdCKhoan__content__tbody__chonTM">
-                <input
-                  type="button"
-                  className="btn btnSellStockBalance"
-                  defaultValue="BÁN"
-                />
-              </td>
-            </tr>
-            
+
+            {isLoadingStockBalance ? (
+           StockBalances &&   StockBalances.Table?.slice(0, dataMax).map((StockBalance) => (
+                <tr className="sell" key={StockBalance.ASTOCKCODE}>
+                  <td className="L bottom__sdCKhoan__content__tbody__mack">
+                    {StockBalance.ASTOCKCODE}
+                  </td>
+                  <td className="bottom__sdCKhoan__content__tbody__kl R">
+                    {StockBalance.AQUANTITY}
+                  </td>
+                  <td className="bottom__sdCKhoan__content__tbody__chonTM">
+                    <input
+                      type="button"
+                      className="btn btnSellStockBalance"
+                      defaultValue="BÁN"
+                    />
+                  </td>
+                </tr>
+              ))
+            ) : (
+              // Hiển thị phần Skeleton ở đây
+              <Box >
+               <Skeleton variant="text"  />
+               <Skeleton variant="text"  />
+               <Skeleton variant="text"  />
+               <Skeleton variant="text"  />
+               <Skeleton variant="text"  />
+              </Box>
+            )}
           </tbody>
         </table>
-      </div>
-      <div
+      </Box>
+      <Box
         className="bottom__sdCKhoan__footer"
         style={{ paddingBottom: "15px" }}
       >
-        <span id="spanShowAll" style={{ cursor: "pointer" }}>
-        {t("home:Order.HTC")}
-        </span>
-        <span id="spanShowLimit" style={{ cursor: "pointer", display: "none" }}>
+        <Typography
+            component="span"
+          sx={{
+            color: "#0055ba",
+            fontSize:12,
+            cursor: "pointer",
+            display: dataMax === 10 ? "block" : "none",
+          }}
+          onClick={() => setDataMax(9999)}
+        >
+          {t("home:Order.HTC")}
+        </Typography>
+        <Typography
+        component="span"
+          sx={{
+            color: "#0055ba",
+            fontSize:12,
+            cursor: "pointer",
+            display: dataMax === 10 ? "none" : "block",
+          }}
+          onClick={() => setDataMax(10)}
+        >
           Thu gọn
-        </span>
-        <div className="bottom-mobile mobileS" style={{ display: "none" }}>
-          <img src="/images/icon-next.png" />
-        </div>
-      </div>
-    </div>
+        </Typography>
+        <Box className="bottom-mobile mobileS" style={{ display: "none" }}>
+          <Avatar src="/images/icon-next.png" />
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
-export default StockBalance;
+export default React.memo(StockBalance);

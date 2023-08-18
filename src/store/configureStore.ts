@@ -24,16 +24,17 @@ import { dataSliceThongke } from "../components/tableMarketwatch/helper/tableFor
 import RespportSlice from "../pages/Report/ResportSlice";
 import TransferSlice from "../pages/Transfer/TransferSlice";
 import chartOptionSlice from "../components/tablePopupMarketwatch/chartOptionSlice";
-import AuthenCationSlice from "../components/Authencation/AuthencationSlice";
 import dataTablePopupDetail from "../components/tablePopupMarketwatch/dataTablePopupDetailSlice";
 import stoplossSlice from "../pages/Stoploss/stoplossSlice";
-import { clientBalenceSlice } from "../components/orderFormMarketwatch/ClientBalance";
+import clientBalanceSlice from "../components/orderFormMarketwatch/ClientBalance";
+import ProfileAccountSlice from "../components/header/ProfileAccountSlice";
+import SendOrderSlice, { SendOrder } from "../components/orderFormMarketwatch/SendOrderSlice";
 
 export const store = configureStore({
   reducer: {
     //trang chủ marketwatch
     // layout
-    Authen : AuthenCationSlice.reducer,
+    // Authen : AuthenCationSlice.reducer,
     layout: LayoutMarketWatchSLice.reducer,
     // Get danh sách công ty để map với stockcode
     company: companySlice.reducer,
@@ -86,7 +87,9 @@ export const store = configureStore({
 
     dataPopupDetail: dataTablePopupDetail.reducer,
     stoploss :stoplossSlice,
-    clientBalance: clientBalenceSlice.reducer,
+    clientBalance: clientBalanceSlice.reducer,
+    ProfileAccount: ProfileAccountSlice.reducer,
+     SendOrder: SendOrderSlice.reducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

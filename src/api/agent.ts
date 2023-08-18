@@ -1,78 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import { RPChart } from "../models/modelChart";
-import { getCoookieStorage ,RemoveCookie} from "./authen";
 const responseBody = (response: AxiosResponse) => response.data;
 const BASE_URL2 = "https://marketstream.fpts.com.vn/";
 const BASE_URL1 = "http://priceboard3.fpts.com.vn/";
 const BASE_URL = "https://eztrade.fpts.com.vn/";
 
 const URL_EZTRADE = "http://eztrade0.fpts.com"
-// mặc định gửi authenticated token lên sever
-
-  // axios.interceptors.request.use(
-  //   (config) => {
-  //     const token = getCoookieStorage()// Lấy token từ local storage hoặc nơi lưu trữ khác
-  //   //   nếu có 
-  //     if (token) {
-  //       config.headers['Authorization'] = `Bearer ${token}`; // Thêm header Authorization với giá trị token
-  //       return config
-  //     }
-  //   //   else{
-  //   //     // nếu không có 
-  //   //     const result = RemoveCookie()
-  //   //     if(result) {
-  //   //         window.location.reload()
-  //   //         // đẩy sang login 
-  //   //     }
-  //   //   }
-  //     return config
-  //   },
-  //   (error) => {
-  //     return Promise.reject(error);
-  //   }
-  // )
-
-  // const responseInterceptor = (res:any) => {
-  //   // xử lý response  trả về 
-  //   const token = getCoookieStorage() 
-  //   if(token){
-  //       return res;
-  //   // }else{
-  //   //     let result  =  RemoveCookie()  
-  //   //     if(result)  window.location.href= "https://accounts.fpts.com.vn/Login?href=eztrade";
-  //   }
-  //   return res;
-  // };
-  // const errorInterceptor = (axiosError:any) => {
-  //   // && axiosError.response
-  //   // console.log("lỗi" ,axiosError)
-  //   // if (axiosError) {
-  //   //   const statusCode = axiosError.response?.status;
-  //   //     if(statusCode === 404) { // lỗi 404 đẩy về trang login 
-  //   //         let result  =  RemoveCookie()
-  //   //         // if(result)  window.location.reload();
-  //   //     }
-  //   // }
-  //   return Promise.reject(axiosError);
-  // };
-  
-// axios.create({
-//     headers: {
-//         'accept': 'application/json',
-//         'Cache-Control': 'no-cache',    
-//         'Access-Control-Allow-Credentials': 'true',
-//         'Access-Control-Allow-Origin': '*', // Thêm header Access-Control-Allow-Origin
-//         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE', // Thêm header Access-Control-Allow-Methods
-//       },
-//       withCredentials: true, // Cho phép gửi cookie trong yêu cầu
-// })
-// axios.interceptors.response.use(responseInterceptor ,errorInterceptor)
-
-
-
-
-
-
 const requests = {
   get: (url: string, params?: URLSearchParams) =>
     axios.get(url, { params }).then(responseBody),
@@ -94,6 +27,30 @@ const requests = {
     }),
     put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
     delete: (url: string) => axios.delete(url).then(responseBody),
+}
+// get tiền 
+const ClientBalance = {
+  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/ClientBalance"),
+}
+// get quyền
+const Permission = {
+  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/Permission"),
+}
+// get thông tin tk
+const Account = {
+  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/ProfileAccount"),
+}
+// get mã ck của KH thường
+const StockBalance = {
+  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/GetStockBalance"),
+}
+// get mã ck của KH margin pro
+const StockBalanceMarpro = {
+  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/InitMarPro"),
+}
+// get mã ck của KH margin pro
+const GetOTP = {
+  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/get_otp"),
 }
 const Authen ={
     login: (query :any) =>requests.post("http://eztrade4.fpts.com.vn/sg/api/gateway/v1/account/login",query.toString())
@@ -189,12 +146,9 @@ const tableDetailPopup = {
 const assetReport = {
   get: () => requests.get("http://eztradereacttest.fpts.com.vn/report/api/ApiData/ReportBCTS"),
 };
-const ClientBalance = {
-  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/ClientBalance"),
-}
-const Account = {
-  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/ProfileAccount"),
-}
+const SendOrder_Marpro = {
+  post: (data:any) => requests.post("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/SendOrder_MarPro",data),
+};
 const agent = {
     Authen,
     TableHNX,
@@ -212,6 +166,11 @@ const agent = {
     tableThongke,
     assetReport,
     ClientBalance,
-    Account
+    Permission,
+    Account,
+    StockBalance,
+    StockBalanceMarpro,
+    SendOrder_Marpro,
+    GetOTP
 }
 export default agent;

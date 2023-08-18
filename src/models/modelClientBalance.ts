@@ -7,7 +7,17 @@ export interface ClientBalance {
   export interface DataClientBalance {
     Table: TableClientBalance[]
   }
-  
+  export interface DataStockBalance {
+    Table: TableStockBalance[]
+  }
+  export interface TableStockBalance {
+    ACLIENTCODE: string
+    ASTOCKCODE: string
+    AEXCHANGE: string
+    AQUANTITY: number
+    AQUANTITYHOLDING: number
+    AQUANTITYREMAIN: number
+  }
   export interface TableClientBalance {
     ACLIENTCODE: string
     ACASHDEPOSITED: number
