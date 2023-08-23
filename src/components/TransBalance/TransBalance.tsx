@@ -45,6 +45,9 @@ const TransBalance = () => {
     URL.revokeObjectURL(url);
   };
 
+  
+  
+
   const handleExportToPDF = () => {
     const table = document.getElementById("table-id");
     const doc: any = new jsPDF("p", "pt");
@@ -166,3 +169,5 @@ const TransBalance = () => {
 };
 
 export default TransBalance;
+
+
