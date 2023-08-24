@@ -103,7 +103,8 @@ const  Protal = ({ popup = false, handelClosed = () => { } }) =>  {
             "30",
             "HSX",
             "1000000000"
-        ],
+         ],
+        
         [
             "058C222210",
             "VCB",
