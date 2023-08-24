@@ -171,9 +171,9 @@ const ListMenu = () => {
             </li>
             <li>
               <Link
-                to="/stoploss/orderform"
+                to="/test/orderform"
                 className="ezfu-hover-itemMenu"
-                onClick={() => ChangeGetActiveMenu("/stoploss/orderform")}
+                onClick={() => ChangeGetActiveMenu("/test/orderform")}
               >
                 {t("home:menu.DKDT")}
               </Link>
