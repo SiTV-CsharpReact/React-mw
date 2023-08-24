@@ -99,7 +99,7 @@
     box-shadow: rgba(0, 0, 0, 0.075) 0px 1px 1px inset;
 }
 .panelDatLenhThuong input {
-    height: 29px !important;
+    // height: 29px !important;
 }
 #btnUpQty{
     transform: rotate(-90deg);
@@ -167,6 +167,8 @@
     padding-right: 0;
     background-color: #dcdcdc !important;
     border-right: 1px solid #c7c7c7;
+    border-left: 1px solid #dedede;
+    height: 24px;
 }
 table {
     width: 100%;
@@ -256,7 +258,57 @@ tr {
     font-weight: 400;
     }
 }
-
+.btn-tab {
+    background-color: #fff;
+    border: 1px solid #dedede;
+    box-sizing: border-box;
+    -webkit-box-shadow: unset;
+    padding: 3px 0 1px 0;
+    width: 33%;
+    border-radius: 0;
+    cursor: pointer;
+    outline: unset;
+    -webkit-box-shadow: unset;
+    box-shadow: unset;
+    text-transform: uppercase;
+    text-align: center;
+}
+.btn-tab.active {
+    background-color: #b3b3b3;
+    color: #0055ba;
+    border: 1px solid #2491eb !important;
+    cursor: default;
+}
+.btn-tab[disabled] {
+    cursor: not-allowed;
+    // filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
+.modal-content-order__confirm{
+    background: #fff;
+    z-index: 100;
+    left: 50%;
+    top: 77%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    position: fixed;
+    padding: 0;
+    text-align: center;
+    border: 0;
+    outline: unset;
+    border-radius: 5px;
+}
+.otp-field{
+    width: 40px;
+    height: 40px;
+}
+.inputStyle{
+    width: 40px !important;
+    height: 40px !important;
+}
 button#btnReset:hover {
     border: 1px solid #66afe9 !important;
     border-radius: 5px;

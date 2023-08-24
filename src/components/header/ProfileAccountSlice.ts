@@ -1,29 +1,59 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import agent from "../../api/agent";
-import { DataClientBalance } from "../../models/modelClientBalance";
+import { PermissionData, SessionData } from "../../models/permission";
 
 export const fetchProfileAccount = createAsyncThunk(
-  "trade/fetchClientBalance",
+  "account/profileAccount",
   async () => {
-    const responseReport =await agent.ClientBalance.get();
-    console.log(responseReport)
-    if(responseReport.Code  === 0){
-      return responseReport.Data;
-    }
-    return null;
+    const response = await agent.Account.get();
+    return response as SessionData;
   }
 );
 
-export const clientBalenceSlice = createSlice({
-  name: "fetchClientBalence",
+export const fetchPermission = createAsyncThunk(
+  "trade/fetchPermission",
+  async () => {
+    const responsePermission = await agent.Permission.get();
+    return responsePermission as PermissionData;
+  }
+);
+
+export const ProfileAccountSlice = createSlice({
+  name: "profileAccount",
   initialState: {
     isLoading: false,
-    ProfileAccount : {} as DataClientBalance,
+    profileAccount: {} as any,
+    LoginName: "058C",
+    ClientName: "Tạ Văn Sĩ",
+    Permission: {} as PermissionData,
+    SMS:"",
+    Email:"",
+    Atransaction:0,
+    EzTrade: 0,
+    EzTransfer: 0,
+    EzAdvance: 0,
+    EzMargin: 0,
+    EzMortgage: 0,
+    EzOddlot: 0,
+    EzMarginPro: 0,
+    EzFuture: 0,
+    EzTvdt: 0,
+    vFeeUP: 0,
+    vFeeUP_CCQ: 0,
+    vFeeLISTED_CP: 0,
+    vFeeLISTED_ETF: 0,
+    vFeeHSX_CP: 0,
+    vFeeHSX_CCQ: 0,
+    vFeeHSX_ETF: 0,
+    vFeeHSX_CQ: 0,
+    vFeeRate_TP: 0,
+    EzTradeChargeRate: 0,
+    statusAccount: 1,
     status: "idle",
   },
   reducers: {
-    getClientBalance: (state, action) => {
-      state.ProfileAccount  = action.payload.Table;
+    setProfileAccount: (state, action) => {
+      state.profileAccount = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -33,16 +63,52 @@ export const clientBalenceSlice = createSlice({
       })
       .addCase(fetchProfileAccount.fulfilled, (state, action) => {
         state.isLoading = true;
-        state.status = "success";       
-        state.ProfileAccount  = action.payload;
+        state.status = "success";
+        state.profileAccount = action.payload.LoginName !== undefined ? action.payload.LoginName : null;
+        state.LoginName = action.payload.LoginName !== undefined ? action.payload.LoginName : "";
+        state.ClientName = action.payload.ClientName !== undefined ? action.payload.ClientName : "";
+        state.SMS = action.payload.SMS !== undefined ? action.payload.SMS : "";
+        state.Email = action.payload.Email !== undefined ? action.payload.Email : "";
+        state.Atransaction = action.payload.ATRANSACTION !== undefined ? action.payload.ATRANSACTION : 0;
+        // state.Email = action.payload?.ClientName;
       })
       .addCase(fetchProfileAccount.rejected, (state) => {
+        state.isLoading = true;
+        state.status = "failed";
+      })
+      .addCase(fetchPermission.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchPermission.fulfilled, (state, action) => {
+        state.isLoading = true;
+        state.status = "success";
+        state.Permission = action.payload;
+        state.vFeeUP = action.payload.vFeeUP !== undefined ? action.payload.vFeeUP : 0;
+        state.vFeeUP_CCQ = action.payload.vFeeUP_CCQ !== undefined ? action.payload.vFeeUP_CCQ : 0;
+        state.vFeeLISTED_CP = action.payload.vFeeLISTED_CP !== undefined ? action.payload.vFeeLISTED_CP : 0;
+        state.vFeeLISTED_ETF = action.payload.vFeeLISTED_ETF !== undefined ? action.payload.vFeeLISTED_ETF : 0;
+        state.vFeeHSX_CP = action.payload.vFeeHSX_CP !== undefined ? action.payload.vFeeHSX_CP : 0;
+        state.vFeeHSX_CCQ = action.payload.vFeeHSX_CCQ !== undefined ? action.payload.vFeeHSX_CCQ : 0;
+        state.vFeeHSX_ETF = action.payload.vFeeHSX_ETF !== undefined ? action.payload.vFeeHSX_ETF : 0;
+        state.vFeeHSX_CQ = action.payload.vFeeHSX_CQ !== undefined ? action.payload.vFeeHSX_CQ : 0;
+        state.vFeeRate_TP = action.payload.vFeeRate_TP !== undefined ? action.payload.vFeeRate_TP : 0;
+        state.EzTradeChargeRate = action.payload.EzTradeChargeRate !== undefined ? action.payload.EzTradeChargeRate : 0;
+        state.EzTrade =action.payload.EzTrade !== undefined ? action.payload.EzTrade : 0
+        if (action.payload.EzTrade === 1 && action.payload.EzMargin === 0) {
+          state.statusAccount = 1; // tk thường
+        } else if (action.payload.EzMargin === 1) {
+          state.statusAccount = 2; // tk margin
+        } else if (action.payload.EzMarginPro === 2) {
+          state.statusAccount = 3; // tk margin pro
+        }
+      })
+      .addCase(fetchPermission.rejected, (state) => {
         state.isLoading = true;
         state.status = "failed";
       });
   },
 });
 
-export const { getClientBalance } = clientBalenceSlice.actions;
+export const { setProfileAccount } = ProfileAccountSlice.actions;
 
-export default clientBalenceSlice;
+export default ProfileAccountSlice;

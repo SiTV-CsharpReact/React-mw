@@ -87,7 +87,7 @@ const TransBalance = () => {
   return (
     <MyContext.Provider value={{ setValueGTTT, setValueDNVKQAndTotalMoney}}>
       <LayoutPage
-        content="Báo cáo tổng hợp số dư tài khoản"
+        content="Báo cáo tổng hợp số dư tài khoảns"
         PageTitle="Báo cáo tổng hợp số dư tài khoản"
       >
         <div className="body__content__report">

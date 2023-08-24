@@ -1,5 +1,5 @@
 import { Box, Button, Typography, Tooltip, Popover } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -9,12 +9,12 @@ import { useTranslation } from "react-i18next";
 import useDarkMode from "./useDarkMode";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { changeModeTheme } from "./DarkModeSlice";
-import { RemoveCookie, getCoookieStorage } from "../../api/authen";
+import { RemoveCookie } from "../../api/authen";
 import { useNavigate  } from "react-router-dom";
-import { getToken } from "../Authencation/AuthencationSlice";
+import { fetchProfileAccount } from "./ProfileAccountSlice";
 // import { changeTheme } from "./DarkModeSlice";
 const ProfileAccount: any = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { i18n } = useTranslation(["home", "report"]);
   const { t } = useTranslation(["home"]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -22,8 +22,13 @@ const ProfileAccount: any = () => {
   // const mode = "light";
   // const { toogleSwitch, mode } = useDarkMode();
   const { mode } = useAppSelector((state) => state.settingColorMode);
+  const LoginName = useAppSelector((state) => state.ProfileAccount.LoginName);
+  const CLientName = useAppSelector((state) => state.ProfileAccount.ClientName);
   const dispatch = useAppDispatch();
-
+  useEffect((
+  )=>{
+ dispatch(fetchProfileAccount())
+  },[])
   const openPopupAccount = Boolean(anchorEl);
   const handleClickAccount = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -38,19 +43,7 @@ const ProfileAccount: any = () => {
   const changeTheme = (theme: string) => {
     dispatch(changeModeTheme(theme));
   };
-  const LogOut =()=>{
-    let removeToken = RemoveCookie()
-    console.log("removeToken" ,removeToken)
-    if(removeToken){
-      let Token = getCoookieStorage()
-      if(Token == undefined || Token === null || Token === ""){
-        dispatch(getToken())
-          return navigate("/login")
-      }
-      dispatch(getToken())
-    }
-
-  }
+ 
 
   return (
     <Box>
@@ -63,7 +56,7 @@ const ProfileAccount: any = () => {
           onClick={handleClickAccount}
           style={{ padding: "0px !important", marginBottom: 1 }}
         >
-          <Box className="text-11pt text-[#2371af]">058C222210</Box>
+          <Box className="text-11pt text-[#2371af]">  {LoginName}</Box>
           <Box
             id="selectSrvdiv"
             className="gb_srv"
@@ -106,7 +99,7 @@ const ProfileAccount: any = () => {
                   style={{ fontSize: 13, paddingTop: 5, paddingBottom: 5 }}
                   className={`${mode}-text`}
                 >
-                 VŨ THÀNH ĐÔ
+                {CLientName}
                 </Typography>
 
                 <a
@@ -246,7 +239,7 @@ const ProfileAccount: any = () => {
               style={{ color: "black" }}
               id="idLogOut"
               className={`${mode}-text`}
-              onClick={LogOut}
+              href="/trade/logout"
             >
               <li>
                 <i className="fa fa-sign-out" ></i>

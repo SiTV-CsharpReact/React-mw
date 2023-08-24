@@ -18,7 +18,6 @@ import * as yup from "yup";
 import {
   formatNumber,
   formatNumberMarket,
-  formatNumberPhanTram,
 } from "../../utils/util";
 import Protal from "./Portol";
 import { useTranslation } from "react-i18next";
@@ -30,6 +29,11 @@ import {
   ResetStockCode,
 } from "../tableMarketwatch/orderComanSlice";
 import SignalRComponent from "../chartIndex/connectSignalr";
+import { setStatusKQ } from "./ClientBalance";
+import ConfirmOrder from "./ConfirmOrder";
+import TableConfirmOrder from "./TableConfirmOrder";
+import { SendOrder_Marpro, setsttOrderForm } from "./SendOrderSlice";
+import { createPortal } from 'react-dom';
 type Props = {
   windowHeight: number;
   heightOrderForm: number;
@@ -38,13 +42,15 @@ type Props = {
   setExpand(expand: number): void;
   setHeightPriceBoard(heightPriceBoard: number): void;
 };
+
 const OrderMarketW = () => {
   const { t } = useTranslation(["home"]);
   // color mua ban
   const { dataShow } = useAppSelector((state) => state.dataShow);
-  const { SanT, maCode, price, TCT, TranC, key, san } = useAppSelector(
-    (state: RootState) => state.orderComan
-  );
+  const statusKQ = useAppSelector((state) => state.clientBalance.statusKQ);
+  const statusEztrade = useAppSelector((state) => state.ProfileAccount.EzTrade);
+  const { SanT, maCode, price, TCT, TranC, key, san } = useAppSelector(state => state.orderComan );
+  const submit = useAppSelector(state => state.SendOrder.submit );
   const [valueInputPrice, setValueInputPrice] = useState<number | null>(0);
   const [statusPrice, setStatusPrice] = useState(0);
   const [valueInputKl, setValueInputKl] = useState<number>(0);
@@ -53,7 +59,7 @@ const OrderMarketW = () => {
 
   const [gdSuccess, setGdSuccess] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  const [submit, setSubmit] = useState(false);
+  // const [submit, setSubmit] = useState(false);
   const [success, setSuccess] = useState("");
 
   // ghi lenh cho gui
@@ -63,6 +69,7 @@ const OrderMarketW = () => {
   //const {data} = useAppSelector(state => state.counter);
 
   const [inputValue, setInputValue] = useState("");
+  console.log(inputValue)
   const [color, setColor] = useState(true);
   // lấy ra chi tiết 1 mã code
   const [stockCode, setStockCode] = useState<Company>({
@@ -79,7 +86,7 @@ const OrderMarketW = () => {
   // popup
   // console.log(" SanT, maCode, price, TCT, TranC, key,san" , SanT, maCode, price, TCT, TranC, key,san)
   useEffect(() => {
-    key == "M" ? setColor(true) : setColor(false);
+    key === "M" ? setColor(true) : setColor(false);
   }, [key]);
   const [popup, setPopup] = useState(false);
   const incrementCounter = () => {
@@ -145,20 +152,7 @@ const OrderMarketW = () => {
     setValueInputKl(value.toUpperCase());
   };
 
-  const handelSuccess = (e: any) => {
-    e.preventDefault();
-    if (!success) {
-      alert("Quý khách chưa nhập mật khẩu giao dịch ");
-    } else {
-      setGdSuccess(true);
-      setTimeout(() => {
-        setSubmit(false);
-        setInputValue("");
-        setValueInputPrice(0);
-        setValueInputKl(0);
-      }, 3000);
-    }
-  };
+
   const validationSchema = yup.object().shape({
     txtSymbol: yup
       .string()
@@ -176,7 +170,28 @@ const OrderMarketW = () => {
       .min(1)
       .required(`"${t("home:menu.CHECK_VLN")} ${t("home:Order.ORDER_MKL")}"`),
   });
+  const CFOM = {
+    "Password2": "",
+    "UniqueRandomString": "20230817-151403126-058C222210",
+    "OrderInfo": [
+        {
+            "ClientRowID": "20230817-151351547-058C222210",
+            "Exchange": "HNX.NY",
+            "StockCode": "AAV",
+            "Quantity": 100,
+            "Price": 5600,
+            "PriceType": "LO",
+            "BuySell": "BUY",
+            "TLV": "0",
+            "MarginContractNo": "",
+            "Type": "MARPRO",
+            "Rate": 0,
+            "VerRequest": "W-058C222210-1692285231546"
+        }
+    ]
+}
   const handleClick = async (e: any) => {
+    dispatch(SendOrder_Marpro(CFOM))
     e.preventDefault();
     try {
       await validationSchema.validate({
@@ -200,7 +215,8 @@ const OrderMarketW = () => {
       alert("Chưa nhập Giá");
       return;
     }
-    setSubmit(!submit);
+    dispatch(setsttOrderForm(true));
+    console.log(submit)
   };
   // tìm kiếm mã chứng khoán
   const handelInputChange = (e: any) => {
@@ -275,8 +291,9 @@ const OrderMarketW = () => {
               }  MBR ${color ? "bg-[#dfeeff]" : "bg-[#FCE0E1]"}`}
             >
               <div className="relative flex justify-between">
-                <div className="btnSwitchBS">
-                  <div className="flex group-buysell">
+        
+                  <div className="flex w-full">
+                    <div className="flex w-[20%] group-buysell  ">
                     <div
                       id="tabBuy"
                       className={`tabBuy ${color ? "active" : ""}`}
@@ -293,24 +310,34 @@ const OrderMarketW = () => {
                     >
                       {t("home:Order.ORDER_BAN")}
                     </div>
-
+                    </div>
+                    
+                    <input
+                      style={{ border: "1px solid #dedede" }}
+                      value="TIỀN MẶT"
+                      type="button"                 
+                      onClick={()=> dispatch(setStatusKQ(false))}
+                      placeholder="TIỀN MẶT"
+                      className={`btn-tab ${statusKQ ? "" : "active"} ${statusEztrade===0 ?"hidden":""}`}
+                    />
                     <input
                       style={{ border: "1px solid #dedede" }}
                       value="KÝ QUỸ"
                       type="button"
-                      disabled
+                      onClick={()=> dispatch(setStatusKQ(true))}
+                      disabled={statusEztrade === 0? true :false}
                       placeholder="KÍ QUỸ"
-                      className="!bg-[#F3F9FF] uppercase ml-[70px] form-control tttt w-[184px] h-[32px] text-[#565656] hover:bg-borderBodyTableMarket"
+                      className={`btn-tab ${statusKQ ? "active" : ""} ${color ? "" : "hidden"}`}
                     />
                     <img
                       onClick={handelPopup}
-                      className="h-[28px] pl-2 cursor-pointer"
+                      className={`h-[28px] pl-2 cursor-pointer ${color ? "" : "hidden"}`}
                       src="/menu-list-icon.png"
                       alt="/menu-list-icon.png "
                     />
                   </div>
-                </div>
-                <div className="w-4/5 text-right btn__switchGroup">
+           
+                <div className="w-[30%] text-right btn__switchGroup">
                   <div className="groupSwitch">
                     <span>{t("home:Order.ORDER_RPO")}</span>
                     <label className="switch" id="switchLabelLCG">
@@ -485,7 +512,7 @@ const OrderMarketW = () => {
                         <div className="ms-sel-ctn">
                           <input
                             style={{
-                              border: statusPrice == 1 ? "red 1px solid" : "",
+                              border: statusPrice === 1 ? "red 1px solid" : "",
                             }}
                             type="number"
                             className="form-control ui-autocomplete-input size-input p-[2px] w-[100%] rounded-md tttt pl-[9px]"
@@ -494,7 +521,7 @@ const OrderMarketW = () => {
                             //  value={(dataTable?.ma && dataTable?.price) || (dataBuy?.ma && dataBuy?.price) || ""}
                             onChange={handelInputChangePrice}
                             step={100}
-                            value={valueInputPrice ? valueInputPrice : " "}
+                            value={valueInputPrice ? valueInputPrice/1000 : " "}
 
                             // value={dataTable.price ? dataTable.price : (dataBuy.price ? dataBuy.price : valueInputPrice)}
                           />
@@ -526,7 +553,7 @@ const OrderMarketW = () => {
                     {color ? (
                       <button
                         disabled={
-                          statusPrice == 1 ||
+                          statusPrice === 1 ||
                           Number(valueInputPrice) <= 0 ||
                           valueInputKl <= 0 ||
                           !maCode
@@ -535,7 +562,7 @@ const OrderMarketW = () => {
                         }
                         onClick={handleClick}
                         id={
-                          statusPrice == 1 ||
+                          statusPrice === 1 ||
                           Number(valueInputPrice) <= 0 ||
                           valueInputKl <= 0 ||
                           !maCode
@@ -550,7 +577,7 @@ const OrderMarketW = () => {
                     ) : (
                       <button
                         disabled={
-                          statusPrice == 1 ||
+                          statusPrice === 1 ||
                           Number(valueInputPrice) <= 0 ||
                           valueInputKl <= 0 ||
                           !maCode
@@ -559,7 +586,7 @@ const OrderMarketW = () => {
                         }
                         onClick={handleClick}
                         id={
-                          statusPrice == 1 ||
+                          statusPrice === 1 ||
                           Number(valueInputPrice) <= 0 ||
                           valueInputKl <= 0 ||
                           !maCode
@@ -572,127 +599,7 @@ const OrderMarketW = () => {
                       </button>
                     )}
                   </div>
-                  {submit && (
-                    <div className="bg-white-500 w-[660px] bottom-[60px] z-50 shadow-2xl  left-[27%] absolute  h-[205px] bg-white rounded-md">
-                      <div
-                        style={{ background: color ? "#034E94" : "red" }}
-                        className=" text-white pt-2 relative text-xl h-[40px] text-center items-center"
-                      >
-                        <h1 className="text-[18px]">XÁC NHẬN LỆNH</h1>
-                        <p onClick={() => setSubmit(!submit)}>
-                          <img
-                            className="absolute cursor-pointer  top-[-13px] right-[-10px] text-4xl text-gray-500"
-                            src="http://eztrade4.fpts.com.vn/images/EzFuture-09.png"
-                            alt=""
-                          />
-                        </p>
-                      </div>
-                      <div className="mx-auto w-[620px] mt-5 bg-white">
-                        <table className="border border-[#dedede]">
-                          <thead>
-                            <tr className=" bg-[#EEEEEE] border border-[#dedede]">
-                              <th className="text-center  font-extralight !text-[#000000] w-[170px] text-sm border-r border border-[#dedede]">
-                                {t("home:Order.ORDER_BAN")}
-                              </th>
-                              <th className="text-center font-extralight !text-[#000000] w-[170px] text-sm border-r border border-[#dedede]">
-                                {t("home:Order.ORDER_MCK")}
-                              </th>
-                              <th className="text-center font-extralight !text-[#000000] w-[170px] text-sm border-r border border-[#dedede]">
-                                {t("home:Order.OPTIONS_KL")}
-                              </th>
-                              <th className="text-center font-extralight !text-[#000000] w-[110px] text-sm border-r border border-[#dedede]">
-                                {t("home:base.Gia")}
-                              </th>
-                              <th className="text-center font-extralight !text-[#000000] w-[240px] text-sm border-r border border-[#dedede]">
-                                {t("home:base.ThongBao")}
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr className="border border-[#dedede]">
-                              <td className="text-center border-r border border-[#dedede]">
-                                {t("home:Order.ORDER_MUA")}
-                              </td>
-                              <td className="text-center border-r border border-[#dedede]">
-                                {maCode}
-                              </td>
-                              <td className="text-center border-r border border-[#dedede]">
-                                {valueInputKl}
-                              </td>
-                              <td className="text-center border-r border border-[#dedede]">
-
-                               {valueInputPrice}
-                              </td>
-                              <td>
-                                {gdSuccess && (
-                                  <span className="text-[13px] text-[#0FB44B] pl-2">
-                                    {t("home:Order.ORDER_TC")}
-                                  </span>
-                                )}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <form className="flex items-center mt-5 gap-6 w-[570px] relative mx-auto">
-                        <p className="!text-[13px] text-[#3773AA]">
-                          Xác nhận lệnh{" "}
-                        </p>
-                        {/* <AiOutlineKey className='absolute my-1 border-gray-400 rounded-sm text-2xl left-[96.5px] h-[27px] border' /> */}
-                        <div className="border border-[#d6d6d6] w-[195px] rounded-sm h-fit flex items-center">
-                          <i
-                            style={{
-                              borderRight: "1px solid #d6d6d6",
-                              paddingRight: "2px",
-                            }}
-                            className="fa fa-key !pr-5  my-1 px-3 rounded-sm text-2xl p-1  w-[20px] shadow-2xl border-r pl-1 h-fit"
-                          ></i>
-                          <input
-                            value={success}
-                            onChange={(e) => setSuccess(e.target.value)}
-                            placeholder="mật khẩu giao dịch "
-                            type="password"
-                            className=" !text-sm !pl-[-7px] rounded-sm border-none w-[145px] focus_none"
-                          />
-                        </div>
-
-                        <button
-                          style={{
-                            border: color
-                              ? "1px solid #034E94"
-                              : "1px solid #red",
-                            background: color ? " #034E94" : "red",
-                          }}
-                          onClick={handelSuccess}
-                          className="p-1 pl-6 pr-6 text-white w-[115px] rounded-2xl"
-                        >
-                          {color ? "MUA" : "BÁN"}
-                        </button>
-                        <button
-                          onClick={() => setSubmit(false)}
-                          className="!text-[13px]   text-[#3773AA] "
-                        >
-                          {" "}
-                          <span className="pr-3 text-xl text-red-500 ">
-                            X
-                          </span>{" "}
-                          <span className="relative top-[-3px]">
-                            {" "}
-                            Đóng lại{" "}
-                          </span>
-                        </button>
-                      </form>
-                      <hr className="mt-2 border w-[620px] block mx-auto " />
-                      <p className="!text-[13px] pt-2 !font-extralight  !text-[#7B7B7C]  tracking-[.5px]  pl-7">
-                        Để sử dụng mật khẩu giao dịch một lần cho cả phiên đăng
-                        nhập, Quý khách cài đặt{" "}
-                        <span className="text-[#337AB7] underline">
-                          {" "}
-                          tại đây{" "}
-                        </span>
-                      </p>
-                    </div>
-                  )}
+                
                 </div>
                 <div className="divReset w-[10%]">
                   <div className="h-[14px]"></div>
@@ -723,8 +630,8 @@ const OrderMarketW = () => {
 
         {/* <div id="draggableH" className="ui-draggable ui-draggable-handle" style={{ top: anchorEl2 ? "431px" : "263.469px",background : "transparent" }} ></div>   */}
       </div>
-      <SignalRComponent/>
       <ToastContainer />
+      <iframe id="dvIframeChart" src={`/chart/blank?${(new Date()).getMilliseconds()}`} ></iframe>
     </>
   );
 };

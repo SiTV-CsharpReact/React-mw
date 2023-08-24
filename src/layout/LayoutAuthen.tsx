@@ -1,4 +1,4 @@
-import AuthenCationScreen from "../components/Authencation/AuthenScreen";
+
 import "./layoutStyle.scss"
 import HoaKy from "./../images/icon-EN.png"
 const LayoutAthentication = () => {
@@ -16,7 +16,7 @@ const LayoutAthentication = () => {
       </section>
       <section className="mainAu">
       {/* <iframe src="http://accounts3.fpts.com.vn/Login?href=eztransfer" title="Login Iframe" /> */}
-        <AuthenCationScreen />
+        {/* <AuthenCationScreen /> */}
       </section>
       <section>
         <div className="footer  ">© 2018 Công ty Cổ phần Chứng khoán FPT</div>

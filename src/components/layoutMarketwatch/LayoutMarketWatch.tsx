@@ -40,6 +40,7 @@ import {
   getDataApi,
   getDataApiPendingOder,
 } from "../orderFormMarketwatch/data";
+import TableConfirmOrder from "../orderFormMarketwatch/TableConfirmOrder";
 
 function RenderTable() {
   const { activeFloor } = useAppSelector((state) => state.tableTest);
@@ -89,6 +90,7 @@ const LayoutMarketWatch: React.FC = () => {
   const { ListDataTable, productsLoaded } = useAppSelector(
     (state: RootState) => state.tableTest
   );
+  const sttOrderForm = useAppSelector((state) => state.SendOrder.submit);
   const [heightComponent, setHeightComponent] = useState(initialState);
   const [selectedValue, setSelectedValue] = useState({
     x: 0,
@@ -587,6 +589,7 @@ const LayoutMarketWatch: React.FC = () => {
           </div>
         </div>
       </div>
+      {sttOrderForm &&   <TableConfirmOrder/>}
     </div>
   );
 };

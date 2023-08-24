@@ -9,19 +9,6 @@ import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice
 import { Company } from "../../models/root";
 
 const CompleteStock = (props: any) => {
-  const companies: string[] = [
-    "AAV - HNX.NY - Công ty Cổ phần AAV Group",
-    "ADC - HNX.NY - Công ty Cổ phần Mỹ thuật và Truyền Thông",
-    "ALT - HNX.NY - Công ty Cổ phần Văn hóa Tân Bình",
-    "AMC - HNX.NY - Công ty Cổ phần Khoáng Sản Á Châu",
-    "AME - HNX.NY - Công ty Cổ phần Alphanam E&C",
-    "AMV - HNX.NY - Công ty Cổ phần Sản xuất kinh doanh dược và trang thiết bị Y tế Việt Mỹ",
-    "API - HNX.NY - Công ty Cổ phần Đầu tư Châu Á - Thái Bình Dương",
-    "APS - HNX.NY - Công ty Cổ phần Chứng khoán Châu Á Thái Bình Dương",
-    "ARM - HNX.NY - Công ty Cổ phần Xuất nhập khẩu Hàng không",
-    "BRM - HNX.NY - Công ty Cổ phần Xuất nhập khẩu Hàng không",
-  ];
-
   const { isLoading, data, status, row, name } = useAppSelector(
     (state: RootState) => state.categories
   );
@@ -30,7 +17,6 @@ const CompleteStock = (props: any) => {
   const [show, setShow] = useState(false);
   const [isActiveShowALL, setActiveShowALl] = useState(false);
   const [Value, setValue] = useState("");
-  const [testdata, setData] = useState(companies);
   const [searchTerm, setSearchTerm] = useState("");
   const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
   const CallApi = async (data: any) => {
