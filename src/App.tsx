@@ -150,7 +150,7 @@ const App: React.FC = () => {
             />
 
          
-          <Route path="/stoploss/orderform" element={<ConditionalOrder />} />
+          <Route path="/test/orderform" element={<ConditionalOrder />} />
           <Route
             path="/stoploss/orderform_test"
             element={<ConditionalOderText />}

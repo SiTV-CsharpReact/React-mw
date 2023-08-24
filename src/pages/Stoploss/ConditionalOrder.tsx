@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import LayoutPage from "../Layout/LayoutPage";
 import SearchStockCode from "../../components/SearchStockCode/SearchStockCode";
 import { Company } from "../../models/root";
+import Cookies from 'js-cookie';
 import {
   RootState,
   useAppDispatch,
@@ -258,6 +259,8 @@ const ConditionalOrder = () => {
         priceLenhTh: dataValue[6],
       };
       dispatch(setDataOrder(data));
+      // luu data cookie
+      Cookies.set('orderData', JSON.stringify(data));
     } else {
       console.log("Vui lòng  nhập đầy đủ các trường ", status);
     }
@@ -288,9 +291,10 @@ const ConditionalOrder = () => {
             <div className="ConditionalOrder_Title">
               <h3>
                 <strong>
-                  Cập nhật
+                  Cập nhật thuwr
                   <a href="http://www.fpts.com.vn/san-pham-dich-vu/giao-dich-chung-khoan/le-nh-die-u-kie-n/huong-dan-su-dung-dich-vu-dat-lenh-dieu-kien-ezstoploss/">
-                    tính năng mới
+                    Tính năng mới
+                    
                   </a>
                   : kích hoạt lệnh điều kiện
                   <a href="http://www.fpts.com.vn/san-pham-dich-vu/giao-dich-chung-khoan/le-nh-die-u-kie-n/huong-dan-su-dung-dich-vu-dat-lenh-dieu-kien-ezstoploss/">
@@ -398,9 +402,9 @@ const ConditionalOrder = () => {
                           id=""
                           className="SelectDisable"
                         >
-                          <option value="">Không</option>
-                          <option value="">Mua</option>
-                          <option value="">Bán</option>
+                          <option selected value="MAR">Ký quỹ</option>
+                          <option value="CASH">Không</option>
+                          <option value="MARPRO">Ký quỹ</option>
                         </select>
                       </td>
                       <td className="TdWidth">
