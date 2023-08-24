@@ -121,7 +121,7 @@ const SettingTable = () => {
           </Typography>
           {/* {"Thiết lập Giao diện"} */}
           <Tooltip title="Đóng">
-            <IconButton onClick={() => handleClose("close")}>
+            <IconButton onClick={() => handleClose("close")} size="large">
               <CloseIcon />
             </IconButton>
           </Tooltip>

@@ -1,5 +1,9 @@
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}", "./node_modules/flowbite/**/*.js"],
+  // content: ["./index.html","./src/**/*.{js,jsx,ts,tsx}", "./node_modules/flowbite/**/*.js"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     maxHeight: {
       27: "27px",

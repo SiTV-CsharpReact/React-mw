@@ -33,7 +33,7 @@ const NotiHeader = () => {
               aria-expanded={openNoti ? "true" : undefined}
               onClick={handleClickNoti}
               style={{position: "relative"}}
-            >
+              size="large">
                {/* <div className="bell__button" id="bellButton">
             <div className="bell__button__click" style={{paddingTop: '7px'}}>
               <i className="fa fa-bell" aria-hidden="true" title="Thông báo" />
@@ -619,7 +619,7 @@ const NotiHeader = () => {
             </div>
           </Popover>
         </Box>
-  )
+  );
 }
 
 export default React.memo(NotiHeader)

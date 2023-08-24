@@ -21,7 +21,7 @@ const ListService = () => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
         style={{ marginBottom: 5 ,marginRight:2}}
-      >
+        size="large">
         <img className="" width={22} src={menuImage} alt="" />
         <Box
           id="selectSrvdiv"
@@ -212,7 +212,7 @@ const ListService = () => {
       </Box>
     </Popover>
   </Box>
-  )
+  );
 }
 
 export default React.memo(ListService)

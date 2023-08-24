@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -10,7 +14,7 @@ body {
   color: #000;
   font-size: 13px;
   /* overflow: auto !important; */
-  min-width: 975px;
+min-width: 975px;
 }
 body
   .fpts-header
@@ -407,6 +411,4 @@ th.sort-table.active::after {
     outline: 0;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
 }
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+

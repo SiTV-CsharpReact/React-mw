@@ -4,8 +4,17 @@ import path from "path";
 import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
+  server: {
+    host: 'eztradereact.fpts.com.vn',
+  },
   css: {
     devSourcemap: true,
+    postcss: {
+      plugins: [
+        require("tailwindcss"),
+        require("autoprefixer"),
+      ],
+    },
   },
   resolve: {
     alias: {
