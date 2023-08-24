@@ -4,11 +4,11 @@ import { CategoriesMarketWatch, Category } from "../../models/category";
 // <CategoriesMarketWatch>
 export const fetchCategoryAsync = createAsyncThunk(
   "table_fecthCategory/getCateolcadf",
-  async () => {
+  async (ClientCode:string) => {
     // const res = await agent.Category.get();
   try {
     // const data = await  agent.Category.get()
-    const data = await  agent.Category.get()
+    const data = await  agent.Category.get(ClientCode)
     return data
   } catch (error) {
     console.log("error ở đây", error);

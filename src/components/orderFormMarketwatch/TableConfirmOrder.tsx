@@ -22,9 +22,10 @@ import {
   getOTP,
   setsttOrderForm,
 } from "./SendOrderSlice";
-import { hidePhoneNumber } from "./util/util";
+import { hideEmail, hidePhoneNumber } from "./util/util";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AlertMessage from "../../layout/AlertMessage";
 var arrErrorOTP = [-123456, 181104, 181105, 181106, 181107, 181109, 181110];
 const TableConfirmOrder = () => {
   const { t } = useTranslation(["home"]);
@@ -49,32 +50,11 @@ const TableConfirmOrder = () => {
     if (msg.Code === -123456 || msg.Code === 181106) {
       if (msg.Code === 181106) {
         dispatch(setsttOrderForm(false));
-        toast.error(
-          " Tài khoản bị khóa OTP. Vui lòng liên hệ hotline 19006446 (ấn phím 1) để được hỗ trợ.",
-          {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          }
-        );
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
+        <AlertMessage
+          type="error" 
+          message="Tài khoản bị khóa OTP. Vui lòng liên hệ hotline 19006446 (ấn phím 1) để được hỗ trợ."
         />;
-
+        alert("Tài khoản bị khóa OTP. Vui lòng liên hệ hotline 19006446 (ấn phím 1) để được hỗ trợ.");
         //return;
       } else {
         alert(msg.Message);
@@ -330,7 +310,7 @@ const TableConfirmOrder = () => {
                     {Atransaction === 2
                       ? hidePhoneNumber(Phone)
                       : Atransaction === 3
-                      ? Email
+                      ? hideEmail(Email)
                       : ""}
                   </Typography>
                   .

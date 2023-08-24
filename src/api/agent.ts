@@ -3,7 +3,7 @@ import { RPChart } from "../models/modelChart";
 const responseBody = (response: AxiosResponse) => response.data;
 const BASE_URL2 = "https://marketstream.fpts.com.vn/";
 const BASE_URL1 = "http://priceboard3.fpts.com.vn/";
-const BASE_URL = "https://eztrade.fpts.com.vn/";
+const BASE_URL = "http://marketstream.fpts.com.vn/";
 
 const URL_EZTRADE = "http://eztrade0.fpts.com"
 const requests = {
@@ -28,66 +28,69 @@ const requests = {
     put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
     delete: (url: string) => axios.delete(url).then(responseBody),
 }
+/* Trang chủ đặt lệnh */
+// get thông tin tk
+const Account = {
+  get: () => requests.get("/trade/api/ApiData/ProfileAccount"),
+}
 // get tiền 
 const ClientBalance = {
-  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/ClientBalance"),
+  get: () => requests.get("/trade/api/ApiData/ClientBalance"),
 }
 // get quyền
 const Permission = {
-  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/Permission"),
-}
-// get thông tin tk
-const Account = {
-  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/ProfileAccount"),
+  get: () => requests.get("/trade/api/ApiData/Permission"),
 }
 // get mã ck của KH thường
 const StockBalance = {
-  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/GetStockBalance"),
+  get: () => requests.get("/trade/api/ApiData/GetStockBalance"),
 }
 // get mã ck của KH margin pro
 const StockBalanceMarpro = {
-  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/InitMarPro"),
+  get: () => requests.get("/trade/api/ApiData/InitMarPro"),
 }
 // get mã ck của KH margin pro
 const GetOTP = {
-  get: () => requests.get("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/get_otp"),
+  get: () => requests.get("/trade/api/ApiData/get_otp"),
 }
-const Authen ={
-    login: (query :any) =>requests.post("http://eztrade4.fpts.com.vn/sg/api/gateway/v1/account/login",query.toString())
-}
+// get data Table HNX
 const TableHNX = {
   list: (params: URLSearchParams) =>
     requests.get(BASE_URL + "hnx/data.ashx", params),
   get: () => requests.get(BASE_URL + "/hnx/data.ashx?s=quote&l=HNXIndex"),
   getOneStock: (params:string) => requests.get(BASE_URL + `/hnx/data.ashx?s=quote&l=${params}`),
 };
+// get data Table HSX
 const TableHSX = {
   list: (params: URLSearchParams) =>
     requests.get(BASE_URL + "hsx/data.ashx", params),
   get: () => requests.get(BASE_URL + "/hsx/data.ashx?s=quote&l=All"),
   getOneStock: (params:string) => requests.get(BASE_URL + `/hsx/data.ashx?s=quote&l=${params}`),
 };
+// get Index
 const Index = {
   get: (params:string) =>
     requests.get(
       BASE_URL+`${params}/data.ashx?s=index`
     ),
 };
+// get cache data stock info
 const Company = {
   get: () =>
     requests.get(
       "http://priceboard3.fpts.com.vn/api/ApiData/get_cache_stockinfo"
     ),
 };
-
+// get danh mục tk khách hàng
 const Category = {
-  get: () =>
-    requests.get("http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C222210" ),
+  get: (ClientCode:string) =>
+    requests.get(`http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/${ClientCode}` ),
   // fetch  đata
   fetchData: () => requests.get("http://localhost:30/categori"),
   // add cate
   AddCate : (data:any) =>requests.post("http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C222210",data )
 };
+// 
 const Ministry = {
   get: () =>
     requests.get(
@@ -121,9 +124,10 @@ const dataTableBasic = {
     requests.postFormData(BASE_URL + "/Root/Data.ashx", dataValueBasic),
   //  requests.postFormData("/Root/Data.ashx", dataValueBasic,   {'Content-Type': 'multipart/form-data'},)
 };
+
 // table Lịch sử khớp lệnh
 const report = {
-  post: () => requests.get("http://eztradereacttest.fpts.com.vn/report/api/ApiData/TradedResultHis"),
+  post: () => requests.get("/report/api/ApiData/TradedResultHis"),
   getHisOrder: () => requests.get("http://localhost:2000/orderHis"),
 };
 const transfer = {
@@ -144,13 +148,12 @@ const tableDetailPopup = {
     ),
 };
 const assetReport = {
-  get: () => requests.get("http://eztradereacttest.fpts.com.vn/report/api/ApiData/ReportBCTS"),
+  get: () => requests.get("/report/api/ApiData/ReportBCTS"),
 };
 const SendOrder_Marpro = {
-  post: (data:any) => requests.post("http://eztradereacttest.fpts.com.vn/trade/api/ApiData/SendOrder_MarPro",data),
+  post: (data:any) => requests.post("/trade/api/ApiData/SendOrder_MarPro",data),
 };
 const agent = {
-    Authen,
     TableHNX,
     TableHSX,
     Index,

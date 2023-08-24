@@ -47,8 +47,13 @@ const OrderMarketW = () => {
   const { t } = useTranslation(["home"]);
   // color mua ban
   const { dataShow } = useAppSelector((state) => state.dataShow);
+  // check trạng thái kí quỹ 
   const statusKQ = useAppSelector((state) => state.clientBalance.statusKQ);
+  // check trạng thái tk margin, thường
   const statusEztrade = useAppSelector((state) => state.ProfileAccount.EzTrade);
+  // 
+  const totalMonneyMarpro = useAppSelector((state) => state.clientBalance.totalMonneyMarpro);
+  console.log(totalMonneyMarpro)
   const { SanT, maCode, price, TCT, TranC, key, san } = useAppSelector(state => state.orderComan );
   const submit = useAppSelector(state => state.SendOrder.submit );
   const [valueInputPrice, setValueInputPrice] = useState<number | null>(0);

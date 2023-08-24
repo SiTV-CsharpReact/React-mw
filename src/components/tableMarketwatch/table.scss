@@ -221,6 +221,12 @@
   & .cell-default{
     background-color: #1D1D1D !important;
   }
+  & .ag-row-hover > .ag-cell{
+    background-color: #444 !important;
+  }
+  & .ag-row-hover > .ag-cell > .custom-cell{
+    background-color: #444 !important;
+  }
 }
 
 // .ag-theme-alpine {

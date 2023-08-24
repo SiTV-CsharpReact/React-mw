@@ -39,8 +39,8 @@ const TableTotalMonney: React.FC<IMyProps> = ({ status, priceMoney }: IMyProps) 
   return (
     <div className={`bottom__sdTien ml-[13%] mr-[3%] float-left SDTM ${status ? 'ml-[13%]' : 'absolute top-[110px] ml-[25px]'}`}>
       <div className="bg-[#b3b3b3] h-[25px]">
-        <span className="px-2.5 text-[#0055ba] uppercase text-15px leading-[25px]">
-          {t("home:Order.CASH_SDT")}
+        <span className="px-2.5 text-[#0055ba] uppercase text-15px leading-[25px] test">
+          {t("home:Order.CASH_SDT")} test
         </span>
         <CachedIcon style={{ color: '#1d60bc', fontSize: 18, fontWeight: 600, marginBottom: 2 }} onClick={()=> dispatch(fetchClientBalence())} />
         <i

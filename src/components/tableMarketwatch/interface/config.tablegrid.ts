@@ -1,12 +1,17 @@
 import { TDefColDef, TRowDataIndex } from "./interface.tablegrid";
 
 export const gridOptions = {
+  // suppressMoveWhenRowDragging: true,
+  suppressRowDrag:true,
   rowStyle: { background: 'black' },
   headerHeight: 30,
   getRowId: function (e: any) {
+    console.log(e.data.RowID)
     return e.data.RowID;
   },
- 
+  // suppressRowDrag: (params:any) => {
+  //   return params.node.pinned === 'top'; // Ở đây, chúng tôi ngăn chặn kéo thả cho các dòng được ghim ở đầu (top)
+  // },
   defaultColDef: {
     resizable: false,
     sortable: true,
@@ -29,12 +34,6 @@ export const gridOptions = {
     sortAscending: '<i class="fa fa-caret-down !text-base pr-0.5 center-horizontal"/>',
     sortDescending: '<i class="fa fa-caret-up !text-base pr-0.5 center-horizontal"/>',
   },
-
-
-  // };
-  // document.addEventListener("contextmenu", (event) => {
-  //   event.preventDefault();
-  // })
 };
 
 export const defaultColDef: TDefColDef = {

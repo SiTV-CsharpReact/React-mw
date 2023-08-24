@@ -65,6 +65,7 @@ export const SendOrderSlice= createSlice({
     isLoadingSendOrderMargin: false,
     Response:{} as ModelDataOTP,
     OTP:{} as ModelDataOTP,
+    formOTP:false,
     submit:false,
     status: "idle",
   },
@@ -74,6 +75,9 @@ export const SendOrderSlice= createSlice({
     // },
     setsttOrderForm: (state,action) => {
       state.submit = action.payload; 
+    },
+    setsttFormOTP: (state,action) => {
+      state.formOTP = action.payload; 
     },
   },
   extraReducers: (builder) => {
@@ -113,6 +117,6 @@ export const SendOrderSlice= createSlice({
   },
 });
 
-export const { setsttOrderForm} = SendOrderSlice.actions;
+export const { setsttOrderForm,setsttFormOTP} = SendOrderSlice.actions;
 
 export default SendOrderSlice;

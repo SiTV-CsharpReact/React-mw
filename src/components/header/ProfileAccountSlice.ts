@@ -23,7 +23,7 @@ export const ProfileAccountSlice = createSlice({
   initialState: {
     isLoading: false,
     profileAccount: {} as any,
-    LoginName: "058C",
+    LoginName: "058C222210",
     ClientName: "Tạ Văn Sĩ",
     Permission: {} as PermissionData,
     SMS:"",
@@ -49,6 +49,7 @@ export const ProfileAccountSlice = createSlice({
     vFeeRate_TP: 0,
     EzTradeChargeRate: 0,
     statusAccount: 1,
+    statusOTP: 0,
     status: "idle",
   },
   reducers: {
@@ -70,6 +71,7 @@ export const ProfileAccountSlice = createSlice({
         state.SMS = action.payload.SMS !== undefined ? action.payload.SMS : "";
         state.Email = action.payload.Email !== undefined ? action.payload.Email : "";
         state.Atransaction = action.payload.ATRANSACTION !== undefined ? action.payload.ATRANSACTION : 0;
+        state.statusOTP =action.payload.OTPVerifed !== undefined ? action.payload.OTPVerifed : 0
         // state.Email = action.payload?.ClientName;
       })
       .addCase(fetchProfileAccount.rejected, (state) => {
@@ -93,7 +95,7 @@ export const ProfileAccountSlice = createSlice({
         state.vFeeHSX_CQ = action.payload.vFeeHSX_CQ !== undefined ? action.payload.vFeeHSX_CQ : 0;
         state.vFeeRate_TP = action.payload.vFeeRate_TP !== undefined ? action.payload.vFeeRate_TP : 0;
         state.EzTradeChargeRate = action.payload.EzTradeChargeRate !== undefined ? action.payload.EzTradeChargeRate : 0;
-        state.EzTrade =action.payload.EzTrade !== undefined ? action.payload.EzTrade : 0
+        state.EzTrade =action.payload.EzTrade !== undefined ? action.payload.EzTrade : 0;
         if (action.payload.EzTrade === 1 && action.payload.EzMargin === 0) {
           state.statusAccount = 1; // tk thường
         } else if (action.payload.EzMargin === 1) {

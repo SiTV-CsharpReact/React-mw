@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import MenuMarketWatch from "../indexMarketWatch/MenuMarketWatch";
 import OrderMarketW from "../orderFormMarketwatch/OrderFormMarketWatch";
-import TableMarketWatch from "../tableMarketwatch/TableMarketWatch";
-import { useParams } from "react-router-dom";
-import { stocks } from "../../models/marketwacthTable";
 import TableGDTTMarketWatch from "../tableMarketwatch/TableGDTTMarketWatch";
 import TableThongKeMarketWatch from "../tableMarketwatch/TableThongKeMarketWatch";
 import {
@@ -16,7 +13,7 @@ import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import IntradayOrder from "../orderFormMarketwatch/IntradayOrder";
 import TradingResult from "../orderFormMarketwatch/TradingResult";
 import "./LayoutMarketWatch.scss";
-import { Tooltip } from "@mui/material";
+import { Avatar, Tooltip } from "@mui/material";
 import ListMenuBar from "../menuBarMW/ListMenuBar";
 import DanhMuc from "../menuBarMW/DanhMuc";
 import SettingTable from "../menuBarMW/SettingTable";
@@ -26,7 +23,7 @@ import PopupTableMarketwatch from "../popupTableMarketwatch/popupTableMarketwatc
 import { resizeState } from "../../models/resizeWindow";
 import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatch";
 import { DraggableData, DraggableEvent } from "react-draggable";
-import TableDanhMuc from "../tableMarketwatch/TableDanhMuc";
+// import TableDanhMuc from "../tableMarketwatch/TableDanhMuc";
 //image
 import LineChart from "../../images/line-chart-32.png";
 import Close from "../../images/x28.png";
@@ -41,7 +38,12 @@ import {
   getDataApiPendingOder,
 } from "../orderFormMarketwatch/data";
 import TableConfirmOrder from "../orderFormMarketwatch/TableConfirmOrder";
-
+import FormGetOTP from "../orderFormMarketwatch/FormGetOTP";
+import IconOTP from "../../images/otp.png";
+import { setsttFormOTP } from "../orderFormMarketwatch/SendOrderSlice";
+// import TableMarketWatch from "../tableMarketwatch/TableMarketWatch";
+// import { useParams } from "react-router-dom";
+// import { stocks } from "../../models/marketwacthTable";
 function RenderTable() {
   const { activeFloor } = useAppSelector((state) => state.tableTest);
   switch (activeFloor) {
@@ -87,10 +89,10 @@ const LayoutMarketWatch: React.FC = () => {
   // row danh mục
   // tao useState resize khi height window thay đổi
   const { row, name } = useSelector((state: RootState) => state.categories);
-  const { ListDataTable, productsLoaded } = useAppSelector(
-    (state: RootState) => state.tableTest
-  );
+  const { ListDataTable, productsLoaded } = useAppSelector((state) => state.tableTest);
   const sttOrderForm = useAppSelector((state) => state.SendOrder.submit);
+  const sttFormOTP = useAppSelector((state) => state.SendOrder.formOTP);
+  const OTPVerifed = useAppSelector((state) => state.ProfileAccount.statusOTP);
   const [heightComponent, setHeightComponent] = useState(initialState);
   const [selectedValue, setSelectedValue] = useState({
     x: 0,
@@ -590,6 +592,8 @@ const LayoutMarketWatch: React.FC = () => {
         </div>
       </div>
       {sttOrderForm &&   <TableConfirmOrder/>}
+      {OTPVerifed===0 &&   <div className="z-[100] w-[65px] h-[65px] absolute bottom-[30px] right-[25px] opacity-70 cursor-pointer" onClick={()=>dispatch(setsttFormOTP(true))}><img src={IconOTP} alt="otp"></img></div>}
+      {sttFormOTP  &&   <FormGetOTP/>}
     </div>
   );
 };

@@ -24,6 +24,9 @@ const arrayPrice = [5, 7, 9, 11, 14, 16, 18];
 //   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
 // );
 const TableMarketWatchTest = () => {
+  const ClientCode= useAppSelector(
+    (state) => state.ProfileAccount.LoginName
+  );
   // tinh width
   const gridRef = useRef<any>();
   const pinnedRowsRef = useRef<any[]>([]);
@@ -40,7 +43,7 @@ const TableMarketWatchTest = () => {
   // const pinned = useAppSelector((state) => state.categories.row);
   // call data
   const HanDelCate = useCallback(async () => {
-    let result = await dispatch(fetchCategoryAsync());
+    let result = await dispatch(fetchCategoryAsync(ClientCode));
     if (result?.payload?.Data[0]?.List) {
       let data = {
         Floor: "danh-muc",
@@ -498,10 +501,11 @@ const TableMarketWatchTest = () => {
     };
   }, []);
   //  ******************************************************************
-
+// Tạo một biến để theo dõi việc kéo thả
+let isDraggingPinnedRow = false;
   return (
     <div style={containerStyle}>
-      <div style={gridStyle} className="ag-theme-alpine-dark table__price">
+      {/* <div style={gridStyle} className="ag-theme-alpine-dark table__price">
         <AgGridReact
           ref={gridRef}
           suppressDragLeaveHidesColumns={true}
@@ -524,7 +528,83 @@ const TableMarketWatchTest = () => {
             });
           }}
         />
-      </div>
+      </div> */}
+      
+      <div style={gridStyle} className="ag-theme-alpine-dark table__price">
+  <AgGridReact
+    ref={gridRef}
+    suppressDragLeaveHidesColumns={true}
+    suppressCellFocus={true}
+    rowHeight={25}
+    overlayNoRowsTemplate={"Loadding..."}
+    rowData={ListDataTable}
+    pinnedTopRowData={DataPined}
+    columnDefs={columnDefs}
+    defaultColDef={defaultColDef}
+    rowDragManaged={true}
+    rowDragEntireRow={true}
+    rowDragMultiRow={true}
+    rowSelection={"multiple"}
+    animateRows={true}
+    gridOptions={gridOptions}
+    rowMultiSelectWithClick={true}
+    
+    onRowDragEnter={(event) => {
+      const node = event.node;
+      console.log(node)
+      if (node && node.rowPinned) {
+        isDraggingPinnedRow = true; // Đánh dấu rằng đang kéo thả hàng đã được ghim
+      } else {
+        isDraggingPinnedRow = false; // Đánh dấu rằng không kéo thả hàng đã được ghim
+      }
+    }}
+  
+    onRowDragEnd={() => {
+      isDraggingPinnedRow = false; // Khi kéo thả kết thúc, đảm bảo rằng không còn kéo thả hàng đã được ghim
+    }}
+  
+    onRowDragMove={(event) => {
+      // if (isDraggingPinnedRow) {
+      //   event.api.deselectAll(); // Nếu đang kéo thả hàng đã được ghim, hủy chọn tất cả các hàng
+      // }
+      const node = event.node;
+      if (node.rowPinned === "top")
+      {
+        const node = event.node;
+        return;
+      }
+      // var movingNode = event.node;
+      // var overNode = event.overNode;
+      // var rowNeedsToMove = movingNode !== overNode;
+      // if (rowNeedsToMove) {
+      //   var movingData = movingNode.data;
+      //   var overData = overNode?.data;
+      //   var fromIndex = immutableStore?.indexOf(movingData);
+      //   var toIndex = immutableStore?.indexOf(overData);
+      //   var newStore = immutableStore.slice();
+      //   moveInArray(newStore, fromIndex, toIndex);
+      //   immutableStore = newStore;
+      //   this.gridApi.setRowData(newStore);
+      //   this.gridApi.clearFocusedCell();
+      // }
+      // function moveInArray(arr, fromIndex, toIndex) {
+      //   if (toIndex === 0)
+      //   {
+      //     toIndex = 1;
+      //   }
+      //   var element = arr[fromIndex];
+      //   arr.splice(fromIndex, 1);
+      //   arr.splice(toIndex, 0, element);
+      // }
+    }}
+    onGridReady={(params: any) => {
+      params.api.sizeColumnsToFit(undefined, {
+        suppressSizeToFit: false,
+      });
+    }}
+  />
+</div>
+
     </div>
   );
 };

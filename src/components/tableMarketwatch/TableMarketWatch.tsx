@@ -91,7 +91,7 @@ const TableMarketWatch = () => {
   );
   useEffect(() => {
     async function HanDelCate() {
-      let result = await dispatch(fetchCategoryAsync());
+      let result = await dispatch(fetchCategoryAsync("058C222210"));
       if (result?.payload?.Data[0]?.List) {
         let data = {
           Floor: "danh-muc",

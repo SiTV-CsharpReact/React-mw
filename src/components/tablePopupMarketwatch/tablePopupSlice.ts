@@ -2,10 +2,10 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import agent from "../../api/agent";
 import { CategoriesMarketWatch, Category } from "../../models/category";
 
-export const fetchCategoryAsync = createAsyncThunk<CategoriesMarketWatch>(
+export const fetchCategoryAsync = createAsyncThunk(
   "table/fecthCategory",
-  async () => {
-    const res = await agent.Category.get();
+  async (ClientCode:string) => {
+    const res = await agent.Category.get(ClientCode);
     console.log(res);
     return res;
   }
