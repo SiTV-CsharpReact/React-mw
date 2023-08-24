@@ -103,7 +103,8 @@ const  Protal = ({ popup = false, handelClosed = () => { } }) =>  {
             "30",
             "HSX",
             "1000000000"
-        ],
+         ],
+        
         [
             "058C222210",
             "VCB",
@@ -174,7 +175,7 @@ const  Protal = ({ popup = false, handelClosed = () => { } }) =>  {
     }, [dataCheckSan])
     return ReactDOM.createPortal(
         <div className={`model fixed inset-0 z-50 flex items-center justify-center p-5 ${popup ? "" : "invisible opacity-0"}`} >
-            <div style={{backgroundColor: "rgba(0,0,0,0.6)"}} onClick={handelClosed} className="absolute  inset-0  overlay"  >
+            <div style={{backgroundColor: "rgba(0,0,0,0.6)"}} onClick={handelClosed} className="absolute inset-0 overlay"  >
             </div>
 
             {/*  */}
@@ -208,13 +209,14 @@ const  Protal = ({ popup = false, handelClosed = () => { } }) =>  {
                                     </thead>
                                     <tbody>
                                         {filteredData.length > 0 && filteredData.map((items: any, index: any) => {
+                                            console.log(filteredData,"data")
                                             return (
                                                 <tr key={index} className='hover:bg-[#EEFEED]' style={{ border: "1px solid #ccc" }}>
                                                     <td style={{ border: "1px solid #ccc" }} className='text-center !font-bold'>{items.values[0]}</td>
                                                     <td style={{ border: "1px solid #ccc" }} className='text-center'>{items.values[2]}</td>
                                                     <td style={{ border: "1px solid #ccc" }} className='pr-2 text-right'>{items.values[1]}</td>
                                                     <td onClick={() => handleShow({ ma: items.values[0], San: items.values[2], TLV: items.values[1] ,giaTranSm:items.values[3] })} style={{ border: "1px solid #ccc" }} className='text-center text-[#337ab7] cursor-pointer hover:underline'>chọn</td>
-                                                    <td style={{ border: "1px solid #ccc", backgroundColor: items.values && items.values.length > 0 ? "" : "#ECECEC" }} className='text-center'> {formatNumber(items.values[3])} </td>
+                                                    <td style={{ border: "1px solid #ccc", backgroundColor: items.values && items.values.length > 0 ? "" : "#ECECEC" }} className='text-center'> { items.values[3] === "1000000000" ? "" :  formatNumber(items.values[3] )} </td>
                                                 </tr>
                                             );
                                         })}
