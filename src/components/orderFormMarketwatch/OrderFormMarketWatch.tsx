@@ -386,7 +386,7 @@ const OrderMarketW = () => {
                     />
                     <img
                       onClick={handelPopup}
-                      className={`h-[28px] pl-2 cursor-pointer ${color ? "" : "hidden"}`}
+                      className={`h-[32px] pl-2 cursor-pointer ${color ? "" : "hidden"}`}
                       src={iconlistKQ}
                       alt="/menu-list-icon.png "
                     />
