@@ -90,12 +90,12 @@ const CompleteStock = (props: any) => {
 
   // dã lọc song
   const searchResults = dataCompanyTotal.filter((item) =>{
-    let name  =`${item.Code} "-" ${item.Exchange === 1 ? "HSX" :item.Exchange === 2? "HNX" : "UPCOM" } "-" ${item.ScripName}`
+    let name  =`${item.Code} "-" ${item.Exchange === 1 ? "HOSE" :item.Exchange === 2? "HNX" : "UPCOM" } "-" ${item.ScripName}`
       const NameTo =   name.toLowerCase().startsWith(searchTerm.toLowerCase())
       return  NameTo
   } 
   );
-  if(isLoading == 1){
+  if(isLoading === 1){
     return  <div> Loading ...</div>
   }
   return (
@@ -134,13 +134,13 @@ const CompleteStock = (props: any) => {
                 ? dataCompanyTotal.length > 0 ?
                dataCompanyTotal?.map((e:Company) => {
                       return <div onClick={() => AddMaCate(e.Code)}>
-                          {e.Code} - {e.Exchange === 1 ? "HSX" :e.Exchange === 2? "HNX" : "UPCOM" } - {e.ScripName}
+                          {e.Code} - {e.Exchange === 1 ? "HOSE" :e.Exchange === 2? "HNX" : "UPCOM" } - {e.ScripName}
                       </div>;
                     })
                   : "" 
               : searchResults.length > 0
                 ? searchResults.map((item) => {
-                  let name  =`${item.Code} - ${item.Exchange === 1 ? "HSX" :item.Exchange === 2? "HNX" : "UPCOM" } - ${item.ScripName}`
+                  let name  =`${item.Code} - ${item.Exchange === 1 ? "HOSE" :item.Exchange === 2? "HNX" : "UPCOM" } - ${item.ScripName}`
                     return (
                       <div onClick={() => AddMaCate(item.Code)}>
                         {getHighlightedText(name, searchTerm)}

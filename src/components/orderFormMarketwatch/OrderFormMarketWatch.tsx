@@ -3,12 +3,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "flowbite";
 import React from "react";
 // import { AiOutlineLoading3Quarters, AiFillCloseCircle, AiOutlineKey, AiOutlineUnorderedList } from 'react-icons/ai';
-import { FormControlLabel, Tooltip, styled } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import TableTotalMonney from "./TableTotalMonney";
 import "./styleOrderForm.scss";
 import IconNext from "../../images/icon-next.png";
 import {
-  RootState,
   useAppDispatch,
   useAppSelector,
 } from "../../store/configureStore";
@@ -27,13 +26,14 @@ import {
   setDataOrder,
   setValueOrder,
   ResetStockCode,
+  setKey,
+  setDecrementCounterPrice,
 } from "../tableMarketwatch/orderComanSlice";
-import SignalRComponent from "../chartIndex/connectSignalr";
-import { setStatusKQ } from "./ClientBalance";
-import ConfirmOrder from "./ConfirmOrder";
-import TableConfirmOrder from "./TableConfirmOrder";
+import { GetStockBalance, GetStockBalanceMarpro, fetchClientBalence, getClientBalance, setStatusKQ } from "./ClientBalance";
 import { SendOrder_Marpro, setsttOrderForm } from "./SendOrderSlice";
-import { createPortal } from 'react-dom';
+import { fetchPermission } from "../header/ProfileAccountSlice";
+import { checkFee } from "./util/util";
+import iconlistKQ from "../../images/menu-list-icon.png"
 type Props = {
   windowHeight: number;
   heightOrderForm: number;
@@ -42,40 +42,68 @@ type Props = {
   setExpand(expand: number): void;
   setHeightPriceBoard(heightPriceBoard: number): void;
 };
-
+const CFOM = {
+  "Password2": "",
+  "UniqueRandomString": "20230817-151403126-058C222210",
+  "OrderInfo": [
+      {
+          "ClientRowID": "20230817-151351547-058C222210",
+          "Exchange": "HNX.NY",
+          "StockCode": "AAV",
+          "Quantity": 100,
+          "Price": 5600,
+          "PriceType": "LO",
+          "BuySell": "BUY",
+          "TLV": "0",
+          "MarginContractNo": "",
+          "Type": "MARPRO",
+          "Rate": 0,
+          "VerRequest": "W-058C222210-1692285231546"
+      }
+  ]
+} 
 const OrderMarketW = () => {
   const { t } = useTranslation(["home"]);
+  const dispatch = useAppDispatch();
   // color mua ban
   const { dataShow } = useAppSelector((state) => state.dataShow);
-  // check trạng thái kí quỹ 
-  const statusKQ = useAppSelector((state) => state.clientBalance.statusKQ);
   // check trạng thái tk margin, thường
-  const statusEztrade = useAppSelector((state) => state.ProfileAccount.EzTrade);
-  // 
-  const totalMonneyMarpro = useAppSelector((state) => state.clientBalance.totalMonneyMarpro);
-  console.log(totalMonneyMarpro)
-  const { SanT, maCode, price, TCT, TranC, key, san } = useAppSelector(state => state.orderComan );
+  const statusAccount = useAppSelector((state) => state.ProfileAccount.statusAccount);
+  // tổng tiền đặt lệnh của marpro // tổng hạn mức còn lại // check trạng thái kí quỹ 
+  const {totalMonney, totalHMCL,statusKQ} = useAppSelector((state) => state.clientBalance);
+  // lấy Thông tin của mã đặt
+  const { SanT, maCode, price, TCT, TranC, key, san,quantityMax,priceInput} = useAppSelector(state => state.orderComan );
+  // lấy ra phí
+  const {vFeeRate_TP,vFeeUP,vFeeUP_CCQ,vFeeLISTED_CP,vFeeLISTED_ETF,vFeeHSX_CCQ,vFeeHSX_CP,vFeeHSX_CQ,vFeeHSX_ETF} = useAppSelector((state) => state.ProfileAccount);  
+ // set phí 
+  const [fee, setFee] = useState(0);
+ // trang thai mua ban 
+  const [color, setColor] = useState(true);
+  // input Khối lượng 
+  const inputQuantity = useRef<HTMLInputElement | null>(null);
+  // input Giá 
+  const inputPrice = useRef<HTMLInputElement | null>(null);
+  // input mã ck
+  const inputStock = useRef<HTMLInputElement | null>(null);
+  // gửi lệnh
   const submit = useAppSelector(state => state.SendOrder.submit );
-  const [valueInputPrice, setValueInputPrice] = useState<number | null>(0);
+
+  useEffect(() => {
+    dispatch(fetchClientBalence())
+    dispatch(fetchPermission())
+    }, [dispatch]);
+ 
+  const [valueInputPrice, setValueInputPrice] = useState<number | null>(TranC !==0 ?  TranC: 1);
+  console.log(valueInputPrice)
   const [statusPrice, setStatusPrice] = useState(0);
   const [valueInputKl, setValueInputKl] = useState<number>(0);
-  const [TotalMoney, setTotalMoney] = useState<number>(7860601494);
   const [QuantityMax, setQuantityMax] = useState<number>(0);
-
-  const [gdSuccess, setGdSuccess] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  // const [submit, setSubmit] = useState(false);
-  const [success, setSuccess] = useState("");
-
   // ghi lenh cho gui
   const [order, setOrder] = useState(true);
 
-  const dispatch = useAppDispatch();
-  //const {data} = useAppSelector(state => state.counter);
-
   const [inputValue, setInputValue] = useState("");
-  console.log(inputValue)
-  const [color, setColor] = useState(true);
+  // console.log(inputValue)
   // lấy ra chi tiết 1 mã code
   const [stockCode, setStockCode] = useState<Company>({
     Code: "",
@@ -88,35 +116,46 @@ const OrderMarketW = () => {
     ScripNameEN: "",
     ID: "",
   });
-  // popup
-  // console.log(" SanT, maCode, price, TCT, TranC, key,san" , SanT, maCode, price, TCT, TranC, key,san)
+   // thêm mã chứng khoán
+   const AddStockCode = (CodeCk: Company) => {
+    let san = CodeCk?.Exchange === 1 ? "HOSE":CodeCk?.Exchange ===2 ? "HNX.NY":"HNX.UPCOM";
+    setFee(checkFee(CodeCk?.Exchange,CodeCk?.Stock_Type2,vFeeRate_TP,vFeeUP,vFeeUP_CCQ,vFeeLISTED_CP,vFeeLISTED_ETF,vFeeHSX_CP,vFeeHSX_CCQ,vFeeHSX_ETF,vFeeHSX_CQ));
+    let data = {
+      key: key,
+      dataOrder: { ...CodeCk, Exchange: san,Fee:fee },
+    };
+    setStatusPrice(0);
+    setInputValue(CodeCk.Code);
+    dispatch(setDataOrder(data));
+    dispatch(setValueOrder(CodeCk.Code));
+    setValueInputPrice(0);
+    inputQuantity.current?.focus();
+  };
   useEffect(() => {
     key === "M" ? setColor(true) : setColor(false);
   }, [key]);
   const [popup, setPopup] = useState(false);
   const incrementCounter = () => {
-    setValueInputKl(valueInputKl + 100);
+    if(valueInputKl === QuantityMax) return ;
+    else setValueInputKl(valueInputKl + 100);
   };
 
   const decrementCounter = () => {
-    setValueInputKl(valueInputKl - 100);
+    if (valueInputKl===0) return ;
+    else setValueInputKl(valueInputKl - 100);
+ 
   };
-  const incrementCounter1 = () => {
-    let numberPrice = (valueInputPrice ? valueInputPrice : 0) + 1;
+  const incrementCounterPrice = () => {
+    let numberPrice = (valueInputPrice  ? valueInputPrice : 0) + 1;
     setValueInputPrice(numberPrice);
     isChangePrice(numberPrice);
   };
 
-  const decrementCounter1 = () => {
-    if (valueInputPrice !== 0) {
-      let numberPrice = (valueInputPrice ? valueInputPrice : 0) - 1;
-      setValueInputPrice(numberPrice);
-      isChangePrice(numberPrice);
-    }
+  const decrementCounterPrice = () => {
+    let numberPrice = (valueInputPrice  ? valueInputPrice : 0) + 1;
+    setValueInputPrice(numberPrice);
+    isChangePrice(numberPrice);
   };
-  const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
-
-  const openPopupLanguage2 = Boolean(anchorEl2);
   const toggleOrder = () => {
     setOrder(!order);
   };
@@ -135,16 +174,12 @@ const OrderMarketW = () => {
     }
   };
   // kiểm tra giá
-
+ 
   const isChangePrice = (value: number) => {
     // SanT, maCode, price, TCT, TranC, key,san
     if (SanT >= 0 && TranC >= 0) {
       // k cho người dùng nhập giá lớn hơn giá trần và nhỏ hơn giá sàn
       if (value > TranC || value < SanT) {
-        //   let mesage = `Quý khách vui lòng nhập trong khoảng ${SanT} - ${ TranC}`
-        //   toast.error(mesage, {
-        //     position: toast.POSITION.BOTTOM_RIGHT,
-        // });
         setStatusPrice(1);
       } else {
         setStatusPrice(2);
@@ -175,26 +210,14 @@ const OrderMarketW = () => {
       .min(1)
       .required(`"${t("home:menu.CHECK_VLN")} ${t("home:Order.ORDER_MKL")}"`),
   });
-  const CFOM = {
-    "Password2": "",
-    "UniqueRandomString": "20230817-151403126-058C222210",
-    "OrderInfo": [
-        {
-            "ClientRowID": "20230817-151351547-058C222210",
-            "Exchange": "HNX.NY",
-            "StockCode": "AAV",
-            "Quantity": 100,
-            "Price": 5600,
-            "PriceType": "LO",
-            "BuySell": "BUY",
-            "TLV": "0",
-            "MarginContractNo": "",
-            "Type": "MARPRO",
-            "Rate": 0,
-            "VerRequest": "W-058C222210-1692285231546"
-        }
-    ]
-}
+
+
+  const switchBuySell =(status:boolean)=>{
+     setColor(status)
+     ResetForm()
+     setQuantityMax(0);
+     dispatch(setKey(status?"M":"B"))
+  }
   const handleClick = async (e: any) => {
     dispatch(SendOrder_Marpro(CFOM))
     e.preventDefault();
@@ -204,12 +227,14 @@ const OrderMarketW = () => {
       });
     } catch (error: any) {
       alert("Chưa nhập Mã chứng khoán");
+      inputStock.current?.focus();
       return false;
     }
     try {
       await validationSchemaKl.validate({ txtSymbol: valueInputKl });
     } catch (error) {
       alert("Chưa nhập Khối lượng");
+      inputQuantity.current?.focus();
       return;
     }
     try {
@@ -218,6 +243,7 @@ const OrderMarketW = () => {
       });
     } catch (error) {
       alert("Chưa nhập Giá");
+      inputPrice.current?.focus();
       return;
     }
     dispatch(setsttOrderForm(true));
@@ -236,60 +262,82 @@ const OrderMarketW = () => {
       setInputValue(value.toUpperCase());
     }
   };
-  // thêm mã chứng khoán
-  const AddStockCode = (CodeCk: Company) => {
-    let san = CodeCk?.Exchange == 1 ? "HSX" : "HNX";
-    let data = {
-      key: key,
-      dataOrder: { ...CodeCk, Exchange: san },
-    };
-    setStatusPrice(0);
-    setInputValue(CodeCk.Code);
-    dispatch(setDataOrder(data));
-    dispatch(setValueOrder(CodeCk.Code));
-    setValueInputPrice(0);
-  };
+ 
   const handelPopup = () => {
     setPopup(!popup);
   };
   useEffect(() => {
+    
     setInputValue(maCode);
     setValueInputPrice(0);
   }, [maCode]);
   // tính số lượng tối đa
+  const vMarRate= 0;
+  let MaxQtty = 0
+  let g_HoldingCash = 0;
   useEffect(() => {
+ // tinh kl tối đa 
     if (TranC > 0) {
-      setQuantityMax(TotalMoney / TranC);
+      if (key === "B"){
+        return setQuantityMax(quantityMax);
+        
+      }
+      if(statusAccount === 1){
+       if (totalMonney>0) MaxQtty = parseInt(((totalMonney - g_HoldingCash) / (TranC * (1 + fee))).toString())
+       else MaxQtty = 0;
+      }
+      else if(statusAccount=== 2){
+        if(totalMonney < totalHMCL){
+          MaxQtty = totalMonney/((1-(vMarRate/100)+ fee) *TranC); 
+        }
+        if(totalHMCL >= totalMonney ){
+          MaxQtty = totalMonney/  ((1+ fee) *TranC);
+        }
+      }
+     else if(statusAccount=== 3){
+      if(totalMonney < totalHMCL){
+        MaxQtty = totalMonney/((1-(vMarRate/100)+ fee) *TranC); 
+      }
+      if(totalHMCL >= totalMonney ){
+        MaxQtty = totalMonney/  ((1+ fee) *TranC);
+      }
+     }
+      MaxQtty = parseInt(MaxQtty.toString())
+      if(MaxQtty >= 100){
+        if (san === "HOSE")  MaxQtty -= MaxQtty % 100
+        if (san === "HNX.NY")  MaxQtty -= MaxQtty % 100
+        if (san === "HNX.UPCOM")  MaxQtty -= MaxQtty % 100
+      }
+      setQuantityMax(MaxQtty);
     }
-  }, [TranC, TotalMoney]);
+  }, [TranC, totalMonney]);
   // làm lại
-  const ResetFrom = () => {
+  const ResetForm = () => {
     dispatch(ResetStockCode());
     setValueInputPrice(0);
+    setQuantityMax(0);
     setInputValue("");
   };
   const priceSm = `Mã CK có giá trần tính SM là ${formatNumber(
     dataShow.giaTranSm
   )}`;
+
   // TranC7,860,601,494
   return (
     <>
       <div className="text-black bg-white" id="tablepricelist">
      
         {/* đặt lệnh */}
-        <Protal popup={popup} handelClosed={() => setPopup(!popup)}></Protal>
+        { statusAccount===3 && <Protal popup={popup} handelClosed={() => setPopup(!popup)}></Protal>}
         <div className="pb-5 panel-bottom">
           <div
             className={`inline-block BGTB w-full ${order ? "" : "relative"}`}
           >
             {color ? (
-              <TableTotalMonney status={order} priceMoney={TotalMoney} />
+              <TableTotalMonney status={order} priceMoney={totalMonney } />
             ) : (
               <StockBalance status={order} />
             )}
-            {/* <TableTotalMonney />
-        <StockBalance/> */}
-            {/* <div className="bottom-left pt-2 p-[20px] mr-[-30px] w-[48%] bg-[#dfeeff] mt-[20px] mb-[30px]  MBR pb-[6px]"> */}
             <div
               className={`bottom-left float-left min-w-[680px] pt-1.5 pb-1 px-2 ${
                 order ? "w-[48%]" : "ml-[25px] w-[44%]"
@@ -299,11 +347,12 @@ const OrderMarketW = () => {
         
                   <div className="flex w-full">
                     <div className="flex w-[20%] group-buysell  ">
+
                     <div
                       id="tabBuy"
                       className={`tabBuy ${color ? "active" : ""}`}
                       // className="tabBuy bg-[#0055ba]"
-                      onClick={() => setColor(true)}
+                      onClick={() => switchBuySell(true)}
                     >
                       {t("home:Order.ORDER_MUA")}
                     </div>
@@ -311,35 +360,37 @@ const OrderMarketW = () => {
                       id="tabSell"
                       className={`tabSell normal-case ${color ? "" : "active"}`}
                       // className="normal-case tabSell "
-                      onClick={() => setColor(false)}
+                      onClick={() => switchBuySell(false)}
                     >
                       {t("home:Order.ORDER_BAN")}
                     </div>
                     </div>
-                    
+                    { statusAccount !== 1 && color  && 
+                    (<div className="flex w-[80%]">
                     <input
                       style={{ border: "1px solid #dedede" }}
                       value="TIỀN MẶT"
                       type="button"                 
                       onClick={()=> dispatch(setStatusKQ(false))}
                       placeholder="TIỀN MẶT"
-                      className={`btn-tab ${statusKQ ? "" : "active"} ${statusEztrade===0 ?"hidden":""}`}
+                      className={`btn-tab ${statusKQ ? "" : "active"} ${statusAccount === 2 ? "":"hidden"} `}
                     />
                     <input
                       style={{ border: "1px solid #dedede" }}
                       value="KÝ QUỸ"
                       type="button"
                       onClick={()=> dispatch(setStatusKQ(true))}
-                      disabled={statusEztrade === 0? true :false}
+                      disabled={statusAccount === 3? true :false}
                       placeholder="KÍ QUỸ"
                       className={`btn-tab ${statusKQ ? "active" : ""} ${color ? "" : "hidden"}`}
                     />
                     <img
                       onClick={handelPopup}
                       className={`h-[28px] pl-2 cursor-pointer ${color ? "" : "hidden"}`}
-                      src="/menu-list-icon.png"
+                      src={iconlistKQ}
                       alt="/menu-list-icon.png "
                     />
+                    </div>)}
                   </div>
            
                 <div className="w-[30%] text-right btn__switchGroup">
@@ -363,23 +414,24 @@ const OrderMarketW = () => {
                 <div className="flex w-[90%] panelDatLenhThuong">
                   <div className="inpStock pr-[15px] w-1/4">
                     <div id="divStock">
-                      <span id="spnDivStock " className="p-[20px]"></span>                    
-                      <input
-                        className="hidden form-control"
-                        type="text"
-                        id="txtContactNo"
-                      ></input>
+                    
+                      <div className={`text-center ${san ?"":"pt-5"}` }>
+                      <span className="!text-[13px] !text-[#333]">
+                            {san}
+                          </span>
+                      </div>
+                     
                       <div
                         className="ms-ctn form-control border-[#cccccc] rounded-md
 
                   "
                         id="txtSymbolBase"
                       >
+                      
+                          
                         <div className="relative ms-sel-ctn">
-                          <span className="absolute top-[-20px] left-[3px] !text-[12px] !text-[#333]">
-                            {san}
-                          </span>
-                          <span className="absolute top-[-20px] right-[3px] !text-[12px] !text-[#333]">
+                        
+                          {statusAccount ===3 &&   <span className="absolute top-[-20px] right-[3px] !text-[12px] !text-[#333]">
                             TLV:{dataShow.TLV ? dataShow.TLV : 0}%
                             <Tooltip title={priceSm}>
                               <i
@@ -392,17 +444,20 @@ const OrderMarketW = () => {
                                 }}
                               ></i>
                             </Tooltip>
-                          </span>
+                          </span>}
+                        
                           <input
                             type="text"
                             className="form-control relative ui-autocomplete-input size-input p-[2px] w-[100%] mr-[14px] rounded-md pl-[8px]"
                             placeholder={`${t("home:Order.ORDER_MCK")}`}
                             id="txtSymbol"
+                            ref={inputStock}
                             // onFocus={() => setShowResults(true)}
                             // onBlur={() => setShowResults(false)}
                             onChange={handelInputChange}
                             name="txtSymbol"
                             value={inputValue ? inputValue : maCode}
+                            // onKeyDown={(e) => handleKeyDownInput(e)} // Thêm sự kiện onKeyDown cho ô input
                             autoComplete="off"
                           />
 
@@ -423,10 +478,10 @@ const OrderMarketW = () => {
                     <div id="divMaxOrder ">
                       <span className="text-xs " id="fillMaxOrder">
                         Tối đa:{" "}
-                        <span id="spnMaxOrder">
+                        <span className="cursor-pointer" onClick={()=>setValueInputKl(QuantityMax)}>
                           {QuantityMax
                             ? formatNumberMarket(Math.floor(QuantityMax))
-                            : 0}
+                            : ""}
                         </span>
                       </span>
                     </div>
@@ -438,6 +493,7 @@ const OrderMarketW = () => {
                               ? "red 1px solid"
                               : "",
                         }}
+                        ref={inputQuantity}
                         onChange={handelInputChangeKl}
                         type="text"
                         className="form-control OrderFormQuantity  size-input text-right w-[100%] p-[1px] pr-[25px] rounded-md"
@@ -523,10 +579,11 @@ const OrderMarketW = () => {
                             className="form-control ui-autocomplete-input size-input p-[2px] w-[100%] rounded-md tttt pl-[9px]"
                             placeholder={`${t("home:base.Gia")}`}
                             id="txtPrice"
+                            ref={inputPrice}
                             //  value={(dataTable?.ma && dataTable?.price) || (dataBuy?.ma && dataBuy?.price) || ""}
                             onChange={handelInputChangePrice}
                             step={100}
-                            value={valueInputPrice ? valueInputPrice/1000 : " "}
+                            value={valueInputPrice ? valueInputPrice : " "}
 
                             // value={dataTable.price ? dataTable.price : (dataBuy.price ? dataBuy.price : valueInputPrice)}
                           />
@@ -537,7 +594,7 @@ const OrderMarketW = () => {
                         <button
                           type="button"
                           id="btnUpPrice"
-                          onClick={() => incrementCounter1()}
+                          onClick={() => incrementCounterPrice()}
                           className="up button-spinner relative  text-[#d3d3d3]"
                         >
                           ›
@@ -545,7 +602,7 @@ const OrderMarketW = () => {
                         <button
                           type="button"
                           id="btnDownPrice"
-                          onClick={() => decrementCounter1()}
+                          onClick={() => decrementCounterPrice()}
                           className="down button-spinner relative text-[#d3d3d3]"
                         >
                           ‹
@@ -557,23 +614,15 @@ const OrderMarketW = () => {
                     <div className="h-[17px]"></div>
                     {color ? (
                       <button
-                        disabled={
-                          statusPrice === 1 ||
-                          Number(valueInputPrice) <= 0 ||
-                          valueInputKl <= 0 ||
-                          !maCode
-                            ? true
-                            : false
-                        }
                         onClick={handleClick}
-                        id={
-                          statusPrice === 1 ||
-                          Number(valueInputPrice) <= 0 ||
-                          valueInputKl <= 0 ||
-                          !maCode
-                            ? "btnBuySend"
-                            : ""
-                        }
+                        // id={
+                        //   statusPrice === 1 ||
+                        //   Number(valueInputPrice) <= 0 ||
+                        //   valueInputKl <= 0 ||
+                        //   !maCode
+                        //     ? "btnBuySend"
+                        //     : ""
+                        // }
                         className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] ml-[10px]  
                         text-13px rounded-md text-white w-4/5"
                       >
@@ -608,7 +657,7 @@ const OrderMarketW = () => {
                 </div>
                 <div className="divReset w-[10%]">
                   <div className="h-[14px]"></div>
-                  <button className="refresh" id="btnReset" onClick={ResetFrom}>
+                  <button className="refresh" id="btnReset" onClick={ResetForm}>
                     <img
                       className="mt-[2px] mr-[8px] ml-[10px] "
                       src="http://priceboard3.fpts.com.vn/images/EzFuture-05.png"
@@ -636,7 +685,7 @@ const OrderMarketW = () => {
         {/* <div id="draggableH" className="ui-draggable ui-draggable-handle" style={{ top: anchorEl2 ? "431px" : "263.469px",background : "transparent" }} ></div>   */}
       </div>
       <ToastContainer />
-      <iframe id="dvIframeChart" src={`/chart/blank?${(new Date()).getMilliseconds()}`} ></iframe>
+      {/* <iframe id="dvIframeChart" src={`/chart/blank?${(new Date()).getMilliseconds()}`} ></iframe> */}
     </>
   );
 };

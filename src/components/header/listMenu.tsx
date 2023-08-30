@@ -213,9 +213,9 @@ const ListMenu = () => {
             </li>
             <li>
               <Link
-                to="/test/bcts"
+                to="/report/AssetReport2"
                 className="ezfu-hover-itemMenu"
-                onClick={() => ChangeGetActiveMenu("/test/bcts")}
+                onClick={() => ChangeGetActiveMenu("/report/AssetReport2")}
               >
                 {t("home:menu.QLTK_BCTS")}
                 <input type="image" src={New} height={16} width={28} />

@@ -8,6 +8,7 @@ export const san_HSX = "hsx";
 var ARRAY_INDEX_LANGUAGE = [0, 1];
 var COOKIE_LANGUAGE_NAME = "aspfpt_language";
 var g_CurrentLanguage = "";
+export const FEE_RATE_TP = "0.0005"
 var g_ARRAY_CHART_NAME = [
   "VNXALL",
   "VNI",

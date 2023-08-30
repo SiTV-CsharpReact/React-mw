@@ -35,3 +35,50 @@ export const hideEmail = (email:string) =>{
             return email;
         }
 }
+export const  checkFee = (Exchange:number,Stock_Type2:number,vFeeRate_TP:number,vFeeUP:number,vFeeUP_CCQ:number,vFeeLISTED_CP:number,vFeeLISTED_ETF:number,vFeeHSX_CP:number,vFeeHSX_CCQ:number,vFeeHSX_ETF:number,vFeeHSX_CQ:number) =>{
+  var fee = 0
+  if (Exchange === 3) { // HNX.UPCOM
+    switch (Stock_Type2) {
+        case 1: // Trái Phiếu
+            fee = vFeeRate_TP;
+            break;
+        case 2: // cổ phiếu
+            fee = vFeeUP;
+            break;
+        case 3: // chứng chỉ quỹ thường
+            fee = vFeeUP_CCQ;
+            break;
+    }
+} else if (Exchange === 2) { // HNX.UPCOM
+    switch (Stock_Type2) {
+        case 1: // Trái Phiếu
+            fee = vFeeRate_TP;
+            break;
+        case 2: // cổ phiếu
+            fee = vFeeLISTED_CP;
+            break;
+        case 3: // chứng chỉ quỹ thường
+            fee = vFeeLISTED_ETF;
+            break;
+    }
+} else if (Exchange === 1) { // HNX.UPCOM
+    switch (Stock_Type2) {
+        case 1: // Trái Phiếu
+            fee = vFeeRate_TP;
+            break;
+        case 2: // cổ phiếu
+            fee = vFeeHSX_CP;
+            break;
+        case 3: // chứng chỉ quỹ thường
+            fee = vFeeHSX_CCQ;
+            break;
+        case 6: // cổ phiếu
+            fee = vFeeHSX_ETF;
+            break;
+        case 7: // chứng chỉ quỹ thường
+            fee = vFeeHSX_CQ;
+            break;
+    }
+}  
+return fee;
+}

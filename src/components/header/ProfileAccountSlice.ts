@@ -46,7 +46,7 @@ export const ProfileAccountSlice = createSlice({
     vFeeHSX_CCQ: 0,
     vFeeHSX_ETF: 0,
     vFeeHSX_CQ: 0,
-    vFeeRate_TP: 0,
+    vFeeRate_TP: 0, //Phí đối với  Trái Phiếu
     EzTradeChargeRate: 0,
     statusAccount: 1,
     statusOTP: 0,
@@ -85,15 +85,15 @@ export const ProfileAccountSlice = createSlice({
         state.isLoading = true;
         state.status = "success";
         state.Permission = action.payload;
-        state.vFeeUP = action.payload.vFeeUP !== undefined ? action.payload.vFeeUP : 0;
-        state.vFeeUP_CCQ = action.payload.vFeeUP_CCQ !== undefined ? action.payload.vFeeUP_CCQ : 0;
-        state.vFeeLISTED_CP = action.payload.vFeeLISTED_CP !== undefined ? action.payload.vFeeLISTED_CP : 0;
-        state.vFeeLISTED_ETF = action.payload.vFeeLISTED_ETF !== undefined ? action.payload.vFeeLISTED_ETF : 0;
-        state.vFeeHSX_CP = action.payload.vFeeHSX_CP !== undefined ? action.payload.vFeeHSX_CP : 0;
-        state.vFeeHSX_CCQ = action.payload.vFeeHSX_CCQ !== undefined ? action.payload.vFeeHSX_CCQ : 0;
-        state.vFeeHSX_ETF = action.payload.vFeeHSX_ETF !== undefined ? action.payload.vFeeHSX_ETF : 0;
-        state.vFeeHSX_CQ = action.payload.vFeeHSX_CQ !== undefined ? action.payload.vFeeHSX_CQ : 0;
-        state.vFeeRate_TP = action.payload.vFeeRate_TP !== undefined ? action.payload.vFeeRate_TP : 0;
+        state.vFeeUP = action.payload.vFeeUP !== undefined ? action.payload.vFeeUP/1000 : 0;
+        state.vFeeUP_CCQ = action.payload.vFeeUP_CCQ !== undefined ? action.payload.vFeeUP_CCQ/10000 : 0;
+        state.vFeeLISTED_CP = action.payload.vFeeLISTED_CP !== undefined ? action.payload.vFeeLISTED_CP/10000 : 0;
+        state.vFeeLISTED_ETF = action.payload.vFeeLISTED_ETF !== undefined ? action.payload.vFeeLISTED_ETF/10000 : 0;
+        state.vFeeHSX_CP = action.payload.vFeeHSX_CP !== undefined ? action.payload.vFeeHSX_CP/10000 : 0;
+        state.vFeeHSX_CCQ = action.payload.vFeeHSX_CCQ !== undefined ? action.payload.vFeeHSX_CCQ/10000 : 0;
+        state.vFeeHSX_ETF = action.payload.vFeeHSX_ETF !== undefined ? action.payload.vFeeHSX_ETF/10000 : 0;
+        state.vFeeHSX_CQ = action.payload.vFeeHSX_CQ !== undefined ? action.payload.vFeeHSX_CQ/10000 : 0;
+        state.vFeeRate_TP = action.payload.vFeeRate_TP !== undefined ? action.payload.vFeeRate_TP/10000 : 0;
         state.EzTradeChargeRate = action.payload.EzTradeChargeRate !== undefined ? action.payload.EzTradeChargeRate : 0;
         state.EzTrade =action.payload.EzTrade !== undefined ? action.payload.EzTrade : 0;
         if (action.payload.EzTrade === 1 && action.payload.EzMargin === 0) {

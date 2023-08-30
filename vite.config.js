@@ -4,17 +4,14 @@ import path from "path";
 import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
+  optimizeDeps: {
+    include: ['esm-dep > cjs-dep'],
+  },
   server: {
-    host: 'eztradereact.fpts.com.vn',
+    host: 'eztradereact.fpts.com.vn'
   },
   css: {
     devSourcemap: true,
-    postcss: {
-      plugins: [
-        require("tailwindcss"),
-        require("autoprefixer"),
-      ],
-    },
   },
   resolve: {
     alias: {
@@ -23,7 +20,7 @@ export default defineConfig({
   },
   build: {
     target: "esnext", // Đối tượng JavaScript mục tiêu (browserslist)
-    outDir: "test", // Thư mục đầu ra của build
+    outDir: "dist", // Thư mục đầu ra của build
     assetsDir: "assets", // Thư mục chứa các tài sản (hình ảnh, font chữ, ...)
     sourcemap: true, // Tạo sourcemap cho mã đầu ra
   },

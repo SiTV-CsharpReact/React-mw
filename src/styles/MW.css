@@ -40,7 +40,7 @@
    background-color: #797979;
 }
 .arrowUp, .arrowDown, .square {
-   background-image: url(../../public/Arrow.png);
+   background-image: url(../images/Arrow.png);
    background-repeat: no-repeat;
    display: inline-block;
    width: 12px;
@@ -75,7 +75,7 @@
 }
 .imgExpandOpen, .imgExpandOpen:hover, .spExpand{
    margin-left: 3px;
-   background-image: url(../../public/arrowdown_2.png);
+   background-image: url(../images/arrowdown_2.png);
    background-repeat: no-repeat;
    display: block;
    width: 30px;
@@ -127,7 +127,7 @@
    color: #ffffff !important;
 }
 .imgCustom{
-   background: url(../../public/custom30.png) no-repeat;
+   background: url(../images/custom30.png) no-repeat;
    display: inline-block;
    width: 30px;
    height: 30px;
@@ -152,7 +152,7 @@
    padding: 7px 6px 0 3px;
 }
 .imgHelp{
-   background: url(../../public/help30.png) no-repeat;
+   background: url(../images/help30.png) no-repeat;
    display: inline-block;
    width: 29px;
    height: 30px;
@@ -164,7 +164,7 @@
    background-position: -29px 0
 }
 /* .imgChart{
-   background: url(../../public/line-chart-32.png) no-repeat;
+   background: url(../images/line-chart-32.png) no-repeat;
    display: inline-block;
    width: 29px;
    height: 30px;
@@ -190,13 +190,12 @@
 }
 .chart3d{
    margin: 2px 0px;
-   background: url(../../public/chart.png) no-repeat;
    width: 204px;
    height: 97px;
 }
 .imgExpand{
    margin-left: 3px;
-   background-image: url(../../public/arrowup_2.png);
+   background-image: url(../images/arrowup_2.png);
    background-repeat: no-repeat;
    display: block;
    width: 30px;

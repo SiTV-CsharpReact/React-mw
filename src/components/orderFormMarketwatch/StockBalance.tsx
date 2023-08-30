@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CachedIcon from "@mui/icons-material/Cached";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { GetStockBalance, GetStockBalanceMarpro } from "./ClientBalance";
 import { Avatar, Box, Skeleton, TextField, Typography } from "@mui/material";
+import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
+import { setDataOrder } from "../tableMarketwatch/orderComanSlice";
 const StockBalance = (status: any) => {
   const { t } = useTranslation(["home"]);
   const dispatch = useAppDispatch();
@@ -11,6 +13,7 @@ const StockBalance = (status: any) => {
   const StockBalances = useAppSelector(
     (state) => state.clientBalance.StockBalane
   );
+  console.log(StockBalances)
   const isLoadingStockBalance = useAppSelector(
     (state) => state.clientBalance.isLoadingStockBalance
   );
@@ -20,6 +23,10 @@ const StockBalance = (status: any) => {
   const sttAccount = useAppSelector(
     (state) => state.ProfileAccount.statusAccount
   );
+  const { dataCompanyTotal } = useAppSelector(
+    (state) => state.company
+  );
+  
   useEffect(() => {
     if (sttAccount === 1) {
       dispatch(GetStockBalance());
@@ -32,7 +39,47 @@ const StockBalance = (status: any) => {
       dispatch(GetStockBalance());
     }
   }, [dispatch]);
+  const SellStock = (vCodeSell:string,vQuantityMax:number)=>{
+    console.log(dataCompanyTotal)
+  //  dispatch(fetchCompanyAsync())
+    let vExchange = "";
+    let vGiaTran=0;
+    let vGiaTC=0;
+    let vGiaSan=0;
+    for (var i = 0; i < dataCompanyTotal.length; i++) {
+      if (dataCompanyTotal[i].Code === vCodeSell) {
+        vGiaTran= dataCompanyTotal[i].Ceiling_Price;
+       vGiaTC= dataCompanyTotal[i].Basic_Price;
+       vGiaSan= dataCompanyTotal[i].Floor_Price;
+          if (dataCompanyTotal[i].Exchange === 1) {   // HO
+              vExchange = "HOSE";   
+          }
 
+          if (dataCompanyTotal[i].Exchange === 2) { // HA
+              vExchange = "HNX.NY";
+          }
+
+          if (dataCompanyTotal[i].Exchange === 3) { // UPCOM
+              vExchange = "HNX.UPCOM";
+          }
+          break;
+      }
+      console.log(vExchange)
+  }
+    const Floor_Price = vGiaSan;
+    const Basic_Price = vGiaTC;
+    const Ceiling_Price = vGiaTran;
+    const Code = vCodeSell;
+    const Exchange = vExchange;
+    const quantityMax = vQuantityMax;
+    let data = {
+      key: "B",
+      dataOrder: {Floor_Price ,Basic_Price,Ceiling_Price,Code,Exchange,quantityMax},
+    };
+    console.log(data)
+      dispatch(setDataOrder(data));
+    console.log(StockBalances)
+  }
   return (
     <Box
       className={`bottom__sdCKhoan bottom__sdTien mr-[3%] float-left ${
@@ -154,6 +201,7 @@ const StockBalance = (status: any) => {
                       type="button"
                       className="btn btnSellStockBalance"
                       defaultValue="BÁN"
+                      onClick={()=>SellStock(StockBalance.ASTOCKCODE,StockBalance.AQUANTITY)}
                     />
                   </td>
                 </tr>

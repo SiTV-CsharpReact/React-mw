@@ -247,3 +247,5 @@ const  Protal = ({ popup = false, handelClosed = () => { } }) =>  {
 
 }
 export default  React.memo(Protal)
+
+

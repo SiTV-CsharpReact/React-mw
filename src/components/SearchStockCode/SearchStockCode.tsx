@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect } from "react";
-import { RootState, useAppDispatch, useAppSelector } from "../../store/configureStore";
+import React, { useCallback, useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import "./SearchStyle.scss"
 import { Company } from "../../models/root";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
+import { Autocomplete } from "@mui/material";
 type Props = {
   showPopup?: boolean;
   setShowPoup?: any;
@@ -23,7 +24,7 @@ const SearchStockCode = ({
 }: Props) => {
   const dispatch = useAppDispatch()
   const { dataCompanyTotal } = useAppSelector(
-    (state: RootState) => state.company
+    (state) => state.company
   );
   const HanDleConpany = useCallback(async() =>{
     await  dispatch(fetchCompanyAsync())
@@ -31,6 +32,8 @@ const SearchStockCode = ({
 useEffect(()=>{
   HanDleConpany() 
 },[])
+const [selectedIndex, setSelectedIndex] = useState(-1);
+const [hoveredIndex, setHoveredIndex] = useState(-1);
   //  chữ tìm kiếm màu đỏ
   const getHighlightedText = (text: string, highlight: string) => {
     const input = valueInput.toLowerCase();
@@ -56,7 +59,7 @@ useEffect(()=>{
     dataCompanyTotal &&
     dataCompanyTotal.filter((item:Company) => {
       let name = `${item.Code} "-" ${
-        item.Exchange === 1 ? "HSX" : item.Exchange === 2 ? "HNX" : "UPCOM"
+        item.Exchange === 1 ? "HOSE" : item.Exchange === 2 ? "HNX.NY" : "HNX.UPCOM"
       } "-" ${item.ScripName}`;
       const NameTo = name.toLowerCase().startsWith(valueInput.toLowerCase());
       return NameTo;
@@ -67,12 +70,22 @@ useEffect(()=>{
     SearchStockCode(stockCode);
     setValueInput("");
   };
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    console.log(e)
+    if (e.key === "ArrowUp" && index > 0) {
+      // Bấm phím mũi tên lên và không ở đầu danh sách
+      setSelectedIndex(index - 1);
+    } else if (e.key === "ArrowDown" && index < searchResults.length - 1) {
+      // Bấm phím mũi tên xuống và không ở cuối danh sách
+      setSelectedIndex(index + 1);
+    }
+  };
+  console.log(searchResults.length)
   return (
     <>
       {showPopup ? (
         <div
-          style={{ overflowY: "scroll" }}
-          className= {` ${border ?  "" : "NoneBoder" } menuSearch  w-[500px]  overflow-hidden shadow-2xl left-[25%] top-[36px] z-50 h-[310px] bg-[#FBFBFB] rounded-sm absolute `}
+          className= {` ${border ?  "NoneBoder" : "" } menuSearch  w-[350px]  shadow-2xl left-[25%] top-[36px] z-50 ${searchResults.length > 9 ?  "h-[212px] overflow-y-auto" : "" } bg-[#FBFBFB] rounded-sm absolute `}
         >
           <ul >
             {dataCompanyTotal && dataCompanyTotal.length > 0
@@ -80,14 +93,23 @@ useEffect(()=>{
                
                   let name = `${item.Code} - ${
                     item.Exchange === 1
-                      ? "HSX"
+                      ? "HOSE"
                       : item.Exchange === 2
-                      ? "HNX"
-                      : "UPCOM"
+                      ? "HNX.NY"
+                      : "HNX.UPCOM"
                   } - ${item.ScripName}`;
+                  const isItemSelected = index === selectedIndex;
+
                   return (
                    
-                      <li className={border ? "liboder" : "LinoneBorder"} key={index} onClick={() => AddStockCode(item)}>
+                      <li className={border ? "liboder" : "LinoneBorder"}
+                       key={index}
+                        onClick={() => AddStockCode(item)}
+                        tabIndex={0}
+                        style={{
+                          backgroundColor: isItemSelected || index === hoveredIndex ? "#E5E7EB" : "transparent",
+                        }}
+                        >
                         {getHighlightedText(name, valueInput)}
                       </li>
                  

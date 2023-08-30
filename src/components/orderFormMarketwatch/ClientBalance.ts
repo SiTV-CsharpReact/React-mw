@@ -51,7 +51,8 @@ export const clientBalanceSlice = createSlice({
     ClientBalane: {} as DataClientBalance,
     StockBalane: {} as DataStockBalance,
     StockBalaneMarpro: "",
-    totalMonneyMarpro:0,
+    totalMonney:0,
+    totalHMCL:0,
     sttAccount: {},
     statusKQ: false,
     status: "idle",
@@ -74,6 +75,8 @@ export const clientBalanceSlice = createSlice({
         state.isLoadingClientBalance = true;
         state.status = "success";       
         state.ClientBalane = action.payload;  
+        state.totalMonney = action.payload.Table?.[0].AVAIL_TRADINGCASH;
+        state.totalHMCL = action.payload.Table?.[0].REMAININGQUOTA;
       })
       .addCase(GetStockBalance.pending, (state) => {
         state.status = "loading";
@@ -82,7 +85,7 @@ export const clientBalanceSlice = createSlice({
         state.isLoadingStockBalance = true;
         state.status = "success";       
         state.StockBalane = action.payload;
-        state.totalMonneyMarpro = action.payload.Table?.[0].AVAIL_TRADINGCASH;
+      
       })
       .addCase(GetStockBalanceMarpro.pending, (state) => {
         state.status = "loading";
@@ -91,7 +94,7 @@ export const clientBalanceSlice = createSlice({
         state.isLoadingStockBalanceMarpro = true;
         state.status = "success";       
         state.StockBalaneMarpro = action.payload;
-        // state.totalMonneyMarpro = 
+        // state.totalMonney = 
       })
       .addCase(fetchPermission.pending, (state) => {
         state.status = "loading";

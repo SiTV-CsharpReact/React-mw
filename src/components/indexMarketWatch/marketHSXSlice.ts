@@ -9,7 +9,7 @@ export const fetchHSXMarketAsync = createAsyncThunk<ObjectMenuHSX>(
   "market/fetchMarketHSX",
   async () => {
     const responseHSX = await agent.Index.get(san_HSX);
-    console.log(responseHSX)
+    // console.log(responseHSX)
     return responseHSX;
   }
 );

@@ -15,10 +15,13 @@ const initialState  = {
       TranC: 0,
       key: "M", 
       valueInput : "",
-      san : ""
+      san : "",
+      Fee :"",
+      quantityMax:0,
+      priceInput:0
 }
 export const OrderComanSlice = createSlice({
-  name: "data_thub",
+  name: "data_order",
   initialState,
   reducers: {
     // set lại data order
@@ -30,6 +33,9 @@ export const OrderComanSlice = createSlice({
         state.key   = key
         state.maCode =  dataOrder?.Code
         state.san =  dataOrder?.Exchange
+        state.Fee =  dataOrder?.Fee
+        state.quantityMax =  dataOrder?.quantityMax
+        state.priceInput = dataOrder.Floor_Price
         },
         // set lại value htai
         setValueOrder  :  (state,action) =>{
@@ -47,6 +53,26 @@ export const OrderComanSlice = createSlice({
           state.key   = "M"
           state.maCode =""
           state.san =  ""
+          state.quantityMax =0
+        },
+        setKey :(state ,action)=>{
+          state.key = action.payload
+        },
+        setDecrementCounterPrice:(state ,action) =>{
+          if(state.priceInput === action.payload){
+            state.priceInput = action.payload - 100
+          }
+          else{
+            state.priceInput = action.payload - 100
+          }
+        },
+        setIncrementCounterPrice:(state ,action) =>{
+          if(action.payload === 0){
+            
+          }
+          else{
+            state.priceInput = action.payload + 100
+          }
         }
   },
   extraReducers: (builder) => {
@@ -57,5 +83,5 @@ export const OrderComanSlice = createSlice({
   },
 });
 
-export const {setDataOrder ,setValueOrder ,setBuySellorder ,ResetStockCode} = OrderComanSlice.actions;
+export const {setDataOrder ,setValueOrder ,setBuySellorder ,ResetStockCode,setKey,setDecrementCounterPrice,setIncrementCounterPrice} = OrderComanSlice.actions;
 export default OrderComanSlice;
