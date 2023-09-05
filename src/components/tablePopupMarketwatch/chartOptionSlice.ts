@@ -1,21 +1,26 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import agent from "../../api/agent";
-import { DataStockCode } from "../../models/stockCode";
+import { DataChart } from "./interface/data_tablepopup";
 
-const initialState = {
+interface DataInitialState {
+  isLoading: boolean;
+  dataChartOption: (string | number)[];
+  status: string;
+}
+const initialState: DataInitialState = {
   isLoading: false,
   dataChartOption: [],
   status: "loading",
 };
-export const fetchChartOptionAsync = createAsyncThunk<[], any>(
+export const fetchChartOptionAsync = createAsyncThunk<[], DataChart>(
   "chartOptions",
   async (data) => {
     try {
       const response = await agent.dataTableBasic.postFormData({
-        action: 'gw-realtime',
-        symbol: data.stockCode,
+        action: data.action,
+        symbol: data.symbol,
       });
-      console.log("daresponseta" ,response)
+      console.log("daresponseta", response);
       return response.data;
     } catch (error) {
       console.log("error ở đây", error);
@@ -27,7 +32,7 @@ export const fetchChartOptiongwHistoryAsync = createAsyncThunk<[], any>(
   async (data) => {
     try {
       const response = await agent.dataTableBasic.postFormData({
-        action: 'gw_history',
+        action: "gw_history",
         symbol: data.stockCode,
       });
       return response.data;
@@ -44,10 +49,10 @@ const chartOptionSlice = createSlice({
       state.dataChartOption = action.payload;
     },
     setAction: (state, action: PayloadAction<[]>) => {
-    // console.log(ac);
+      // console.log(ac);
+    },
   },
-  },
-  
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchChartOptionAsync.pending, (state) => {
