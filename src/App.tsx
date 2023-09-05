@@ -42,23 +42,31 @@ import Cookies from 'js-cookie';
 import ConditionalOderText from "./pages/Stoploss/ConditionalOderText";
 import ChartTradingView from "./components/Chart/TradingView";
 import { useEffect, useState } from "react";
-import MyLayouts from "./components/dynamicDashboard/MyLayouts";
 const App: React.FC = () => {
-//   const token = Cookies.get('aspfpt_sessiontoken');
-//  // const navigate = useNavigate(); // Sử dụng hook useNavigate từ react-router-dom
-//   const [hasToken, setHasToken] = useState(!!token); // Sử dụng state để kiểm tra token
-
-//   useEffect(() => {
-//     if (!token) {
-//       // Nếu không có token, chuyển hướng đến trang đăng nhập
-//       window.location.replace("http://accounts3.fpts.com.vn/Login?href=eztradereact")
-//     }
-//   }, [token]);
-
-//   if (!hasToken) {
-//     // Nếu không có token, không hiển thị nội dung của App
-//     return null;
-//   }
+  const token = Cookies.get('aspfpt_sessiontoken');
+ // const navigate = useNavigate(); // Sử dụng hook useNavigate từ react-router-dom
+  const [hasToken, setHasToken] = useState(!!token); // Sử dụng state để kiểm tra token
+  const isDevelopment = process.env.NODE_ENV === "development";
+  console.log(isDevelopment)
+  useEffect(() => {
+    if (!token && !isDevelopment) {
+      // Nếu không có token, chuyển hướng đến trang đăng nhập
+      window.location.replace("http://accounts3.fpts.com.vn/Login?href=eztradereact")
+    }
+  }, [token,isDevelopment]);
+  if (isDevelopment) {
+    console.log("Đây là chế độ phát triển.");
+  }
+  else{
+    if (!hasToken) {
+    // Nếu không có token, không hiển thị nội dung của App
+    return null;
+  }
+  }
+  // if (!hasToken) {
+  //   // Nếu không có token, không hiển thị nội dung của App
+  //   return null;
+  // }
   
   return (
     <AppProvider>
@@ -70,7 +78,7 @@ const App: React.FC = () => {
               path="/dynamic-dashboard-test"
               element={   <DynamicDashboard />  }
             />
-            <Route path="/dynamic-dashboard" element={<MyLayouts />} />
+            <Route path="/dynamic-dashboard" element={<MyLayout />} />
            
             <Route
               path="/report/ReportTransBalance"

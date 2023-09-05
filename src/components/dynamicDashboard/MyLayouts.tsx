@@ -1,10 +1,5 @@
 import React, { useState, useRef } from "react";
-import {
-  IJsonModel,
-  Model,
-  TabNode,
-  Layout,
-} from "flexlayout-react";
+import { IJsonModel, Model, TabNode, Layout } from "flexlayout-react";
 import OrderFormMarketWatch from "../orderFormMarketwatch/OrderFormMarketWatch";
 import TablePrice from "./TablePrice";
 import PendingOrders from "../orderFormMarketwatch/PendingOrders";
@@ -16,6 +11,9 @@ import TradingResult from "../orderFormMarketwatch/TradingResult";
 import AssetReport from "../AssetReport/AssetReport";
 import TransBalance from "../TransBalance/TransBalance";
 import ReportNAV from "../../pages/Report/ReportNAV";
+import SlidesMarketWatch from "../indexMarketWatch/SlidesMarketWatch";
+import ChartTradingView from "../Chart/TradingView";
+import TradingViewWidget from "../Chart/TradingViewWidget";
 
 type Tab = {
   id: string;
@@ -39,27 +37,66 @@ const json: IJsonModel = {
   borders: [],
   layout: {
     type: "row",
-    weight: 150,
+
     children: [
       {
-        type: "tabset",
-        weight: 50,
+        type: "row",
         children: [
           {
-            type: "tab",
-            name: "Bảng đặt lệnh",
-            component: "orderform",
+            height:193,
+            type: "tabset",
+            children: [
+              {
+                type: "tab",
+                name: "Chart Index",
+                component: "chartindex",
+                id: "custom-tab0",
+              },
+            ],
           },
-        ],
-      },
-      {
-        type: "tabset",
-        weight: 50,
-        children: [
           {
-            type: "tab",
-            name: "Bảng giá cũ",
-            component: "tableprice",
+            type: "row",
+            children: [
+              {
+                type: "tabset",
+                children: [
+                  {
+                    type: "tab",
+                    name: "Bảng giá",
+                    component: "tablepricenew",
+                    id: "custom-tab000",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: "row",
+            children: [
+                {
+                    type: "tabset",
+                    children: [
+                      {
+                        type: "tab",
+                        name: "Số dư tiền",
+                        component: "totalmonney",
+                        id: "custom-tab00000",
+                      },
+                    ],
+                  },
+              {
+                type: "tabset",
+                children: [
+                  {
+                    type: "tab",
+                    name: "Đặt lệnh",
+                    component: "orderform",
+                    id: "custom-tab0000",
+                  },
+                ],
+              },
+             
+            ],
           },
         ],
       },
@@ -117,7 +154,7 @@ const MenuSection: React.FC<MenuSectionProps> = ({ title, items }) => (
 
 const MyLayouts: React.FC = () => {
   const layoutRef = useRef<Layout | null>(null);
-  const [sttMenu,setSTTMenu] = useState<boolean>(true);
+  const [sttMenu, setSTTMenu] = useState<boolean>(true);
   const [state, setState] = useState<MyLayoutState>({
     layoutFile: null,
     model: Model.fromJson(json),
@@ -132,6 +169,12 @@ const MyLayouts: React.FC = () => {
     var component = node.getComponent();
     // let config = node.getConfig();
     // console.log(node, component);
+    if (component === "chartindex") {
+      return <SlidesMarketWatch />;
+    }
+    if (component === "chartwidget") {
+        return <TradingViewWidget heightPriceBoard={350} />;
+      }
     // đặt lệnh
     if (component === "orderform") {
       return <OrderFormMarketWatch types="1" />;
@@ -155,19 +198,20 @@ const MyLayouts: React.FC = () => {
     if (component === "totalmonney") {
       return <TableTotalMonney status={true} />;
     }
-    // báo cáo 
+    // báo cáo
     if (component === "assetreport") {
-        return <AssetReport  />;
-      }
-      if (component === "reporttransbalance") {
-        return <TransBalance  />;
-      }
-      if (component === "reportNAV") {
-        return <ReportNAV  />;
-      }
-      if (component === "reportprofitloss") {
-        return <AssetReport  />;
-      }
+      return <AssetReport />;
+    }
+    if (component === "reporttransbalance") {
+      return <TransBalance />;
+    }
+    if (component === "reportNAV") {
+      return <ReportNAV />;
+    }
+    if (component === "reportprofitloss") {
+      return <AssetReport />;
+    }
+    
     return null;
   };
   const handleAddTab = () => {
@@ -231,12 +275,16 @@ const MyLayouts: React.FC = () => {
         return "KQ khớp lệnh trong ngày";
       case "intradayorder":
         return "Lệnh trong ngày";
-        case "assetreport":
-            return "Báo cáo tài sản";
-          case "reporttransbalance":
-            return "Báo cáo tổng hợp số dư giao dịch";
-          case "reportNAV":
-            return "Báo cáo biến động tài sản ròng";
+      case "assetreport":
+        return "Báo cáo tài sản";
+      case "reporttransbalance":
+        return "Báo cáo tổng hợp số dư giao dịch";
+      case "reportNAV":
+        return "Báo cáo biến động tài sản ròng";
+      case "chartindex":
+        return "Chart Index";
+        case "chartwidget":
+            return "Biểu đồ kĩ thuật";
       default:
         break;
     }
@@ -280,15 +328,26 @@ const MyLayouts: React.FC = () => {
   }
   const menuData = [
     {
-      title: "Bảng giá",
+      title: "Đồ thị",
       items: [
         {
-          label: "Bảng giá cũ",
-          onClick: (event: any) => onAddDragMouseDown(event, "tableprice"),
+          label: "Biểu đồ Index",
+          onClick: (event: any) => onAddDragMouseDown(event, "chartindex"),
           iconClass: "bg-sell",
         },
         {
-          label: "Bảng giá mới",
+            label: "Biểu đồ kỹ thuật",
+            onClick: (event: any) => onAddDragMouseDown(event, "chartwidget"),
+            iconClass: "bg-sell",
+          },
+      ],
+    },
+    {
+      title: "Bảng giá",
+      items: [
+        
+        {
+          label: "Bảng giá",
           onClick: (event: any) => onAddDragMouseDown(event, "tablepricenew"),
           iconClass: "bg-buy",
         },
@@ -330,30 +389,32 @@ const MyLayouts: React.FC = () => {
       ],
     },
     {
-        title: "Báo cáo",
-        items: [
-          {
-            label: "Báo cáo tài sản",
-            onClick: (event: any) => onAddDragMouseDown(event, "assetreport"),
-            iconClass: "bg-sell",
-          },
-          {
-            label: "Báo cáo tổng hợp số dư giao dịch",
-            onClick: (event: any) => onAddDragMouseDown(event, "reporttransbalance"),
-            iconClass: "bg-sell",
-          },
-          {
-            label: "Báo cáo biến động tài sản ròng",
-            onClick: (event: any) => onAddDragMouseDown(event, "reportNAV"),
-            iconClass: "bg-sell",
-          },
-          {
-            label: "Báo cáo tổng hợp giao dịch theo mã chứng khoán",
-            onClick: (event: any) => onAddDragMouseDown(event, "reportprofitloss"),
-            iconClass: "bg-sell",
-          },
-        ],
-      },
+      title: "Báo cáo",
+      items: [
+        {
+          label: "Báo cáo tài sản",
+          onClick: (event: any) => onAddDragMouseDown(event, "assetreport"),
+          iconClass: "bg-sell",
+        },
+        {
+          label: "Báo cáo tổng hợp số dư giao dịch",
+          onClick: (event: any) =>
+            onAddDragMouseDown(event, "reporttransbalance"),
+          iconClass: "bg-sell",
+        },
+        {
+          label: "Báo cáo biến động tài sản ròng",
+          onClick: (event: any) => onAddDragMouseDown(event, "reportNAV"),
+          iconClass: "bg-sell",
+        },
+        {
+          label: "Báo cáo tổng hợp giao dịch theo mã chứng khoán",
+          onClick: (event: any) =>
+            onAddDragMouseDown(event, "reportprofitloss"),
+          iconClass: "bg-sell",
+        },
+      ],
+    },
   ];
 
   return (
@@ -379,7 +440,7 @@ const MyLayouts: React.FC = () => {
                   height="16px"
                   width="16px"
                   xmlns="http://www.w3.org/2000/svg"
-                    onClick={()=> setSTTMenu(!sttMenu)}
+                  onClick={() => setSTTMenu(!sttMenu)}
                 >
                   <path d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z" />
                 </svg>

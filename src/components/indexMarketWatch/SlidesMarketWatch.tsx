@@ -163,7 +163,7 @@ const SlidesMarketWatch = () => {
           handleMouseLeave(e);
         }}
       />
-      <ul className="my-1 col-priceboard class-chart">
+      <ul className="py-1 col-priceboard class-chart bg-black">
         <div
           className="flex w-full overflow-x-hidden whitespace-nowrap cursor-grab"
           ref={divRef}
