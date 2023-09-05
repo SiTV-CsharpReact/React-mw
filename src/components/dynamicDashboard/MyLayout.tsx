@@ -6,6 +6,8 @@ import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import "./dynamic.scss";
 import TableTotalMonney from "../orderFormMarketwatch/TableTotalMonney";
 import TablePriceNew from "./TablePriceNew";
+import IntradayOrder from "../orderFormMarketwatch/IntradayOrder";
+import TradingResult from "../orderFormMarketwatch/TradingResult";
 type Tab = {
   id: string;
   name: string;
@@ -51,10 +53,56 @@ const json: IJsonModel = {
           },
         ],
       },
-   
     ],
   },
 };
+interface MenuSectionProps {
+  title: string;
+  items: MenuItemProps[];
+}
+
+interface MenuItemProps {
+  label: string;
+  onClick: (event: React.SyntheticEvent) => void;
+  iconClass: string;
+}
+
+const MenuItem: React.FC<MenuItemProps> = ({ label, onClick, iconClass }) => (
+  <div
+    className="px-3 py-1 cursor-pointer hover:bg-invert hover:text-color-highlight"
+    role="menuitem"
+    tabIndex={-1}
+    data-headlessui-state
+  >
+    <div className="flex items-center justify-between w-full">
+      <div className="flex items-center space-x-1">
+        <span
+          onMouseDown={(event) => onClick(event)}
+          onTouchStart={(event) => onClick(event)}
+        >
+          {label}
+        </span>
+      </div>
+      <span className={`w-3 h-3 rounded-full ${iconClass}`} />
+    </div>
+  </div>
+);
+
+const MenuSection: React.FC<MenuSectionProps> = ({ title, items }) => (
+  <div role="none">
+    <div
+      className="bg-invert text-color-tertiary font-medium px-3 py-1.5 mb-1"
+      role="none"
+    >
+      {title}
+    </div>
+    <div className="space-y" role="none">
+      {items.map((item) => (
+        <MenuItem key={item.label} {...item} />
+      ))}
+    </div>
+  </div>
+);
 
 class MyLayout extends React.Component<{}, MyLayoutState> {
   loadingLayoutName?: string;
@@ -89,7 +137,7 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
     let config = node.getConfig();
     // console.log(node, component);
     if (component === "orderform") {
-      return <OrderFormMarketWatch />;
+      return <OrderFormMarketWatch types="1" />;
     }
     if (component === "tableprice") {
       return <TablePrice />;
@@ -100,12 +148,20 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
     if (component === "pendingorder") {
       return <PendingOrders value={1} />;
     }
+    if (component === "tradingresult") {
+      return <TradingResult/>;
+    }
+    if (component === "intradayorder") {
+      return <IntradayOrder/>;
+    }
+  
     if (component === "totalmonney") {
       return <TableTotalMonney status={true} />;
     }
 
     return null;
   };
+
   showDropDownMenu = () => {
     this.setState({ showDropMenu: !this.state.showDropMenu });
     console.log(this.state.showDropMenu);
@@ -163,8 +219,15 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
         return "Bảng đặt lệnh";
       case "totalmonney":
         return "Số dư tiền";
-        case "tablepricenew":
-          return "Bảng giá mới";
+      case "tablepricenew":
+        return "Bảng giá mới";
+      case "pendingorder":
+        return "Lệnh chờ khớp";
+      case "tradingresult":
+        return "KQ khớp lệnh trong ngày";
+      case "intradayorder":
+        return "Lệnh trong ngày";
+        
       default:
         break;
     }
@@ -207,6 +270,65 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
         </div>
       );
     }
+    const menuData = [
+      {
+        title: "Bảng giá",
+        items: [
+          {
+            label: "Bảng giá cũ",
+            onClick: (event: any) =>
+              this.onAddDragMouseDown(event, "tableprice"),
+            iconClass: "bg-sell",
+          },
+          {
+            label: "Bảng giá mới",
+            onClick: (event: any) =>
+              this.onAddDragMouseDown(event, "tablepricenew"),
+            iconClass: "bg-buy",
+          },
+        ],
+      },
+      {
+        title: "Giao dịch",
+        items: [
+          {
+            label: "Đặt lệnh",
+            onClick: (event: any) =>
+              this.onAddDragMouseDown(event, "orderform"),
+            iconClass: "bg-sell",
+          },
+          {
+            label: "Lệnh chờ khớp",
+            onClick: (event: any) =>
+              this.onAddDragMouseDown(event, "pendingorder"),
+            iconClass: "bg-sell",
+          },
+          {
+            label: "KQ khớp lệnh trong ngày",
+            onClick: (event: any) =>
+              this.onAddDragMouseDown(event, "tradingresult"),
+            iconClass: "bg-sell",
+          },
+          {
+            label: "Lệnh trong ngày",
+            onClick: (event: any) =>
+              this.onAddDragMouseDown(event, "intradayorder"),
+            iconClass: "bg-sell",
+          },
+        ],
+      },
+      {
+        title: "Tài sản",
+        items: [
+          {
+            label: "Số dư tiền",
+            onClick: (event: any) =>
+              this.onAddDragMouseDown(event, "totalmonney"),
+            iconClass: "bg-sell",
+          },
+        ],
+      },
+    ];
 
     return (
       <main id="main-wrapper" className="relative w-full main-wrappers">
@@ -312,170 +434,9 @@ class MyLayout extends React.Component<{}, MyLayoutState> {
                   </div>
 
                   <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-scroll list-widget">
-                    <div role="none">
-                      <div
-                        className="bg-invert text-color-tertiary font-medium px-3 py-1.5 mb-1"
-                        role="none"
-                      >
-                        Bảng giá 
-                      </div>
-                      <div className="space-y" role="none">
-                        <div
-                          className="px-3 py-1 cursor-pointer hover:bg-invert hover:text-color-highlight"
-                          id="headlessui-menu-item-179"
-                          role="menuitem"
-                          tabIndex={-1}
-                          data-headlessui-state
-                        >
-                          <div className="flex items-center justify-between w-full">
-                            <div className="flex items-center space-x-1">
-                              <button
-                                // disabled={this.state.adding}
-                                onMouseDown={(event) =>
-                                  this.onAddDragMouseDown(event, "tableprice")
-                                }
-                                onTouchStart={(event) =>
-                                  this.onAddDragMouseDown(event, "tableprice")
-                                }
-                              >
-                                Bảng giá cũ
-                              </button>
-                            </div>
-                            <span className="w-3 h-3 rounded-full bg-sell" />
-                          </div>
-                        </div>
-
-                        <div
-                          className="px-3 py-1 cursor-pointer hover:bg-invert hover:text-color-highlight"
-                          id="headlessui-menu-item-189"
-                          role="menuitem"
-                          tabIndex={-1}
-                          data-headlessui-state
-                        >
-                          <div className="flex items-center justify-between w-full">
-                            <div className="flex items-center space-x-1">
-                            <button
-                                // disabled={this.state.adding}
-                                onMouseDown={(event) =>
-                                  this.onAddDragMouseDown(event, "tablepricenew")
-                                }
-                                onTouchStart={(event) =>
-                                  this.onAddDragMouseDown(event, "tablepricenew")
-                                }
-                              >
-                                Bảng giá mới
-                              </button>
-                              <svg
-                                stroke="currentColor"
-                                fill="currentColor"
-                                strokeWidth={0}
-                                viewBox="0 0 24 24"
-                                height="1em"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <g>
-                                  <path fill="none" d="M0 0h24v24H0z" />
-                                  <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM11 7h2v2h-2V7zm0 4h2v6h-2v-6z" />
-                                </g>
-                              </svg>
-                            </div>
-                            <span className="w-3 h-3 rounded-full bg-buy" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div role="none">
-                      <div
-                        className="bg-invert text-color-tertiary font-medium px-3 py-1.5 mb-1"
-                        role="none"
-                      >
-                        Giao dịch
-                      </div>
-                      <div className="space-y" role="none">
-                        <div
-                          className="px-3 py-1 cursor-pointer hover:bg-invert hover:text-color-highlight"
-                          id="headlessui-menu-item-179"
-                          role="menuitem"
-                          tabIndex={-1}
-                          data-headlessui-state
-                        >
-                          <div className="flex items-center justify-between w-full">
-                            <div className="flex items-center space-x-1">
-                              <span
-                                //  disabled={this.state.adding}
-                                onMouseDown={(event) =>
-                                  this.onAddDragMouseDown(event, "orderform")
-                                }
-                                onTouchStart={(event) =>
-                                  this.onAddDragMouseDown(event, "orderform")
-                                }
-                              >
-                                Đặt lệnh
-                              </span>
-                            </div>
-                            <span className="w-3 h-3 rounded-full bg-sell" />
-                          </div>
-                        </div>
-                        <div
-                          className="px-3 py-1 cursor-pointer hover:bg-invert hover:text-color-highlight"
-                          id="headlessui-menu-item-180"
-                          role="menuitem"
-                          tabIndex={-1}
-                          data-headlessui-state
-                        >
-                          <div className="flex items-center justify-between w-full">
-                            <div className="flex items-center space-x-1">
-                              <span
-                                onMouseDown={(event) =>
-                                  this.onAddDragMouseDown(event, "pendingorder")
-                                }
-                                onTouchStart={(event) =>
-                                  this.onAddDragMouseDown(event, "orderform")
-                                }
-                              >
-                                Lệnh chờ khớp
-                              </span>
-                            </div>
-                            <span className="w-3 h-3 rounded-full bg-sell" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div role="none">
-                      <div
-                        className="bg-invert text-color-tertiary font-medium px-3 py-1.5 mb-1"
-                        role="none"
-                      >
-                        Tài sản
-                      </div>
-                      <div className="space-y" role="none">
-                        <div
-                          className="px-3 py-1 cursor-pointer hover:bg-invert hover:text-color-highlight"
-                          id="headlessui-menu-item-179"
-                          role="menuitem"
-                          tabIndex={-1}
-                          data-headlessui-state
-                        >
-                          <div className="flex items-center justify-between w-full">
-                            <div className="flex items-center space-x-1">
-                              <span
-                                //  disabled={this.state.adding}
-                                onMouseDown={(event) =>
-                                  this.onAddDragMouseDown(event, "totalmonney")
-                                }
-                                onTouchStart={(event) =>
-                                  this.onAddDragMouseDown(event, "totalmonney")
-                                }
-                              >
-                                Số dư tiền
-                              </span>
-                            </div>
-                            <span className="w-3 h-3 rounded-full bg-sell" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    {menuData.map((section) => (
+                      <MenuSection key={section.title} {...section} />
+                    ))}
                   </div>
                 </div>
               </div>

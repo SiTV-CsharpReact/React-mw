@@ -13,20 +13,20 @@ const ListService = () => {
       };
   return (
     <Box>
-    <Tooltip title="Truy cập dịch vụ">
+    <Tooltip title="Truy cập dịch vụ" sx={{marginTop:"-1px"}}>
       <IconButton
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
-        style={{ marginBottom: 5 ,marginRight:2}}
+        sx={{ marginRight:0.1,padding:1.2}}
         size="large">
         <img className="" width={22} src={menuImage} alt="" />
         <Box
           id="selectSrvdiv"
           className="gb_srvService "
-          style={{ display: anchorEl ? "block" : "none" }}
+          sx={{ display: anchorEl ? "block" : "none" }}
         ></Box>
       </IconButton>
     </Tooltip>
@@ -41,9 +41,9 @@ const ListService = () => {
       }}
     >
       <Box className="ezfu-ServiceBox">
-        <div className="fptstriangle"></div>
-        <div className="flex service__col">
-          <div className="px-4 w-2/6 list_menu_right">
+        <Box className="fptstriangle"></Box>
+        <Box className="flex service__col">
+          <Box className="px-4 w-2/6 list_menu_right">
             <ul>
               <li className="forgiaodichchungkhoan">
                 <a
@@ -91,7 +91,7 @@ const ListService = () => {
                 </a>
               </li>
             </ul>
-          </div>
+          </Box>
           <div className="px-4 w-2/6 list_menu_right">
             <ul>
               <li className="no_logo">
@@ -208,7 +208,7 @@ const ListService = () => {
               </li>
             </ul>
           </div>
-        </div>
+        </Box>
       </Box>
     </Popover>
   </Box>

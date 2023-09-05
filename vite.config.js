@@ -7,9 +7,9 @@ export default defineConfig({
   optimizeDeps: {
     include: ['esm-dep > cjs-dep'],
   },
-  server: {
-    host: 'eztradereact.fpts.com.vn'
-  },
+  // server: {
+  //   host: 'eztradereact.fpts.com.vn'
+  // },
   css: {
     devSourcemap: true,
   },

@@ -53,6 +53,9 @@ const StockBalanceMarpro = {
 const GetOTP = {
   get: () => requests.get("/trade/api/ApiData/get_otp"),
 }
+const checkOTP = {
+  get: (OTP:string) => requests.get(`/trade/api/ApiData/check_otp?OTP=${OTP}`),
+}
 // get data Table HNX
 const TableHNX = {
   list: (params: URLSearchParams) =>
@@ -88,7 +91,8 @@ const Category = {
   // fetch  đata
   fetchData: () => requests.get("http://localhost:30/categori"),
   // add cate
-  AddCate : (data:any) =>requests.post("http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C222210",data )
+  AddCate : (data:any) =>requests.post("http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C222210",data ),
+  postformData :(data:any) =>requests.postFormData("http://eztradereacttest.fpts.com.vn/Root/Data.ashx", data)
 };
 // 
 const Ministry = {
@@ -174,6 +178,7 @@ const agent = {
     StockBalance,
     StockBalanceMarpro,
     SendOrder_Marpro,
-    GetOTP
+    GetOTP,
+    checkOTP
 }
 export default agent;

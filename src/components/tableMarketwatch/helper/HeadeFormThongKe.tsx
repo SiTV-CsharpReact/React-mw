@@ -9,7 +9,7 @@ import { dispatchDataThongke } from "./tableFormThongke";
 import { DateTimeCover, getDateTime } from "../../../pages/helper/DateTime";
 import { SortTableThongkeIndex } from "../tableTestSlice";
 import { VARIBLE_ACTICON_TYPE } from "./varible";
-
+import * as XLSX from "xlsx";
 type DataValue = {
   action: string;
   center: any; //san
@@ -130,6 +130,22 @@ const HeaderFromThongke = ({ ChangeFuncion }: Props) => {
     };
     dispatch(SortTableThongkeIndex(query));
   };
+  const handleToExcel = (e:any) => {
+    const table = document.getElementById("tbHIST_INDEX");
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.table_to_sheet(table);
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    const excelData = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelData], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    const url = URL.createObjectURL(data);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "Thongke.xlsx";
+    link.dispatchEvent(new MouseEvent("click"));
+    URL.revokeObjectURL(url);
+  };
   return (
     <>
       <div id="dvSTTIndexs" className="" style={{}}>
@@ -236,6 +252,7 @@ const HeaderFromThongke = ({ ChangeFuncion }: Props) => {
               <button
                 className="btn btn-success button_Statistics"
                 id="btnExportHIST_INDEX"
+                onClick={handleToExcel}
               >
                 Excel
               </button>

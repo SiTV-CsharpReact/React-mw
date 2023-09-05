@@ -11,7 +11,7 @@ export const fetchAssetReport = createAsyncThunk(
       return responseReport.Data
     }
     else if(responseReport.Code === -6789){
-      window.location.replace('http://accounts3.fpts.com.vn');
+      window.location.replace('http://accounts3.fpts.com.vn/Login?href=eztradereactjs');
     }
     return null;
   }

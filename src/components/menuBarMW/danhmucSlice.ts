@@ -1,19 +1,17 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import agent from "../../api/agent";
-import { CategoriesMarketWatch, Category } from "../../models/category";
+import { Categories, CategoriesMarketWatch, CategoriesMarketWatchs, Category } from "../../models/category";
 // <CategoriesMarketWatch>
 export const fetchCategoryAsync = createAsyncThunk(
   "table_fecthCategory/getCateolcadf",
-  async (ClientCode:string) => {
-    // const res = await agent.Category.get();
+  async (form:any) => {
   try {
-    // const data = await  agent.Category.get()
-    const data = await  agent.Category.get(ClientCode)
+    // const data = await  agent.Category.postformData(form)
+    const data = await agent.Category.get(form)
     return data
   } catch (error) {
     console.log("error ở đây", error);
   }
-    // return res;
   }
 );
 export const AddCategori = createAsyncThunk("table_fecthCategory/addCategori" , async(Query:any)=>{
@@ -34,12 +32,12 @@ export const danhmucSlice = createSlice({
     data: {
       Code: 0,
       Message: "SUCCESS",
-      Data: [] as Category[],
+      Data: [] as Categories[],
     },
     status: "idle",
   },
   reducers: {
-    getDataSuccess: (state, action: PayloadAction<CategoriesMarketWatch>) => {
+    getDataSuccess: (state, action: PayloadAction<CategoriesMarketWatchs>) => {
       state.data = action.payload;
       state.status = "idle";
     },
@@ -61,7 +59,9 @@ export const danhmucSlice = createSlice({
       .addCase(fetchCategoryAsync.fulfilled, (state, action) => {
         state.isLoading = 2;
         const result = action.payload;
+        console.log(result)
         if (result?.Code === 0) {
+          console.log(result.Data[0])
           state.data = action.payload;
           state.row = result?.Data[0]?.Row; // lưu row danh mục
           state.name = result?.Data[0]?.Name; // tên danh mục
