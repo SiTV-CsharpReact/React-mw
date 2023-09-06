@@ -1,10 +1,8 @@
-import { Navigate, Route, Routes, redirect } from "react-router-dom";
+import {  Route, Routes, useNavigate } from "react-router-dom";
 // import AssetReport from "./pages/Report/AssetReport";
 import LayoutMarketWatch from "./components/layoutMarketwatch/LayoutMarketWatch";
 import AppProvider from "./Context/AppContext";
-import SlidesMarketWatch from "./components/indexMarketWatch/SlidesMarketWatch";
 import DynamicDashboard from "./components/dynamicDashboard/DynamicDashboard";
-import MyLayout from "./components/dynamicDashboard/MyLayout";
 import AssetReport from "./components/AssetReport/AssetReport";
 import TableMarketWatchTest from "./components/tableMarketwatch/TableMarketWatchTest";
 import TradingViewWidget from "./components/Chart/TradingViewWidget";
@@ -29,32 +27,41 @@ import RegistrationOnline from "./pages/RightCustody/RegistrationOnline";
 import CurrMargin from "./pages/Report/CurrMargin";
 import StockSettlement from "./pages/Report/StockSettlement";
 import CashSettlement from "./pages/Report/CashSettlement";
-import ReportCW from "./pages/Report/ReportCW";
-import ListFee from "./pages/Report/ListFee";
-import DepositoryHistory from "./pages/RightCustody/DepositoryHistory";
 import ReportNAV from "./pages/Report/ReportNAV";
-// import ReportNAV from "./components/ReportNAV/ReportNAV";
 import ReportTransSummary from "./pages/Report/ReportTransSummary";
 import StockDetails from "./pages/Report/StockDetails";
 import TransBalance from "./components/TransBalance/TransBalance";
 import Header from "./components/header/Header";
-// import LayoutAthentication from "./layout/LayoutAuthen";
-import {
-  RootState,
-  useAppDispatch,
-  useAppSelector,
-} from "./store/configureStore";
-import { useEffect } from "react";
-import MainlayoutScreen from "./layout/LayoutSreen";
+import Cookies from 'js-cookie';
 import ConditionalOderText from "./pages/Stoploss/ConditionalOderText";
 import ChartTradingView from "./components/Chart/TradingView";
+import { useEffect, useState } from "react";
+import MyLayouts from "./components/dynamicDashboard/MyLayouts";
 const App: React.FC = () => {
-  // const dispatch = useAppDispatch();
-  // // const { token ,isLoadingToken } = useAppSelector((state: RootState) => state.Authen);
-  // useEffect(() => {
-  //   dispatch(getToken());
-  // }, [dispatch]);
- 
+  const token = Cookies.get('aspfpt_sessiontoken');
+ // const navigate = useNavigate(); // Sử dụng hook useNavigate từ react-router-dom
+  const [hasToken, setHasToken] = useState(!!token); // Sử dụng state để kiểm tra token
+  const isDevelopment = process.env.NODE_ENV === "development";
+  useEffect(() => {
+    if (!token && !isDevelopment) {
+      // Nếu không có token, chuyển hướng đến trang đăng nhập
+      window.location.replace(import.meta.env.VITE_API_URL_ACCOUNTS)
+    }
+  }, [token,isDevelopment]);
+  if (isDevelopment) {
+    console.log("Đây là chế độ phát triển.");
+  }
+  else{
+    if (!hasToken) {
+    // Nếu không có token, không hiển thị nội dung của App
+    return null;
+  }
+  }
+  // if (!hasToken) {
+  //   // Nếu không có token, không hiển thị nội dung của App
+  //   return null;
+  // }
+  
   return (
     <AppProvider>
       <Header/>
@@ -65,7 +72,7 @@ const App: React.FC = () => {
               path="/dynamic-dashboard-test"
               element={   <DynamicDashboard />  }
             />
-            <Route path="/dynamic-dashboard" element={<MyLayout />} />
+            <Route path="/dynamic-dashboard" element={<MyLayouts />} />
            
             <Route
               path="/report/ReportTransBalance"

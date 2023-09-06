@@ -3,6 +3,7 @@ import Highcharts from "highcharts";
 import { formatNumber } from "../../utils/util";
 import "./chartIndex.scss";
 import { _getDateTs } from "./util/app.chart";
+import agent from "../../api/agent";
 
 type TProps = {
   name: string;
@@ -15,7 +16,6 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps
   const [indexValue, setIndexValue] = useState(0);
   const [timeFirst, setTimeFirst] = useState(0);
   const [timeLast, setTimeLast] = useState<any>();
-
   useEffect(() => {
     if (san === "HSX") {
       const hsx = dataChartIndex?.HSX;
@@ -102,7 +102,6 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps
       }
     }
   }, [dataChartIndex?.HNX, dataChartIndex?.HSX, name, san, timeFirst]);
-
   useEffect(() => {
     const gradient: any = [0, 0, 50, 380];
     const series: any[] = [
@@ -138,14 +137,8 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps
           },
         },
       },
-      // {
-      //   name: "",
-      //   type: "collum",
-      //   data: dataChart,
-      //   color: '#5F9DFE',
-      // },
     ];
-
+ 
     Highcharts.chart(`container-${name}`, {
       chart: {
         marginTop: 8, // Đặt khoảng cách giữa highcharts-plot-background và highcharts-container là 20px

@@ -3,6 +3,7 @@ import agent from "../../api/agent";
 import { DataClientBalance, DataStockBalance } from "../../models/modelClientBalance";
 import { fetchPermission } from "../header/ProfileAccountSlice";
 import { ModelDataOTP } from "../../models/modelOTP";
+import { RootOTP } from "../../models/otp";
 
 export const SendOrder = createAsyncThunk(
   "trade/SendOrder",
@@ -57,6 +58,13 @@ export const getOTP = createAsyncThunk(
     return response;
   }
 );
+export const checkOTP = createAsyncThunk(
+  "trade/checkOTP",
+  async (OTP:string) => {
+    const response = await agent.checkOTP.get(OTP);
+    return response;
+  }
+);
 export const SendOrderSlice= createSlice({
   name: "sendOrder",
   initialState: {
@@ -64,6 +72,7 @@ export const SendOrderSlice= createSlice({
     isLoadingSendOrderMarginPro: false,
     isLoadingSendOrderMargin: false,
     Response:{} as ModelDataOTP,
+    ResponseOTP:{} as RootOTP,
     OTP:{} as ModelDataOTP,
     formOTP:false,
     submit:false,
@@ -76,6 +85,7 @@ export const SendOrderSlice= createSlice({
     setsttOrderForm: (state,action) => {
       state.submit = action.payload; 
     },
+    
     setsttFormOTP: (state,action) => {
       state.formOTP = action.payload; 
     },
@@ -113,6 +123,16 @@ export const SendOrderSlice= createSlice({
         state.isLoadingSendOrderMargin = true;
         state.status = "success";       
         state.OTP = action.payload;
+      })
+      .addCase(checkOTP.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(checkOTP.fulfilled, (state, action) => {
+        state.isLoadingSendOrderMargin = true;
+        console.log(action.payload)
+        state.status = "success";       
+        state.ResponseOTP = action.payload;
+        console.log(state.ResponseOTP)
       })
   },
 });

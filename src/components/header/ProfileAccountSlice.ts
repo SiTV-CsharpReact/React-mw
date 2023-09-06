@@ -17,14 +17,21 @@ export const fetchPermission = createAsyncThunk(
     return responsePermission as PermissionData;
   }
 );
+export const Logout = createAsyncThunk(
+  "trade/Logout",
+  async () => {
+    const responsePermission = await agent.logout.get();
+    return responsePermission as PermissionData;
+  }
+);
 
 export const ProfileAccountSlice = createSlice({
   name: "profileAccount",
   initialState: {
     isLoading: false,
     profileAccount: {} as any,
-    LoginName: "058C222210",
-    ClientName: "Tạ Văn Sĩ",
+    LoginName: "",
+    ClientName: "",
     Permission: {} as PermissionData,
     SMS:"",
     Email:"",
@@ -49,13 +56,16 @@ export const ProfileAccountSlice = createSlice({
     vFeeRate_TP: 0, //Phí đối với  Trái Phiếu
     EzTradeChargeRate: 0,
     statusAccount: 1,
-    statusOTP: 0,
+    OTPVerifed: 0,
     status: "idle",
   },
   reducers: {
     setProfileAccount: (state, action) => {
       state.profileAccount = action.payload;
     },
+    setOTPVerified: (state, action) => {
+      state.OTPVerifed = action.payload;
+      }
   },
   extraReducers: (builder) => {
     builder
@@ -71,7 +81,7 @@ export const ProfileAccountSlice = createSlice({
         state.SMS = action.payload.SMS !== undefined ? action.payload.SMS : "";
         state.Email = action.payload.Email !== undefined ? action.payload.Email : "";
         state.Atransaction = action.payload.ATRANSACTION !== undefined ? action.payload.ATRANSACTION : 0;
-        state.statusOTP =action.payload.OTPVerifed !== undefined ? action.payload.OTPVerifed : 0
+        state.OTPVerifed =action.payload.OTPVerifed !== undefined ? action.payload.OTPVerifed : 0
         // state.Email = action.payload?.ClientName;
       })
       .addCase(fetchProfileAccount.rejected, (state) => {
@@ -108,9 +118,10 @@ export const ProfileAccountSlice = createSlice({
         state.isLoading = true;
         state.status = "failed";
       });
+      
   },
 });
 
-export const { setProfileAccount } = ProfileAccountSlice.actions;
+export const { setProfileAccount ,setOTPVerified} = ProfileAccountSlice.actions;
 
 export default ProfileAccountSlice;

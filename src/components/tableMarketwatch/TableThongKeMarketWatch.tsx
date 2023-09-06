@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { stocks } from "../../models/marketwacthTable";
+import * as XLSX from "xlsx";
 import HeaderFromThongke from "./helper/HeadeFormThongKe";
 import TableChange from "./helper/MainTable";
 import {
@@ -33,6 +34,9 @@ type DataValues = {
   page_size: any;
 };
 const TableThongKeMarketWatch = () => {
+ 
+
+
   const {
     KeyMenuChildren,
     dataTableThongkeIndex,
@@ -137,6 +141,22 @@ const TableThongKeMarketWatch = () => {
       dispatch(SortTableThongkeIndex(query));
     }
   };
+  const handleToExcel = (e:any) => {
+    const table = document.getElementById("tbHIST_INDEX");
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.table_to_sheet(table);
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    const excelData = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelData], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    const url = URL.createObjectURL(data);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "Thongke.xlsx";
+    link.dispatchEvent(new MouseEvent("click"));
+    URL.revokeObjectURL(url);
+  };
   return (
     <>
       {KeyMenuChildren === 0 ? (
@@ -235,8 +255,10 @@ const TableThongKeMarketWatch = () => {
                 Xem
               </button>
               <button
+               onClick={handleToExcel}
                 className="btn btn-success button_Statistics"
                 id="btnExportHIST_INDEX"
+               
               >
                 Excel
               </button>

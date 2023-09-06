@@ -9,6 +9,10 @@ import { setDataOrder } from '../tableMarketwatch/orderComanSlice';
 
 
 const  Protal = ({ popup = false, handelClosed = () => { } }) =>  {
+    const dispatch = useAppDispatch();
+
+    const dataTLV = useAppSelector((state)=>state.clientBalance.StockBalaneMarpro)
+    console.log(dataTLV)
      const data = [ 
         ["058C222210", "BCC", "30", "HNX.LISTED", "1000000000"],
         ["058C222210", "BVS", "30", "HNX.LISTED", "1000000000"],
@@ -129,7 +133,6 @@ const  Protal = ({ popup = false, handelClosed = () => { } }) =>  {
     useEffect(() => {
         setDataKiquy(mappedData);
     }, []);
-    const dispatch = useAppDispatch();
     const handleShow = (dataShow: any) => {
         let  data = dataCompanyTotal.find((item :Company) =>  item.Code ===  dataShow.ma)
         // dataShow = {ma: 'ANV', San: 'HSX', TLV: '30', giaTranSm: '60000'}

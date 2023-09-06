@@ -4,6 +4,7 @@ import OrderFormMarketWatch from "../orderFormMarketwatch/OrderFormMarketWatch";
 import BoxTest from "./TablePrice";
 import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import "./dynamic.scss";
+import { useAppDispatch } from "../../store/configureStore";
 type Tab = {
   id: string;
   name: string;
@@ -76,7 +77,6 @@ const json: IJsonModel = {
     ],
   },
 };
-
 class BoxTestDI extends React.Component<{}, MyLayoutState> {
   loadingLayoutName?: string;
   nextGridIndex: number = 1;
@@ -109,7 +109,7 @@ class BoxTestDI extends React.Component<{}, MyLayoutState> {
     let config = node.getConfig();
     // console.log(node, component);
     if (component === "orderform") {
-      return <OrderFormMarketWatch />;
+      return <OrderFormMarketWatch types ="1" />;
     }
     if (component === "tableprice") {
       return <BoxTest />;
