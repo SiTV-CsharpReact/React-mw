@@ -61,22 +61,103 @@ export function initXDatetime(objCInitData: chartIndex) {
     xmax = _getDateTs(xmaxTmp);
   }
 }
-export function _getDateTs(dateTime: any) {
+export function getTimeStamp(dateTime: string | any): any {
+  const regex = /^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}$/;
+  if (regex.test(dateTime)) {
+    const inputDate = dateTime.split(" ");
+    const dateArr = inputDate[0].split("-");
+    return new Date(dateArr[0], dateArr[1], dateArr[2]).getTime();
+  }
+  let d;
+  d = new Date(dateTime).getTime();
+  return d;
+}
+
+export function _getDateTs(dateTime: any): number {
   var d;
   d = new Date(dateTime).getTime();
   return d;
-  // }
-  // dateTime = dateTime.toString().replace(/-/g, " "); //1 Jan 2010 works but 1-Jan-2010 doesn't
-  // d = new Date(dateTime).getTime();
-  // if (!isNaN(d)) {
-  //   return d;
-  // }
-  // // may be what we've is a time stamp.
-  // if ((d = parseInt(dateTime)) > 100000) {
-  //   // we are not handling something that's up on 1st Jan 1971, as yet.
-  //   // assume it is a valid time stamp and just send it back.
-  //   return d;
-  // }
+}
+
+export function drawChartOption(arr: any, type: string) {
+  if (arr.length === 0) {
+    return [];
+  } else {
+    let time_start, time_end, date, month, year;
+
+    let arr_data: any = [];
+
+    time_end = _getDateTs(arr[arr.length - 1][0]);
+
+    date = new Date(time_end).getDate();
+
+    month = new Date(time_end).getMonth();
+
+    year = new Date(time_end).getFullYear();
+
+    switch (type) {
+      case "1D":
+        return arr;
+
+      case "1W":
+        time_start = new Date(year, month, date - 7).getTime();
+
+        for (let i = 0; i < arr.length; i++) {
+          if (_getDateTs(arr[i][0]) >= time_start) {
+            arr_data.push(arr[i]);
+          }
+        }
+
+        return arr_data;
+
+      case "3M":
+        time_start = new Date(year, month - 3, date).getTime();
+
+        for (let i = 0; i < arr.length; i++) {
+          if (_getDateTs(arr[i][0]) >= time_start) {
+            arr_data.push(arr[i]);
+          }
+        }
+
+        return arr_data;
+
+      case "6M":
+        time_start = new Date(year, month - 6, date).getTime();
+
+        for (let i = 0; i < arr.length; i++) {
+          if (_getDateTs(arr[i][0]) >= time_start) {
+            arr_data.push(arr[i]);
+          }
+        }
+
+        return arr_data;
+
+      case "1Y":
+        time_start = new Date(year, month - 12, date).getTime();
+
+        for (let i = 0; i < arr.length; i++) {
+          if (_getDateTs(arr[i][0]) >= time_start) {
+            arr_data.push(arr[i]);
+          }
+        }
+
+        return arr_data;
+
+      case "2Y":
+        time_start = new Date(year, month - 24, date).getTime();
+
+        for (let i = 0; i < arr.length; i++) {
+          if (_getDateTs(arr[i][0]) >= time_start) {
+            arr_data.push(arr[i]);
+          }
+        }
+
+        return arr_data;
+
+      default:
+        return arr;
+    }
+  }
 }
 export function drawChart(data: any): any {
   // return
@@ -122,4 +203,11 @@ export function maxNumber(arr: any): number {
     }
   }
   return maxNum;
+}
+
+export function formatDate(time: any) {
+  const dd = new Date(time).getDate() > 9 ? `${new Date(time).getDate()}` : `0${new Date(time).getDate()}`;
+  const mm = new Date(time).getMonth() + 1 > 9 ? `${new Date(time).getMonth() + 1}` : `0${new Date(time).getMonth() + 1}`;
+  const yy = new Date(time).getFullYear();
+  return `${mm}/${dd}/${yy}`;
 }
