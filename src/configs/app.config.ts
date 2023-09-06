@@ -7,6 +7,7 @@ export const san_HNX = "hnx";
 export const san_HSX = "hsx";
 var ARRAY_INDEX_LANGUAGE = [0, 1];
 var COOKIE_LANGUAGE_NAME = "aspfpt_language";
+export const COOKIE_SESSION_NAME = "aspfpt_sessiontoken";
 var g_CurrentLanguage = "";
 export const FEE_RATE_TP = "0.0005"
 var g_ARRAY_CHART_NAME = [

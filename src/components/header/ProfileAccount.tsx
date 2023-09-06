@@ -12,6 +12,9 @@ import { changeModeTheme } from "./DarkModeSlice";
 import { RemoveCookie } from "../../api/authen";
 import { useNavigate  } from "react-router-dom";
 import { fetchProfileAccount } from "./ProfileAccountSlice";
+import Cookies from "js-cookie";
+import agent from "../../api/agent";
+import { COOKIE_SESSION_NAME } from "../../configs/app.config";
 // import { changeTheme } from "./DarkModeSlice";
 const ProfileAccount: any = () => {
   // const navigate = useNavigate();
@@ -43,7 +46,14 @@ const ProfileAccount: any = () => {
   const changeTheme = (theme: string) => {
     dispatch(changeModeTheme(theme));
   };
- 
+  async function logout() {
+    const logout = await agent.logout.get();
+    if(logout?.Code === 0){
+      window.location.replace(logout?.Data);
+      Cookies.remove(COOKIE_SESSION_NAME, { path: '', domain: '.fpts.com.vn' })
+    }
+  
+   }
 
   return (
     <Box>
@@ -237,8 +247,8 @@ const ProfileAccount: any = () => {
             </li>
             <a
               style={{ color: "black" }}
-              id="idLogOut"
               className={`${mode}-text`}
+              onClick={()=> logout()}
               href="/trade/logout"
             >
               <li>

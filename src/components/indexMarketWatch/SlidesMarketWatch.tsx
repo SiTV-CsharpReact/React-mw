@@ -39,15 +39,31 @@ import {
   fStatusMarketHSX,
   fStatusMarketUPCOM,
 } from "../../utils/util";
-import { fetchChartIndexAsync } from "../chartIndex/chartIndexSlice";
+import {
+  fetchChartIndexAsync,
+  fetchChartIndexCDTAsync,
+  fetchChartIndexTimeAsync,
+  fetchConfigChartIndexAsync,
+  setDataChartRealTime,
+} from "../chartIndex/chartIndexSlice";
+import agent from "../../api/agent";
 
 const SlidesMarketWatch = () => {
+  const dispatch = useAppDispatch();
   const { visible } = useAppSelector((state) => state.chart);
   const height = useContext(AppContext);
-  const screenWidth = visible ? window.innerWidth - 650 : window.innerWidth;
-  const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
+  const { dataChartIndex, configChartIndex, dataChartIndexTime } =
+    useAppSelector((state) => state.chartIndex);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [sttFetchData, setSTTFetchData] = useState(true);
+  const INTERVAL = 30000; // 60000 milliseconds = 1 minute
+  const ACTION_LIST = {
+    GET_SS: "ss", // get snapshot data (update) , can phai co Max
+    GET_CDT: "cdt", // get check date time
+  };
 
-  const dispatch = useAppDispatch();
   const {
     marketHSX: { valueHSX },
   } = useAppSelector((state) => state.marketHSX);
@@ -68,15 +84,72 @@ const SlidesMarketWatch = () => {
   useEffect(() => {
     dispatch(fetchChartIndexAsync());
   }, [dispatch]);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Gọi API đầu tiên
+        await dispatch(fetchConfigChartIndexAsync());
+      } catch (error) {
+        // Xử lý lỗi nếu cần
+        console.error("Error fetching first API data:", error);
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
+  const HOUR_STOP_UPDATE = 15;
+  useEffect(() => {
+    const fetchDataCDT = async () => {
+      try {
+        // Sau khi có dữ liệu từ API đầu tiên, gọi API thứ hai với giá trị từ API đầu tiên
+        if (configChartIndex) {
+          var RP = { s: ACTION_LIST.GET_SS, m: configChartIndex };
+          const dataCDT = await agent.chartIndex.getCDT(ACTION_LIST.GET_CDT);
+          const dataSS = await agent.chartIndex.getTimeSS(RP);
+          // dispatch(fetchChartIndexCDTAsync(ACTION_LIST.GET_CDT));
+          // dispatch(fetchChartIndexTimeAsync(RP));
+          if (dataCDT) {
+            // ko null thi moi xu ly
+            // if (self.m_TimerProcID) // khac null
+            // {
+            if (
+              !dataCDT.IsWorkingDay || // ko phai NGAY LAM VIEC >> destroy timer
+              (dataCDT.IsWorkingDay &&
+                new Date(dataCDT.Now).getHours() >= HOUR_STOP_UPDATE) // la NGAY LAM VIEC + tu sau 15h00 => destroy timer
+            ) {
+              setSTTFetchData(false);
+            }
+            // }
+          }
+          if (dataSS.data)
+            if (dataSS.data?.SS !== null) {
+              setDataChartRealTime(dataSS.data);
+            }
+          console.log(dataCDT, dataSS);
+        }
+      } catch (error) {
+        // Xử lý lỗi nếu cần
+        console.error("Error fetching second API data:", error);
+      }
+      if (!sttFetchData || !configChartIndex) {
+        // Kiểm tra biến trạng thái và configChartIndex
+        clearInterval(intervalId); // Dừng interval nếu không cần tiếp tục
+      }
+    };
+    fetchDataCDT();
+    // Thiết lập interval để gọi API mỗi 1 phút
+    const intervalId = setInterval(fetchDataCDT, INTERVAL);
+    // Trả về một hàm để xóa interval khi component unmount hoặc thay đổi
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [dispatch, configChartIndex, sttFetchData]);
   // let speed = 0;
   const scrollRef = useRef<any>(null);
   const divRef = useRef<any>(null);
   let scrollInterval: any = null;
-  let scrollInterval1: any = null;
+  // let scrollInterval1: any = null;
   // const [mouseX, setMouseX] = useState(0);
   const handleMouseDown = (event: any) => {
     setIsDragging(true);
@@ -138,11 +211,10 @@ const SlidesMarketWatch = () => {
   };
 
   const handleMouseLeave = (e: any) => {
-    clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover    
+    clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover
     !visible && e.target.classList.remove("scrollingHotSpotRightVisible");
     !visible && e.target.classList.remove("scrollingHotSpotLeftVisible");
   };
-
   return (
     <div
       id="divIndexChart "

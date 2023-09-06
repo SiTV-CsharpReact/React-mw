@@ -116,8 +116,12 @@ const dataGDTTtable = {
 };
 const chartIndex = {
   get: () => requests.get(BASE_URL + "/chart/data.ashx?s=full"),
+  getSS: () => requests.get(BASE_URL + `/chart/data.ashx?s=config&v=20160829061939`),
+  getTimeSS: (dataChartIndex:any) => requests.postFormData(BASE_URL + "/chart/data.ashx",dataChartIndex),
+  getCDT: (value_getCDT:string) => requests.get(BASE_URL +`/chart/data.ashx?s=${value_getCDT}`),
   //get: () => requests.get('http://localhost:8000/dataChartIndex'),
 };
+
 var formData = new FormData();
 formData.append("key1", "value1");
 formData.append("key2", "value2");
@@ -157,6 +161,9 @@ const assetReport = {
 const SendOrder_Marpro = {
   post: (data:any) => requests.post("/trade/api/ApiData/SendOrder_MarPro",data),
 };
+const logout ={
+  get: () => requests.get("/trade/logout"),
+}
 const agent = {
     TableHNX,
     TableHSX,
@@ -179,6 +186,7 @@ const agent = {
     StockBalanceMarpro,
     SendOrder_Marpro,
     GetOTP,
-    checkOTP
+    checkOTP,
+    logout
 }
 export default agent;

@@ -17,6 +17,13 @@ export const fetchPermission = createAsyncThunk(
     return responsePermission as PermissionData;
   }
 );
+export const Logout = createAsyncThunk(
+  "trade/Logout",
+  async () => {
+    const responsePermission = await agent.logout.get();
+    return responsePermission as PermissionData;
+  }
+);
 
 export const ProfileAccountSlice = createSlice({
   name: "profileAccount",
@@ -111,6 +118,7 @@ export const ProfileAccountSlice = createSlice({
         state.isLoading = true;
         state.status = "failed";
       });
+      
   },
 });
 
