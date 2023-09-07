@@ -1,0 +1,92 @@
+import React, { useEffect, useState } from "react";
+import Highcharts from "highcharts";
+import { formatNumber } from "../../utils/util";
+import "./chartIndex.scss";
+import { _getDateTs } from "./util/app.chart";
+import { IChartIndex } from "./util/interface.config";
+import { getDataChartHNX, getDataChartHSX, useChart } from "./chart/useChart";
+
+type TProps = {
+  name: string;
+  san: string;
+  dataChartIndex: IChartIndex;
+};
+const ChartIndexSlide: React.FC<TProps> = ({
+  name,
+  san,
+  dataChartIndex,
+}: TProps) => {
+  const [dataSpline, setDataSpline] = useState<number[][]>([]);
+  const [dataBar, setDataBar] = useState<number[][]>([]);
+  const [indexValue, setIndexValue] = useState(0);
+  const [timeFirst, setTimeFirst] = useState(0);
+  const [timeLast, setTimeLast] = useState<any>();
+  const { options } = useChart(dataSpline, dataBar, indexValue);
+
+  useEffect(() => {
+    if (san === "HSX") {
+      const data = getDataChartHSX(dataChartIndex, name);
+      const dataTimeIndex: number[][] = data?.map((item: any) => [
+        item.Data.TimeJS,
+        item.Data.Index,
+      ]);
+      setDataSpline(dataTimeIndex);
+      data?.map((item: any, index: number) => {
+        if (index === 0) {
+          const v = item?.Data.Index;
+          setIndexValue(v);
+          setTimeFirst(item?.Data.TimeJS);
+          const today = new Date(timeFirst);
+          today.setHours(today.getHours() + 6);
+          setTimeLast(today.getTime());
+        }
+
+        return "";
+      });
+      const dataTimeVol: number[][] = data?.map((item: any) => [
+        item.Data.TimeJS,
+        item.Data.Vol,
+      ]);
+      setDataBar(dataTimeVol);
+    } else {
+      if (san === "HNX") {
+        const data = getDataChartHNX(dataChartIndex, name);
+        const dataTimeIndex: number[][] = data?.map((item: any) => [
+          item.Data.TimeJS,
+          item.Data.Index,
+        ]);
+        setDataSpline(dataTimeIndex);
+        data?.map((item: any, index: number) => {
+          if (index === 0) {
+            const v = item?.Data.Index;
+            setIndexValue(v);
+            setTimeFirst(item?.Data.TimeJS);
+            const today = new Date(timeFirst);
+            today.setHours(today.getHours() + 6);
+            setTimeLast(today.getTime());
+          }
+          return "";
+        });
+        const dataTimeVol: number[][] = data?.map((item: any) => [
+          item.Data.TimeJS,
+          item.Data.Vol,
+        ]);
+        setDataBar(dataTimeVol);
+      }
+    }
+  }, [dataChartIndex, name, san, timeFirst]);
+
+  useEffect(() => {
+    Highcharts.chart(`container-${name}`, options);
+  }, [name, options, indexValue]);
+
+  return (
+    <div className="chart__slide__market">
+      <figure className="highcharts-figure">
+        <div id={`container-${name}`}></div>
+      </figure>
+    </div>
+  );
+};
+
+export default React.memo(ChartIndexSlide);

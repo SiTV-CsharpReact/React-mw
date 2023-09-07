@@ -19,30 +19,35 @@ const useChartConfig = (
 ) => {
   const [dataCol, setDataCol] = useState<number[][]>([]);
   const [dataSpline, setDataSpline] = useState<number[][]>([]);
-  console.log({ dataCol, dataSpline });
+  const arrPr: any = React.useMemo(() => {
+    if (dataChartOption.length === 0) {
+      const min = Number(indexValue) - 0.1;
+      const max = Number(indexValue) + 0.1;
+      return [min, indexValue, max];
+    }
+    return dataSpline.map((item: any) => item[1]);
+  }, [dataChartOption, dataSpline, indexValue]);
+  console.log({ arrPr });
 
   useEffect(() => {
     if (dataChartOption.length !== 0) {
       if (option === "gw_realtime") {
-        const dataColoumnReal: number[][] = drawChartOption(
+        const dataColoumnReal: any = drawChartOption(
           dataChartOption,
           select
-        ).map((item: any) => [_getDateTs(item[0]), item[5]]);
-        const dataIndexReal: number[][] = drawChartOption(
-          dataChartOption,
-          select
-        ).map((item: any) => [_getDateTs(item[0]), item[4]]);
+        ).map((item: any) => ({ x: _getDateTs(item[0]), y: item[5] }));
+        const dataIndexReal: any = drawChartOption(dataChartOption, select).map(
+          (item: any) => ({ x: _getDateTs(item[0]), y: item[4] })
+        );
         setDataCol(dataColoumnReal);
         setDataSpline(dataIndexReal);
       } else {
-        const dataColoumn: number[][] = drawChartOption(
-          dataChartOption,
-          select
-        ).map((item: any) => [_getDateTs(item[0]), item[5]]);
-        const dataIndex: number[][] = drawChartOption(
-          dataChartOption,
-          select
-        ).map((item: any) => [_getDateTs(item[0]), item[4]]);
+        const dataColoumn: any = drawChartOption(dataChartOption, select).map(
+          (item: any) => ({ x: _getDateTs(item[0]), y: item[5] })
+        );
+        const dataIndex: any = drawChartOption(dataChartOption, select).map(
+          (item: any) => ({ x: _getDateTs(item[0]), y: item[4] })
+        );
         setDataCol(dataColoumn);
         setDataSpline(dataIndex);
       }
@@ -55,7 +60,7 @@ const useChartConfig = (
     },
     chart: {
       height: 160,
-      type: "column",
+      type: "line",
       polar: true,
       backgroundColor: "#303030",
       plotBackgroundColor: {
@@ -87,23 +92,23 @@ const useChartConfig = (
 
           const xmin = _getDateTs(xminTmp);
           const xmax = _getDateTs(xmaxTmp);
-          // xAxis.setExtremes(xmin, xmax, true, false);
+         
           switch (select) {
             case "1D":
-              // const xmin = _getDateTs(xminTmp);
-
-              // const xmax = _getDateTs(xmaxTmp);
-
               xAxis.setExtremes(xmin, xmax, true, false);
-
+              if (dataChartOption.length === 0) {
+                this.yAxis[1].update({
+                  tickPositions: arrPr,
+                });
+              }
               break;
             case "1W":
               xAxis.update({
                 labels: {
                   formatter: function () {
-                    const date = new Date(this.value);
-                    const day = date.getDate();
-                    const month = date.getMonth() + 1;
+                    const date: any = new Date(this.value);
+                    const day: any = date.getDate();
+                    const month: any = date.getMonth() + 1;
                     return `${day}/${month}`;
                   },
                 },
@@ -124,7 +129,6 @@ const useChartConfig = (
                     }`;
                   },
                 },
-                // startOnTick: true,
                 tickInterval: 30 * 24 * 3600 * 1000,
               });
 
@@ -154,18 +158,15 @@ const useChartConfig = (
               xAxis.update({
                 labels: {
                   formatter: function () {
-                    const date = new Date(this.value);
-                    const year = date.getFullYear();
-                    const month = date.getMonth() + 1;
+                    const date: any = new Date(this.value);
+                    const year: any = date.getFullYear();
+                    const month: any = date.getMonth() + 1;
                     return `${
                       month.toString().length === 1 ? `0${month}` : month
                     }/${year}`;
                   },
                 },
                 tickInterval: 2 * 365 * 24 * 3600 * 1000,
-                // endOnTick: true,
-                // startOnTick: true,
-                // tickInterval: 30 * 24 * 3600 * 1000
               });
               this.yAxis[1].update({
                 tickAmount: 6,
@@ -178,6 +179,7 @@ const useChartConfig = (
               xAxis.setExtremes(xmin, xmax, true, false);
               break;
           }
+          this.redraw();
         },
       },
     },
@@ -282,7 +284,7 @@ const useChartConfig = (
             return { x: e.x, y: e.y };
           }
 
-          return "";
+          return e;
         });
 
         const hour: any = new Date(Number(index[1].x)).getHours();
@@ -293,10 +295,14 @@ const useChartConfig = (
             : new Date(Number(index[1].x)).getMinutes();
 
         return `<span style="color:#000">Thời gian: <b style="font-size:12px;font-weight:600;color:#000" class="font-bold text-sm">${
-          option !== "gw_realtime" ? formatDate(index[1].x) : hour + ":" + minutes
+          option !== "gw_realtime"
+            ? formatDate(index[1].x)
+            : hour + ":" + minutes
         }</b></span><br/><span style="color:#000">Index:  <b style="font-size:12px;color:#000" class="font-bold text-sm">${
           index[1].y
-        }</b></span><br/><span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm"></b></span>`;
+        }</b></span><br/><span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm">${formatNumber(
+          index[0].y
+        )}</b></span>`;
       },
       positioner: function (labelWidth, labelHeight, point) {
         var tooltipX, tooltipY;
@@ -333,6 +339,7 @@ const useChartConfig = (
             lineWidth: 1.2,
           },
         },
+
         zones:
           option !== "gw_realtime"
             ? []
@@ -360,6 +367,9 @@ const useChartConfig = (
       line: {
         color: "#00ff00",
         lineWidth: 1.5,
+        marker: {
+          enabled: false,
+        },
         states: {
           hover: {
             enabled: true,

@@ -3,27 +3,10 @@ import { iconColorMenuMarket, setColorMenuMarket } from "../../utils/util";
 // import ChartIndex from "../chartIndex/ChartIndex";
 // import ChartTest from "../chartIndex/ChartIndexSlide";
 import ChartIndexSlide from "../chartIndex/ChartIndexSlide";
+import { ISlideMarket } from "./interface/slidemarket.config";
 
-type Props = {
-  id: string[];
-  name: string;
-  valueChange: string;
-  valueChangePercent: string;
-  valueIndexChange: string;
-  visible: boolean;
-  valueTotalSharesAOM: string;
-  valueTotalValuesAOM: string;
-  valueUp: string;
-  valueCeiling: string;
-  valueDown: string;
-  valueFloor: string;
-  valueNoChange: string;
-  status: string;
-  san: string;
-  dataChartIndex: any;
-};
 
-const SlideMarketItem: React.FC<Props> = ({
+const SlideMarketItem: React.FC<ISlideMarket> = ({
   id,
   name,
   valueChange,
@@ -40,7 +23,7 @@ const SlideMarketItem: React.FC<Props> = ({
   status,
   san,
   dataChartIndex,
-}: Props) => {
+}) => {
   return (
     <>
       <li className="dvChart ">

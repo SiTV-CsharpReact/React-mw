@@ -142,6 +142,7 @@ const SlidesMarketWatch = () => {
     !visible && e.target.classList.remove("scrollingHotSpotRightVisible");
     !visible && e.target.classList.remove("scrollingHotSpotLeftVisible");
   };
+console.log({dataChartIndex});
 
   return (
     <div
