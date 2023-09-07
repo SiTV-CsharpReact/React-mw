@@ -28,12 +28,15 @@ import {
   ResetStockCode,
   setKey,
   setDecrementCounterPrice,
+  setValueSendOrder,
 } from "../tableMarketwatch/orderComanSlice";
 import { GetStockBalance, GetStockBalanceMarpro, fetchClientBalence, getClientBalance, setStatusKQ } from "./ClientBalance";
 import { SendOrder_Marpro, setsttOrderForm } from "./SendOrderSlice";
 import { fetchPermission } from "../header/ProfileAccountSlice";
 import { checkFee } from "./util/util";
 import iconlistKQ from "../../images/menu-list-icon.png"
+import StockSettlement from "../../pages/Report/StockSettlement";
+import { type } from "os";
 type Props = {
   windowHeight: number;
   heightOrderForm: number;
@@ -62,7 +65,10 @@ const CFOM = {
       }
   ]
 } 
-const OrderMarketW = () => {
+interface PropResize {
+  types: string,
+}
+const OrderMarketW:React.FC<PropResize> = ({types}:PropResize) => {
   const { t } = useTranslation(["home"]);
   const dispatch = useAppDispatch();
   // color mua ban
@@ -173,6 +179,15 @@ const OrderMarketW = () => {
       }, 1000);
     }
   };
+  const [index,setIndex]= useState(-1);
+  const handleKeyDownInput = (e:any) => {
+    if (e.key === "ArrowDown") {
+      setIndex(index+1)
+    }
+    if (e.key === "ArrowUp") {
+      setIndex(index-1)
+    }
+  };
   // kiểm tra giá
  
   const isChangePrice = (value: number) => {
@@ -216,6 +231,7 @@ const OrderMarketW = () => {
      setColor(status)
      ResetForm()
      setQuantityMax(0);
+     setValueInputKl(0);
      dispatch(setKey(status?"M":"B"))
   }
   const handleClick = async (e: any) => {
@@ -239,7 +255,7 @@ const OrderMarketW = () => {
     }
     try {
       await validationSchemaPrice.validate({
-        txtSymbol: valueInputPrice  || price,
+        txtSymbol: valueInputPrice  || price || priceInput,
       });
     } catch (error) {
       alert("Chưa nhập Giá");
@@ -247,7 +263,16 @@ const OrderMarketW = () => {
       return;
     }
     dispatch(setsttOrderForm(true));
-    console.log(submit)
+    const data = {
+      key:key,
+      dataSendOrder: {  
+        StockCode : maCode|| inputValue || san ,
+        Quantity : valueInputKl,
+        Price: valueInputPrice  || price || priceInput,}
+    }
+    dispatch(setValueSendOrder(data));
+    // console.log(data)
+    // console.log(submit)
   };
   // tìm kiếm mã chứng khoán
   const handelInputChange = (e: any) => {
@@ -267,10 +292,10 @@ const OrderMarketW = () => {
     setPopup(!popup);
   };
   useEffect(() => {
-    
+    setValueInputPrice(priceInput);
     setInputValue(maCode);
     setValueInputPrice(0);
-  }, [maCode]);
+  }, [maCode,priceInput]);
   // tính số lượng tối đa
   const vMarRate= 0;
   let MaxQtty = 0
@@ -333,20 +358,23 @@ const OrderMarketW = () => {
           <div
             className={`inline-block BGTB w-full ${order ? "" : "relative"}`}
           >
-            {color ? (
-              <TableTotalMonney status={order} priceMoney={totalMonney } />
+          {types=== "0" ? <div>
+          {color? (
+               <TableTotalMonney status={order} priceMoney={totalMonney } />
             ) : (
               <StockBalance status={order} />
             )}
+          </div>:""}  
+           
             <div
-              className={`bottom-left float-left min-w-[680px] pt-1.5 pb-1 px-2 ${
+              className={`bottom-left float-left ${types === "0" ? "min-w-[680px] ml-[1%]":"!w-[100%]"} pt-1.5 pb-1 px-2 ${
                 order ? "w-[48%]" : "ml-[25px] w-[44%]"
               }  MBR ${color ? "bg-[#dfeeff]" : "bg-[#FCE0E1]"}`}
             >
-              <div className="relative flex justify-between">
+              <div className="relative flex justify-between h-[33px]">
         
                   <div className="flex w-full">
-                    <div className="flex w-[20%] group-buysell  ">
+                    <div className="flex w-[29%] group-buysell ml-[15PX]">
 
                     <div
                       id="tabBuy"
@@ -386,14 +414,14 @@ const OrderMarketW = () => {
                     />
                     <img
                       onClick={handelPopup}
-                      className={`h-[28px] pl-2 cursor-pointer ${color ? "" : "hidden"}`}
+                      className={`h-[32px] pl-2 cursor-pointer ${color ? "" : "hidden"}`}
                       src={iconlistKQ}
                       alt="/menu-list-icon.png "
                     />
                     </div>)}
                   </div>
            
-                <div className="w-[30%] text-right btn__switchGroup">
+                <div className={`w-[30%] text-right btn__switchGroup min-w-[200px] ${types==="0"? "":"hidden"}`}>
                   <div className="groupSwitch">
                     <span>{t("home:Order.ORDER_RPO")}</span>
                     <label className="switch" id="switchLabelLCG">
@@ -412,7 +440,7 @@ const OrderMarketW = () => {
               </div>
               <div className="flex w-full pt-1">
                 <div className="flex w-[90%] panelDatLenhThuong">
-                  <div className="inpStock pr-[15px] w-1/4">
+                  <div className="inpStock pr-[15px] w-1/4 ml-[15px]">
                     <div id="divStock">
                     
                       <div className={`text-center ${san ?"":"pt-5"}` }>
@@ -422,9 +450,7 @@ const OrderMarketW = () => {
                       </div>
                      
                       <div
-                        className="ms-ctn form-control border-[#cccccc] rounded-md
-
-                  "
+                        className="ms-ctn  border-[#cccccc] rounded-md"
                         id="txtSymbolBase"
                       >
                       
@@ -448,20 +474,23 @@ const OrderMarketW = () => {
                         
                           <input
                             type="text"
-                            className="form-control relative ui-autocomplete-input size-input p-[2px] w-[100%] mr-[14px] rounded-md pl-[8px]"
+                            className="form-control relative ui-autocomplete-input size-input p-[2px] w-[100%] mr-[14px] rounded-md pl-[8px] border-none"
                             placeholder={`${t("home:Order.ORDER_MCK")}`}
                             id="txtSymbol"
                             ref={inputStock}
                             // onFocus={() => setShowResults(true)}
                             // onBlur={() => setShowResults(false)}
+                            onKeyDown={(e) => handleKeyDownInput(e)}
                             onChange={handelInputChange}
                             name="txtSymbol"
                             value={inputValue ? inputValue : maCode}
-                            // onKeyDown={(e) => handleKeyDownInput(e)} // Thêm sự kiện onKeyDown cho ô input
+                           
                             autoComplete="off"
                           />
 
-                          <SearchStockCode
+                     {showResults &&  <SearchStockCode
+                          indexStockCode ={index}
+                          setIndexStockCode={setIndex}
                             valueInput={inputValue}
                             setShowPoup={setShowResults}
                             showPopup={showResults}
@@ -469,7 +498,7 @@ const OrderMarketW = () => {
                             SearchStockCode={AddStockCode}
                             setValueInput={setInputValue}
                             border={false}
-                          />
+                          />}    
                         </div>
                       </div>
                     </div>
@@ -496,7 +525,7 @@ const OrderMarketW = () => {
                         ref={inputQuantity}
                         onChange={handelInputChangeKl}
                         type="text"
-                        className="form-control OrderFormQuantity  size-input text-right w-[100%] p-[1px] pr-[25px] rounded-md"
+                        className="form-control OrderFormQuantity p-[2px]  size-input text-right w-[100%] pr-[25px] rounded-md"
                         placeholder={`${t("home:Order.OPTIONS_KL")}`}
                         role="presentation"
                         value={valueInputKl ? formatNumber(valueInputKl) : ""}
@@ -569,7 +598,7 @@ const OrderMarketW = () => {
                       </table>
                     </div>
                     <div className="container-spinner fix-margin">
-                      <div className="ms-ctn form-control " id="txtPriceBase">
+                      <div className="ms-ctn " id="txtPriceBase">
                         <div className="ms-sel-ctn">
                           <input
                             style={{
@@ -583,8 +612,8 @@ const OrderMarketW = () => {
                             //  value={(dataTable?.ma && dataTable?.price) || (dataBuy?.ma && dataBuy?.price) || ""}
                             onChange={handelInputChangePrice}
                             step={100}
-                            value={valueInputPrice ? valueInputPrice : " "}
-
+                            // value={valueInputPrice ? valueInputPrice/1000 : " "}
+                            value={valueInputPrice ? valueInputPrice/1000 : formatNumberMarket(priceInput)}
                             // value={dataTable.price ? dataTable.price : (dataBuy.price ? dataBuy.price : valueInputPrice)}
                           />
                         </div>
@@ -615,6 +644,22 @@ const OrderMarketW = () => {
                     {color ? (
                       <button
                         onClick={handleClick}
+                        className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] ml-[10px]  
+                        text-12px rounded-md text-white w-4/5"
+                      >
+                        {t("home:Order.ORDER_GUI")}
+                      </button>
+                    ) : (
+                      <button
+                        // disabled={
+                        //   statusPrice === 1 ||
+                        //   Number(valueInputPrice) <= 0 ||
+                        //   valueInputKl <= 0 ||
+                        //   !maCode
+                        //     ? true
+                        //     : false
+                        // }
+                        onClick={handleClick}
                         // id={
                         //   statusPrice === 1 ||
                         //   Number(valueInputPrice) <= 0 ||
@@ -623,30 +668,6 @@ const OrderMarketW = () => {
                         //     ? "btnBuySend"
                         //     : ""
                         // }
-                        className="btn btnBuyGui btnSaveTemplate bg-[#0055ba] ml-[10px]  
-                        text-13px rounded-md text-white w-4/5"
-                      >
-                        {t("home:Order.ORDER_GUI")}
-                      </button>
-                    ) : (
-                      <button
-                        disabled={
-                          statusPrice === 1 ||
-                          Number(valueInputPrice) <= 0 ||
-                          valueInputKl <= 0 ||
-                          !maCode
-                            ? true
-                            : false
-                        }
-                        onClick={handleClick}
-                        id={
-                          statusPrice === 1 ||
-                          Number(valueInputPrice) <= 0 ||
-                          valueInputKl <= 0 ||
-                          !maCode
-                            ? "btnBuySend"
-                            : ""
-                        }
                         className="btn btnBuyBan btnSaveTemplate bg-[#d71920] ml-[10px]  text-13px rounded-md text-white w-4/5"
                       >
                         {t("home:Order.ORDER_GUI")}
@@ -685,7 +706,6 @@ const OrderMarketW = () => {
         {/* <div id="draggableH" className="ui-draggable ui-draggable-handle" style={{ top: anchorEl2 ? "431px" : "263.469px",background : "transparent" }} ></div>   */}
       </div>
       <ToastContainer />
-      {/* <iframe id="dvIframeChart" src={`/chart/blank?${(new Date()).getMilliseconds()}`} ></iframe> */}
     </>
   );
 };

@@ -4,7 +4,6 @@ import OrderMarketW from "../orderFormMarketwatch/OrderFormMarketWatch";
 import TableGDTTMarketWatch from "../tableMarketwatch/TableGDTTMarketWatch";
 import TableThongKeMarketWatch from "../tableMarketwatch/TableThongKeMarketWatch";
 import {
-  RootState,
   useAppDispatch,
   useAppSelector,
 } from "../../store/configureStore";
@@ -13,7 +12,7 @@ import PendingOrders from "../orderFormMarketwatch/PendingOrders";
 import IntradayOrder from "../orderFormMarketwatch/IntradayOrder";
 import TradingResult from "../orderFormMarketwatch/TradingResult";
 import "./LayoutMarketWatch.scss";
-import { Avatar, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import ListMenuBar from "../menuBarMW/ListMenuBar";
 import DanhMuc from "../menuBarMW/DanhMuc";
 import SettingTable from "../menuBarMW/SettingTable";
@@ -22,15 +21,11 @@ import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlic
 import PopupTableMarketwatch from "../popupTableMarketwatch/popupTableMarketwatch";
 import { resizeState } from "../../models/resizeWindow";
 import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatch";
-import { DraggableData, DraggableEvent } from "react-draggable";
-// import TableDanhMuc from "../tableMarketwatch/TableDanhMuc";
 //image
 import LineChart from "../../images/line-chart-32.png";
 import Close from "../../images/x28.png";
 import TableMarketWatchTest from "../tableMarketwatch/TableMarketWatchTest";
-import DropDown from "../menuBarMW/DropDown";
 import { setOrderCount } from "./LayoutMarketWatchSLice";
-import { useSelector } from "react-redux";
 import CompleteStock from "../menuBarMW/CompleteStock";
 import { useTranslation } from "react-i18next";
 import {
@@ -85,14 +80,11 @@ const LayoutMarketWatch: React.FC = () => {
   const { t } = useTranslation(["home"]);
   const dispatch = useAppDispatch();
   const orderCount = useAppSelector((state) => state.layout.orderCount);
-  // gọi danh mục
-  // row danh mục
-  // tao useState resize khi height window thay đổi
-  const { row, name } = useSelector((state: RootState) => state.categories);
+  const {OTPVerifed,Atransaction} = useAppSelector((state) => state.ProfileAccount);
+  const { row, name } = useAppSelector((state) => state.categories);
   const { ListDataTable, productsLoaded } = useAppSelector((state) => state.tableTest);
   const sttOrderForm = useAppSelector((state) => state.SendOrder.submit);
   const sttFormOTP = useAppSelector((state) => state.SendOrder.formOTP);
-  const OTPVerifed = useAppSelector((state) => state.ProfileAccount.statusOTP);
   const [heightComponent, setHeightComponent] = useState(initialState);
   const [selectedValue, setSelectedValue] = useState({
     x: 0,
@@ -235,9 +227,6 @@ const LayoutMarketWatch: React.FC = () => {
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     draggingRef.current = false;
   };
-  const handleDragable = (event: DraggableEvent, data: DraggableData) => {
-    console.log(`x: ${data.x}, y: ${data.y}`);
-  };
   const status = useAppSelector((state) => state.popupTable.visible);
   if (!ListDataTable && !productsLoaded) {
     return <div> Loading ... </div>;
@@ -370,17 +359,16 @@ const LayoutMarketWatch: React.FC = () => {
             </div>
           </div>
           {/* chart */}
-          <div
+         {componentVisible && <div
             className="w-full chart-layout"
             style={{
-              display: componentVisible ? "block" : "none",
               height: heightComponent.heightPriceBoard,
             }}
           >
             <ChartMarketwatch
               heightPriceBoard={heightComponent.heightPriceBoard}
             />
-          </div>
+          </div>} 
         </div>
         <div
           id="draggableH"
@@ -416,7 +404,7 @@ const LayoutMarketWatch: React.FC = () => {
               style={{ display: heightComponent.orderForm ? "block" : "none" }}
               className="mt-1 text-black"
             >
-              <div className="panel__bottom__link flex justify-end mr-[40px] mb-[14px]">
+              <div className="panel__bottom__link flex justify-end mr-[40px] mb-[14px] text-[#333333]">
                 <div className="px-2 group" onClick={() => showTab(1)}>
                   <span className=" size-input hover-text-blue-L">
                     {t("home:Order.TITLE_LCK")}
@@ -554,7 +542,7 @@ const LayoutMarketWatch: React.FC = () => {
           </div>
           {/* form lệnh */}
           <div
-            className="pb-5 overflow-auto text-black divBot panel-footer__ordrp"
+            className="pb-5 overflow-auto text-black divBot panel-footer__ordrp pt-2"
             style={{
               display: hideShowOrderForm ? "block" : "none",
               height: heightComponent.heightOrderForm,
@@ -565,7 +553,7 @@ const LayoutMarketWatch: React.FC = () => {
                 display: orderCount === 0 ? "block" : "none",
               }}
             >
-              <OrderMarketW />
+              <OrderMarketW types ="0"/>
             </div>
             <div
               style={{
@@ -592,7 +580,7 @@ const LayoutMarketWatch: React.FC = () => {
         </div>
       </div>
       {sttOrderForm &&   <TableConfirmOrder/>}
-      {OTPVerifed===0 &&   <div className="z-[100] w-[65px] h-[65px] absolute bottom-[30px] right-[25px] opacity-70 cursor-pointer" onClick={()=>dispatch(setsttFormOTP(true))}><img src={IconOTP} alt="otp"></img></div>}
+      {OTPVerifed === 0 && Atransaction === (2 || 3)  &&   <div className="z-[100] w-[65px] h-[65px] absolute bottom-[30px] right-[25px] opacity-70 cursor-pointer" onClick={()=>dispatch(setsttFormOTP(true))}><img src={IconOTP} alt="otp"></img></div>}
       {sttFormOTP  &&   <FormGetOTP/>}
     </div>
   );

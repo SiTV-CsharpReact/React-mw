@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { RPChart } from "../models/modelChart";
+import { IDataCDT, IRP } from "../components/indexMarketWatch/interface/slidemarket.config";
 const responseBody = (response: AxiosResponse) => response.data;
 const BASE_URL2 = "https://marketstream.fpts.com.vn/";
 const BASE_URL1 = "http://priceboard3.fpts.com.vn/";
@@ -53,6 +54,9 @@ const StockBalanceMarpro = {
 const GetOTP = {
   get: () => requests.get("/trade/api/ApiData/get_otp"),
 }
+const checkOTP = {
+  get: (OTP:string) => requests.get(`/trade/api/ApiData/check_otp?OTP=${OTP}`),
+}
 // get data Table HNX
 const TableHNX = {
   list: (params: URLSearchParams) =>
@@ -88,7 +92,8 @@ const Category = {
   // fetch  đata
   fetchData: () => requests.get("http://localhost:30/categori"),
   // add cate
-  AddCate : (data:any) =>requests.post("http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C222210",data )
+  AddCate : (data:any) =>requests.post("http://marketwatchapiservicecore.fpts.com.vn/api/stock/v1/mw/template/058C222210",data ),
+  postformData :(data:any) =>requests.postFormData("http://eztradereacttest.fpts.com.vn/Root/Data.ashx", data)
 };
 // 
 const Ministry = {
@@ -112,8 +117,12 @@ const dataGDTTtable = {
 };
 const chartIndex = {
   get: () => requests.get(BASE_URL + "/chart/data.ashx?s=full"),
+  getSS: () => requests.get(BASE_URL + `/chart/data.ashx?s=config&v=20160829061939`),
+  getTimeSS: (dataChartIndex: IRP) => requests.postFormData(BASE_URL + "/chart/data.ashx",dataChartIndex),
+  getCDT: (value_getCDT:string) => requests.get(BASE_URL +`/chart/data.ashx?s=${value_getCDT}`),
   //get: () => requests.get('http://localhost:8000/dataChartIndex'),
 };
+
 var formData = new FormData();
 formData.append("key1", "value1");
 formData.append("key2", "value2");
@@ -153,6 +162,9 @@ const assetReport = {
 const SendOrder_Marpro = {
   post: (data:any) => requests.post("/trade/api/ApiData/SendOrder_MarPro",data),
 };
+const logout ={
+  get: () => requests.get("/trade/logout"),
+}
 const agent = {
     TableHNX,
     TableHSX,
@@ -174,6 +186,8 @@ const agent = {
     StockBalance,
     StockBalanceMarpro,
     SendOrder_Marpro,
-    GetOTP
+    GetOTP,
+    checkOTP,
+    logout
 }
 export default agent;

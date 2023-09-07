@@ -5,7 +5,6 @@ import { iconColorMenuMarket, setColorMenuMarket } from "../../utils/util";
 import ChartIndexSlide from "../chartIndex/ChartIndexSlide";
 import { ISlideMarket } from "./interface/slidemarket.config";
 
-
 const SlideMarketItem: React.FC<ISlideMarket> = ({
   id,
   name,
@@ -102,7 +101,13 @@ const SlideMarketItem: React.FC<ISlideMarket> = ({
                   )
                 </span>
                 <span
-                  className={`${san==="HSX" ?"HO_MarketStat":san==="HNX"?"HA_MarketStat":"UPC_MarketStat"} txtIndex`}
+                  className={`${
+                    san === "HSX"
+                      ? "HO_MarketStat"
+                      : san === "HNX"
+                      ? "HA_MarketStat"
+                      : "UPC_MarketStat"
+                  } txtIndex`}
                   id={`${id[11] !== undefined ? id[11] : ""}`}
                 >
                   {status}
@@ -111,7 +116,11 @@ const SlideMarketItem: React.FC<ISlideMarket> = ({
             </>
           )}
           {/* <ChartIndex /> */}
-          <ChartIndexSlide name={name} san={san} dataChartIndex={dataChartIndex} />
+          <ChartIndexSlide
+            name={name}
+            san={san}
+            dataChartIndex={dataChartIndex}
+          />
         </div>
       </li>
     </>

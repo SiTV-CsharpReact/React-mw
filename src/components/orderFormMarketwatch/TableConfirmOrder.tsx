@@ -26,6 +26,7 @@ import { hideEmail, hidePhoneNumber } from "./util/util";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AlertMessage from "../../layout/AlertMessage";
+import { formatNumber } from "../../utils/util";
 var arrErrorOTP = [-123456, 181104, 181105, 181106, 181107, 181109, 181110];
 const TableConfirmOrder = () => {
   const { t } = useTranslation(["home"]);
@@ -33,9 +34,7 @@ const TableConfirmOrder = () => {
   // get phone number
   const Phone = useAppSelector((state) => state.ProfileAccount.SMS);
   // get sử dụng phone hay number 2 = phone  3 =email
-  const Atransaction = useAppSelector(
-    (state) => state.ProfileAccount.Atransaction
-  );
+  const Atransaction = useAppSelector(  (state) => state.ProfileAccount.Atransaction );
   // get email
   const Email = useAppSelector((state) => state.ProfileAccount.Email);
   // get trạng thái tk (margin,marginpro,...)
@@ -44,8 +43,8 @@ const TableConfirmOrder = () => {
   );
   const OTP = useAppSelector((state) => state.SendOrder.OTP);
   console.log(OTP);
-  // data từ gửi lệnh
   const msg = useAppSelector((state) => state.SendOrder.Response);
+  const { SanT, maCode, price, TCT, TranC, key, san,quantityMax,priceInput} = useAppSelector(state => state.orderComan );
   if (arrErrorOTP.includes(msg.Code)) {
     if (msg.Code === -123456 || msg.Code === 181106) {
       if (msg.Code === 181106) {
@@ -193,7 +192,7 @@ const TableConfirmOrder = () => {
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const buttonSx = {
-    ...(success && {
+    ...(!success && {
       bgcolor: "#0fb44b",
       border: "1px solid #92ddad",
       color: "#fff",
@@ -225,7 +224,8 @@ const TableConfirmOrder = () => {
       >
         <Box
           sx={{
-            backgroundColor: "#034e94",
+            // backgroundColor: "#034e94",
+            backgroundColor: key === "M"? "#034e94" : "#d71920",
             color: "#fff",
             fontSize: 15,
             padding: "7px 5px",
@@ -277,26 +277,24 @@ const TableConfirmOrder = () => {
                       <th className="text-center font-extralight !text-[#000000] w-[110px] text-sm border-r border border-[#dedede]">
                         {t("home:base.Gia")}
                       </th>
-                      <th className="text-center font-extralight !text-[#000000] w-[240px] text-sm border-r border border-[#dedede]">
-                        {t("home:base.ThongBao")}
-                      </th>
+                  
                     </tr>
                   </thead>
                   <tbody>
                     <tr className="border border-[#dedede]">
-                      <td className="text-center border-r border border-[#dedede]">
-                        {t("home:Order.ORDER_MUA")}
+                      <td className={`text-center border-r border border-[#dedede]   ${key==="M" ? "text-[#034e94]":"text-[#d71920]"}`}>
+                      {key==="M" ? t("home:Order.ORDER_MUA"): t("home:Order.ORDER_BAN")}
                       </td>
                       <td className="text-center border-r border border-[#dedede]">
-                        AAV
+                      {maCode}
                       </td>
                       <td className="text-center border-r border border-[#dedede]">
-                        100
+                        {formatNumber(quantityMax)} 
                       </td>
                       <td className="text-center border-r border border-[#dedede]">
-                        5.6
+                        {priceInput || price/1000}
                       </td>
-                      <td>oke</td>
+                     
                     </tr>
                   </tbody>
                 </table>
@@ -304,8 +302,14 @@ const TableConfirmOrder = () => {
               <Box paddingTop="12px" textAlign="center">
                 <Typography fontSize="13px">
                   Để đảm bảo an toàn, FPTS áp dụng việc xác thực OTP để thay thế
-                  cho mật khẩu giao dịch khi đặt lệnh. Mã OTP sẽ được gửi đến số
-                  điện thoại{" "}
+                  cho mật khẩu giao dịch khi đặt lệnh. Mã OTP sẽ được gửi 
+                  
+                  {Atransaction === 2
+                      ? " đến số điện thoại"
+                      : Atransaction === 3
+                      ? " đến email"
+                      : ""}
+                   {" "}
                   <Typography component="span" color="#3773aa">
                     {Atransaction === 2
                       ? hidePhoneNumber(Phone)

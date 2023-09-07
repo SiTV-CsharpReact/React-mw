@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as HighCharts from "highcharts";
 import { _getDateTs } from "../util/app.chart";
-import { IChartIndex, IData } from "../util/interface.config";
+import { IChartIndex, IData } from "../interface/interface.config";
 
 export const useChart = (
   dataSpline: number[][],
@@ -191,7 +191,7 @@ export const useChart = (
   return { options };
 };
 
-export function getDataChartHSX(data: IChartIndex, name: string): IData[] {
+export function getDataChartHSX(data: IChartIndex, name: string): any {
   switch (name) {
     case "VNXALL":
       return data.HSX?.DataFull?.VNXALL;
@@ -213,7 +213,7 @@ export function getDataChartHSX(data: IChartIndex, name: string): IData[] {
   }
 }
 
-export function getDataChartHNX(data: IChartIndex, name: string): IData[] {
+export function getDataChartHNX(data: IChartIndex, name: string): any {
   switch (name) {
     case "HNX":
       return data.HNX?.DataFull?.HNXIndex;

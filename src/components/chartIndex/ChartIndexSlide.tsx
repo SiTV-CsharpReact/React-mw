@@ -4,11 +4,12 @@ import { formatNumber, formatNumberToM } from "../../utils/util";
 import "./chartIndex.scss";
 import { _getDateTs } from "./util/app.chart";
 import { getDataChartHNX, getDataChartHSX } from "./chart/useChart";
+import agent from "../../api/agent";
 
 type TProps = {
   name: string;
   san: string;
-  dataChartIndex: any;
+  dataChartIndex?: any;
 };
 const ChartIndexSlide: React.FC<TProps> = ({
   name,
@@ -109,14 +110,8 @@ const ChartIndexSlide: React.FC<TProps> = ({
           },
         },
       },
-      // {
-      //   name: "",
-      //   type: "collum",
-      //   data: dataChart,
-      //   color: '#5F9DFE',
-      // },
     ];
-
+ 
     Highcharts.chart(`container-${name}`, {
       chart: {
         marginTop: 8, // Đặt khoảng cách giữa highcharts-plot-background và highcharts-container là 20px

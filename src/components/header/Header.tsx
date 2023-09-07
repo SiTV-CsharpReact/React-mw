@@ -72,11 +72,12 @@ const Header = () => {
           <Tooltip title="Giao dịch chứng khoán phát sinh">
             {/* <span className="  uppercase text-sm"> */}
             <Button
-              style={{
+              sx={{
                 padding: "0px !important",
                 minWidth: 30,
-                marginBottom: 4,
-                marginRight: 2,
+                marginBottom: 1,
+                marginRight: 0.4,
+                marginTop:0.8,
               }}
             >
               <a href="/">

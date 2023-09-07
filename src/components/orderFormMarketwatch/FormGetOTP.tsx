@@ -13,9 +13,9 @@ import {
   import imageCloseRed from "../../images/EzFuture-05.png";
   import imageClose from "../../images/EzFuture-09.png";
   import { useAppDispatch, useAppSelector } from "../../store/configureStore";
-  import green from "@mui/material/colors/green";
   import OtpInput from "react-otp-input";
   import {
+    checkOTP,
     getOTP,
     setsttOrderForm,
   } from "./SendOrderSlice";
@@ -23,6 +23,8 @@ import {
   import { ToastContainer, toast } from "react-toastify";
   import "react-toastify/dist/ReactToastify.css";
   import { setsttFormOTP } from './SendOrderSlice';
+import agent from "../../api/agent";
+import { setOTPVerified } from "../header/ProfileAccountSlice";
   var arrErrorOTP = [-123456, 181104, 181105, 181106, 181107, 181109, 181110];
 
 
@@ -41,6 +43,7 @@ const FormGetOTP = () => {
   const sttAccount = useAppSelector(
     (state) => state.ProfileAccount.statusAccount
   );
+
   const [countdownValue, setCountdownValue] = useState("");
   const [showResend, setShowResend] = useState(false);
   // otp
@@ -50,6 +53,48 @@ const FormGetOTP = () => {
   const sendGetOTP = ()=>{
     setSttInputOtp(true)
     dispatch(getOTP());
+  }
+  const ConfirmOTP = async  ()=>{
+    setSttInputOtp(false);
+    console.log(otp)
+  //  await dispatch(checkOTP(otp));
+   const ResponseOTP = await agent.checkOTP.get(otp);
+      if(ResponseOTP.Code === 0){
+        if(ResponseOTP.Data.ErrorCode===0){
+         setSttInputOtp(false);
+         dispatch(setsttFormOTP(false));
+         dispatch(setOTPVerified(1));
+         toast.success(
+          ResponseOTP.Data.Message,
+          {
+            className: "mt-6",
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
+        );
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />;
+        }
+        else{
+         alert(ResponseOTP.Data.Message)
+        }
+    }
   }
   const msg = useAppSelector((state) => state.SendOrder.OTP);
   if (arrErrorOTP.includes(msg.Code)) {
@@ -280,35 +325,45 @@ const FormGetOTP = () => {
                       onChange={setOtp}
                       inputStyle="inputStyle"
                       numInputs={6}
+                      shouldAutoFocus
                       renderInput={(props) => <input {...props} />}
                     />
                   </Box>
                 </Box>}   
           
                 <Box textAlign="center">
-                  <Button
-                    sx={{ display: "none" }}
-                    variant="contained"
-                    className="btn px-4 validate otp-popup-otpSubmit hidden"
-                    data-view="OF"
-                  >
-                    Xác nhận
-                  </Button>
-                  <div className="divSendOTP" style={{ display: "block" }}>
+                  <Box className="divSendOTP" paddingBottom={2} style={{ display: "block" }}>
                     <Button
                       variant="contained"
                       onClick={()=>sendGetOTP()}
+                      sx={{
+                        display:sttInputotp?"none":"",
+                        borderRadius:"20px",
+                        fontSize:"12px",
+                        padding:"8px 20px"
+                      }}
                     >
                        Nhận mã OTP
                     </Button>
-                    
-                  </div>
+                    <Button
+                      variant="contained"
+                      onClick={()=>ConfirmOTP()}
+                      sx={{
+                        display:sttInputotp?"":"none",
+                        borderRadius:"20px",
+                        fontSize:"12px",
+                        padding:"8px 20px"
+                      }}
+                    >
+                       Xác nhận
+                    </Button>
+                  </Box>
                   <Button
                     variant="text"
                     sx={{
                       position: "absolute",
                       left: "80%",
-                      top: 315,
+                      top: 275,
                       color: "#337ab7",
                       fontSize: "13px",
                       display: showResend ? "" : "none",

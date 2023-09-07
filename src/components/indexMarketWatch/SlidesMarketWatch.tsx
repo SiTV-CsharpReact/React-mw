@@ -2,6 +2,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -39,15 +40,65 @@ import {
   fStatusMarketHSX,
   fStatusMarketUPCOM,
 } from "../../utils/util";
-import { fetchChartIndexAsync } from "../chartIndex/chartIndexSlice";
+import {
+  fetchChartIndexAsync,
+  fetchChartIndexCDTAsync,
+  fetchChartIndexTimeAsync,
+  fetchConfigChartIndexAsync,
+  setDataChartRealTime,
+} from "../chartIndex/chartIndexSlice";
+import agent from "../../api/agent";
+import {
+  IACTION_LIST,
+  IDataCDT,
+  IDataSS,
+  IRP,
+} from "./interface/slidemarket.config";
 
 const SlidesMarketWatch = () => {
+  const dispatch = useAppDispatch();
   const { visible } = useAppSelector((state) => state.chart);
   const height = useContext(AppContext);
-  const screenWidth = visible ? window.innerWidth - 650 : window.innerWidth;
-  const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
+  const { dataChartIndex, configChartIndex, dataChartIndexTime } =
+    useAppSelector((state) => state.chartIndex);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [sttFetchData, setSTTFetchData] = useState(true);
+  const INTERVAL = 30000; // 60000 milliseconds = 1 minute
+  const ACTION_LIST: IACTION_LIST = {
+    GET_SS: "ss", // get snapshot data (update) , can phai co Max
+    GET_CDT: "cdt", // get check date time
+  };
+  const dataChart = useMemo(() => {
+    const mergedResult: any = {};
+    for(const key in dataChartIndex){
+      if(dataChartIndex.hasOwnProperty(key)){
+        if(Array.isArray(dataChartIndex[key])){
+          mergedResult[key] = dataChartIndex[key].concat(dataChartIndexTime[0][key]);
+        }else{
+          if(typeof dataChartIndex[key] === 'object'){
+            mergedResult[key] = { ...dataChartIndex[key] };
+            for (const nestedKey in dataChartIndex[key]) {
+              if (dataChartIndex[key].hasOwnProperty(nestedKey)) {
+                // break;
+                if (Array.isArray(dataChartIndex[key][nestedKey])) {
+                  mergedResult[key][nestedKey] = dataChartIndex[key][nestedKey].concat(dataChartIndexTime[0][key][nestedKey]);
+                  break;
+                }
+              }
+            }
+          }else {
+            mergedResult[key] = dataChartIndex[key];
+          }
+        }
+      }
+    }
+    return mergedResult
+  }, [dataChartIndex, dataChartIndexTime]);
+  console.log({ dataChart });
+  // console.log({ dataChartIndex: dataChartIndex});
 
-  const dispatch = useAppDispatch();
   const {
     marketHSX: { valueHSX },
   } = useAppSelector((state) => state.marketHSX);
@@ -68,15 +119,73 @@ const SlidesMarketWatch = () => {
   useEffect(() => {
     dispatch(fetchChartIndexAsync());
   }, [dispatch]);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Gọi API đầu tiên
+        await dispatch(fetchConfigChartIndexAsync());
+      } catch (error) {
+        // Xử lý lỗi nếu cần
+        console.error("Error fetching first API data:", error);
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
+  const HOUR_STOP_UPDATE = 15;
+  useEffect(() => {
+    const fetchDataCDT = async () => {
+      try {
+        // Sau khi có dữ liệu từ API đầu tiên, gọi API thứ hai với giá trị từ API đầu tiên
+        if (configChartIndex) {
+          var RP: IRP = { s: ACTION_LIST.GET_SS, m: configChartIndex };
+          const dataCDT: IDataCDT = await agent.chartIndex.getCDT(
+            ACTION_LIST.GET_CDT
+          );
+          const { data } = await agent.chartIndex.getTimeSS(RP);
+          // dispatch(fetchChartIndexCDTAsync(ACTION_LIST.GET_CDT));
+          // dispatch(fetchChartIndexTimeAsync(RP));
+          if (dataCDT) {
+            // ko null thi moi xu ly
+            // if (self.m_TimerProcID) // khac null
+            // {
+            if (
+              !dataCDT.IsWorkingDay || // ko phai NGAY LAM VIEC >> destroy timer
+              (dataCDT.IsWorkingDay &&
+                new Date(dataCDT.Now).getHours() >= HOUR_STOP_UPDATE) // la NGAY LAM VIEC + tu sau 15h00 => destroy timer
+            ) {
+              setSTTFetchData(false);
+            }
+            // }
+          }
+          if (data)
+            if (data?.SS !== null) {
+              dispatch(setDataChartRealTime(data));
+            }
+        }
+      } catch (error) {
+        // Xử lý lỗi nếu cần
+        console.error("Error fetching second API data:", error);
+      }
+      if (!sttFetchData || !configChartIndex) {
+        // Kiểm tra biến trạng thái và configChartIndex
+        clearInterval(intervalId); // Dừng interval nếu không cần tiếp tục
+      }
+    };
+    fetchDataCDT();
+    // Thiết lập interval để gọi API mỗi 1 phút
+    const intervalId = setInterval(fetchDataCDT, INTERVAL);
+    // Trả về một hàm để xóa interval khi component unmount hoặc thay đổi
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [dispatch, configChartIndex, sttFetchData]);
   // let speed = 0;
   const scrollRef = useRef<any>(null);
   const divRef = useRef<any>(null);
   let scrollInterval: any = null;
-  let scrollInterval1: any = null;
+  // let scrollInterval1: any = null;
   // const [mouseX, setMouseX] = useState(0);
   const handleMouseDown = (event: any) => {
     setIsDragging(true);
@@ -138,11 +247,10 @@ const SlidesMarketWatch = () => {
   };
 
   const handleMouseLeave = (e: any) => {
-    clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover    
+    clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover
     !visible && e.target.classList.remove("scrollingHotSpotRightVisible");
     !visible && e.target.classList.remove("scrollingHotSpotLeftVisible");
   };
-console.log({dataChartIndex});
 
   return (
     <div
@@ -164,7 +272,7 @@ console.log({dataChartIndex});
           handleMouseLeave(e);
         }}
       />
-      <ul className="my-1 col-priceboard class-chart">
+      <ul className="py-1 col-priceboard class-chart bg-black">
         <div
           className="flex w-full overflow-x-hidden whitespace-nowrap cursor-grab"
           ref={divRef}
@@ -190,7 +298,7 @@ console.log({dataChartIndex});
               valueFloor={valueHSX?.VNXALL_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
               san="HSX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.VNI && (
@@ -210,7 +318,7 @@ console.log({dataChartIndex});
               valueFloor={valueHSX?.VNI_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
               san="HSX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.VN30 && (
@@ -230,7 +338,7 @@ console.log({dataChartIndex});
               valueFloor={valueHSX?.VN30_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
               san="HSX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.VN100 && (
@@ -250,7 +358,7 @@ console.log({dataChartIndex});
               valueFloor={valueHSX?.VN100_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
               san="HSX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.VNALL && (
@@ -270,7 +378,7 @@ console.log({dataChartIndex});
               valueFloor={valueHSX?.VNALL_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
               san="HSX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.VNMID && (
@@ -290,7 +398,7 @@ console.log({dataChartIndex});
               valueFloor={valueHSX?.VNMID_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
               san="HSX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.VNSML && (
@@ -310,7 +418,7 @@ console.log({dataChartIndex});
               valueFloor={valueHSX?.VNSML_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
               san="HSX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.HNX && (
@@ -330,7 +438,7 @@ console.log({dataChartIndex});
               valueFloor={valueHNX?.i02_x253f}
               status={fStatusMarketHNX(valueHNX?.i02_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.HNX30 && (
@@ -350,7 +458,7 @@ console.log({dataChartIndex});
               valueFloor={valueHNX?.i41_x253f}
               status={fStatusMarketHNX(valueHNX?.i41_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.HNXLCAP && (
@@ -370,7 +478,7 @@ console.log({dataChartIndex});
               valueFloor={valueHNX?.i26_x253f}
               status={fStatusMarketHNX(valueHNX?.i26_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.HNXSMCAP && (
@@ -390,7 +498,7 @@ console.log({dataChartIndex});
               valueFloor={valueHNX?.i28_x253f}
               status={fStatusMarketHNX(valueHNX?.i28_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.HNXFIN && (
@@ -410,7 +518,7 @@ console.log({dataChartIndex});
               valueFloor={valueHNX?.i39_x253f}
               status={fStatusMarketHNX(valueHNX?.i39_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.HNXMAN && (
@@ -430,7 +538,7 @@ console.log({dataChartIndex});
               valueFloor={valueHNX?.i310_x253f}
               status={fStatusMarketHNX(valueHNX?.i310_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.HNXCON && (
@@ -450,7 +558,7 @@ console.log({dataChartIndex});
               valueFloor={valueHNX?.i311_x253f}
               status={fStatusMarketHNX(valueHNX?.i311_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.UPCOM && (
@@ -470,7 +578,7 @@ console.log({dataChartIndex});
               valueFloor={valueHNX?.i03_x253f}
               status={fStatusMarketUPCOM(valueHNX?.i03_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
         </div>

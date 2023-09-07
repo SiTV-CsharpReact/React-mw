@@ -12,4 +12,16 @@ export interface CategoriesMarketWatch {
     Default_MarketWatch: string
     UserAgent: any
   }
+  export interface CategoriesMarketWatchs {
+    Code: number
+    Message: string
+    Data: Categories[]
+  }
+  
+  export interface Categories {
+    RowID: string
+    Text: string
+    Code: string
+    Def: string
+  }
   

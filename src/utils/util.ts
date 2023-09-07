@@ -26,8 +26,12 @@ export function formatNumbertoDecimal(number: any) {
   }
 }
 export function formatNumber(number: any) {
-  if (!number || number === 0 || number === "0") return 0; // hoac ''
-  else return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+  if (number >= 1000000) {
+    return (number / 1000000).toFixed(2) + 'M';
+  }else{
+    if (!number || number === 0 || number === "0") return 0; // hoac ''
+    else return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+  }
 }
 export function formatNumberMarket(number: any) {
   if (!number || number === 0 || number === "0") return ""; // hoac ''

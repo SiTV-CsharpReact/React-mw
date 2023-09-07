@@ -15,15 +15,15 @@ import { defaultColDef, gridOptions } from "./interface/config.tablegrid";
 import ColumnDef from "./components/options";
 import { setCookie } from "../../models/cookie";
 import { g_CLASS_INDEX } from "../../configs/app.config";
-import { async } from "q";
 import { setActiveMenu } from "../menuBarMW/menuSlice";
-import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
+
 const arrayPrice = [5, 7, 9, 11, 14, 16, 18];
   const arrayKL = [6, 8, 10, 12, 15, 17, 19];
 // LicenseManager.setLicenseKey(
 //   "SHI_UK_on_behalf_of_Lenovo_Sweden_MultiApp_1Devs6_November_2019__MTU3Mjk5ODQwMDAwMA==e27a8fba6b8b1b40e95ee08e9e0db2cb"
 // );
 const TableMarketWatchTest = () => {
+  const dispatch = useAppDispatch();
   const ClientCode= useAppSelector(
     (state) => state.ProfileAccount.LoginName
   );
@@ -32,7 +32,7 @@ const TableMarketWatchTest = () => {
   const pinnedRowsRef = useRef<any[]>([]);
 
   const [columnDefs] = ColumnDef(gridRef, pinnedRowsRef);
-  const dispatch = useAppDispatch();
+  
   // rest sort
   //setRowData
   const { ListDataTable, DataPined, RowPined, keyActiveMan } = useAppSelector(
@@ -43,7 +43,8 @@ const TableMarketWatchTest = () => {
   // const pinned = useAppSelector((state) => state.categories.row);
   // call data
   const HanDelCate = useCallback(async () => {
-    let result = await dispatch(fetchCategoryAsync(ClientCode));
+    if(ClientCode) {  
+      let result = await dispatch(fetchCategoryAsync(ClientCode));
     if (result?.payload?.Data[0]?.List) {
       let data = {
         Floor: "danh-muc",
@@ -74,7 +75,8 @@ const TableMarketWatchTest = () => {
 
       dispatch(setActiveMenu(activeMenu))
     }
-  }, [dispatch]);
+  }
+  }, [dispatch,ClientCode]);
   const handelGetData = useCallback(
    async (Data: any) => {
      let result = await dispatch(getDataTable(Data));

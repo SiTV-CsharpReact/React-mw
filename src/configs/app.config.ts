@@ -7,6 +7,7 @@ export const san_HNX = "hnx";
 export const san_HSX = "hsx";
 var ARRAY_INDEX_LANGUAGE = [0, 1];
 var COOKIE_LANGUAGE_NAME = "aspfpt_language";
+export const COOKIE_SESSION_NAME = "aspfpt_sessiontoken";
 var g_CurrentLanguage = "";
 export const FEE_RATE_TP = "0.0005"
 var g_ARRAY_CHART_NAME = [
@@ -127,13 +128,13 @@ export const g_arrHAMarketStatus = [
   ["LIS_AUC_C_NML_LOC_1", "ATC (chặn hủy sửa)"], // ATC
   ["LIS_AUC_C_NEW_1", "ATC"], // ATC
   ["LIS_AUC_C_NEW_LOC_1", "ATC (chặn hủy sửa)"], // ATC
-  ["LIS_CON_NML_90", "Đóng cửa (chờ nhận lệnh)"],
+  ["LIS_CON_NML_90", "Đóng cửa"],
   ["LIS_CON_NML_2", "Nghỉ trưa"],
   ["LIS_CON_NML_1", "Liên tục"],
   ["LIS_PTH_P_NML_13", "Đóng cửa"],
   ["LIS_PTH_P_NML_1", "Thỏa thuận"],
   ["LIS_PTH_P_NML_97", "Đóng cửa"],
-  ["LIS_CON_NEW_90", "Đóng cửa (chờ nhận lệnh)"],
+  ["LIS_CON_NEW_90", "Đóng cửa"],
   ["LIS_CON_NEW_2", "Nghỉ trưa"],
   ["LIS_CON_NEW_1", "Liên tục"],
   //thêm 2020-02-19 9h28 longht

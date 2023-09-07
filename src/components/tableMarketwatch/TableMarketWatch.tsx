@@ -16,8 +16,6 @@ import {
 } from "../../utils/util";
 import "../../styles/MW.css";
 import { ObjectMenuHSX } from "../../models/modelListMenuHSX";
-import { useParams } from "react-router-dom";
-import { stocks } from "../../models/marketwacthTable";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import FooterMarket from "../footerMarketwatch/FooterMarket";
 import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
@@ -67,6 +65,7 @@ const showKLPT = (value: string) => {
 };
 
 const TableMarketWatch = () => {
+  const accountname = useAppSelector((state) => state.ProfileAccount.ClientName);
   const dataTables = useAppSelector((state) => state.table.ListDataTable);
   const { INDEX } = useAppSelector(
     (state: RootState) => state.settingMarketwatch
@@ -91,7 +90,8 @@ const TableMarketWatch = () => {
   );
   useEffect(() => {
     async function HanDelCate() {
-      let result = await dispatch(fetchCategoryAsync("058C222210"));
+    if(accountname) {
+      let result = await dispatch(fetchCategoryAsync(accountname));
       if (result?.payload?.Data[0]?.List) {
         let data = {
           Floor: "danh-muc",
@@ -104,7 +104,7 @@ const TableMarketWatch = () => {
           Query: "s=quote&l=All",
         };
         await handelGetData(data);
-      }
+      }} 
     }
     HanDelCate();
   }, [dispatch]);

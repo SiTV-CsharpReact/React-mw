@@ -36,7 +36,6 @@ const ColumnDef = (props: any, props2: any) => {
 
   const handelCheckNext = () => {
     setShowPrice(!showPrice);
-
   };
   const widthWindow = window.innerWidth;
   const dispatch = useAppDispatch();
@@ -44,14 +43,14 @@ const ColumnDef = (props: any, props2: any) => {
   const {RowPined} = useAppSelector((state) => state.tableTest)
   const {dataCompanyTotal} = useAppSelector((state) => state.company)
   const handleClick = (dataTable: any) => {
-
     dispatch(dispatchDataTable(dataTable));
     const dataCode = dataCompanyTotal.find((item:Company) =>  item.Code ===  dataTable.ma)
     if(dataCode){
+      let PriceInput = dataTable?.price
       let san = dataCode?.Exchange === 1 ?  "HSX" :"HNX"
       const data = {
-        key  :"B",
-        dataOrder :{...dataCode , Exchange :san}
+        key  :dataTable?.key,
+        dataOrder :{...dataCode , Exchange :san,PriceInput:PriceInput}
       }
       dispatch(setDataOrder(data))
     }
@@ -635,7 +634,7 @@ const ColumnDef = (props: any, props2: any) => {
                   data-comp={rowid}
                   className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClick({ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC,key:"B" })
+                    handleClick({ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC,key:"M" })
                   }
 
                 >
@@ -704,7 +703,7 @@ const ColumnDef = (props: any, props2: any) => {
                   data-comp={rowid}
                   className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClick({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC,key:"B" })
+                    handleClick({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC,key:"M" })
                   }
                 >
                   {formatNumberMarket(value)}
@@ -774,7 +773,7 @@ const ColumnDef = (props: any, props2: any) => {
                   data-comp={rowid}
                   className="cursor-pointer custom-cell"
                   onDoubleClick={() =>
-                    handleClick({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC,key:"B" })
+                    handleClick({ ma: params.data.MCK, price: value ,SanT:SanT,TCT:TCT ,TranC:TranC,key:"M" })
                   }
                 >
                   {formatNumberMarket(value)}
