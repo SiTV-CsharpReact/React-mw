@@ -45,6 +45,7 @@ interface TableState {
   keyMenu: string;
   nameMenu: string;
   floorMenu: string;
+  sttStockcode:string;
 }
 type params = {
   Floor: string;
@@ -252,6 +253,7 @@ export const tableTestSlice = createSlice({
     keyMenu: "" ,
     nameMenu: "",
     floorMenu: "",
+    sttStockcode: "",
   }),
   reducers: {
     setProductParams: (state, action) => {
@@ -445,7 +447,6 @@ export const tableTestSlice = createSlice({
             state.NameFloor = "HNX";
           }
         }
-
       })
       .addCase(getDataTable.rejected, (state, action) => {
         state.DataBi = state.DataBi;

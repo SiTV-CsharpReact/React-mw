@@ -550,7 +550,8 @@ let isDraggingPinnedRow = false;
     animateRows={true}
     gridOptions={gridOptions}
     rowMultiSelectWithClick={true}
-    
+    tooltipShowDelay={0}
+    tooltipHideDelay={1000}
     onRowDragEnter={(event) => {
       const node = event.node;
       console.log(node)

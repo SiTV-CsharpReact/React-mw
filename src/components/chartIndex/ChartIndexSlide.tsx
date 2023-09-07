@@ -4,6 +4,7 @@ import { formatNumber } from "../../utils/util";
 import "./chartIndex.scss";
 import { _getDateTs } from "./util/app.chart";
 import agent from "../../api/agent";
+import { useAppSelector } from "../../store/configureStore";
 
 type TProps = {
   name: string;
@@ -16,6 +17,11 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps
   const [indexValue, setIndexValue] = useState(0);
   const [timeFirst, setTimeFirst] = useState(0);
   const [timeLast, setTimeLast] = useState<any>();
+  const dataChartIndexTime = useAppSelector((state)=> state.chartIndex.dataChartIndexTime)
+  console.log(dataChartIndexTime)
+  useEffect(()=>{
+    console.log(dataChartIndexTime)
+  },[dataChartIndexTime])
   useEffect(() => {
     if (san === "HSX") {
       const hsx = dataChartIndex?.HSX;

@@ -13,27 +13,11 @@ import { setCookie } from "../../../models/cookie";
 import CustomHeader from "../CustomHeader";
 import { CellOtherColorRender } from "./CellOtherColorComponent";
 import { Company } from "../../../models/root";
-
-
-
-
-
-const PinCell = () => {
-  return (
-    <div title="Double click to pin" className="pt-[7px]">
-      <svg style={{ width: 12, height: 12 }} viewBox="0 0 24 24">
-        <path
-          fill="currentColor"
-          d="M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12M8.8,14L10,12.8V4H14V12.8L15.2,14H8.8Z"
-        />
-      </svg>
-    </div>
-  );
-};
-
+import { OBJECT_STATUS } from "../../../configs/app.config";
+import { forEach } from "lodash";
 const ColumnDef = (props: any, props2: any) => {
   const [showPrice, setShowPrice] = useState(false);
-
+  const  [sttStockCode, setSttStockCode] = useState("")
   const handelCheckNext = () => {
     setShowPrice(!showPrice);
   };
@@ -82,6 +66,7 @@ const ColumnDef = (props: any, props2: any) => {
         dispatch(addDatatPined({RowPined,data}))
       }
   };
+  function isNumeric(n:any) { return !isNaN(parseFloat(n)) && isFinite(n); }
   const columnDefs = React.useMemo(
     () => [
     // {
@@ -106,7 +91,8 @@ const ColumnDef = (props: any, props2: any) => {
       spanHeaderHeight: true,
       width: widthWindow * 0.05,
       maxWidth: 100,
-
+      tooltipField: 'MCK',
+      tooltipComponentParams: { color: '#e5f6fd' },
       // cellClass: "custom-cell",
       headerClass: "custom-header",
       cellStyle: (params: any) => {
@@ -121,7 +107,60 @@ const ColumnDef = (props: any, props2: any) => {
 
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
-
+        var txtStatus1 = '';
+        var txtStatus2 = '';// hungtq
+        var txtInfo = '';// hungtq
+        let checkSTTStockCode = params.data.Quyen;
+        var g_Language = 0
+        if (checkSTTStockCode.indexOf('|') === -1) {
+          checkSTTStockCode = checkSTTStockCode.split(':');
+          for (var i = 0; i < OBJECT_STATUS.length; i++) {
+            if (checkSTTStockCode[0] === OBJECT_STATUS[i].Status[0]) {
+              // txtStatus1 = '&nbsp;' + '-' + '&nbsp;' + OBJECT_STATUS[i].Status[g_Language + 1];
+              for (var j1 = 0; j1 < OBJECT_STATUS[i].Info.length; j1++) {
+                if (checkSTTStockCode[1] === OBJECT_STATUS[i].Info[j1][0]) {
+                  txtStatus2 = '&nbsp;' + '-' + '&nbsp;' + OBJECT_STATUS[i].Info[j1][g_Language + 1] + '.';
+                  txtInfo =  (isNumeric(checkSTTStockCode[1]) ? "R" : checkSTTStockCode[1]);
+                  console.log(txtStatus2,params.data.MCK);
+                  console.log(txtInfo);
+                  break;
+                }
+              }
+              // break;
+              console.log("oke")
+            }
+          }
+        }
+        else {
+         const strn = checkSTTStockCode.split('|');
+         for (var index = 0; index < strn.length; index++) {
+          var data = strn[index];
+           checkSTTStockCode = data.split(':');
+          
+          for (var ii = 0; ii < OBJECT_STATUS.length; ii++) {
+            if (checkSTTStockCode[0] === OBJECT_STATUS[ii].Status[0]) {
+              var txtStatus1 = '&nbsp;' + '-' + '&nbsp;' + OBJECT_STATUS[ii].Status[g_Language + 1];
+              
+              for (var jj = 0; jj < OBJECT_STATUS[ii].Info.length; jj++) {
+                if (checkSTTStockCode[1] === OBJECT_STATUS[ii].Info[jj][0]) {
+                 txtStatus2 = '&nbsp;' + '-' + '&nbsp;' + OBJECT_STATUS[ii].Info[jj][g_Language + 1] + '.';
+                  txtInfo = (isNumeric(checkSTTStockCode[1]) ? "R" : checkSTTStockCode[1]);
+                  //console.info('strn',strn,'checkSTTStockCode',checkSTTStockCode,'txtStatus1',txtStatus1,'txtStatus2',txtStatus2,'txtInfo',txtInfo,'OBJECT_STATUS[ii].Status[0]',OBJECT_STATUS[ii].Status[0]);
+                  console.log(txtStatus2,params.data.MCK);
+                  console.log(txtInfo)
+                  if (checkSTTStockCode[0] === '232' || checkSTTStockCode[0] === 'BE') {
+                    break;
+                  }
+                  // Để thoát khỏi vòng lặp trong trường hợp tìm thấy kết quả
+                  // return;
+                }
+              }
+            }
+          }
+        }
+        
+        }
+        // const 
         return (
           <div
             data-index={dataIndex}
@@ -143,7 +182,16 @@ const ColumnDef = (props: any, props2: any) => {
               className="pt-1 pl-1"
               onDoubleClick={(e) => handleDoubleClick(e, value)}
             >
-              {value}
+              {/* {value} */}
+              {checkSTTStockCode !== "" && checkSTTStockCode[0] === 'BE' || checkSTTStockCode[0] === '232' ? <span className="bg-[#808080]">{value} <sup>{txtInfo}</sup></span> : value}
+              {/* {txtInfo?
+              <span className="bg-[#808080]">
+              {txtInfo && <sup>{txtInfo}</sup>}
+              </span>
+              // ? checkSTTStockCode[0] !== '232': value
+              
+              :""} */}
+             
             </div>
           </div>
         );
