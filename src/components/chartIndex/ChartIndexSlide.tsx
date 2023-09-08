@@ -3,77 +3,41 @@ import Highcharts from "highcharts";
 import { formatNumber, formatNumberToM } from "../../utils/util";
 import "./chartIndex.scss";
 import { _getDateTs } from "./util/app.chart";
-import { getDataChartHNX, getDataChartHSX } from "./chart/useChart";
+import {
+  getDataChart,
+  getPlotLine,
+} from "./chart/useChart";
 import agent from "../../api/agent";
+import { IChartIndex, IData } from "./interface/interface.config";
+import { useAppSelector } from "../../store/configureStore";
 
 type TProps = {
   name: string;
   san: string;
-  dataChartIndex?: any;
 };
-const ChartIndexSlide: React.FC<TProps> = ({
-  name,
-  san,
-  dataChartIndex,
-}: TProps) => {
-  const [dataSpline, setDataSpline] = useState([]);
-  const [dataBar, setDataBar] = useState([]);
-  const [indexValue, setIndexValue] = useState(0);
-  const [timeFirst, setTimeFirst] = useState(0);
-  const [timeLast, setTimeLast] = useState<any>();
+const ChartIndexSlide: React.FC<TProps> = ({ name, san }: TProps) => {
+  const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
+  const [dataSpline, setDataSpline] = useState<any>([]);
+  const [dataBar, setDataBar] = useState<any>([]);
+  const [indexValue, setIndexValue] = useState<number>(0);
 
   useEffect(() => {
     if (san === "HSX") {
-      const data = getDataChartHSX(dataChartIndex, name);
-      const dataTimeIndex: any = data?.map((item: any) => ({
-        x: item.Data.TimeJS,
-        y: item.Data.Index,
-      }));
-      setDataSpline(dataTimeIndex);
-      data?.map((item: any, index: number) => {
-        if (index === 0) {
-          const v = item?.Data.Index;
-          setIndexValue(v);
-          setTimeFirst(item?.Data.TimeJS);
-          const today = new Date(timeFirst);
-          today.setHours(today.getHours() + 6);
-          setTimeLast(today.getTime());
-        }
-
-        return "";
-      });
-      const dataTimeVol: any = data?.map((item: any) => ({
-        x: item.Data.TimeJS,
-        y: item.Data.Vol,
-      }));
-      setDataBar(dataTimeVol);
+      const data = getDataChart(dataChartIndex, name);
+      const value = getPlotLine(dataChartIndex, name);
+      setIndexValue(value);
+      setDataSpline(data[0]);
+      setDataBar(data[1]);
     } else {
       if (san === "HNX") {
-        const data = getDataChartHNX(dataChartIndex, name);
-        const dataTimeIndex: any = data?.map((item: any) => ({
-          x: item.Data.TimeJS,
-          y: item.Data.Index,
-        }));
-        setDataSpline(dataTimeIndex);
-        data?.map((item: any, index: number) => {
-          if (index === 0) {
-            const v = item?.Data.Index;
-            setIndexValue(v);
-            setTimeFirst(item?.Data.TimeJS);
-            const today = new Date(timeFirst);
-            today.setHours(today.getHours() + 6);
-            setTimeLast(today.getTime());
-          }
-          return "";
-        });
-        const dataTimeVol: any = data?.map((item: any) => ({
-          x: item.Data.TimeJS,
-          y: item.Data.Vol,
-        }));
-        setDataBar(dataTimeVol);
+        const data = getDataChart(dataChartIndex, name);
+        const value = getPlotLine(dataChartIndex, name);
+        setIndexValue(value);
+        setDataBar(data[1]);
+        setDataSpline(data[0]);
       }
     }
-  }, [dataChartIndex, name, san, timeFirst]);
+  }, [dataChartIndex, name, san]);
 
   useEffect(() => {
     const gradient: any = [0, 0, 50, 380];
@@ -111,7 +75,7 @@ const ChartIndexSlide: React.FC<TProps> = ({
         },
       },
     ];
- 
+
     Highcharts.chart(`container-${name}`, {
       chart: {
         marginTop: 8, // Đặt khoảng cách giữa highcharts-plot-background và highcharts-container là 20px
@@ -216,30 +180,6 @@ const ChartIndexSlide: React.FC<TProps> = ({
         useUTC: false,
       },
       tooltip: {
-        positioner: function (labelWidth, labelHeight, point) {
-          var tooltipX, tooltipY;
-          // Calculate tooltip X position
-          if (point.plotX + labelWidth > this.chart.plotWidth) {
-            tooltipX = point.plotX - labelWidth + this.chart.plotLeft - 10;
-          } else if (point.plotX - labelWidth < 0) {
-            tooltipX = point.plotX + this.chart.plotLeft + 10;
-          } else {
-            tooltipX = point.plotX + this.chart.plotLeft - labelWidth / 2;
-          }
-          // Calculate tooltip Y position
-          if (point.plotY + labelHeight > this.chart.plotHeight) {
-            tooltipY = point.plotY - labelHeight + this.chart.plotTop - 10;
-          } else if (point.plotY - labelHeight < 0) {
-            tooltipY = point.plotY + this.chart.plotTop + 10;
-          } else {
-            tooltipY = point.plotY + this.chart.plotTop - labelHeight - 10;
-          }
-
-          return {
-            x: tooltipX,
-            y: tooltipY,
-          };
-        },
         shadow: false,
         backgroundColor: "#ffffffc9",
         borderColor: "#07d800",

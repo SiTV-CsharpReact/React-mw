@@ -16,7 +16,7 @@ export interface ISlideMarket {
   valueNoChange: string;
   status: string;
   san: string;
-  dataChartIndex?: IChartIndex;
+  // dataChartIndex: IChartIndex;
 }
 
 export interface IACTION_LIST {
@@ -72,10 +72,10 @@ export interface HSX {
 }
 
 export interface IDataHNX_HSX {
-  Time?: string;
-  Data?: {
-    Index?: number;
-    TimeJS?: number;
-    Vol?: number;
+  Time: string;
+  Data: {
+    Index: number;
+    TimeJS: number;
+    Vol: number;
   };
 }

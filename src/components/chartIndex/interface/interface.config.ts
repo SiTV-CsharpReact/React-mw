@@ -1,6 +1,6 @@
 export interface IData {
-  Time?: string;
-  Data?: {
+  Time: string;
+  Data: {
     Index: number;
     TimeJS: number;
     Vol: number;
@@ -61,9 +61,7 @@ export interface IDataFullHSX {
   VNXALL: IData[];
 }
 
-export interface IChart {
-  [key: string]: IChartIndex
-}
+
 export interface IChartIndex {
   HSX: HSX | null;
   HNX: HNX | null;

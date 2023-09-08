@@ -201,7 +201,7 @@ export const HNXCON: string[] = [
   "i311_x336x340",
 ];
 
-export const UPCON: string[] = [
+export const UPCOM: string[] = [
   "i03_Image",
   "i03_3",
   "i03_5",

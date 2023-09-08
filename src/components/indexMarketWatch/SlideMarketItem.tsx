@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { iconColorMenuMarket, setColorMenuMarket } from "../../utils/util";
 // import ChartIndex from "../chartIndex/ChartIndex";
 // import ChartTest from "../chartIndex/ChartIndexSlide";
 import ChartIndexSlide from "../chartIndex/ChartIndexSlide";
 import { ISlideMarket } from "./interface/slidemarket.config";
+import { useAppSelector } from "../../store/configureStore";
 
 const SlideMarketItem: React.FC<ISlideMarket> = ({
   id,
@@ -21,15 +22,18 @@ const SlideMarketItem: React.FC<ISlideMarket> = ({
   valueNoChange,
   status,
   san,
-  dataChartIndex,
+  // dataChartIndex,
 }) => {
+  const { dataChartIndexTime } = useAppSelector((state) => state.chartIndex);
+
+  useEffect(() => {}, [dataChartIndexTime]);
   return (
     <>
       <li className="dvChart ">
         <div>
           <p className="text-sm text-center whitespace-nowrap">
             <span id="" className="mar_">
-              {name}:
+              {name === "HNXUPCOM" ? "UPCOM" : name}:
             </span>
             <span
               id={id[1]}
@@ -119,7 +123,7 @@ const SlideMarketItem: React.FC<ISlideMarket> = ({
           <ChartIndexSlide
             name={name}
             san={san}
-            dataChartIndex={dataChartIndex}
+            // dataChartIndex={dataChartIndex}
           />
         </div>
       </li>
