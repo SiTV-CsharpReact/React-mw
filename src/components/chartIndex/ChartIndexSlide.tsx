@@ -4,24 +4,27 @@ import { formatNumber, formatNumberToM } from "../../utils/util";
 import "./chartIndex.scss";
 import { _getDateTs } from "./util/app.chart";
 import { getDataChartHNX, getDataChartHSX } from "./chart/useChart";
-import agent from "../../api/agent";
 import { useAppSelector } from "../../store/configureStore";
+// import agent from "../../api/agent";
+// import { useAppSelector } from "../../store/configureStore";
 
 type TProps = {
   name: string;
   san: string;
-  dataChartIndex?: any;
+
 };
 const ChartIndexSlide: React.FC<TProps> = ({
   name,
   san,
-  dataChartIndex,
+
 }: TProps) => {
   const [dataSpline, setDataSpline] = useState([]);
   const [dataBar, setDataBar] = useState([]);
   const [indexValue, setIndexValue] = useState(0);
   const [timeFirst, setTimeFirst] = useState(0);
   const [timeLast, setTimeLast] = useState<any>();
+  const dataChartIndex = useAppSelector((state)=>state.chartIndex.dataChartIndex);
+  // console.log(dataChartIndexTime)
   useEffect(() => {
     if (san === "HSX") {
       const data = getDataChartHSX(dataChartIndex, name);
@@ -122,7 +125,7 @@ const ChartIndexSlide: React.FC<TProps> = ({
           linearGradient: gradient,
           stops: [
             [0, "#080808"],
-            [1, "#917c05"],
+            [1, "#d4b614"],
           ],
         },
         backgroundColor: "#000",
@@ -170,6 +173,7 @@ const ChartIndexSlide: React.FC<TProps> = ({
         labels: {
           useHTML: true,
           style: {
+            // color: "#5F9DFE",
             color: "#a5a5a5",
             fontSize: "8px",
           },
@@ -187,7 +191,6 @@ const ChartIndexSlide: React.FC<TProps> = ({
           },
           gridLineWidth: 0,
           opposite: true,
-          // height: 75,
           lineWidth: 0,
         },
         {
@@ -209,7 +212,6 @@ const ChartIndexSlide: React.FC<TProps> = ({
               zIndex: 10,
             },
           ],
-          // height: 75,
         },
       ],
       time: {

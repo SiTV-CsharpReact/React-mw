@@ -87,11 +87,11 @@ const chartIndexSlice = createSlice({
       state.dataChartIndex = action.payload;
     },
     setDataChartRealTime:(state,action)=>{
-        const dataChartTime = action.payload;
-      
+    
+          const dataChartTime = action.payload;
           state.dataChartIndexTime = dataChartTime;
-          state.configChartIndex = dataChartTime.Max.toString();
-        
+          // state.configChartIndex = dataChartTime.Max.toString();
+          console.log(state.dataChartIndexTime)
     }
   },
   extraReducers: (builder) => {

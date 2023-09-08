@@ -40,7 +40,7 @@ const StockBalance = (status: any) => {
     }
   }, [dispatch]);
   const SellStock = (vCodeSell:string,vQuantityMax:number)=>{
-    console.log(dataCompanyTotal)
+    // console.log(dataCompanyTotal)
    dispatch(fetchCompanyAsync())
     let vExchange = "";
     let vGiaTran=0;

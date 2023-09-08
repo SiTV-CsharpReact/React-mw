@@ -100,7 +100,7 @@ const OrderMarketW:React.FC<PropResize> = ({types}:PropResize) => {
     }, [dispatch]);
  
   const [valueInputPrice, setValueInputPrice] = useState<number | null>(TranC !==0 ?  TranC: 1);
-  console.log(valueInputPrice)
+  // console.log(valueInputPrice)
   const [statusPrice, setStatusPrice] = useState(0);
   const [valueInputKl, setValueInputKl] = useState<number>(0);
   const [QuantityMax, setQuantityMax] = useState<number>(0);

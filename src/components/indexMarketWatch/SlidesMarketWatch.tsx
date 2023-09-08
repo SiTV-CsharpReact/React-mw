@@ -11,7 +11,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { AppContext } from "../../Context/AppContext";
 import {
-  RootState,
   useAppDispatch,
   useAppSelector,
 } from "../../store/configureStore";
@@ -42,8 +41,6 @@ import {
 } from "../../utils/util";
 import {
   fetchChartIndexAsync,
-  fetchChartIndexCDTAsync,
-  fetchChartIndexTimeAsync,
   fetchConfigChartIndexAsync,
   setDataChartRealTime,
 } from "../chartIndex/chartIndexSlice";
@@ -51,16 +48,41 @@ import agent from "../../api/agent";
 import {
   IACTION_LIST,
   IDataCDT,
-  IDataSS,
   IRP,
 } from "./interface/slidemarket.config";
+import { IChartIndex } from "../chartIndex/interface/interface.config";
+import { ARRAY_CHART_NAME } from "../../configs/app.config";
+// chart 
+const DivIndex = (
+  nameIndex:string,idIndex:string[],valueIndexChange:string,valueChange:string,valueChangePercent:string,visible:boolean,
+  valueTotalSharesAOM:string,valueTotalValuesAOM:string,
+  valueUp:string,valueCeiling:string,valueNoChange:string,valueDown:string,valueFloor:string, status:string,san:string,dataChartIndex:IChartIndex
+  )=>(
+  <SlideMarketItem
+  name={nameIndex}
+  id={idIndex}
+  valueIndexChange={valueIndexChange}
+  valueChange={valueChange}
+  valueChangePercent={valueChangePercent}
+  visible={visible}
+  valueTotalSharesAOM={valueTotalSharesAOM}
+  valueTotalValuesAOM={valueTotalValuesAOM}
+  valueUp={valueUp}
+  valueCeiling={valueCeiling}
+  valueNoChange={valueNoChange}
+  valueDown={valueDown}
+  valueFloor={valueFloor}
+  status={status}
+  san={san}
 
+/>
+ )
 const SlidesMarketWatch = () => {
   const dispatch = useAppDispatch();
   const { visible } = useAppSelector((state) => state.chart);
   const height = useContext(AppContext);
-  const { dataChartIndex, configChartIndex, dataChartIndexTime } =
-    useAppSelector((state) => state.chartIndex);
+  const { dataChartIndex, configChartIndex, dataChartIndexTime } =useAppSelector((state) => state.chartIndex);
+  console.log(dataChartIndex,configChartIndex)
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -70,33 +92,8 @@ const SlidesMarketWatch = () => {
     GET_SS: "ss", // get snapshot data (update) , can phai co Max
     GET_CDT: "cdt", // get check date time
   };
-  const dataChart = useMemo(() => {
-    const mergedResult: any = {};
-    for(const key in dataChartIndex){
-      if(dataChartIndex.hasOwnProperty(key)){
-        if(Array.isArray(dataChartIndex[key])){
-          mergedResult[key] = dataChartIndex[key].concat(dataChartIndexTime[0][key]);
-        }else{
-          if(typeof dataChartIndex[key] === 'object'){
-            mergedResult[key] = { ...dataChartIndex[key] };
-            for (const nestedKey in dataChartIndex[key]) {
-              if (dataChartIndex[key].hasOwnProperty(nestedKey)) {
-                // break;
-                if (Array.isArray(dataChartIndex[key][nestedKey])) {
-                  mergedResult[key][nestedKey] = dataChartIndex[key][nestedKey].concat(dataChartIndexTime[0][key][nestedKey]);
-                  break;
-                }
-              }
-            }
-          }else {
-            mergedResult[key] = dataChartIndex[key];
-          }
-        }
-      }
-    }
-    return mergedResult
-  }, [dataChartIndex, dataChartIndexTime]);
-  console.log({ dataChart });
+  // console.log(dataChartIndexTime)
+  // console.log({ dataChart });
   // console.log({ dataChartIndex: dataChartIndex});
 
   const {
@@ -105,8 +102,7 @@ const SlidesMarketWatch = () => {
   const {
     marketHNX: { valueHNX },
   } = useAppSelector((state) => state.marketHNX);
-  const { INDEX } = useAppSelector(
-    (state: RootState) => state.settingMarketwatch
+  const { INDEX } = useAppSelector( (state) => state.settingMarketwatch
   );
   useEffect(() => {
     dispatch(fetchHSXMarketAsync());
@@ -133,6 +129,7 @@ const SlidesMarketWatch = () => {
 
     fetchData();
   }, [dispatch]);
+
   const HOUR_STOP_UPDATE = 15;
   useEffect(() => {
     const fetchDataCDT = async () => {
@@ -161,7 +158,15 @@ const SlidesMarketWatch = () => {
           }
           if (data)
             if (data?.SS !== null) {
-              dispatch(setDataChartRealTime(data));
+              var obj = data.SS;
+              for (var k = 0; k < obj.length; k++) {
+                var child = obj[k];
+                for (var i = 0; i < ARRAY_CHART_NAME.length; i++) {
+                  console.log(child)
+                  dispatch(setDataChartRealTime(child));
+                }
+                }
+           
             }
         }
       } catch (error) {
@@ -281,305 +286,52 @@ const SlidesMarketWatch = () => {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
         >
-          {INDEX.VNXALL && (
-            <SlideMarketItem
-              name="VNXALL"
-              id={VNXALL}
-              valueIndexChange={valueHSX?.VNXALL_IndexValue}
-              valueChange={valueHSX?.VNXALL_Change}
-              valueChangePercent={valueHSX?.VNXALL_ChangePercent}
-              visible={visible}
-              valueTotalSharesAOM={valueHSX?.VNXALL_TotalSharesAOM}
-              valueTotalValuesAOM={valueHSX?.VNXALL_TotalValuesAOM}
-              valueUp={valueHSX?.VNXALL_Up}
-              valueCeiling={valueHSX?.VNXALL_Ceiling}
-              valueNoChange={valueHSX?.VNXALL_NoChange}
-              valueDown={valueHSX?.VNXALL_Down}
-              valueFloor={valueHSX?.VNXALL_Floor}
-              status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
-              san="HSX"
-              dataChartIndex={dataChart}
-            />
+          {INDEX.VNXALL && ( 
+            DivIndex("VNXALL",VNXALL,valueHSX?.VNXALL_IndexValue,valueHSX?.VNXALL_Change,valueHSX?.VNXALL_ChangePercent,visible,valueHSX?.VNXALL_TotalSharesAOM,valueHSX?.VNXALL_TotalValuesAOM,valueHSX?.VNXALL_Up,valueHSX?.VNXALL_Ceiling ,valueHSX?.VNXALL_NoChange,valueHSX?.VNXALL_Down,valueHSX?.VNXALL_Floor,fStatusMarketHSX(valueHSX?.STAT_ControlCode),"HSX",dataChartIndex)
+                    
+
           )}
           {INDEX.VNI && (
-            <SlideMarketItem
-              name="VNI"
-              id={VNI}
-              valueIndexChange={valueHSX?.VNI_IndexValue}
-              valueChange={valueHSX?.VNI_Change}
-              valueChangePercent={valueHSX?.VNI_ChangePercent}
-              visible={visible}
-              valueTotalSharesAOM={valueHSX?.VNI_TotalSharesAOM}
-              valueTotalValuesAOM={valueHSX?.VNI_TotalValuesAOM}
-              valueUp={valueHSX?.VNI_Up}
-              valueCeiling={valueHSX?.VNI_Ceiling}
-              valueNoChange={valueHSX?.VNI_NoChange}
-              valueDown={valueHSX?.VNI_Down}
-              valueFloor={valueHSX?.VNI_Floor}
-              status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
-              san="HSX"
-              dataChartIndex={dataChart}
-            />
+             DivIndex("VNI",VNI,valueHSX?.VNI_IndexValue,valueHSX?.VNI_Change,valueHSX?.VNI_ChangePercent,visible,valueHSX?.VNI_TotalSharesAOM,valueHSX?.VNI_TotalValuesAOM,valueHSX?.VNI_Up,valueHSX?.VNI_Ceiling ,valueHSX?.VNI_NoChange,valueHSX?.VNI_Down,valueHSX?.VNI_Floor,fStatusMarketHSX(valueHSX?.STAT_ControlCode),"HSX",dataChartIndex)
           )}
           {INDEX.VN30 && (
-            <SlideMarketItem
-              name="VN30"
-              id={VN30}
-              valueIndexChange={valueHSX?.VN30_IndexValue}
-              valueChange={valueHSX?.VN30_Change}
-              valueChangePercent={valueHSX?.VN30_ChangePercent}
-              visible={visible}
-              valueTotalSharesAOM={valueHSX?.VN30_TotalSharesAOM}
-              valueTotalValuesAOM={valueHSX?.VN30_TotalValuesAOM}
-              valueUp={valueHSX?.VN30_Up}
-              valueCeiling={valueHSX?.VN30_Ceiling}
-              valueNoChange={valueHSX?.VN30_NoChange}
-              valueDown={valueHSX?.VN30_Down}
-              valueFloor={valueHSX?.VN30_Floor}
-              status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
-              san="HSX"
-              dataChartIndex={dataChart}
-            />
+              DivIndex("VN30",VN30,valueHSX?.VN30_IndexValue,valueHSX?.VN30_Change,valueHSX?.VN30_ChangePercent,visible,valueHSX?.VN30_TotalSharesAOM,valueHSX?.VN30_TotalValuesAOM,valueHSX?.VN30_Up,valueHSX?.VN30_Ceiling ,valueHSX?.VN30_NoChange,valueHSX?.VN30_Down,valueHSX?.VN30_Floor,fStatusMarketHSX(valueHSX?.STAT_ControlCode),"HSX",dataChartIndex)
           )}
           {INDEX.VN100 && (
-            <SlideMarketItem
-              name="VN100"
-              id={VN100}
-              valueIndexChange={valueHSX?.VN100_IndexValue}
-              valueChange={valueHSX?.VN100_Change}
-              valueChangePercent={valueHSX?.VN100_ChangePercent}
-              visible={visible}
-              valueTotalSharesAOM={valueHSX?.VN100_TotalSharesAOM}
-              valueTotalValuesAOM={valueHSX?.VN100_TotalValuesAOM}
-              valueUp={valueHSX?.VN100_Up}
-              valueCeiling={valueHSX?.VN100_Ceiling}
-              valueNoChange={valueHSX?.VN100_NoChange}
-              valueDown={valueHSX?.VN100_Down}
-              valueFloor={valueHSX?.VN100_Floor}
-              status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
-              san="HSX"
-              dataChartIndex={dataChart}
-            />
+             DivIndex("VN100",VN100,valueHSX?.VN100_IndexValue,valueHSX?.VN100_Change,valueHSX?.VN100_ChangePercent,visible,valueHSX?.VN100_TotalSharesAOM,valueHSX?.VN100_TotalValuesAOM,valueHSX?.VN100_Up,valueHSX?.VN100_Ceiling ,valueHSX?.VN100_NoChange,valueHSX?.VN100_Down,valueHSX?.VN100_Floor,fStatusMarketHSX(valueHSX?.STAT_ControlCode),"HSX",dataChartIndex)
           )}
           {INDEX.VNALL && (
-            <SlideMarketItem
-              name="VNALL"
-              id={VNALL}
-              valueIndexChange={valueHSX?.VNALL_IndexValue}
-              valueChange={valueHSX?.VNALL_Change}
-              valueChangePercent={valueHSX?.VNALL_ChangePercent}
-              visible={visible}
-              valueTotalSharesAOM={valueHSX?.VNALL_TotalSharesAOM}
-              valueTotalValuesAOM={valueHSX?.VNALL_TotalValuesAOM}
-              valueUp={valueHSX?.VNALL_Up}
-              valueCeiling={valueHSX?.VNALL_Ceiling}
-              valueNoChange={valueHSX?.VNALL_NoChange}
-              valueDown={valueHSX?.VNALL_Down}
-              valueFloor={valueHSX?.VNALL_Floor}
-              status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
-              san="HSX"
-              dataChartIndex={dataChart}
-            />
+          DivIndex("VNALL", VNALL, valueHSX?.VNALL_IndexValue, valueHSX?.VNALL_Change, valueHSX?.VNALL_ChangePercent, visible, valueHSX?.VNALL_TotalSharesAOM, valueHSX?.VNALL_TotalValuesAOM, valueHSX?.VNALL_Up, valueHSX?.VNALL_Ceiling, valueHSX?.VNALL_NoChange, valueHSX?.VNALL_Down, valueHSX?.VNALL_Floor, fStatusMarketHSX(valueHSX?.STAT_ControlCode), "HSX", dataChartIndex)
           )}
           {INDEX.VNMID && (
-            <SlideMarketItem
-              name="VNMID"
-              id={VNMID}
-              valueIndexChange={valueHSX?.VNMID_IndexValue}
-              valueChange={valueHSX?.VNMID_Change}
-              valueChangePercent={valueHSX?.VNMID_ChangePercent}
-              visible={visible}
-              valueTotalSharesAOM={valueHSX?.VNMID_TotalSharesAOM}
-              valueTotalValuesAOM={valueHSX?.VNMID_TotalValuesAOM}
-              valueUp={valueHSX?.VNMID_Up}
-              valueCeiling={valueHSX?.VNMID_Ceiling}
-              valueNoChange={valueHSX?.VNMID_NoChange}
-              valueDown={valueHSX?.VNMID_Down}
-              valueFloor={valueHSX?.VNMID_Floor}
-              status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
-              san="HSX"
-              dataChartIndex={dataChart}
-            />
+           DivIndex("VNMID", VNMID, valueHSX?.VNMID_IndexValue, valueHSX?.VNMID_Change, valueHSX?.VNMID_ChangePercent, visible, valueHSX?.VNMID_TotalSharesAOM, valueHSX?.VNMID_TotalValuesAOM, valueHSX?.VNMID_Up, valueHSX?.VNMID_Ceiling, valueHSX?.VNMID_NoChange, valueHSX?.VNMID_Down, valueHSX?.VNMID_Floor, fStatusMarketHSX(valueHSX?.STAT_ControlCode), "HSX", dataChartIndex)
           )}
           {INDEX.VNSML && (
-            <SlideMarketItem
-              name="VNSML"
-              id={VNMSL}
-              valueIndexChange={valueHSX?.VNSML_IndexValue}
-              valueChange={valueHSX?.VNSML_Change}
-              valueChangePercent={valueHSX?.VNSML_ChangePercent}
-              visible={visible}
-              valueTotalSharesAOM={valueHSX?.VNSML_TotalSharesAOM}
-              valueTotalValuesAOM={valueHSX?.VNSML_TotalValuesAOM}
-              valueUp={valueHSX?.VNSML_Up}
-              valueCeiling={valueHSX?.VNSML_Ceiling}
-              valueNoChange={valueHSX?.VNSML_NoChange}
-              valueDown={valueHSX?.VNSML_Down}
-              valueFloor={valueHSX?.VNSML_Floor}
-              status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
-              san="HSX"
-              dataChartIndex={dataChart}
-            />
+          DivIndex("VNSML", VNMSL, valueHSX?.VNSML_IndexValue, valueHSX?.VNSML_Change, valueHSX?.VNSML_ChangePercent, visible, valueHSX?.VNSML_TotalSharesAOM, valueHSX?.VNSML_TotalValuesAOM, valueHSX?.VNSML_Up, valueHSX?.VNSML_Ceiling, valueHSX?.VNSML_NoChange, valueHSX?.VNSML_Down, valueHSX?.VNSML_Floor, fStatusMarketHSX(valueHSX?.STAT_ControlCode), "HSX", dataChartIndex)
           )}
           {INDEX.HNX && (
-            <SlideMarketItem
-              name="HNX"
-              id={HNX}
-              valueIndexChange={valueHNX?.i02_3}
-              valueChange={valueHNX?.i02_5}
-              valueChangePercent={valueHNX?.i02_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i02_7}
-              valueTotalValuesAOM={valueHNX?.i02_14}
-              valueUp={valueHNX?.i02_x251}
-              valueCeiling={valueHNX?.i02_x251c}
-              valueNoChange={valueHNX?.i02_x252}
-              valueDown={valueHNX?.i02_x253}
-              valueFloor={valueHNX?.i02_x253f}
-              status={fStatusMarketHNX(valueHNX?.i02_x336x340)}
-              san="HNX"
-              dataChartIndex={dataChart}
-            />
+            DivIndex("HNX", HNX, valueHNX?.i02_3, valueHNX?.i02_5, valueHNX?.i02_6, visible, valueHNX?.i02_7, valueHNX?.i02_14, valueHNX?.i02_x251, valueHNX?.i02_x251c, valueHNX?.i02_x252, valueHNX?.i02_x253, valueHNX?.i02_x253f, fStatusMarketHNX(valueHNX?.i02_x336x340), "HNX", dataChartIndex)
           )}
           {INDEX.HNX30 && (
-            <SlideMarketItem
-              name="HNX30"
-              id={HNX30}
-              valueIndexChange={valueHNX?.i41_3}
-              valueChange={valueHNX?.i41_5}
-              valueChangePercent={valueHNX?.i41_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i41_7}
-              valueTotalValuesAOM={valueHNX?.i41_14}
-              valueUp={valueHNX?.i41_x251}
-              valueCeiling={valueHNX?.i41_x251c}
-              valueNoChange={valueHNX?.i41_x252}
-              valueDown={valueHNX?.i41_x253}
-              valueFloor={valueHNX?.i41_x253f}
-              status={fStatusMarketHNX(valueHNX?.i41_x336x340)}
-              san="HNX"
-              dataChartIndex={dataChart}
-            />
+            DivIndex("HNX30", HNX30, valueHNX?.i41_3, valueHNX?.i41_5, valueHNX?.i41_6, visible, valueHNX?.i41_7, valueHNX?.i41_14, valueHNX?.i41_x251, valueHNX?.i41_x251c, valueHNX?.i41_x252, valueHNX?.i41_x253, valueHNX?.i41_x253f, fStatusMarketHNX(valueHNX?.i41_x336x340), "HNX", dataChartIndex)
           )}
           {INDEX.HNXLCAP && (
-            <SlideMarketItem
-              name="HNXLCAP"
-              id={HNXLCAP}
-              valueIndexChange={valueHNX?.i26_3}
-              valueChange={valueHNX?.i26_5}
-              valueChangePercent={valueHNX?.i26_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i26_7}
-              valueTotalValuesAOM={valueHNX?.i26_14}
-              valueUp={valueHNX?.i26_x251}
-              valueCeiling={valueHNX?.i26_x251c}
-              valueNoChange={valueHNX?.i26_x252}
-              valueDown={valueHNX?.i26_x253}
-              valueFloor={valueHNX?.i26_x253f}
-              status={fStatusMarketHNX(valueHNX?.i26_x336x340)}
-              san="HNX"
-              dataChartIndex={dataChart}
-            />
+            DivIndex("HNXLCAP", HNXLCAP, valueHNX?.i26_3, valueHNX?.i26_5, valueHNX?.i26_6, visible, valueHNX?.i26_7, valueHNX?.i26_14, valueHNX?.i26_x251, valueHNX?.i26_x251c, valueHNX?.i26_x252, valueHNX?.i26_x253, valueHNX?.i26_x253f, fStatusMarketHNX(valueHNX?.i26_x336x340), "HNX", dataChartIndex)
           )}
           {INDEX.HNXSMCAP && (
-            <SlideMarketItem
-              name="HNXSMCAP"
-              id={HNXSMCAP}
-              valueIndexChange={valueHNX?.i28_3}
-              valueChange={valueHNX?.i28_5}
-              valueChangePercent={valueHNX?.i28_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i28_7}
-              valueTotalValuesAOM={valueHNX?.i28_14}
-              valueUp={valueHNX?.i28_x251}
-              valueCeiling={valueHNX?.i28_x251c}
-              valueNoChange={valueHNX?.i28_x252}
-              valueDown={valueHNX?.i28_x253}
-              valueFloor={valueHNX?.i28_x253f}
-              status={fStatusMarketHNX(valueHNX?.i28_x336x340)}
-              san="HNX"
-              dataChartIndex={dataChart}
-            />
+            DivIndex("HNXSMCAP", HNXSMCAP, valueHNX?.i28_3, valueHNX?.i28_5, valueHNX?.i28_6, visible, valueHNX?.i28_7, valueHNX?.i28_14, valueHNX?.i28_x251, valueHNX?.i28_x251c, valueHNX?.i28_x252, valueHNX?.i28_x253, valueHNX?.i28_x253f, fStatusMarketHNX(valueHNX?.i28_x336x340), "HNX", dataChartIndex)
           )}
           {INDEX.HNXFIN && (
-            <SlideMarketItem
-              name="HNXFIN"
-              id={HNXFIN}
-              valueIndexChange={valueHNX?.i39_3}
-              valueChange={valueHNX?.i39_5}
-              valueChangePercent={valueHNX?.i39_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i39_7}
-              valueTotalValuesAOM={valueHNX?.i39_14}
-              valueUp={valueHNX?.i39_x251}
-              valueCeiling={valueHNX?.i39_x251c}
-              valueNoChange={valueHNX?.i39_x252}
-              valueDown={valueHNX?.i39_x253}
-              valueFloor={valueHNX?.i39_x253f}
-              status={fStatusMarketHNX(valueHNX?.i39_x336x340)}
-              san="HNX"
-              dataChartIndex={dataChart}
-            />
+           DivIndex("HNXFIN", HNXFIN, valueHNX?.i39_3, valueHNX?.i39_5, valueHNX?.i39_6, visible, valueHNX?.i39_7, valueHNX?.i39_14, valueHNX?.i39_x251, valueHNX?.i39_x251c, valueHNX?.i39_x252, valueHNX?.i39_x253, valueHNX?.i39_x253f, fStatusMarketHNX(valueHNX?.i39_x336x340), "HNX", dataChartIndex)
           )}
           {INDEX.HNXMAN && (
-            <SlideMarketItem
-              name="HNXMAN"
-              id={HNXMAN}
-              valueIndexChange={valueHNX?.i310_3}
-              valueChange={valueHNX?.i310_5}
-              valueChangePercent={valueHNX?.i310_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i310_7}
-              valueTotalValuesAOM={valueHNX?.i310_14}
-              valueUp={valueHNX?.i310_x251}
-              valueCeiling={valueHNX?.i310_x251c}
-              valueNoChange={valueHNX?.i310_x252}
-              valueDown={valueHNX?.i310_x253}
-              valueFloor={valueHNX?.i310_x253f}
-              status={fStatusMarketHNX(valueHNX?.i310_x336x340)}
-              san="HNX"
-              dataChartIndex={dataChart}
-            />
+           DivIndex("HNXMAN", HNXMAN, valueHNX?.i310_3, valueHNX?.i310_5, valueHNX?.i310_6, visible, valueHNX?.i310_7, valueHNX?.i310_14, valueHNX?.i310_x251, valueHNX?.i310_x251c, valueHNX?.i310_x252, valueHNX?.i310_x253, valueHNX?.i310_x253f, fStatusMarketHNX(valueHNX?.i310_x336x340), "HNX", dataChartIndex)
           )}
           {INDEX.HNXCON && (
-            <SlideMarketItem
-              name="HNXCON"
-              id={HNXCON}
-              valueIndexChange={valueHNX?.i311_3}
-              valueChange={valueHNX?.i311_5}
-              valueChangePercent={valueHNX?.i311_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i311_7}
-              valueTotalValuesAOM={valueHNX?.i311_14}
-              valueUp={valueHNX?.i311_x251}
-              valueCeiling={valueHNX?.i311_x251c}
-              valueNoChange={valueHNX?.i311_x252}
-              valueDown={valueHNX?.i311_x253}
-              valueFloor={valueHNX?.i311_x253f}
-              status={fStatusMarketHNX(valueHNX?.i311_x336x340)}
-              san="HNX"
-              dataChartIndex={dataChart}
-            />
+          DivIndex("HNXCON", HNXCON, valueHNX?.i311_3, valueHNX?.i311_5, valueHNX?.i311_6, visible, valueHNX?.i311_7, valueHNX?.i311_14, valueHNX?.i311_x251, valueHNX?.i311_x251c, valueHNX?.i311_x252, valueHNX?.i311_x253, valueHNX?.i311_x253f, fStatusMarketHNX(valueHNX?.i311_x336x340), "HNX", dataChartIndex)
           )}
           {INDEX.UPCOM && (
-            <SlideMarketItem
-              name="UPCOM"
-              id={UPCON}
-              valueIndexChange={valueHNX?.i03_3}
-              valueChange={valueHNX?.i03_5}
-              valueChangePercent={valueHNX?.i03_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i03_7}
-              valueTotalValuesAOM={valueHNX?.i03_14}
-              valueUp={valueHNX?.i03_x251}
-              valueCeiling={valueHNX?.i03_x251c}
-              valueNoChange={valueHNX?.i03_x252}
-              valueDown={valueHNX?.i03_x253}
-              valueFloor={valueHNX?.i03_x253f}
-              status={fStatusMarketUPCOM(valueHNX?.i03_x336x340)}
-              san="HNX"
-              dataChartIndex={dataChart}
-            />
+         DivIndex("UPCOM", UPCON, valueHNX?.i03_3, valueHNX?.i03_5, valueHNX?.i03_6, visible, valueHNX?.i03_7, valueHNX?.i03_14, valueHNX?.i03_x251, valueHNX?.i03_x251c, valueHNX?.i03_x252, valueHNX?.i03_x253, valueHNX?.i03_x253f, fStatusMarketUPCOM(valueHNX?.i03_x336x340), "HNX", dataChartIndex)
           )}
         </div>
       </ul>

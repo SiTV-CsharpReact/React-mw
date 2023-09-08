@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import MenuMarketWatch from "../indexMarketWatch/MenuMarketWatch";
 import OrderMarketW from "../orderFormMarketwatch/OrderFormMarketWatch";
 import TableGDTTMarketWatch from "../tableMarketwatch/TableGDTTMarketWatch";
 import TableThongKeMarketWatch from "../tableMarketwatch/TableThongKeMarketWatch";
@@ -36,9 +35,7 @@ import TableConfirmOrder from "../orderFormMarketwatch/TableConfirmOrder";
 import FormGetOTP from "../orderFormMarketwatch/FormGetOTP";
 import IconOTP from "../../images/otp.png";
 import { setsttFormOTP } from "../orderFormMarketwatch/SendOrderSlice";
-// import TableMarketWatch from "../tableMarketwatch/TableMarketWatch";
-// import { useParams } from "react-router-dom";
-// import { stocks } from "../../models/marketwacthTable";
+import SlidesMarketWatch from "../indexMarketWatch/SlidesMarketWatch";
 function RenderTable() {
   const { activeFloor } = useAppSelector((state) => state.tableTest);
   switch (activeFloor) {
@@ -77,6 +74,7 @@ const initialState: resizeState = {
 };
 // const LayoutMarketWatch  = () => {
 const LayoutMarketWatch: React.FC = () => {
+  console.log("call test")
   const { t } = useTranslation(["home"]);
   const dispatch = useAppDispatch();
   const orderCount = useAppSelector((state) => state.layout.orderCount);
@@ -266,7 +264,8 @@ const LayoutMarketWatch: React.FC = () => {
                     : "169px",
               }}
             >
-              {ListDataTable ? <MenuMarketWatch /> : ""}
+              {/* {ListDataTable ? <MenuMarketWatch /> : ""} */}
+              <SlidesMarketWatch/>
             </div>
             {/* Menu Table */}
             <div

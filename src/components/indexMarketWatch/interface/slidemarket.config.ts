@@ -17,6 +17,7 @@ export interface ISlideMarket {
   status: string;
   san: string;
   dataChartIndex?: IChartIndex;
+  dataChartIndexTime?: IChartIndex;
 }
 
 export interface IACTION_LIST {

@@ -53,7 +53,6 @@ const ColumnDef = (props: any, props2: any) => {
   // ngôn ngữ 
   const {language} = useAppSelector((state) => state.ProfileAccount);
 
-  console.log(dataCompanyTotal)
   const HanDleConpany = useCallback(async () => {
     await dispatch(fetchCompanyAsync());
   }, []);
