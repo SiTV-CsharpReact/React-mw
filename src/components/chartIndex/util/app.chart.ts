@@ -209,5 +209,5 @@ export function formatDate(time: any) {
   const dd = new Date(time).getDate() > 9 ? `${new Date(time).getDate()}` : `0${new Date(time).getDate()}`;
   const mm = new Date(time).getMonth() + 1 > 9 ? `${new Date(time).getMonth() + 1}` : `0${new Date(time).getMonth() + 1}`;
   const yy = new Date(time).getFullYear();
-  return `${mm}/${dd}/${yy}`;
+  return `${dd}/${mm}/${yy}`;
 }

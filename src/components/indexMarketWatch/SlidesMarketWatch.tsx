@@ -2,6 +2,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -47,6 +48,12 @@ import {
   setDataChartRealTime,
 } from "../chartIndex/chartIndexSlice";
 import agent from "../../api/agent";
+import {
+  IACTION_LIST,
+  IDataCDT,
+  IDataSS,
+  IRP,
+} from "./interface/slidemarket.config";
 
 const SlidesMarketWatch = () => {
   const dispatch = useAppDispatch();
@@ -59,10 +66,38 @@ const SlidesMarketWatch = () => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [sttFetchData, setSTTFetchData] = useState(true);
   const INTERVAL = 30000; // 60000 milliseconds = 1 minute
-  const ACTION_LIST = {
+  const ACTION_LIST: IACTION_LIST = {
     GET_SS: "ss", // get snapshot data (update) , can phai co Max
     GET_CDT: "cdt", // get check date time
   };
+  const dataChart = useMemo(() => {
+    const mergedResult: any = {};
+    for(const key in dataChartIndex){
+      if(dataChartIndex.hasOwnProperty(key)){
+        if(Array.isArray(dataChartIndex[key])){
+          mergedResult[key] = dataChartIndex[key].concat(dataChartIndexTime[0][key]);
+        }else{
+          if(typeof dataChartIndex[key] === 'object'){
+            mergedResult[key] = { ...dataChartIndex[key] };
+            for (const nestedKey in dataChartIndex[key]) {
+              if (dataChartIndex[key].hasOwnProperty(nestedKey)) {
+                // break;
+                if (Array.isArray(dataChartIndex[key][nestedKey])) {
+                  mergedResult[key][nestedKey] = dataChartIndex[key][nestedKey].concat(dataChartIndexTime[0][key][nestedKey]);
+                  break;
+                }
+              }
+            }
+          }else {
+            mergedResult[key] = dataChartIndex[key];
+          }
+        }
+      }
+    }
+    return mergedResult
+  }, [dataChartIndex, dataChartIndexTime]);
+  console.log({ dataChart });
+  // console.log({ dataChartIndex: dataChartIndex});
 
   const {
     marketHSX: { valueHSX },
@@ -104,9 +139,11 @@ const SlidesMarketWatch = () => {
       try {
         // Sau khi có dữ liệu từ API đầu tiên, gọi API thứ hai với giá trị từ API đầu tiên
         if (configChartIndex) {
-          var RP = { s: ACTION_LIST.GET_SS, m: configChartIndex };
-          const dataCDT = await agent.chartIndex.getCDT(ACTION_LIST.GET_CDT);
-          const dataSS = await agent.chartIndex.getTimeSS(RP);
+          var RP: IRP = { s: ACTION_LIST.GET_SS, m: configChartIndex };
+          const dataCDT: IDataCDT = await agent.chartIndex.getCDT(
+            ACTION_LIST.GET_CDT
+          );
+          const { data } = await agent.chartIndex.getTimeSS(RP);
           // dispatch(fetchChartIndexCDTAsync(ACTION_LIST.GET_CDT));
           // dispatch(fetchChartIndexTimeAsync(RP));
           if (dataCDT) {
@@ -122,11 +159,10 @@ const SlidesMarketWatch = () => {
             }
             // }
           }
-          if (dataSS.data)
-            if (dataSS.data?.SS !== null) {
-              setDataChartRealTime(dataSS.data);
+          if (data)
+            if (data?.SS !== null) {
+              dispatch(setDataChartRealTime(data));
             }
-          console.log(dataCDT, dataSS);
         }
       } catch (error) {
         // Xử lý lỗi nếu cần
@@ -215,6 +251,7 @@ const SlidesMarketWatch = () => {
     !visible && e.target.classList.remove("scrollingHotSpotRightVisible");
     !visible && e.target.classList.remove("scrollingHotSpotLeftVisible");
   };
+
   return (
     <div
       id="divIndexChart "
@@ -261,7 +298,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHSX?.VNXALL_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
               san="HSX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.VNI && (
@@ -281,7 +318,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHSX?.VNI_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
               san="HSX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.VN30 && (
@@ -301,7 +338,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHSX?.VN30_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
               san="HSX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.VN100 && (
@@ -321,7 +358,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHSX?.VN100_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
               san="HSX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.VNALL && (
@@ -341,7 +378,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHSX?.VNALL_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
               san="HSX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.VNMID && (
@@ -361,7 +398,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHSX?.VNMID_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
               san="HSX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.VNSML && (
@@ -381,7 +418,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHSX?.VNSML_Floor}
               status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
               san="HSX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.HNX && (
@@ -401,7 +438,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHNX?.i02_x253f}
               status={fStatusMarketHNX(valueHNX?.i02_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.HNX30 && (
@@ -421,7 +458,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHNX?.i41_x253f}
               status={fStatusMarketHNX(valueHNX?.i41_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.HNXLCAP && (
@@ -441,7 +478,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHNX?.i26_x253f}
               status={fStatusMarketHNX(valueHNX?.i26_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.HNXSMCAP && (
@@ -461,7 +498,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHNX?.i28_x253f}
               status={fStatusMarketHNX(valueHNX?.i28_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.HNXFIN && (
@@ -481,7 +518,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHNX?.i39_x253f}
               status={fStatusMarketHNX(valueHNX?.i39_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.HNXMAN && (
@@ -501,7 +538,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHNX?.i310_x253f}
               status={fStatusMarketHNX(valueHNX?.i310_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.HNXCON && (
@@ -521,7 +558,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHNX?.i311_x253f}
               status={fStatusMarketHNX(valueHNX?.i311_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
           {INDEX.UPCOM && (
@@ -541,7 +578,7 @@ const SlidesMarketWatch = () => {
               valueFloor={valueHNX?.i03_x253f}
               status={fStatusMarketUPCOM(valueHNX?.i03_x336x340)}
               san="HNX"
-              dataChartIndex={dataChartIndex}
+              dataChartIndex={dataChart}
             />
           )}
         </div>

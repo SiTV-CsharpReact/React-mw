@@ -1,21 +1,36 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import agent from "../../api/agent";
-import { IChartIndex } from "./util/interface.config";
+import { IChart, IChartIndex } from "./interface/interface.config";
+import { DataReponseHNX_HSX, IDataSS } from "../indexMarketWatch/interface/slidemarket.config";
 interface RootChart {
   SS: any
   Max: number
 }
-const initialState = {
+interface IState  {
+  isLoading: boolean,
+  // dataChartIndex: IChart,
+  // dataChartIndexTime: IDataSS,
+  dataChartIndex: any,
+  dataChartIndexTime: any,
+  configChartIndex: string,
+  Max: string,
+  timeGet: string,
+  status: string,
+}
+const initialState: IState = {
   isLoading: false,
-  dataChartIndex: {} as IChartIndex,
-  dataChartIndexTime:{} as RootChart,
-  configChartIndex:{},
-  Max:"",
+  dataChartIndex: {} as IChart,
+  dataChartIndexTime: {
+    Max: 0,
+    SS: null
+  },
+  configChartIndex: "",
+  Max: "",
   timeGet:'',
 
   status: "loading",
 };
-export const fetchChartIndexAsync = createAsyncThunk<IChartIndex>(
+export const fetchChartIndexAsync = createAsyncThunk(
   "chartIndex",
   async () => {
     try {
@@ -31,10 +46,8 @@ export const fetchConfigChartIndexAsync = createAsyncThunk(
   async () => {
     try {
       const data = await agent.chartIndex.getSS();
-      console.log(data)
       const regex = /var\s+g_CHART_MAX_INDEX_SS\s*=\s*'([^']+)'/;
       const match = data.match(regex);
-      console.log(match)
       return match[1];
     } catch (error) {
       console.log("error ở đây", error);
@@ -46,7 +59,7 @@ export const fetchChartIndexTimeAsync = createAsyncThunk(
   async (dataChartIndex:any) => {
     try {
       const data = await agent.chartIndex.getTimeSS(dataChartIndex);
-      return data.data as RootChart;
+      return data.data;
     } catch (error) {
       console.log("error ở đây", error);
     }
@@ -67,7 +80,7 @@ const chartIndexSlice = createSlice({
   name: "ChartIndex",
   initialState,
   reducers: {
-    setStatusTable: (state, action: PayloadAction<IChartIndex>) => {
+    setStatusTable: (state, action) => {
       state.dataChartIndex = action.payload;
     },
     setMax: (state, action) => {
@@ -77,7 +90,7 @@ const chartIndexSlice = createSlice({
         const dataChartTime = action.payload;
       
           state.dataChartIndexTime = dataChartTime;
-          state.configChartIndex = dataChartTime.Max;
+          state.configChartIndex = dataChartTime.Max.toString();
         
     }
   },

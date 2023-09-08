@@ -1,46 +1,30 @@
 import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
-import { formatNumber } from "../../utils/util";
+import { formatNumber, formatNumberToM } from "../../utils/util";
 import "./chartIndex.scss";
 import { _getDateTs } from "./util/app.chart";
+import { getDataChartHNX, getDataChartHSX } from "./chart/useChart";
 import agent from "../../api/agent";
 import { useAppSelector } from "../../store/configureStore";
 
 type TProps = {
   name: string;
   san: string;
-  dataChartIndex: any;
+  dataChartIndex?: any;
 };
-const ChartIndexSlide: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps) => {
+const ChartIndexSlide: React.FC<TProps> = ({
+  name,
+  san,
+  dataChartIndex,
+}: TProps) => {
   const [dataSpline, setDataSpline] = useState([]);
   const [dataBar, setDataBar] = useState([]);
   const [indexValue, setIndexValue] = useState(0);
   const [timeFirst, setTimeFirst] = useState(0);
   const [timeLast, setTimeLast] = useState<any>();
-  const dataChartIndexTime = useAppSelector((state)=> state.chartIndex.dataChartIndexTime)
-  console.log(dataChartIndexTime)
-  useEffect(()=>{
-    console.log(dataChartIndexTime)
-  },[dataChartIndexTime])
   useEffect(() => {
     if (san === "HSX") {
-      const hsx = dataChartIndex?.HSX;
-      const data =
-        name === "VNXALL"
-          ? hsx?.DataFull.VNXALL
-          : name === "VNI"
-          ? hsx?.DataFull.VNIndex
-          : name === "VNSML"
-          ? hsx?.DataFull.VNSML
-          : name === "VN30"
-          ? hsx?.DataFull.VNALL
-          : name === "VNALL"
-          ? hsx?.DataFull.VN30
-          : name === "VN100"
-          ? hsx?.DataFull.VN100
-          : name === "VNMID"
-          ? hsx?.DataFull.VNMID
-          : [];
+      const data = getDataChartHSX(dataChartIndex, name);
       const dataTimeIndex: any = data?.map((item: any) => ({
         x: item.Data.TimeJS,
         y: item.Data.Index,
@@ -65,25 +49,7 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps
       setDataBar(dataTimeVol);
     } else {
       if (san === "HNX") {
-        const hnx = dataChartIndex.HNX;
-        const data =
-          name === "HNX"
-            ? hnx?.DataFull.HNXIndex
-            : name === "HNX30"
-            ? hnx?.DataFull.HNX30
-            : name === "HNXLCAP"
-            ? hnx?.DataFull.HNXLCap
-            : name === "HNXSMCAP"
-            ? hnx?.DataFull.HNXMSCap
-            : name === "HNXFIN"
-            ? hnx?.DataFull.HNXFin
-            : name === "HNXMAN"
-            ? hnx?.DataFull.HNXMan
-            : name === "HNXCON"
-            ? hnx?.DataFull.HNXCon
-            : name === "UPCOM"
-            ? hnx?.DataFull.HNXUpcomIndex
-            : [];
+        const data = getDataChartHNX(dataChartIndex, name);
         const dataTimeIndex: any = data?.map((item: any) => ({
           x: item.Data.TimeJS,
           y: item.Data.Index,
@@ -107,7 +73,8 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps
         setDataBar(dataTimeVol);
       }
     }
-  }, [dataChartIndex?.HNX, dataChartIndex?.HSX, name, san, timeFirst]);
+  }, [dataChartIndex, name, san, timeFirst]);
+
   useEffect(() => {
     const gradient: any = [0, 0, 50, 380];
     const series: any[] = [
@@ -178,13 +145,10 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps
             const xmin = _getDateTs(xminTmp);
             const xmax = _getDateTs(xmaxTmp);
             xAxis.setExtremes(xmin, xmax, true, false);
-            // console.log(this.yAxis[1].series);
-    
-          
           },
         },
       },
-    
+
       title: {
         text: "",
       },
@@ -193,7 +157,6 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps
       },
       xAxis: {
         type: "datetime",
-        // width:180,
         dateTimeLabelFormats: {
           hour: "%H h",
         },
@@ -203,20 +166,12 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps
         tickWidth: 0,
         minPadding: 0,
         maxPadding: 0,
-        // min: timeFirst, // Giới hạn trục x từ 9 giờ
-        // max: timeLast,
         tickInterval: 3600000,
-        // height: 75,
         labels: {
-          //       x: 0, // Đưa nhãn trục "9h" vào vị trí bắt đầu từ 0px
-          // align: 'left', // Đưa văn bản của nhãn trục vào vị trí bắt đầu từ 0px
-          // overflow: 'justify', // Hiển thị nội dung nhãn trục ra khỏi biểu đồ
           useHTML: true,
           style: {
             color: "#a5a5a5",
             fontSize: "8px",
-            // rotation: -45,
-            // step: 1,
           },
         },
         offset: -9,
@@ -323,7 +278,13 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps
             hour + ":" + minutes
           }</b></span><br/><span style="color:#000">Index:  <b style="font-size:12px;color:#000" class="font-bold text-sm">${
             index[1].y
-          }</b></span><br/><span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm">${formatNumber(this.y)} </b></span>`;
+          }</b></span><br/>${
+            this.y === 0
+              ? ""
+              : `<span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm">${formatNumber(
+                  formatNumberToM(this.y)
+                )} </b></span>`
+          }`;
         },
       },
       legend: {
@@ -352,7 +313,7 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps
       },
       series: series,
     });
-  }, [dataBar, dataSpline, indexValue, name, timeFirst, timeLast]);
+  }, [dataBar, dataSpline, indexValue, name]);
 
   return (
     <div className="chart__slide__market">
@@ -364,4 +325,3 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san, dataChartIndex }: TProps
 };
 
 export default React.memo(ChartIndexSlide);
-

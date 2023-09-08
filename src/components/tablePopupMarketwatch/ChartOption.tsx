@@ -95,69 +95,69 @@ const ChartOption = () => {
   //           price_min = minNumber(arrPr);
   //           price_max = maxNumber(arrPr);
 
-  //           if (arrPr.length === 0) {
-  //             const min = Number(indexValue) - 0.1;
-  //             const max = Number(indexValue) + 0.1;
+            // if (arrPr.length === 0) {
+            //   const min = Number(indexValue) - 0.1;
+            //   const max = Number(indexValue) + 0.1;
 
-  //             this.yAxis[1].setExtremes(min, max, true, false);
-  //           } else {
-  //             for (let i = 0; i < arrPr.length; i++) {
-  //               let next = arrPr[i + 1];
+            //   this.yAxis[1].setExtremes(min, max, true, false);
+            // } else {
+            //   for (let i = 0; i < arrPr.length; i++) {
+            //     let next = arrPr[i + 1];
 
-  //               if (typeof next === "undefined") {
-  //                 next = arrPr[0];
-  //                 arrSub.push(
-  //                   Math.abs(Math.round((arrPr[i] - next) * 10) / 10)
-  //                 );
-  //               }
-  //             }
-  //             minSub = minNumber(arrSub);
-  //             if (price_min > indexValue) {
-  //               tick = 0.1;
-  //               price_min = indexValue - tick;
-  //               price_max += tick;
-  //               barwidth = 0.05;
-  //             } else {
-  //               if (price_max < indexValue) {
-  //                 tick = 0.5;
-  //                 price_max = indexValue + tick;
-  //                 price_min -= tick;
-  //                 barwidth = 0.05;
-  //               } else {
-  //                 if (price_max < 50) {
-  //                   tick = 0.1;
-  //                   barwidth = 0.05;
-  //                   price_min -= tick;
-  //                   price_max += tick;
-  //                 } else {
-  //                   if (minSub < 0.5) {
-  //                     tick = 0.1;
-  //                     barwidth = 0.05;
-  //                     price_min -= tick;
-  //                     price_max += tick;
-  //                   } else {
-  //                     tick = 1;
-  //                     barwidth = 0.2;
-  //                     price_min -= tick;
-  //                     price_max += tick;
-  //                   }
-  //                 }
-  //               }
-  //             }
+            //     if (typeof next === "undefined") {
+            //       next = arrPr[0];
+            //       arrSub.push(
+            //         Math.abs(Math.round((arrPr[i] - next) * 10) / 10)
+            //       );
+            //     }
+            //   }
+            //   minSub = minNumber(arrSub);
+              // if (price_min > indexValue) {
+              //   tick = 0.1;
+              //   price_min = indexValue - tick;
+              //   price_max += tick;
+              //   barwidth = 0.05;
+              // } else {
+              //   if (price_max < indexValue) {
+              //     tick = 0.5;
+              //     price_max = indexValue + tick;
+              //     price_min -= tick;
+              //     barwidth = 0.05;
+              //   } else {
+              //     if (price_max < 50) {
+              //       tick = 0.1;
+              //       barwidth = 0.05;
+              //       price_min -= tick;
+              //       price_max += tick;
+              //     } else {
+              //       if (minSub < 0.5) {
+              //         tick = 0.1;
+              //         barwidth = 0.05;
+              //         price_min -= tick;
+              //         price_max += tick;
+              //       } else {
+              //         tick = 1;
+              //         barwidth = 0.2;
+              //         price_min -= tick;
+              //         price_max += tick;
+              //       }
+              //     }
+              //   }
+              // }
 
-  //             let sub = price_max - price_min;
+              // let sub = price_max - price_min;
 
-  //             if (sub > 0) {
-  //               let countTick = Math.round(sub / tick);
+              // if (sub > 0) {
+              //   let countTick = Math.round(sub / tick);
 
-  //               if (countTick > 20) {
-  //                 let tempTick = Math.round(countTick / 15);
-  //                 tick = 0.5;
-  //                 barwidth = 0.05;
-  //                 price_min -= tick;
-  //                 price_max += tick;
-  //               }
-  //             }
+              //   if (countTick > 20) {
+              //     let tempTick = Math.round(countTick / 15);
+              //     tick = 0.5;
+              //     barwidth = 0.05;
+              //     price_min -= tick;
+              //     price_max += tick;
+              //   }
+              // }
 
   //             // eslint-disable-next-line array-callback-return
   //             this.series[0].points.map((e) => {

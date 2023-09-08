@@ -61,8 +61,11 @@ export interface IDataFullHSX {
   VNXALL: IData[];
 }
 
+export interface IChart {
+  [key: string]: IChartIndex
+}
 export interface IChartIndex {
-  HSX: HSX;
-  HNX: HNX;
+  HSX: HSX | null;
+  HNX: HNX | null;
   IsWorkingDay: string;
 }

@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { RPChart } from "../models/modelChart";
+import { IDataCDT, IRP } from "../components/indexMarketWatch/interface/slidemarket.config";
 const responseBody = (response: AxiosResponse) => response.data;
 const BASE_URL2 = "https://marketstream.fpts.com.vn/";
 const BASE_URL1 = "http://priceboard3.fpts.com.vn/";
@@ -117,7 +118,7 @@ const dataGDTTtable = {
 const chartIndex = {
   get: () => requests.get(BASE_URL + "/chart/data.ashx?s=full"),
   getSS: () => requests.get(BASE_URL + `/chart/data.ashx?s=config&v=20160829061939`),
-  getTimeSS: (dataChartIndex:any) => requests.postFormData(BASE_URL + "/chart/data.ashx",dataChartIndex),
+  getTimeSS: (dataChartIndex: IRP) => requests.postFormData(BASE_URL + "/chart/data.ashx",dataChartIndex),
   getCDT: (value_getCDT:string) => requests.get(BASE_URL +`/chart/data.ashx?s=${value_getCDT}`),
   //get: () => requests.get('http://localhost:8000/dataChartIndex'),
 };

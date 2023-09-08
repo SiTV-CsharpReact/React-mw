@@ -1,5 +1,23 @@
-import { g_ARRAY_COLOR_CLASS, g_ID_TD_STAT_CONTROLCODE, g_arrHAMarketStatus, g_arrHOMarketStatus, g_arrUPMarketStatus } from "../configs/app.config";
-export function formatNumbertoDecimal(number:any) {
+import {
+  g_ARRAY_COLOR_CLASS,
+  g_ID_TD_STAT_CONTROLCODE,
+  g_arrHAMarketStatus,
+  g_arrHOMarketStatus,
+  g_arrUPMarketStatus,
+} from "../configs/app.config";
+export function formatNumberToM(value: any) {
+  // Kiểm tra nếu giá trị lớn hơn hoặc bằng 1 triệu
+  if (value >= 1000000) {
+    // Chia cho 1 triệu và làm tròn đến 2 chữ số thập phân
+    return (value / 1000000).toFixed(2) + "M";
+  } else {
+    // Giữ nguyên giá trị nếu nhỏ hơn 1 triệu
+    if (!value || value === 0 || value === "0") return 0; // hoac ''
+    else return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+  }
+}
+
+export function formatNumbertoDecimal(number: any) {
   const decimalPart = number % 1;
   if (decimalPart !== 0) {
     return number.toFixed(2);
@@ -8,17 +26,21 @@ export function formatNumbertoDecimal(number:any) {
   }
 }
 export function formatNumber(number: any) {
-  if (!number || number === 0 || number === "0") return 0; // hoac ''
-  else return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+  if (number >= 1000000) {
+    return (number / 1000000).toFixed(2) + 'M';
+  }else{
+    if (!number || number === 0 || number === "0") return 0; // hoac ''
+    else return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+  }
 }
 export function formatNumberMarket(number: any) {
   if (!number || number === 0 || number === "0") return ""; // hoac ''
   else return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 }
-export const formatNumberPhanTram = (number: any)=>{
+export const formatNumberPhanTram = (number: any) => {
   var roundedNumber = Math.round(number * 100) / 100;
-  return roundedNumber
-}
+  return roundedNumber;
+};
 export function tinhGiaTC(tc: number, price: number) {
   const diff = price - tc;
   //if(isFinite(diff)) return "";
@@ -202,41 +224,37 @@ export const checkSTTMarketValue = (value: string, status?: string) => {
   }
 };
 // status sàn HNX
-export const fStatusMarketHNX = (value?:string) =>{
-    let valueStatus = ""
-    g_arrHAMarketStatus.forEach((g_HNXStatus) => {
-          if(g_HNXStatus[0] === value){
-            valueStatus= g_HNXStatus[1]
-          }
-          
-    })
-    return valueStatus
-  }
-  // status HSX
-  export const fStatusMarketHSX = (value?: string) => {
-    let valueStatus = "";
-    g_arrHOMarketStatus.forEach((g_HSXStatus: any) => {
-      if (g_HSXStatus[0] === value) {
-        valueStatus = g_HSXStatus[2];
-      }
-    });
-  
-    return valueStatus;
-  };
-  //status sàn UPCOM
-  export const fStatusMarketUPCOM = (value?:string) =>{
-    let valueStatus = ""
-    g_arrUPMarketStatus.forEach((g_UPCStatus)=>{  
-          if(g_UPCStatus[0] === value){
-            valueStatus= g_UPCStatus[1]
-          }
-          
-    })
-    return valueStatus;
-  }
-  export const HNXStatus =() =>{
-    
-  }
+export const fStatusMarketHNX = (value?: string) => {
+  let valueStatus = "";
+  g_arrHAMarketStatus.forEach((g_HNXStatus) => {
+    if (g_HNXStatus[0] === value) {
+      valueStatus = g_HNXStatus[1];
+    }
+  });
+  return valueStatus;
+};
+// status HSX
+export const fStatusMarketHSX = (value?: string) => {
+  let valueStatus = "";
+  g_arrHOMarketStatus.forEach((g_HSXStatus: any) => {
+    if (g_HSXStatus[0] === value) {
+      valueStatus = g_HSXStatus[2];
+    }
+  });
+
+  return valueStatus;
+};
+//status sàn UPCOM
+export const fStatusMarketUPCOM = (value?: string) => {
+  let valueStatus = "";
+  g_arrUPMarketStatus.forEach((g_UPCStatus) => {
+    if (g_UPCStatus[0] === value) {
+      valueStatus = g_UPCStatus[1];
+    }
+  });
+  return valueStatus;
+};
+export const HNXStatus = () => {};
 var ARRAY_EXCHANGE = [
   ["HO", "HOSE"],
   ["HA", "HNX.NY"],
@@ -295,7 +313,7 @@ const g_CurrentLanguage = getCookie("aspfpt_language");
 // HO => HOSE; HA => HNX.NY; UP => HNX.UPCOM
 const mapCompanyName = () => {
   // console.log(g_arrStockInfo)
-  if(g_arrStockInfo){
+  if (g_arrStockInfo) {
     const arr = [...g_arrStockInfo];
     if (arr) {
       return arr.map(function (v) {
@@ -310,7 +328,6 @@ const mapCompanyName = () => {
     }
     console.log(arr);
   }
- 
 };
 
 // mapCompanyName();
@@ -331,7 +348,7 @@ const getExchangeName = (vEx: string) => {
     if (vEx === ARRAY_EXCHANGE[i][0]) return ARRAY_EXCHANGE[i][1];
 };
 export const getCompanyNameByCode = (vStockCode: string) => {
-  console.log("vo day ne",vStockCode)
+  console.log("vo day ne", vStockCode);
   // if(g_arrCompanyInfo) {
   //     let name = g_arrCompanyInfo.find((element:any)=>element.Code === vStockCode);
   // }
@@ -359,7 +376,7 @@ export const getCompanyNameByCode = (vStockCode: string) => {
       }
     }
   }
-  console.log(name)
+  console.log(name);
   return [name];
 };
 export const arrayColor = [
@@ -390,8 +407,8 @@ export const colorTextMenu = (price: number) => {
 
   return Color;
 };
-var STR_BASIC = 'basic';
-var STR_REPORT = 'report';
+var STR_BASIC = "basic";
+var STR_REPORT = "report";
 var ARRAY_BASIC = [
   "Giá trị vốn hóa thị trường",
   "KLNY hiện tại",
@@ -404,7 +421,7 @@ var ARRAY_BASIC = [
   "P/E*",
   "EPS điều chỉnh*",
   "EPS(FPTS)**",
-  "P/E(FPTS)**"
+  "P/E(FPTS)**",
 ];
 var ARRAY_REPORT_0 = [
   "Doanh thu bán hàng và cung cấp dịch vụ",
@@ -418,8 +435,8 @@ var ARRAY_REPORT_0 = [
   "Nợ dài hạn",
   "VỐN CHỦ SỞ HỮU",
   "Vốn đầu tư của chủ sở hữu",
-  "Cập nhật đến quý"
-]
+  "Cập nhật đến quý",
+];
 var ARRAY_REPORT_1 = [
   "Thu nhập lãi và các khoản thu nhập tương tự",
   "Lãi/lỗ thuần từ hoạt động dịch vụ",
@@ -429,8 +446,8 @@ var ARRAY_REPORT_1 = [
   "Cho vay khách hàng",
   "Tiền gửi khách hàng",
   "TỔNG VỐN CHỦ SỞ HỮU",
-  "Cập nhật đến quý"
-]
+  "Cập nhật đến quý",
+];
 var ARRAY_REPORT_2 = [
   "Doanh thu thuần",
   "Chi phí hoạt động",
@@ -444,80 +461,88 @@ var ARRAY_REPORT_2 = [
   "Nợ dài hạn",
   "VỐN CHỦ SỞ HỮU",
   "Vốn đầu tư của chủ sở hữu",
-  "Cập nhật đến quý"
-]
+  "Cập nhật đến quý",
+];
 var ARRAY_REPORT_3 = [
   "Doanh thu thuần hoạt động kinh doanh bảo hiểm",
   "Lợi nhuận sau thuế thu nhập doanh nghiệp",
   "TỔNG CỘNG TÀI SẢN",
   "VỐN CHỦ SỞ HỮU",
-  "Cập nhật đến quý"
-]
-export const subStringData = (str:string, table?:string) => {
-  var arr:any = [], subStr1, type = '', arrName:any = [];
+  "Cập nhật đến quý",
+];
+export const subStringData = (str: string, table?: string) => {
+  var arr: any = [],
+    subStr1,
+    type = "",
+    arrName: any = [];
   if (str.length === 0) {
-      return arr;
+    return arr;
   }
-  if (str.indexOf('@|@') > -1) {
-      str = str.replace('@|@', '@');
+  if (str.indexOf("@|@") > -1) {
+    str = str.replace("@|@", "@");
   }
-  subStr1 = str.split('@');
+  subStr1 = str.split("@");
   if (table === STR_BASIC) {
-      arrName.push.apply(arrName, ARRAY_BASIC);
+    arrName.push.apply(arrName, ARRAY_BASIC);
+  } else if (table === STR_REPORT) {
+    const type: number = parseInt(subStr1[subStr1.length - 1]);
+    switch (type) {
+      case 0:
+        arrName.push.apply(arrName, ARRAY_REPORT_0);
+        break;
+      case 1:
+        arrName.push.apply(arrName, ARRAY_REPORT_1);
+        break;
+      case 2:
+        arrName.push.apply(arrName, ARRAY_REPORT_2);
+        break;
+      case 3:
+        arrName.push.apply(arrName, ARRAY_REPORT_3);
+        break;
+      default:
+        break;
+    }
   }
-  
-  else if (table === STR_REPORT) {
-     const type:number = parseInt(subStr1[subStr1.length - 1]);
-      switch (type) {
-          case 0:
-              arrName.push.apply(arrName, ARRAY_REPORT_0);
-              break;
-          case 1:
-              arrName.push.apply(arrName, ARRAY_REPORT_1);
-              break;
-          case 2:
-              arrName.push.apply(arrName, ARRAY_REPORT_2);
-              break;
-          case 3:
-              arrName.push.apply(arrName, ARRAY_REPORT_3);
-              break;
-          default:
-              break;
-      }
-  }
-
 
   for (var i = 0; i < subStr1.length; i++) {
-      var subStr2:any = [];
-      if (subStr1[i].indexOf('|') > -1) {
-          subStr2.push.apply(subStr2, subStr1[i].split('|'));
+    var subStr2: any = [];
+    if (subStr1[i].indexOf("|") > -1) {
+      subStr2.push.apply(subStr2, subStr1[i].split("|"));
 
-          //2021-03-29 15:57:49 tiepbx
-          // fix bo 2 row EPS* || no dai han || P/E* || EPS điều chỉnh*
-          if (subStr2[0].toLocaleLowerCase() === "EPS*".toLocaleLowerCase() || subStr2[0].toLocaleLowerCase() === "Nợ dài hạn".toLocaleLowerCase() || subStr2[0].toLocaleLowerCase() === "P/E*".toLocaleLowerCase() || subStr2[0].toLocaleLowerCase() === "EPS điều chỉnh*".toLocaleLowerCase()) {
-              continue;
-          }
-
-          // lam tron den hang don vi
-          if (subStr2[0].toLocaleLowerCase() === "EPS(FPTS)**".toLocaleLowerCase()) {
-              subStr2[1] = parseFloat(subStr2[1]).toFixed();
-          }
-
-          subStr2[0] = arrName[i];
+      //2021-03-29 15:57:49 tiepbx
+      // fix bo 2 row EPS* || no dai han || P/E* || EPS điều chỉnh*
+      if (
+        subStr2[0].toLocaleLowerCase() === "EPS*".toLocaleLowerCase() ||
+        subStr2[0].toLocaleLowerCase() === "Nợ dài hạn".toLocaleLowerCase() ||
+        subStr2[0].toLocaleLowerCase() === "P/E*".toLocaleLowerCase() ||
+        subStr2[0].toLocaleLowerCase() === "EPS điều chỉnh*".toLocaleLowerCase()
+      ) {
+        continue;
       }
-      else {
-          // co 2 TH: 
-          // +1) cap nhat den quy
-          // +2) loai hinh doanh nghiep: 0, 1, 2,...
-          if (isNaN(Number(subStr1[i]))) {
-              var result = subStr1[i].split(' ');
-              subStr2.push.apply(subStr2, [arrName[i] + ' ' + result[result.length - 1]]);
-          } else {
-              subStr2.push.apply(subStr2, [subStr1[i]]);
-          }
+
+      // lam tron den hang don vi
+      if (
+        subStr2[0].toLocaleLowerCase() === "EPS(FPTS)**".toLocaleLowerCase()
+      ) {
+        subStr2[1] = parseFloat(subStr2[1]).toFixed();
       }
-      arr.push(subStr2);
+
+      subStr2[0] = arrName[i];
+    } else {
+      // co 2 TH:
+      // +1) cap nhat den quy
+      // +2) loai hinh doanh nghiep: 0, 1, 2,...
+      if (isNaN(Number(subStr1[i]))) {
+        var result = subStr1[i].split(" ");
+        subStr2.push.apply(subStr2, [
+          arrName[i] + " " + result[result.length - 1],
+        ]);
+      } else {
+        subStr2.push.apply(subStr2, [subStr1[i]]);
+      }
+    }
+    arr.push(subStr2);
   }
   return arr;
-}
+};
 // export { g_arrStockInfo };
