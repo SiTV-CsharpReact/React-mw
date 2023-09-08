@@ -368,7 +368,7 @@ const OrderMarketW:React.FC<PropResize> = ({types}:PropResize) => {
            
             <div
               className={`bottom-left float-left ${types === "0" ? "min-w-[680px] ml-[1%]":"!w-[100%]"} pt-1.5 pb-1 px-2 ${
-                order ? "w-[48%]" : "ml-[25px] w-[44%]"
+                order ? "w-[48%]" : "ml-[1%] w-[44%]"
               }  MBR ${color ? "bg-[#dfeeff]" : "bg-[#FCE0E1]"}`}
             >
               <div className="relative flex justify-between h-[33px]">

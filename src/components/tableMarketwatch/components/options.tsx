@@ -1,7 +1,7 @@
-import React,{ useRef, useState } from "react";
-import { formatNumberMarket, setColorMarkettest } from "../../../utils/util";
+import React,{ useCallback, useEffect, useRef, useState } from "react";
+import { formatNumberMarket, getCompanyNameByCode, setColorMarkettest } from "../../../utils/util";
 import { RowDataIndex } from "../interface/config.tablegrid";
-import { Tooltip } from "@mui/material";
+import { Tooltip, TooltipProps, styled, tooltipClasses } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../store/configureStore";
 // import { dispatchDataTableBuy } from "../tableBuy";
 import {  dispatchDataTable, setDataOrder  } from "../orderComanSlice";
@@ -14,18 +14,74 @@ import CustomHeader from "../CustomHeader";
 import { CellOtherColorRender } from "./CellOtherColorComponent";
 import { Company } from "../../../models/root";
 import { OBJECT_STATUS } from "../../../configs/app.config";
-import { forEach } from "lodash";
+import { fetchCompanyAsync } from "../../companyMarketwatch/companyMarketwatchSlice";
+import { useTranslation } from "react-i18next";
+// import { makeStyles } from "@material-ui/core/styles";
+
+const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: '#e5f6fd',
+    color: 'rgba(0, 0, 0, 0.87)',
+    boxShadow: theme.shadows[1],
+    fontSize: 13,
+    top:-12,
+    left:40,
+    maxWidth: 500,
+  },
+  [`& .${tooltipClasses.arrow}`]: {
+   color: '#e5f6fd',
+  },
+}));
 const ColumnDef = (props: any, props2: any) => {
+  // ngon ngu 
+  const { t } = useTranslation(["home"]);
+  // show bang gia
   const [showPrice, setShowPrice] = useState(false);
-  const  [sttStockCode, setSttStockCode] = useState("")
   const handelCheckNext = () => {
     setShowPrice(!showPrice);
   };
   const widthWindow = window.innerWidth;
   const dispatch = useAppDispatch();
+  // hiển thị bảng
   const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
+  // data pinmned
   const {RowPined} = useAppSelector((state) => state.tableTest)
-  const {dataCompanyTotal} = useAppSelector((state) => state.company)
+  // danh mục mã 
+  const {dataCompanyTotal} = useAppSelector((state) => state.company);
+  // ngôn ngữ 
+  const {language} = useAppSelector((state) => state.ProfileAccount);
+
+  console.log(dataCompanyTotal)
+  const HanDleConpany = useCallback(async () => {
+    await dispatch(fetchCompanyAsync());
+  }, []);
+  useEffect(() => {
+    HanDleConpany();
+    // document.addEventListener('keydown',handleKey,true)
+  }, [language]);  
+  // HO => HOSE; HA => HNX.NY; UP => HNX.UPCOM
+	const getExchangeName = (vEx:number) => {
+	const ExChange=	vEx === 1 ? "HOSE": vEx === 2 ? "HNX.NY": "HNX.UPCOM"
+  return ExChange;
+	}
+  const getCompanyNameByCode =  (vStockCode:string) =>{
+    console.log(vStockCode)
+		var name = '', element = '', cpnyID = ''
+		for (var i = 0; i < dataCompanyTotal.length; i++) {
+			if (vStockCode === dataCompanyTotal[i].Code) {
+				// NamLD
+				// Sua lai tra gia tri companyName theo dang mang [fullname cong ty, cpnyID]
+				name = getExchangeName(dataCompanyTotal[i].Exchange) + ' - ' + language==="VN"? dataCompanyTotal[i].ScripName : dataCompanyTotal[i].ScripNameEN;
+				//return [name, element.cpnyID];
+				// cpnyID = element.cpnyID;
+				break;
+			}
+		}
+
+		return name;
+	}
   const handleClick = (dataTable: any) => {
     dispatch(dispatchDataTable(dataTable));
     const dataCode = dataCompanyTotal.find((item:Company) =>  item.Code ===  dataTable.ma)
@@ -69,30 +125,17 @@ const ColumnDef = (props: any, props2: any) => {
   function isNumeric(n:any) { return !isNaN(parseFloat(n)) && isFinite(n); }
   const columnDefs = React.useMemo(
     () => [
-    // {
-    //   headerName: "",
-    //   cellClass: "ag-cell-pinning",
-    //   field: "pinning",
-    //   maxWidth: 19,
-    //   cellRenderer: PinCell,
-    //   onCellDoubleClicked: (e: any) => {
-    //     const field = e.colDef.field;
-    //     if (field === "pinning") {
-    //       // handlePinRow(e);
-    //     }
-    //   },
-    // },
     {
       field: "MCK",
       // pinned:true,
-      headerName: "Mã",
+      headerName: t("home:priceBoard.StockCode"),
       cellClass: "score-cell",
       suppressMenu: true,
       spanHeaderHeight: true,
       width: widthWindow * 0.05,
       maxWidth: 100,
-      tooltipField: 'MCK',
-      tooltipComponentParams: { color: '#e5f6fd' },
+      // tooltipField: 'MCK',
+      // tooltipComponentParams: { color: '#e5f6fd' },
       // cellClass: "custom-cell",
       headerClass: "custom-header",
       cellStyle: (params: any) => {
@@ -108,7 +151,7 @@ const ColumnDef = (props: any, props2: any) => {
         const value = params.value; // Get the value of the cell
         const rowid = params.data.RowID; // Get the
         var txtStatus1 = '';
-        var txtStatus2 = '';// hungtq
+        var txtStatusCondition = '';// hungtq
         var txtInfo = '';// hungtq
         let checkSTTStockCode = params.data.Quyen;
         var g_Language = 0
@@ -116,13 +159,13 @@ const ColumnDef = (props: any, props2: any) => {
           checkSTTStockCode = checkSTTStockCode.split(':');
           for (var i = 0; i < OBJECT_STATUS.length; i++) {
             if (checkSTTStockCode[0] === OBJECT_STATUS[i].Status[0]) {
-              // txtStatus1 = '&nbsp;' + '-' + '&nbsp;' + OBJECT_STATUS[i].Status[g_Language + 1];
+              txtStatus1 = '&nbsp;' + '-' + '&nbsp;' + OBJECT_STATUS[i].Status[g_Language + 1];
               for (var j1 = 0; j1 < OBJECT_STATUS[i].Info.length; j1++) {
                 if (checkSTTStockCode[1] === OBJECT_STATUS[i].Info[j1][0]) {
-                  txtStatus2 = '&nbsp;' + '-' + '&nbsp;' + OBJECT_STATUS[i].Info[j1][g_Language + 1] + '.';
+                  txtStatusCondition = " " +'-' +" " + OBJECT_STATUS[i].Info[j1][g_Language + 1] + '.';
                   txtInfo =  (isNumeric(checkSTTStockCode[1]) ? "R" : checkSTTStockCode[1]);
-                  console.log(txtStatus2,params.data.MCK);
-                  console.log(txtInfo);
+                  console.log(txtStatusCondition,params.data.MCK);
+                  // console.log(txtInfo);
                   break;
                 }
               }
@@ -143,11 +186,11 @@ const ColumnDef = (props: any, props2: any) => {
               
               for (var jj = 0; jj < OBJECT_STATUS[ii].Info.length; jj++) {
                 if (checkSTTStockCode[1] === OBJECT_STATUS[ii].Info[jj][0]) {
-                 txtStatus2 = '&nbsp;' + '-' + '&nbsp;' + OBJECT_STATUS[ii].Info[jj][g_Language + 1] + '.';
+                 txtStatusCondition = " " +'-' +" "  + OBJECT_STATUS[ii].Info[jj][g_Language + 1] + '.';
                   txtInfo = (isNumeric(checkSTTStockCode[1]) ? "R" : checkSTTStockCode[1]);
-                  //console.info('strn',strn,'checkSTTStockCode',checkSTTStockCode,'txtStatus1',txtStatus1,'txtStatus2',txtStatus2,'txtInfo',txtInfo,'OBJECT_STATUS[ii].Status[0]',OBJECT_STATUS[ii].Status[0]);
-                  console.log(txtStatus2,params.data.MCK);
-                  console.log(txtInfo)
+                  //console.info('strn',strn,'checkSTTStockCode',checkSTTStockCode,'txtStatus1',txtStatus1,'txtStatusCondition',txtStatusCondition,'txtInfo',txtInfo,'OBJECT_STATUS[ii].Status[0]',OBJECT_STATUS[ii].Status[0]);
+                  console.log(txtStatusCondition,params.data.MCK);
+                  // console.log(txtInfo)
                   if (checkSTTStockCode[0] === '232' || checkSTTStockCode[0] === 'BE') {
                     break;
                   }
@@ -162,6 +205,7 @@ const ColumnDef = (props: any, props2: any) => {
         }
         // const 
         return (
+          
           <div
             data-index={dataIndex}
             data-comp={rowid}
@@ -178,12 +222,16 @@ const ColumnDef = (props: any, props2: any) => {
               }}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
             />
+            <CustomTooltip title={getCompanyNameByCode(value) + txtStatusCondition} arrow >
             <div
               className="pt-1 pl-1"
               onDoubleClick={(e) => handleDoubleClick(e, value)}
             >
-              {/* {value} */}
+      
               {checkSTTStockCode !== "" && checkSTTStockCode[0] === 'BE' || checkSTTStockCode[0] === '232' ? <span className="bg-[#808080]">{value} <sup>{txtInfo}</sup></span> : value}
+           
+              {/* {value} */}
+             
               {/* {txtInfo?
               <span className="bg-[#808080]">
               {txtInfo && <sup>{txtInfo}</sup>}
@@ -193,13 +241,15 @@ const ColumnDef = (props: any, props2: any) => {
               :""} */}
              
             </div>
+            </CustomTooltip>
           </div>
+         
         );
       },
     },
     {
       field: "TC",
-      headerName: "TC",
+      headerName: t("home:priceBoard.TC"),
       headerClass: "custom-header tc-header",
       cellClass: "score-cell tc-cell",
       suppressMenu: true,
@@ -219,7 +269,7 @@ const ColumnDef = (props: any, props2: any) => {
     },
     {
       field: "Tran",
-      headerName: "Trần",
+      headerName: t("home:priceBoard.Ceiling"),
       suppressMenu: true,
       spanHeaderHeight: true,
       width: widthWindow * 0.03,
@@ -235,7 +285,7 @@ const ColumnDef = (props: any, props2: any) => {
     },
     {
       field: "San",
-      headerName: "Sàn",
+      headerName: t("home:priceBoard.Floor"),
       suppressMenu: true,
       spanHeaderHeight: true,
       width: widthWindow * 0.03,
@@ -250,13 +300,13 @@ const ColumnDef = (props: any, props2: any) => {
       cellRenderer: CellOtherColorRender,
     },
     {
-      headerName: "Mua",
+      headerName: t("home:priceBoard.Mua"),
       headerClass: "custom-header cell-default !cursor-default",
 
       children: [
         {
           field: "KL4",
-          headerName: "KL4",
+          headerName: t("home:priceBoard.Vol4"),
           suppressMenu: true,
           width: widthWindow * 0.03,
           minWidth: 50,
@@ -294,7 +344,7 @@ const ColumnDef = (props: any, props2: any) => {
         {
           field: "G3",
          
-          headerName: "G3",
+          headerName: t("home:priceBoard.Price3"),
           suppressMenu: true,
           width: widthWindow * 0.03,
 
@@ -335,7 +385,7 @@ const ColumnDef = (props: any, props2: any) => {
         },
         {
           field: "KL3",
-          headerName: "KL3",
+          headerName: t("home:priceBoard.Vol3"),
           suppressMenu: true,
           width: widthWindow * 0.04,
 
@@ -368,7 +418,7 @@ const ColumnDef = (props: any, props2: any) => {
 
         {
           field: "G2",
-          headerName: "G2",
+          headerName: t("home:priceBoard.Price2"),
           suppressMenu: true,
           width: widthWindow * 0.03,
           minWidth: 50,
@@ -409,7 +459,7 @@ const ColumnDef = (props: any, props2: any) => {
 
         {
           field: "KL2",
-          headerName: "KL2",
+          headerName: t("home:priceBoard.Vol2"),
           suppressMenu: true,
           width: widthWindow * 0.04,
           minWidth: 50,
@@ -439,7 +489,7 @@ const ColumnDef = (props: any, props2: any) => {
         },
         {
           field: "G1",
-          headerName: "G1",
+          headerName: t("home:priceBoard.Price1"),
           suppressMenu: true,
           width: widthWindow * 0.04,
           minWidth: 50,
@@ -479,7 +529,7 @@ const ColumnDef = (props: any, props2: any) => {
         },
         {
           field: "KL1",
-          headerName: "KL1",
+          headerName: t("home:priceBoard.Vol1"),
           cellClass: "score-cell",
           suppressMenu: true,
           width: widthWindow * 0.05,
@@ -510,12 +560,12 @@ const ColumnDef = (props: any, props2: any) => {
       ],
     },
     {
-      headerName: "Khớp lệnh",
+      headerName: t("home:priceBoard.KL"),
       headerClass: "custom-header tc-header",
       children: [
         {
           field: "GiaKhop",
-          headerName: "Giá",
+          headerName: t("home:priceBoard.Vol1"),
           suppressMenu: true,
           width: widthWindow * 0.03,
           minWidth: 50,
@@ -531,7 +581,7 @@ const ColumnDef = (props: any, props2: any) => {
         },
         {
           field: "KLKhop",
-          headerName: "KL",
+          headerName: t("home:priceBoard.Vol1"),
           suppressMenu: true,
           width: widthWindow * 0.04,
           minWidth: 50,
@@ -649,7 +699,7 @@ const ColumnDef = (props: any, props2: any) => {
       ],
     },
     {
-      headerName: "Bán",
+      headerName: t("home:priceBoard.Ban"),
       headerClass: "custom-header cell-default !cursor-default",
       children: [
         {
@@ -694,7 +744,7 @@ const ColumnDef = (props: any, props2: any) => {
         },
         {
           field: "KL1B",
-          headerName: "KL1",
+          headerName: t("home:priceBoard.Vol1"),
           suppressMenu: true,
           width: widthWindow * 0.04,
           minWidth: 50,
@@ -723,7 +773,7 @@ const ColumnDef = (props: any, props2: any) => {
         },
         {
           field: "G2B",
-          headerName: "G2",
+          headerName: t("home:priceBoard.Price2"),
           suppressMenu: true,
           width: widthWindow * 0.03,
           minWidth: 50,
@@ -762,7 +812,7 @@ const ColumnDef = (props: any, props2: any) => {
         },
         {
           field: "KL2B",
-          headerName: "KL2",
+          headerName: t("home:priceBoard.Vol2"),
           suppressMenu: true,
           width: widthWindow * 0.03,
           minWidth: 50,
@@ -791,7 +841,7 @@ const ColumnDef = (props: any, props2: any) => {
         },
         {
           field: "G3B",
-          headerName: "G3",
+          headerName: t("home:priceBoard.Price3"),
           cellClass: "score-cell",
           suppressMenu: true,
           width: widthWindow * 0.04,
@@ -832,7 +882,7 @@ const ColumnDef = (props: any, props2: any) => {
         },
         {
           field: "KL3B",
-          headerName: "KL3",
+          headerName: t("home:priceBoard.Vol3"),
           suppressMenu: true,
           width: widthWindow * 0.05,
           minWidth: 50,
@@ -861,7 +911,7 @@ const ColumnDef = (props: any, props2: any) => {
         },
         {
           field: "KL4B",
-          headerName: "KL4",
+          headerName: t("home:priceBoard.Vol4"),
           suppressMenu: true,
           width: widthWindow * 0.05,
           minWidth: 50,
@@ -893,7 +943,7 @@ const ColumnDef = (props: any, props2: any) => {
     },
     {
       field: "TKL",
-      headerName: "Tổng KL",
+      headerName: t("home:priceBoard.TKL"),
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
       width: widthWindow * 0.05,
@@ -904,7 +954,7 @@ const ColumnDef = (props: any, props2: any) => {
     },
     {
       field: "MOC",
-      headerName: "Mở Cửa",
+      headerName: t("home:priceBoard.MC"),
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
       width: widthWindow * 0.03,
@@ -921,7 +971,7 @@ const ColumnDef = (props: any, props2: any) => {
     },
     {
       field: "CaoNhat",
-      headerName: "Cao Nhất",
+      headerName: t("home:priceBoard.CN"),
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
       hide: INDEX.cbcol23 ? false : true,
@@ -938,7 +988,7 @@ const ColumnDef = (props: any, props2: any) => {
     },
     {
       field: "ThapNhat",
-      headerName: "Thấp nhất",
+      headerName: t("home:priceBoard.TN"),
       spanHeaderHeight: true,
       hide: INDEX.cbcol24 ? false : true,
       width: widthWindow * 0.03,
@@ -955,7 +1005,7 @@ const ColumnDef = (props: any, props2: any) => {
     },
     {
       field: "Trungbinh",
-      headerName: "Trung bình",
+      headerName: t("home:priceBoard.TB"),
       spanHeaderHeight: true,
       hide: INDEX.cbcol25 ? false : true,
       width: widthWindow * 0.04,
@@ -972,7 +1022,7 @@ const ColumnDef = (props: any, props2: any) => {
     },
     {
       field: "NNMua",
-      headerName: "NN mua",
+      headerName: t("home:priceBoard.NNM"),
       spanHeaderHeight: true,
       hide: INDEX.cbcol26 ? false : true,
       width: widthWindow * 0.04,
@@ -984,7 +1034,7 @@ const ColumnDef = (props: any, props2: any) => {
     },
     {
       field: "NNBan",
-      headerName: "NN bán",
+      headerName: t("home:priceBoard.NNB"),
       cellClass: "score-cell tc-cell",
       spanHeaderHeight: true,
       hide: INDEX.cbcol27 ? false : true,
@@ -996,7 +1046,7 @@ const ColumnDef = (props: any, props2: any) => {
     },
     {
       field: "RoomCL",
-      headerName: "Room Còn lại ",
+      headerName: t("home:priceBoard.RCL"),
       spanHeaderHeight: true,
       hide: INDEX.cbcol28 ? false : true,
       width: widthWindow * 0.05,

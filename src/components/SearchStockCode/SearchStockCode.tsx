@@ -69,7 +69,7 @@ const SearchStockCode = ({
     // };
   };
   // lọc Chữ
-  const searchResults =
+ const searchResults =
     dataCompanyTotal &&
     dataCompanyTotal.filter((item: Company) => {
       let name = `${item.Code} "-" ${
