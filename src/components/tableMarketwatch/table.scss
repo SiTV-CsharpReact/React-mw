@@ -669,3 +669,29 @@
   }
 }
 
+.custom-tooltip {
+  width: 150px;
+  height: 30px;
+  border: 1px solid cornflowerblue;
+  overflow: hidden;
+  color:#000
+}
+
+.custom-tooltip p {
+  margin: 5px;
+  white-space: nowrap;
+}
+
+.custom-tooltip p:first-of-type {
+  font-weight: bold;
+}
+.ag-theme-balham .ag-tooltip {
+  background-color: black;
+  color: white;
+  border-radius: 2px;
+  padding: 10px 16px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #cbd0d3;
+  transition: opacity 1s;
+}

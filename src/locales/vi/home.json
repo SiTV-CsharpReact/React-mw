@@ -55,7 +55,33 @@
         "QLTK_TCTSKQ": "Tra cứu tham số ký quỹ",
         "QLTK_DNTDMH": " Đề nghị thay đổi hạn mức"
     },
+    "priceBoard":{
+        "KL":"Khớp lệnh",
+        "RCL":"Room còn lại",
+        "NNM":"NN mua",
+        "NNB":"NN bán",
+        "TN":"Thấp nhất",
+        "CN":"Cao nhất",
+        "TB":"Trung bình",
+        "MC":"Mở cửa",
+        "TKL":"Tổng KL",
+        "Mua":"Mua",
+        "Ban":"Bán",
+        "Price3":"G3",
+        "Price2":"G2",
+        "Price1":"G1",
+        "Vol4":"Vol4",
+        "Vol3":"Vol3",
+        "Vol2":"Vol2",
+        "Vol1":"Vol1",
+        "Floor":"Sàn",
+        "TC":"TC",
+        "Ceiling":"Trần",
+        "StockCode": "Mã CK",
+        "Price":"Giá"
+    },
     "base": {
+        
         "Time": "Thời gian",
         "Stock": "Mã CK",
         "LoaiGD": "Loại g.dịch",
@@ -93,6 +119,7 @@
         "PROFILE_GD": "Giao diện",
         "PROFILE_T": "Thoát"
     },
+  
     "Order": {
         "ORDER__EXIT": "Thoát",
         "TITLE_LCK": "Lệnh chờ khớp",

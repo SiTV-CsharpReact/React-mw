@@ -5,6 +5,7 @@ import "./chartIndex.scss";
 import { _getDateTs } from "./util/app.chart";
 import { getDataChartHNX, getDataChartHSX } from "./chart/useChart";
 import agent from "../../api/agent";
+import { useAppSelector } from "../../store/configureStore";
 
 type TProps = {
   name: string;
@@ -21,7 +22,6 @@ const ChartIndexSlide: React.FC<TProps> = ({
   const [indexValue, setIndexValue] = useState(0);
   const [timeFirst, setTimeFirst] = useState(0);
   const [timeLast, setTimeLast] = useState<any>();
-
   useEffect(() => {
     if (san === "HSX") {
       const data = getDataChartHSX(dataChartIndex, name);

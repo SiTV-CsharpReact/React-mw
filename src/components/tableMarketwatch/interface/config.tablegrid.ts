@@ -1,3 +1,4 @@
+import CustomTooltip from "../components/CustomTooltip";
 import { TDefColDef, TRowDataIndex } from "./interface.tablegrid";
 
 export const gridOptions = {
@@ -6,7 +7,7 @@ export const gridOptions = {
   rowStyle: { background: 'black' },
   headerHeight: 30,
   getRowId: function (e: any) {
-    console.log(e.data.RowID)
+    // console.log(e.data.RowID)
     return e.data.RowID;
   },
   // suppressRowDrag: (params:any) => {
@@ -36,11 +37,13 @@ export const gridOptions = {
   },
 };
 
-export const defaultColDef: TDefColDef = {
+export const defaultColDef: any = {
   width: 100,
   sortable: true,
   filter: true,
   autoSize: true,
+  resizable: true,
+  tooltipComponent: CustomTooltip,
 };
 
 export const RowDataIndex: TRowDataIndex = {

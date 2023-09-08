@@ -93,6 +93,7 @@ const menuItems = [
   },
   {
     name: "Ngành",
+    nameEN: "Ngành",
     path: "/co-phieu-nganh",
     floor: "HNX",
     children: [
