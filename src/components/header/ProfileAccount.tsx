@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { changeModeTheme } from "./DarkModeSlice";
 import { RemoveCookie } from "../../api/authen";
 import { useNavigate  } from "react-router-dom";
-import { fetchProfileAccount } from "./ProfileAccountSlice";
+import { fetchProfileAccount, setLanguage } from "./ProfileAccountSlice";
 import Cookies from "js-cookie";
 import agent from "../../api/agent";
 import { COOKIE_SESSION_NAME } from "../../configs/app.config";
@@ -40,6 +40,7 @@ const ProfileAccount: any = () => {
     setAnchorEl(null);
   };
   const changeLanguage = (lng: "EN" | "VN") => {
+    dispatch(setLanguage(lng))
     i18n.changeLanguage(lng);
   };
 

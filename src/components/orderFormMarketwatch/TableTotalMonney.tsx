@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CachedIcon from '@mui/icons-material/Cached';
 import { useTranslation } from 'react-i18next';
 import { formatNumber } from '../../utils/util';
@@ -15,6 +15,8 @@ interface IMyProps {
 
 const TableTotalMonney: React.FC<IMyProps> = ({ status, priceMoney }: IMyProps) => {
   const dispatch = useAppDispatch();
+  const [isRotating, setIsRotating] = useState(false);
+
   const isLoading = useAppSelector((state) => state.clientBalance.isLoadingClientBalance);
   const dataMonney = useAppSelector((state) => state.clientBalance.ClientBalane);
   const statusKQ = useAppSelector((state) => state.clientBalance.statusKQ);
@@ -23,7 +25,16 @@ const TableTotalMonney: React.FC<IMyProps> = ({ status, priceMoney }: IMyProps) 
     dispatch(fetchClientBalence());
     dispatch(fetchPermission());
   }, [dispatch]);
- 
+  const loadingBalance = () => {
+    // Bắt đầu animation bằng cách đặt isRotating thành true
+    setIsRotating(true);
+    // Đợi một khoảng thời gian (1 giây trong ví dụ này) trước khi kết thúc animation
+    setTimeout(() => {
+      setIsRotating(false);
+    }, 1000);
+    dispatch(fetchClientBalence())
+    // Thêm các tác vụ khác ở đây khi cần
+  };
   const { t } = useTranslation(["home"]);
   const renderData = dataMonney?.Table?.[0] ?? null;
   // const renderData = dataMonney && dataMonney.Table && dataMonney.Table[0] ? dataMonney.Table[0] : null;
@@ -37,18 +48,16 @@ const TableTotalMonney: React.FC<IMyProps> = ({ status, priceMoney }: IMyProps) 
     </Box>:""
   );
   return (
-    <div className={`bottom__sdTien ml-[15%] mr-[1%] float-left SDTM ${status ? 'ml-[13%]' : 'absolute top-[110px] ml-[1%]'}`}>
+    <div className={`bottom__sdTien  mr-[1%] float-left SDTM ${status ? 'ml-[13%]' : 'absolute top-[110px] ml-[1%]'}`}>
       <div className="bg-[#b3b3b3] h-[25px]">
         <span className="px-2.5 text-[#0055ba] uppercase text-15px leading-[25px]">
           {t("home:Order.CASH_SDT")} 
         </span>
-        <CachedIcon style={{ color: '#1d60bc', fontSize: 18, fontWeight: 600, marginBottom: 2 }} onClick={()=> dispatch(fetchClientBalence())} />
-        <i
-          title="Cập nhật số dư tiền"
-          className="glyphicon glyphicon-refresh"
-          id="spnRefreshDataCookieTien"
-          onClick={()=> dispatch(fetchClientBalence())}
-        ></i>
+        {/* <CachedIcon style={{ color: '#1d60bc', fontSize: 18, fontWeight: 600, marginBottom: 2 }} onClick={()=> dispatch(fetchClientBalence())} /> */}
+        <i className={`fa fa-refresh ${isRotating ? 'rotate' : ''} relative ml-[4px] text-[#1d60bc] !text-[15px] cursor-pointer top-[-1px]`}
+      aria-hidden="true"
+     
+      onClick={loadingBalance}></i>
       </div>
       {renderData?
       <div className='text-13px'>

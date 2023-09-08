@@ -35,6 +35,7 @@ export const ProfileAccountSlice = createSlice({
     Permission: {} as PermissionData,
     SMS:"",
     Email:"",
+    language:"VN",
     Atransaction:0,
     EzTrade: 0,
     EzTransfer: 0,
@@ -62,6 +63,9 @@ export const ProfileAccountSlice = createSlice({
   reducers: {
     setProfileAccount: (state, action) => {
       state.profileAccount = action.payload;
+    },
+    setLanguage: (state, action) => {
+      state.language = action.payload;
     },
     setOTPVerified: (state, action) => {
       state.OTPVerifed = action.payload;
@@ -122,6 +126,6 @@ export const ProfileAccountSlice = createSlice({
   },
 });
 
-export const { setProfileAccount ,setOTPVerified} = ProfileAccountSlice.actions;
+export const { setProfileAccount ,setOTPVerified,setLanguage} = ProfileAccountSlice.actions;
 
 export default ProfileAccountSlice;

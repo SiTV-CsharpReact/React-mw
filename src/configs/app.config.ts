@@ -9,7 +9,7 @@ var ARRAY_INDEX_LANGUAGE = [0, 1];
 var COOKIE_LANGUAGE_NAME = "aspfpt_language";
 export const COOKIE_SESSION_NAME = "aspfpt_sessiontoken";
 var g_CurrentLanguage = "";
-export const FEE_RATE_TP = "0.0005"
+export const FEE_RATE_TP = "0.0005";
 var g_ARRAY_CHART_NAME = [
   "VNXALL",
   "VNI",
@@ -232,4 +232,122 @@ export const g_ARRAY_CONTTROL_CODE = [
   "STAT_ControlCode",
   "STAT_Time",
   "STAT_Date",
+];
+export const OBJECT_STATUS = [
+  {
+    Status: ["SU", "CK bị tạm ngưng giao dịch", "CK bị tạm ngưng giao dịchEN"],
+    Info: [["S", "Bị tạm ngưng", "Bị tạm ngưngEN"]],
+  },
+  {
+    Status: ["DE", "CK bị hủy niêm yết", "CK bị hủy niêm yếtEN"],
+    Info: ["D", "Bị hủy niêm yết", "Bị hủy niêm yếtEN"],
+  },
+  {
+    Status: ["HA", "CK bị ngưng hoặc giao dịch trơ lại trong phiên giao dịch"],
+    Info: [
+      ["H", "Bị ngưng giao dịch trong phiên"],
+      ["R", "Giao dịch trở lại trong phiên"],
+      ["A", "Bị ngưng giao dịch khớp lệnh trong phiên"],
+      ["P", "Bị ngưng giao dịch thỏa thuận trong phiên"],
+    ],
+  },
+  {
+    Status: [
+      "SP",
+      "CK thực hiện tách cổ phiếu",
+      "CK thực hiện tách cổ phiếuEN",
+    ],
+    Info: [["S", "Thực hiện", "Thực hiệnEN"]],
+  },
+  {
+    Status: ["BE", "Ngày giao dịch không hưởng quyền", "Ex-date"],
+    Info: [
+      ["A", "Phát hành thêm & Cổ tức", "Share issue & dividend"],
+      ["D", "Chia cổ tức", "Dividend"],
+      ["R", "Thực hiện quyền", "Corporate Actions"],
+    ],
+  },
+  {
+    Status: [
+      "ME",
+      "TCNY tổ chức đại hội cổ đông",
+      "TCNY tổ chức đại hội cổ đôngEN",
+    ],
+    Info: [["M", "Tổ chức đại hội cổ đông", "Tổ chức đại hội cổ đôngEN"]],
+  },
+  {
+    Status: [
+      "NO",
+      "TCNY bị yêu cầu cung cấp thong tin quan trong trong phiên giao dịch",
+      "TCNY bị yêu cầu cung cấp thong tin quan trong trong phiên giao dịchEN",
+    ],
+    Info: [
+      ["P", "Chờ thông tin cần cung cấp", "Chờ thông tin cần cung cấpEN"],
+      ["R", "Đã nhận thong tin cung cấp", "Đã nhận thong tin cung cấpEN"],
+    ],
+  },
+  {
+    Status: ["327", "Tình trạng chứng khoán", "Tình trạng chứng khoán EN"],
+    Info: [
+      ["2", "Bị cảnh cáo", "Bị cảnh cáoEN"],
+      ["3", "Bị kiểm soát", "Bị kiểm soátEN"],
+    ],
+  },
+  {
+    Status: ["326", "Trạng thái chứng khoán", "Trạng thái chứng khoán EN"],
+    Info: [
+      [
+        "1",
+        "Tạm ngưng giao dịch do ngày nghỉ",
+        "Tạm ngưng giao dịch do ngày nghỉEN",
+      ],
+      ["2", "Ngừng giao dịch", "Ngừng giao dịchEN"],
+      ["6", "Hủy niêm yết", "Hủy niêm yếtEN"],
+      ["7", "Niêm yết mới", "Niêm yết mớiEN"],
+      ["8", "Sắp hủy niêm yết", "Sắp hủy niêm yếtEN"],
+      [
+        "10",
+        "Tạm ngừng giao dịch giữa phiên",
+        "Tạm ngừng giao dịch giữa phiênEN",
+      ],
+      ["25", "Giao dịch đặc biệt", "Giao dịch đặc biệtEN"],
+    ],
+  },
+  {
+    Status: ["232", "Ngày giao dịch không hưởng quyền", "Ex-date"],
+    Info: [
+      ["1", "Trả cổ tức bằng tiền", "Dividend"],
+      ["2", "Trả cổ tức bằng CP/CP thưởng", "Stock split"],
+      [
+        "3",
+        "Phát hành CP cho cổ đông hiện hữu",
+        "Share issue for current shareholders",
+      ],
+      [
+        "4",
+        "Trả cổ tức bằng CP/CP thưởng,phát hành CP cho cổ đông hiện hữu",
+        "Stock split, Share issue to current shareholders",
+      ],
+      [
+        "5",
+        "Trả cổ tức bằng tiền, bằng CP/CP thưởng,phát hành CP cho cổ đông hiện hữu",
+        "Dividend, Stock split, Share issue to current shareholders",
+      ],
+      ["6", "Niêm yết bổ sung", "Additional listing"],
+      ["7", "Giảm vốn", "Capital Reduction"],
+      [
+        "8",
+        "Trả cổ tức bằng tiền, trả cổ tức bằng CP/CP thưởng",
+        "Dividend, Stock split",
+      ],
+      [
+        "9",
+        "Trả cổ tức bằng tiền,phát hành CP cho cổ đông hiện hữu",
+        "Dividend, Share issue to current shareholders",
+      ],
+      ["10", "Thay đổi tỷ lệ Free Float", "Change of Free Float Ratio"],
+      ["11", "Họp đại hội cổ đông", "General Shareholders Meeting"],
+      ["16", "chia cổ tức bang cổ phiếu quỹ", "Bonus from treasury shares"],
+    ],
+  },
 ];

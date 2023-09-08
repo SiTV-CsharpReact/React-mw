@@ -54,7 +54,33 @@
         "QLTK_TCTSKQ":"Parameter digital signature lookup",
         "QLTK_DNTDMH":"Change of rating limit"
     },
+    "priceBoard":{
+        "KL":"Order matching",
+        "RCL":"Room",
+        "NNM":"Frgn Sell",
+        "NNB":"Frgn Buy",
+        "TN":"Lowest",
+        "CN":"Highest",
+        "TB":"Average",
+        "MC":"Open",
+        "TKL":"Total volume",
+        "Mua":"Bid",
+        "Ban":"Ask",
+        "Price3":"Pr3",
+        "Price2":"Pr2",
+        "Price1":"Pr1",
+        "Vol4":"KL4",
+        "Vol3":"KL3",
+        "Vol2":"KL2",
+        "Vol1":"KL1",
+        "Floor":"Floor",
+        "TC":"Ref",
+        "Ceiling":"Ceiling",
+        "StockCode": "Symbol",
+        "Price":"Price"
+    },
     "base":{
+        
         "Time":"Time",
         "Stock":"Stock",
         "LoaiGD":"Trading Type",
