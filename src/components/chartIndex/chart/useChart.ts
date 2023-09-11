@@ -196,124 +196,124 @@ export function getDataChart(data: IChartIndex, name: string) {
   switch (name) {
     case "VNXALL":
       return [
-        convertDataIndex(data.HSX?.DataFull.VNXALL || []),
-        convertDataColumn(data.HSX?.DataFull.VNXALL || []),
+        data.HSX.DataFull.VNXALL.map((item) => convertDataIndex(item)),
+        data.HSX.DataFull.VNXALL.map((item) => convertDataColumn(item)),
       ];
     case "VNI":
       return [
-        convertDataIndex(data.HSX?.DataFull.VNIndex || []),
-        convertDataColumn(data.HSX?.DataFull.VNIndex || []),
+        data.HSX.DataFull.VNIndex.map((item) => convertDataIndex(item)),
+        data.HSX.DataFull.VNIndex.map((item) => convertDataColumn(item)),
       ];
     case "VNSML":
       return [
-        convertDataIndex(data.HSX?.DataFull.VNSML || []),
-        convertDataColumn(data.HSX?.DataFull.VNSML || []),
+        data.HSX.DataFull.VNSML.map((item) => convertDataIndex(item)),
+        data.HSX.DataFull.VNSML.map((item) => convertDataColumn(item)),
       ];
     case "VN30":
       return [
-        convertDataIndex(data.HSX?.DataFull.VN30 || []),
-        convertDataColumn(data.HSX?.DataFull.VN30 || []),
+        data.HSX.DataFull.VN30.map((item) => convertDataIndex(item)),
+        data.HSX.DataFull.VN30.map((item) => convertDataColumn(item)),
       ];
     case "VNALL":
       return [
-        convertDataIndex(data.HSX?.DataFull.VNALL || []),
-        convertDataColumn(data.HSX?.DataFull.VNALL || []),
+        data.HSX.DataFull.VNALL.map((item) => convertDataIndex(item)),
+        data.HSX.DataFull.VNALL.map((item) => convertDataColumn(item)),
       ];
     case "VN100":
       return [
-        convertDataIndex(data.HSX?.DataFull.VN100 || []),
-        convertDataColumn(data.HSX?.DataFull.VN100 || []),
+        data.HSX.DataFull.VN100.map((item) => convertDataIndex(item)),
+        data.HSX.DataFull.VN100.map((item) => convertDataColumn(item)),
       ];
     case "VNMID":
       return [
-        convertDataIndex(data.HSX?.DataFull.VNMID || []),
-        convertDataColumn(data.HSX?.DataFull.VNMID || []),
+        data.HSX.DataFull.VNMID.map((item) => convertDataIndex(item)),
+        data.HSX.DataFull.VNMID.map((item) => convertDataColumn(item)),
       ];
     case "HNX":
       return [
-        convertDataIndex(data.HNX?.DataFull.HNXIndex || []),
-        convertDataColumn(data.HNX?.DataFull.HNXIndex || []),
+        data.HNX.DataFull.HNXIndex.map((item) => convertDataIndex(item)),
+        data.HNX.DataFull.HNXIndex.map((item) => convertDataColumn(item)),
       ];
     case "HNX30":
       return [
-        convertDataIndex(data.HNX?.DataFull.HNX30 || []),
-        convertDataColumn(data.HNX?.DataFull.HNX30 || []),
+        data.HNX.DataFull.HNX30.map((item) => convertDataIndex(item)),
+        data.HNX.DataFull.HNX30.map((item) => convertDataColumn(item)),
       ];
     case "HNXLCAP":
       return [
-        convertDataIndex(data.HNX?.DataFull.HNXLCap || []),
-        convertDataColumn(data.HNX?.DataFull.HNXLCap || []),
+        data.HNX.DataFull.HNXLCap.map((item) => convertDataIndex(item)),
+        data.HNX.DataFull.HNXLCap.map((item) => convertDataColumn(item)),
       ];
     case "HNXSMCAP":
       return [
-        convertDataIndex(data.HNX?.DataFull.HNXMSCap || []),
-        convertDataColumn(data.HNX?.DataFull.HNXMSCap || []),
+        data.HNX.DataFull.HNXMSCap.map((item) => convertDataIndex(item)),
+        data.HNX.DataFull.HNXMSCap.map((item) => convertDataColumn(item)),
       ];
     case "HNXFIN":
       return [
-        convertDataIndex(data.HNX?.DataFull.HNXFin || []),
-        convertDataColumn(data.HNX?.DataFull.HNXFin || []),
+        data.HNX.DataFull.HNXFin.map((item) => convertDataIndex(item)),
+        data.HNX.DataFull.HNXFin.map((item) => convertDataColumn(item)),
       ];
     case "HNXMAN":
       return [
-        convertDataIndex(data.HNX?.DataFull.HNXMan || []),
-        convertDataColumn(data.HNX?.DataFull.HNXMan || []),
+        data.HNX.DataFull.HNXMan.map((item) => convertDataIndex(item)),
+        data.HNX.DataFull.HNXMan.map((item) => convertDataColumn(item)),
       ];
     case "HNXCON":
       return [
-        convertDataIndex(data.HNX?.DataFull.HNXCon || []),
-        convertDataColumn(data.HNX?.DataFull.HNXCon || []),
+        data.HNX.DataFull.HNXCon.map((item) => convertDataIndex(item)),
+        data.HNX.DataFull.HNXCon.map((item) => convertDataColumn(item)),
       ];
-    case "HNXUPCOM":
+    case "UPCOM":
       return [
-        convertDataIndex(data.HNX?.DataFull.HNXUpcomIndex || []),
-        convertDataColumn(data.HNX?.DataFull.HNXUpcomIndex || []),
+        data.HNX.DataFull.HNXUpcomIndex.map((item) => convertDataIndex(item)),
+        data.HNX.DataFull.HNXUpcomIndex.map((item) => convertDataColumn(item)),
       ];
     default:
       return [];
   }
 }
 
-export function convertDataIndex(data: IData[]) {
-  return data.map((item) => [item.Data.TimeJS, item.Data.Index]);
+export function convertDataIndex(data: IData) {
+  return [data.Data.TimeJS, data.Data.Index];
 }
 
-export function convertDataColumn(data: IData[]) {
-  return data.map((item) => [item.Data.TimeJS, item.Data.Vol]);
+export function convertDataColumn(data: IData) {
+  return [data.Data.TimeJS, data.Data.Vol];
 }
 
-export function getPlotLine(data: IChartIndex, name: string): any {
+export function getPlotLine(data: IChartIndex, name: string) {
   switch (name) {
     case "VNXALL":
-      return data.HSX?.LastIndex.VNXALL;
+      return data.HSX.LastIndex.VNXALL;
     case "VNI":
-      return data.HSX?.LastIndex.VNIndex;
+      return data.HSX.LastIndex.VNIndex;
     case "VNSML":
-      return data.HSX?.LastIndex.VNSML;
+      return data.HSX.LastIndex.VNSML;
     case "VN30":
-      return data.HSX?.LastIndex.VN30;
+      return data.HSX.LastIndex.VN30;
     case "VNALL":
-      return data.HSX?.LastIndex.VNALL;
+      return data.HSX.LastIndex.VNALL;
     case "VN100":
-      return data.HSX?.LastIndex.VN100;
+      return data.HSX.LastIndex.VN100;
     case "VNMID":
-      return data.HSX?.LastIndex.VNMID;
+      return data.HSX.LastIndex.VNMID;
     case "HNX":
-      return data.HNX?.LastIndex.HNXIndex;
+      return data.HNX.LastIndex.HNXIndex;
     case "HNX30":
-      return data.HNX?.LastIndex.HNX30;
+      return data.HNX.LastIndex.HNX30;
     case "HNXLCAP":
-      return data.HNX?.LastIndex.HNXLCap;
+      return data.HNX.LastIndex.HNXLCap;
     case "HNXSMCAP":
-      return data.HNX?.LastIndex.HNXMSCap;
+      return data.HNX.LastIndex.HNXMSCap;
     case "HNXFIN":
-      return data.HNX?.LastIndex.HNXFin;
+      return data.HNX.LastIndex.HNXFin;
     case "HNXMAN":
-      return data.HNX?.LastIndex.HNXMan;
+      return data.HNX.LastIndex.HNXMan;
     case "HNXCON":
-      return data.HNX?.LastIndex.HNXCon;
-    case "HNXUPCOM":
-      return data.HNX?.LastIndex.HNXUpcomIndex;
+      return data.HNX.LastIndex.HNXCon;
+    case "UPCOM":
+      return data.HNX.LastIndex.HNXUpcomIndex;
     default:
       return 0;
   }

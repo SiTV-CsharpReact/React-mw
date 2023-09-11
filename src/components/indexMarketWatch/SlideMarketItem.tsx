@@ -6,127 +6,114 @@ import ChartIndexSlide from "../chartIndex/ChartIndexSlide";
 import { ISlideMarket } from "./interface/slidemarket.config";
 import { useAppSelector } from "../../store/configureStore";
 
-const SlideMarketItem: React.FC<ISlideMarket> = ({
-  id,
-  name,
-  valueChange,
-  valueIndexChange,
-  valueChangePercent,
-  visible,
-  valueCeiling,
-  valueDown,
-  valueFloor,
-  valueTotalSharesAOM,
-  valueTotalValuesAOM,
-  valueUp,
-  valueNoChange,
-  status,
-  san,
-  // dataChartIndex,
-}) => {
+const SlideMarketItem: React.FC<ISlideMarket | any> = ({ data, dataChart }) => {
+  console.log({ data });
+
   const { dataChartIndexTime } = useAppSelector((state) => state.chartIndex);
 
   useEffect(() => {}, [dataChartIndexTime]);
   return (
     <>
-      <li className="dvChart ">
-        <div>
-          <p className="text-sm text-center whitespace-nowrap">
-            <span id="" className="mar_">
-              {name === "HNXUPCOM" ? "UPCOM" : name}:
-            </span>
-            <span
-              id={id[1]}
-              className={`${setColorMenuMarket(valueChange)} px-0.5`}
-            >
-              {valueIndexChange}
-            </span>
-            <span
-              id={id[0]}
-              className={`${iconColorMenuMarket(valueChange)} px-0.5`}
-            ></span>
-            <span
-              id={id[2]}
-              className={`${setColorMenuMarket(valueChange)} px-0.5`}
-            >
-              {valueChange}
-            </span>
-            <span
-              id=""
-              className={`${setColorMenuMarket(valueChange)} px-0.5 `}
-            >
-              <span
-                id={id[3]}
-                className={`${setColorMenuMarket(valueChange)} px-0.5 `}
-              >
-                {valueChangePercent}
+      {data.type && (
+        <li className="dvChart ">
+          <div>
+            <p className="text-sm text-center whitespace-nowrap">
+              <span id="" className="mar_">
+                {data.name}:
               </span>
-              %
-            </span>
-          </p>
-          {!visible && (
-            <>
-              <p className="text-xs text-center whitespace-nowrap">
-                <span className="mar_ spQtty">KL:</span>
-                <span id={id[4]} className="mar_ txtIndex">
-                  {valueTotalSharesAOM}
-                </span>
-                <span className="mar_ spValue">GT:</span>
-                <span id={id[5]} className="mar_ txtIndex">
-                  {valueTotalValuesAOM}
-                </span>
-                <span className="mar_ spUnit">tỷ</span>
-              </p>
-              <p className="text-xs text-center whitespace-nowrap">
-                <span className="arrowUp" />
-                <span id={id[6]} className="maru txtIndex">
-                  {valueUp}
-                </span>
-                <span className="marc txtIndex">
-                  (
-                  <span className="marc" id={id[7]}>
-                    {valueCeiling}
-                  </span>
-                  )
-                </span>
-                <span className="square" />
-                <span id={id[8]} className="marn txtIndex">
-                  {valueNoChange}
-                </span>
-                <span className="arrowDown" />
-                <span id={id[9]} className="mard txtIndex">
-                  {valueDown}
-                </span>
-                <span className="marf txtIndex">
-                  (
-                  <span className="marf" id={id[10]}>
-                    {valueFloor}
-                  </span>
-                  )
-                </span>
+              <span
+                id={data.id[1]}
+                className={`${setColorMenuMarket(data.valueChange)} px-0.5`}
+              >
+                {data.valueIndexChange}
+              </span>
+              <span
+                id={data.id[0]}
+                className={`${iconColorMenuMarket(data.valueChange)} px-0.5`}
+              ></span>
+              <span
+                id={data.id[2]}
+                className={`${setColorMenuMarket(data.valueChange)} px-0.5`}
+              >
+                {data.valueChange}
+              </span>
+              <span
+                id=""
+                className={`${setColorMenuMarket(data.valueChange)} px-0.5 `}
+              >
                 <span
-                  className={`${
-                    san === "HSX"
-                      ? "HO_MarketStat"
-                      : san === "HNX"
-                      ? "HA_MarketStat"
-                      : "UPC_MarketStat"
-                  } txtIndex`}
-                  id={`${id[11] !== undefined ? id[11] : ""}`}
+                  id={data.id[3]}
+                  className={`${setColorMenuMarket(data.valueChange)} px-0.5 `}
                 >
-                  {status}
+                  {data.valueChangePercent}
                 </span>
-              </p>
-            </>
-          )}
-          {/* <ChartIndex /> */}
-          <ChartIndexSlide
-            name={name}
-            san={san}
-            // dataChartIndex={dataChartIndex}
-          />
-        </div>
-      </li>
+                %
+              </span>
+            </p>
+            {!data.visible && (
+              <>
+                <p className="text-xs text-center whitespace-nowrap">
+                  <span className="mar_ spQtty">KL:</span>
+                  <span id={data.id[4]} className="mar_ txtIndex">
+                    {data.valueTotalSharesAOM}
+                  </span>
+                  <span className="mar_ spValue">GT:</span>
+                  <span id={data.id[5]} className="mar_ txtIndex">
+                    {data.valueTotalValuesAOM}
+                  </span>
+                  <span className="mar_ spUnit">tỷ</span>
+                </p>
+                <p className="text-xs text-center whitespace-nowrap">
+                  <span className="arrowUp" />
+                  <span id={data.id[6]} className="maru txtIndex">
+                    {data.valueUp}
+                  </span>
+                  <span className="marc txtIndex">
+                    (
+                    <span className="marc" id={data.id[7]}>
+                      {data.valueCeiling}
+                    </span>
+                    )
+                  </span>
+                  <span className="square" />
+                  <span id={data.id[8]} className="marn txtIndex">
+                    {data.valueNoChange}
+                  </span>
+                  <span className="arrowDown" />
+                  <span id={data.id[9]} className="mard txtIndex">
+                    {data.valueDown}
+                  </span>
+                  <span className="marf txtIndex">
+                    (
+                    <span className="marf" id={data.id[10]}>
+                      {data.valueFloor}
+                    </span>
+                    )
+                  </span>
+                  <span
+                    className={`${
+                      data.san === "HSX"
+                        ? "HO_MarketStat"
+                        : data.san === "HNX"
+                        ? "HA_MarketStat"
+                        : "UPC_MarketStat"
+                    } txtIndex`}
+                    id={`${data.id[11] !== undefined ? data.id[11] : ""}`}
+                  >
+                    {data.status}
+                  </span>
+                </p>
+              </>
+            )}
+            {/* <ChartIndex /> */}
+            <ChartIndexSlide
+              name={data.name}
+              san={data.san}
+              dataChartIndex={dataChart}
+            />
+          </div>
+        </li>
+      )}
     </>
   );
 };

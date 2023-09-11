@@ -19,28 +19,6 @@ import { fetchHSXMarketAsync } from "./marketHSXSlice";
 import { fetchHNXMarketAsync } from "./marketHNXSlice";
 import SlideMarketItem from "./SlideMarketItem";
 import {
-  HNX,
-  HNX30,
-  HNXCON,
-  HNXFIN,
-  HNXLCAP,
-  HNXMAN,
-  HNXSMCAP,
-  UPCOM,
-  VN100,
-  VN30,
-  VNALL,
-  VNI,
-  VNMID,
-  VNMSL,
-  VNXALL,
-} from "./className";
-import {
-  fStatusMarketHNX,
-  fStatusMarketHSX,
-  fStatusMarketUPCOM,
-} from "../../utils/util";
-import {
   fetchChartIndexAsync,
   fetchChartIndexCDTAsync,
   fetchChartIndexTimeAsync,
@@ -48,13 +26,12 @@ import {
   setDataChartRealTime,
 } from "../chartIndex/chartIndexSlice";
 import agent from "../../api/agent";
-import {
-  IACTION_LIST,
-  IDataCDT,
-  IDataSS,
-  IRP,
-} from "./interface/slidemarket.config";
+import { IACTION_LIST, IDataCDT, IRP } from "./interface/slidemarket.config";
 import { updateChart } from "../chartIndex/chart/useChart";
+import {
+  g_ARRAY_CHART_NAME,
+  renderSlideMarket,
+} from "./utils/renderSlideMarket";
 
 const SlidesMarketWatch = () => {
   const dispatch = useAppDispatch();
@@ -71,6 +48,7 @@ const SlidesMarketWatch = () => {
     GET_SS: "ss", // get snapshot data (update) , can phai co Max
     GET_CDT: "cdt", // get check date time
   };
+  console.log({ update: updateChart(dataChartIndexTime, dataChartIndex) });
 
   const {
     marketHSX: { valueHSX },
@@ -81,9 +59,70 @@ const SlidesMarketWatch = () => {
   const { INDEX } = useAppSelector(
     (state: RootState) => state.settingMarketwatch
   );
-  console.log({ dataChartIndexTime: updateChart(dataChartIndexTime, dataChartIndex) });
+  const arr = useMemo(() => {
+    // const my_Arr = dataChartIndex;
+    // if (dataChartIndexTime.SS !== null) {
+    //   dataChartIndexTime.SS.forEach((item) => {
+    //     if (item.HSX.VNXALL.length !== 0) {
+    //       my_Arr.HSX.DataFull.VNXALL =
+    //         dataChartIndex.HSX.DataFull.VNXALL.concat(item.HSX.VNXALL);
+    //     } else if (item.HSX.VNIndex.length !== 0) {
+    //       my_Arr.HSX.DataFull.VNIndex =
+    //         dataChartIndex.HSX.DataFull.VNIndex.concat(item.HSX.VNIndex);
+    //     } else if (item.HSX.VN30.length !== 0) {
+    //       my_Arr.HSX.DataFull.VN30 = dataChartIndex.HSX.DataFull.VN30.concat(
+    //         item.HSX.VN30
+    //       );
+    //     } else if (item.HSX.VNALL.length !== 0) {
+    //       my_Arr.HSX.DataFull.VNALL = dataChartIndex.HSX.DataFull.VNALL.concat(
+    //         item.HSX.VNALL
+    //       );
+    //     } else if (item.HSX.VN100.length !== 0) {
+    //       my_Arr.HSX.DataFull.VN100 = dataChartIndex.HSX.DataFull.VN100.concat(
+    //         item.HSX.VN100
+    //       );
+    //     } else if (item.HSX.VNSML.length !== 0) {
+    //       my_Arr.HSX.DataFull.VNSML = dataChartIndex.HSX.DataFull.VNSML.concat(
+    //         item.HSX.VNSML
+    //       );
+    //     } else if (item.HSX.VNMID.length !== 0) {
+    //       my_Arr.HSX.DataFull.VNMID = dataChartIndex.HSX.DataFull.VNMID.concat(
+    //         item.HSX.VNMID
+    //       );
+    //     } else if (item.HNX.HNX30.length !== 0) {
+    //       my_Arr.HNX.DataFull.HNX30 = dataChartIndex.HNX.DataFull.HNX30.concat(
+    //         item.HNX.HNX30
+    //       );
+    //     } else if (item.HNX.HNXCon.length !== 0) {
+    //       my_Arr.HNX.DataFull.HNXCon =
+    //         dataChartIndex.HNX.DataFull.HNXCon.concat(item.HNX.HNXCon);
+    //     } else if (item.HNX.HNXFin.length !== 0) {
+    //       my_Arr.HNX.DataFull.HNXFin =
+    //         dataChartIndex.HNX.DataFull.HNXFin.concat(item.HNX.HNXFin);
+    //     } else if (item.HNX.HNXIndex.length !== 0) {
+    //       my_Arr.HNX.DataFull.HNXIndex =
+    //         dataChartIndex.HNX.DataFull.HNXIndex.concat(item.HNX.HNXIndex);
+    //     } else if (item.HNX.HNXLCap.length !== 0) {
+    //       my_Arr.HNX.DataFull.HNXLCap =
+    //         dataChartIndex.HNX.DataFull.HNXLCap.concat(item.HNX.HNXLCap);
+    //     } else if (item.HNX.HNXMSCap.length !== 0) {
+    //       my_Arr.HNX.DataFull.HNXMSCap =
+    //         dataChartIndex.HNX.DataFull.HNXMSCap.concat(item.HNX.HNXMSCap);
+    //     } else if (item.HNX.HNXMan.length !== 0) {
+    //       my_Arr.HNX.DataFull.HNXMan =
+    //         dataChartIndex.HNX.DataFull.HNXMan.concat(item.HNX.HNXMan);
+    //     } else if (item.HNX.HNXUpcomIndex.length !== 0) {
+    //       my_Arr.HNX.DataFull.HNXUpcomIndex =
+    //         dataChartIndex.HNX.DataFull.HNXUpcomIndex.concat(
+    //           item.HNX.HNXUpcomIndex
+    //         );
+    //     }
+    //   });
+    // }
+    // return my_Arr;
+  }, []);
+  console.log(arr);
 
-  
   useEffect(() => {
     dispatch(fetchHSXMarketAsync());
   }, [dispatch]);
@@ -226,6 +265,9 @@ const SlidesMarketWatch = () => {
     speed = event.clientX - event.target.getBoundingClientRect().left;
     console.log(speed);
   };
+  // console.log({
+  //   data: g_ARRAY_CHART_NAME.map(item => renderSlideMarket(INDEX, item, valueHSX, valueHNX, visible))
+  // })
 
   const handleMouseLeave = (e: any) => {
     clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover
@@ -262,306 +304,12 @@ const SlidesMarketWatch = () => {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
         >
-          {INDEX.VNXALL && (
+          {g_ARRAY_CHART_NAME.map((item) => (
             <SlideMarketItem
-              name="VNXALL"
-              id={VNXALL}
-              valueIndexChange={valueHSX?.VNXALL_IndexValue}
-              valueChange={valueHSX?.VNXALL_Change}
-              valueChangePercent={valueHSX?.VNXALL_ChangePercent}
-              visible={visible}
-              valueTotalSharesAOM={valueHSX?.VNXALL_TotalSharesAOM}
-              valueTotalValuesAOM={valueHSX?.VNXALL_TotalValuesAOM}
-              valueUp={valueHSX?.VNXALL_Up}
-              valueCeiling={valueHSX?.VNXALL_Ceiling}
-              valueNoChange={valueHSX?.VNXALL_NoChange}
-              valueDown={valueHSX?.VNXALL_Down}
-              valueFloor={valueHSX?.VNXALL_Floor}
-              status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
-              san="HSX"
-              // dataChartIndex={dataChartIndex}
+              data={renderSlideMarket(INDEX, item, valueHSX, valueHNX, visible)}
+              dataChart={arr}
             />
-          )}
-          {INDEX.VNI && (
-            <SlideMarketItem
-              name="VNI"
-              id={VNI}
-              valueIndexChange={valueHSX?.VNI_IndexValue}
-              valueChange={valueHSX?.VNI_Change}
-              valueChangePercent={valueHSX?.VNI_ChangePercent}
-              visible={visible}
-              valueTotalSharesAOM={valueHSX?.VNI_TotalSharesAOM}
-              valueTotalValuesAOM={valueHSX?.VNI_TotalValuesAOM}
-              valueUp={valueHSX?.VNI_Up}
-              valueCeiling={valueHSX?.VNI_Ceiling}
-              valueNoChange={valueHSX?.VNI_NoChange}
-              valueDown={valueHSX?.VNI_Down}
-              valueFloor={valueHSX?.VNI_Floor}
-              status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
-              san="HSX"
-              // dataChartIndex={dataChartIndex}
-            />
-          )}
-          {INDEX.VN30 && (
-            <SlideMarketItem
-              name="VN30"
-              id={VN30}
-              valueIndexChange={valueHSX?.VN30_IndexValue}
-              valueChange={valueHSX?.VN30_Change}
-              valueChangePercent={valueHSX?.VN30_ChangePercent}
-              visible={visible}
-              valueTotalSharesAOM={valueHSX?.VN30_TotalSharesAOM}
-              valueTotalValuesAOM={valueHSX?.VN30_TotalValuesAOM}
-              valueUp={valueHSX?.VN30_Up}
-              valueCeiling={valueHSX?.VN30_Ceiling}
-              valueNoChange={valueHSX?.VN30_NoChange}
-              valueDown={valueHSX?.VN30_Down}
-              valueFloor={valueHSX?.VN30_Floor}
-              status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
-              san="HSX"
-              // dataChartIndex={dataChartIndex}
-            />
-          )}
-          {INDEX.VN100 && (
-            <SlideMarketItem
-              name="VN100"
-              id={VN100}
-              valueIndexChange={valueHSX?.VN100_IndexValue}
-              valueChange={valueHSX?.VN100_Change}
-              valueChangePercent={valueHSX?.VN100_ChangePercent}
-              visible={visible}
-              valueTotalSharesAOM={valueHSX?.VN100_TotalSharesAOM}
-              valueTotalValuesAOM={valueHSX?.VN100_TotalValuesAOM}
-              valueUp={valueHSX?.VN100_Up}
-              valueCeiling={valueHSX?.VN100_Ceiling}
-              valueNoChange={valueHSX?.VN100_NoChange}
-              valueDown={valueHSX?.VN100_Down}
-              valueFloor={valueHSX?.VN100_Floor}
-              status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
-              san="HSX"
-              // dataChartIndex={dataChartIndex}
-            />
-          )}
-          {INDEX.VNALL && (
-            <SlideMarketItem
-              name="VNALL"
-              id={VNALL}
-              valueIndexChange={valueHSX?.VNALL_IndexValue}
-              valueChange={valueHSX?.VNALL_Change}
-              valueChangePercent={valueHSX?.VNALL_ChangePercent}
-              visible={visible}
-              valueTotalSharesAOM={valueHSX?.VNALL_TotalSharesAOM}
-              valueTotalValuesAOM={valueHSX?.VNALL_TotalValuesAOM}
-              valueUp={valueHSX?.VNALL_Up}
-              valueCeiling={valueHSX?.VNALL_Ceiling}
-              valueNoChange={valueHSX?.VNALL_NoChange}
-              valueDown={valueHSX?.VNALL_Down}
-              valueFloor={valueHSX?.VNALL_Floor}
-              status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
-              san="HSX"
-              // dataChartIndex={dataChartIndex}
-            />
-          )}
-          {INDEX.VNMID && (
-            <SlideMarketItem
-              name="VNMID"
-              id={VNMID}
-              valueIndexChange={valueHSX?.VNMID_IndexValue}
-              valueChange={valueHSX?.VNMID_Change}
-              valueChangePercent={valueHSX?.VNMID_ChangePercent}
-              visible={visible}
-              valueTotalSharesAOM={valueHSX?.VNMID_TotalSharesAOM}
-              valueTotalValuesAOM={valueHSX?.VNMID_TotalValuesAOM}
-              valueUp={valueHSX?.VNMID_Up}
-              valueCeiling={valueHSX?.VNMID_Ceiling}
-              valueNoChange={valueHSX?.VNMID_NoChange}
-              valueDown={valueHSX?.VNMID_Down}
-              valueFloor={valueHSX?.VNMID_Floor}
-              status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
-              san="HSX"
-              // dataChartIndex={dataChartIndex}
-            />
-          )}
-          {INDEX.VNSML && (
-            <SlideMarketItem
-              name="VNSML"
-              id={VNMSL}
-              valueIndexChange={valueHSX?.VNSML_IndexValue}
-              valueChange={valueHSX?.VNSML_Change}
-              valueChangePercent={valueHSX?.VNSML_ChangePercent}
-              visible={visible}
-              valueTotalSharesAOM={valueHSX?.VNSML_TotalSharesAOM}
-              valueTotalValuesAOM={valueHSX?.VNSML_TotalValuesAOM}
-              valueUp={valueHSX?.VNSML_Up}
-              valueCeiling={valueHSX?.VNSML_Ceiling}
-              valueNoChange={valueHSX?.VNSML_NoChange}
-              valueDown={valueHSX?.VNSML_Down}
-              valueFloor={valueHSX?.VNSML_Floor}
-              status={fStatusMarketHSX(valueHSX?.STAT_ControlCode)}
-              san="HSX"
-              // dataChartIndex={dataChartIndex}
-            />
-          )}
-          {INDEX.HNX && (
-            <SlideMarketItem
-              name="HNX"
-              id={HNX}
-              valueIndexChange={valueHNX?.i02_3}
-              valueChange={valueHNX?.i02_5}
-              valueChangePercent={valueHNX?.i02_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i02_7}
-              valueTotalValuesAOM={valueHNX?.i02_14}
-              valueUp={valueHNX?.i02_x251}
-              valueCeiling={valueHNX?.i02_x251c}
-              valueNoChange={valueHNX?.i02_x252}
-              valueDown={valueHNX?.i02_x253}
-              valueFloor={valueHNX?.i02_x253f}
-              status={fStatusMarketHNX(valueHNX?.i02_x336x340)}
-              san="HNX"
-              // dataChartIndex={dataChartIndex}
-            />
-          )}
-          {INDEX.HNX30 && (
-            <SlideMarketItem
-              name="HNX30"
-              id={HNX30}
-              valueIndexChange={valueHNX?.i41_3}
-              valueChange={valueHNX?.i41_5}
-              valueChangePercent={valueHNX?.i41_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i41_7}
-              valueTotalValuesAOM={valueHNX?.i41_14}
-              valueUp={valueHNX?.i41_x251}
-              valueCeiling={valueHNX?.i41_x251c}
-              valueNoChange={valueHNX?.i41_x252}
-              valueDown={valueHNX?.i41_x253}
-              valueFloor={valueHNX?.i41_x253f}
-              status={fStatusMarketHNX(valueHNX?.i41_x336x340)}
-              san="HNX"
-              // dataChartIndex={dataChartIndex}
-            />
-          )}
-          {INDEX.HNXLCAP && (
-            <SlideMarketItem
-              name="HNXLCAP"
-              id={HNXLCAP}
-              valueIndexChange={valueHNX?.i26_3}
-              valueChange={valueHNX?.i26_5}
-              valueChangePercent={valueHNX?.i26_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i26_7}
-              valueTotalValuesAOM={valueHNX?.i26_14}
-              valueUp={valueHNX?.i26_x251}
-              valueCeiling={valueHNX?.i26_x251c}
-              valueNoChange={valueHNX?.i26_x252}
-              valueDown={valueHNX?.i26_x253}
-              valueFloor={valueHNX?.i26_x253f}
-              status={fStatusMarketHNX(valueHNX?.i26_x336x340)}
-              san="HNX"
-              // dataChartIndex={dataChartIndex}
-            />
-          )}
-          {INDEX.HNXSMCAP && (
-            <SlideMarketItem
-              name="HNXSMCAP"
-              id={HNXSMCAP}
-              valueIndexChange={valueHNX?.i28_3}
-              valueChange={valueHNX?.i28_5}
-              valueChangePercent={valueHNX?.i28_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i28_7}
-              valueTotalValuesAOM={valueHNX?.i28_14}
-              valueUp={valueHNX?.i28_x251}
-              valueCeiling={valueHNX?.i28_x251c}
-              valueNoChange={valueHNX?.i28_x252}
-              valueDown={valueHNX?.i28_x253}
-              valueFloor={valueHNX?.i28_x253f}
-              status={fStatusMarketHNX(valueHNX?.i28_x336x340)}
-              san="HNX"
-              // dataChartIndex={dataChartIndex}
-            />
-          )}
-          {INDEX.HNXFIN && (
-            <SlideMarketItem
-              name="HNXFIN"
-              id={HNXFIN}
-              valueIndexChange={valueHNX?.i39_3}
-              valueChange={valueHNX?.i39_5}
-              valueChangePercent={valueHNX?.i39_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i39_7}
-              valueTotalValuesAOM={valueHNX?.i39_14}
-              valueUp={valueHNX?.i39_x251}
-              valueCeiling={valueHNX?.i39_x251c}
-              valueNoChange={valueHNX?.i39_x252}
-              valueDown={valueHNX?.i39_x253}
-              valueFloor={valueHNX?.i39_x253f}
-              status={fStatusMarketHNX(valueHNX?.i39_x336x340)}
-              san="HNX"
-              // dataChartIndex={dataChartIndex}
-            />
-          )}
-          {INDEX.HNXMAN && (
-            <SlideMarketItem
-              name="HNXMAN"
-              id={HNXMAN}
-              valueIndexChange={valueHNX?.i310_3}
-              valueChange={valueHNX?.i310_5}
-              valueChangePercent={valueHNX?.i310_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i310_7}
-              valueTotalValuesAOM={valueHNX?.i310_14}
-              valueUp={valueHNX?.i310_x251}
-              valueCeiling={valueHNX?.i310_x251c}
-              valueNoChange={valueHNX?.i310_x252}
-              valueDown={valueHNX?.i310_x253}
-              valueFloor={valueHNX?.i310_x253f}
-              status={fStatusMarketHNX(valueHNX?.i310_x336x340)}
-              san="HNX"
-              // dataChartIndex={dataChartIndex}
-            />
-          )}
-          {INDEX.HNXCON && (
-            <SlideMarketItem
-              name="HNXCON"
-              id={HNXCON}
-              valueIndexChange={valueHNX?.i311_3}
-              valueChange={valueHNX?.i311_5}
-              valueChangePercent={valueHNX?.i311_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i311_7}
-              valueTotalValuesAOM={valueHNX?.i311_14}
-              valueUp={valueHNX?.i311_x251}
-              valueCeiling={valueHNX?.i311_x251c}
-              valueNoChange={valueHNX?.i311_x252}
-              valueDown={valueHNX?.i311_x253}
-              valueFloor={valueHNX?.i311_x253f}
-              status={fStatusMarketHNX(valueHNX?.i311_x336x340)}
-              san="HNX"
-              // dataChartIndex={dataChartIndex}
-            />
-          )}
-          {INDEX.UPCOM && (
-            <SlideMarketItem
-              name="HNXUPCOM"
-              id={UPCOM}
-              valueIndexChange={valueHNX?.i03_3}
-              valueChange={valueHNX?.i03_5}
-              valueChangePercent={valueHNX?.i03_6}
-              visible={visible}
-              valueTotalSharesAOM={valueHNX?.i03_7}
-              valueTotalValuesAOM={valueHNX?.i03_14}
-              valueUp={valueHNX?.i03_x251}
-              valueCeiling={valueHNX?.i03_x251c}
-              valueNoChange={valueHNX?.i03_x252}
-              valueDown={valueHNX?.i03_x253}
-              valueFloor={valueHNX?.i03_x253f}
-              status={fStatusMarketUPCOM(valueHNX?.i03_x336x340)}
-              san="HNX"
-              // dataChartIndex={dataChartIndex}
-            />
-          )}
+          ))}
         </div>
       </ul>
       <div

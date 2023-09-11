@@ -1,8 +1,9 @@
 import { IChartIndex } from "../../chartIndex/interface/interface.config";
 
 export interface ISlideMarket {
-  id: string[];
+  type: boolean;
   name: string;
+  id: string[];
   valueChange: string;
   valueChangePercent: string;
   valueIndexChange: string;
@@ -44,8 +45,8 @@ export interface IDataSS {
 }
 
 export interface DataReponseHNX_HSX {
-  HNX: HNX,
-  HSX: HSX
+  HNX: HNX;
+  HSX: HSX;
 }
 
 export interface HNX {

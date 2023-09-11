@@ -7,13 +7,12 @@ import {
   getDataChart,
   getPlotLine,
 } from "./chart/useChart";
-import agent from "../../api/agent";
-import { IChartIndex, IData } from "./interface/interface.config";
 import { useAppSelector } from "../../store/configureStore";
 
 type TProps = {
   name: string;
   san: string;
+   dataChartIndex: any
 };
 const ChartIndexSlide: React.FC<TProps> = ({ name, san }: TProps) => {
   const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
@@ -26,6 +25,8 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san }: TProps) => {
       const data = getDataChart(dataChartIndex, name);
       const value = getPlotLine(dataChartIndex, name);
       setIndexValue(value);
+      console.log({value});
+      
       setDataSpline(data[0]);
       setDataBar(data[1]);
     } else {
@@ -76,7 +77,7 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san }: TProps) => {
       },
     ];
 
-    Highcharts.chart(`container-${name}`, {
+  Highcharts.chart(`container-${name}`, {
       chart: {
         marginTop: 8, // Đặt khoảng cách giữa highcharts-plot-background và highcharts-container là 20px
         marginBottom: 15,
