@@ -273,7 +273,50 @@ export function getDataChart(data: IChartIndex, name: string) {
       return [];
   }
 }
+export function getDataChartHSX(data: IChartIndex, name: string): any {
+  switch (name) {
+    case "VNXALL":
+      return data.HSX?.DataFull?.VNXALL;
+    case "VNI":
+      return data.HSX?.DataFull?.VNIndex;
+    case "VNSML":
+      return data.HSX?.DataFull?.VNSML;
+    case "VN30":
+      return data.HSX?.DataFull?.VN30;
+    case "VNALL":
+      return data.HSX?.DataFull?.VNALL;
+    case "VN100":
+      return data.HSX?.DataFull?.VN100;
+    case "VNMID":
+      return data.HSX?.DataFull?.VNMID;
 
+    default:
+      return [];
+  }
+}
+
+export function getDataChartHNX(data: IChartIndex, name: string): any {
+  switch (name) {
+    case "HNX":
+      return data.HNX?.DataFull?.HNXIndex;
+    case "HNX30":
+      return data.HNX?.DataFull?.HNX30;
+    case "HNXLCAP":
+      return data.HNX?.DataFull?.HNXLCap;
+    case "HNXSMCAP":
+      return data.HNX?.DataFull?.HNXMSCap;
+    case "HNXFIN":
+      return data.HNX?.DataFull?.HNXFin;
+    case "HNXMAN":
+      return data.HNX?.DataFull?.HNXMan;
+    case "HNXCON":
+      return data.HNX?.DataFull?.HNXCon;
+    case "UPCOM":
+      return data.HNX?.DataFull?.HNXUpcomIndex;
+    default:
+      return [];
+  }
+}
 export function convertDataIndex(data: IData) {
   return [data.Data.TimeJS, data.Data.Index];
 }
