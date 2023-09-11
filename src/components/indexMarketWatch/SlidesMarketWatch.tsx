@@ -40,7 +40,7 @@ const SlidesMarketWatch = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [sttFetchData, setSTTFetchData] = useState(true);
-  const INTERVAL = 1000; // 60000 milliseconds = 1 minute
+  const INTERVAL = 60000; // 60000 milliseconds = 1 minute
   const ACTION_LIST: IACTION_LIST = {
     GET_SS: "ss", // get snapshot data (update) , can phai co Max
     GET_CDT: "cdt", // get check date time
@@ -172,9 +172,10 @@ const SlidesMarketWatch = () => {
   let speed = 0; // Biến lưu trữ giá trị speed
 
   let handleMouseEnter = (value: any, event: any, speed: any) => {
+    console.log(divRef)
     if (value === "right") {
       !visible && event.target.classList.add("scrollingHotSpotRightVisible");
-
+   
       scrollInterval = setInterval(() => {
         divRef.current.scrollLeft += speed; // tốc độc scroll
         const divElement = divRef.current;
@@ -231,7 +232,7 @@ const SlidesMarketWatch = () => {
       }`}
     >
       <div
-        className={`scrollingHotSpotLeft ${visible ? "!h-full" : ""}`}
+        className={`scrollingHotSpotLeft ${visible ? "!h-full" : ""} opacity-0`}
         onMouseEnter={(e) => {
           handleMouseEnter("left", e, 2);
         }}
@@ -241,7 +242,7 @@ const SlidesMarketWatch = () => {
       />
       <ul className="py-1 col-priceboard class-chart bg-black">
         <div
-          className="flex w-full overflow-x-hidden whitespace-nowrap cursor-grab"
+          className="flex w-full overflow-x-hidden whitespace-nowrap cursor-move"
           ref={divRef}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}

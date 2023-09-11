@@ -28,8 +28,6 @@ const ChartIndex: React.FC<TProps> = ({
       const data = getDataChart(dataChartIndex, name);
       const value = getPlotLine(dataChartIndex, name);
       setIndexValue(value);
-      console.log({value});
-      
       setDataSpline(data[0]);
       setDataBar(data[1]);
     } else {
@@ -52,7 +50,7 @@ const ChartIndex: React.FC<TProps> = ({
         linearGradient: [0, 0, 50, 380],
         stops: [
           [0, "#080808"],
-          [1, "#d4b614"],
+          [1, "#a08909"],
         ],
       },
       backgroundColor: "#000",
@@ -163,17 +161,6 @@ const ChartIndex: React.FC<TProps> = ({
       // }
       formatter: function (this: Highcharts.TooltipFormatterContextObject){
         const points = this.points;
-        console.log(this)
-        console.log(points)
-       
-        // if (points.y !== null && points.y !== undefined) {
-        //   if (points.y >= indexValue) {
-        //     points.series.chart.tooltip.options.borderColor = "#07d800";
-        //   } else {
-        //     points.series.chart.tooltip.options.borderColor = "red";
-        //   }
-        //   return { x: points.x, y: points.y };
-        // }
         const index: any = points?.map((point, ind) => {
           if (ind === 1) {
             if (point.y !== null && point.y !== undefined) {
@@ -257,11 +244,6 @@ const ChartIndex: React.FC<TProps> = ({
             color: "#00FF00",
           },
         ],
-        states: {
-          hover: {
-            enabled: false,
-          },
-        },
       },
     ],
   };

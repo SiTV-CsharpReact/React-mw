@@ -251,7 +251,7 @@ const TableMarketWatchTest = () => {
             }
             if (vCLassPT) {
               if (vTextClass) {
-                vCLassPT.className = vTextClass;
+                vCLassPT.className = vTextClass ;
                 // console.log(vCLassPT,vTextClass)
                 //vCLassIndex.classList.add(vTextClass);
               }
