@@ -150,8 +150,8 @@ const LayoutMarketWatch: React.FC = () => {
 
   // show hide order
   const hideOrderForm = () => {
-    dispatch(getDataApi());
-    dispatch(getDataApiPendingOder());
+    // dispatch(getDataApi());
+    // dispatch(getDataApiPendingOder());
     setHeightComponent({
       ...heightComponent,
       orderForm: !heightComponent.orderForm,

@@ -24,7 +24,6 @@ import {
 } from "../chartIndex/chartIndexSlice";
 import agent from "../../api/agent";
 import { IACTION_LIST, IDataCDT, IRP } from "./interface/slidemarket.config";
-import { updateChart } from "../chartIndex/chart/useChart";
 import {
   g_ARRAY_CHART_NAME,
   renderSlideMarket,
@@ -32,21 +31,24 @@ import {
 
 const SlidesMarketWatch = () => {
   const dispatch = useAppDispatch();
+  // show ẩn index
   const { visible } = useAppSelector((state) => state.chart);
+  // tính height div
   const height = useContext(AppContext);
-  const { dataChartIndex, configChartIndex, dataChartIndexTime } =useAppSelector((state) => state.chartIndex);
-  console.log(dataChartIndex,configChartIndex)
+  // get config chart
+  const {configChartIndex} =useAppSelector((state) => state.chartIndex);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [isUlHoveredLeft, setIsUlHoveredLeft] = useState(false);
+  const [isUlHoveredRight, setIsUlHoveredRight] = useState(false);
+  const [heightIndex,setHeightIndex] =useState(0)
   const [sttFetchData, setSTTFetchData] = useState(true);
-  const INTERVAL = 60000; // 60000 milliseconds = 1 minute
+  const INTERVAL = 30000; // 60000 milliseconds = 1 minute
   const ACTION_LIST: IACTION_LIST = {
     GET_SS: "ss", // get snapshot data (update) , can phai co Max
     GET_CDT: "cdt", // get check date time
   };
-  console.log({ update: updateChart(dataChartIndexTime, dataChartIndex) });
-
   const {
     marketHSX: { valueHSX },
   } = useAppSelector((state) => state.marketHSX);
@@ -55,43 +57,30 @@ const SlidesMarketWatch = () => {
   } = useAppSelector((state) => state.marketHNX);
   const { INDEX } = useAppSelector( (state) => state.settingMarketwatch
   );
+  // lấy data Index HSX
   useEffect(() => {
     dispatch(fetchHSXMarketAsync());
   }, [dispatch]);
-
+// lấy data Index HNX
   useEffect(() => {
     dispatch(fetchHNXMarketAsync());
   }, [dispatch]);
-
+// lấy data Chart Index
   useEffect(() => {
-    // Gọi API lần đầu tiên khi component được render
     dispatch(fetchChartIndexAsync());
-
-    // Đặt interval để gọi API mỗi phút
-    const intervalId = setInterval(() => {
-      dispatch(fetchChartIndexAsync());
-    }, 60000); // 60000 milliseconds = 1 phút
-
-    // Cleanup để ngăn việc gọi API tiếp tục sau khi component bị unmount
-    return () => {
-      clearInterval(intervalId);
-    };
   }, [dispatch]);
-
+  // get data config chart
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Gọi API đầu tiên
         await dispatch(fetchConfigChartIndexAsync());
       } catch (error) {
         // Xử lý lỗi nếu cần
         console.error("Error fetching first API data:", error);
       }
     };
-
     fetchData();
   }, [dispatch]);
-
   const HOUR_STOP_UPDATE = 15;
   useEffect(() => {
     const fetchDataCDT = async () => {
@@ -106,13 +95,7 @@ const SlidesMarketWatch = () => {
           // dispatch(fetchChartIndexCDTAsync(ACTION_LIST.GET_CDT));
           // dispatch(fetchChartIndexTimeAsync(RP));
           if (dataCDT) {
-            // ko null thi moi xu ly
-            // if (self.m_TimerProcID) // khac null
-            // {
-            if (
-              !dataCDT.IsWorkingDay || // ko phai NGAY LAM VIEC >> destroy timer
-              (dataCDT.IsWorkingDay &&
-                new Date(dataCDT.Now).getHours() >= HOUR_STOP_UPDATE) // la NGAY LAM VIEC + tu sau 15h00 => destroy timer
+            if (dataCDT.IsWorkingDay && new Date(dataCDT.Now).getHours() >= HOUR_STOP_UPDATE // la NGAY LAM VIEC + tu sau 15h00 => destroy timer
             ) {
               setSTTFetchData(false);
             }
@@ -126,10 +109,9 @@ const SlidesMarketWatch = () => {
         // Xử lý lỗi nếu cần
         console.error("Error fetching second API data:", error);
       }
-      // if (!sttFetchData || !configChartIndex) {
-      //   // Kiểm tra biến trạng thái và configChartIndex
-      //   clearInterval(intervalId); // Dừng interval nếu không cần tiếp tục
-      // }
+      if (!sttFetchData || !configChartIndex) {
+        clearInterval(intervalId); // Dừng interval nếu không cần tiếp tục
+      }
     };
     fetchDataCDT();
     // Thiết lập interval để gọi API mỗi 1 phút
@@ -145,6 +127,14 @@ const SlidesMarketWatch = () => {
     ACTION_LIST.GET_SS,
     ACTION_LIST.GET_CDT,
   ]);
+  const divWidth = 0;
+  useEffect(()=>{
+    const divWidth = divRef.current.children.length;
+    if(divWidth){
+      setHeightIndex(divWidth*223)
+    }
+    console.log(heightIndex)
+  },[divWidth])
   // let speed = 0;
   const scrollRef = useRef<any>(null);
   const divRef = useRef<any>(null);
@@ -160,6 +150,7 @@ const SlidesMarketWatch = () => {
   const handleMouseMove = (event: any) => {
     if (!isDragging) return;
     event.preventDefault();
+    console.log(divRef)
     const x = event.pageX - divRef.current.offsetLeft;
     const walk = x - startX; // Tốc độ kéo
     divRef.current.scrollLeft = scrollLeft - walk;
@@ -167,13 +158,23 @@ const SlidesMarketWatch = () => {
 
   const handleMouseUp = () => {
     setIsDragging(false);
+    setIsUlHoveredLeft(false)
   };
 
   let speed = 0; // Biến lưu trữ giá trị speed
 
   let handleMouseEnter = (value: any, event: any, speed: any) => {
-    console.log(divRef)
+    // console.log(divRef)
     if (value === "right") {
+      const { clientX } = event;
+      const ulLeftEdge = divRef.current.getBoundingClientRect().right;
+      // if(clientX < ulLeftEdge + 75){
+      //   setIsUlHoveredLeft(false)
+      // }
+      // else{
+      //   setIsUlHoveredLeft(true)
+      // }
+      console.log(ulLeftEdge,clientX)
       !visible && event.target.classList.add("scrollingHotSpotRightVisible");
    
       scrollInterval = setInterval(() => {
@@ -193,6 +194,7 @@ const SlidesMarketWatch = () => {
     }
 
     if (value === "left") {
+
       !visible && event.target.classList.add("scrollingHotSpotLeftVisible");
       scrollInterval = setInterval(() => {
         divRef.current.scrollLeft -= speed; // tốc độc scroll
@@ -208,7 +210,7 @@ const SlidesMarketWatch = () => {
   const handleMouseMoveButton = (event: any) => {
     // handleMouseEnter("right", event, 0);
     speed = event.clientX - event.target.getBoundingClientRect().left;
-    console.log(speed);
+    //console.log(speed);
   };
   // console.log({
   //   data: g_ARRAY_CHART_NAME.map(item => renderSlideMarket(INDEX, item, valueHSX, valueHNX, visible))
@@ -232,7 +234,9 @@ const SlidesMarketWatch = () => {
       }`}
     >
       <div
-        className={`scrollingHotSpotLeft ${visible ? "!h-full" : ""} opacity-0`}
+        className={`scrollingHotSpotLeft ${
+          visible ? "!h-full" : ""
+        } ${isUlHoveredLeft ? "hidden" : ""}`}
         onMouseEnter={(e) => {
           handleMouseEnter("left", e, 2);
         }}
@@ -240,9 +244,10 @@ const SlidesMarketWatch = () => {
           handleMouseLeave(e);
         }}
       />
-      <ul className="py-1 col-priceboard class-chart bg-black">
+      <div className="py-1 col-priceboard class-chart bg-black">
         <div
-          className="flex w-full overflow-x-hidden whitespace-nowrap cursor-move"
+          className={`flex w-[${heightIndex}px] overflow-x-hidden whitespace-nowrap cursor-move`}
+          style={{width:heightIndex}}
           ref={divRef}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
@@ -256,9 +261,9 @@ const SlidesMarketWatch = () => {
             />
           ))}
         </div>
-      </ul>
+      </div>
       <div
-        className={`scrollingHotSpotRight ${visible ? "!h-full" : ""}`}
+        className={`scrollingHotSpotRight ${visible ? "!h-full" : ""} ${isUlHoveredRight ? "hidden" : ""}`}
         onMouseEnter={(e) => {
           handleMouseEnter("right", e, 2);
         }}

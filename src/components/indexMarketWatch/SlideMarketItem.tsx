@@ -7,7 +7,7 @@ const SlideMarketItem: React.FC<IPropsSlideMarket> = ({ data }) => {
   return (
     <>
       {data.type && (
-        <li className="dvChart ">
+        <div className="dvChart">
           <div>
             <p className="text-sm text-center whitespace-nowrap">
               <span id="" className="mar_">
@@ -99,7 +99,7 @@ const SlideMarketItem: React.FC<IPropsSlideMarket> = ({ data }) => {
             )}
             <ChartIndex name={data.name} san={data.san} />
           </div>
-        </li>
+        </div>
       )}
     </>
   );
