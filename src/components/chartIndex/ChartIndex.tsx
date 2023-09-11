@@ -7,7 +7,7 @@ import { drawChart } from "./util/app.chart";
 import { formatNumber, formatNumberToM } from "../../utils/util";
 import "./chartIndex.scss";
 import { _getDateTs } from "./util/app.chart";
-import { getDataChartHNX, getDataChartHSX } from "./chart/useChart";
+import { getDataChart, getDataChartHNX, getDataChartHSX, getPlotLine } from "./chart/useChart";
 
 type TProps = {
   name: string;
@@ -18,66 +18,30 @@ const ChartIndex: React.FC<TProps> = ({
   name,
   san,
 }: TProps) => {
-  const [dataSpline, setDataSpline] = useState([]);
-  const [dataBar, setDataBar] = useState([]);
-  const [indexValue, setIndexValue] = useState(0);
-  const [timeFirst, setTimeFirst] = useState(0);
-  const [timeLast, setTimeLast] = useState<any>();
-  const dataChartIndex = useAppSelector((state) => state.chartIndex.dataChartIndex);
-  console.log(dataChartIndex)
+  const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
+  const [dataSpline, setDataSpline] = useState<any>([]);
+  const [dataBar, setDataBar] = useState<any>([]);
+  const [indexValue, setIndexValue] = useState<number>(0);
+
   useEffect(() => {
     if (san === "HSX") {
-      const data = getDataChartHSX(dataChartIndex, name);
-      const dataTimeIndex: any = data?.map((item: any) => ({
-        x: item.Data.TimeJS,
-        y: item.Data.Index,
-      }));
-      setDataSpline(dataTimeIndex);
-      data?.map((item: any, index: number) => {
-        if (index === 0) {
-          const v = item?.Data.Index;
-          setIndexValue(v);
-          setTimeFirst(item?.Data.TimeJS);
-          const today = new Date(timeFirst);
-          today.setHours(today.getHours() + 6);
-          setTimeLast(today.getTime());
-        }
-
-        return "";
-      });
-      const dataTimeVol: any = data?.map((item: any) => ({
-        x: item.Data.TimeJS,
-        y: item.Data.Vol,
-      }));
-      setDataBar(dataTimeVol);
+      const data = getDataChart(dataChartIndex, name);
+      const value = getPlotLine(dataChartIndex, name);
+      setIndexValue(value);
+      console.log({value});
+      
+      setDataSpline(data[0]);
+      setDataBar(data[1]);
     } else {
       if (san === "HNX") {
-        const data = getDataChartHNX(dataChartIndex, name);
-        const dataTimeIndex: any = data?.map((item: any) => ({
-          x: item.Data.TimeJS,
-          y: item.Data.Index,
-        }));
-        setDataSpline(dataTimeIndex);
-        data?.map((item: any, index: number) => {
-          if (index === 0) {
-            const v = item?.Data.Index;
-            setIndexValue(v);
-            setTimeFirst(item?.Data.TimeJS);
-            const today = new Date(timeFirst);
-            today.setHours(today.getHours() + 6);
-            setTimeLast(today.getTime());
-          }
-          return "";
-        });
-        const dataTimeVol: any = data?.map((item: any) => ({
-          x: item.Data.TimeJS,
-          y: item.Data.Vol,
-        }));
-        setDataBar(dataTimeVol);
+        const data = getDataChart(dataChartIndex, name);
+        const value = getPlotLine(dataChartIndex, name);
+        setIndexValue(value);
+        setDataBar(data[1]);
+        setDataSpline(data[0]);
       }
     }
-  }, [dataChartIndex, name, san, timeFirst]);
-
+  }, [dataChartIndex, name, san]);
   const options = {
     chart: {
       marginTop: 8,
