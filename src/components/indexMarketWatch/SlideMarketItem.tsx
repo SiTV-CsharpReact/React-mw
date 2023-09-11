@@ -2,6 +2,7 @@ import React from "react";
 import ChartIndexSlide from "../chartIndex/ChartIndexSlide";
 import { ISlideMarket } from "./interface/slidemarket.config";
 import DivIndexInfo from "./DivIndexInfo";
+import ChartIndex from "../chartIndex/ChartIndex";
 
 const SlideMarketItem: React.FC<ISlideMarket> = ({
   id,
@@ -45,10 +46,13 @@ const SlideMarketItem: React.FC<ISlideMarket> = ({
         </div>
         <div>
                {/* <ChartIndex /> */}
-        <ChartIndexSlide
+        {/* <ChartIndexSlide
             name={name}
             san={san}
-          />
+          /> */}
+          <ChartIndex
+           name={name}
+           san={san}/>
         </div>
       </li>
     </>

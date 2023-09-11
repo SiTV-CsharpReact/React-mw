@@ -24,7 +24,7 @@ const ChartIndexSlide: React.FC<TProps> = ({
   const [timeFirst, setTimeFirst] = useState(0);
   const [timeLast, setTimeLast] = useState<any>();
   const dataChartIndex = useAppSelector((state)=>state.chartIndex.dataChartIndex);
-  // console.log(dataChartIndexTime)
+  // console.log(dataChartIndex)
   useEffect(() => {
     if (san === "HSX") {
       const data = getDataChartHSX(dataChartIndex, name);
@@ -258,7 +258,10 @@ const ChartIndexSlide: React.FC<TProps> = ({
         },
         shared: true,
         formatter: function () {
+          const pointsss= this.points;
+          console.log(this.points)
           const index: any = this.points?.map((e: any, ind) => {
+            console.log(ind)
             if (ind === 1) {
               if (e.y >= indexValue) {
                 e.series.chart.tooltip.options.borderColor = "#07d800";

@@ -113,7 +113,18 @@ const SlidesMarketWatch = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    // Gọi API lần đầu tiên khi component được render
     dispatch(fetchChartIndexAsync());
+
+    // Đặt interval để gọi API mỗi phút
+    const intervalId = setInterval(() => {
+      dispatch(fetchChartIndexAsync());
+    }, 60000); // 60000 milliseconds = 1 phút
+
+    // Cleanup để ngăn việc gọi API tiếp tục sau khi component bị unmount
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [dispatch]);
 
   useEffect(() => {
@@ -156,18 +167,18 @@ const SlidesMarketWatch = () => {
             }
             // }
           }
-          if (data)
-            if (data?.SS !== null) {
-              var obj = data.SS;
-              for (var k = 0; k < obj.length; k++) {
-                var child = obj[k];
-                for (var i = 0; i < ARRAY_CHART_NAME.length; i++) {
-                  console.log(child)
-                  dispatch(setDataChartRealTime(child));
-                }
-                }
+          // if (data)
+          //   if (data?.SS !== null) {
+          //     var obj = data.SS;
+          //     for (var k = 0; k < obj.length; k++) {
+          //       var child = obj[k];
+          //       for (var i = 0; i < ARRAY_CHART_NAME.length; i++) {
+          //         console.log(child)
+          //         dispatch(setDataChartRealTime(child));
+          //       }
+          //       }
            
-            }
+          //   }
         }
       } catch (error) {
         // Xử lý lỗi nếu cần
