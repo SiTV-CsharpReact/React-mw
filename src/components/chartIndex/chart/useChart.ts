@@ -274,50 +274,6 @@ export function getDataChart(data: IChartIndex, name: string) {
   }
 }
 
-export function updateChart(objJSON: IDataSS, data: IChartIndex) {
-  const obj = objJSON.SS;
-  if (obj === null) {
-    return;
-  }
-  for (let i = 0; i < obj?.length; i++) {
-    const child = obj[i];
-    if (child.HSX.VNXALL.length !== 0) {
-      data.HSX?.DataFull.VNXALL.concat(child.HSX.VNXALL);
-    } else if (child.HSX.VNIndex.length !== 0) {
-      data.HSX?.DataFull.VNIndex.concat(child.HSX.VNIndex);
-    } else if (child.HSX.VNSML.length !== 0) {
-      data.HSX?.DataFull.VNSML.concat(child.HSX.VNSML);
-    } else if (child.HSX.VNMID.length !== 0) {
-      data.HSX?.DataFull.VNMID.concat(child.HSX.VNMID);
-    } else if (child.HSX.VNALL.length !== 0) {
-      data.HSX?.DataFull.VNALL.concat(child.HSX.VNALL);
-    } else if (child.HSX.VNALL.length !== 0) {
-      data.HSX?.DataFull.VNALL.concat(child.HSX.VNALL);
-    } else if (child.HSX.VN30.length !== 0) {
-      data.HSX?.DataFull.VN30.concat(child.HSX.VN30);
-    } else if (child.HSX.VN100.length !== 0) {
-      data.HSX?.DataFull.VN100.concat(child.HSX.VN100);
-    } else if (child.HNX.HNX30.length !== 0) {
-      data.HNX?.DataFull.HNX30.concat(child.HNX.HNX30);
-    } else if (child.HNX.HNXCon.length !== 0) {
-      data.HNX?.DataFull.HNXCon.concat(child.HNX.HNXCon);
-    } else if (child.HNX.HNXFin.length !== 0) {
-      data.HNX?.DataFull.HNXFin.concat(child.HNX.HNXFin);
-    } else if (child.HNX.HNXIndex.length !== 0) {
-      data.HNX?.DataFull.HNXIndex.concat(child.HNX.HNXIndex);
-    } else if (child.HNX.HNXLCap.length !== 0) {
-      data.HNX?.DataFull.HNXLCap.concat(child.HNX.HNXLCap);
-    } else if (child.HNX.HNXMSCap.length !== 0) {
-      data.HNX?.DataFull.HNXMSCap.concat(child.HNX.HNXMSCap);
-    } else if (child.HNX.HNXUpcomIndex.length !== 0) {
-      data.HNX?.DataFull.HNXUpcomIndex.concat(child.HNX.HNXUpcomIndex);
-    }
-  }
-  return data;
-}
-
-export function drawChartSlide(lstData: DataReponseHNX_HSX, arr: IChartIndex) {}
-
 export function convertDataIndex(data: IData[]) {
   return data.map((item) => [item.Data.TimeJS, item.Data.Index]);
 }
@@ -360,5 +316,25 @@ export function getPlotLine(data: IChartIndex, name: string): any {
       return data.HNX?.LastIndex.HNXUpcomIndex;
     default:
       return 0;
+  }
+}
+
+export function updateChart(DataTime: any, DataIndex: any) {
+  if (DataTime.SS !== null) {
+    for (const key in DataTime) {
+      if (DataTime.hasOwnProperty(key)) {
+        if (DataIndex.hasOwnProperty(key)) {
+          for (const subKey in DataTime[key]) {
+            if (DataTime[key].hasOwnProperty(subKey)) {
+              // Kiểm tra xem subKey này đã tồn tại trong dataChartIndex[key] chưa
+              if (DataIndex[key].hasOwnProperty(subKey)) {
+                // Cập nhật dữ liệu từ dataChartIndexTime[key][subKey] vào dataChartIndex[key][subKey]
+                DataIndex[key][subKey] = DataTime[key][subKey];
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
