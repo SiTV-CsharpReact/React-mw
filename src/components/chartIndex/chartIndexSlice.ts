@@ -1,25 +1,62 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import agent from "../../api/agent";
-import { IChartIndex } from "./interface/interface.config";
+import { IChartIndex, IHNX, IHSX, IState } from "./interface/interface.config";
 import { IDataSS } from "../indexMarketWatch/interface/slidemarket.config";
-interface RootChart {
-  SS: any;
-  Max: number;
-}
-interface IState {
-  isLoading: boolean;
-  dataChartIndex: IChartIndex;
-  dataChartIndexTime: IDataSS;
-  configChartIndex: string;
-  Max: string;
-  timeGet: string;
-  status: string;
-}
+
+export const Data_HSX: IHSX = {
+  LastIndex: {
+    TradingDate: "",
+    VN30: 0,
+    VN100: 0,
+    VNALL: 0,
+    VNIndex: 0,
+    VNMID: 0,
+    VNSML: 0,
+    VNXALL: 0,
+  },
+  DataFull: {
+    VN30: [],
+    VN100: [],
+    VNALL: [],
+    VNIndex: [],
+    VNMID: [],
+    VNSML: [],
+    VNXALL: [],
+  },
+};
+export const Data_HNX: IHNX = {
+  LastIndex: {
+    HNX30: 0,
+    HNX30TRI: 0,
+    HNXCon: 0,
+    HNXFin: 0,
+    HNXIndex: 0,
+    HNXLCap: 0,
+    HNXMSCap: 0,
+    HNXMan: 0,
+    HNXUPCoMPremium: 0,
+    HNXUpcomIndex: 0,
+    TradingDate: "",
+  },
+  DataFull: {
+    HNX30: [],
+    HNX30TRI: [],
+    HNXCon: [],
+    HNXFin: [],
+    HNXIndex: [],
+    HNXLCap: [],
+    HNXMSCap: [],
+    HNXMan: [],
+    HNXUPCoMPremium: [],
+    HNXUpcomIndex: [],
+  },
+};
+
 const initialState: IState = {
   isLoading: false,
   dataChartIndex: {
-    HNX: null,
-    HSX: null,
+    HNX: Data_HNX,
+    HSX: Data_HSX,
     IsWorkingDay: "",
   },
   dataChartIndexTime: {
@@ -87,7 +124,6 @@ const chartIndexSlice = createSlice({
     // },
     setDataChartRealTime: (state, action: PayloadAction<IDataSS>) => {
       const dataChartTime = action.payload;
-
       state.dataChartIndexTime = dataChartTime;
       state.configChartIndex = dataChartTime.Max.toString();
     },
