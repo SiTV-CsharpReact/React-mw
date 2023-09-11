@@ -43,7 +43,7 @@ const SlidesMarketWatch = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [sttFetchData, setSTTFetchData] = useState(true);
-  const INTERVAL = 1000; // 60000 milliseconds = 1 minute
+  const INTERVAL = 60000; // 60000 milliseconds = 1 minute
   const ACTION_LIST: IACTION_LIST = {
     GET_SS: "ss", // get snapshot data (update) , can phai co Max
     GET_CDT: "cdt", // get check date time
@@ -59,69 +59,6 @@ const SlidesMarketWatch = () => {
   const { INDEX } = useAppSelector(
     (state: RootState) => state.settingMarketwatch
   );
-  const arr = useMemo(() => {
-    // const my_Arr = dataChartIndex;
-    // if (dataChartIndexTime.SS !== null) {
-    //   dataChartIndexTime.SS.forEach((item) => {
-    //     if (item.HSX.VNXALL.length !== 0) {
-    //       my_Arr.HSX.DataFull.VNXALL =
-    //         dataChartIndex.HSX.DataFull.VNXALL.concat(item.HSX.VNXALL);
-    //     } else if (item.HSX.VNIndex.length !== 0) {
-    //       my_Arr.HSX.DataFull.VNIndex =
-    //         dataChartIndex.HSX.DataFull.VNIndex.concat(item.HSX.VNIndex);
-    //     } else if (item.HSX.VN30.length !== 0) {
-    //       my_Arr.HSX.DataFull.VN30 = dataChartIndex.HSX.DataFull.VN30.concat(
-    //         item.HSX.VN30
-    //       );
-    //     } else if (item.HSX.VNALL.length !== 0) {
-    //       my_Arr.HSX.DataFull.VNALL = dataChartIndex.HSX.DataFull.VNALL.concat(
-    //         item.HSX.VNALL
-    //       );
-    //     } else if (item.HSX.VN100.length !== 0) {
-    //       my_Arr.HSX.DataFull.VN100 = dataChartIndex.HSX.DataFull.VN100.concat(
-    //         item.HSX.VN100
-    //       );
-    //     } else if (item.HSX.VNSML.length !== 0) {
-    //       my_Arr.HSX.DataFull.VNSML = dataChartIndex.HSX.DataFull.VNSML.concat(
-    //         item.HSX.VNSML
-    //       );
-    //     } else if (item.HSX.VNMID.length !== 0) {
-    //       my_Arr.HSX.DataFull.VNMID = dataChartIndex.HSX.DataFull.VNMID.concat(
-    //         item.HSX.VNMID
-    //       );
-    //     } else if (item.HNX.HNX30.length !== 0) {
-    //       my_Arr.HNX.DataFull.HNX30 = dataChartIndex.HNX.DataFull.HNX30.concat(
-    //         item.HNX.HNX30
-    //       );
-    //     } else if (item.HNX.HNXCon.length !== 0) {
-    //       my_Arr.HNX.DataFull.HNXCon =
-    //         dataChartIndex.HNX.DataFull.HNXCon.concat(item.HNX.HNXCon);
-    //     } else if (item.HNX.HNXFin.length !== 0) {
-    //       my_Arr.HNX.DataFull.HNXFin =
-    //         dataChartIndex.HNX.DataFull.HNXFin.concat(item.HNX.HNXFin);
-    //     } else if (item.HNX.HNXIndex.length !== 0) {
-    //       my_Arr.HNX.DataFull.HNXIndex =
-    //         dataChartIndex.HNX.DataFull.HNXIndex.concat(item.HNX.HNXIndex);
-    //     } else if (item.HNX.HNXLCap.length !== 0) {
-    //       my_Arr.HNX.DataFull.HNXLCap =
-    //         dataChartIndex.HNX.DataFull.HNXLCap.concat(item.HNX.HNXLCap);
-    //     } else if (item.HNX.HNXMSCap.length !== 0) {
-    //       my_Arr.HNX.DataFull.HNXMSCap =
-    //         dataChartIndex.HNX.DataFull.HNXMSCap.concat(item.HNX.HNXMSCap);
-    //     } else if (item.HNX.HNXMan.length !== 0) {
-    //       my_Arr.HNX.DataFull.HNXMan =
-    //         dataChartIndex.HNX.DataFull.HNXMan.concat(item.HNX.HNXMan);
-    //     } else if (item.HNX.HNXUpcomIndex.length !== 0) {
-    //       my_Arr.HNX.DataFull.HNXUpcomIndex =
-    //         dataChartIndex.HNX.DataFull.HNXUpcomIndex.concat(
-    //           item.HNX.HNXUpcomIndex
-    //         );
-    //     }
-    //   });
-    // }
-    // return my_Arr;
-  }, []);
-  console.log(arr);
 
   useEffect(() => {
     dispatch(fetchHSXMarketAsync());
@@ -306,8 +243,8 @@ const SlidesMarketWatch = () => {
         >
           {g_ARRAY_CHART_NAME.map((item) => (
             <SlideMarketItem
+              key={item}
               data={renderSlideMarket(INDEX, item, valueHSX, valueHNX, visible)}
-              dataChart={arr}
             />
           ))}
         </div>
