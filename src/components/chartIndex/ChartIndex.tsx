@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/configureStore";
-import { fetchChartIndexAsync } from "./chartIndexSlice";
+import { useAppSelector } from "../../store/configureStore";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { drawChart } from "./util/app.chart";
-import { formatNumber, formatNumberToM } from "../../utils/util";
-import "./chartIndex.scss";
 import { _getDateTs } from "./util/app.chart";
-import { getDataChart, getDataChartHNX, getDataChartHSX, getPlotLine } from "./chart/useChart";
+import { formatNumber, formatNumberToM } from "../../utils/util";
+import { getDataChart, getPlotLine } from "./chart/useChart";
+import "./chartIndex.scss"
 
 type TProps = {
   name: string;
@@ -155,10 +153,6 @@ const ChartIndex: React.FC<TProps> = ({
         position: "absolute",
       },
       shared: true,
-      // function(this: Highcharts.TooltipFormatterContextObject){
-      //       const points = this;
-      //   console.log(points)
-      // }
       formatter: function (this: Highcharts.TooltipFormatterContextObject){
         const points = this.points;
         const index: any = points?.map((point, ind) => {
@@ -204,18 +198,42 @@ const ChartIndex: React.FC<TProps> = ({
     plotOptions: {
       spline: {
         lineWidth: 1.5,
+        marker: {
+          enabled: false,
+          states: {
+            hover: {
+              animation: {
+                duration: 500,
+              },
+              enabled: true,
+              lineColor: "none",
+              lineWidth: 4,
+              fillColor: "none",
+              radius: 6.5,
+            },
+          },
+        },
         zones: [
           {
             value: indexValue,
             color: "red",
           },
           {
-            color: "#00c010",
+            // color: "#00c010",
+            color: "#00FF00",
           },
         ],
       },
-      bar: {
+      column: {
         color: "#5F9DFE",
+        borderWidth: 0,
+        borderRadius: 0,
+        pointWidth: 0.2,
+        states: {
+          hover: {
+            enabled: true,
+          },
+        },
       },
     },
     series: [
@@ -224,26 +242,12 @@ const ChartIndex: React.FC<TProps> = ({
         type: "column",
         yAxis: 0,
         data: dataBar,
-        states: {
-          hover: {
-            enabled: false,
-          },
-        },
       },
       {
         name: "Spline",
         type: "spline",
         yAxis: 1,
         data: dataSpline,
-        zones: [
-          {
-            value: indexValue,
-            color: "#ff0000",
-          },
-          {
-            color: "#00FF00",
-          },
-        ],
       },
     ],
   };

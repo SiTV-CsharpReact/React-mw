@@ -20,6 +20,10 @@ export interface ISlideMarket {
   // dataChartIndex: IChartIndex;
 }
 
+export interface IPropsSlideMarket {
+  data: ISlideMarket;
+};
+
 export interface IACTION_LIST {
   GET_SS: string;
   GET_CDT: string;

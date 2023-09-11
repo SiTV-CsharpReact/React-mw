@@ -251,6 +251,7 @@ const SlidesMarketWatch = () => {
         >
           {g_ARRAY_CHART_NAME.map((item) => (
             <SlideMarketItem
+              key={item}
               data={renderSlideMarket(INDEX, item, valueHSX, valueHNX, visible)}
             />
           ))}
