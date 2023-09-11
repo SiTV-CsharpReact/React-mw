@@ -1,6 +1,8 @@
+import { IDataSS } from "../../indexMarketWatch/interface/slidemarket.config";
+
 export interface IData {
-  Time?: string;
-  Data?: {
+  Time: string;
+  Data: {
     Index: number;
     TimeJS: number;
     Vol: number;
@@ -20,7 +22,7 @@ export interface IDataFullHNX {
   HNXUpcomIndex: IData[];
 }
 
-export interface HNX {
+export interface IHNX {
   LastIndex: {
     HNX30: number;
     HNX30TRI: number;
@@ -37,7 +39,7 @@ export interface HNX {
   DataFull: IDataFullHNX;
 }
 
-export interface HSX {
+export interface IHSX {
   LastIndex: {
     TradingDate?: string;
     VN30: number;
@@ -61,11 +63,20 @@ export interface IDataFullHSX {
   VNXALL: IData[];
 }
 
-export interface IChart {
-  [key: string]: IChartIndex
-}
+
 export interface IChartIndex {
-  HSX: HSX | null;
-  HNX: HNX | null;
+  HSX: IHSX;
+  HNX: IHNX;
   IsWorkingDay: string;
+}
+
+// setup initialState for redux
+export interface IState {
+  isLoading: boolean;
+  dataChartIndex: IChartIndex;
+  dataChartIndexTime: IDataSS;
+  configChartIndex: string;
+  Max: string;
+  timeGet: string;
+  status: string;
 }

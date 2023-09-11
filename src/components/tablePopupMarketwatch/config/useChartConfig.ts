@@ -20,13 +20,13 @@ const useChartConfig = (
   const [dataCol, setDataCol] = useState<any>([]);
   const [dataSpline, setDataSpline] = useState<any>([]);
   const arrPr: any = React.useMemo(() => {
-    if (dataChartOption.length === 0) {
-      const min = Number(indexValue) - 0.1;
-      const max = Number(indexValue) + 0.1;
-      return [min, indexValue, max];
-    }
+    // if (dataChartOption.length === 0) {
+    //   const min = Number(indexValue) - 0.1;
+    //   const max = Number(indexValue) + 0.1;
+    //   return [min, indexValue, max];
+    // }
     return dataSpline.map((item: any) => item.y);
-  }, [dataChartOption, dataSpline, indexValue]);
+  }, [dataSpline]);
 
   useEffect(() => {
     if (dataChartOption.length !== 0) {
@@ -75,7 +75,7 @@ const useChartConfig = (
         load: function () {
           this.yAxis[1].update({
             labels: {
-              format: "{value:.1f}",
+              format: "{value:.2f}",
             },
           });
           const xAxis = this.xAxis[0];
