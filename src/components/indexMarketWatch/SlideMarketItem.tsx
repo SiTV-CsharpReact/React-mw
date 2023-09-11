@@ -1,18 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { iconColorMenuMarket, setColorMenuMarket } from "../../utils/util";
-// import ChartIndex from "../chartIndex/ChartIndex";
-// import ChartTest from "../chartIndex/ChartIndexSlide";
-import ChartIndexSlide from "../chartIndex/ChartIndexSlide";
-import { ISlideMarket } from "./interface/slidemarket.config";
-import { useAppSelector } from "../../store/configureStore";
 import ChartIndex from "../chartIndex/ChartIndex";
+import { IPropsSlideMarket } from "./interface/slidemarket.config";
 
-const SlideMarketItem: React.FC<ISlideMarket | any> = ({ data}) => {
-  console.log({ data });
-
-  const { dataChartIndexTime } = useAppSelector((state) => state.chartIndex);
-
-  useEffect(() => {}, [dataChartIndexTime]);
+const SlideMarketItem: React.FC<IPropsSlideMarket> = ({ data }) => {
   return (
     <>
       {data.type && (
@@ -106,12 +97,7 @@ const SlideMarketItem: React.FC<ISlideMarket | any> = ({ data}) => {
                 </p>
               </>
             )}
-            {/* <ChartIndex /> */}
-               <ChartIndex
-              name={data.name}
-              san={data.san}
-            
-            />
+            <ChartIndex name={data.name} san={data.san} />
           </div>
         </li>
       )}

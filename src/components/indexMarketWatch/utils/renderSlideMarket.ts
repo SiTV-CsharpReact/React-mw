@@ -48,7 +48,7 @@ export function renderSlideMarket(
   valueHSX: ObjectMenuHSX,
   valueHNX: ObjectMenuHNX,
   visible: boolean
-) {
+): ISlideMarket {
   switch (name) {
     case "VNXALL":
       return {
@@ -334,6 +334,25 @@ export function renderSlideMarket(
         valueFloor: valueHNX?.i03_x253f,
         status: fStatusMarketUPCOM(valueHNX?.i03_x336x340),
         san: "HNX",
+      };
+    default:
+      return {
+        type: false,
+        name: name,
+        id: [], // Fill in the appropriate default value
+        valueIndexChange: "",
+        valueChange: "",
+        valueChangePercent: "",
+        visible: false, // Or set to an appropriate default value
+        valueTotalSharesAOM: "",
+        valueTotalValuesAOM: "",
+        valueUp: "",
+        valueCeiling: "",
+        valueNoChange: "",
+        valueDown: "",
+        valueFloor: "",
+        status: "Unknown", // Or set to an appropriate default value
+        san: "Unknown", // Or set to an appropriate default value
       };
   }
 }
