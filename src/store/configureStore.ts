@@ -29,6 +29,7 @@ import stoplossSlice from "../pages/Stoploss/stoplossSlice";
 import clientBalanceSlice from "../components/orderFormMarketwatch/ClientBalance";
 import ProfileAccountSlice from "../components/header/ProfileAccountSlice";
 import SendOrderSlice, { SendOrder } from "../components/orderFormMarketwatch/SendOrderSlice";
+import screenSizeSlice from "../components/layoutMarketwatch/ScreenSize";
 
 export const store = configureStore({
   reducer: {
@@ -56,6 +57,8 @@ export const store = configureStore({
     marketHNX: marketHNXSlice.reducer,
     // cài đặt giao diện trang marketwatch
     settingMarketwatch: settingMarketWatchSlice.reducer,
+    // screen màn hình 
+    screenSize: screenSizeSlice.reducer,
     //báo cáo tài sản
     assetReport: assetReportSlice.reducer,
     //

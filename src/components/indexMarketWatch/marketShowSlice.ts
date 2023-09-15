@@ -66,9 +66,11 @@ const data =
   localStorage.getItem("setting_table") !== null
     ? JSON.parse(localStorage.getItem("setting_table") as string)
     : INDEX_TYPE;
-
+const quantityIndex15F=Object.values(data).slice(0, 15);
+const quantityIndex= quantityIndex15F.filter(value => value === true).length
 const initialState = {
   INDEX: data as IIndex,
+  quantityIndex: quantityIndex,
 };
 
 export const settingMarketWatchSlice = createSlice({
@@ -76,7 +78,10 @@ export const settingMarketWatchSlice = createSlice({
   initialState,
   reducers: {
     paramsMarketwatch: (state, action) => {
-      state.INDEX = action.payload;
+      const qttIndex = action.payload;
+      state.INDEX = qttIndex;
+      const first15Values = Object.values(qttIndex).slice(0, 15) // lay 15 index
+      state.quantityIndex = first15Values.filter(value => value === true).length; // đếm số lượng index hiển thị
       localStorage.setItem("setting_table", JSON.stringify(state.INDEX));
     },
  

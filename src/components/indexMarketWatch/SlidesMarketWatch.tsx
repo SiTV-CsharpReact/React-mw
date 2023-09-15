@@ -28,8 +28,25 @@ import {
   g_ARRAY_CHART_NAME,
   renderSlideMarket,
 } from "./utils/renderSlideMarket";
+import { setScreenSize } from "../layoutMarketwatch/ScreenSize";
+interface KineticScrollProps {
+  moved?: (settings: KineticSettings) => void;
+}
 
-const SlidesMarketWatch = () => {
+interface KineticSettings {
+  mouseDown: boolean;
+  xpos: number | false;
+  ypos: number | false;
+  prevXPos: number | false;
+  prevYPos: number | false;
+  velocity: number;
+  velocityY: number;
+  scrollLeft: number;
+  scrollTop: number;
+  decelerate: boolean;
+}
+
+const SlidesMarketWatch: React.FC<KineticScrollProps> = ({ moved })  => {
   const dispatch = useAppDispatch();
   // show ẩn index
   const { visible } = useAppSelector((state) => state.chart);
@@ -37,14 +54,34 @@ const SlidesMarketWatch = () => {
   const height = useContext(AppContext);
   // get config chart
   const {configChartIndex} =useAppSelector((state) => state.chartIndex);
+  // lấy height, width màn hình window
+  const { widthWindow, heightWindow } = useAppSelector((state) => state.screenSize);
+
+  const  {quantityIndex}  = useAppSelector((state) => state.settingMarketwatch);
+  // console.log(quantityIndex)
+  // stt kéo thả
   const [isDragging, setIsDragging] = useState(false);
+  // điểm bắt đầu
   const [startX, setStartX] = useState(0);
+  // set scroll
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [isUlHoveredLeft, setIsUlHoveredLeft] = useState(false);
-  const [isUlHoveredRight, setIsUlHoveredRight] = useState(false);
-  const [heightIndex,setHeightIndex] =useState(0)
+  // check stt hiển thị scroll left
+  const [isHoveredLeft, setIsHoveredLeft] = useState(false);
+  // check stt hiển thị scroll right
+  const [isHoveredRight, setIsHoveredRight] = useState(false);
+  // tính width div index to
+  const [widthIndex,setWidthIndex] =useState(quantityIndex*223)
+  // stt fetch data
   const [sttFetchData, setSTTFetchData] = useState(true);
+  // ref scroll left right
+  const divScrollLeft = useRef<any>(null);
+  const divScrollRight = useRef<any>(null);
+  // ref scroll divchart
+  const divRef = useRef<any>(null);
+
   const INTERVAL = 30000; // 60000 milliseconds = 1 minute
+  let scrollInterval: any = null;
+  const HOUR_STOP_UPDATE = 15;
   const ACTION_LIST: IACTION_LIST = {
     GET_SS: "ss", // get snapshot data (update) , can phai co Max
     GET_CDT: "cdt", // get check date time
@@ -81,7 +118,139 @@ const SlidesMarketWatch = () => {
     };
     fetchData();
   }, [dispatch]);
-  const HOUR_STOP_UPDATE = 15;
+  // get width height window
+  useEffect(() => {
+    const handleResize = () => {
+      dispatch(setScreenSize({ width: window.innerWidth, height: window.innerHeight }));
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [dispatch]);
+  // tinh width index
+  useEffect(()=>{
+    if(quantityIndex){
+      setWidthIndex(quantityIndex*223)
+    }
+    // width Index < width màn hình thì không hiện scroll
+    if(widthIndex <=  widthWindow){
+      console.log(widthIndex,widthWindow)
+      setIsHoveredLeft(false);
+      setIsHoveredRight(false);
+    } 
+     else{
+      console.log(widthIndex,widthWindow)
+      setIsHoveredLeft(true);
+      setIsHoveredRight(true);
+     }
+  },[quantityIndex,widthWindow,divRef,widthIndex])
+  // hover show All Scroll
+   const showAllScroll = ()=>{
+    console.log(divScrollLeft.current)
+    divScrollLeft.current.classList.remove("hidden")
+    divScrollLeft.current.classList.add("scrollingHotSpotLeftVisible")
+    divScrollRight.current.classList.remove("hidden")
+    divScrollRight.current.classList.add("scrollingHotSpotRightVisible")
+   }
+   // ẩn all scroll khi bỏ hover
+   const hideAllScroll = ()=>{
+    divScrollLeft.current.classList.remove("scrollingHotSpotLeftVisible")
+    divScrollRight.current.classList.remove("scrollingHotSpotRightVisible")
+   }
+   const handleMouseDown = (event: any) => {
+     setIsDragging(true);
+     setStartX(event.pageX - divRef.current.offsetLeft);
+     setScrollLeft(divRef.current.scrollLeft);
+   };
+ 
+   const handleMouseMove = (event: any) => {
+     if (!isDragging) return;
+     event.preventDefault();
+     // console.log(divRef)
+     const x = event.pageX - divRef.current.offsetLeft;
+     const walk = x - startX; // Tốc độ kéo
+     divRef.current.scrollLeft = scrollLeft - walk;
+   };
+ 
+   const handleMouseUp = () => {
+     setIsDragging(false);
+     hideAllScroll()
+     // setIsHoveredLeft(false)
+   };
+ 
+   let speed = 0; // Biến lưu trữ giá trị speed
+ 
+   let handleMouseEnter = (value: any, event: any, speed: any) => {
+     // console.log(divRef)
+     if (value === "right") {
+      //  const { clientX } = event;
+      //  const ulLeftEdge = divRef.current.getBoundingClientRect().right;
+       !visible && event.target.classList.add("scrollingHotSpotRightVisible");
+    
+       scrollInterval = setInterval(() => {
+         divRef.current.scrollLeft += speed; // tốc độc scroll
+        if(widthIndex <=  widthWindow+divRef.current.scrollLeft){
+          console.log(widthIndex , widthWindow+divRef.current.scrollLeft)
+          setIsHoveredLeft(true);
+          setIsHoveredRight(false);
+        }
+        else{
+          setIsHoveredLeft(true);
+          setIsHoveredRight(true);
+        }
+        //console.log(widthIndex,widthWindow+divRef.current.scrollLeft);
+        console.log(divRef.current.scrollLeft);
+         const divElement = divRef.current;
+         const isAtRightEdge =
+           divElement.scrollLeft + divElement.clientWidth >=
+           divElement.scrollWidth;
+ 
+         if (isAtRightEdge) {
+           !visible &&
+             event.target.classList.remove("scrollingHotSpotRightVisible");
+           clearInterval(scrollInterval);
+           handleMouseEnter(null, null, 0);
+         }
+       }, 1);
+     }
+ 
+     if (value === "left") {
+ 
+       !visible && event.target.classList.add("scrollingHotSpotLeftVisible");
+       scrollInterval = setInterval(() => {
+         divRef.current.scrollLeft -= speed; // tốc độc scroll
+         if (divRef.current.scrollLeft === 0) {
+          console.log("về 0")
+          setIsHoveredLeft(false);
+          setIsHoveredRight(true);
+           clearInterval(scrollInterval);
+           event.target.classList.remove("scrollingHotSpotLeftVisible");
+           handleMouseEnter(null, null, 0);
+         }
+        //  else{
+        //   setIsHoveredRight(true);
+        //  }
+       }, 8);
+     }
+   };
+ 
+   const handleMouseMoveButton = (event: any) => {
+     // handleMouseEnter("right", event, 0);
+     speed = event.clientX - event.target.getBoundingClientRect().left;
+     //console.log(speed);
+   };
+   // console.log({
+   //   data: g_ARRAY_CHART_NAME.map(item => renderSlideMarket(INDEX, item, valueHSX, valueHNX, visible))
+   // })
+ 
+   const handleMouseLeave = (e: any) => {
+     clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover
+     !visible && e.target.classList.remove("scrollingHotSpotRightVisible");
+     !visible && e.target.classList.remove("scrollingHotSpotLeftVisible");
+   };
+
+   // xu ly data realtime
   useEffect(() => {
     const fetchDataCDT = async () => {
       try {
@@ -127,101 +296,6 @@ const SlidesMarketWatch = () => {
     ACTION_LIST.GET_SS,
     ACTION_LIST.GET_CDT,
   ]);
-  const divWidth = 0;
-  useEffect(()=>{
-    const divWidth = divRef.current.children.length;
-    if(divWidth){
-      setHeightIndex(divWidth*223)
-    }
-    console.log(heightIndex)
-  },[divWidth])
-  // let speed = 0;
-  const scrollRef = useRef<any>(null);
-  const divRef = useRef<any>(null);
-  let scrollInterval: any = null;
-  // let scrollInterval1: any = null;
-  // const [mouseX, setMouseX] = useState(0);
-  const handleMouseDown = (event: any) => {
-    setIsDragging(true);
-    setStartX(event.pageX - divRef.current.offsetLeft);
-    setScrollLeft(divRef.current.scrollLeft);
-  };
-
-  const handleMouseMove = (event: any) => {
-    if (!isDragging) return;
-    event.preventDefault();
-    console.log(divRef)
-    const x = event.pageX - divRef.current.offsetLeft;
-    const walk = x - startX; // Tốc độ kéo
-    divRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    setIsUlHoveredLeft(false)
-  };
-
-  let speed = 0; // Biến lưu trữ giá trị speed
-
-  let handleMouseEnter = (value: any, event: any, speed: any) => {
-    // console.log(divRef)
-    if (value === "right") {
-      const { clientX } = event;
-      const ulLeftEdge = divRef.current.getBoundingClientRect().right;
-      // if(clientX < ulLeftEdge + 75){
-      //   setIsUlHoveredLeft(false)
-      // }
-      // else{
-      //   setIsUlHoveredLeft(true)
-      // }
-      console.log(ulLeftEdge,clientX)
-      !visible && event.target.classList.add("scrollingHotSpotRightVisible");
-   
-      scrollInterval = setInterval(() => {
-        divRef.current.scrollLeft += speed; // tốc độc scroll
-        const divElement = divRef.current;
-        const isAtRightEdge =
-          divElement.scrollLeft + divElement.clientWidth >=
-          divElement.scrollWidth;
-
-        if (isAtRightEdge) {
-          !visible &&
-            event.target.classList.remove("scrollingHotSpotRightVisible");
-          clearInterval(scrollInterval);
-          handleMouseEnter(null, null, 0);
-        }
-      }, 1);
-    }
-
-    if (value === "left") {
-
-      !visible && event.target.classList.add("scrollingHotSpotLeftVisible");
-      scrollInterval = setInterval(() => {
-        divRef.current.scrollLeft -= speed; // tốc độc scroll
-        if (divRef.current.scrollLeft === 0) {
-          clearInterval(scrollInterval);
-          event.target.classList.remove("scrollingHotSpotLeftVisible");
-          handleMouseEnter(null, null, 0);
-        }
-      }, 8);
-    }
-  };
-
-  const handleMouseMoveButton = (event: any) => {
-    // handleMouseEnter("right", event, 0);
-    speed = event.clientX - event.target.getBoundingClientRect().left;
-    //console.log(speed);
-  };
-  // console.log({
-  //   data: g_ARRAY_CHART_NAME.map(item => renderSlideMarket(INDEX, item, valueHSX, valueHNX, visible))
-  // })
-
-  const handleMouseLeave = (e: any) => {
-    clearInterval(scrollInterval); // Dừng cuộn tự động khi bỏ hover
-    !visible && e.target.classList.remove("scrollingHotSpotRightVisible");
-    !visible && e.target.classList.remove("scrollingHotSpotLeftVisible");
-  };
-
   return (
     <div
       id="divIndexChart "
@@ -234,9 +308,10 @@ const SlidesMarketWatch = () => {
       }`}
     >
       <div
+        ref={divScrollLeft}
         className={`scrollingHotSpotLeft ${
           visible ? "!h-full" : ""
-        } ${isUlHoveredLeft ? "hidden" : ""}`}
+        } ${isHoveredLeft ? "" : "hidden"}`}
         onMouseEnter={(e) => {
           handleMouseEnter("left", e, 2);
         }}
@@ -246,13 +321,14 @@ const SlidesMarketWatch = () => {
       />
       <div className="py-1 col-priceboard class-chart bg-black">
         <div
-          className={`flex w-[${heightIndex}px] overflow-x-hidden whitespace-nowrap cursor-move`}
-          style={{width:heightIndex}}
+          className={`flex w-[${widthIndex}px] overflow-x-hidden whitespace-nowrap cursor-move`}
+          // style={{width:widthIndex}}
           ref={divRef}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
+          onMouseEnter={showAllScroll}
         >
           {g_ARRAY_CHART_NAME.map((item) => (
             <SlideMarketItem
@@ -263,7 +339,7 @@ const SlidesMarketWatch = () => {
         </div>
       </div>
       <div
-        className={`scrollingHotSpotRight ${visible ? "!h-full" : ""} ${isUlHoveredRight ? "hidden" : ""}`}
+        className={`scrollingHotSpotRight ${visible ? "!h-full" : ""} ${isHoveredRight ? "" : "hidden"}`}
         onMouseEnter={(e) => {
           handleMouseEnter("right", e, 2);
         }}
@@ -273,7 +349,7 @@ const SlidesMarketWatch = () => {
         onMouseMove={(e) => {
           handleMouseMoveButton(e);
         }}
-        ref={scrollRef}
+        ref={divScrollRight}
       />
     </div>
   );

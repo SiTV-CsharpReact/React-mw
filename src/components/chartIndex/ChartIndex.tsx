@@ -6,6 +6,7 @@ import { _getDateTs } from "./util/app.chart";
 import { formatNumber, formatNumberToM } from "../../utils/util";
 import { getDataChart, getPlotLine } from "./chart/useChart";
 import "./chartIndex.scss"
+import TooltipChartIndex from "./TooltipChartIndex";
 
 type TProps = {
   name: string;
@@ -16,11 +17,15 @@ const ChartIndex: React.FC<TProps> = ({
   name,
   san,
 }: TProps) => {
+  const [tooltipData, setTooltipData] = useState<any>({
+    customTooltipX: null,
+    customTooltipY: null,
+    customTooltipContent: "",
+  });
   const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
   const [dataSpline, setDataSpline] = useState<any>([]);
   const [dataBar, setDataBar] = useState<any>([]);
   const [indexValue, setIndexValue] = useState<number>(0);
-
   useEffect(() => {
     if (san === "HSX") {
       const data = getDataChart(dataChartIndex, name);
@@ -72,6 +77,7 @@ const ChartIndex: React.FC<TProps> = ({
           const xmax = _getDateTs(xmaxTmp);
           xAxis.setExtremes(xmin, xmax, true, false);
         },
+        
       },
     },
     title: {
@@ -138,7 +144,9 @@ const ChartIndex: React.FC<TProps> = ({
     time: {
       useUTC: false,
     },
-    tooltip: {
+  
+   tooltip: {
+    // followPointer: true,
       shadow: false,
       backgroundColor: "#ffffffc9",
       borderColor: "#07d800",
@@ -150,7 +158,8 @@ const ChartIndex: React.FC<TProps> = ({
         width: 150,
         fontSize: "11px",
         fontWeight: "500",
-        position: "absolute",
+        position: "relative",
+        top:400
       },
       shared: true,
       formatter: function (this: Highcharts.TooltipFormatterContextObject){
@@ -175,7 +184,9 @@ const ChartIndex: React.FC<TProps> = ({
             ? "0" + new Date(Number(index[1].x)).getMinutes()
             : new Date(Number(index[1].x)).getMinutes();
       
-        return `<span style="color:#000">Thời gian: <b style="font-size:12px;font-weight:600;color:#000" class="font-bold text-sm">${
+        return `
+       
+        <span style="color:#000">Thời gian: <b style="font-size:12px;font-weight:600;color:#000" class="font-bold text-sm">${
           hour + ":" + minutes
         }</b></span><br/><span style="color:#000">Index:  <b style="font-size:12px;color:#000" class="font-bold text-sm">${
           index[1].y
@@ -185,7 +196,7 @@ const ChartIndex: React.FC<TProps> = ({
             : `<span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm">${formatNumber(
                 formatNumberToM(this.y)
               )} </b></span>`
-        }`;
+        } `;
       },
     },
     legend: {
@@ -205,14 +216,21 @@ const ChartIndex: React.FC<TProps> = ({
               animation: {
                 duration: 500,
               },
+              // enabled: true,
+              // lineColor: "none",
+              // lineWidth: 4,
+              // fillColor: "white",
+              // symbol: "circle",
+              // radius: 6.5,
               enabled: true,
-              lineColor: "none",
-              lineWidth: 4,
-              fillColor: "none",
-              radius: 6.5,
+                    radius:0,
+                    radiusPlus:2,
+                    lineColor: 'white',
+                    fillColor: 'white'
             },
           },
         },
+       
         zones: [
           {
             value: indexValue,
@@ -235,6 +253,7 @@ const ChartIndex: React.FC<TProps> = ({
           },
         },
       },
+      
     },
     series: [
       {
@@ -260,3 +279,100 @@ const ChartIndex: React.FC<TProps> = ({
 };
 
 export default React.memo(ChartIndex);
+
+
+ // tooltip: {
+    //   shadow: false,
+    //   backgroundColor: "#ffffffc9",
+    //   borderColor: "#07d800",
+    //   borderRadius: 5,
+    //   borderWidth: 1,
+    //   padding: 6,
+    //   useHTML: true,
+    //   style: {
+    //     width: 150,
+    //     fontSize: "11px",
+    //     fontWeight: "500",
+    //     position: "absolute",
+    //   },
+    //   shared: true,
+    //   // positioner: customTooltipPositioner,
+    //   formatter: function (this: Highcharts.TooltipFormatterContextObject){
+    //     const points = this.points;
+    //     const index: any = points?.map((point, ind) => {
+    //       if (ind === 1) {
+    //         if (point.y !== null && point.y !== undefined) {
+    //           if (point.y >= indexValue) {
+    //             point.series.chart.tooltip.options.borderColor = "#07d800";
+    //           } else {
+    //             point.series.chart.tooltip.options.borderColor = "red";
+    //           }
+    //           return { x: point.x, y: point.y };
+    //         }
+    //       }
+    //       return "";
+    //     });
+      
+    //     const hour: any = new Date(Number(index[1].x)).getHours();
+    //     const minutes =
+    //       new Date(Number(index[1].x)).getMinutes().toString().length === 1
+    //         ? "0" + new Date(Number(index[1].x)).getMinutes()
+    //         : new Date(Number(index[1].x)).getMinutes();
+      
+    //     return `
+    //     <div class="custom_tooltip">
+    //     <span style="color:#000">Thời gian: <b style="font-size:12px;font-weight:600;color:#000" class="font-bold text-sm">${
+    //       hour + ":" + minutes
+    //     }</b></span><br/><span style="color:#000">Index:  <b style="font-size:12px;color:#000" class="font-bold text-sm">${
+    //       index[1].y
+    //     }</b></span><br/>${
+    //       this.y === 0
+    //         ? ""
+    //         : `<span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm">${formatNumber(
+    //             formatNumberToM(this.y)
+    //           )} </b></span>`
+    //     }  </div>`;
+    //   },
+    // },
+    // tooltip: {
+    //   enabled: false, // Tắt tooltip mặc định của Highcharts
+    // },
+
+
+        // console.log(e)
+    // const point = chart.chart;
+    // console.log(point)
+    // if (point) {
+    //   const x = point.plotX;
+    //   const y = point.plotY + 10;
+    //   const content = `
+    //     <div class="custom_tooltip">
+    //       <!-- Nội dung tooltip -->
+    //     </div>
+    //   `;
+
+    //   // Cập nhật giá trị của tooltipData
+    //   setTooltipData({
+    //     customTooltipX: x,
+    //     customTooltipY: y,
+    //     customTooltipContent: content,
+    //   });
+    // } else {
+    //   // Nếu không có điểm dữ liệu, ẩn tooltip
+    //   setTooltipData({
+    //     customTooltipX: null,
+    //     customTooltipY: null,
+    //     customTooltipContent: "",
+    //   });
+    // }
+
+    // Khai báo kiểu cho hàm positioner
+// const customTooltipPositioner: Highcharts.TooltipPositionerCallbackFunction = function (labelWidth, labelHeight, point) {
+//   console.log(labelWidth,labelHeight)
+//   // point.x và point.y chứa vị trí của điểm dữ liệu trên biểu đồ
+//   // Trong ví dụ này, chúng ta đặt tooltip ở vị trí (x + 50, y - 50)
+//   const x = point.plotX ;
+//   const y = point.plotY +10;
+
+//   return { x, y };
+// };

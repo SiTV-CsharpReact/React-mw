@@ -5,6 +5,12 @@
   .highcharts-tooltip {
     z-index: 9999 !important;
   }
+  .custom_tooltip{
+    position: absolute;
+    z-index: 9999!important;
+    height: 400px;
+    width: 400px;
+  }
   .highcharts-background {
     height: 100px;
   }
