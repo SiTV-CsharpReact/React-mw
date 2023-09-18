@@ -3,7 +3,7 @@ import { iconColorMenuMarket, setColorMenuMarket } from "../../utils/util";
 import ChartIndex from "../chartIndex/ChartIndex";
 import { IPropsSlideMarket } from "./interface/slidemarket.config";
 
-const SlideMarketItem: React.FC<IPropsSlideMarket> = ({ data }) => {
+const SlideMarketItem: React.FC<any> = ({ data }) => {
   return (
     <>
       {data.type && (

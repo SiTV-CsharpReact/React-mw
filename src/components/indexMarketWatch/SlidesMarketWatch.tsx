@@ -10,10 +10,7 @@ import "./slide.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { AppContext } from "../../Context/AppContext";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../store/configureStore";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { fetchHSXMarketAsync } from "./marketHSXSlice";
 import { fetchHNXMarketAsync } from "./marketHNXSlice";
 import SlideMarketItem from "./SlideMarketItem";
@@ -33,8 +30,9 @@ const SlidesMarketWatch = () => {
   const dispatch = useAppDispatch();
   const { visible } = useAppSelector((state) => state.chart);
   const height = useContext(AppContext);
-  const { dataChartIndex, configChartIndex, dataChartIndexTime } =useAppSelector((state) => state.chartIndex);
-  console.log(dataChartIndex,configChartIndex)
+  const { dataChartIndex, configChartIndex, dataChartIndexTime } =
+    useAppSelector((state) => state.chartIndex);
+  console.log(dataChartIndex, configChartIndex);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -48,9 +46,7 @@ const SlidesMarketWatch = () => {
 
   const { marketHSX } = useAppSelector((state) => state.marketHSX);
   const { marketHNX } = useAppSelector((state) => state.marketHNX);
-  const { INDEX } = useAppSelector(
-    (state: RootState) => state.settingMarketwatch
-  );
+  const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
 
   useEffect(() => {
     dispatch(fetchHSXMarketAsync());
@@ -168,10 +164,10 @@ const SlidesMarketWatch = () => {
   let speed = 0; // Biến lưu trữ giá trị speed
 
   let handleMouseEnter = (value: any, event: any, speed: any) => {
-    console.log(divRef)
+    console.log(divRef);
     if (value === "right") {
       !visible && event.target.classList.add("scrollingHotSpotRightVisible");
-   
+
       scrollInterval = setInterval(() => {
         divRef.current.scrollLeft += speed; // tốc độc scroll
         const divElement = divRef.current;
