@@ -82,17 +82,7 @@
    height: 30px;
    cursor: pointer;
 }
-.dvChart:hover{
-   border: 1px solid #ffffff;
-    cursor: default;
-}
-.dvChart{
-   min-width: 220px;
-    max-width: 220px;
-    text-align: center;
-    border: 1px solid transparent;
-    height: 157px;
-}
+
 .col-symbol {
    width: 5.5%;
 }

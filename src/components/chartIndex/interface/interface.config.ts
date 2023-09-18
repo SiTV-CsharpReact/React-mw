@@ -22,7 +22,7 @@ export interface IDataFullHNX {
   HNXUpcomIndex: IData[];
 }
 
-export interface IHNX_DATA {
+export interface IHNX {
   LastIndex: {
     HNX30: number;
     HNX30TRI: number;
@@ -39,7 +39,7 @@ export interface IHNX_DATA {
   DataFull: IDataFullHNX;
 }
 
-export interface IHSX_DATA {
+export interface IHSX {
   LastIndex: {
     TradingDate?: string;
     VN30: number;
@@ -65,12 +65,12 @@ export interface IDataFullHSX {
 
 
 export interface IChartIndex {
-  HSX: IHSX_DATA;
-  HNX: IHNX_DATA;
+  HSX: IHSX;
+  HNX: IHNX;
   IsWorkingDay: string;
 }
 
-// config type for data redux
+// setup initialState for redux
 export interface IState {
   isLoading: boolean;
   dataChartIndex: IChartIndex;

@@ -49,7 +49,7 @@ const App: React.FC = () => {
     }
   }, [token,isDevelopment]);
   if (isDevelopment) {
-    console.log("Đây là chế độ phát triển.");
+    // console.log("Đây là chế độ phát triển.");
   }
   else{
     if (!hasToken) {
@@ -66,7 +66,7 @@ const App: React.FC = () => {
     <AppProvider>
       <Header/>
       <Routes>
-            <Route path="/" element={  <LayoutMarketWatch />     } />
+            <Route path="/" element={<LayoutMarketWatch /> } />
             <Route path="/test" element={<TableMarketWatchTest />} />
             <Route
               path="/dynamic-dashboard-test"

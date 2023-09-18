@@ -1,118 +1,261 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/configureStore";
-import { fetchChartIndexAsync } from "./chartIndexSlice";
+import { useAppSelector } from "../../store/configureStore";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { drawChart } from "./util/app.chart";
+import { _getDateTs } from "./util/app.chart";
+import { formatNumber, formatNumberToM } from "../../utils/util";
+import { getDataChart, getPlotLine } from "./chart/useChart";
+import "./chartIndex.scss"
 
-const gradient: any = [0, 0, 50, 500];
-// const xAxis: any = [
-//   '09 h', '10 h', '11 h','12 h', '13 h', '14 h', '15 h'
-// ];
+type TProps = {
+  name: string;
+  san: string;
+};
 
+const ChartIndex: React.FC<TProps> = ({
+  name,
+  san,
+}: TProps) => {
+  const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
+  const [dataSpline, setDataSpline] = useState<any>([]);
+  const [dataBar, setDataBar] = useState<any>([]);
+  const [indexValue, setIndexValue] = useState<number>(0);
 
-const options: Highcharts.Options = {
-  chart: {
-    height: 95,
-    backgroundColor: "#000",
-    plotBackgroundColor: {
-      linearGradient: gradient,
-      stops: [
-        [0, "#080808"],
-        [1, "#917c05"],
-      ],
-    },
-  },
-  credits: {
-    enabled: false,
-  },
-  title: {
-    text: "",
-  },
+  useEffect(() => {
+    if (san === "HSX") {
+      const data = getDataChart(dataChartIndex, name);
+      const value = getPlotLine(dataChartIndex, name);
+      setIndexValue(value);
+      setDataSpline(data[0]);
+      setDataBar(data[1]);
+    } else {
+      if (san === "HNX") {
+        const data = getDataChart(dataChartIndex, name);
+        const value = getPlotLine(dataChartIndex, name);
+        setIndexValue(value);
+        setDataBar(data[1]);
+        setDataSpline(data[0]);
+      }
+    }
+  }, [dataChartIndex, name, san]);
+  const options = {
+    chart: {
+      marginTop: 8,
+      marginBottom: 15,
+      plotBorderWidth: 1,
+      plotBorderColor: "#545454",
+      plotBackgroundColor: {
+        linearGradient: [0, 0, 50, 380],
+        stops: [
+          [0, "#080808"],
+          [1, "#a08909"],
+        ],
+      },
+      backgroundColor: "#000",
+      width: 205,
+      height: 98,
+      events: {
+        load: function (this: Highcharts.Chart) {
+          const xAxis = this.xAxis[0];
+          const today = new Date();
+          const dd = today.getDate();
+          const mm = today.getMonth(); //January is 0!
+          const yyyy = today.getFullYear();
+          const HH1 = 9;
+          const HH2 = 15;
+          const MM = 0; // minute
 
-  yAxis: {
-    min: 0,
-    height: 80,
-    gridLineWidth: 1,
-    labels: {
-      enabled: false, // Tắt hiển thị giá trị bên trục y
+          const xminTmp = new Date(yyyy, mm, dd, HH1, MM);
+          const xmaxTmp = new Date(yyyy, mm, dd, HH2, MM);
+
+          const xmin = _getDateTs(xminTmp);
+          const xmax = _getDateTs(xmaxTmp);
+          xAxis.setExtremes(xmin, xmax, true, false);
+        },
+      },
     },
     title: {
       text: "",
     },
-    maxPadding: 0,
-    gridLineColor: "#222012",
-  },
-  xAxis: {
-    type: 'datetime',
-    tickInterval: 3600 * 1000, 
-    gridLineWidth: 1,
-    gridLineColor: "#222012",
-    startOnTick: true,
-    labels: {
-      rotation: 0,
+    credits: {
+      enabled: false,
+    },
+    xAxis: {
+      type: "datetime",
+      dateTimeLabelFormats: {
+        hour: "%H h",
+      },
+      gridLineWidth: 1.5,
+      gridLineColor: "#35353550",
+      lineWidth: 0,
+      tickWidth: 0,
+      minPadding: 0,
+      maxPadding: 0,
+      tickInterval: 3600000,
+      labels: {
+        useHTML: true,
+        style: {
+          color: "#a5a5a5",
+          fontSize: "8px",
+        },
+      },
+      offset: -9,
+      zIndex: 1,
+    },
+    yAxis: [
+      {
+        title: {
+          text: "",
+        },
+        labels: {
+          enabled: false,
+        },
+        gridLineWidth: 0,
+        opposite: true,
+        lineWidth: 0,
+      },
+      {
+        title: {
+          text: "",
+        },
+        endOnTick: true,
+        lineWidth: 0,
+        labels: {
+          enabled: false,
+        },
+        gridLineWidth: 0,
+        tickAmount: 10,
+        plotLines: [
+          {
+            color: "#FFFF00",
+            width: 0.8,
+            value: indexValue,
+            zIndex: 10,
+          },
+        ],
+      },
+    ],
+    time: {
+      useUTC: false,
+    },
+    tooltip: {
+      shadow: false,
+      backgroundColor: "#ffffffc9",
+      borderColor: "#07d800",
+      borderRadius: 5,
+      borderWidth: 1,
+      padding: 6,
+      useHTML: true,
       style: {
-        color: "#969696",
-        fontSize: "8px",
+        width: 150,
+        fontSize: "11px",
+        fontWeight: "500",
+        position: "absolute",
+      },
+      shared: true,
+      formatter: function (this: Highcharts.TooltipFormatterContextObject){
+        const points = this.points;
+        const index: any = points?.map((point, ind) => {
+          if (ind === 1) {
+            if (point.y !== null && point.y !== undefined) {
+              if (point.y >= indexValue) {
+                point.series.chart.tooltip.options.borderColor = "#07d800";
+              } else {
+                point.series.chart.tooltip.options.borderColor = "red";
+              }
+              return { x: point.x, y: point.y };
+            }
+          }
+          return "";
+        });
+      
+        const hour: any = new Date(Number(index[1].x)).getHours();
+        const minutes =
+          new Date(Number(index[1].x)).getMinutes().toString().length === 1
+            ? "0" + new Date(Number(index[1].x)).getMinutes()
+            : new Date(Number(index[1].x)).getMinutes();
+      
+        return `<span style="color:#000">Thời gian: <b style="font-size:12px;font-weight:600;color:#000" class="font-bold text-sm">${
+          hour + ":" + minutes
+        }</b></span><br/><span style="color:#000">Index:  <b style="font-size:12px;color:#000" class="font-bold text-sm">${
+          index[1].y
+        }</b></span><br/>${
+          this.y === 0
+            ? ""
+            : `<span style="color:#000">Khối lượng: <b style="font-size:12px;color:#000" class="font-bold text-sm">${formatNumber(
+                formatNumberToM(this.y)
+              )} </b></span>`
+        }`;
       },
     },
-    height: 60,
-    tickWidth: 0,
-    maxPadding: 0,
-    minPadding: 0,
-  },
-  legend: {
-    symbolPadding: 0,
-    symbolWidth: 0,
-    symbolHeight: 0,
-    squareSymbol: false,
-  },
-  plotOptions: {
-    line: {
-      states: {
-        hover: { enabled: false },
+    legend: {
+      symbolPadding: 0,
+      symbolWidth: 0,
+      symbolHeight: 0,
+      squareSymbol: false,
+      enabled: false,
+    },
+    plotOptions: {
+      spline: {
+        lineWidth: 1.5,
+        marker: {
+          enabled: false,
+          states: {
+            hover: {
+              animation: {
+                duration: 500,
+              },
+              enabled: true,
+              lineColor: "none",
+              lineWidth: 4,
+              fillColor: "none",
+              radius: 6.5,
+            },
+          },
+        },
+        zones: [
+          {
+            value: indexValue,
+            color: "red",
+          },
+          {
+            // color: "#00c010",
+            color: "#00FF00",
+          },
+        ],
       },
-      marker: {
-        enabled: false,
+      column: {
+        color: "#5F9DFE",
+        borderWidth: 0,
+        borderRadius: 0,
+        pointWidth: 0.2,
+        states: {
+          hover: {
+            enabled: true,
+          },
+        },
       },
     },
-  },
-  series: [
-    {
-      name: "",
-      type: "line",
-      data: [1, 2, 3, 7, 8, 9, 10, 23, 37, 80, 90],
-      color: "#00ff00",
-      marker: {
-        enabled: false,
+    series: [
+      {
+        name: "Bar",
+        type: "column",
+        yAxis: 0,
+        data: dataBar,
       },
-    },
-  ],
-};
+      {
+        name: "Spline",
+        type: "spline",
+        yAxis: 1,
+        data: dataSpline,
+      },
+    ],
+  };
 
-// const chartStyle = {
-//   height: '150px', // Chiều cao tùy chỉnh
-//   width: '100px', // Chiều rộng tùy chỉnh
-// };
-const ChartIndex = (props: HighchartsReact.Props) => {
-  const dispatch = useAppDispatch();
-  const { isLoading, dataChartIndex, status } = useAppSelector(
-    (state) => state.chartIndex
-  );
-  useEffect(() => {
-    dispatch(fetchChartIndexAsync());
-  }, []);
-  const dataChart = drawChart(dataChartIndex);
-  // console.log(dataChartIndex)
-  const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
   return (
-    <HighchartsReact
-      highcharts={Highcharts}
-      options={options}
-      ref={chartComponentRef}
-      // style={chartStyle}
-      {...props}
-    />
+    <div className="chart__slide__market">
+      <HighchartsReact highcharts={Highcharts} options={options} />
+    </div>
   );
 };
 

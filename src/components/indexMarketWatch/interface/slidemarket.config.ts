@@ -6,6 +6,10 @@ export type TStatus = "idle" | "loading" | "success" | "failed";
 
 export interface ISlideMarket extends IReturn_Data {}
 
+export interface IPropsSlideMarket {
+  data: ISlideMarket;
+};
+
 export interface IACTION_LIST {
   GET_SS: string;
   GET_CDT: string;

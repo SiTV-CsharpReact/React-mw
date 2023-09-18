@@ -5,11 +5,13 @@ import "./chartIndex.scss";
 import { _getDateTs } from "./util/app.chart";
 import { getDataChart, getPlotLine } from "./chart/useChart";
 import { useAppSelector } from "../../store/configureStore";
-import { IChartIndex } from "./interface/interface.config";
+// import agent from "../../api/agent";
+// import { useAppSelector } from "../../store/configureStore";
 
 type TProps = {
   name: string;
   san: string;
+  // dataChartIndex: any;
 };
 const ChartIndexSlide: React.FC<TProps> = ({ name, san }: TProps) => {
   const { dataChartIndex, dataChartIndexTime } = useAppSelector(
@@ -78,6 +80,8 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san }: TProps) => {
       const data = getDataChart(dataChartIndex, name);
       const value = getPlotLine(dataChartIndex, name);
       setIndexValue(value);
+      console.log({ value });
+
       setDataSpline(data[0]);
       setDataBar(data[1]);
     } else {
@@ -138,7 +142,7 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san }: TProps) => {
           linearGradient: gradient,
           stops: [
             [0, "#080808"],
-            [1, "#917c05"],
+            [1, "#d4b614"],
           ],
         },
         backgroundColor: "#000",
@@ -186,6 +190,7 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san }: TProps) => {
         labels: {
           useHTML: true,
           style: {
+            // color: "#5F9DFE",
             color: "#a5a5a5",
             fontSize: "8px",
           },
@@ -203,7 +208,6 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san }: TProps) => {
           },
           gridLineWidth: 0,
           opposite: true,
-          // height: 75,
           lineWidth: 0,
         },
         {
@@ -225,7 +229,6 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san }: TProps) => {
               zIndex: 10,
             },
           ],
-          // height: 75,
         },
       ],
       time: {
@@ -248,7 +251,10 @@ const ChartIndexSlide: React.FC<TProps> = ({ name, san }: TProps) => {
         },
         shared: true,
         formatter: function () {
+          const pointsss= this.points;
+          console.log(this.points)
           const index: any = this.points?.map((e: any, ind) => {
+            console.log(ind)
             if (ind === 1) {
               if (e.y >= indexValue) {
                 e.series.chart.tooltip.options.borderColor = "#07d800";

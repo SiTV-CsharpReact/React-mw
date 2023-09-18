@@ -563,7 +563,7 @@ const ColumnDef = (props: any, props2: any) => {
       children: [
         {
           field: "GiaKhop",
-          headerName: t("home:priceBoard.Vol1"),
+          headerName: t("home:priceBoard.Price"),
           suppressMenu: true,
           width: widthWindow * 0.03,
           minWidth: 50,
@@ -579,7 +579,7 @@ const ColumnDef = (props: any, props2: any) => {
         },
         {
           field: "KLKhop",
-          headerName: t("home:priceBoard.Vol1"),
+          headerName: t("home:priceBoard.Vol"),
           suppressMenu: true,
           width: widthWindow * 0.04,
           minWidth: 50,
@@ -702,7 +702,7 @@ const ColumnDef = (props: any, props2: any) => {
       children: [
         {
           field: "G1B",
-          headerName: "G1",
+          headerName: t("home:priceBoard.Price1"),
           suppressMenu: true,
           width: widthWindow * 0.03,
           minWidth: 50,

@@ -243,7 +243,7 @@ const TableMarketWatchTest = () => {
             }
             if (vCLassIndex) {
               if (vTextClass) {
-                vCLassIndex.className = vTextClass + " px-0.5";
+                vCLassIndex.className = vTextClass + " txt-Index";
 
                 // console.log(vCLassIndex,vTextClass)
                 //vCLassIndex.classList.add(vTextClass);
@@ -251,7 +251,7 @@ const TableMarketWatchTest = () => {
             }
             if (vCLassPT) {
               if (vTextClass) {
-                vCLassPT.className = vTextClass;
+                vCLassPT.className = vTextClass ;
                 // console.log(vCLassPT,vTextClass)
                 //vCLassIndex.classList.add(vTextClass);
               }
@@ -277,7 +277,7 @@ const TableMarketWatchTest = () => {
             }
             if (vCLassIndexHSX) {
               if (vTextClass) {
-                vCLassIndexHSX.className = vTextClass + " px-0.5";
+                vCLassIndexHSX.className = vTextClass + " txt-Index";
 
                 // console.log(vCLassIndex,vTextClass)
                 //vCLassIndex.classList.add(vTextClass);

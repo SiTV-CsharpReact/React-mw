@@ -77,3 +77,28 @@ div.scrollingHotSpotLeftVisible {
   background-color: #000 !important;
   
 }
+.dvChart{
+  min-width: 220px;
+  max-width: 220px;
+  text-align: center;
+  border: 1px solid transparent;
+  height: 157px;
+  margin: 0 3px 0 0;
+  font-family: Helvetica, Arial, Sans-Serif;
+  & .mar_{
+    font-size: 12px;
+  }
+  & p:nth-child(1) span {
+    font-size: 13.333px;
+  }
+  & .maru{
+    font-size: 12px;
+  }
+  &:hover{
+    border: 1px solid #ffffff;
+    cursor: default;
+  }
+}
+.p-chart{
+   padding: 0 3px;
+}

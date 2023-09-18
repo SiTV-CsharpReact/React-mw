@@ -351,3 +351,20 @@ export const OBJECT_STATUS = [
     ],
   },
 ];
+export const ARRAY_CHART_NAME = [
+  "VNXALL",
+  "VNI",
+  "VN30",
+  "VN100",
+  "VNALL",
+  "VNMID",
+  "VNSML",
+  "i41",
+  "i311",
+  "i39",
+  "i02",
+  "i26",
+  "i28",
+  "i310",
+  "i03"
+]

@@ -1,48 +1,30 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import agent from "../../api/agent";
-import {
-  IHNX_DATA,
-  IHSX_DATA,
-  IChartIndex,
-  IState,
-} from "./interface/interface.config";
+import { IChartIndex, IHNX, IHSX, IState } from "./interface/interface.config";
 import { IDataSS } from "../indexMarketWatch/interface/slidemarket.config";
 
-const HSX: IHSX_DATA = {
+export const Data_HSX: IHSX = {
+  LastIndex: {
+    TradingDate: "",
+    VN30: 0,
+    VN100: 0,
+    VNALL: 0,
+    VNIndex: 0,
+    VNMID: 0,
+    VNSML: 0,
+    VNXALL: 0,
+  },
   DataFull: {
-    VN100: [],
     VN30: [],
+    VN100: [],
     VNALL: [],
     VNIndex: [],
     VNMID: [],
     VNSML: [],
     VNXALL: [],
   },
-  LastIndex: {
-    VN100: 0,
-    VN30: 0,
-    VNALL: 0,
-    VNIndex: 0,
-    VNMID: 0,
-    VNSML: 0,
-    VNXALL: 0,
-    TradingDate: "",
-  },
 };
-
-const HNX: IHNX_DATA = {
-  DataFull: {
-    HNX30: [],
-    HNX30TRI: [],
-    HNXCon: [],
-    HNXFin: [],
-    HNXIndex: [],
-    HNXLCap: [],
-    HNXMan: [],
-    HNXMSCap: [],
-    HNXUpcomIndex: [],
-    HNXUPCoMPremium: [],
-  },
+export const Data_HNX: IHNX = {
   LastIndex: {
     HNX30: 0,
     HNX30TRI: 0,
@@ -50,23 +32,35 @@ const HNX: IHNX_DATA = {
     HNXFin: 0,
     HNXIndex: 0,
     HNXLCap: 0,
-    HNXMan: 0,
     HNXMSCap: 0,
-    HNXUpcomIndex: 0,
+    HNXMan: 0,
     HNXUPCoMPremium: 0,
+    HNXUpcomIndex: 0,
     TradingDate: "",
   },
+  DataFull: {
+    HNX30: [],
+    HNX30TRI: [],
+    HNXCon: [],
+    HNXFin: [],
+    HNXIndex: [],
+    HNXLCap: [],
+    HNXMSCap: [],
+    HNXMan: [],
+    HNXUPCoMPremium: [],
+    HNXUpcomIndex: [],
+  },
 };
-
-const DataRealTime: IDataSS = {
+export const DataRealTime: IDataSS = {
   Max: 0,
   SS: null,
 };
+
 const initialState: IState = {
   isLoading: false,
   dataChartIndex: {
-    HNX: HNX,
-    HSX: HSX,
+    HNX: Data_HNX,
+    HSX: Data_HSX,
     IsWorkingDay: "",
   },
   dataChartIndexTime: DataRealTime,

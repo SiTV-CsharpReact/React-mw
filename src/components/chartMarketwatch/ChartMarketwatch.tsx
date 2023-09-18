@@ -6,13 +6,12 @@ import ImageHandShake from "../../images/handshake-32.png";
 import DateTime from "../menuBarMW/DateTime";
 import "./chartMarketwatch.scss";
 import { useAppDispatch } from "../../store/configureStore";
-import FooterChart from "../footerMarketwatch/FooterChart";
-import { statusChartMarketwatch } from "./chartMarketwatchSlice";
-import SlidesIndexChartMarketwatch from "./SlidesIndexChartMarketwatch";
 import TableTabWithBuySell from "./components/TableTabWithBuySell";
 import TableTabWithChart from "./components/TableTabWithChart";
 import TableTabWithDanhMuc from "./components/TableTabWithDanhMuc";
 import TradingViewWidget from "../Chart/TradingViewWidget";
+import SlidesMarketWatch from "../indexMarketWatch/SlidesMarketWatch";
+import { statusChartMarketwatch } from "./chartMarketwatchSlice";
 
 interface ChartMarketwatchProps {
   heightPriceBoard: number; // Kiểu dữ liệu của prop "heightPriceBoard" là number
@@ -36,7 +35,7 @@ const ChartMarketwatch: React.FC<ChartMarketwatchProps> = ({
         <div className="chart-layout-header float-left w-full h-[30px]">
           <div className="float-left w-[900px] index-chart">
             <div>
-              <SlidesIndexChartMarketwatch />
+              <SlidesMarketWatch />
             </div>
           </div>
           <DateTime />
