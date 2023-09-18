@@ -12,7 +12,7 @@ import { addDatatPined } from "../tableTestSlice";
 import { setCookie } from "../../../models/cookie";
 import CustomHeader from "../CustomHeader";
 import { CellOtherColorRender } from "./CellOtherColorComponent";
-import { Company } from "../../../models/root";
+import { ICompany } from "../../../models/root";
 import { OBJECT_STATUS } from "../../../configs/app.config";
 import { fetchCompanyAsync } from "../../companyMarketwatch/companyMarketwatchSlice";
 import { useTranslation } from "react-i18next";
@@ -53,21 +53,19 @@ const ColumnDef = (props: any, props2: any) => {
   // ngôn ngữ 
   const {language} = useAppSelector((state) => state.ProfileAccount);
 
-  console.log(dataCompanyTotal)
-  const HanDleConpany = useCallback(async () => {
-    await dispatch(fetchCompanyAsync());
-  }, []);
-  useEffect(() => {
-    HanDleConpany();
-    // document.addEventListener('keydown',handleKey,true)
-  }, [language]);  
+  // console.log(dataCompanyTotal)
+
+  // useEffect(() => {
+  //   dispatch(fetchCompanyAsync());
+  //   // document.addEventListener('keydown',handleKey,true)
+  // }, [dispatch]);  
   // HO => HOSE; HA => HNX.NY; UP => HNX.UPCOM
 	const getExchangeName = (vEx:number) => {
 	const ExChange=	vEx === 1 ? "HOSE": vEx === 2 ? "HNX.NY": "HNX.UPCOM"
   return ExChange;
 	}
   const getCompanyNameByCode =  (vStockCode:string) =>{
-    console.log(vStockCode)
+    // console.log(vStockCode)
 		var name = '', element = '', cpnyID = ''
 		for (var i = 0; i < dataCompanyTotal.length; i++) {
 			if (vStockCode === dataCompanyTotal[i].Code) {
@@ -84,7 +82,7 @@ const ColumnDef = (props: any, props2: any) => {
 	}
   const handleClick = (dataTable: any) => {
     dispatch(dispatchDataTable(dataTable));
-    const dataCode = dataCompanyTotal.find((item:Company) =>  item.Code ===  dataTable.ma)
+    const dataCode = dataCompanyTotal.find((item: ICompany) =>  item.Code ===  dataTable.ma)
     if(dataCode){
       let PriceInput = dataTable?.price
       let san = dataCode?.Exchange === 1 ?  "HSX" :"HNX"
@@ -164,13 +162,13 @@ const ColumnDef = (props: any, props2: any) => {
                 if (checkSTTStockCode[1] === OBJECT_STATUS[i].Info[j1][0]) {
                   txtStatusCondition = " " +'-' +" " + OBJECT_STATUS[i].Info[j1][g_Language + 1] + '.';
                   txtInfo =  (isNumeric(checkSTTStockCode[1]) ? "R" : checkSTTStockCode[1]);
-                  console.log(txtStatusCondition,params.data.MCK);
+                  // console.log(txtStatusCondition,params.data.MCK);
                   // console.log(txtInfo);
                   break;
                 }
               }
               // break;
-              console.log("oke")
+              // console.log("oke")
             }
           }
         }

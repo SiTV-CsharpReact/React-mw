@@ -1,39 +1,68 @@
-
-.menuSearch{
-    position: absolute;
-    top: 100%;
-    left: 0;
-    font-size: 14px;
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
-    background: rgb(251, 251, 251);
-    border-radius: 4px;
-    max-height: 302px;
-    min-width: 450px;
-    overflow-x: auto;
-    margin-top:2px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    border: 1px solid rgba(0,0,0,.15);
-    &  ul li {
-        padding: 3.5px 5px;
-        line-height: 1.2em;
-        font-size: 9pt;
-        white-space: nowrap;
-        &:hover{
-            cursor: pointer;
-            background-color: rgba(99, 169, 224, 0.4);
-        }
+// .menuSearch {
+//   position: absolute;
+//   top: 100%;
+//   left: 0;
+//   font-size: 14px;
+//   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+//   background: rgb(251, 251, 251);
+//   border-radius: 4px;
+//   max-height: 302px;
+//   min-width: 450px;
+//   overflow-x: auto;
+//   margin-top: 2px;
+//   padding-top: 4px;
+//   padding-bottom: 4px;
+//   border: 1px solid rgba(0, 0, 0, 0.15);
+//   & ul li {
+//     padding: 3.5px 5px;
+//     line-height: 1.2em;
+//     font-size: 9pt;
+//     white-space: nowrap;
+//     &:hover {
+//       cursor: pointer;
+//       background-color: rgba(99, 169, 224, 0.4);
+//     }
+//   }
+//   & .liboder {
+//     border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+//   }
+//   & .LinoneBorder {
+//   }
+// }
+// .NoneBoder {
+//   top: 106%;
+//   border: none;
+// //   box-shadow: 0px 0px 3px 0.5px #a80c0c4f;
+//   border-radius: 2px;
+// }
+.form-search {
+  background: rgb(251, 251, 251);
+  border-radius: 1px;
+  width: 500px;
+  box-shadow: 0 3px 10px rgba(251, 251, 251, 0.4);
+  margin: 2px 0;
+  cursor: default !important;
+  max-height: 302px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 160px;
+  padding: 5px 0;
+  font-size: 14px;
+  text-align: left;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 3px 10px rgba(251, 251, 251, 0.4);
+  overflow-y: auto;
+  z-index: 1000;
+  ul {
+    li {
+      padding: 5px;
+      line-height: 1.2em;
+      border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+      font-size: 9pt;
+      &:hover {
+        background-color: rgba(128, 128, 128, 0.21);
+      }
     }
-    & .liboder{
-        border-bottom: 1px solid rgba(128, 128, 128, 0.15);
-    }
-    & .LinoneBorder{
-
-    }
-}
-.NoneBoder {
-    top: 106%;
-    border: none;
-    box-shadow: 0px 0px 3px 0.5px #a80c0c4f;
-    border-radius: 2px;
+  }
 }

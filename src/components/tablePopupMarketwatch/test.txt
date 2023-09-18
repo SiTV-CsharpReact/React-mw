@@ -1,0 +1,51 @@
+<div className="flex pu-grtitle">
+              <div className="m-auto">
+                {/* <div className="pu-div-search">
+                  <div
+                    className="relative ms-ctn form-control"
+                    style={{ border: "1px solid #ccc" }}
+                    id="ipSearchCode"
+                  >
+                    <div className="ms-sel-ctn">
+                      <input
+                        type="text"
+                        placeholder="Nhập mã Chứng khoán"
+                        autoComplete="nofill"
+                        onChange={(e) => handleChange(e.target.value)}
+                        onClick={handelClick}
+                        className="cursor-pointer"
+                        value={ValueInput}
+                      />
+                    </div>
+                    <div className="ms-trigger">
+                      <div className="fa fa-search top-[2px] absolute left-[2px]" />
+                    </div>
+                    <SearchStockCode
+                      valueInput={ValueInput}
+                      setShowPoup={setShowPopup}
+                      showPopup={showPopup}
+                      ChangeFunction={setStockCode}
+                      SearchStockCode={AddStockCode}
+                      setValueInput={setValueInput}
+                      border={true}
+                    />
+                  </div>
+                </div> */}
+                <div className="inline-block pu-div-title">
+                  <h2 className="pu-title">
+                    {stockCode.Code
+                      ? `${stockCode.Code} - ${
+                          stockCode.Exchange === 1
+                            ? "HSX"
+                            : stockCode.Exchange === 2
+                            ? "HNX"
+                            : "UPCOM"
+                        } - ${stockCode.ScripName}`
+                      : ""}
+                  </h2>
+                </div>
+              </div>
+              {/*  */}
+
+              {/* vd */}
+            </div>

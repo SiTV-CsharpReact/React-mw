@@ -1,36 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-export interface IIndex {
-  VNXALL: boolean;
-  VNI: boolean;
-  VN30: boolean;
-  VN100: boolean;
-  VNMID: boolean;
-  VNSML: boolean;
-  VNALL: boolean;
-  HNX: boolean;
-  HNX30: boolean;
-  HNXLCAP: boolean;
-  HNXSMCAP: boolean;
-  HNXFIN: boolean;
-  HNXMAN: boolean;
-  HNXCON: boolean;
-  UPCOM: boolean;
-  cbcol4: boolean;
-  cbcol20: boolean;
-  cbcol25: boolean;
-  cbcol28: boolean;
-  cbcol22: boolean;
-  cbcol23: boolean;
-  cbcol24: boolean;
-  cbcol26: boolean;
-  cbcol27: boolean;
-  smart_symbol_up: boolean;
-  smart_symbol_down: boolean;
-  prior_textbox_priceF: boolean;
-  prior_textbox_qtyF: boolean;
-}
+import { IIndex } from "./interface/slidemarket.config";
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const INDEX_TYPE: IIndex = {
   VNXALL: true,
   VNI: true,
@@ -79,7 +49,6 @@ export const settingMarketWatchSlice = createSlice({
       state.INDEX = action.payload;
       localStorage.setItem("setting_table", JSON.stringify(state.INDEX));
     },
- 
   },
 });
 

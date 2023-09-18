@@ -100,15 +100,15 @@ const TableDanhMuc = () => {
         fetchData();
       }, []);
  
-  const fetchDataCompany = async () => {
-    await dispatch(fetchCompanyAsync());
-  };
+  // const fetchDataCompany = async () => {
+  //   await 
+  // };
   // Call `fetchData` to fetch data when component mounts
-  useEffect(() => {
-    if (!localStorage.getItem("CacheSi")) {
-      fetchDataCompany();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!localStorage.getItem("CacheSi")) {
+  //     dispatch(fetchCompanyAsync());
+  //   }
+  // }, [dispatch]);
   // sort products
   products.forEach((obj) =>
     obj.Info.sort((a: any, b: any) => {

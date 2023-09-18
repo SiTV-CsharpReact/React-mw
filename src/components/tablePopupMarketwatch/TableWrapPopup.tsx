@@ -9,9 +9,11 @@ import TableReportingPopup from "./TableReportingPopup";
 import TableBasicPopup from "./TableBasicPopup";
 import TableDetailPopup from "./TableDetailPopup";
 
-const TableWrapPopup = () => {
+const TableWrapPopup = React.memo(() => {
+  console.log("re-render");
+
   return (
-    <>
+    <React.Fragment>
       <div>
         <TableDetailPopup />
       </div>
@@ -37,8 +39,8 @@ const TableWrapPopup = () => {
           <NewsPopup />
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
-};
+});
 
-export default React.memo(TableWrapPopup);
+export default TableWrapPopup;

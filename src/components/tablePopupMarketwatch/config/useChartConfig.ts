@@ -20,11 +20,6 @@ const useChartConfig = (
   const [dataCol, setDataCol] = useState<any>([]);
   const [dataSpline, setDataSpline] = useState<any>([]);
   const arrPr: any = React.useMemo(() => {
-    // if (dataChartOption.length === 0) {
-    //   const min = Number(indexValue) - 0.1;
-    //   const max = Number(indexValue) + 0.1;
-    //   return [min, indexValue, max];
-    // }
     return dataSpline.map((item: any) => item.y);
   }, [dataSpline]);
 
@@ -75,7 +70,7 @@ const useChartConfig = (
         load: function () {
           this.yAxis[1].update({
             labels: {
-              format: "{value:.2f}",
+              format: "{value:.1f}",
             },
           });
           const xAxis = this.xAxis[0];
@@ -101,8 +96,22 @@ const useChartConfig = (
               price_min = minNumber(arrPr);
               price_max = maxNumber(arrPr);
               if (dataChartOption.length === 0) {
+                const findMinMax = (a: number): number[] => {
+                  const roundedDown = Math.floor(a * 10) / 10;
+                  const roundedUp = Math.ceil(a * 10) / 10;
+                  const result = [];
+                  // Kiểm tra nếu giá trị roundedDown và roundedUp trùng nhau
+                  if (roundedDown === roundedUp) {
+                    result.push(roundedDown - 0.1, a, roundedUp + 0.1);
+                  } else {
+                    result.push(roundedDown, roundedUp);
+                  }
+
+                  return result;
+                };
+                const result = findMinMax(Number(indexValue));
                 this.yAxis[1].update({
-                  tickPositions: arrPr,
+                  tickPositions: result,
                 });
               } else {
                 for (let i = 0; i < arrPr.length; i++) {
@@ -185,86 +194,72 @@ const useChartConfig = (
                 },
                 tickInterval: 86400000,
               });
-              // let price__min, price__max: number, _tick, _minSub;
-              // let _barwidth: number;
-              // let _arrSub: any = [];
-              // price__min = minNumber(arrPr);
-              // price__max = maxNumber(arrPr);
-              // if (arrPr.length === 0) {
-              //   const min = Number(indexValue) - 0.1;
-              //   const max = Number(indexValue) + 0.1;
+              let price__min, price__max: number, _tick, _minSub;
+              let _barwidth: number;
+              let _arrSub: any = [];
+              price__min = minNumber(arrPr);
+              price__max = maxNumber(arrPr);
+              if (arrPr.length === 0) {
+                const min = Number(indexValue) - 0.1;
+                const max = Number(indexValue) + 0.1;
 
-              //   this.yAxis[1].setExtremes(min, max, true, false);
-              // } else {
-              //   for (let i = 0; i < arrPr.length; i++) {
-              //     let next = arrPr[i + 1];
+                this.yAxis[1].setExtremes(min, max, true, false);
+              } else {
+                for (let i = 0; i < arrPr.length; i++) {
+                  let next = arrPr[i + 1];
 
-              //     if (typeof next === "undefined") {
-              //       next = arrPr[0];
-              //       _arrSub.push(
-              //         Math.abs(Math.round((arrPr[i] - next) * 10) / 10)
-              //       );
-              //     }
-              //   }
-              //   _minSub = minNumber(_arrSub);
-              //   if (price__min > indexValue) {
-              //     _tick = 0.1;
-              //     price__min = indexValue - _tick;
-              //     price__max += _tick;
-              //     _barwidth = 0.05;
-              //   } else {
-              //     if (price__max < indexValue) {
-              //       _tick = 0.5;
-              //       price__max = indexValue + _tick;
-              //       price__min -= _tick;
-              //       _barwidth = 0.05;
-              //     } else {
-              //       if (price__max < 50) {
-              //         _tick = 0.1;
-              //         _barwidth = 0.05;
-              //         price__min -= _tick;
-              //         price__max += _tick;
-              //       } else {
-              //         if (_minSub < 0.5) {
-              //           _tick = 0.1;
-              //           _barwidth = 0.05;
-              //           price__min -= _tick;
-              //           price__max += _tick;
-              //         } else {
-              //           _tick = 1;
-              //           _barwidth = 0.2;
-              //           price__min -= _tick;
-              //           price__max += _tick;
-              //         }
-              //       }
-              //     }
-              //   }
-              //   let sub = price__max - price__min;
+                  if (typeof next === "undefined") {
+                    next = arrPr[0];
+                    _arrSub.push(
+                      Math.abs(Math.round((arrPr[i] - next) * 10) / 10)
+                    );
+                  }
+                }
+                _minSub = minNumber(_arrSub);
+                if (price__max < 50) {
+                  _tick = 0.1;
+                  _barwidth = 0.05;
+                  price__min -= _tick;
+                  price__max += _tick;
+                } else {
+                  if (_minSub < 0.5) {
+                    _tick = 0.1;
+                    _barwidth = 0.05;
+                    price__min -= _tick;
+                    price__max += _tick;
+                  } else {
+                    _tick = 1;
+                    _barwidth = 0.2;
+                    price__min -= _tick;
+                    price__max += _tick;
+                  }
+                }
+                let sub = price__max - price__min;
 
-              //   if (sub > 0) {
-              //     let countTick = Math.round(sub / _tick);
+                if (sub > 0) {
+                  let countTick = Math.round(sub / _tick);
 
-              //     if (countTick > 20) {
-              //       let tempTick = Math.round(countTick / 15);
-              //       _tick = 0.5;
-              //       _barwidth = 0.05;
-              //       price__min -= _tick;
-              //       price__max += _tick;
-              //     }
-              //   }
-              //   let tickPosition: any = [];
-              //   for (let i = price__min; i <= price__max; i += _tick) {
-              //     tickPosition.push(i);
-              //   }
-              //   console.log({ tickPosition });
+                  if (countTick > 20) {
+                    let tempTick = Math.round(countTick / 15);
+                    _tick = 0.5;
+                    _barwidth = 0.05;
+                    price__min -= _tick;
+                    price__max += _tick;
+                  }
+                }
+                let tickPosition: any = [];
+                for (let i = price__min; i <= price__max; i += _tick) {
+                  tickPosition.push(i);
+                }
+                console.log({ tickPosition });
 
-              //   this.yAxis[1].update({
-              //     tickPositions: tickPosition.map(
-              //       (item: any) => Math.round(item * 10) / 10
-              //     ),
-              //   });
-              // }
-              // this.redraw();
+                this.yAxis[1].update({
+                  tickPositions: tickPosition.map(
+                    (item: any) => Math.round(item * 10) / 10
+                  ),
+                });
+              }
+              this.redraw();
               break;
             case "3M":
               xAxis.update({
@@ -274,15 +269,15 @@ const useChartConfig = (
                     const day: any = date.getDate();
                     const month: any = date.getMonth() + 1;
 
-                    // if (day === 1 || day === 16) {
-                    //   return day + '/' + month;
-                    // }
                     return `${day.toString().length === 1 ? `0${day}` : day}/${
                       month.toString().length === 1 ? `0${month}` : month
                     }`;
                   },
                 },
-                tickInterval: 30 * 24 * 3600 * 1000,
+                tickInterval: 12 * 24 * 3600 * 1000,
+              });
+              this.yAxis[1].update({
+                tickAmount: 6,
               });
               break;
             case "6M":
@@ -309,14 +304,14 @@ const useChartConfig = (
                 labels: {
                   formatter: function () {
                     const date = new Date(this.value);
-                    const year = date.getFullYear();
+                    const year = date.getFullYear().toString();
                     const month = date.getMonth() + 1;
                     return `${
                       month.toString().length === 1 ? `0${month}` : month
-                    }/${year}`;
+                    }/${year.slice(2)}`;
                   },
                 },
-                tickInterval: 365 * 24 * 3600 * 1000,
+                tickInterval: 2 * 30 * 24 * 3600 * 1000,
               });
               this.yAxis[1].update({
                 tickAmount: 6,
@@ -324,17 +319,19 @@ const useChartConfig = (
               break;
             case "2Y":
               xAxis.update({
+                dateTimeLabelFormats: {
+                  year: "%b %Y",
+                },
                 labels: {
                   formatter: function () {
                     const date: any = new Date(this.value);
                     const year: any = date.getFullYear();
                     const month: any = date.getMonth() + 1;
-                    return `${
-                      month.toString().length === 1 ? `0${month}` : month
-                    }/${year}`;
+                    return `${month}/${year}`;
                   },
                 },
-                tickInterval: 2 * 365 * 24 * 3600 * 1000,
+                // tickInterval: 2 * 365 * 24 * 3600 * 1000,
+                tickInterval: 3 * 30 * 24 * 3600 * 1000,
               });
               this.yAxis[1].update({
                 tickAmount: 6,
@@ -347,7 +344,8 @@ const useChartConfig = (
               xAxis.setExtremes(xmin, xmax, true, false);
               break;
           }
-          this.redraw();
+
+          this.redraw(true);
         },
       },
     },
@@ -508,13 +506,13 @@ const useChartConfig = (
           states: {
             hover: {
               animation: {
-                duration: 500
+                duration: 500,
               },
               enabled: true,
               lineColor: "#00ff0045",
               lineWidth: 4,
               fillColor: "none",
-              radius: 6.5
+              radius: 6.5,
             },
           },
         },
@@ -550,13 +548,13 @@ const useChartConfig = (
           states: {
             hover: {
               animation: {
-                duration: 500
+                duration: 500,
               },
               enabled: true,
               lineColor: "#00ff0045",
               lineWidth: 4,
               fillColor: "none",
-              radius: 6.5
+              radius: 6.5,
             },
           },
         },

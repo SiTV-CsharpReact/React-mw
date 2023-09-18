@@ -15,7 +15,7 @@ import "./LayoutMarketWatch.scss";
 import { Tooltip } from "@mui/material";
 import ListMenuBar from "../menuBarMW/ListMenuBar";
 import DanhMuc from "../menuBarMW/DanhMuc";
-import SettingTable from "../menuBarMW/SettingTable";
+import SettingTable from "../menuBarMW/helper/SettingTable";
 import DateTime from "../menuBarMW/DateTime";
 import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import PopupTableMarketwatch from "../popupTableMarketwatch/popupTableMarketwatch";

@@ -1,43 +1,50 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import agent from "../../api/agent";
-import { Categories, CategoriesMarketWatch, CategoriesMarketWatchs, Category } from "../../models/category";
-// <CategoriesMarketWatch>
-export const fetchCategoryAsync = createAsyncThunk(
+import { ICategory, CategoriesMarketWatchs } from "../../models/category";
+import { IData_Reponse, IState_Category } from "./interface/interface.config";
+
+const Reponse_Data: IData_Reponse = {
+  Code: 0,
+  Msg: "",
+  Data: Array<ICategory>()
+};
+const initialState: IState_Category = {
+  isLoading: 0,
+  name: null,
+  row: null,
+  status: "idle",
+  data: Reponse_Data,
+};
+// Lấy danh sách danh mục
+export const fetchCategoryAsync = createAsyncThunk<IData_Reponse>(
   "table_fecthCategory/getCateolcadf",
-  async (form:any) => {
-  try {
-    // const data = await  agent.Category.postformData(form)
-    const data = await agent.Category.get(form)
-    return data
-  } catch (error) {
-    console.log("error ở đây", error);
-  }
+  async (form: any) => {
+    try {
+      // const data = await  agent.Category.postformData(form)
+      const data = await agent.Category.get(form);
+      return data;
+    } catch (error) {
+      console.log("error ở đây", error);
+    }
   }
 );
-export const AddCategori = createAsyncThunk("table_fecthCategory/addCategori" , async(Query:any)=>{
-  try {
-      const data = await agent.Category.AddCate(Query)
-      console.log("vô data  Query " ,Query ,  data)
-  } catch (error) {
-    
+
+// Thêm danh mục
+export const AddCategori = createAsyncThunk(
+  "table_fecthCategory/addCategori",
+  async (Query: any) => {
+    try {
+      const data = await agent.Category.AddCate(Query);
+      console.log("vô data  Query ", Query, data);
+    } catch (error) {}
   }
-})
+);
 
 export const danhmucSlice = createSlice({
   name: "table_fecthCategory",
-  initialState: {
-    isLoading: 0,
-    row: null,
-    name: null,
-    data: {
-      Code: 0,
-      Message: "SUCCESS",
-      Data: [] as Categories[],
-    },
-    status: "idle",
-  },
+  initialState,
   reducers: {
-    getDataSuccess: (state, action: PayloadAction<CategoriesMarketWatchs>) => {
+    getDataSuccess: (state, action) => {
       state.data = action.payload;
       state.status = "idle";
     },
@@ -45,10 +52,10 @@ export const danhmucSlice = createSlice({
       state.name = action.payload?.name;
       state.row = action.payload?.row;
     },
-    historyPriceActiveMenu : (state) => {
-      state.name = null
-      state.row = null
-    }
+    historyPriceActiveMenu: (state) => {
+      state.name = null;
+      state.row = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -56,21 +63,13 @@ export const danhmucSlice = createSlice({
         state.isLoading = 1;
         state.status = "loading";
       })
-      .addCase(fetchCategoryAsync.fulfilled, (state, action) => {
-        state.isLoading = 2;
-        const result = action.payload;
-        console.log(result)
-        if (result?.Code === 0) {
-          console.log(result.Data[0])
+      .addCase(
+        fetchCategoryAsync.fulfilled,
+        (state, action: PayloadAction<IData_Reponse>) => {
+          state.isLoading = 2;
           state.data = action.payload;
-          state.row = result?.Data[0]?.Row; // lưu row danh mục
-          state.name = result?.Data[0]?.Name; // tên danh mục
-          state.status = "succeeded";
-        } else {
-          state.status = "failed";
-          // Xử lý tình huống khi API trả về lỗi
         }
-      })
+      )
       .addCase(fetchCategoryAsync.rejected, (state) => {
         state.isLoading = 3;
         state.status = "failed";
@@ -78,5 +77,6 @@ export const danhmucSlice = createSlice({
       });
   },
 });
-export const { activeMenuDanhmuc ,historyPriceActiveMenu} = danhmucSlice.actions;
+export const { activeMenuDanhmuc, historyPriceActiveMenu } =
+  danhmucSlice.actions;
 export default danhmucSlice;

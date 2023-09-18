@@ -65,7 +65,9 @@ const showKLPT = (value: string) => {
 };
 
 const TableMarketWatch = () => {
-  const accountname = useAppSelector((state) => state.ProfileAccount.ClientName);
+  const accountname = useAppSelector(
+    (state) => state.ProfileAccount.ClientName
+  );
   const dataTables = useAppSelector((state) => state.table.ListDataTable);
   const { INDEX } = useAppSelector(
     (state: RootState) => state.settingMarketwatch
@@ -89,35 +91,35 @@ const TableMarketWatch = () => {
     [dispatch]
   );
   useEffect(() => {
-    async function HanDelCate() {
-    if(accountname) {
-      let result = await dispatch(fetchCategoryAsync(accountname));
-      if (result?.payload?.Data[0]?.List) {
-        let data = {
-          Floor: "danh-muc",
-          Query: result?.payload?.Data[0]?.List,
-        };
-        await handelGetData(data);
-      } else {
-        let data = {
-          Floor: "HSX",
-          Query: "s=quote&l=All",
-        };
-        await handelGetData(data);
-      }} 
-    }
-    HanDelCate();
+    // async function HanDelCate() {
+    // if(accountname) {
+    //   let result = await dispatch(fetchCategoryAsync(accountname));
+    //   if (result?.payload?.Data[0]?.List) {
+    //     let data = {
+    //       Floor: "danh-muc",
+    //       Query: result?.payload?.Data[0]?.List,
+    //     };
+    //     await handelGetData(data);
+    //   } else {
+    //     let data = {
+    //       Floor: "HSX",
+    //       Query: "s=quote&l=All",
+    //     };
+    //     await handelGetData(data);
+    //   }}
+    // }
+    // HanDelCate();
   }, [dispatch]);
-  const fetchDataCompany = async () => {
-    await dispatch(fetchCompanyAsync());
-  };
+  // const fetchDataCompany = async () => {
+  //   await
+  // };
 
   // Call `fetchData` to fetch data when component mounts
-  useEffect(() => {
-    if (!localStorage.getItem("CacheSi")) {
-      fetchDataCompany();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!localStorage.getItem("CacheSi")) {
+  //     dispatch(fetchCompanyAsync());
+  //   }
+  // }, [dispatch]);
 
   // su kien click mua ban ma
   const handleClick = (dataTable: any) => {

@@ -1,23 +1,10 @@
-import { IChartIndex } from "../../chartIndex/interface/interface.config";
+import { ObjectMenuHNX, ObjectMenuHSX } from "../../../models/modelListMenuHSX";
+import { IReturn_Data } from "./interface.RenderSlideMarket";
 
-export interface ISlideMarket {
-  id: string[];
-  name: string;
-  valueChange: string;
-  valueChangePercent: string;
-  valueIndexChange: string;
-  visible: boolean;
-  valueTotalSharesAOM: string;
-  valueTotalValuesAOM: string;
-  valueUp: string;
-  valueCeiling: string;
-  valueDown: string;
-  valueFloor: string;
-  valueNoChange: string;
-  status: string;
-  san: string;
-  // dataChartIndex: IChartIndex;
-}
+// status when api return
+export type TStatus = "idle" | "loading" | "success" | "failed";
+
+export interface ISlideMarket extends IReturn_Data {}
 
 export interface IACTION_LIST {
   GET_SS: string;
@@ -40,12 +27,12 @@ export interface IDataCDT {
 
 export interface IDataSS {
   Max: number;
-  SS: null | DataReponseHNX_HSX[];
+  SS: DataReponseHNX_HSX[] | null;
 }
 
 export interface DataReponseHNX_HSX {
-  HNX: HNX,
-  HSX: HSX
+  HNX: HNX;
+  HSX: HSX;
 }
 
 export interface HNX {
@@ -79,3 +66,49 @@ export interface IDataHNX_HSX {
     Vol: number;
   };
 }
+
+//interace initialState for redux
+export interface IState_SlideMarket {
+  isLoadingMarket: boolean;
+  statusMarket: TStatus;
+}
+
+export interface IState_SlideMarket_HSX extends IState_SlideMarket {
+  marketHSX: ObjectMenuHSX;
+}
+
+export interface IState_SlideMarket_HNX extends IState_SlideMarket {
+  marketHNX: ObjectMenuHNX;
+}
+
+export interface IIndex {
+  VNXALL: boolean;
+  VNI: boolean;
+  VN30: boolean;
+  VN100: boolean;
+  VNMID: boolean;
+  VNSML: boolean;
+  VNALL: boolean;
+  HNX: boolean;
+  HNX30: boolean;
+  HNXLCAP: boolean;
+  HNXSMCAP: boolean;
+  HNXFIN: boolean;
+  HNXMAN: boolean;
+  HNXCON: boolean;
+  UPCOM: boolean;
+  cbcol4: boolean;
+  cbcol20: boolean;
+  cbcol25: boolean;
+  cbcol28: boolean;
+  cbcol22: boolean;
+  cbcol23: boolean;
+  cbcol24: boolean;
+  cbcol26: boolean;
+  cbcol27: boolean;
+  smart_symbol_up: boolean;
+  smart_symbol_down: boolean;
+  prior_textbox_priceF: boolean;
+  prior_textbox_qtyF: boolean;
+}
+
