@@ -28,7 +28,9 @@ import dataTablePopupDetail from "../components/tablePopupMarketwatch/dataTableP
 import stoplossSlice from "../pages/Stoploss/stoplossSlice";
 import clientBalanceSlice from "../components/orderFormMarketwatch/ClientBalance";
 import ProfileAccountSlice from "../components/header/ProfileAccountSlice";
-import SendOrderSlice, { SendOrder } from "../components/orderFormMarketwatch/SendOrderSlice";
+import SendOrderSlice, {
+  SendOrder,
+} from "../components/orderFormMarketwatch/SendOrderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -59,10 +61,10 @@ export const store = configureStore({
     //báo cáo tài sản
     assetReport: assetReportSlice.reducer,
     //
-   
+
     dataThongke: dataSliceThongke.reducer,
-    orderComan :  OrderComanSlice.reducer,
- 
+    orderComan: OrderComanSlice.reducer,
+
     //set status show table chart
     statusTable: statusTableMWSlice.reducer,
 
@@ -86,10 +88,10 @@ export const store = configureStore({
     transfer: TransferSlice.reducer,
 
     dataPopupDetail: dataTablePopupDetail.reducer,
-    stoploss :stoplossSlice,
+    stoploss: stoplossSlice,
     clientBalance: clientBalanceSlice.reducer,
     ProfileAccount: ProfileAccountSlice.reducer,
-     SendOrder: SendOrderSlice.reducer,
+    SendOrder: SendOrderSlice.reducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

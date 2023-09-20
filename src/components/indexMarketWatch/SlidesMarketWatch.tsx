@@ -10,10 +10,7 @@ import "./slide.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { AppContext } from "../../Context/AppContext";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../store/configureStore";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { fetchHSXMarketAsync } from "./marketHSXSlice";
 import { fetchHNXMarketAsync } from "./marketHNXSlice";
 import SlideMarketItem from "./SlideMarketItem";
@@ -24,11 +21,10 @@ import {
 } from "../chartIndex/chartIndexSlice";
 import agent from "../../api/agent";
 import { IACTION_LIST, IDataCDT, IRP } from "./interface/slidemarket.config";
-import { updateChart } from "../chartIndex/chart/useChart";
 import {
-  g_ARRAY_CHART_NAME,
-  renderSlideMarket,
-} from "./utils/renderSlideMarket";
+  Data_Stock_Exchange,
+  RenderSlideNarketItem,
+} from "./helper/renderSlideMarket";
 
 const SlidesMarketWatch = () => {
   const dispatch = useAppDispatch();
@@ -44,15 +40,12 @@ const SlidesMarketWatch = () => {
     GET_SS: "ss", // get snapshot data (update) , can phai co Max
     GET_CDT: "cdt", // get check date time
   };
+  // console.log({ update: updateChart(dataChartIndexTime, dataChartIndex) });
 
-  const {
-    marketHSX: { valueHSX },
-  } = useAppSelector((state) => state.marketHSX);
-  const {
-    marketHNX: { valueHNX },
-  } = useAppSelector((state) => state.marketHNX);
-  const { INDEX } = useAppSelector( (state) => state.settingMarketwatch
-  );
+  const { marketHSX } = useAppSelector((state) => state.marketHSX);
+  const { marketHNX } = useAppSelector((state) => state.marketHNX);
+  const { INDEX } = useAppSelector((state) => state.settingMarketwatch);
+
   useEffect(() => {
     dispatch(fetchHSXMarketAsync());
   }, [dispatch]);
@@ -75,7 +68,6 @@ const SlidesMarketWatch = () => {
       clearInterval(intervalId);
     };
   }, [dispatch]);
-
   useEffect(() => {
     dispatch(fetchConfigChartIndexAsync())
   }, [dispatch]);
@@ -121,10 +113,10 @@ const SlidesMarketWatch = () => {
     };
     fetchDataCDT();
     // Thiết lập interval để gọi API mỗi 1 phút
-    const intervalId = setInterval(fetchDataCDT, INTERVAL);
+    // const intervalId = setInterval(fetchDataCDT, INTERVAL);
     // Trả về một hàm để xóa interval khi component unmount hoặc thay đổi
     return () => {
-      clearInterval(intervalId);
+      // clearInterval(intervalId);
     };
   }, [
     dispatch,
@@ -160,10 +152,10 @@ const SlidesMarketWatch = () => {
   let speed = 0; // Biến lưu trữ giá trị speed
 
   let handleMouseEnter = (value: any, event: any, speed: any) => {
-    console.log(divRef)
+    console.log(divRef);
     if (value === "right") {
       !visible && event.target.classList.add("scrollingHotSpotRightVisible");
-   
+
       scrollInterval = setInterval(() => {
         divRef.current.scrollLeft += speed; // tốc độc scroll
         const divElement = divRef.current;
@@ -237,10 +229,18 @@ const SlidesMarketWatch = () => {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
         >
-          {g_ARRAY_CHART_NAME.map((item) => (
+          {Data_Stock_Exchange.map((item) => (
             <SlideMarketItem
-              key={item}
-              data={renderSlideMarket(INDEX, item, valueHSX, valueHNX, visible)}
+              key={item.StockIndex}
+              data={RenderSlideNarketItem({
+                name: item.StockIndex,
+                san: item.StockExchange,
+                marketHNX,
+                marketHSX,
+                visible: visible,
+                type: INDEX,
+                id: item.className,
+              })}
             />
           ))}
         </div>

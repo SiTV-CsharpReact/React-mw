@@ -15,10 +15,10 @@ export interface CategoriesMarketWatch {
   export interface CategoriesMarketWatchs {
     Code: number
     Message: string
-    Data: Categories[]
+    Data: ICategory[]
   }
   
-  export interface Categories {
+  export interface ICategory {
     RowID: string
     Text: string
     Code: string

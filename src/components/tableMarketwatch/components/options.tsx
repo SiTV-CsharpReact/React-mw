@@ -12,7 +12,7 @@ import { addDatatPined } from "../tableTestSlice";
 import { setCookie } from "../../../models/cookie";
 import CustomHeader from "../CustomHeader";
 import { CellOtherColorRender } from "./CellOtherColorComponent";
-import { Company } from "../../../models/root";
+import { ICompany } from "../../../models/root";
 import { OBJECT_STATUS } from "../../../configs/app.config";
 import { fetchCompanyAsync } from "../../companyMarketwatch/companyMarketwatchSlice";
 import { useTranslation } from "react-i18next";
@@ -53,13 +53,12 @@ const ColumnDef = (props: any, props2: any) => {
   // ngôn ngữ 
   const {language} = useAppSelector((state) => state.ProfileAccount);
 
-  const HanDleConpany = useCallback(async () => {
-    await dispatch(fetchCompanyAsync());
-  }, []);
-  useEffect(() => {
-    HanDleConpany();
-    // document.addEventListener('keydown',handleKey,true)
-  }, [language]);  
+  // console.log(dataCompanyTotal)
+
+  // useEffect(() => {
+  //   dispatch(fetchCompanyAsync());
+  //   // document.addEventListener('keydown',handleKey,true)
+  // }, [dispatch]);  
   // HO => HOSE; HA => HNX.NY; UP => HNX.UPCOM
 	const getExchangeName = (vEx:number) => {
 	const ExChange=	vEx === 1 ? "HOSE": vEx === 2 ? "HNX.NY": "HNX.UPCOM"
@@ -83,7 +82,7 @@ const ColumnDef = (props: any, props2: any) => {
 	}
   const handleClick = (dataTable: any) => {
     dispatch(dispatchDataTable(dataTable));
-    const dataCode = dataCompanyTotal.find((item:Company) =>  item.Code ===  dataTable.ma)
+    const dataCode = dataCompanyTotal.find((item: ICompany) =>  item.Code ===  dataTable.ma)
     if(dataCode){
       let PriceInput = dataTable?.price
       let san = dataCode?.Exchange === 1 ?  "HSX" :"HNX"
@@ -169,7 +168,7 @@ const ColumnDef = (props: any, props2: any) => {
                 }
               }
               // break;
-              console.log("oke")
+              // console.log("oke")
             }
           }
         }

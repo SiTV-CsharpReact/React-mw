@@ -1,10 +1,6 @@
 import * as HighCharts from "highcharts";
 import { _getDateTs } from "../util/app.chart";
 import { IChartIndex, IData } from "../interface/interface.config";
-import {
-  DataReponseHNX_HSX,
-  IDataSS,
-} from "../../indexMarketWatch/interface/slidemarket.config";
 
 export const useChart = (
   dataSpline: number[][],
@@ -362,22 +358,3 @@ export function getPlotLine(data: IChartIndex, name: string) {
   }
 }
 
-export function updateChart(DataTime: any, DataIndex: any) {
-  if (DataTime.SS !== null) {
-    for (const key in DataTime) {
-      if (DataTime.hasOwnProperty(key)) {
-        if (DataIndex.hasOwnProperty(key)) {
-          for (const subKey in DataTime[key]) {
-            if (DataTime[key].hasOwnProperty(subKey)) {
-              // Kiểm tra xem subKey này đã tồn tại trong dataChartIndex[key] chưa
-              if (DataIndex[key].hasOwnProperty(subKey)) {
-                // Cập nhật dữ liệu từ dataChartIndexTime[key][subKey] vào dataChartIndex[key][subKey]
-                DataIndex[key][subKey] = DataTime[key][subKey];
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}

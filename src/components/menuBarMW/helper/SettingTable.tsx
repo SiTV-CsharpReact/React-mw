@@ -10,15 +10,15 @@ import {
   Box,
 } from "@mui/material";
 import React, { useState } from "react";
-import "./menuBar.scss";
+import "../menuBar.scss";
 import CloseIcon from "@mui/icons-material/Close";
-import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { useAppDispatch, useAppSelector } from "../../../store/configureStore";
 import {
   IIndex,
   INDEX_TYPE,
   paramsMarketwatch,
-} from "../indexMarketWatch/marketShowSlice";
-import { ColCompoent, SettingBodyComponent } from "./SettingItemTable";
+} from "../../indexMarketWatch/marketShowSlice";
+import { ColCompoent, SettingBodyComponent } from "../SettingItemTable";
 
 export interface IData {
   key: string;

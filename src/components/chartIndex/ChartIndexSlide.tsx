@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Highcharts from "highcharts";
 import { formatNumber, formatNumberToM } from "../../utils/util";
 import "./chartIndex.scss";
@@ -14,11 +14,67 @@ type TProps = {
   // dataChartIndex: any;
 };
 const ChartIndexSlide: React.FC<TProps> = ({ name, san }: TProps) => {
-  const { dataChartIndex } = useAppSelector((state) => state.chartIndex);
+  const { dataChartIndex, dataChartIndexTime } = useAppSelector(
+    (state) => state.chartIndex
+  );
   const [dataSpline, setDataSpline] = useState<any>([]);
   const [dataBar, setDataBar] = useState<any>([]);
   const [indexValue, setIndexValue] = useState<number>(0);
 
+  const data = useMemo(() => {
+    if (dataChartIndexTime.SS === null) {
+      return dataChartIndex;
+    }else{
+      return dataChartIndexTime.SS.forEach(item => {
+        if(item.HSX.VNXALL.length !== 0){
+          dataChartIndex.HSX.DataFull.VNXALL = dataChartIndex.HSX.DataFull.VNXALL.concat(item.HSX.VNXALL)
+        }
+        if(item.HSX.VNIndex.length !== 0){
+          dataChartIndex.HSX.DataFull.VNIndex = dataChartIndex.HSX.DataFull.VNIndex.concat(item.HSX.VNIndex)
+        }
+        if(item.HSX.VN30.length !== 0){
+          dataChartIndex.HSX.DataFull.VN30 = dataChartIndex.HSX.DataFull.VN30.concat(item.HSX.VN30)
+        } 
+        if(item.HSX.VNALL.length !== 0){
+          dataChartIndex.HSX.DataFull.VNALL = dataChartIndex.HSX.DataFull.VNALL.concat(item.HSX.VNALL)
+        } 
+        if(item.HSX.VN100.length !== 0){
+          dataChartIndex.HSX.DataFull.VN100 = dataChartIndex.HSX.DataFull.VN100.concat(item.HSX.VN100)
+        } 
+        if(item.HSX.VNSML.length !== 0){
+          dataChartIndex.HSX.DataFull.VNSML = dataChartIndex.HSX.DataFull.VNSML.concat(item.HSX.VNSML)
+        } 
+        if(item.HSX.VNMID.length !== 0){
+          dataChartIndex.HSX.DataFull.VNMID = dataChartIndex.HSX.DataFull.VNMID.concat(item.HSX.VNMID)
+        } 
+        if(item.HNX.HNX30.length !== 0){
+          dataChartIndex.HNX.DataFull.HNX30 = dataChartIndex.HNX.DataFull.HNX30.concat(item.HNX.HNX30)
+        } 
+        if(item.HNX.HNXCon.length !== 0){
+          dataChartIndex.HNX.DataFull.HNXCon = dataChartIndex.HNX.DataFull.HNXCon.concat(item.HNX.HNXCon)
+        }
+        if(item.HNX.HNXFin.length !== 0){
+          dataChartIndex.HNX.DataFull.HNXFin = dataChartIndex.HNX.DataFull.HNXFin.concat(item.HNX.HNXFin)
+        }
+        if(item.HNX.HNXIndex.length !== 0){
+          dataChartIndex.HNX.DataFull.HNXIndex = dataChartIndex.HNX.DataFull.HNXIndex.concat(item.HNX.HNXIndex)
+        }
+        if(item.HNX.HNXLCap.length !== 0){
+          dataChartIndex.HNX.DataFull.HNXLCap = dataChartIndex.HNX.DataFull.HNXLCap.concat(item.HNX.HNXLCap)
+        }
+        if(item.HNX.HNXMSCap.length !== 0){
+          dataChartIndex.HNX.DataFull.HNXMSCap = dataChartIndex.HNX.DataFull.HNXMSCap.concat(item.HNX.HNXMSCap)
+        }
+        if(item.HNX.HNXMan.length !== 0){
+          dataChartIndex.HNX.DataFull.HNXMan = dataChartIndex.HNX.DataFull.HNXMan.concat(item.HNX.HNXMan)
+        }
+        if(item.HNX.HNXUpcomIndex.length !== 0){
+          dataChartIndex.HNX.DataFull.HNXUpcomIndex = dataChartIndex.HNX.DataFull.HNXUpcomIndex.concat(item.HNX.HNXUpcomIndex)
+        }
+      })
+    }
+  }, [dataChartIndex, dataChartIndexTime.SS]);
+  
   useEffect(() => {
     if (san === "HSX") {
       const data = getDataChart(dataChartIndex, name);

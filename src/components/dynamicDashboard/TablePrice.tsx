@@ -3,7 +3,7 @@ import ListMenuBar from "../menuBarMW/ListMenuBar";
 import TableMarketWatch from "../tableMarketwatch/TableMarketWatch";
 import DanhMuc from "../menuBarMW/DanhMuc";
 import DateTime from "../menuBarMW/DateTime";
-import SettingTable from "../menuBarMW/SettingTable";
+import SettingTable from "../menuBarMW/helper/SettingTable";
 import PopupTableMarketwatch from "../popupTableMarketwatch/popupTableMarketwatch";
 import { useAppSelector } from "../../store/configureStore";
 import TablePopupMarketwatch from "../tablePopupMarketwatch/TablePopupMarketwatch";

@@ -73,6 +73,7 @@ export const fetchCompanyAsync = createAsyncThunk<IDataCompany_Response>(
     }
   }
 );
+
 export const companySlice = createSlice({
   name: "company",
   initialState,

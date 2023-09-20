@@ -25,40 +25,10 @@ type Bounds = {
 
 const TablePopupMarketwatch = () => {
   const dispatch = useAppDispatch();
-  
-  // const { code } = useAppSelector((state) => state.popupTable);
-  const { dataCompanyTotal } = useAppSelector((state) => state.company);
-
   const [position, setPosition] = useState({
     x: (window.innerWidth - 1230) / 2, // - đi witdh tablle chia 2
     y: (window.innerHeight - 721 - 40) / 2,
   });
-
-  // const handelClick = (e: any) => {
-  //   setShowPopup(!showPopup);
-  // };
-  // const AddStockCode = (CodeCk: Company) => {
-  //   detailStockcode(CodeCk.Code);
-  //   let floor = CodeCk.Exchange === 1 ? "HSX" : "HNX";
-  //   let stockCode = CodeCk.Code;
-  //   dispatch(fetchDataDetailPopupAsync({ stockCode, floor }));
-  //   // dispatch(fetchDataDetailPopupAsync({ stockCode, floor }));
-  //   dispatch(fetchDataTableKLTTGAsync(stockCode));
-  //   dispatch(showDetailStock({ visible: true, code: CodeCk.Code }));
-  //   dispatch(setLLTG(floor));
-  // };
-  // const detailStockcode = (codeCk: string) => {
-  //   let CodenCt = dataCompanyTotal.find((e: Company) => e.Code === codeCk);
-
-  //   if (CodenCt) setStockCode(CodenCt);
-  // };
-  // useEffect(() => {
-  //   dispatch(
-  //     fetchChartOptionAsync({ stockCode: code, setActions: "gw-realtime" })
-  //   );
-  // }, [code, dispatch]);
-  // Kiểm tra và đặt lại giá trị cho dataMouse.maF và dataMouseBuy.maB nếu selectedCode tồn tại
-  // kéo thả
 
   const [bounds, setBounds] = useState<Bounds>({
     left: null,
@@ -78,7 +48,6 @@ const TablePopupMarketwatch = () => {
   const handleStop = (e: any, data: any) => {
     setPosition({ x: data.x, y: data.y });
   };
-  // console.log("position", position);
   return (
     <TableContextProvider>
       <Draggable
