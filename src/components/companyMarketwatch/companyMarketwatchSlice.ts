@@ -1,59 +1,86 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import agent from "../../api/agent";
-import { Company, Root } from "../../models/root";
-import { actions } from "react-table";
-export const fetchCompanyAsync = createAsyncThunk<any>(
+import { ICompany, IDataCompany_Response } from "../../models/root";
+
+interface IState extends IDataCompany_Response {
+  status: number;
+  dataDetail: null;
+  productsLoaded: boolean;
+}
+
+const IData_Company: ICompany = {
+  Basic_Price: 0,
+  Ceiling_Price: 0,
+  Code: "",
+  Exchange: 0,
+  Floor_Price: 0,
+  ID: "",
+  ScripName: "",
+  ScripNameEN: "",
+  Stock_Type2: 0,
+};
+
+const initialState: IState = {
+  dataCompanyTotal: [IData_Company],
+  dataCompanyUpcom: [IData_Company],
+  dataCompanyHNX: [IData_Company],
+  dataCompanyHSX: [IData_Company],
+  status: 0,
+  dataDetail: null,
+  productsLoaded: false,
+};
+
+export const fetchCompanyAsync = createAsyncThunk<IDataCompany_Response>(
   "company/getdata",
   async () => {
-   try {
-    const res = await agent.Company.get();
-    let result =  JSON.parse(res)
-    let dataCompanyTotal =  result
-    let dataCompanyHSX = result.filter(
-      (item: Company) => item.Exchange === 1
-    );
-    let dataCompanyHNX = result.filter(
-      (item: Company) => item.Exchange === 2
-    );
-    let dataCompanyUpcom = result.filter(
-      (item: Company) => item.Exchange === 3
-    );
-    let data = {
-      dataCompanyTotal :dataCompanyTotal.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
-      dataCompanyHSX: dataCompanyHSX.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
-      dataCompanyHNX :dataCompanyHNX.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
-      dataCompanyUpcom : dataCompanyUpcom.sort((a:Company, b:Company) => a.Code.localeCompare(b.Code)),
+    try {
+      const res: string = await agent.Company.get();
+      let result = JSON.parse(res);
+      let dataCompanyTotal: ICompany[] = result;
+
+      let dataCompanyHSX: ICompany[] = result.filter(
+        (item: ICompany) => item.Exchange === 1
+      );
+      let dataCompanyHNX: ICompany[] = result.filter(
+        (item: ICompany) => item.Exchange === 2
+      );
+      let dataCompanyUpcom: ICompany[] = result.filter(
+        (item: ICompany) => item.Exchange === 3
+      );
+      let data = {
+        dataCompanyTotal: dataCompanyTotal.sort((a: ICompany, b: ICompany) =>
+          a.Code.localeCompare(b.Code)
+        ),
+        dataCompanyHSX: dataCompanyHSX.sort((a: ICompany, b: ICompany) =>
+          a.Code.localeCompare(b.Code)
+        ),
+        dataCompanyHNX: dataCompanyHNX.sort((a: ICompany, b: ICompany) =>
+          a.Code.localeCompare(b.Code)
+        ),
+        dataCompanyUpcom: dataCompanyUpcom.sort((a: ICompany, b: ICompany) =>
+          a.Code.localeCompare(b.Code)
+        ),
+      };
+      return data;
+    } catch (error) {
+      let data = {
+        dataCompanyHSX: [],
+        dataCompanyHNX: [],
+        dataCompanyUpcom: [],
+        dataCompanyTotal: [],
+      };
+      return data;
     }
-    return data
-   } catch (error) {
-    let data = {
-   dataCompanyHSX : [],
-    dataCompanyHNX: [],
-    dataCompanyUpcom: [],
-    dataCompanyTotal: [],
-    }
-    return  data
-   }
   }
 );
 export const companySlice = createSlice({
   name: "company",
-  initialState: {
-    productsLoaded: false,
-    dataCompanyTotal: [] as Company[],
-    dataCompanyUpcom: [] as Company[],
-    dataCompanyHNX: [] as Company[],
-    dataCompanyHSX: [] as Company[],
-    status: 0,
-    dataDetail :null ,
-  },
-
+  initialState,
   reducers: {
     getDataSuccess: (state, action: PayloadAction<{}>) => {
       // state.data = action.payload;
-    //   state.status = 1;
+      //   state.status = 1;
     },
-
   },
 
   extraReducers: (builder) => {
@@ -61,21 +88,23 @@ export const companySlice = createSlice({
       .addCase(fetchCompanyAsync.pending, (state) => {
         state.productsLoaded = false;
         state.status = 1;
-        state.dataCompanyTotal =[]
+        state.dataCompanyTotal = [];
       })
-      .addCase(fetchCompanyAsync.fulfilled, (state, action) => {
-        state.productsLoaded = true;
-        state.status = 2;
-        let data = action.payload;
-    
-        state.dataCompanyTotal = data.dataCompanyTotal
-        state.dataCompanyHNX = data.dataCompanyHNX
-        state.dataCompanyHSX = data.dataCompanyHSX
-        state.dataCompanyUpcom = data.dataCompanyUpcom
-      })
+      .addCase(
+        fetchCompanyAsync.fulfilled,
+        (state, action: PayloadAction<IDataCompany_Response>) => {
+          state.productsLoaded = true;
+          state.status = 2;
+          let data = action.payload;
+
+          state.dataCompanyTotal = data.dataCompanyTotal;
+          state.dataCompanyHNX = data.dataCompanyHNX;
+          state.dataCompanyHSX = data.dataCompanyHSX;
+          state.dataCompanyUpcom = data.dataCompanyUpcom;
+        }
+      )
 
       .addCase(fetchCompanyAsync.rejected, (state, action) => {
-     
         state.productsLoaded = true;
         state.status = 3;
         state.dataCompanyHSX = [];
@@ -85,5 +114,5 @@ export const companySlice = createSlice({
       });
   },
 });
-export const {getDataSuccess}  = companySlice.actions
+export const { getDataSuccess } = companySlice.actions;
 export default companySlice;

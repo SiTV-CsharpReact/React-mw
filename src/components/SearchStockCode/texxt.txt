@@ -1,0 +1,55 @@
+<>
+        {showPopup ? (
+          <div
+            className={` ${
+              border ? "NoneBoder" : ""
+            } menuSearch  w-[350px]  shadow-2xl left-[25%] top-[36px] z-50 ${
+              searchResults.length > 9 ? "h-[212px] overflow-y-auto" : ""
+            } bg-[#FBFBFB] rounded-sm absolute `}
+          >
+            <ul>
+              {dataCompanyTotal && dataCompanyTotal.length > 0 ? (
+                searchResults.length > 0 ? (
+                  searchResults.map((item: Company, index: number) => {
+                    let name = `${item.Code} - ${
+                      item.Exchange === 1
+                        ? "HOSE"
+                        : item.Exchange === 2
+                        ? "HNX.NY"
+                        : "HNX.UPCOM"
+                    } - ${item.ScripName}`;
+                    const isItemSelected = index === indexStockCode;
+                    const isItemHovered = index === indexStockCode;
+
+                    return (
+                      <li
+                        className={border ? "liboder" : "LinoneBorder"}
+                        key={index}
+                        onClick={() => AddStockCode(item)}
+                        tabIndex={0}
+                        // onKeyDown={(e) => handleKeyDown(e, index)} // Xử lý sự kiện keyDown
+                        onMouseEnter={() => setIndexStockCode(index)} // Xử lý hover chuột
+                        // onMouseLeave={() => setHoveredIndex(-1)} // Khi chuột rời khỏi item
+                        style={{
+                          backgroundColor:
+                            isItemSelected || isItemHovered
+                              ? "#63A9E066"
+                              : "transparent",
+                        }}
+                      >
+                        {getHighlightedText(name, valueInput)}
+                      </li>
+                    );
+                  })
+                ) : (
+                  <li> Mã chứng khoán không tồn tại !</li>
+                )
+              ) : (
+                ""
+              )}
+            </ul>
+          </div>
+        ) : (
+          ""
+        )}
+      </>

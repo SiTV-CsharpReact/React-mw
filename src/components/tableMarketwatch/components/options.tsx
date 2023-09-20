@@ -66,7 +66,7 @@ const ColumnDef = (props: any, props2: any) => {
   return ExChange;
 	}
   const getCompanyNameByCode =  (vStockCode:string) =>{
-    console.log(vStockCode)
+    // console.log(vStockCode)
 		var name = '', element = '', cpnyID = ''
 		for (var i = 0; i < dataCompanyTotal.length; i++) {
 			if (vStockCode === dataCompanyTotal[i].Code) {
@@ -163,7 +163,7 @@ const ColumnDef = (props: any, props2: any) => {
                 if (checkSTTStockCode[1] === OBJECT_STATUS[i].Info[j1][0]) {
                   txtStatusCondition = " " +'-' +" " + OBJECT_STATUS[i].Info[j1][g_Language + 1] + '.';
                   txtInfo =  (isNumeric(checkSTTStockCode[1]) ? "R" : checkSTTStockCode[1]);
-                  console.log(txtStatusCondition,params.data.MCK);
+                  // console.log(txtStatusCondition,params.data.MCK);
                   // console.log(txtInfo);
                   break;
                 }
@@ -188,7 +188,7 @@ const ColumnDef = (props: any, props2: any) => {
                  txtStatusCondition = " " +'-' +" "  + OBJECT_STATUS[ii].Info[jj][g_Language + 1] + '.';
                   txtInfo = (isNumeric(checkSTTStockCode[1]) ? "R" : checkSTTStockCode[1]);
                   //console.info('strn',strn,'checkSTTStockCode',checkSTTStockCode,'txtStatus1',txtStatus1,'txtStatusCondition',txtStatusCondition,'txtInfo',txtInfo,'OBJECT_STATUS[ii].Status[0]',OBJECT_STATUS[ii].Status[0]);
-                  console.log(txtStatusCondition,params.data.MCK);
+                  // console.log(txtStatusCondition,params.data.MCK);
                   // console.log(txtInfo)
                   if (checkSTTStockCode[0] === '232' || checkSTTStockCode[0] === 'BE') {
                     break;

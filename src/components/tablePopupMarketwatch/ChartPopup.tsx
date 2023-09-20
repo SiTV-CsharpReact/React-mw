@@ -65,7 +65,7 @@ const ChartPopup = () => {
                 arrSub.push(sub);
               }
             }
-            console.log({ arrPr });
+            // console.log({ arrPr });
 
             minSub = minNumber(arrSub);
             const sub = max - min;

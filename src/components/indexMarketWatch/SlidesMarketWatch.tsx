@@ -35,7 +35,6 @@ const SlidesMarketWatch = () => {
   const { visible } = useAppSelector((state) => state.chart);
   const height = useContext(AppContext);
   const { dataChartIndex, configChartIndex, dataChartIndexTime } =useAppSelector((state) => state.chartIndex);
-  console.log(dataChartIndex,configChartIndex)
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -45,7 +44,6 @@ const SlidesMarketWatch = () => {
     GET_SS: "ss", // get snapshot data (update) , can phai co Max
     GET_CDT: "cdt", // get check date time
   };
-  console.log({ update: updateChart(dataChartIndexTime, dataChartIndex) });
 
   const {
     marketHSX: { valueHSX },
@@ -79,17 +77,7 @@ const SlidesMarketWatch = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Gọi API đầu tiên
-        await dispatch(fetchConfigChartIndexAsync());
-      } catch (error) {
-        // Xử lý lỗi nếu cần
-        console.error("Error fetching first API data:", error);
-      }
-    };
-
-    fetchData();
+    dispatch(fetchConfigChartIndexAsync())
   }, [dispatch]);
 
   const HOUR_STOP_UPDATE = 15;

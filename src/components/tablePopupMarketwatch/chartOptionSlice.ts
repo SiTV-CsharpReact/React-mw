@@ -13,11 +13,11 @@ const initialState: DataInitialState = {
   status: "loading",
 };
 export const fetchChartOptionAsync = createAsyncThunk<[], DataChart>(
-  "chartOptions",
+  "chartOptionRealtime",
   async (data) => {
     try {
       const response = await agent.dataTableBasic.postFormData({
-        action: data.action,
+        action: "gw_realtime",
         symbol: data.symbol,
       });
       console.log("daresponseta", response);
@@ -27,13 +27,13 @@ export const fetchChartOptionAsync = createAsyncThunk<[], DataChart>(
     }
   }
 );
-export const fetchChartOptiongwHistoryAsync = createAsyncThunk<[], any>(
-  "chartOptions",
+export const fetchChartOptiongHistoryAsync = createAsyncThunk<[], DataChart>(
+  "chartOptionHistory",
   async (data) => {
     try {
       const response = await agent.dataTableBasic.postFormData({
         action: "gw_history",
-        symbol: data.stockCode,
+        symbol: data.symbol,
       });
       return response.data;
     } catch (error) {
@@ -62,8 +62,10 @@ const chartOptionSlice = createSlice({
       .addCase(fetchChartOptionAsync.fulfilled, (state, action) => {
         state.isLoading = true;
         state.dataChartOption = action.payload;
-        // const result = action.payload;
-        // console.log(result)
+      })
+      .addCase(fetchChartOptiongHistoryAsync.fulfilled, (state, action) => {
+        state.isLoading = true;
+        state.dataChartOption = action.payload
       });
   },
 });

@@ -1,9 +1,5 @@
-import React, {  useEffect,  useState } from "react";
-import {
-
-  useAppDispatch,
-  useAppSelector,
-} from "../../store/configureStore";
+import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import {
   checkSTTMarket,
   formatNumber,
@@ -21,7 +17,12 @@ import FooterMarket from "../footerMarketwatch/FooterMarket";
 import { statusChartMarketwatch } from "../chartMarketwatch/chartMarketwatchSlice";
 import { useSelector } from "react-redux";
 import { fetchCompanyAsync } from "../companyMarketwatch/companyMarketwatchSlice";
-import {  fetchTableHNXAsync, fetchTableHSXAsync, productHSXSelectors, productSelectors, } from "./tableSlice";
+import {
+  fetchTableHNXAsync,
+  fetchTableHSXAsync,
+  productHSXSelectors,
+  productSelectors,
+} from "./tableSlice";
 import { DataTable } from "../../models/modelTableHNX";
 const showKLPT = (value: string) => {
   // console.log(value);
@@ -71,44 +72,40 @@ const TableDanhMuc = () => {
   const dispatch = useAppDispatch();
   const tableData = useAppSelector(productSelectors.selectAll);
   const tableDataHSX = useAppSelector(productHSXSelectors.selectAll);
-  console.log(tableData,tableDataHSX)
- useEffect(() => {
-  dispatch(fetchTableHNXAsync("BCC,AAV,BCM,CEO"));
-  dispatch(fetchTableHSXAsync("BCC,AAV,BCM,CEO"));
-}, [ dispatch]);
-
+  console.log(tableData, tableDataHSX);
+  useEffect(() => {
+    dispatch(fetchTableHNXAsync("BCC,AAV,BCM,CEO"));
+    dispatch(fetchTableHSXAsync("BCC,AAV,BCM,CEO"));
+  }, [dispatch]);
 
   const [sortedColumn, setSortedColumn] = useState("");
   const [statusMarket, setStatusMarket] = useState<ObjectMenuHSX | null>(null);
-  
-  const [products, setProducts] = useState<any[]>([]);
-    const codeList = useAppSelector(((state) => state.codeList.codeList))
 
-    var arrS = codeList.split(',');
-    var arr_names:DataTable[] = new Array(arrS.length)  
-    useEffect(() => {
-        async function fetchData() {
-          try {
-            const responsesttHNX = await axios.get(
-              `http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`
-            );
-            setStatusMarket(responsesttHNX.data);
-          } catch (error) {
-            console.log(error);
-          }
-        }
-        fetchData();
-      }, []);
- 
-  const fetchDataCompany = async () => {
-    await dispatch(fetchCompanyAsync());
-  };
+  const [products, setProducts] = useState<any[]>([]);
+  const codeList = useAppSelector((state) => state.codeList.codeList);
+
+  var arrS = codeList.split(",");
+  var arr_names: DataTable[] = new Array(arrS.length);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const responsesttHNX = await axios.get(
+          `http://marketstream.fpts.com.vn/hsx/data.ashx?s=index`
+        );
+        setStatusMarket(responsesttHNX.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
+
   // Call `fetchData` to fetch data when component mounts
   useEffect(() => {
     if (!localStorage.getItem("CacheSi")) {
-      fetchDataCompany();
+      dispatch(fetchCompanyAsync());
     }
-  }, []);
+  }, [dispatch]);
   // sort products
   products.forEach((obj) =>
     obj.Info.sort((a: any, b: any) => {
@@ -941,7 +938,6 @@ const TableDanhMuc = () => {
                         </td>
                         {/* G3 Mua*/}
                         <td
-                         
                           {...provider.dragHandleProps}
                           data-sort={dataTable.Info[8][1]}
                           id={`${dataTable.RowID}_${dataTable.Info[5][0]}`}
@@ -952,8 +948,8 @@ const TableDanhMuc = () => {
                             dataTable.Info[3][1]
                           )}`}
                           // onClick={() => handleClick(dataTable) }
-                           onClick={() => console.log("oke") }
-                          // 
+                          onClick={() => console.log("oke")}
+                          //
                         >
                           {formatNumberMarket(dataTable.Info[5][1])}
                         </td>

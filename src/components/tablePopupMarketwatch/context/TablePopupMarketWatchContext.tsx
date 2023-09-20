@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/configureStore";
-import { fetchChartOptionAsync } from "../chartOptionSlice";
+import { fetchChartOptionAsync, fetchChartOptiongHistoryAsync } from "../chartOptionSlice";
 
 interface TablePopupContextData {
   value: string;
@@ -19,19 +19,16 @@ const TableContextProvider: React.FC<any> = ({ children }) => {
   const dispatch = useAppDispatch();
   const { code } = useAppSelector((state) => state.popupTable);
   const { dataChartOption } = useAppSelector((state) => state.chartOption);
-  const [option, setOption] = useState<string>("");
+  const [option, setOption] = useState<string>("gw_realtime");
   //tạo option để lưu data theo 1day,1week,3month,6month,1year,2year
-  const [select, setSelect] = useState<string>("");
+  const [select, setSelect] = useState<string>("1D");
   useEffect(() => {
-    dispatch(
-      fetchChartOptionAsync({ symbol: code, action: option || "gw_realtime" })
-    );
+    if (option === "gw_realtime") {
+      dispatch(fetchChartOptionAsync({ symbol: code, action: "gw_realtime" }));
+    } else {
+      dispatch(fetchChartOptiongHistoryAsync({symbol: code, action: "gw_history"}))
+    }
   }, [code, dispatch, option]);
-
-  useEffect(() => {
-    setOption("gw_realtime");
-    setSelect("1D")
-  }, []);
 
   return (
     <TablePopupConext.Provider
@@ -41,7 +38,7 @@ const TableContextProvider: React.FC<any> = ({ children }) => {
         option,
         setOption,
         select,
-        setSelect
+        setSelect,
       }}
     >
       {children}

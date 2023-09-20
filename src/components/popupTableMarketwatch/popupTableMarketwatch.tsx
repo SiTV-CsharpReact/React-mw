@@ -12,7 +12,7 @@ import {
   fetchDataDetailPopupAsync,
   fetchDataTableKLTTGAsync,
 } from "../tablePopupMarketwatch/dataTablePopupDetailSlice";
-import { Company } from "../../models/root";
+import { ICompany } from "../../models/root";
 import { setDataOrder } from "../tableMarketwatch/orderComanSlice";
 
 interface Props {
@@ -69,7 +69,7 @@ const PopupTableMarketwatch = ({
   };
   const BuySeillStockCode = (key: string ) => {
     setSelectedValueProp({ ...selectedValue, status: false });
-    const dataCode = dataCompanyTotal.find((item:Company) =>  item.Code ===  selectedValue.value)
+    const dataCode = dataCompanyTotal.find((item: ICompany) =>  item.Code ===  selectedValue.value)
     if(dataCode){
       let san = dataCode?.Exchange === 1 ?  "HSX" :"HNX"
       const data = {

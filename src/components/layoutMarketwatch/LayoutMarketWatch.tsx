@@ -84,6 +84,7 @@ const LayoutMarketWatch: React.FC = () => {
   const sttOrderForm = useAppSelector((state) => state.SendOrder.submit);
   const sttFormOTP = useAppSelector((state) => state.SendOrder.formOTP);
   const [heightComponent, setHeightComponent] = useState(initialState);
+  const status = useAppSelector((state) => state.popupTable.visible);
   const [selectedValue, setSelectedValue] = useState({
     x: 0,
     y: 0,
@@ -225,7 +226,6 @@ const LayoutMarketWatch: React.FC = () => {
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     draggingRef.current = false;
   };
-  const status = useAppSelector((state) => state.popupTable.visible);
   if (!ListDataTable && !productsLoaded) {
     return <div> Loading ... </div>;
   }
@@ -584,4 +584,4 @@ const LayoutMarketWatch: React.FC = () => {
     </div>
   );
 };
-export default React.memo(LayoutMarketWatch);
+export default LayoutMarketWatch;

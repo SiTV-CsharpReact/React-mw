@@ -1,6 +1,4 @@
-import React, { useState } from "react";
 import ChartOption from "./ChartOption";
-import ChartOptionHistory from "./ChartOptionHistory";
 import { useContextTablePopup } from "./context/TablePopupMarketWatchContext";
 
 const ChartWithOption = () => {
@@ -59,11 +57,6 @@ const ChartWithOption = () => {
         </div>
       </div>
       <ChartOption />
-      {/* {active === "a1d" ? (
-        <ChartOption />
-      ) : (
-        <ChartOptionHistory time={active} />
-      )} */}
     </div>
   );
 };
