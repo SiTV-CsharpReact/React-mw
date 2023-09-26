@@ -65,6 +65,8 @@ const SlidesMarketWatch: React.FC<KineticScrollProps> = ({ moved })  => {
   const [startX, setStartX] = useState(0);
   // set scroll
   const [scrollLeft, setScrollLeft] = useState(0);
+    // check stt hiển thị scroll left
+    const [sttLocation, setSttLocation] = useState(false);
   // check stt hiển thị scroll left
   const [isHoveredLeft, setIsHoveredLeft] = useState(false);
   // check stt hiển thị scroll right
@@ -140,18 +142,20 @@ const SlidesMarketWatch: React.FC<KineticScrollProps> = ({ moved })  => {
       setIsHoveredRight(false);
     } 
      else{
-      console.log(widthIndex,widthWindow)
       setIsHoveredLeft(true);
       setIsHoveredRight(true);
      }
   },[quantityIndex,widthWindow,divRef,widthIndex])
   // hover show All Scroll
    const showAllScroll = ()=>{
-    console.log(divScrollLeft.current)
-    divScrollLeft.current.classList.remove("hidden")
-    divScrollLeft.current.classList.add("scrollingHotSpotLeftVisible")
-    divScrollRight.current.classList.remove("hidden")
-    divScrollRight.current.classList.add("scrollingHotSpotRightVisible")
+    if(widthIndex >=  widthWindow+divRef.current.scrollLeft && isHoveredLeft && isHoveredRight){
+      // console.log(divScrollLeft.current)
+      divScrollLeft.current.classList.remove("hidden")
+      divScrollLeft.current.classList.add("scrollingHotSpotLeftVisible")
+      divScrollRight.current.classList.remove("hidden")
+      divScrollRight.current.classList.add("scrollingHotSpotRightVisible")
+    }
+
    }
    // ẩn all scroll khi bỏ hover
    const hideAllScroll = ()=>{
@@ -178,8 +182,6 @@ const SlidesMarketWatch: React.FC<KineticScrollProps> = ({ moved })  => {
      hideAllScroll()
      // setIsHoveredLeft(false)
    };
- 
-   let speed = 0; // Biến lưu trữ giá trị speed
  
    let handleMouseEnter = (value: any, event: any, speed: any) => {
      // console.log(divRef)
@@ -234,7 +236,7 @@ const SlidesMarketWatch: React.FC<KineticScrollProps> = ({ moved })  => {
        }, 8);
      }
    };
- 
+   let speed=0;
    const handleMouseMoveButton = (event: any) => {
      // handleMouseEnter("right", event, 0);
      speed = event.clientX - event.target.getBoundingClientRect().left;

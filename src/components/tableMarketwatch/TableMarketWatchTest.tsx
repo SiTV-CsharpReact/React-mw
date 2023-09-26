@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useRef } from "react";
+import React, { useCallback, useState, useEffect, useRef, useMemo } from "react";
 import { AgGridReact } from "ag-grid-react";
 // import "ag-grid-enterprise";
 // import "ag-grid-community/styles/ag-grid.css";
@@ -8,7 +8,7 @@ import { arrayColor, colorTextMenu, colorTextTD, fStatusMarketHNX, fStatusMarket
 
 // import { LicenseManager } from "ag-grid-enterprise";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
-import { getDataCookie, getDataTable, handleHistoryPrices } from "./tableTestSlice";
+import { UpdateDataTableRealTime, getDataCookie, getDataTable, handleHistoryPrices } from "./tableTestSlice";
 import { fetchCategoryAsync } from "../menuBarMW/danhmucSlice";
 
 import { defaultColDef, gridOptions } from "./interface/config.tablegrid";
@@ -16,6 +16,7 @@ import ColumnDef from "./components/options";
 import { setCookie } from "../../models/cookie";
 import { g_CLASS_INDEX } from "../../configs/app.config";
 import { setActiveMenu } from "../menuBarMW/menuSlice";
+import { RowData, RowDataMap } from "../../models/tableMarketwatch";
 
 const arrayPrice = [5, 7, 9, 11, 14, 16, 18];
   const arrayKL = [6, 8, 10, 12, 15, 17, 19];
@@ -93,8 +94,8 @@ const TableMarketWatchTest = () => {
     if (keyActiveMan === 0) {
       HanDelCate();
     }
-    
-  }, [dispatch, HanDelCate]);
+    dispatch(UpdateDataTableRealTime({arrRowID:"ACB", arrInfo:10, arrValue:100}))
+  }, [dispatch, HanDelCate,ListDataTable]);
   useEffect(() => {
     const socketHSX = new WebSocket(
       "wss://eztrade.fpts.com.vn/hnx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=l4Qv5el2qo7nNiXubQ1oHGbFB%2F4w1UNE4vpgPXPs5nz6VP7b6bGYnMwB2aivGfMOUNZ%2F0QwrXmR%2BwkqRkEukXGYDdn8iKHzVZ%2BIiwFO2A1nxyh0%2FCdX3rc3omFIBjraz&connectionData=%5B%7B%22name%22%3A%22hubhnx2%22%7D%5D&tid=5"
@@ -130,25 +131,6 @@ const TableMarketWatchTest = () => {
       socketHNX.close();
     };
   }, []);
-  // useEffect(() => {
-  //   const socketHNX = new WebSocket(
-  //     "wss://eztrade.fpts.com.vn/hsx/signalr/connect?transport=webSockets&clientProtocol=1.5&connectionToken=JWiUHUXRVLCXtTY7Na0DSx2vODWGuDSFrc6Da7FVAcRg9EYCUqCkDYfa3bsaKn305erm6aBpsrUmoFZ70viczLA1hDqUzrrqmuaZWu0UZDyUzynPYy0gGJu4gHM7dZVg&connectionData=%5B%7B%22name%22%3A%22hubhsx2%22%7D%5D&tid=1"
-  //   );
-  //   socketHNX.onopen = () => {
-  //     //console.log("WebSocket connection established.");
-  //   };
-  //   socketHNX.onmessage = (event) => {
-  //     // updateQuote(event.data)
-  //     updateQuote(event.data);
-  //     // setDataHNX(event.data);
-  //   };
-  //   socketHNX.onclose = () => {
-  //     // console.log("WebSocket connection closed.");
-  //   };
-  //   return () => {
-  //     socketHNX.close();
-  //   };
-  // }, []);
   const updateQuote = (objRealtime: any) => {
     // objRealtime = {"RowID":"BCC","Info":[[5,83.5],[7,83.6],[8,100],[11,84.1],[12,101900],[15,77500],[16,84.2],[17,12900],[18,84.3],[19,2000],[20,0],[21,839400],[22,84.2]]};
     //  updateTableHNX(objRealtime)
@@ -349,28 +331,45 @@ const TableMarketWatchTest = () => {
       }
     }
   };
-
+  // const updatePrices = useCallback(() => {
+  //   const newStore:any[] = [];
+  //   ListDataTable.forEach(function (item:any) {
+  //     newStore.push({
+  //       // use same symbol as last time, this is the unique id
+  //       symbol: item.symbol,
+  //       // group also stays the same
+  //       group: item.group,
+  //       // add random price
+  //       price: Math.floor(Math.random() * 100),
+  //     });
+  //   });
+  //   SetDataTable(newStore);
+  // }, [ListDataTable]);
+  // Hàm cập nhật giá trị dựa trên vị trí và giá trị thay đổi
+// function updateDataByPosition(maCK:string,position: number, newValue: string) {
+//   const fieldName = RowDataMap[position];
+//   if (fieldName) {
+//     ListDataTable.forEach(item => (item[fieldName] = newValue));
+//   }
+// }
+  
   const updateDataTable = (
     arrRowID: string,
     arrInfo: number,
     arrValue: number
   ) => {
-    const tdIndex = document.getElementById(`${arrRowID}_${arrInfo}`);
-    // const valueTC = document.querySelector(`div[data-index="5"][aria-rowindex="BCC"]`)?.innerHTML;
-    // const valueTCS = document.querySelector(`div[data-index="${arrInfo}"][aria-rowindex="${arrRowID}"]`) as HTMLElement;
-    // if(valueTCS){
-    //   valueTCS.innerHTML = `${formatNumberMarket(arrValue)}`;
-    //   // gán màu bg
-    //   const test =  valueTCS.parentElement;
-    //   if(test){
-    //     test.style.backgroundColor = "#888888";
-    //     setTimeout(function () {
-    //       test.style.backgroundColor = "";
-    //     }, 500);
+    dispatch(UpdateDataTableRealTime({arrRowID:"ACB", arrInfo:10, arrValue:100}))
+    // UpdateDataTableRealTime({arrRowID:"ACB", arrInfo:10, arrValue:100});
+    // for (let i = 0; i < ListDataTable.length; i++) {
+    //   if (ListDataTable[i].MCK === arrRowID) {
+    //     let fieldName = RowDataMap[arrInfo];
+    //     if (fieldName) {
+    //       // Cập nhật giá trị của trường tương ứng
+    //       currentListDataTable[i][fieldName] = arrValue.toString();
+    //     }
     //   }
-    //   // sau 0.5s xóa màu bg
-      
     // }
+    const tdIndex = document.getElementById(`${arrRowID}_${arrInfo}`);
     const valueTC = document.getElementById(`${arrRowID}_TC`)?.innerHTML;
 
     const valueTran = document.getElementById(`${arrRowID}_Tran`)?.innerHTML;
@@ -489,6 +488,16 @@ const TableMarketWatchTest = () => {
       // sau 0.5s xóa màu bg
     }
   };
+  // const onGridReady = (params:any) => {
+  //  const api = params.api;
+  //  console.log(api.)
+    
+  //   // Sử dụng api ở đây
+  // };
+  // const getRowId = useMemo(() => {
+  //   // console.log((params:any) => params.data.id)
+  //   return (params:any) =>  console.log(params);
+  // }, []);
   const containerStyle = { width: "100%", height: "100%" };
   const gridStyle = { height: "100%", width: "100%" };
   const HandleHistory = () => {
@@ -507,34 +516,10 @@ const TableMarketWatchTest = () => {
 let isDraggingPinnedRow = false;
   return (
     <div style={containerStyle}>
-      {/* <div style={gridStyle} className="ag-theme-alpine-dark table__price">
-        <AgGridReact
-          ref={gridRef}
-          suppressDragLeaveHidesColumns={true}
-          suppressCellFocus={true}
-          rowHeight={25}
-          overlayNoRowsTemplate={"Loadding..."}
-          rowData={ListDataTable}
-          pinnedTopRowData={DataPined}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          rowDragManaged={true}
-          rowDragEntireRow={true}
-          rowDragMultiRow={true}
-          rowSelection={"multiple"}
-          animateRows={true}
-          gridOptions={gridOptions}
-          onGridReady={(params: any) => {
-            params.api.sizeColumnsToFit(undefined, {
-              suppressSizeToFit: false,
-            });
-          }}
-        />
-      </div> */}
-      
       <div style={gridStyle} className="ag-theme-alpine-dark table__price">
   <AgGridReact
     ref={gridRef}
+    // onGridReady={onGridReady}
     suppressDragLeaveHidesColumns={true}
     suppressCellFocus={true}
     rowHeight={25}
@@ -550,56 +535,9 @@ let isDraggingPinnedRow = false;
     animateRows={true}
     gridOptions={gridOptions}
     rowMultiSelectWithClick={true}
-    tooltipShowDelay={0}
-    tooltipHideDelay={1000}
-    onRowDragEnter={(event) => {
-      const node = event.node;
-      console.log(node)
-      if (node && node.rowPinned) {
-        isDraggingPinnedRow = true; // Đánh dấu rằng đang kéo thả hàng đã được ghim
-      } else {
-        isDraggingPinnedRow = false; // Đánh dấu rằng không kéo thả hàng đã được ghim
-      }
-    }}
-  
-    onRowDragEnd={() => {
-      isDraggingPinnedRow = false; // Khi kéo thả kết thúc, đảm bảo rằng không còn kéo thả hàng đã được ghim
-    }}
-  
-    onRowDragMove={(event) => {
-      // if (isDraggingPinnedRow) {
-      //   event.api.deselectAll(); // Nếu đang kéo thả hàng đã được ghim, hủy chọn tất cả các hàng
-      // }
-      const node = event.node;
-      if (node.rowPinned === "top")
-      {
-        const node = event.node;
-        return;
-      }
-      // var movingNode = event.node;
-      // var overNode = event.overNode;
-      // var rowNeedsToMove = movingNode !== overNode;
-      // if (rowNeedsToMove) {
-      //   var movingData = movingNode.data;
-      //   var overData = overNode?.data;
-      //   var fromIndex = immutableStore?.indexOf(movingData);
-      //   var toIndex = immutableStore?.indexOf(overData);
-      //   var newStore = immutableStore.slice();
-      //   moveInArray(newStore, fromIndex, toIndex);
-      //   immutableStore = newStore;
-      //   this.gridApi.setRowData(newStore);
-      //   this.gridApi.clearFocusedCell();
-      // }
-      // function moveInArray(arr, fromIndex, toIndex) {
-      //   if (toIndex === 0)
-      //   {
-      //     toIndex = 1;
-      //   }
-      //   var element = arr[fromIndex];
-      //   arr.splice(fromIndex, 1);
-      //   arr.splice(toIndex, 0, element);
-      // }
-    }}
+    // tooltipShowDelay={0}
+    // tooltipHideDelay={1000}
+    // getRowId={getRowId}
     onGridReady={(params: any) => {
       params.api.sizeColumnsToFit(undefined, {
         suppressSizeToFit: false,

@@ -36,3 +36,38 @@ export interface RowData{
     PhanTram: string;
     isPined: boolean;
   };
+  // Tạo một đối tượng ánh xạ tất cả các vị trí vào tên trường tương ứng
+export const RowDataMap: { [key: number]: keyof RowData } = {
+  0: "MCK",
+  1: "TC",
+  2: "Tran",
+  3: "San",
+  4: "KL4",
+  5: "G3",
+  6: "KL3",
+  7: "G2",
+  8: "KL2",
+  9: "G1",
+  10: "KL1",
+  11: "GiaKhop",
+  12: "KLKhop",
+  13: "Chenhlech",
+  14: "G1B",
+  15: "KL1B",
+  16: "G2B",
+  17: "KL2B",
+  18: "G3B",
+  19: "KL3B",
+  20: "KL4B",
+  21: "TKL",
+  22: "MOC",
+  23: "CaoNhat",
+  24: "ThapNhat",
+  25: "GTB",
+  26: "NNMua",
+  27: "NNBan",
+  28: "RoomCL",
+  29: "GDK",
+  30: "Quyen",
+  31: "CGKGN",
+};

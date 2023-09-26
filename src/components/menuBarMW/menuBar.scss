@@ -428,3 +428,16 @@ input[type="checkbox"].priceboard2 {
   width: 100%;
   z-index: 13;
 }
+.cbCheck{
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+[type='checkbox']:checked{
+  background-size: 0.85em 0.85em;
+}
+.clsAllIndex label:hover {
+  color: #0C0;
+  text-decoration: underline;
+  cursor: pointer;
+}

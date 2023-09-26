@@ -65,8 +65,7 @@ const ColumnDef = (props: any, props2: any) => {
 	const ExChange=	vEx === 1 ? "HOSE": vEx === 2 ? "HNX.NY": "HNX.UPCOM"
   return ExChange;
 	}
-  const getCompanyNameByCode =  (vStockCode:string) =>{
-    console.log(vStockCode)
+  const getCompanyNameByCode =  (vStockCode:string) =>{    
 		var name = '', element = '', cpnyID = ''
 		for (var i = 0; i < dataCompanyTotal.length; i++) {
 			if (vStockCode === dataCompanyTotal[i].Code) {

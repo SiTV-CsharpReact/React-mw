@@ -16,7 +16,7 @@ import { VARIBLE_ACTICON_TYPE } from "./helper/varible";
 interface TableState {
   activeFloor : number;
   productsLoaded: boolean;
-  ListDataTable: DataTable[];
+  ListDataTable: RowData[];
   productParams: TableParams;
   status: string;
   index: number;
@@ -226,7 +226,7 @@ export const tableTestSlice = createSlice({
   initialState: dataTableAdapter.getInitialState<TableState>({
     activeFloor : 0,
     productsLoaded: false,
-    ListDataTable: [] as DataTable[],
+    ListDataTable: [] as RowData[],
     status: "idle",
     index: 0,
     DataBi: [] as DataGDTT[],
@@ -344,7 +344,17 @@ export const tableTestSlice = createSlice({
     // reset lại floor
     HandleSetActiveFloor : (state ,action) => {
       state.activeFloor = action.payload
-    }
+    },
+     // gán data table mới
+     UpdateDataTableRealTime : (state ,action) => {
+      const data = action.payload;
+      for(let i = 0; i < state.ListDataTable.length; i++)
+      {
+        if(state.ListDataTable[i].MCK === action.payload.arrRowID){
+              console.log(action.payload)
+        }
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -512,5 +522,6 @@ export const {
   handleHistoryPrices,
   HandleKeyActiveMain,
   handleSetStockCode,
-  HandleSetActiveFloor
+  HandleSetActiveFloor,
+  UpdateDataTableRealTime
 } = tableTestSlice.actions;
